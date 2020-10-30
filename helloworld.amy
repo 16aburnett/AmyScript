@@ -1,0 +1,27 @@
+
+
+FUNCTION increment a
+ADD a 1 INTO a
+RETURN a
+ENDFUNCTION
+
+ASSIGN count 0
+ADD count 1 INTO count
+ADD count 1 INTO count
+ADD count 1 INTO count
+ADD count 1 INTO count
+PRINT count
+
+ASSIGN s1 "Hello, "
+ASSIGN s2 "World!"
+ADD s1 "sweet " INTO result
+ADD result "sweet " INTO result
+ADD result s2 INTO result
+PRINT result
+
+ASSIGN num 1
+CALL increment num INTO num
+CALL increment num INTO num
+PRINT num
+
+PRINT ARGV
