@@ -1,6 +1,12 @@
+# The Amy Programming Language Memory Heap
+# By Amy Burnett
+# November 5 2020
+##########################################################################
+# Imports
 
 from __future__ import annotations # for using type hint of containing class name
 
+##########################################################################
 
 class BlockHeader:
     def __init__(self, prevBlock:BlockHeader, payloadSize:int, isAlloc:bool):
@@ -100,8 +106,8 @@ def printheap(heap:Heap):
     for i in range(len(heap.memory)):
         if isinstance(heap.memory[i], BlockHeader):
             print(f"{i} {heap.memory[i].payloadSize} {heap.memory[i].isAlloc}")
-            if heap.memory[i].prevBlock != None:
-                print(f"\t{heap.memory[i].prevBlock.payloadSize} {heap.memory[i].prevBlock.isAlloc}")
+            # if heap.memory[i].prevBlock != None:
+            #     print(f"\t{heap.memory[i].prevBlock.payloadSize} {heap.memory[i].prevBlock.isAlloc}")
         else:
             print(f"{i} {heap.memory[i]}")
 
