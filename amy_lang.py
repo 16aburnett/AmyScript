@@ -7,11 +7,14 @@
 import sys
 import shlex
 import re
+from memory import Heap
+from memory import printheap
 
 ##########################################################################
 # Globals/Constants
 
 ##########################################################################
+
 
 WORD = 0
 INT = 1
@@ -19,12 +22,19 @@ FLOAT = 2
 BOOL = 3
 STRING = 4
 ERROR = 5
+NAMESPACE = 6
+MEMORY = 7
 DELIMITERS = " \t\n"
 
 class CommandComponent:
     def __init__(self, type, value):
         self.type = type 
         self.value = value
+class MemoryComponent(CommandComponent):
+    def __init__(self, ptr, offset):
+        self.type = MEMORY
+        self.pointer = ptr
+        self.offset = offset
 class Lexer:
     def __init__(self, source:str):
         self.source = source.strip()
@@ -36,9 +46,45 @@ class Lexer:
             if re.match("[a-zA-Z_]", self.source[self.index]):
                 token = [self.source[self.index]]
                 self.index += 1
+                # read alphanumerics
                 while self.index < len(self.source) and re.match("[a-zA-Z0-9_]", self.source[self.index]):
                     token += [self.source[self.index]]
                     self.index += 1
+                # memory accessor
+                if self.index < len(self.source) and self.source[self.index] == "[":
+                    self.index += 1 
+                    # possibly a word
+                    if self.index < len(self.source) and re.match("[a-zA-Z_]", self.source[self.index]):
+                        offset = [self.source[self.index]]
+                        self.index += 1
+                        # grab other letters for var
+                        while self.index < len(self.source) and re.match("[a-zA-Z0-9_]", self.source[self.index]):
+                            offset += [self.source[self.index]]
+                            self.index += 1
+                        # ensure next thing is ]
+                        if self.index >= len(self.source) or self.source[self.index] != "]":
+                            return CommandComponent(ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}")
+                        self.index += 1
+                        # ensure next is space - if there is next
+                        if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
+                            return CommandComponent(ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}")
+                        return MemoryComponent("".join(token), "".join(offset))
+                    # possibly an int
+                    if self.index < len(self.source) and re.match("[0-9-]", self.source[self.index]):
+                        offset = [self.source[self.index]]
+                        self.index += 1
+                        # grab other letters for var
+                        while self.index < len(self.source) and re.match("[0-9]", self.source[self.index]):
+                            offset += [self.source[self.index]]
+                            self.index += 1
+                        # ensure next thing is ]
+                        if self.index >= len(self.source) or self.source[self.index] != "]":
+                            return CommandComponent(ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}")
+                        self.index += 1
+                        # ensure next is space - if there is next
+                        if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
+                            return CommandComponent(ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}")
+                        return MemoryComponent("".join(token), int("".join(offset)))
                 # ensure next is space - if there is next
                 if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
                     return CommandComponent(ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}")
@@ -169,6 +215,7 @@ for line in lines:
     code += [components]
 
 
+heap = Heap()
 stack = []
 
 # build the record for main
@@ -191,11 +238,11 @@ while stack[-1].index < len(code):
         cmd, varname, value = code[stack[-1].index]
 
         # ensure varname is a word
-        if varname.type != WORD:
+        if varname.type != WORD and varname.type != MEMORY:
             print("Expected <word> but got", varname.type)
             print(code[stack[-1].index])
             exit()
-        
+
         # Case 1: value is another variable 
         if value.type == WORD:
             # Ensure it is a valid variable
@@ -203,9 +250,21 @@ while stack[-1].index < len(code):
                 print(f"{value.value} referenced before assignment\nLine: {lines[stack[-1].index]}") 
                 exit()
             # assign value to varname
-            stack[-1].variables[varname.value] = stack[-1].variables[value.value]
+            # Case 1: varname is var
+            if varname.type == WORD:
+                stack[-1].variables[varname.value] = stack[-1].variables[value.value]
+            # Case 2: varname is memory addr
+            elif varname.type == MEMORY:
+                heap.memory[stack[-1].variables[varname.pointer]+varname.offset] = stack[-1].variables[value.value]
+
         # Case 2: value is immediate data
-        stack[-1].variables[varname.value] = value.value
+        else:
+            # Case 1: varname is var
+            if varname.type == WORD:
+                stack[-1].variables[varname.value] = value.value
+            # Case 2: varname is memory addr
+            elif varname.type == MEMORY:
+                heap.memory[stack[-1].variables[varname.pointer]+varname.offset] = value.value
 
     elif code[stack[-1].index][0].value == "ADD":
         cmd, varname1, varname2, into, varname3 = code[stack[-1].index]
@@ -369,6 +428,22 @@ while stack[-1].index < len(code):
         # ensure caller was expecting a value
         if stack[-1].returnedToVar != None:
             stack[-1].variables[stack[-1].returnedToVar] = returnedValue
+
+    # allocating data on heap
+    elif code[stack[-1].index][0].value == "MALLOC":
+        cmd, varname, size = code[stack[-1].index]
+
+        # allocate space on heap 
+        stack[-1].variables[varname.value] = heap.malloc(size.value)
+
+        printheap(heap)
+
+    # deallocating data on heap
+    elif code[stack[-1].index][0].value == "FREE":
+        cmd, varname = code[stack[-1].index]
+
+        # allocate space on heap 
+        heap.free(stack[-1].variables[varname.value])
 
     else:
         print("UNKNOWN command! Yikes there bud!")
