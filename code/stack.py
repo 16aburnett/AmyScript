@@ -25,7 +25,7 @@ class Record:
         }
         self.numParams = 0
         self.paramlabels = []
-        self.returnedToVar = None
+        self.returnedValue = 0
     
     def getInstance(self):
         ri = RecordInstance(self.start_index)

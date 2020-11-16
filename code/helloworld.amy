@@ -1,33 +1,54 @@
 
 
-MALLOC mylist 3
-ASSIGN mylist[0] 3
-ASSIGN mylist[1] 6
-ASSIGN mylist[2] 5
-MALLOC mylist2 6
 
-FUNCTION increment a
-ADD a 1 INTO a
-RETURN a
-ENDFUNCTION
+ASSIGN value 0
+ASSIGN next 1
+ASSIGN prev 2
 
-ASSIGN count 0
-ADD count 1 INTO count
-ADD count 1 INTO count
-ADD count 1 INTO count
-ADD count 1 INTO count
-PRINT count
+FUNCTION Node v n p
+    MALLOC node 3
+    ASSIGN @node[value] v
+    ASSIGN @node[next] n
+    ASSIGN @node[prev] p
+    RETURN node
+ENDFUNCTION Node
 
-ASSIGN s1 "Hello, "
-ASSIGN s2 "World!"
-ADD s1 "sweet " INTO result
-ADD result "sweet " INTO result
-ADD result s2 INTO result
-PRINT result
+CALL Node "Hello" 0 0
+RESPONSE root
+CALL Node "," 0 root
+RESPONSE node
+ASSIGN @root[next] node
+CALL Node " World!\n" 0 node
+RESPONSE nextnode
+ASSIGN @node[next] nextnode
 
-ASSIGN num 1
-CALL increment num INTO num
-CALL increment num INTO num
-PRINT num
+PRINT @root[value]
+ASSIGN n @root[next]
+PRINT @n[value]
+ASSIGN n @n[next]
+PRINT @n[value]
 
-PRINT ARGV
+ASSIGN cond 0
+ASSIGN cond2 0
+ASSIGN cond3 0
+IF cond
+    IF cond2 
+        PRINT "cond1 and cond2"
+    ELSE
+        PRINT "cond1 but not cond2"
+    ENDIF
+ELIF cond2
+    PRINT "cond2 is true!"
+ELIF cond3 
+    PRINT "cond3 is true"
+ELSE
+    PRINT "cond1, cond2, cond3 are false"
+ENDIF
+
+IF 1 
+    PRINT "This should print"
+ELSE
+    PRINT "This should not print"
+ENDIF
+
+
