@@ -1,54 +1,48 @@
+// 'Simple' hello world program 
+// By Amy Burnett
+//========================================================================
 
+// prints a string that is stored on the heap
+// returns the length of the string
+FUNCTION printString string i size
+    // Base case - end of string
+    EQUAL end i size
+    IF end 
+        PRINTLN
+        RETURN i
+    ENDIF 
+    PRINT @string[i] 
+    ADD i i 1
+    CALL printString string i size
+    RESPONSE i
+    RETURN i
+ENDFUNCTION printString
 
+//========================================================================
 
-ASSIGN value 0
-ASSIGN next 1
-ASSIGN prev 2
+// Returns a customary phrase stored on the heap
+FUNCTION getCustomaryPhraseFromHeap
+    MALLOC phrase 13
+    ASSIGN @phrase[0] "H"
+    ASSIGN @phrase[1] "e"
+    ASSIGN @phrase[2] "l"
+    ASSIGN @phrase[3] "l"
+    ASSIGN @phrase[4] "o"
+    ASSIGN @phrase[5] ","
+    ASSIGN @phrase[6] " "
+    ASSIGN @phrase[7] "W"
+    ASSIGN @phrase[8] "o"
+    ASSIGN @phrase[9] "r"
+    ASSIGN @phrase[10] "l"
+    ASSIGN @phrase[11] "d"
+    ASSIGN @phrase[12] "!"
+    RETURN phrase
+ENDFUNCTION getCustomaryPhraseFromHeap
 
-FUNCTION Node v n p
-    MALLOC node 3
-    ASSIGN @node[value] v
-    ASSIGN @node[next] n
-    ASSIGN @node[prev] p
-    RETURN node
-ENDFUNCTION Node
+//========================================================================
 
-CALL Node "Hello" 0 0
-RESPONSE root
-CALL Node "," 0 root
-RESPONSE node
-ASSIGN @root[next] node
-CALL Node " World!\n" 0 node
-RESPONSE nextnode
-ASSIGN @node[next] nextnode
+CALL getCustomaryPhraseFromHeap
+// grab the return value of the previous call
+RESPONSE msg 
 
-PRINT @root[value]
-ASSIGN n @root[next]
-PRINT @n[value]
-ASSIGN n @n[next]
-PRINT @n[value]
-
-ASSIGN cond 0
-ASSIGN cond2 0
-ASSIGN cond3 0
-IF cond
-    IF cond2 
-        PRINT "cond1 and cond2"
-    ELSE
-        PRINT "cond1 but not cond2"
-    ENDIF
-ELIF cond2
-    PRINT "cond2 is true!"
-ELIF cond3 
-    PRINT "cond3 is true"
-ELSE
-    PRINT "cond1, cond2, cond3 are false"
-ENDIF
-
-IF 1 
-    PRINT "This should print"
-ELSE
-    PRINT "This should not print"
-ENDIF
-
-
+CALL printString msg 0 13

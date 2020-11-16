@@ -35,6 +35,8 @@ OPCODE_ELIF        = 17
 OPCODE_ELSE        = 18
 OPCODE_ENDIF       = 19
 OPCODE_JUMP        = 20
+OPCODE_EQUAL       = 21
+OPCODE_PRINTLN     = 22
 toOpCode = {
     "ASSIGN"      : OPCODE_ASSIGN,
     "MALLOC"      : OPCODE_MALLOC,
@@ -55,7 +57,9 @@ toOpCode = {
     "IF"          : OPCODE_IF,
     "ELIF"        : OPCODE_ELIF,
     "ELSE"        : OPCODE_ELSE,
-    "ENDIF"       : OPCODE_ENDIF
+    "ENDIF"       : OPCODE_ENDIF,
+    "EQUAL"       : OPCODE_EQUAL,
+    "PRINTLN"     : OPCODE_PRINTLN
 }
 
 # PARAM MODES
@@ -175,13 +179,13 @@ def addControlFlowJumps(i, awaiting_endif=[]):
 
     while (i < len(code)):
 
-        print(f"[{i}] {code[i]} {lines[i]}")
+        # print(f"[{i}] {code[i]} {lines[i]}")
 
         if code[i][0] == OPCODE_IF:
-            print("found if")
+            # print("found if")
             i = addControlFlowJumps (i+1)
         elif code[i][0] == OPCODE_ELIF:
-            print("found elif")
+            # print("found elif")
             # add finishing jump for endif 
             code.insert(i, [OPCODE_JUMP])
             lines.insert(i, "JUMP")
@@ -190,7 +194,7 @@ def addControlFlowJumps(i, awaiting_endif=[]):
             code[prev_if] += [MODE_IMMEDIATE, i]
             return addControlFlowJumps(i+1, awaiting_endif+[i-1])
         elif code[i][0] == OPCODE_ELSE:
-            print("found else")
+            # print("found else")
             # add finishing jump for endif 
             code.insert(i, [OPCODE_JUMP])
             lines.insert(i, "JUMP")
@@ -199,7 +203,7 @@ def addControlFlowJumps(i, awaiting_endif=[]):
             code[prev_if] += [MODE_IMMEDIATE, i]
             return addControlFlowJumps(i+1, awaiting_endif+[i-1])
         elif code[i][0] == OPCODE_ENDIF:
-            print("found end")
+            # print("found end")
             # add this position to all awaiting terminal jumps
             for j in awaiting_endif:
                 code[j] += [MODE_IMMEDIATE, i]
@@ -216,9 +220,9 @@ addControlFlowJumps(0)
 
 ### Print Code ###########################################################
 
-print("=== Code ========================================================")
-for i in range(len(code)):
-    print(f"[{i}] {code[i]} {lines[i]}")
+# print("=== Code ========================================================")
+# for i in range(len(code)):
+#     print(f"[{i}] {code[i]} {lines[i]}")
 
 ### Save IntCode #########################################################
 
@@ -311,15 +315,19 @@ def getNextValue(heap, stack, params, i, reject=[]):
 
     # Case 4: String Literal
     elif params[i] == MODE_STRING and MODE_STRING not in reject:
-        # Allocate space on heap for string
-        string = params[i+1]
-        string_address = heap.malloc(len(string)+1)
-        # copy string into memory
-        for j in range(len(string)):
-            heap.memory[string_address+j] = string[j]
-        # Null terminated 
-        heap.memory[string_address + len(string)] = "\0"
-        return string_address, i+2
+        # treat it as an immediate value 
+        #   for now
+        return params[i+1], i+2
+
+        # # Allocate space on heap for string
+        # string = params[i+1]
+        # string_address = heap.malloc(len(string)+1)
+        # # copy string into memory
+        # for j in range(len(string)):
+        #     heap.memory[string_address+j] = string[j]
+        # # Null terminated 
+        # heap.memory[string_address + len(string)] = "\0"
+        # return string_address, i+2
     # Case 5: Unknown mode
     print("Bad Parameter Mode")
     exit(1)
@@ -327,7 +335,7 @@ def getNextValue(heap, stack, params, i, reject=[]):
 # evaluate lines
 while stack[-1].index < len(code):
 
-    print(f"[{stack[-1].index}] {code[stack[-1].index]} {lines[stack[-1].index]}")
+    # print(f"[{stack[-1].index}] {code[stack[-1].index]} {lines[stack[-1].index]}")
 
     cmd, *params = code[stack[-1].index] 
 
@@ -370,23 +378,16 @@ while stack[-1].index < len(code):
             exit(1)
     elif cmd == OPCODE_PRINT:
         # Only One Parameter
-        # Case 1: Memory
-        if params[0] == MODE_MEMORY:
-            # next 4 nums make up the pointer and offset
-            pmode, pointer, omode, offset = params[1:]
-            address = getMemAddress(stack, pmode, pointer, omode, offset)
-            # print data
-            print(heap.memory[address], end="")
-        # Case 2: Stack variable
-        elif params[0] == MODE_STACK:
-            print(getVariableValue(stack, params[1]), end="")
-        # Case 3: Immediate Value
-        elif params[0] == MODE_IMMEDIATE:
-            print(params[1], end="")
-        # Case 4: String Literal
-        elif params[0] == MODE_STRING:
-            # dont waste time allocating on the heap
-            print(params[1], end="")
+        value, _ = getNextValue(heap, stack, params, 0)
+        print(value, end="")
+    elif cmd == OPCODE_PRINTLN:
+        # PRINTLN 
+        # PRINTLN value
+        if len(params) == 0:
+            print()
+        else:
+            value, _ = getNextValue(heap, stack, params, 0)
+            print(value)
     # function definitions
     elif cmd == OPCODE_FUNCTION:
 
@@ -428,7 +429,7 @@ while stack[-1].index < len(code):
         stack[-1].records[fname] = record
 
         # skip through definition - dont eval code
-        print("... Skipping Function Definition ...")
+        # print("... Skipping Function Definition ...")
         while stack[-1].index < len(code) and (code[stack[-1].index][0] != OPCODE_ENDFUNCTION or code[stack[-1].index][2] != fname):
             stack[-1].index += 1
         
@@ -513,7 +514,7 @@ while stack[-1].index < len(code):
             address = getMemAddress(stack, pmode, pointer, omode, offset)
             size, _ = getNextValue(heap, stack, params, 5, reject=[MODE_STRING])
             heap.memory[address] = heap.malloc(size)
-        printheap(heap)
+        # printheap(heap)
     # deallocating data on heap
     elif cmd == OPCODE_FREE:
         # FREE pointer
@@ -552,6 +553,22 @@ while stack[-1].index < len(code):
         # JUMP dest
         dest, _ = getNextValue(heap, stack, params, 0)
         stack[-1].index = dest
+    elif cmd == OPCODE_EQUAL:
+        # EQUAL dest src1 src2 
+        # dest = src1 == src2
+        # Case1 : variable
+        if params[0] == MODE_STACK:
+            # variable is allowed to not exist for assigning 
+            src1, i = getNextValue(heap, stack, params, 2)
+            src2, i = getNextValue(heap, stack, params, i)
+            stack[-1].variables[params[1]] = 1 if src1 == src2 else 0
+        # Case2 : memory
+        elif params[0] == MODE_MEMORY:
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            src1, i = getNextValue(heap, stack, params, 5)
+            src2, i = getNextValue(heap, stack, params, i)
+            heap.memory[address] = 1 if src1 == src2 else 0
     elif cmd == OPCODE_HALT:
         break
     else:
@@ -561,8 +578,8 @@ while stack[-1].index < len(code):
     stack[-1].index += 1
 
 
-printheap(heap)
+# printheap(heap)
 
-print("*** End of program ***")
+# print("*** End of program ***")
 
 ##########################################################################
