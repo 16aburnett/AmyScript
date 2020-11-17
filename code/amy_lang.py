@@ -376,6 +376,82 @@ while stack[-1].index < len(code):
         else:
             print(f"Dest should be memory or stack")
             exit(1)
+    elif cmd == OPCODE_SUBTRACT:
+        # SUBTRACT dest src1 src2
+        # Case 1: Memory
+        if params[0] == MODE_MEMORY:
+            # next 4 nums make up the pointer and offset
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            src1, i = getNextValue(heap, stack, params, 5)
+            src2, i = getNextValue(heap, stack, params, i)
+            heap.memory[address] = src1 - src2
+        # Case 2: Stack variable
+        elif params[0] == MODE_STACK:
+            src1, i = getNextValue(heap, stack, params, 2)
+            src2, i = getNextValue(heap, stack, params, i)
+            stack[-1].variables[params[1]] = src1 - src2
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
+    elif cmd == OPCODE_MULTIPLY:
+        # MULTIPLY dest src1 src2
+        # Case 1: Memory
+        if params[0] == MODE_MEMORY:
+            # next 4 nums make up the pointer and offset
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            src1, i = getNextValue(heap, stack, params, 5)
+            src2, i = getNextValue(heap, stack, params, i)
+            heap.memory[address] = src1 * src2
+        # Case 2: Stack variable
+        elif params[0] == MODE_STACK:
+            src1, i = getNextValue(heap, stack, params, 2)
+            src2, i = getNextValue(heap, stack, params, i)
+            stack[-1].variables[params[1]] = src1 * src2
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
+    elif cmd == OPCODE_DIVIDE:
+        # DIVIDE dest src1 src2
+        # Case 1: Memory
+        if params[0] == MODE_MEMORY:
+            # next 4 nums make up the pointer and offset
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            src1, i = getNextValue(heap, stack, params, 5)
+            src2, i = getNextValue(heap, stack, params, i)
+            heap.memory[address] = src1 / src2
+        # Case 2: Stack variable
+        elif params[0] == MODE_STACK:
+            src1, i = getNextValue(heap, stack, params, 2)
+            src2, i = getNextValue(heap, stack, params, i)
+            stack[-1].variables[params[1]] = src1 / src2
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
+    elif cmd == OPCODE_MOD:
+        # MOD dest src1 src2
+        # Case 1: Memory
+        if params[0] == MODE_MEMORY:
+            # next 4 nums make up the pointer and offset
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            src1, i = getNextValue(heap, stack, params, 5)
+            src2, i = getNextValue(heap, stack, params, i)
+            heap.memory[address] = src1 % src2
+        # Case 2: Stack variable
+        elif params[0] == MODE_STACK:
+            src1, i = getNextValue(heap, stack, params, 2)
+            src2, i = getNextValue(heap, stack, params, i)
+            stack[-1].variables[params[1]] = src1 % src2
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
     elif cmd == OPCODE_PRINT:
         # Only One Parameter
         value, _ = getNextValue(heap, stack, params, 0)
