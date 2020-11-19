@@ -37,6 +37,7 @@ OPCODE_ENDIF       = 19
 OPCODE_JUMP        = 20
 OPCODE_EQUAL       = 21
 OPCODE_PRINTLN     = 22
+OPCODE_SIZEOF      = 23
 toOpCode = {
     "ASSIGN"      : OPCODE_ASSIGN,
     "MALLOC"      : OPCODE_MALLOC,
@@ -59,7 +60,8 @@ toOpCode = {
     "ELSE"        : OPCODE_ELSE,
     "ENDIF"       : OPCODE_ENDIF,
     "EQUAL"       : OPCODE_EQUAL,
-    "PRINTLN"     : OPCODE_PRINTLN
+    "PRINTLN"     : OPCODE_PRINTLN,
+    "SIZEOF"      : OPCODE_SIZEOF
 }
 
 # PARAM MODES
@@ -388,6 +390,18 @@ while stack[-1].index < len(code):
         else:
             value, _ = getNextValue(heap, stack, params, 0)
             print(value)
+    elif cmd == OPCODE_INPUT:
+        # INPUT dest
+        # Case 1: Memory
+        if params[0] == MODE_MEMORY:
+            heap.memory[address] = input()
+        # Case 2: Stack variable
+        elif params[0] == MODE_STACK:
+            stack[-1].variables[params[1]] = input()
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
     # function definitions
     elif cmd == OPCODE_FUNCTION:
 
@@ -521,6 +535,18 @@ while stack[-1].index < len(code):
         pointer, _ = getNextValue(heap, stack, params, 0)
         # allocate space on heap 
         heap.free(pointer)
+    elif cmd == OPCODE_SIZEOF:
+        # OPCODE_SIZEOF dest pointer
+        # Case1 : variable
+        if params[0] == MODE_STACK:
+            pointer, _ = getNextValue(heap, stack, params, 2, reject=[MODE_STRING])
+            stack[-1].variables[params[1]] = heap.sizeof(pointer)
+        # Case2 : memory
+        elif params[0] == MODE_MEMORY:
+            pmode, pointer, omode, offset = params[1:5]
+            dest = getMemAddress(stack, pmode, pointer, omode, offset)
+            pointer, _ = getNextValue(heap, stack, params, 5, reject=[MODE_STRING])
+            heap.memory[dest] = heap.sizeof(pointer)
     # Control flow
     elif cmd == OPCODE_IF:
         # IF cond destIfFalse
@@ -572,7 +598,7 @@ while stack[-1].index < len(code):
     elif cmd == OPCODE_HALT:
         break
     else:
-        print("UNKNOWN command! Yikes there bud!")
+        print(f"UNKNOWN command! Yikes there bud! {cmd}")
         exit(1)
 
     stack[-1].index += 1
