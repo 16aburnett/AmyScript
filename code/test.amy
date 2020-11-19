@@ -1,0 +1,42 @@
+
+
+PRINT "Enter your name => "
+INPUT name
+
+PRINT "Hello, "
+PRINT name
+PRINTLN "!"
+
+MALLOC mylist 10
+
+FUNCTION loop list i v
+    SIZEOF size list
+    EQUAL isEnd size i
+    IF isEnd
+        RETURN i
+    ENDIF
+    ASSIGN @list[i] v
+    ADD v v 2
+    ADD i i 1
+    CALL loop list i v
+    RESPONSE i
+    RETURN i
+ENDFUNCTION loop
+
+CALL loop mylist 0 1
+
+FUNCTION printall list i 
+    SIZEOF size list
+    EQUAL isEnd size i
+    IF isEnd 
+        RETURN i
+    ENDIF
+    PRINT @list[i]
+    PRINT " "
+    ADD i i 1
+    CALL printall list i
+    RETURN i
+ENDFUNCTION printall
+
+CALL printall mylist 0
+PRINTLN

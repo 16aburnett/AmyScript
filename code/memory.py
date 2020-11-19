@@ -100,6 +100,15 @@ class Heap:
             # delete header
             self.memory[address] = 0
 
+    def sizeof(self, address):
+        """Returns the payload size for a given pointer
+
+        Pre-condition: pointer must be allocated and not offset 
+        from the start of the block
+        """
+        return self.memory[address-1].payloadSize
+
+
 
 
 def printheap(heap:Heap):
