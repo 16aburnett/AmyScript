@@ -38,5 +38,10 @@ FUNCTION printall list i
     RETURN i
 ENDFUNCTION printall
 
-CALL printall mylist 0
+FUNCTION call func list i 
+    CALL func list i 
+    RETURN i
+ENDFUNCTION call
+
+CALL call printall mylist 0
 PRINTLN
