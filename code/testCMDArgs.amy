@@ -1,0 +1,17 @@
+    stackget interpreter 1
+    stackget filename 2
+    stackget arg3 3
+
+    assign i 0
+    sizeof size arg3
+loop:
+    cmp i size
+    jge endloop
+    print arg3[i]
+    add i i 1
+    jump loop
+endloop:
+
+    println
+
+    halt

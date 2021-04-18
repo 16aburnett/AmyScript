@@ -31,8 +31,8 @@ main:
 
     assign i 0
 while:
-    compare i 13
-    jumpge endwhile
+    cmp i 13
+    jge endwhile
     print msg[i]
     add i i 1
     jump while

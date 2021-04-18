@@ -23,8 +23,8 @@ print ' '
 
 assign i 0
 loop:
-    compare i size
-    jumpge endloop
+    cmp i size
+    jge endloop
     print name[i]
     add i i 1
     jump loop

@@ -13,59 +13,59 @@ stringToInt:
     assign val 0
     assign i 0 
 while01:
-    compare i size
-    jumpge endwhile01
+    cmp i size
+    jge endwhile01
 
     // shift nums
     multiply val val 10
 
-    compare string[i] '1'
-    jumpneq notOne
+    cmp string[i] '1'
+    jneq notOne
     add val val 1 
     jump continue
 notOne:
-    compare string[i] '2'
-    jumpneq notTwo
+    cmp string[i] '2'
+    jneq notTwo
     add val val 2 
     jump continue
 notTwo:
-    compare string[i] '3'
-    jumpneq notThree
+    cmp string[i] '3'
+    jneq notThree
     add val val 3 
     jump continue
 notThree:
-    compare string[i] '4'
-    jumpneq notFour
+    cmp string[i] '4'
+    jneq notFour
     add val val 4 
     jump continue
 notFour:
-    compare string[i] '5'
-    jumpneq notFive
+    cmp string[i] '5'
+    jneq notFive
     add val val 5 
     jump continue
 notFive:
-    compare string[i] '6'
-    jumpneq notSix
+    cmp string[i] '6'
+    jneq notSix
     add val val 6 
     jump continue
 notSix:
-    compare string[i] '7'
-    jumpneq notSeven
+    cmp string[i] '7'
+    jneq notSeven
     add val val 7 
     jump continue
 notSeven:
-    compare string[i] '8'
-    jumpneq notEight
+    cmp string[i] '8'
+    jneq notEight
     add val val 8 
     jump continue
 notEight:
-    compare string[i] '9'
-    jumpneq notNine
+    cmp string[i] '9'
+    jneq notNine
     add val val 9 
     jump continue
 notNine:
-    compare string[i] '0'
-    jumpneq error
+    cmp string[i] '0'
+    jneq error
     add val val 0 
     jump continue
 error:
@@ -91,8 +91,8 @@ printRange:
     assign i 0
 while02:
     // condition
-    compare i N 
-    jumpge endwhile02
+    cmp i N 
+    jge endwhile02
     // body 
     println i
     //update

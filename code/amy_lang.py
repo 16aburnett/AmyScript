@@ -61,14 +61,14 @@ toOpCode = {
     "return"      : OPCODE_RETURN,
     "response"    : OPCODE_RESPONSE,
     "jump"        : OPCODE_JUMP,
-    "jumplt"      : OPCODE_JUMPLT,
-    "jumple"      : OPCODE_JUMPLE,
-    "jumpeq"      : OPCODE_JUMPEQ,
-    "jumpneq"     : OPCODE_JUMPNEQ,
-    "jumpge"      : OPCODE_JUMPGE,
-    "jumpgt"      : OPCODE_JUMPGT,
+    "jlt"         : OPCODE_JUMPLT,
+    "jle"         : OPCODE_JUMPLE,
+    "jeq"         : OPCODE_JUMPEQ,
+    "jneq"        : OPCODE_JUMPNEQ,
+    "jge"         : OPCODE_JUMPGE,
+    "jgt"         : OPCODE_JUMPGT,
     "equal"       : OPCODE_EQUAL,
-    "compare"     : OPCODE_COMPARE,
+    "cmp"         : OPCODE_COMPARE,
     "println"     : OPCODE_PRINTLN,
     "sizeof"      : OPCODE_SIZEOF,
     "and"         : OPCODE_AND,
@@ -88,7 +88,7 @@ MODE_JUMPPOINT = -1
 ##########################################################################
 
 # ensure file was provided 
-if len(sys.argv) != 2:
+if len(sys.argv) < 2:
     print("Please provide a file_name")
     exit()
 
@@ -234,11 +234,16 @@ heap = Heap()
 stack = []
 sys.argv.reverse()
 for arg in sys.argv:
-    stack += [arg]
-stack += [len(sys.argv), {}]
+    # allocate string on heap
+    ptr = heap.malloc(len(arg))
+    # copy string to heap 
+    for i in range(len(arg)):
+        heap.memory[ptr+i] = arg[i]
+    # put ptr on stack 
+    stack += [ptr]
+stack += [len(sys.argv), -1, {}]
 instruction_pointer = 0
 base_pointer = len(stack)-1
-G_BASE_POINTER = 0 
 return_value = 0
 # flag states 
 lessThanFlag = 0
@@ -322,8 +327,8 @@ while instruction_pointer < len(code):
     cmd, *params = code[instruction_pointer] 
 
     # print (f"{code[instruction_pointer]} | {lines[instruction_pointer]}")
-    print (heap.memory)
-    print("\n\n")
+    # print (heap.memory)
+    # print("\n\n")
     # print (stack, end="\n\n\n")
 
     if cmd == OPCODE_ASSIGN:
