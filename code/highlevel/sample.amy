@@ -1,0 +1,34 @@
+// Test for AmyScript
+// By Amy Burnett
+// =======================================================================
+// returns a tuple of the min val and max val of the given values. 
+
+function minmax (a, b)
+{
+    return min(a,b),max(a,b);
+}
+
+// =======================================================================
+
+nums = [20, 1, 42, 64, 19];
+
+// bubbles up the largest number 
+for (i = 0; i < nums.size()-1; i++)
+{
+    nums[i], nums[i+1] = minmax(nums[i], nums[i+1]);
+}
+
+if (nums.size() > 0)
+{
+    print("Nums: ");
+    print(nums);
+    println();
+}
+
+print (x = (y = 10));
+
+x = (10, 7);
+
+print (x[0]);
+
+// =======================================================================

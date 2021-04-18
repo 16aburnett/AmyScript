@@ -1,6 +1,6 @@
 # The Amy Programming Language Interpreter 
 # By Amy Burnett
-# November 5 2020
+# November 30 2020
 ##########################################################################
 # Imports
 
@@ -23,58 +23,67 @@ OPCODE_MULTIPLY    = 5
 OPCODE_DIVIDE      = 6
 OPCODE_MOD         = 7
 OPCODE_PRINT       = 8
-OPCODE_INPUT       = 9
-OPCODE_HALT        = 10
-OPCODE_FUNCTION    = 11
-OPCODE_ENDFUNCTION = 12
-OPCODE_CALL        = 13
-OPCODE_RETURN      = 14
-OPCODE_RESPONSE    = 15
-OPCODE_IF          = 16
-OPCODE_ELIF        = 17
-OPCODE_ELSE        = 18
-OPCODE_ENDIF       = 19
-OPCODE_JUMP        = 20
-OPCODE_EQUAL       = 21
-OPCODE_PRINTLN     = 22
-OPCODE_AND         = 23
-OPCODE_OR          = 24
-OPCODE_NOT         = 25
-OPCODE_SIZEOF      = 26
+OPCODE_PRINTLN     = 9
+OPCODE_INPUT       = 10
+OPCODE_HALT        = 11
+OPCODE_CALL        = 12
+OPCODE_RETURN      = 13
+OPCODE_RESPONSE    = 14
+OPCODE_JUMP        = 15
+OPCODE_JUMPLT      = 16
+OPCODE_JUMPLE      = 17
+OPCODE_JUMPEQ      = 18
+OPCODE_JUMPNEQ     = 19
+OPCODE_JUMPGE      = 20
+OPCODE_JUMPGT      = 21
+OPCODE_EQUAL       = 22
+OPCODE_COMPARE     = 23
+OPCODE_AND         = 24
+OPCODE_OR          = 25
+OPCODE_NOT         = 26
+OPCODE_SIZEOF      = 27
+OPCODE_PUSH        = 28
+OPCODE_POP         = 29
+OPCODE_STACKGET    = 30
 toOpCode = {
-    "ASSIGN"      : OPCODE_ASSIGN,
-    "MALLOC"      : OPCODE_MALLOC,
-    "FREE"        : OPCODE_FREE,
-    "ADD"         : OPCODE_ADD,
-    "SUBTRACT"    : OPCODE_SUBTRACT,
-    "MULTIPLY"    : OPCODE_MULTIPLY,
-    "DIVIDE"      : OPCODE_DIVIDE,
-    "MOD"         : OPCODE_MOD,
-    "PRINT"       : OPCODE_PRINT,
-    "INPUT"       : OPCODE_INPUT,
-    "HALT"        : OPCODE_HALT,
-    "FUNCTION"    : OPCODE_FUNCTION,
-    "ENDFUNCTION" : OPCODE_ENDFUNCTION,
-    "CALL"        : OPCODE_CALL,
-    "RETURN"      : OPCODE_RETURN,
-    "RESPONSE"    : OPCODE_RESPONSE,
-    "IF"          : OPCODE_IF,
-    "ELIF"        : OPCODE_ELIF,
-    "ELSE"        : OPCODE_ELSE,
-    "ENDIF"       : OPCODE_ENDIF,
-    "EQUAL"       : OPCODE_EQUAL,
-    "PRINTLN"     : OPCODE_PRINTLN,
-    "SIZEOF"      : OPCODE_SIZEOF,
-    "AND"         : OPCODE_AND,
-    "OR"          : OPCODE_OR,
-    "NOT"         : OPCODE_NOT
+    "assign"      : OPCODE_ASSIGN,
+    "malloc"      : OPCODE_MALLOC,
+    "free"        : OPCODE_FREE,
+    "add"         : OPCODE_ADD,
+    "subtract"    : OPCODE_SUBTRACT,
+    "multiply"    : OPCODE_MULTIPLY,
+    "divide"      : OPCODE_DIVIDE,
+    "mod"         : OPCODE_MOD,
+    "print"       : OPCODE_PRINT,
+    "input"       : OPCODE_INPUT,
+    "halt"        : OPCODE_HALT,
+    "call"        : OPCODE_CALL,
+    "return"      : OPCODE_RETURN,
+    "response"    : OPCODE_RESPONSE,
+    "jump"        : OPCODE_JUMP,
+    "jumplt"      : OPCODE_JUMPLT,
+    "jumple"      : OPCODE_JUMPLE,
+    "jumpeq"      : OPCODE_JUMPEQ,
+    "jumpneq"     : OPCODE_JUMPNEQ,
+    "jumpge"      : OPCODE_JUMPGE,
+    "jumpgt"      : OPCODE_JUMPGT,
+    "equal"       : OPCODE_EQUAL,
+    "compare"     : OPCODE_COMPARE,
+    "println"     : OPCODE_PRINTLN,
+    "sizeof"      : OPCODE_SIZEOF,
+    "and"         : OPCODE_AND,
+    "or"          : OPCODE_OR,
+    "not"         : OPCODE_NOT,
+    "push"        : OPCODE_PUSH,
+    "pop"         : OPCODE_POP,
+    "stackget"    : OPCODE_STACKGET
 }
 
 # PARAM MODES
 MODE_IMMEDIATE = 0 # value represent data
 MODE_STACK     = 1 # value is a stack address (aka a variable/function)
 MODE_MEMORY    = 2 # value is a heap address 
-MODE_STRING    = 3 # value is a string literal
+MODE_JUMPPOINT = -1
 
 ##########################################################################
 
@@ -107,22 +116,31 @@ for i in range(len(lines)-1, -1, -1):
 # This does not care about scope 
 wordToInt = {}
 wordId = 0
+# stores all the jump points (label, instruction)
+jumpPoints = {}
 code = []
 for line in lines:
     lexer = Lexer(line)
     code_line = []
 
-    # all lines start with a command
-    # convert to opcode
     type, value = lexer.getToken()
-    if type != WORD:
-        print(f"lines should start with a word \n {line}")
+    # jump points
+    if type == JUMPPOINT:
+        # var DNE
+        if value not in wordToInt:
+            wordToInt[value] = wordId
+            wordId += 1
+        jumpPoints[wordToInt[value]] = len(code)
+        code += [[MODE_JUMPPOINT, wordToInt[value], len(code)]]
+        continue
+    elif type != WORD:
+        print(f"lines should start with a word or jump point label \n {line}")
         exit(1)
     # ensure valid command
-    if value not in toOpCode:
+    if value.lower() not in toOpCode:
         print(f"'{value}' is not a command")
         exit(1)
-    code_line += [toOpCode[value]]
+    code_line += [toOpCode[value.lower()]]
 
     # convert the arguments to integers
     while lexer.hasToken():
@@ -133,11 +151,8 @@ for line in lines:
             print(values[0])
             exit()
         # immediate
-        if type == INT or type == FLOAT:
+        if type == INT or type == FLOAT or type == CHAR:
             code_line += [MODE_IMMEDIATE, values[0]]
-        # string literal
-        elif type == STRING:
-            code_line += [MODE_STRING, values[0]]
         # var/func
         elif type == WORD:
             # var DNE
@@ -179,53 +194,6 @@ for line in lines:
     # add line to code list
     code += [code_line]
 
-### Add Control Flow Jumps ###############################################
-
-def addControlFlowJumps(i, awaiting_endif=[]):
-
-    prev_if = i-1
-
-    while (i < len(code)):
-
-        # print(f"[{i}] {code[i]} {lines[i]}")
-
-        if code[i][0] == OPCODE_IF:
-            # print("found if")
-            i = addControlFlowJumps (i+1)
-        elif code[i][0] == OPCODE_ELIF:
-            # print("found elif")
-            # add finishing jump for endif 
-            code.insert(i, [OPCODE_JUMP])
-            lines.insert(i, "JUMP")
-            i += 1
-            # save this elif position to prev if/elif
-            code[prev_if] += [MODE_IMMEDIATE, i]
-            return addControlFlowJumps(i+1, awaiting_endif+[i-1])
-        elif code[i][0] == OPCODE_ELSE:
-            # print("found else")
-            # add finishing jump for endif 
-            code.insert(i, [OPCODE_JUMP])
-            lines.insert(i, "JUMP")
-            i += 1
-            # save this elif position to prev if/elif
-            code[prev_if] += [MODE_IMMEDIATE, i]
-            return addControlFlowJumps(i+1, awaiting_endif+[i-1])
-        elif code[i][0] == OPCODE_ENDIF:
-            # print("found end")
-            # add this position to all awaiting terminal jumps
-            for j in awaiting_endif:
-                code[j] += [MODE_IMMEDIATE, i]
-                lines[j] += " to " + str(i)
-            # save this elif position to prev if/elif/else
-            code[prev_if] += [MODE_IMMEDIATE, i]
-            return i
-        i += 1
-    
-    return i 
-
-addControlFlowJumps(0)
-
-
 ### Print Code ###########################################################
 
 # print("=== Code ========================================================")
@@ -258,27 +226,40 @@ with open(file_name+"i", "w") as outfile:
 ### Set up the stack and heap ############################################
 
 heap = Heap()
-stack = Stack()
-
-# build the record for main
-main = Record(0, "__main__")
-main.variables = {"ARGV" : sys.argv}
-maininstance = main.getInstance()
-stack.push(maininstance)
+# create the stack 
+# starts with the program arguments
+# and variable scope for main 
+# for each stack frame, the base_pointer should point
+# to the variable dictionary 
+stack = []
+sys.argv.reverse()
+for arg in sys.argv:
+    stack += [arg]
+stack += [len(sys.argv), {}]
+instruction_pointer = 0
+base_pointer = len(stack)-1
+G_BASE_POINTER = 0 
+return_value = 0
+# flag states 
+lessThanFlag = 0
+equalFlag = 0
+greaterThanFlag = 0
 
 ### Execute The Code #####################################################
 
 def getVariableValue(stack, var):
 
-    # Ensure variable exists
-    if not stack.hasVariable(var):
+    # Ensure variable exists in the current scope 
+    if var not in stack[base_pointer]:
         print(f"variable referenced before assignment - '{var}'")
         exit(1)
     
-    return stack.getVariable(var)
+    return stack[base_pointer][var]
 
 def getMemAddress(stack, pmode, pointer, omode, offset) -> int:
+    """Gets the absolute memory address including any offset
 
+    """
     # Ensure pointer mode is stack variable
     if pmode != MODE_STACK:
         print("pmode must be stack variable")
@@ -309,8 +290,19 @@ def getNextValue(heap, stack, params, i, reject=[]):
     if params[i] == MODE_MEMORY and MODE_MEMORY not in reject:
         # next 4 nums make up the pointer and offset
         pmode, pointer, omode, offset = params[i+1:i+5]
-        address = getMemAddress(stack, pmode, pointer, omode, offset)
-        return heap.memory[address], i+5
+        address = getVariableValue(stack, pointer)
+        if omode == MODE_STACK:
+            offset = getVariableValue(stack, offset)
+        # heap address must be int
+        if isinstance(address, int):
+            return heap.memory[address+offset], i+5
+        # float is invalid
+        if isinstance(address, float):
+            print("float is not subscriptable")
+            exit(1)
+        # strings and lists
+        else:
+            return address[offset], i+5
     
     # Case 2: Stack variable
     elif params[i] == MODE_STACK and MODE_STACK not in reject:
@@ -320,52 +312,40 @@ def getNextValue(heap, stack, params, i, reject=[]):
     elif params[i] == MODE_IMMEDIATE and MODE_IMMEDIATE not in reject:
         return params[i+1], i+2
 
-    # Case 4: String Literal
-    elif params[i] == MODE_STRING and MODE_STRING not in reject:
-        # break up into char array
-        return params[i+1], i+2
-
-        # # Allocate space on heap for string
-        # string = params[i+1]
-        # string_address = heap.malloc(len(string)+1)
-        # # copy string into memory
-        # for j in range(len(string)):
-        #     heap.memory[string_address+j] = string[j]
-        # # Null terminated 
-        # heap.memory[string_address + len(string)] = "\0"
-        # return string_address, i+2
     # Case 5: Unknown mode
     print("Bad Parameter Mode")
     exit(1)
 
 # evaluate lines
-while stack.getIndex() < len(code):
+while instruction_pointer < len(code):
 
-    # print(f"[{stack[-1].index}] {code[stack[-1].index]} {lines[stack[-1].index]}")
+    cmd, *params = code[instruction_pointer] 
 
-    cmd, *params = code[stack.getIndex()] 
-
+    # print (f"{code[instruction_pointer]} | {lines[instruction_pointer]}")
+    print (heap.memory)
+    print("\n\n")
+    # print (stack, end="\n\n\n")
 
     if cmd == OPCODE_ASSIGN:
         # ASSIGN dest src
-        # Case 1: Memory
+        # Case 1: Dest is Memory
         if params[0] == MODE_MEMORY:
             # next 4 nums make up the pointer and offset
             pmode, pointer, omode, offset = params[1:5]
             address = getMemAddress(stack, pmode, pointer, omode, offset)
             # Assign src to dest 
             heap.memory[address], i = getNextValue(heap, stack, params, 5)
-        # Case 2: Stack variable
+        # Case 2: Dest is Stack variable
         elif params[0] == MODE_STACK:
             # Assign src to dest
-            stack.setVariable(params[1], getNextValue(heap, stack, params, 2)[0])
-        # Case 3: Invalid param type
+            stack[base_pointer][params[1]], i = getNextValue(heap, stack, params, 2)
+        # Case 3: Dest is Invalid param type
         else:
-            print(f"Dest should be memory or stack")
+            print(f"Can only assign a value to a stack variable or memory address")
             exit(1)
     elif cmd == OPCODE_ADD:
         # ADD dest src1 src2
-        # Case 1: Memory
+        # Case 1: Dest is Memory
         if params[0] == MODE_MEMORY:
             # next 4 nums make up the pointer and offset
             pmode, pointer, omode, offset = params[1:5]
@@ -373,12 +353,12 @@ while stack.getIndex() < len(code):
             src1, i = getNextValue(heap, stack, params, 5)
             src2, i = getNextValue(heap, stack, params, i)
             heap.memory[address] = src1 + src2
-        # Case 2: Stack variable
+        # Case 2: Dest is Stack variable
         elif params[0] == MODE_STACK:
             src1, i = getNextValue(heap, stack, params, 2)
             src2, i = getNextValue(heap, stack, params, i)
-            stack.setVariable(params[1], src1 + src2)
-        # Case 3: Invalid param type
+            stack[base_pointer][params[1]] = src1 + src2
+        # Case 3: Dest is Invalid param type
         else:
             print(f"Dest should be memory or stack")
             exit(1)
@@ -396,7 +376,7 @@ while stack.getIndex() < len(code):
         elif params[0] == MODE_STACK:
             src1, i = getNextValue(heap, stack, params, 2)
             src2, i = getNextValue(heap, stack, params, i)
-            stack.setVariable(params[1], src1 - src2)
+            stack[base_pointer][params[1]] = src1 - src2
         # Case 3: Invalid param type
         else:
             print(f"Dest should be memory or stack")
@@ -415,7 +395,7 @@ while stack.getIndex() < len(code):
         elif params[0] == MODE_STACK:
             src1, i = getNextValue(heap, stack, params, 2)
             src2, i = getNextValue(heap, stack, params, i)
-            stack.setVariable(params[1], src1 * src2)
+            stack[base_pointer][params[1]] = src1 * src2
         # Case 3: Invalid param type
         else:
             print(f"Dest should be memory or stack")
@@ -434,7 +414,7 @@ while stack.getIndex() < len(code):
         elif params[0] == MODE_STACK:
             src1, i = getNextValue(heap, stack, params, 2)
             src2, i = getNextValue(heap, stack, params, i)
-            stack.setVariable(params[1], src1 / src2)
+            stack[base_pointer][params[1]] = src1 / src2
         # Case 3: Invalid param type
         else:
             print(f"Dest should be memory or stack")
@@ -453,7 +433,7 @@ while stack.getIndex() < len(code):
         elif params[0] == MODE_STACK:
             src1, i = getNextValue(heap, stack, params, 2)
             src2, i = getNextValue(heap, stack, params, i)
-            stack.setVariable(params[1], src1 % src2)
+            stack[base_pointer][params[1]] = src1 % src2
         # Case 3: Invalid param type
         else:
             print(f"Dest should be memory or stack")
@@ -472,66 +452,27 @@ while stack.getIndex() < len(code):
             print(value)
     elif cmd == OPCODE_INPUT:
         # INPUT dest
+
+        # Read in line 
+        line = input()
+        # put in memory 
+        lineAddress = heap.malloc(len(line))
+        for i in range(len(line)):
+            heap.memory[lineAddress+i] = line[i]
+
         # Case 1: Memory
         if params[0] == MODE_MEMORY:
-            heap.memory[address] = input()
+            # next 4 nums make up the pointer and offset
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            heap.memory[address] = lineAddress
         # Case 2: Stack variable
         elif params[0] == MODE_STACK:
-            stack.setVariable(params[1], input())
+            stack[base_pointer][params[1]] = lineAddress
         # Case 3: Invalid param type
         else:
             print(f"Dest should be memory or stack")
             exit(1)
-    # function definitions
-    elif cmd == OPCODE_FUNCTION:
-
-        if params[0] != MODE_STACK:
-            print(f"function name must be a stack variable")
-            exit(1)
-
-        fname = params[1]
-
-        # build record for new function
-        record = Record(stack.getIndex(), fname)
-
-        # Ensure all parameters are words
-
-        # add parameter labels
-        record.numParams = 0
-        plabels = []
-        i = 2
-        while i < len(params):
-            # ensure param mode is stack var
-            if params[i] != MODE_STACK:
-                print(f"function def must have variable names")
-                exit(1)
-            plabels += [params[i+1]]
-            i += 2
-            record.numParams += 1
-        record.paramlabels = plabels
-
-        # add capture value of surrounding scope
-        # this copies all values seen before the function def
-        # however, if a variable is modified after function def,
-        # then the variable is not updated for the function
-        # **this should be changed to match C++
-        # -> existing vars are updated 
-        for param_name in stack.stack[-1].variables:
-            record.variables[param_name] = stack.getVariable(param_name)
-
-        # add function to this record
-        stack.setVariable(fname, record)
-
-        # skip through definition - dont eval code
-        # print("... Skipping Function Definition ...")
-        while stack.getIndex() < len(code) and (code[stack.getIndex()][0] != OPCODE_ENDFUNCTION or code[stack.getIndex()][2] != fname):
-            stack.incrementIndex()
-        
-        # ensure end of function was found
-        if stack.getIndex() >= len(code):
-            print(f"function '{fname}' does not have a matching 'endfunction'")
-            exit()
-
     # calling functions
     elif cmd == OPCODE_CALL:
 
@@ -541,79 +482,74 @@ while stack.getIndex() < len(code):
 
         fname = params[1]
 
-        # Ensure function exists
-        if not stack.hasVariable(fname):
-            print(f"variable '{fname}' is not defined")  
-            exit(1)
-        
-        # Ensure function is a function
-        if not isinstance(stack.getVariable(fname), Record):
-            print(f"variable '{fname}' is not a function")  
+        # Ensure function exists 
+        if fname not in jumpPoints:
+            print(f"jump point '{fname}' is not defined")  
             exit(1)
 
-        # get function's record
-        record = stack.getVariable(fname)
+        # push return address 
+        stack.append(instruction_pointer)
 
-        # Generate record instance
-        instance = record.getInstance()
-        
-        # Add parameters to record instance
-        j = 2
-        for i in range(len(instance.paramlabels)):
-            
-            # ensure there are enough parameters
-            if j > len(params):
-                print(f"Not enough parameters : function needs {len(instance.paramlabels)} parameters")
-                exit(1)
+        # push previous base pointer
+        stack.append(base_pointer)
 
-            instance.variables[instance.paramlabels[i]], j = getNextValue(heap, stack, params, j)
+        # move stack base pointer to after return address 
+        base_pointer = len(stack)
 
-        # ensure there weren't too many parameters
-        if j < len(params):
-            print(f"Too many parameters : function needs {len(instance.paramlabels)} parameters {j}")
-            exit(1)
+        # add new variable scope 
+        stack.append({})
 
-        # push record instance onto the stack
-        stack.push(instance)
+        # jump to function start
+        instruction_pointer = jumpPoints[fname]
 
     # returning from functions
     elif cmd == OPCODE_RETURN:
         # RETURN value
-        returnedValue, i = getNextValue(heap, stack, params, 0)
-        # pop off the stack 
-        # to return to where the function was called
+        return_value, i = getNextValue(heap, stack, params, 0)
+        # restore instruction pointer
+        instruction_pointer = stack[base_pointer-2]
+        # pop off function's scope 
         stack.pop()
-        # give caller the return value 
-        stack.setReturnedValue(returnedValue)
+        # restore base_pointer
+        base_pointer = stack[base_pointer-1]
+        # pop off base_pointer
+        stack.pop()
+        # pop off return address
+        stack.pop()
+        # top of stack should be at the params now 
     elif cmd == OPCODE_RESPONSE:
         # RESPONSE dest
         # Case 1 : Stack variable
         if params[0] == MODE_STACK:
-            stack.setVariable(params[1], stack.getReturnedValue())
+            stack[base_pointer][params[1]] = return_value
         # Case 2 : Memory address
         elif params[0] == MODE_MEMORY:
-            heap.memory[params[1]] = stack.getReturnedValue()
+            # next 4 nums make up the pointer and offset
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            heap.memory[address] = return_value
         # Case 3 : Bad token
         else:
             print(f"RESPONSE requires a stack variable or a memory address")
             exit(1)
     # allocating data on heap
     elif cmd == OPCODE_MALLOC:
-        # ensure param1 is var or mem address
-        if params[0] != MODE_STACK and params[0] != MODE_MEMORY:
-            print(f"Expected variable or memory address - line {lines[stack[-1].index]}")
-            exit(1)
+        # MALLOC ptrDest size 
         # Pointer Case1 : variable
         if params[0] == MODE_STACK:
-            # variable is allowed to not exist for assigning 
-            size, _ = getNextValue(heap, stack, params, 2, reject=[MODE_STRING])
-            stack.setVariable(params[1], heap.malloc(size))
+            size, _ = getNextValue(heap, stack, params, 2, reject=[])
+            stack[base_pointer][params[1]] = heap.malloc(size)
         # Pointer Case2 : memory
         elif params[0] == MODE_MEMORY:
+            # next 4 nums make up the pointer and offset
             pmode, pointer, omode, offset = params[1:5]
             address = getMemAddress(stack, pmode, pointer, omode, offset)
-            size, _ = getNextValue(heap, stack, params, 5, reject=[MODE_STRING])
+            size, _ = getNextValue(heap, stack, params, 5, reject=[])
             heap.memory[address] = heap.malloc(size)
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
         # printheap(heap)
     # deallocating data on heap
     elif cmd == OPCODE_FREE:
@@ -622,49 +558,100 @@ while stack.getIndex() < len(code):
         # allocate space on heap 
         heap.free(pointer)
     elif cmd == OPCODE_SIZEOF:
-        # OPCODE_SIZEOF dest pointer
+        # SIZEOF dest pointer
         # Case1 : variable
         if params[0] == MODE_STACK:
-            pointer, _ = getNextValue(heap, stack, params, 2, reject=[MODE_STRING])
-            stack.setVariable(params[1], heap.sizeof(pointer))
+            pointer, _ = getNextValue(heap, stack, params, 2)
+            stack[base_pointer][params[1]] = heap.sizeof(pointer)
         # Case2 : memory
         elif params[0] == MODE_MEMORY:
+            # next 4 nums make up the pointer and offset
             pmode, pointer, omode, offset = params[1:5]
-            dest = getMemAddress(stack, pmode, pointer, omode, offset)
-            pointer, _ = getNextValue(heap, stack, params, 5, reject=[MODE_STRING])
-            heap.memory[dest] = heap.sizeof(pointer)
-    # Control flow
-    elif cmd == OPCODE_IF:
-        # IF cond destIfFalse
-        cond, i = getNextValue(heap, stack, params, 0)
-        destIfFalse, i = getNextValue(heap, stack, params, i)
-        # condition is false
-        if cond == 0:
-            # jump to next elif or else
-            stack.setIndex(destIfFalse)
-            continue
-        # if condition passes - just continue execution
-    elif cmd == OPCODE_ELIF:
-        # ELIF cond destIfFalse
-        cond, i = getNextValue(heap, stack, params, 0)
-        destIfFalse, i = getNextValue(heap, stack, params, i)
-        # condition is false
-        if cond == 0:
-            # jump to next elif or else
-            stack.setIndex(destIfFalse)
-            continue
-        # if condition passes - just continue execution
-    elif cmd == OPCODE_ELSE:
-        # ELSE 
-        # if reached - just execute block
-        pass
-    elif cmd == OPCODE_ENDIF:
-        # if reached - just move on 
-        pass
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            pointer, _ = getNextValue(heap, stack, params, 5)
+            heap.memory[address] = heap.sizeof(pointer)
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
+    elif cmd == OPCODE_COMPARE:
+        # COMPARE src1 src2
+        # sets the appropriate comparision flag 
+        src1, i = getNextValue(heap, stack, params, 0)
+        src2, i = getNextValue(heap, stack, params, i)
+        # set flags 
+        lessThanFlag = 1 if src1 < src2 else 0
+        equalFlag = 1 if src1 == src2 else 0
+        greaterThanFlag = 1 if src1 > src2 else 0
     elif cmd == OPCODE_JUMP:
         # JUMP dest
-        dest, _ = getNextValue(heap, stack, params, 0)
-        stack.setIndex(dest)
+        # unconditional jump 
+        # ensure it is a var 
+        if params[0] != MODE_STACK:
+            print("can only jump to a jump point")
+            exit(1)
+        # move to jump point
+        instruction_pointer = jumpPoints[params[1]]
+    elif cmd == OPCODE_JUMPLT:
+        # JUMPLT dest
+        # jump if less than flag is true 
+        # ensure it is a var 
+        if params[0] != MODE_STACK:
+            print("can only jump to a jump point")
+            exit(1)
+        # move to jump point
+        if lessThanFlag == 1:
+            instruction_pointer = jumpPoints[params[1]]
+    elif cmd == OPCODE_JUMPLE:
+        # JUMPLE dest
+        # jump if less than or equal to flags are true 
+        # ensure it is a var
+        if params[0] != MODE_STACK:
+            print("can only jump to a jump point")
+            exit(1)
+        # move to jump point
+        if lessThanFlag == 1 or equalFlag == 1:
+            instruction_pointer = jumpPoints[params[1]]
+    elif cmd == OPCODE_JUMPEQ:
+        # JUMPEQ dest
+        # jump if equal to flag is true 
+        # ensure it is a var
+        if params[0] != MODE_STACK:
+            print("can only jump to a jump point")
+            exit(1)
+        # move to jump point
+        if equalFlag == 1:
+            instruction_pointer = jumpPoints[params[1]]
+    elif cmd == OPCODE_JUMPNEQ:
+        # JUMPNEQ dest
+        # jump if equal to flag is false 
+        # ensure it is a var
+        if params[0] != MODE_STACK:
+            print("can only jump to a jump point")
+            exit(1)
+        # move to jump point
+        if equalFlag == 0:
+            instruction_pointer = jumpPoints[params[1]]
+    elif cmd == OPCODE_JUMPGE:
+        # JUMPGE dest
+        # jump if greater than or equal to flags are true 
+        # ensure it is a var
+        if params[0] != MODE_STACK:
+            print("can only jump to a jump point")
+            exit(1)
+        # move to jump point
+        if equalFlag == 1 or greaterThanFlag == 1:
+            instruction_pointer = jumpPoints[params[1]]
+    elif cmd == OPCODE_JUMPGT:
+        # JUMPGT dest
+        # jump if greater than flag is true 
+        # ensure it is a var
+        if params[0] != MODE_STACK:
+            print("can only jump to a jump point")
+            exit(1)
+        # move to jump point
+        if greaterThanFlag == 1:
+            instruction_pointer = jumpPoints[params[1]]
     elif cmd == OPCODE_EQUAL:
         # EQUAL dest src1 src2 
         # dest = src1 == src2
@@ -673,7 +660,7 @@ while stack.getIndex() < len(code):
             # variable is allowed to not exist for assigning 
             src1, i = getNextValue(heap, stack, params, 2)
             src2, i = getNextValue(heap, stack, params, i)
-            stack.setVariable(params[1], 1 if src1 == src2 else 0)
+            stack[base_pointer][params[1]] = 1 if src1 == src2 else 0
         # Case2 : memory
         elif params[0] == MODE_MEMORY:
             pmode, pointer, omode, offset = params[1:5]
@@ -681,6 +668,10 @@ while stack.getIndex() < len(code):
             src1, i = getNextValue(heap, stack, params, 5)
             src2, i = getNextValue(heap, stack, params, i)
             heap.memory[address] = 1 if src1 == src2 else 0
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
     elif cmd == OPCODE_AND:
         # AND dest src1 src2 
         # dest = src1 && src2
@@ -689,7 +680,7 @@ while stack.getIndex() < len(code):
             # variable is allowed to not exist for assigning 
             src1, i = getNextValue(heap, stack, params, 2)
             src2, i = getNextValue(heap, stack, params, i)
-            stack.setVariable(params[1], 1 if src1 != 0 and src2 != 0 else 0)
+            stack[base_pointer][params[1]] = 1 if src1 != 0 and src2 != 0 else 0
         # Case2 : memory
         elif params[0] == MODE_MEMORY:
             pmode, pointer, omode, offset = params[1:5]
@@ -697,6 +688,10 @@ while stack.getIndex() < len(code):
             src1, i = getNextValue(heap, stack, params, 5)
             src2, i = getNextValue(heap, stack, params, i)
             heap.memory[address] = 1 if src1 != 0 and src2 != 0 else 0
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
     elif cmd == OPCODE_OR:
         # OR dest src1 src2 
         # dest = src1 || src2
@@ -705,7 +700,7 @@ while stack.getIndex() < len(code):
             # variable is allowed to not exist for assigning 
             src1, i = getNextValue(heap, stack, params, 2)
             src2, i = getNextValue(heap, stack, params, i)
-            stack.setVariable(params[1], 1 if src1 != 0 or src2 != 0 else 0)
+            stack[base_pointer][params[1]] = 1 if src1 != 0 or src2 != 0 else 0
         # Case2 : memory
         elif params[0] == MODE_MEMORY:
             pmode, pointer, omode, offset = params[1:5]
@@ -713,27 +708,74 @@ while stack.getIndex() < len(code):
             src1, i = getNextValue(heap, stack, params, 5)
             src2, i = getNextValue(heap, stack, params, i)
             heap.memory[address] = 1 if src1 != 0 or src2 != 0 else 0
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
     elif cmd == OPCODE_NOT:
-        # OR dest src
+        # NOT dest src
         # dest = ~src
         # Case1 : variable
         if params[0] == MODE_STACK:
             # variable is allowed to not exist for assigning 
             src, i = getNextValue(heap, stack, params, 2)
-            stack.setVariable(params[1], 1 if src == 0 else 0)
+            stack[base_pointer][params[1]] = 1 if src == 0 else 0
         # Case2 : memory
         elif params[0] == MODE_MEMORY:
             pmode, pointer, omode, offset = params[1:5]
             address = getMemAddress(stack, pmode, pointer, omode, offset)
             src, i = getNextValue(heap, stack, params, 5)
             heap.memory[address] = 1 if src == 0 else 0
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
+    elif cmd == OPCODE_PUSH:
+        # PUSH src 
+        src, i = getNextValue(heap, stack, params, 0)
+        stack.append(src)
+    elif cmd == OPCODE_POP:
+        # POP dest 
+        # Case1 : variable
+        if params[0] == MODE_STACK:
+            stack[base_pointer][params[1]] = stack[-1]
+            stack.pop()
+        # Case2 : memory
+        elif params[0] == MODE_MEMORY:
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            heap.memory[address] = stack[-1] 
+            stack.pop()
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
+    elif cmd == OPCODE_STACKGET:
+        # STACKGET dest offset 
+        # Case1 : variable
+        if params[0] == MODE_STACK:
+            offset, i = getNextValue(heap, stack, params, 2)
+            stack[base_pointer][params[1]] = stack[base_pointer-2-offset]
+        # Case2 : memory
+        elif params[0] == MODE_MEMORY:
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            offset, i = getNextValue(heap, stack, params, 5)
+            heap.memory[address] = stack[base_pointer+offset]
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
     elif cmd == OPCODE_HALT:
         break
+    #  jump point line
+    elif cmd == MODE_JUMPPOINT:
+        pass
     else:
         print(f"UNKNOWN command! Yikes there bud! {cmd}")
         exit(1)
 
-    stack.incrementIndex()
+    instruction_pointer += 1
 
 
 # printheap(heap)

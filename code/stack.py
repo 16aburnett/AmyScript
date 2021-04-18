@@ -4,6 +4,7 @@
 ##########################################################################
 # Imports
 
+
 ##########################################################################
 
 class RecordInstance:
@@ -55,6 +56,9 @@ class Stack:
 
     def setVariable(self, varname, value):
         self.stack[-1].variables[varname] = value
+
+    def modifyVariable(self, varname, offset, value):
+        self.stack[-1].variables[varname][offset] = value
 
     def pop(self):
         self.stack.pop()

@@ -1,0 +1,33 @@
+
+
+print 'n'
+print 'a'
+print 'm'
+print 'e'
+print ' '
+print '='
+print '>'
+print ' '
+
+input name 
+sizeof size name
+
+println 
+print 'H'
+print 'e'
+print 'l'
+print 'l'
+print 'o'
+print ','
+print ' '
+
+assign i 0
+loop:
+    compare i size
+    jumpge endloop
+    print name[i]
+    add i i 1
+    jump loop
+endloop:
+
+println

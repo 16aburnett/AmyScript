@@ -2,47 +2,42 @@
 // By Amy Burnett
 //========================================================================
 
-// prints a string that is stored on the heap
-// returns the length of the string
-FUNCTION printString string i size
-    // Base case - end of string
-    EQUAL end i size
-    IF end 
-        PRINTLN
-        RETURN i
-    ENDIF 
-    PRINT @string[i] 
-    ADD i i 1
-    CALL printString string i size
-    RESPONSE i
-    RETURN i
-ENDFUNCTION printString
-
-//========================================================================
+    jump main
 
 // Returns a customary phrase stored on the heap
-FUNCTION getCustomaryPhraseFromHeap
-    MALLOC phrase 13
-    ASSIGN @phrase[0] "H"
-    ASSIGN @phrase[1] "e"
-    ASSIGN @phrase[2] "l"
-    ASSIGN @phrase[3] "l"
-    ASSIGN @phrase[4] "o"
-    ASSIGN @phrase[5] ","
-    ASSIGN @phrase[6] " "
-    ASSIGN @phrase[7] "W"
-    ASSIGN @phrase[8] "o"
-    ASSIGN @phrase[9] "r"
-    ASSIGN @phrase[10] "l"
-    ASSIGN @phrase[11] "d"
-    ASSIGN @phrase[12] "!"
-    RETURN phrase
-ENDFUNCTION getCustomaryPhraseFromHeap
+getCustomaryPhraseFromHeap:
+    malloc phrase 13
+    assign phrase[0] 'H' 
+    assign phrase[1] 'e'
+    assign phrase[2] 'l'
+    assign phrase[3] 'l'
+    assign phrase[4] 'o'
+    assign phrase[5] ','
+    assign phrase[6] ' '
+    assign phrase[7] 'W'
+    assign phrase[8] 'o'
+    assign phrase[9] 'r'
+    assign phrase[10] 'l'
+    assign phrase[11] 'd'
+    assign phrase[12] '!'
+    return phrase
 
 //========================================================================
 
-CALL getCustomaryPhraseFromHeap
-// grab the return value of the previous call
-RESPONSE msg 
+main:
+    call getCustomaryPhraseFromHeap
+    // grab the return value of the previous call
+    response msg 
 
-CALL printString msg 0 13
+    assign i 0
+while:
+    compare i 13
+    jumpge endwhile
+    print msg[i]
+    add i i 1
+    jump while
+endwhile:
+
+    println 
+
+    free msg 

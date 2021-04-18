@@ -1,47 +1,118 @@
+// reads in a number from the user and converts it to an int 
+// then outputs 1 to n 
 
+    jump main 
 
-PRINT "Enter your name => "
-INPUT name
+//========================================================================
+// converts string to integer
+// param1 - string pointer
+// param2 - string size 
+stringToInt:
+    stackget string 1
+    stackget size 2
+    assign val 0
+    assign i 0 
+while01:
+    compare i size
+    jumpge endwhile01
 
-PRINT "Hello, "
-PRINT name
-PRINTLN "!"
+    // shift nums
+    multiply val val 10
 
-MALLOC mylist 10
+    compare string[i] '1'
+    jumpneq notOne
+    add val val 1 
+    jump continue
+notOne:
+    compare string[i] '2'
+    jumpneq notTwo
+    add val val 2 
+    jump continue
+notTwo:
+    compare string[i] '3'
+    jumpneq notThree
+    add val val 3 
+    jump continue
+notThree:
+    compare string[i] '4'
+    jumpneq notFour
+    add val val 4 
+    jump continue
+notFour:
+    compare string[i] '5'
+    jumpneq notFive
+    add val val 5 
+    jump continue
+notFive:
+    compare string[i] '6'
+    jumpneq notSix
+    add val val 6 
+    jump continue
+notSix:
+    compare string[i] '7'
+    jumpneq notSeven
+    add val val 7 
+    jump continue
+notSeven:
+    compare string[i] '8'
+    jumpneq notEight
+    add val val 8 
+    jump continue
+notEight:
+    compare string[i] '9'
+    jumpneq notNine
+    add val val 9 
+    jump continue
+notNine:
+    compare string[i] '0'
+    jumpneq error
+    add val val 0 
+    jump continue
+error:
+    print 'e'
+    print 'r'
+    print 'r'
+    print 'o'
+    println 'r'
+    println string[i]
+    halt 
+continue:
+    add i i 1
+    jump while01
+endwhile01:
+    return val 
 
-FUNCTION loop list i v
-    SIZEOF size list
-    EQUAL isEnd size i
-    IF isEnd
-        RETURN i
-    ENDIF
-    ASSIGN @list[i] v
-    ADD v v 2
-    ADD i i 1
-    CALL loop list i v
-    RESPONSE i
-    RETURN i
-ENDFUNCTION loop
+//========================================================================
+// prints values 0 to N - not including N
+// param1 - number
+printRange:
+    stackget N 1
+    // init
+    assign i 0
+while02:
+    // condition
+    compare i N 
+    jumpge endwhile02
+    // body 
+    println i
+    //update
+    add i i 1
+    // repeat
+    jump while02
+endwhile02:
+    return 0
+//========================================================================
 
-CALL loop mylist 0 1
-
-FUNCTION printall list i 
-    SIZEOF size list
-    EQUAL isEnd size i
-    IF isEnd 
-        RETURN i
-    ENDIF
-    PRINT @list[i]
-    PRINT " "
-    ADD i i 1
-    CALL printall list i
-    RETURN i
-ENDFUNCTION printall
-
-FUNCTION call func list i 
-    CALL func list i 
-    RETURN i
-ENDFUNCTION call
-
-CALL call printall mylist 0
-PRINTLN
+main:
+    input string 
+    sizeof size string
+    // pushed in reverse order 
+    push size 
+    push string 
+    call stringToInt
+    response val
+    println val
+    // print 1 to val
+    push val
+    call printRange
+    halt

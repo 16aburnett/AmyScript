@@ -11,9 +11,10 @@ import re
 WORD = 0
 INT = 1
 FLOAT = 2
-STRING = 4
 ERROR = 5
 MEMORY = 7
+CHAR = 8
+JUMPPOINT = 9 
 DELIMITERS = " \t\n"
 
 ##########################################################################
@@ -86,68 +87,62 @@ class Lexer:
             # possibly a word 
             if re.match("[a-zA-Z_]", self.source[self.index]):
                 status, value = self.getWord()
-                # ensure next position is a space - if next exists
-                if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
-                    return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
-                return status, value
-            # memory accessor
-            if self.index < len(self.source) and self.source[self.index] == "@":
-                self.index += 1 
-                # grab the pointer name
-                status, pointer = self.getWord()
-                if status == ERROR:
-                    return status, pointer
-    
-                # ensure there is subscript operator
-                if self.index >= len(self.source) or self.source[self.index] != "[":
-                    return ERROR, f"Expected '[' at index {self.index} for line \n {self.source}"
-                self.index += 1
-                
-                # subscript is var
-                if self.index < len(self.source) and re.match("[a-zA-Z_]", self.source[self.index]):
-                    status, subscript = self.getWord()
-                    # ensure matched word
-                    if status == ERROR:
-                        return ERROR, subscript
-                    # ensure next thing is ]
-                    if self.index >= len(self.source) or self.source[self.index] != "]":
-                        return ERROR, f"Expected ']' at index {self.index} for line \n {self.source}"
+                # skip over whitespace
+                while self.index < len(self.source) and self.source[self.index] in DELIMITERS:
                     self.index += 1
-                    # ensure next is space - if there is next
-                    if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
-                        return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+                # try to match jump point label 
+                if self.index < len(self.source) and self.source[self.index] == ':':
+                    return JUMPPOINT, value 
+                # try to match subscript 
+                if status != ERROR and self.index < len(self.source) and self.source[self.index] == '[':
                     self.index += 1
-                    # return word component
-                    return MEMORY, WORD, pointer, WORD, subscript
-                # subscript is immediate number
-                if self.index < len(self.source) and re.match("[0-9-]", self.source[self.index]):
-                    status, subscript = self.getNumber()
-                    # ensure matched word
-                    if status == ERROR:
-                        return ERROR, subscript
-                    # ensure num is INT
-                    if status != INT:
-                        return ERROR, f"Memory addresses should be integers"
-                    # ensure next thing is ]
-                    if self.index >= len(self.source) or self.source[self.index] != "]":
-                        return ERROR, f"Expected ']' at index {self.index} for line \n {self.source}"
-                    self.index += 1
-                    # ensure next is space - if there is next
-                    if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
-                        return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
-                    self.index += 1
-                    # return word component
-                    return MEMORY, WORD, pointer, INT, subscript
+                    
+                    # subscript is var
+                    if self.index < len(self.source) and re.match("[a-zA-Z_]", self.source[self.index]):
+                        status, subscript = self.getWord()
+                        # ensure matched word
+                        if status == ERROR:
+                            return ERROR, subscript
+                        # ensure next thing is ]
+                        if self.index >= len(self.source) or self.source[self.index] != "]":
+                            return ERROR, f"Expected ']' at index {self.index} for line \n {self.source}"
+                        self.index += 1
+                        # ensure next is space - if there is next
+                        if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
+                            return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+                        self.index += 1
+                        # return word component
+                        return MEMORY, WORD, value, WORD, subscript
+                    # subscript is immediate number
+                    if self.index < len(self.source) and re.match("[0-9-]", self.source[self.index]):
+                        status, subscript = self.getNumber()
+                        # ensure matched word
+                        if status == ERROR:
+                            return ERROR, subscript
+                        # ensure num is INT
+                        if status != INT:
+                            return ERROR, f"Memory addresses should be integers"
+                        # ensure next thing is ]
+                        if self.index >= len(self.source) or self.source[self.index] != "]":
+                            return ERROR, f"Expected ']' at index {self.index} for line \n {self.source}"
+                        self.index += 1
+                        # ensure next is space - if there is next
+                        if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
+                            return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+                        self.index += 1
+                        # return word component
+                        return MEMORY, WORD, value, INT, subscript
 
+                return status, value
             # possibly a number 
             if re.match("[0-9-]", self.source[self.index]):
                 return self.getNumber()
-            
-            # strings
-            if self.source[self.index] == "\"":
+
+            # characters
+            if self.source[self.index] == "\'":
                 token = []
                 self.index += 1
-                while self.index < len(self.source) and self.source[self.index] != "\"":
+                while self.index < len(self.source) and self.source[self.index] != "\'":
                     token += [self.source[self.index]]
                     self.index += 1
                 # no ending quotation marks
@@ -159,7 +154,7 @@ class Lexer:
                 if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
                     return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
                 # string successfully matched
-                return STRING, "".join(token)
+                return CHAR, "".join(token)
 
             self.index += 1
         return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
