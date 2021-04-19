@@ -1,15 +1,426 @@
-# The Amy Programming Language Interpreter 
+# The AmyAssembly Programming Language Interpreter 
 # By Amy Burnett
-# November 30 2020
-##########################################################################
+# April 18 2021
+#=========================================================================
 # Imports
 
 import sys
-from lexer import *
-from memory import Heap
-from memory import printheap
+import re
 
-##########################################################################
+#=========================================================================
+# amy assembly code 
+
+code = """
+// AmyAssembly Programming Language
+// By Amy Burnett
+//========================================================================
+
+// start at main
+    jump main
+
+//========================================================================
+// converts string range to integer
+// param1 - string pointer
+// param2 - starting position to read int from
+// param3 - end position to stop reading 
+stringToInt:
+    stackget string 0
+    stackget start 1
+    stackget end 2
+    assign val 0
+    assign i start
+while00:
+    cmp i end
+    jge endwhile00
+
+    // shift nums
+    multiply val val 10
+
+    cmp string[i] '1'
+    jneq notOne
+    add val val 1 
+    jump continue
+notOne:
+    cmp string[i] '2'
+    jneq notTwo
+    add val val 2 
+    jump continue
+notTwo:
+    cmp string[i] '3'
+    jneq notThree
+    add val val 3 
+    jump continue
+notThree:
+    cmp string[i] '4'
+    jneq notFour
+    add val val 4 
+    jump continue
+notFour:
+    cmp string[i] '5'
+    jneq notFive
+    add val val 5 
+    jump continue
+notFive:
+    cmp string[i] '6'
+    jneq notSix
+    add val val 6 
+    jump continue
+notSix:
+    cmp string[i] '7'
+    jneq notSeven
+    add val val 7 
+    jump continue
+notSeven:
+    cmp string[i] '8'
+    jneq notEight
+    add val val 8 
+    jump continue
+notEight:
+    cmp string[i] '9'
+    jneq notNine
+    add val val 9 
+    jump continue
+notNine:
+    cmp string[i] '0'
+    jneq error
+    add val val 0 
+    jump continue
+error:
+    print 'e'
+    print 'r'
+    print 'r'
+    print 'o'
+    println 'r'
+    println string[i]
+    halt 
+continue:
+    add i i 1
+    jump while00
+endwhile00:
+    return val 
+
+//========================================================================
+
+main:
+    input line
+    // break up line into the two nums
+    assign begin1 0
+    assign end1 0
+while01:
+    cmp line[end1] ' '
+    jeq endwhile01
+
+    add end1 end1 1 
+
+    jump while01
+endwhile01: 
+
+    add begin2 end1 1
+    sizeof end2 line
+
+    push end1
+    push begin1
+    push line
+    call stringToInt
+    response r
+    pop null 
+    pop null
+    pop null
+
+    push end2
+    push begin2
+    push line
+    call stringToInt
+    response s
+    pop null 
+    pop null
+    pop null
+
+
+    multiply r2 2 s
+    subtract r2 r2 r
+
+    println r2 
+
+"""
+
+
+lines = code.split("\n")
+
+
+#=========================================================================
+# LEXER
+
+WORD = 0
+INT = 1
+FLOAT = 2
+ERROR = 5
+MEMORY = 7
+CHAR = 8
+JUMPPOINT = 9 
+DELIMITERS = " \t\n"
+
+#=========================================================================
+
+class CommandComponent:
+    def __init__(self, type, value):
+        self.type = type 
+        self.value = value
+class MemoryComponent(CommandComponent):
+    def __init__(self, ptrType, ptr, offsetType, offset):
+        self.type = MEMORY
+        self.pointerType = ptrType
+        self.pointer = ptr
+        self.offsetType = offsetType
+        self.offset = offset
+class Lexer:
+    def __init__(self, source:str):
+        self.source = source.strip()
+        self.index = 0
+    def getNumber(self):
+        # ensure valid index
+        if self.index >= len(self.source):
+            return ERROR, "No number"
+        # ensure it starts with 0 - 9 or '-' minus 
+        if not re.match("[0-9-]", self.source[self.index]):
+            return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+
+        token = [self.source[self.index]]
+        self.index += 1
+
+        # grab left of decimal
+        while self.index < len(self.source) and re.match("[0-9]", self.source[self.index]):
+            token += [self.source[self.index]]
+            self.index += 1
+        # float
+        if self.index < len(self.source) and self.source[self.index] == ".":
+            token += ["."]
+            self.index += 1
+            # grab right of decimal
+            while self.index < len(self.source) and re.match("[0-9_]", self.source[self.index]):
+                token += [self.source[self.index]]
+                self.index += 1
+            return FLOAT, float("".join(token))
+        # ensure that the only thing captured wasnt '-'
+        if "".join(token) == '-':
+            return ERROR, f"Unexpected '-' for line '{self.source}'"
+        # Success return int
+        return INT, int("".join(token))
+        
+    def getWord(self):
+        # ensure valid index
+        if self.index >= len(self.source):
+            return ERROR, "No word"
+        # ensure first is is alpha 
+        if not re.match("[a-zA-Z_]", self.source[self.index]):
+            return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+        token = [self.source[self.index]]
+        self.index += 1
+        # read alphanumerics
+        while self.index < len(self.source) and re.match("[a-zA-Z0-9_]", self.source[self.index]):
+            token += [self.source[self.index]]
+            self.index += 1
+        
+        # return word component
+        return WORD, "".join(token)
+        
+    def getToken(self) -> CommandComponent:
+        # grab next component
+        while self.index < len(self.source):
+            # possibly a word 
+            if re.match("[a-zA-Z_]", self.source[self.index]):
+                status, value = self.getWord()
+                # skip over whitespace
+                while self.index < len(self.source) and self.source[self.index] in DELIMITERS:
+                    self.index += 1
+                # try to match jump point label 
+                if self.index < len(self.source) and self.source[self.index] == ':':
+                    return JUMPPOINT, value 
+                # try to match subscript 
+                if status != ERROR and self.index < len(self.source) and self.source[self.index] == '[':
+                    self.index += 1
+                    
+                    # subscript is var
+                    if self.index < len(self.source) and re.match("[a-zA-Z_]", self.source[self.index]):
+                        status, subscript = self.getWord()
+                        # ensure matched word
+                        if status == ERROR:
+                            return ERROR, subscript
+                        # ensure next thing is ]
+                        if self.index >= len(self.source) or self.source[self.index] != "]":
+                            return ERROR, f"Expected ']' at index {self.index} for line \n {self.source}"
+                        self.index += 1
+                        # ensure next is space - if there is next
+                        if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
+                            return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+                        self.index += 1
+                        # return word component
+                        return MEMORY, WORD, value, WORD, subscript
+                    # subscript is immediate number
+                    if self.index < len(self.source) and re.match("[0-9-]", self.source[self.index]):
+                        status, subscript = self.getNumber()
+                        # ensure matched word
+                        if status == ERROR:
+                            return ERROR, subscript
+                        # ensure num is INT
+                        if status != INT:
+                            return ERROR, f"Memory addresses should be integers"
+                        # ensure next thing is ]
+                        if self.index >= len(self.source) or self.source[self.index] != "]":
+                            return ERROR, f"Expected ']' at index {self.index} for line \n {self.source}"
+                        self.index += 1
+                        # ensure next is space - if there is next
+                        if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
+                            return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+                        self.index += 1
+                        # return word component
+                        return MEMORY, WORD, value, INT, subscript
+
+                return status, value
+            # possibly a number 
+            if re.match("[0-9-]", self.source[self.index]):
+                return self.getNumber()
+
+            # characters
+            if self.source[self.index] == "\'":
+                token = []
+                self.index += 1
+                while self.index < len(self.source) and self.source[self.index] != "\'":
+                    token += [self.source[self.index]]
+                    self.index += 1
+                # no ending quotation marks
+                if self.index >= len(self.source):
+                    return ERROR, f"Line ended without closing double quotes in {self.source}"
+                # index should be at the ending quotation mark
+                self.index += 1
+                # ensure next position is whitespace or the end
+                if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
+                    return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+                # string successfully matched
+                return CHAR, "".join(token)
+
+            self.index += 1
+        return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+
+    def hasToken(self) -> bool:
+        return self.index < len(self.source)
+
+#=========================================================================
+# HEAP 
+
+class BlockHeader:
+    def __init__(self, prevBlock, payloadSize:int, isAlloc:bool):
+        self.prevBlock = prevBlock
+        self.payloadSize = payloadSize
+        self.isAlloc = isAlloc
+
+class Heap:
+    def __init__(self):
+        initialSize = 12
+        self.memory = [0 for _ in range(initialSize)]
+        # set up first free block
+        # mem[0] is reserved for NULLPTR
+        self.memory[1] = BlockHeader(None, initialSize-2, False)
+
+    def malloc(self, size:int) -> int:
+        """allocates space for given size and returns the pointer to 
+        the starting position"""
+        # Search for sufficient mem block
+        i = 1
+        header = None
+        while i < len(self.memory):
+            # get header
+            header = self.memory[i]
+            # ensure it is free
+            if header.isAlloc:
+                i += header.payloadSize + 1
+                continue
+            # if sufficient 
+            if header.payloadSize == size:
+                # allocate 
+                header.isAlloc = True
+                # return pointer to first payload pos
+                return i + 1
+            # if sufficient
+            if header.payloadSize > size:
+                # split payload
+                secondPayload = header.payloadSize - size - 1
+                secondAddress = i+size+1
+                # modify this payload
+                header.payloadSize = size
+                header.isAlloc = True
+                # if second split has >0 payload
+                # *** removed if because caused error 
+                # if secondPayload > 0:
+                    # create new payload
+                self.memory[secondAddress] = BlockHeader(header, secondPayload, False)
+                # coalesce 
+                self.coallese(secondAddress)
+                # assign second split's next's prev to the second split
+                if secondAddress+secondPayload+1 < len(self.memory):
+                    self.memory[secondAddress+secondPayload+1].prevBlock = self.memory[secondAddress]
+                # ****
+                # return pointer to first payload pos
+                return i + 1
+            i += header.payloadSize + 1
+        # Reachs here if no sufficient free blocks were found
+        # Lets add one
+        self.memory += [BlockHeader(header, size, True)]
+        self.memory += [0 for _ in range(size)]
+        # return pointer to first payload pos
+        return i + 1
+
+    def free(self, address:int):
+        """Frees the block containing the address"""
+        self.memory[address-1].isAlloc = False
+        self.coallese(address-1)
+    
+    def coallese(self, address:int):
+        """Merges the free block at given address with
+        adjacent free blocks"""
+        # combine with free block after
+        nextBlockAddr = address+self.memory[address].payloadSize+1
+        if nextBlockAddr < len(self.memory) and not self.memory[nextBlockAddr].isAlloc:
+            # clear second split
+            temp = self.memory[nextBlockAddr].payloadSize
+            self.memory[nextBlockAddr] = 0
+            # add space to this block
+            # + 1 for the space that used to have the header
+            self.memory[address].payloadSize += temp+1
+            # assign this to the prev of the next header
+            newNextBlockAddr = address+self.memory[address].payloadSize+1
+            if newNextBlockAddr < len(self.memory):
+                self.memory[newNextBlockAddr].prevBlock = self.memory[address]
+        # Combine with free block before
+        if self.memory[address].prevBlock != None and not self.memory[address].prevBlock.isAlloc:
+            # add this space to the prev block payload
+            self.memory[address].prevBlock.payloadSize += 1+self.memory[address].payloadSize
+            # assign this next to the prev
+            # if there is a next
+            if address+self.memory[address].payloadSize+1 < len(self.memory):
+                self.memory[address+self.memory[address].payloadSize+1].prevBlock = self.memory[address].prevBlock
+            # delete header
+            self.memory[address] = 0
+
+    def sizeof(self, address):
+        """Returns the payload size for a given pointer
+
+        Pre-condition: pointer must be allocated and not offset 
+        from the start of the block
+        """
+        return self.memory[address-1].payloadSize
+
+def printheap(heap):
+    for i in range(len(heap.memory)):
+        if isinstance(heap.memory[i], BlockHeader):
+            print(f"{i} {heap.memory[i].payloadSize} {heap.memory[i].isAlloc}")
+            # if heap.memory[i].prevBlock != None:
+            #     print(f"\t{heap.memory[i].prevBlock.payloadSize} {heap.memory[i].prevBlock.isAlloc}")
+        else:
+            print(f"{i} {heap.memory[i]}")
+
+
+#=========================================================================
 # Globals/Constants
 
 # OPCODES
@@ -87,15 +498,15 @@ MODE_JUMPPOINT = -1
 ##########################################################################
 
 # ensure file was provided 
-if len(sys.argv) < 2:
-    print("Please provide a file_name")
-    exit()
+# if len(sys.argv) < 2:
+#     print("Please provide a file_name")
+#     exit()
 
 # read code from file 
-file_name = sys.argv[1]
-lines = []
-with open(file_name, "r") as file:
-    lines = file.readlines()
+# file_name = sys.argv[1]
+# lines = []
+# with open(file_name, "r") as file:
+#     lines = file.readlines()
 
 # remove any comments and empty lines
 for i in range(len(lines)-1, -1, -1):
@@ -207,20 +618,20 @@ def padzeros(i, maxdigits):
         stri = "".join(["0",stri])
     return stri
 
-with open(file_name+"c", "w") as outfile:
-    maxdigits = len(str(len(code)))
-    for i in range(len(code)):
-        outfile.write(f"{padzeros(i, maxdigits)} {code[i]} {lines[i]}\n")
+# with open(file_name+"c", "w") as outfile:
+#     maxdigits = len(str(len(code)))
+#     for i in range(len(code)):
+#         outfile.write(f"{padzeros(i, maxdigits)} {code[i]} {lines[i]}\n")
 
-with open(file_name+"i", "w") as outfile:
-    for i in range(len(code)):
-        outfile.write(f"{code[i][0]}")
-        for j in range(1, len(code[i])):
-            if isinstance(code[i][j], str):
-                outfile.write(f", \"{code[i][j]}\"")
-            else:
-                outfile.write(f", {code[i][j]}")
-        outfile.write("\n")
+# with open(file_name+"i", "w") as outfile:
+#     for i in range(len(code)):
+#         outfile.write(f"{code[i][0]}")
+#         for j in range(1, len(code[i])):
+#             if isinstance(code[i][j], str):
+#                 outfile.write(f", \"{code[i][j]}\"")
+#             else:
+#                 outfile.write(f", {code[i][j]}")
+#         outfile.write("\n")
 
 ### Set up the stack and heap ############################################
 
