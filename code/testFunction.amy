@@ -3,8 +3,8 @@
     jump main
 
 sum:
-    stackget param1 1
-    stackget param2 2 
+    stackget param1 0
+    stackget param2 1 
     print param1
     print ' + '
     print param2

@@ -8,8 +8,8 @@
 // param1 - string pointer
 // param2 - string size 
 stringToInt:
-    stackget string 1
-    stackget size 2
+    stackget string 0
+    stackget size 1
     assign val 0
     assign i 0 
 while01:
@@ -86,7 +86,7 @@ endwhile01:
 // prints values 0 to N - not including N
 // param1 - number
 printRange:
-    stackget N 1
+    stackget N 0
     // init
     assign i 0
 while02:

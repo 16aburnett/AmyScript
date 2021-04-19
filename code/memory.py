@@ -50,14 +50,16 @@ class Heap:
                 header.payloadSize = size
                 header.isAlloc = True
                 # if second split has >0 payload
-                if secondPayload > 0:
+                # *** removed if because caused error 
+                # if secondPayload > 0:
                     # create new payload
-                    self.memory[secondAddress] = BlockHeader(header, secondPayload, False)
-                    # coalesce 
-                    self.coallese(secondAddress)
-                    # assign second split's next's prev to the second split
-                    if secondAddress+secondPayload+1 < len(self.memory):
-                        self.memory[secondAddress+secondPayload+1].prevBlock = self.memory[secondAddress]
+                self.memory[secondAddress] = BlockHeader(header, secondPayload, False)
+                # coalesce 
+                self.coallese(secondAddress)
+                # assign second split's next's prev to the second split
+                if secondAddress+secondPayload+1 < len(self.memory):
+                    self.memory[secondAddress+secondPayload+1].prevBlock = self.memory[secondAddress]
+                # ****
                 # return pointer to first payload pos
                 return i + 1
             i += header.payloadSize + 1

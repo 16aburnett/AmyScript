@@ -241,7 +241,7 @@ for arg in sys.argv:
         heap.memory[ptr+i] = arg[i]
     # put ptr on stack 
     stack += [ptr]
-stack += [len(sys.argv), -1, {}]
+stack += [len(sys.argv), -1, -1, {}]
 instruction_pointer = 0
 base_pointer = len(stack)-1
 return_value = 0
@@ -760,13 +760,23 @@ while instruction_pointer < len(code):
         # Case1 : variable
         if params[0] == MODE_STACK:
             offset, i = getNextValue(heap, stack, params, 2)
-            stack[base_pointer][params[1]] = stack[base_pointer-2-offset]
+            # -3 initially because
+            # first argument <--- base pointer - 3
+            # return address <--- base pointer - 2
+            # old base pointer <- base pointer - 1
+            # variables <-------- base pointer
+            stack[base_pointer][params[1]] = stack[base_pointer-3-offset]
         # Case2 : memory
         elif params[0] == MODE_MEMORY:
             pmode, pointer, omode, offset = params[1:5]
             address = getMemAddress(stack, pmode, pointer, omode, offset)
             offset, i = getNextValue(heap, stack, params, 5)
-            heap.memory[address] = stack[base_pointer+offset]
+            # -3 initially because
+            # first argument <--- base pointer - 3
+            # return address <--- base pointer - 2
+            # old base pointer <- base pointer - 1
+            # variables <-------- base pointer
+            heap.memory[address] = stack[base_pointer-3-offset]
         # Case 3: Invalid param type
         else:
             print(f"Dest should be memory or stack")
