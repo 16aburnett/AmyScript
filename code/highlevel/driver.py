@@ -7,28 +7,27 @@ import sys
 
 import lexer
 from parser import Parser
+from visitor import *
 
 # ========================================================================
 
-statements = "".join(sys.stdin.readlines())
+# determine what file to read from
+file = sys.stdin
+if (len(sys.argv) == 2):
+    file = open(sys.argv[1])
+
+statements = "".join(file.readlines())
 
 # tokenize the input 
 tokens = lexer.tokenize(statements)
 
 # parse the syntax 
-parser = Parser(tokens)
-parser.doDebug = False
+parser = Parser(tokens, False)
 ast = parser.parse()
 
-def treeprint(tree, spaces):
-    for i in range(spaces):
-        print("| ",end="")
-    print(tree.name, end=" -> ") 
-    for child in tree.children:
-        print(child.name,end=" ")
-    print("")
-    for child in tree.children:
-        treeprint(child, spaces+1)
+visitor = PrintVisitor ()
+visitor.visitProgramNode (ast)
 
+output = "".join(visitor.outputstrings)
 
-treeprint(ast, 0)
+print (output)

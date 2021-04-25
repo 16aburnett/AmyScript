@@ -792,7 +792,7 @@ while instruction_pointer < len(code):
     instruction_pointer += 1
 
 
-# printheap(heap)
+printheap(heap)
 
 # print("*** End of program ***")
 

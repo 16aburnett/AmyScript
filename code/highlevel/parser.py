@@ -3,6 +3,7 @@
 # April 10 2021
 # ========================================================================
 
+from ast import *
 
 # ========================================================================
 
@@ -14,19 +15,21 @@ class Node:
 
 class Parser:
 
-    def __init__(self, tokens):
+    def __init__(self, tokens, doDebug=False):
         self.tokens = tokens
         self.currentToken = 0
-        self.doDebug = False
+        self.doDebug = doDebug
         self.level = 0
 
-    # <start> -> <code> { <code> }
+    # <start> -> { <codeunit> }
     def parse(self):
-        tree = Node("source")
-        while self.currentToken < len(self.tokens):
-            tree.children += [self.codeunit ()]
-        print ("Valid!")
-        return tree
+
+        codeunits = [] 
+        
+        while self.currentToken < len(self.tokens) and self.tokens[self.currentToken].type != "END_OF_FILE":
+            codeunits += [self.codeunit ()]
+        
+        return ProgramNode(codeunits)
 
     def match(self, function, expectedToken, additional=""):
         if (self.tokens[self.currentToken].type == expectedToken):
@@ -74,38 +77,24 @@ class Parser:
 
     # Generic syntax start state 
     # <codeunit> -> <function>
-    #        -> <statement>
-    #        -> <codeblock>
-    #        -> <forloop>
-    #        -> <whileloop>
-    #        -> <conditional>
+    #            -> <class>
+    #            -> <namespace>
+    #            -> <statement>
     def codeunit (self):
         self.enter ("codeunit")
 
-        tree = Node("codeunit")
+        node = None
 
         # <codeunit> -> <function>
         if (self.tokens[self.currentToken].type == 'FUNCTION'):
-            tree.children += [self.function ()]
-        # <codeunit> -> <codeblock>
-        elif (self.tokens[self.currentToken].type == "LBRACE"):
-            tree.children += [self.codeblock ()]
-        # <codeunit> -> <forloop>
-        elif (self.tokens[self.currentToken].type == "FOR"):
-            tree.children += [self.forloop ()]
-        # <codeunit> -> <whileloop>
-        elif (self.tokens[self.currentToken].type == "WHILE"):
-            tree.children += [self.whileloop ()]
-        # <codeunit> -> <condition>
-        elif (self.tokens[self.currentToken].type == "IF"):
-            tree.children += [self.conditional ()]
-        # <codeunit> -> <statement> 
+            node = self.function ()
+        # <codeunit> -> <statement>
         else:
-            tree.children += [self.statement ()]
-
+            node = self.statement ()
+        
         self.leave ("codeunit")
 
-        return tree
+        return node
 
     # ====================================================================
     # function declaration
@@ -114,18 +103,18 @@ class Parser:
     def function (self):
         self.enter ("function")
 
-        tree = Node("function")
-
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
         self.match ("function", "FUNCTION")
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+        
+        id = self.tokens[self.currentToken].lexeme
         self.match ("function", "IDENTIFIER")
-        tree.children += [self.paramlist()]
-        tree.children += [self.codeblock()]
+        
+        params = self.paramlist()
+
+        body = self.codeblock()
 
         self.leave ("function")
 
-        return tree
+        return FunctionNode (id, params, body)
 
     # ====================================================================
     # parameter list for a function declaration
@@ -134,142 +123,273 @@ class Parser:
     def paramlist (self): 
         self.enter ("paramlist")
 
-        tree = Node("paramlist")
+        params = []
 
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
         self.match ("paramlist", "LPAREN")
 
         if self.tokens[self.currentToken].type == "IDENTIFIER":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+
+            id = self.tokens[self.currentToken].lexeme
             self.match ("paramlist", "IDENTIFIER")
+            params += [ParameterNode (id)]
 
             while self.tokens[self.currentToken].type == "COMMA":
-                tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
                 self.match ("paramlist", "COMMA")
-                tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-                self.match ("paramlist", "IDENTIFIER")
 
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+                id = self.tokens[self.currentToken].lexeme
+                self.match ("paramlist", "IDENTIFIER")
+                params += [ParameterNode (id)]
+
         self.match ("paramlist", "RPAREN")
 
         self.leave ("paramlist")
 
-        return tree
+        return params
 
     # ====================================================================
-    # codeblock 
-    # <codeblock> -> '{' { <code> } '}'
-
-    def codeblock (self):
-        self.enter ("codeblock")
-
-        tree = Node("codeblock")
-
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("codeblock", "LBRACE")
-        while self.tokens[self.currentToken].type != "RBRACE":
-            tree.children += [self.codeunit ()]
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("codeblock", "RBRACE")
-
-        self.leave ("codeblock")
-
-        return tree
-
-    # ====================================================================
-    # for loop 
-    # <forloop> -> for ( <expr> ; <expr> ; <expr> ) <codeblock>
-
-    def forloop (self):
-        self.enter ("forloop")
-
-        tree = Node("forloop")
-
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("forloop", "FOR")
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("forloop", "LPAREN")
-        tree.children += [self.expression ()]
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("forloop", "SEMI")
-        tree.children += [self.expression ()]
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("forloop", "SEMI")
-        tree.children += [self.expression ()]
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("forloop", "RPAREN")
-        tree.children += [self.codeblock ()]
-
-        self.leave ("forloop")
-
-        return tree
-
-    # ====================================================================
-    # while loop 
-    # <whileloop> -> while ( <expr> ) <codeblock>
-
-    def whileloop (self):
-        self.enter ("forloop")
-
-        tree = Node("whileloop")
-
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("forloop", "FOR")
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("forloop", "LPAREN")
-        tree.children += [self.expression ()]
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("forloop", "RPAREN")
-        tree.children += [self.codeblock ()]
-
-        self.leave ("forloop")
-
-        return tree
-
-    # ====================================================================
-    # if statement 
-    # <conditional> -> if ( <expr> ) <codeblock>
-
-    def conditional (self):
-        self.enter ("conditional")
-
-        tree = Node("conditional")
-
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("conditional", "IF")
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("conditional", "LPAREN")
-        tree.children += [self.expression ()]
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("conditional", "RPAREN")
-        tree.children += [self.codeblock ()]
-
-        self.leave ("conditional")
-
-        return tree
-
-    # ====================================================================
-    # statement
-    # <statement> -> <expression> ; 
-    #             -> return <expression> ;
+    # statement 
+    # <statement> -> <codeblock>
+    #             -> <forloop>
+    #             -> <whileloop>
+    #             -> <condition>
+    #             -> <returnStatement>
+    #             -> <continueStatement>
+    #             -> <breakStatement>
+    #             -> <expressionStatement>
 
     def statement (self):
         self.enter ("statement")
 
-        tree = Node("statement")
+        node = None
 
-        if self.tokens[self.currentToken].type == "RETURN":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-            self.match ("statement", "RETURN")
-        tree.children += [self.expression ()]
-        # could give error message here saying
-        # "hey fricker, you missed a semi"
-        tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-        self.match ("statement", "SEMI", "You should add a semicolon")
+        # <statement> -> <codeblock>
+        if (self.tokens[self.currentToken].type == "LBRACE"):
+            node = self.codeblock ()
+        # <statement> -> <forloop>
+        elif (self.tokens[self.currentToken].type == "FOR"):
+            node = self.forloop ()
+        # <statement> -> <whileloop>
+        elif (self.tokens[self.currentToken].type == "WHILE"):
+            node = self.whileloop ()
+        # <statement> -> <condition>
+        elif (self.tokens[self.currentToken].type == "IF"):
+            node = self.conditional ()
+        # <statement> -> <returnStatement>
+        elif (self.tokens[self.currentToken].type == "RETURN"):
+            node = self.returnStatement ()
+        # <statement> -> <continueStatement>
+        elif (self.tokens[self.currentToken].type == "CONTINUE"):
+            node = self.continueStatement ()
+        # <statement> -> <breakStatement>
+        elif (self.tokens[self.currentToken].type == "BREAK"):
+            node = self.breakStatement ()
+        # <statement> -> <expressionStatement> 
+        else:
+            node = self.expressionStatement ()
 
         self.leave ("statement")
 
-        return tree
+        return node
+
+    # ====================================================================
+    # codeblock 
+    # <codeblock> -> '{' { <codeunit> } '}'
+
+    def codeblock (self):
+        self.enter ("codeblock")
+
+        codeunits = []
+
+        self.match ("codeblock", "LBRACE")
+        
+        while self.tokens[self.currentToken].type != "RBRACE":
+            codeunits += [self.codeunit ()]
+        
+        self.match ("codeblock", "RBRACE")
+
+        self.leave ("codeblock")
+
+        return CodeBlockNode (codeunits)
+
+    # ====================================================================
+    # for loop 
+    # <forloop> -> for ( <expr> ; <expr> ; <expr> ) <statement>
+
+    def forloop (self):
+        self.enter ("forloop")
+
+        self.match ("forloop", "FOR")
+        self.match ("forloop", "LPAREN")
+        init = self.expression ()
+        self.match ("forloop", "SEMI")
+        cond = self.expression ()
+        self.match ("forloop", "SEMI")
+        update = self.expression ()
+        self.match ("forloop", "RPAREN")
+        body = self.statement ()
+
+        self.leave ("forloop")
+
+        return ForStatementNode (init, cond, update, body)
+
+    # ====================================================================
+    # while loop 
+    # <whileloop> -> while ( <expr> ) <statement>
+
+    def whileloop (self):
+        self.enter ("whileloop")
+
+        self.match ("whileloop", "WHILE")
+        self.match ("whileloop", "LPAREN")
+        cond = self.expression ()
+        self.match ("whileloop", "RPAREN")
+        body = self.statement ()
+
+        self.leave ("whileloop")
+
+        return WhileStatementNode (cond, body)
+
+    # ====================================================================
+    # if statement 
+    # <conditional> -> if ( <expr> ) <statement> { <elif> } [ <else> ]
+
+    def conditional (self):
+        self.enter ("conditional")
+
+        self.match ("conditional", "IF")
+        
+        self.match ("conditional", "LPAREN")
+
+        cond = self.expression ()
+        
+        self.match ("conditional", "RPAREN")
+
+        body = self.statement ()
+
+        # match 0 or more elifs 
+        elifs = []
+        while (self.tokens[self.currentToken].type == "ELIF"):
+            elifs += [self.elifStatement ()]
+        
+        # match 0 or 1 else
+        elseStmt = None
+        if (self.tokens[self.currentToken].type == "ELSE"):
+            elseStmt = self.elseStatement ()
+
+        self.leave ("conditional")
+
+        return IfStatementNode (cond, body, elifs, elseStmt)
+
+    # ====================================================================
+    # elif statement 
+    # <elifStatement> -> ELIF ( <expr> ) <statement>
+
+    def elifStatement (self):
+        self.enter ("elifStatement")
+
+        self.match ("elifStatement", "ELIF")
+        self.match ("elifStatement", "LPAREN")
+
+        cond = self.expression ()
+
+        self.match ("elifStatement", "RPAREN")
+
+        body = self.statement ()
+
+        self.leave ("elifStatement")
+
+        return ElifStatementNode (cond, body)
+
+    # ====================================================================
+    # else statement 
+    # <elseStatement> -> ELSE <statement>
+
+    def elseStatement (self):
+        self.enter ("elseStatement")
+
+        self.match ("elseStatement", "ELSE")
+
+        body = self.statement ()
+
+        self.leave ("elseStatement")
+
+        return ElseStatementNode (body)
+
+    # ====================================================================
+    # expressionStatement
+    # <expressionStatement> -> [ <expression> ] ; 
+
+    def expressionStatement (self):
+        self.enter ("expressionStatement")
+
+        # optionally an expression
+        expr = None
+        if (self.tokens[self.currentToken].type != "SEMI"):
+            expr = self.expression ()
+
+        # could give error message here saying
+        # "hey fricker, you missed a semi"
+        self.match ("expressionStatement", "SEMI", "You should add a semicolon")
+
+        self.leave ("expressionStatement")
+
+        return ExpressionStatementNode (expr)
+
+    # ====================================================================
+    # return statement
+    # <returnStatement> -> RETURN [ <expression> ] ; 
+
+    def returnStatement (self):
+        self.enter ("returnStatement")
+
+        self.match ("returnStatement", "RETURN")
+
+        # optionally an expression
+        expr = None
+        if (self.tokens[self.currentToken].type != "SEMI"):
+            expr = self.expression ()
+
+        # could give error message here saying
+        # "hey fricker, you missed a semi"
+        self.match ("returnStatement", "SEMI", "You should add a semicolon")
+
+        self.leave ("returnStatement")
+
+        return ReturnStatementNode (expr)
+
+    # ====================================================================
+    # break statement
+    # <breakStatement> -> BREAK; 
+
+    def breakStatement (self):
+        self.enter ("breakStatement")
+
+        self.match ("breakStatement", "BREAK")
+
+        # could give error message here saying
+        # "hey fricker, you missed a semi"
+        self.match ("breakStatement", "SEMI", "You should add a semicolon")
+
+        self.leave ("breakStatement")
+
+        return BreakStatementNode ()
+
+    # ====================================================================
+    # continue statement
+    # <continueStatement> -> CONTINUE; 
+
+    def continueStatement (self):
+        self.enter ("continueStatement")
+
+        self.match ("continueStatement", "CONTINUE")
+
+        # could give error message here saying
+        # "hey fricker, you missed a semi"
+        self.match ("continueStatement", "SEMI", "You should add a semicolon")
+
+        self.leave ("continueStatement")
+
+        return ContinueStatementNode ()
 
     # ====================================================================
     # expression
@@ -277,14 +397,12 @@ class Parser:
 
     def expression (self):
         self.enter ("expression")
-
-        tree = Node("expression")
         
-        tree.children += [self.tuple ()]
+        node = self.tuple ()
 
         self.leave ("expression")
 
-        return tree
+        return node
 
     # ====================================================================
     # tuple 
@@ -293,17 +411,17 @@ class Parser:
     def tuple (self):
         self.enter ("tuple")
 
-        tree = Node("tuple")
+        lhs = self.assignexpr ()
 
-        tree.children += [self.assignexpr ()]
         while (self.tokens[self.currentToken].type == "COMMA"):
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
             self.match ("tuple", "COMMA")
-            tree.children += [self.assignexpr ()]
+            rhs = self.assignexpr ()
+
+            lhs = TupleExpressionNode (lhs, rhs)
 
         self.leave ("tuple")
 
-        return tree
+        return lhs
 
     # ====================================================================
     # assignment expressions 
@@ -317,17 +435,17 @@ class Parser:
     def assignexpr (self):
         self.enter ("assignexpr")
 
-        tree = Node("assignexpr")
+        lhs = self.logicalOR ()
 
-        tree.children += [self.logicalOR ()]
         if self.tokens[self.currentToken].type == "ASSIGN":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
             self.match ("assignexpr", "ASSIGN")
-            tree.children += [self.logicalOR ()]
+            rhs = self.logicalOR ()
+
+            lhs = AssignExpressionNode (lhs, "=", rhs)
 
         self.leave ("assignexpr")
 
-        return tree
+        return lhs
 
     # ====================================================================
     # logical OR 
@@ -336,17 +454,17 @@ class Parser:
     def logicalOR (self):
         self.enter ("logicalOR")
 
-        tree = Node("logicalOR")
+        lhs = self.logicalAND ()
 
-        tree.children += [self.logicalAND ()]
         while self.tokens[self.currentToken].type == "LOR":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
             self.match ("logicalOR", "LOR")
-            tree.children += [self.logicalAND ()]
+            rhs = self.logicalAND ()
+
+            lhs = LogicalOrExpressionNode (lhs, rhs)
 
         self.leave ("logicalOR")
 
-        return tree
+        return lhs
 
     # ====================================================================
     # logical AND
@@ -355,17 +473,17 @@ class Parser:
     def logicalAND (self):
         self.enter ("logicalAND")
 
-        tree = Node("logicalAND")
+        lhs = self.equalop ()
 
-        tree.children += [self.equalop ()]
         while self.tokens[self.currentToken].type == "LAND":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
             self.match ("logicalOR", "LAND")
-            tree.children += [self.equalop ()]
+            rhs = self.equalop ()
+
+            lhs = LogicalAndExpressionNode (lhs, rhs)
 
         self.leave ("logicalAND")
 
-        return tree
+        return lhs
 
     # ====================================================================
     # equal operator
@@ -374,22 +492,24 @@ class Parser:
     def equalop (self):
         self.enter ("equalop")
 
-        tree = Node("equalop")
+        lhs = self.inequalop ()
 
-        tree.children += [self.inequalop ()]
         while self.tokens[self.currentToken].type == "EQ" \
             or self.tokens[self.currentToken].type == "NE": 
+            op = ""
             if self.tokens[self.currentToken].type == "EQ":
-                tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+                op = "=="
                 self.match ("equalop", "EQ")
             else:
-                tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+                op = "!="
                 self.match ("equalop", "NE")
-            tree.children += [self.inequalop ()]
+            rhs = self.inequalop ()
+
+            lhs = EqualityExpressionNode (lhs, op, rhs)
 
         self.leave ("equalop")
 
-        return tree
+        return lhs
 
     # ====================================================================
     # inequal operator
@@ -398,20 +518,21 @@ class Parser:
     def inequalop (self):
         self.enter ("inequalop")
 
-        tree = Node("inequalop")
+        lhs = self.addsub ()
 
-        tree.children += [self.addsub ()]
         while self.tokens[self.currentToken].type == "LT"   \
             or self.tokens[self.currentToken].type == "LTE" \
             or self.tokens[self.currentToken].type == "GT"  \
             or self.tokens[self.currentToken].type == "GTE":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+            op = self.tokens[self.currentToken].lexeme
             self.match ("inequalop", self.tokens[self.currentToken].type)
-            tree.children += [self.addsub ()]
+            rhs = self.addsub ()
+
+            lhs = InequalityExpressionNode (lhs, op, rhs)
 
         self.leave ("inequalop")
 
-        return tree
+        return lhs
 
     # ====================================================================
     # addition and subtraction 
@@ -420,18 +541,20 @@ class Parser:
     def addsub (self):
         self.enter ("addsub")
 
-        tree = Node("addsub")
+        lhs = self.term ()
 
-        tree.children += [self.term ()]
         while  self.tokens[self.currentToken].type == "PLUS"  \
             or self.tokens[self.currentToken].type == "MINUS":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+
+            op = self.tokens[self.currentToken].lexeme
             self.match ("addsub", self.tokens[self.currentToken].type)
-            tree.children += [self.term ()]
+            rhs = self.term ()
+
+            lhs = AdditiveExpressionNode (lhs, op, rhs)
 
         self.leave ("addsub")
 
-        return tree
+        return lhs
 
     # ====================================================================
     # multiplication / division / remainder (mod)
@@ -440,19 +563,21 @@ class Parser:
     def term (self):
         self.enter ("term")
 
-        tree = Node("term")
+        lhs = self.unaryleft ()
 
-        tree.children += [self.unaryleft ()]
         while self.tokens[self.currentToken].type == "TIMES"   \
             or self.tokens[self.currentToken].type == "DIVIDE" \
             or self.tokens[self.currentToken].type == "MOD":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+
+            op = self.tokens[self.currentToken].lexeme
             self.match ("term", self.tokens[self.currentToken].type)
-            tree.children += [self.unaryleft ()]
+            rhs = self.unaryleft ()
+
+            lhs = MultiplicativeExpressionNode (lhs, op, rhs)
 
         self.leave ("term")
 
-        return tree
+        return lhs 
 
     # ====================================================================
     # unary left operators
@@ -461,131 +586,134 @@ class Parser:
     def unaryleft (self):
         self.enter ("unaryleft")
 
-        tree = Node("unaryleft")
-
+        op = None
         if     self.tokens[self.currentToken].type == "INCR"  \
             or self.tokens[self.currentToken].type == "DECR"  \
             or self.tokens[self.currentToken].type == "PLUS"  \
             or self.tokens[self.currentToken].type == "MINUS" \
             or self.tokens[self.currentToken].type == "LNOT"  \
             or self.tokens[self.currentToken].type == "BNOT":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+            op = self.tokens[self.currentToken].lexeme
             self.match ("unaryleft", self.tokens[self.currentToken].type)
-        tree.children += [self.unaryright ()]
+
+        rhs = self.unaryright ()
 
         self.leave ("unaryleft")
 
-        return tree
+        if (op != None):
+            return UnaryLeftExpressionNode (op, rhs)
+        return rhs
 
     # ====================================================================
-    # unary right operators / funcall / subscript / member accessor 
-    # <unaryright> -> <factor> [ ( ++ | -- ) ]
-    #              -> <factor> [ '(' [ <expr> ] ')' ]
-    #              -> <factor> [ '[' [ <expr> ] ']' ]
-    #              -> <factor> [ . <member> ]
+    # unary right operators / funcall / subscript
+    # <unaryright> -> <member> [ ( ++ | -- ) ]
+    #              -> <member> [ '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' ]
+    #              -> <member> [ '[' [ <expression> ] ']' ]
 
     def unaryright (self):
         self.enter ("unaryright")
-
-        tree = Node("unaryright")
         
-        tree.children += [self.factor ()]
+        lhs = self.member ()
 
-        # <unaryright> -> <factor> [ ++ ]
+        # <unaryright> -> <member> [ ++ ]
         if self.tokens[self.currentToken].type == "INCR":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
             self.match ("unaryright", "INCR")
-        # <unaryright> -> <factor> [ -- ]
+            lhs = PostIncrementExpressionNode (lhs)
+        # <unaryright> -> <member> [ -- ]
         elif self.tokens[self.currentToken].type == "DECR":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
             self.match ("unaryright", "DECR")
-        # <unaryright> -> <factor> [ '(' <expr> ')' ]
+            lhs = PostDecrementExpressionNode (lhs)
+        # function call 
+        # <unaryright> -> <member> [ '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' ]
         elif self.tokens[self.currentToken].type == "LPAREN":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
             self.match ("unaryright", "LPAREN")
+            args = []
+            # optional arguments 
             if self.tokens[self.currentToken].type != "RPAREN":
-                tree.children += [self.expression ()]
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+                args += [self.assignexpr ()]
+                # 0 or more additional arguments 
+                while self.tokens[self.currentToken].type == "COMMA":
+                    self.match ("unaryright", "COMMA")
+                    args += [self.assignexpr ()]
             self.match ("unaryright", "RPAREN")
-        # <unaryright> -> <factor> [ '[' <expr> ']' ]
+            lhs = FunctionCallExpressionNode (lhs, args)
+        # subscript operator 
+        # <unaryright> -> <member> [ '[' <expr> ']' ]
         elif self.tokens[self.currentToken].type == "LBRACKET":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
             self.match ("unaryright", "LBRACKET")
-            if self.tokens[self.currentToken].type != "RBRACKET":
-                tree.children += [self.expression ()]
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+            offset = self.expression ()
             self.match ("unaryright", "RBRACKET")
-        # <unaryright> -> <factor> [ . <member> ]
-        elif self.tokens[self.currentToken].type == "DOT":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
-            self.match ("unaryright", "DOT")
-            tree.children += [self.member ()]
+            lhs = SubscriptExpressionNode (lhs, offset)
 
         self.leave ("unaryright")
 
-        return tree
+        return lhs
 
     # ====================================================================
     # member accessor
-    # <member> -> IDENTIFIER [ '(' [ <expr> ] ')' ]
+    # string.length
+    # string.substring(0, 12).size()
+    # string.data[10]
+    # (matrixA * matrixB).transpose()
+    # <member> -> <factor> { DOT <factor> }
     def member (self):
         self.enter ("member")
 
-        tree = Node("MEMBER")
-        tree.children += [Node("IDENTIFIER", self.tokens[self.currentToken])]
-        self.match ("member", "IDENTIFIER")
-        if (self.tokens[self.currentToken].type == "LPAREN"):
-            tree.children += [Node("LPAREN", self.tokens[self.currentToken])]
-            self.match ("member", "LPAREN")
-            if self.tokens[self.currentToken].type != "RPAREN":
-                tree.children += [self.expression ()]
-            tree.children += [Node("RPAREN", self.tokens[self.currentToken])]
-            self.match ("member", "RPAREN")
+        lhs = self.factor ()
+
+        while (self.tokens[self.currentToken].type == "DOT"):
+            self.match ("member", "DOT")
+            rhs = self.factor ()
+
+            lhs = MemberAccessorExpressionNode (lhs, rhs)
 
         self.leave ("member")
 
-        return tree
+        return lhs
 
     # ====================================================================
     # parentheses / indentifiers / list / literals 
     # <factor> -> '(' [ <expr> ] ')'
     #          -> INDENTIFIER
-    #          -> '[' [ <expr> ] ']'
+    #          -> '[' [ [ <assignExpression> { COMMA <assignExpression> } ] ] ']'
     #          -> <literal>
 
     def factor (self):
         self.enter ("factor")
 
-        tree = None
+        lhs = None 
 
         # <factor> -> '(' [ <expr> ] ')'
         if self.tokens[self.currentToken].type == "LPAREN":
-            tree = Node("PARENS")
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
             self.match ("factor", "LPAREN")
             if self.tokens[self.currentToken].type != "RPAREN":
-                tree.children += [self.expression ()]
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+                lhs = self.expression ()
             self.match ("factor", "RPAREN")
         # <factor> -> INDENTIFIER
         elif self.tokens[self.currentToken].type == "IDENTIFIER":
-            tree = Node("IDENTIFIER", self.tokens[self.currentToken])
+            id = self.tokens[self.currentToken].lexeme
             self.match ("factor", "IDENTIFIER")
-        # <factor> -> '[' [ <expr> ] ']'
+            lhs = IdentifierExpressionNode (id)
+        # list creator operator  
+        # <factor> -> '[' [ [ <assignExpression> { COMMA <assignExpression> } ] ] ']'
         elif self.tokens[self.currentToken].type == "LBRACKET":
-            tree = Node("LIST")
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
             self.match ("factor", "LBRACKET")
-            if self.tokens[self.currentToken].type != "RBRACKET":
-                tree.children += [self.expression ()]
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+            items = []
+            # optional items 
+            if self.tokens[self.currentToken].type != "RPAREN":
+                items += [self.assignexpr ()]
+                # 0 or more additional items 
+                while self.tokens[self.currentToken].type == "COMMA":
+                    self.match ("factor", "COMMA")
+                    items += [self.assignexpr ()]
             self.match ("factor", "RBRACKET")
+            lhs = ListConstructorExpressionNode (items)
         else:
-            tree = self.literal ()
+            lhs = self.literal ()
 
         self.leave ("factor")
 
-        return tree
+        return lhs
 
     # ====================================================================
     # literals
@@ -597,26 +725,30 @@ class Parser:
     def literal (self):
         self.enter ("literal")
 
-        tree = Node("literal")
+        node = None
 
         if self.tokens[self.currentToken].type == "INT":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+            value = self.tokens[self.currentToken].value
             self.match ("literal", "INT")
+            node = IntLiteralExpressionNode (value)
         elif self.tokens[self.currentToken].type == "FLOAT":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+            value = self.tokens[self.currentToken].value
             self.match ("literal", "FLOAT")
+            node = FloatLiteralExpressionNode (value)
         elif self.tokens[self.currentToken].type == "CHAR":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+            value = self.tokens[self.currentToken].value
             self.match ("literal", "CHAR")
+            node = CharLiteralExpressionNode (value)
         elif self.tokens[self.currentToken].type == "STRING":
-            tree.children += [Node(self.tokens[self.currentToken].type, self.tokens[self.currentToken])]
+            value = self.tokens[self.currentToken].value
             self.match ("literal", "STRING")
+            node = StringLiteralExpressionNode (value)
         # expected literal but didnt get one 
         else:
             self.error ("literal", "INT")
 
         self.leave ("literal")
 
-        return tree
+        return node
 
 # ========================================================================

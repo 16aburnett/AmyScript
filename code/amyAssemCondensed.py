@@ -19,128 +19,46 @@ code = """
     jump main
 
 //========================================================================
-// converts string range to integer
-// param1 - string pointer
-// param2 - starting position to read int from
-// param3 - end position to stop reading 
-stringToInt:
-    stackget string 0
-    stackget start 1
-    stackget end 2
-    assign val 0
-    assign i start
-while00:
-    cmp i end
-    jge endwhile00
-
-    // shift nums
-    multiply val val 10
-
-    cmp string[i] '1'
-    jneq notOne
-    add val val 1 
-    jump continue
-notOne:
-    cmp string[i] '2'
-    jneq notTwo
-    add val val 2 
-    jump continue
-notTwo:
-    cmp string[i] '3'
-    jneq notThree
-    add val val 3 
-    jump continue
-notThree:
-    cmp string[i] '4'
-    jneq notFour
-    add val val 4 
-    jump continue
-notFour:
-    cmp string[i] '5'
-    jneq notFive
-    add val val 5 
-    jump continue
-notFive:
-    cmp string[i] '6'
-    jneq notSix
-    add val val 6 
-    jump continue
-notSix:
-    cmp string[i] '7'
-    jneq notSeven
-    add val val 7 
-    jump continue
-notSeven:
-    cmp string[i] '8'
-    jneq notEight
-    add val val 8 
-    jump continue
-notEight:
-    cmp string[i] '9'
-    jneq notNine
-    add val val 9 
-    jump continue
-notNine:
-    cmp string[i] '0'
-    jneq error
-    add val val 0 
-    jump continue
-error:
-    print 'e'
-    print 'r'
-    print 'r'
-    print 'o'
-    println 'r'
-    println string[i]
-    halt 
-continue:
-    add i i 1
-    jump while00
-endwhile00:
-    return val 
+// Returns a customary phrase stored on the heap
+getCustomaryPhraseFromHeap:
+    malloc phrase 12
+    assign phrase[0] 'H' 
+    assign phrase[1] 'e'
+    assign phrase[2] 'l'
+    assign phrase[3] 'l'
+    assign phrase[4] 'o'
+    assign phrase[5] ' '
+    assign phrase[6] 'W'
+    assign phrase[7] 'o'
+    assign phrase[8] 'r'
+    assign phrase[9] 'l'
+    assign phrase[10] 'd'
+    assign phrase[11] '!'
+    return phrase
 
 //========================================================================
 
 main:
-    input line
-    // break up line into the two nums
-    assign begin1 0
-    assign end1 0
-while01:
-    cmp line[end1] ' '
-    jeq endwhile01
-
-    add end1 end1 1 
-
-    jump while01
-endwhile01: 
-
-    add begin2 end1 1
-    sizeof end2 line
-
-    push end1
-    push begin1
-    push line
-    call stringToInt
-    response r
-    pop null 
-    pop null
-    pop null
-
-    push end2
-    push begin2
-    push line
-    call stringToInt
-    response s
-    pop null 
-    pop null
-    pop null
-
-
-    multiply r2 2 s
-    subtract r2 r2 r
-
-    println r2 
+    call getCustomaryPhraseFromHeap
+    // grab the return value of the previous call
+    response msg 
+    // loop through phrase and print out 
+    assign i 0
+    sizeof size msg
+while:
+    // condition
+    cmp i size
+    jge endwhile
+    // body 
+    print msg[i]
+    // update
+    add i i 1
+    // repeat
+    jump while
+endwhile:
+    println 
+    free msg 
+    halt
 
 """
 

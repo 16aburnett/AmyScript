@@ -12,6 +12,7 @@ import sys
 
 class Token(NamedTuple):
     type: str
+    lexeme: str
     value: str
     line: int
     column: int
@@ -28,6 +29,7 @@ token_specification = [
     ('STRING',   r'"[^"\\]*(\\.[^"\\]*)*"'),   
 # Keywords 
     ('IF',       r'if'),  
+    ('ELIF',     r'elif'),  
     ('ELSE',     r'else'),   
     ('FOR',      r'for'),  
     ('WHILE',    r'while'),  
@@ -87,7 +89,9 @@ def tokenize(code):
     for mo in re.finditer(tok_regex, code):
         kind = mo.lastgroup
         value = mo.group()
-        column = mo.start() - line_start
+        lexeme = value
+        # + 1 bc 1-based indexes for columns 
+        column = mo.start() - line_start + 1
         if kind == 'INT':
             value = int(value)
         elif kind == 'FLOAT':
@@ -103,7 +107,9 @@ def tokenize(code):
             continue
         elif kind == 'ERROR':
             pass
-        tokens +=  [Token(kind, value, line_num, column)]
+        tokens +=  [Token(kind, lexeme, value, line_num, column)]
+    # add end of file token
+    tokens += [Token("END_OF_FILE", "EOF", 0, line_num, len(code) - line_start + 1)]
     return tokens 
 
 # ========================================================================
