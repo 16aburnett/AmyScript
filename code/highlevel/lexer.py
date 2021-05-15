@@ -37,6 +37,19 @@ token_specification = [
     ('BREAK',    r'break'),  
     ('CONTINUE', r'continue'),  
     ('FUNCTION', r'function'),  
+    ('CLASS',    r'class'),  
+    ('PUBLIC',   r'public'),  
+    ('PRIVATE',  r'private'),  
+    ('FIELD',    r'field'),  
+    ('METHOD',   r'method'),  
+    ('CONSTRUCTOR',  r'constructor'),  
+# Built-in types
+    ('INTTYPE',   r'int'),  
+    ('FLOATTYPE', r'float'),  
+    ('BOOLTYPE',  r'bool'),  
+    ('CHARTYPE',  r'char'),  
+    ('STRINGTYPE',r'string'), 
+    ('VOIDTYPE',  r'void'),  
 # Identifier
     ('IDENTIFIER',r'[A-Za-z_][A-Za-z_0-9]*'),    # Identifiers
 # Operators
@@ -47,10 +60,10 @@ token_specification = [
     ('TIMES',    r'\*'),
     ('DIVIDE',   r'\/'),
     ('MOD',      r'\%'),
-    ('LT',       r'\<'),
     ('LTE',      r'\<\='),
-    ('GT',       r'\>'),
+    ('LT',       r'\<'),
     ('GTE',      r'\>\='),
+    ('GT',       r'\>'),
     ('EQ',       r'\=\='),
     ('NE',       r'\!\='),
     ('ASSIGN',   r'\='),

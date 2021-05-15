@@ -88,6 +88,9 @@ class Parser:
         # <codeunit> -> <function>
         if (self.tokens[self.currentToken].type == 'FUNCTION'):
             node = self.function ()
+        # <codeunit> -> <class>
+        elif (self.tokens[self.currentToken].type == "CLASS"):
+            node = self.classDeclaration ()
         # <codeunit> -> <statement>
         else:
             node = self.statement ()
@@ -98,14 +101,17 @@ class Parser:
 
     # ====================================================================
     # function declaration
-    # <function> -> FUNCTION IDENTIFIER <paramlist> <codeblock>
+    # <function> -> FUNCTION <typeSpecifier> IDENTIFIER <paramlist> <codeblock>
     
     def function (self):
         self.enter ("function")
 
         self.match ("function", "FUNCTION")
         
+        type = self.typeSpecifier ()
+
         id = self.tokens[self.currentToken].lexeme
+        token = self.tokens[self.currentToken]
         self.match ("function", "IDENTIFIER")
         
         params = self.paramlist()
@@ -114,11 +120,138 @@ class Parser:
 
         self.leave ("function")
 
-        return FunctionNode (id, params, body)
+        return FunctionNode (type, id, token, params, body)
+
+    # ====================================================================
+    # class declaration
+    # <class> -> CLASS IDENTIFIER LBRACE { ( <fieldDeclaration> | <methodDeclaration> ) } RBRACE
+    
+    def classDeclaration (self):
+        self.enter ("classDeclaration")
+
+        self.match ("classDeclaration", "CLASS")
+
+        id = self.tokens[self.currentToken].lexeme
+        token = self.tokens[self.currentToken]
+        self.match ("classDeclaration", "IDENTIFIER")
+        
+        self.match ("classDeclaration", "LBRACE")
+
+        constructors = []
+        fields = []
+        methods = [] 
+        while (self.tokens[self.currentToken].type == "PUBLIC"\
+            or self.tokens[self.currentToken].type == "PRIVATE"\
+            or self.tokens[self.currentToken].type == "FIELD"\
+            or self.tokens[self.currentToken].type == "METHOD"\
+            or self.tokens[self.currentToken].type == "CONSTRUCTOR"):
+            if (self.tokens[self.currentToken].type == "PUBLIC"
+                or self.tokens[self.currentToken].type == "PRIVATE"):
+                if (self.tokens[self.currentToken+1].type == "FIELD"):
+                    fields += [self.fieldDeclaration ()]
+                elif (self.tokens[self.currentToken+1].type == "METHOD"):
+                    methods += [self.methodDeclaration ()]
+                else: 
+                    self.error ("classDeclaration", "FIELD", "Expected a field or method in class body")
+            else:
+                if (self.tokens[self.currentToken].type == "FIELD"):
+                    fields += [self.fieldDeclaration ()]
+                elif (self.tokens[self.currentToken].type == "METHOD"):
+                    methods += [self.methodDeclaration ()]
+                elif (self.tokens[self.currentToken].type == "CONSTRUCTOR"):
+                    constructors += [self.constructorDeclaration ()]
+                else: 
+                    self.error ("classDeclaration", "FIELD", "Expected a field or method in class body")
+            
+        self.match ("classDeclaration", "RBRACE")
+
+        self.leave ("classDeclaration")
+
+        return ClassDeclarationNode (id, token, constructors, fields, methods)
+
+    # ====================================================================
+    # field declaration
+    # <fieldDeclaration> -> [ SECURITY ] FIELD <typeSpecifier> IDENTIFIER SEMI
+    
+    def fieldDeclaration (self):
+        self.enter ("fieldDeclaration")
+
+        # private by default 
+        security = Security.PRIVATE
+        if (self.tokens[self.currentToken].type == "PUBLIC"):
+            security = Security.PUBLIC
+            self.match ("methodDeclaration", "PUBLIC")
+        elif (self.tokens[self.currentToken].type == "PRIVATE"):
+            security = Security.PRIVATE
+            self.match ("methodDeclaration", "PRIVATE")
+
+        self.match ("fieldDeclaration", "FIELD")
+
+        type = self.typeSpecifier ()
+
+        id = self.tokens[self.currentToken].lexeme
+        token = self.tokens[self.currentToken]
+        self.match ("fieldDeclaration", "IDENTIFIER")
+
+        self.match ("fieldDeclaration", "SEMI")
+
+        self.leave ("fieldDeclaration")
+
+        return FieldDeclarationNode (security, type, id, token)
+
+    # ====================================================================
+    # method declaration
+    # <methodDeclaration> -> [ SECURITY ] METHOD <typeSpecifier> IDENTIFIER <paramlist> <codeblock>
+    
+    def methodDeclaration (self):
+        self.enter ("methodDeclaration")
+
+        # private by default 
+        security = Security.PRIVATE
+        if (self.tokens[self.currentToken].type == "PUBLIC"):
+            security = Security.PUBLIC
+            self.match ("methodDeclaration", "PUBLIC")
+        elif (self.tokens[self.currentToken].type == "PRIVATE"):
+            security = Security.PRIVATE
+            self.match ("methodDeclaration", "PRIVATE")
+
+        self.match ("fieldDeclaration", "METHOD")
+
+        type = self.typeSpecifier ()
+
+        id = self.tokens[self.currentToken].lexeme
+        token = self.tokens[self.currentToken]
+        self.match ("methodDeclaration", "IDENTIFIER")
+        
+        params = self.paramlist()
+
+        body = self.codeblock()
+
+        self.leave ("methodDeclaration")
+
+        return MethodDeclarationNode (security, type, id, token, params, body)
+
+    # ====================================================================
+    # constructor declaration
+    # <constructorDeclaration> -> CONSTRUCTOR <paramlist> <codeblock>
+    
+    def constructorDeclaration (self):
+        self.enter ("constructorDeclaration")
+
+        token = self.tokens[self.currentToken]
+        self.match ("constructorDeclaration", "CONSTRUCTOR")
+        
+        params = self.paramlist()
+
+        body = self.codeblock()
+
+        self.leave ("constructorDeclaration")
+
+        return ConstructorDeclarationNode (token, params, body)
 
     # ====================================================================
     # parameter list for a function declaration
-    # <paramlist> -> '(' [ IDENTIFIER [ , IDENTIFIER ] ] ')'
+    # <paramlist> -> '(' [ <typeSpecifier> IDENTIFIER [ , <typeSpecifier> IDENTIFIER ] ] ')'
 
     def paramlist (self): 
         self.enter ("paramlist")
@@ -127,24 +260,99 @@ class Parser:
 
         self.match ("paramlist", "LPAREN")
 
-        if self.tokens[self.currentToken].type == "IDENTIFIER":
+        if self.tokens[self.currentToken].type != "RPAREN":
+
+            type = self.typeSpecifier ()
 
             id = self.tokens[self.currentToken].lexeme
+            token = self.tokens[self.currentToken]
             self.match ("paramlist", "IDENTIFIER")
-            params += [ParameterNode (id)]
+            params += [ParameterNode (type, id, token)]
 
             while self.tokens[self.currentToken].type == "COMMA":
                 self.match ("paramlist", "COMMA")
 
+                type = self.typeSpecifier ()
+
                 id = self.tokens[self.currentToken].lexeme
+                token = self.tokens[self.currentToken]
                 self.match ("paramlist", "IDENTIFIER")
-                params += [ParameterNode (id)]
+                params += [ParameterNode (type, id, token)]
 
         self.match ("paramlist", "RPAREN")
 
         self.leave ("paramlist")
 
         return params
+
+    # ====================================================================
+
+    def isType (self):
+        # <typeSpecifier> -> INTTYPE
+        return self.tokens[self.currentToken].type == 'INTTYPE'   \
+            or self.tokens[self.currentToken].type == 'FLOATTYPE' \
+            or self.tokens[self.currentToken].type == 'CHARTYPE'  \
+            or self.tokens[self.currentToken].type == 'BOOLTYPE'  \
+            or self.tokens[self.currentToken].type == 'STRINGTYPE'\
+            or self.tokens[self.currentToken].type == 'VOIDTYPE'
+
+    # <typeSpecifier> -> INTTYPE { '[' ']' }
+    #                  | FLOATTYPE { '[' ']' }
+    #                  | CHARTYPE { '[' ']' }
+    #                  | BOOLTYPE { '[' ']' }
+    #                  | STRINGTYPE { '[' ']' }
+    #                  | IDENTIFIER { '[' ']' }
+    def typeSpecifier (self):
+        self.enter ("typeSpecifier")
+
+        # unknown by default 
+        type = None
+        temp = self.currentToken
+
+        # <typeSpecifier> -> INTTYPE
+        if (self.tokens[self.currentToken].type == 'INTTYPE'):
+            self.match ("typeSpecifier", 'INTTYPE')
+            type = TypeSpecifierNode (Type.INT, "int", self.tokens[self.currentToken])
+        # <typeSpecifier> -> FLOATTYPE
+        elif (self.tokens[self.currentToken].type == 'FLOATTYPE'):
+            self.match ("typeSpecifier", 'FLOATTYPE')
+            type = TypeSpecifierNode (Type.FLOAT, "float", self.tokens[self.currentToken])
+        # <typeSpecifier> -> CHARTYPE
+        elif (self.tokens[self.currentToken].type == 'CHARTYPE'):
+            self.match ("typeSpecifier", 'CHARTYPE')
+            type = TypeSpecifierNode (Type.CHAR, "char", self.tokens[self.currentToken])
+        # <typeSpecifier> -> BOOLTYPE
+        elif (self.tokens[self.currentToken].type == 'BOOLTYPE'):
+            self.match ("typeSpecifier", 'BOOLTYPE')
+            type = TypeSpecifierNode (Type.BOOL, "bool", self.tokens[self.currentToken])
+        # <typeSpecifier> -> STRINGTYPE
+        elif (self.tokens[self.currentToken].type == 'STRINGTYPE'):
+            self.match ("typeSpecifier", 'STRINGTYPE')
+            type = TypeSpecifierNode (Type.STRING, "string", self.tokens[self.currentToken])
+        # <typeSpecifier> -> VOIDTYPE
+        elif (self.tokens[self.currentToken].type == 'VOIDTYPE'):
+            self.match ("typeSpecifier", 'VOIDTYPE')
+            type = TypeSpecifierNode (Type.VOID, "void", self.tokens[self.currentToken])
+        # <typeSpecifier> -> IDENTIFIER
+        elif (self.tokens[self.currentToken].type == 'IDENTIFIER'):
+            type = TypeSpecifierNode (Type.USERTYPE, self.tokens[self.currentToken].lexeme, self.tokens[self.currentToken])
+            self.match ("typeSpecifier", 'IDENTIFIER')
+        
+        # match array 
+        if type != None:
+            while (self.tokens[self.currentToken].type == "LBRACKET"):
+                self.match ("typeSpecifier", "LBRACKET")
+                # possibly not a type spec
+                if (self.tokens[self.currentToken].type != "RBRACKET"):
+                    self.currentToken = temp
+                    self.leave ("typeSpecifier")
+                    return None
+                self.match ("typeSpecifier", "RBRACKET")
+                type.arrayDimensions += 1
+        
+        self.leave ("typeSpecifier")
+
+        return type
 
     # ====================================================================
     # statement 
@@ -214,6 +422,7 @@ class Parser:
     # ====================================================================
     # for loop 
     # <forloop> -> for ( <expr> ; <expr> ; <expr> ) <statement>
+    # **add for/else
 
     def forloop (self):
         self.enter ("forloop")
@@ -317,7 +526,7 @@ class Parser:
 
     # ====================================================================
     # expressionStatement
-    # <expressionStatement> -> [ <expression> ] ; 
+    # <expressionStatement> -> [ <expression> ] SEMI
 
     def expressionStatement (self):
         self.enter ("expressionStatement")
@@ -424,27 +633,86 @@ class Parser:
         return lhs
 
     # ====================================================================
-    # assignment expressions 
-    # <assignexpr> -> <logicalOR> [ = <logicalOR> ]
-    # this does not work like C++ assignment expressions (a = b = 10) because that
-    # requires right recursion which im not sure how to handle yet 
-    # with recursive descent and prediction
-    # HOWEVER! you can use parentheses to enforce it (a = (b = 10))
-    # which should have the same effect
+    # varDeclaration 
+    # <varDeclaration> -> ( TYPE [ "[]" ] ID | ID [ "[]" ] ID | <logicalOR> )
 
+    def varDeclaration (self):
+        self.enter ("varDeclaration")
+
+        lhs = None
+
+        #     -> ID { '[' ']' } ID 
+        #     -> <logicalOR> 
+        if (self.isType () or self.tokens[self.currentToken].type == "IDENTIFIER"):
+
+            varIndex = self.currentToken
+            # match type
+            type = self.typeSpecifier ()
+
+            # assumption was wrong
+            # -> <logicalOR> 
+            if (type == None or self.tokens[self.currentToken].type != "IDENTIFIER"):
+                # restore state
+                self.currentToken = varIndex
+                lhs = self.logicalOR ()
+            else:
+                id = self.tokens[self.currentToken].lexeme
+                token = self.tokens[self.currentToken]
+                self.match ("varDeclaration", "IDENTIFIER")
+                lhs = VariableDeclarationNode (type, id, token)
+        # assumption was wrong
+        else:
+            lhs = self.logicalOR ()
+
+        self.leave ("varDeclaration")
+
+        return lhs
+
+    # ====================================================================
+    # assignment expressions 
+    # <assignexpr> -> { <varDeclaration> = } <varDeclaration>
     def assignexpr (self):
         self.enter ("assignexpr")
 
-        lhs = self.logicalOR ()
+        root = None
+        lastAssign = None
 
-        if self.tokens[self.currentToken].type == "ASSIGN":
-            self.match ("assignexpr", "ASSIGN")
-            rhs = self.logicalOR ()
+        # while lhs is var or var declaration
+        while (self.tokens[self.currentToken].type == "IDENTIFIER" \
+            or self.isType()):
+            # save return state
+            varIndex = self.currentToken
+            lhs = self.varDeclaration ()
 
-            lhs = AssignExpressionNode (lhs, "=", rhs)
+            # if there is an assign
+            if (self.tokens[self.currentToken].type == "ASSIGN"):
+                self.match ("assignexpr", "ASSIGN")
+                rhs = AssignExpressionNode (lhs, "=", None)
+                # if this is the first assignment expression
+                if (root == None):
+                    # make this the root 
+                    root = rhs 
+                    lastAssign = root 
+                # not the first assignment statement
+                else:
+                    lastAssign.rhs = rhs 
+                    lastAssign = rhs 
+            # no ASSIGN
+            # assumption was wrong
+            else:
+                # assumption was wrong, the var should be a logicalOR
+                self.currentToken = varIndex
+                break 
+
+        # if there was at least one assign expr 
+        if (root != None):
+            lastAssign.rhs = self.varDeclaration ()
+            self.leave ("assignexpr")
+            return root 
+        
+        lhs = self.varDeclaration ()
 
         self.leave ("assignexpr")
-
         return lhs
 
     # ====================================================================
@@ -608,7 +876,7 @@ class Parser:
     # unary right operators / funcall / subscript
     # <unaryright> -> <member> [ ( ++ | -- ) ]
     #              -> <member> [ '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' ]
-    #              -> <member> [ '[' [ <expression> ] ']' ]
+    #              -> <member> { '[' [ <expression> ] ']' }
 
     def unaryright (self):
         self.enter ("unaryright")
@@ -639,11 +907,12 @@ class Parser:
             lhs = FunctionCallExpressionNode (lhs, args)
         # subscript operator 
         # <unaryright> -> <member> [ '[' <expr> ']' ]
-        elif self.tokens[self.currentToken].type == "LBRACKET":
-            self.match ("unaryright", "LBRACKET")
-            offset = self.expression ()
-            self.match ("unaryright", "RBRACKET")
-            lhs = SubscriptExpressionNode (lhs, offset)
+        else:
+            while self.tokens[self.currentToken].type == "LBRACKET":
+                self.match ("unaryright", "LBRACKET")
+                offset = self.expression ()
+                self.match ("unaryright", "RBRACKET")
+                lhs = SubscriptExpressionNode (lhs, offset)
 
         self.leave ("unaryright")
 
@@ -674,7 +943,7 @@ class Parser:
     # ====================================================================
     # parentheses / indentifiers / list / literals 
     # <factor> -> '(' [ <expr> ] ')'
-    #          -> INDENTIFIER
+    #          -> IDENTIFIER
     #          -> '[' [ [ <assignExpression> { COMMA <assignExpression> } ] ] ']'
     #          -> <literal>
 
@@ -689,11 +958,12 @@ class Parser:
             if self.tokens[self.currentToken].type != "RPAREN":
                 lhs = self.expression ()
             self.match ("factor", "RPAREN")
-        # <factor> -> INDENTIFIER
+        # <factor> -> IDENTIFIER
         elif self.tokens[self.currentToken].type == "IDENTIFIER":
             id = self.tokens[self.currentToken].lexeme
+            token = self.tokens[self.currentToken]
             self.match ("factor", "IDENTIFIER")
-            lhs = IdentifierExpressionNode (id)
+            lhs = IdentifierExpressionNode (id, token)
         # list creator operator  
         # <factor> -> '[' [ [ <assignExpression> { COMMA <assignExpression> } ] ] ']'
         elif self.tokens[self.currentToken].type == "LBRACKET":

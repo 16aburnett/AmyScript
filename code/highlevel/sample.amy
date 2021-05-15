@@ -1,48 +1,104 @@
 // Test for AmyScript
 // By Amy Burnett
 // =======================================================================
-// returns a tuple of the min val and max val of the given values. 
 
-function minmax (a, b)
+class Person
 {
-    // comma operator forms a tuple 
-    return min(a,b),max(a,b);
+    public field string m_name; 
+    // fields and methods are private by default 
+    field int m_age; 
+
+    // default constructor
+    // constructors are always public so public/private does not need
+    // to be provided 
+    constructor ()
+    {
+        m_name = "";
+        m_age = 0; 
+    }
+
+    // overloaded constructors 
+    // multiple constructors can be provided as long as 
+    // the parameter signature has different types 
+    constructor (string name, int age)
+    {
+        m_name = name;
+        m_age = age; 
+    }
+
+    public method int getAge ()
+    {
+        return m_age; 
+    }
+
 }
 
 // =======================================================================
 
-nums = [20, 1, 42, 5+1, 19];
-
-// bubbles up the largest number 
-for (i = 0; i < nums.size()-1; i++)
+function int max (int a, int b)
 {
-    (nums[i], nums[i+1]) = minmax(nums[i], nums[i+1]);
+    if (a >= b) return a;
+    return b; 
 }
 
-mybool = 0; 
+// =======================================================================
+
+Person amy; 
+
+amy.name = "Amy";
+amy.age = 21;
+
+println (amy.name.size());
+
+int[] nums;
+
+// you can use sizeof to get the size of an array 
+for (int i = 0; i < nums.size(); ++i)
+{
+    print (nums[i], " ");
+}
+println ();
+
+int mybool = 0; 
 
 if (nums.size() > 0)
 {
     print("Nums: ");
-    print(nums);
+    print(nums); 
     println();
 }
 elif (mybool)
 {
-    print (mybool);
+    println (mybool);
 }
 else
-    print ("Yes");
+    println ("Yes");
 
-print (x = (y = 10));
+// assignment expressions return the value that was assigned
+// declarations can happen on the left of an assign expression
+// <declaration> -> <type> ID
+// <declaration> -> ID1 ID2
+// adds ID2 to the symbol table with type ID1
+println (int x = int y = 10);
 
-x = (10, 7);
-
-print (x[0]);
-
+// if, for, while statements can be 
+// completed with another statement
 x = 0;
 while (1)
     if (x++ > 10)
         break;
+
+int w = nums[x++] = 21 + 12;
+
+
+int foo = float boat = 7;
+
+
+float[][] board; 
+
+board[0][0] = 7.34;
+
+// foo is not an array
+foo[2] = 7;
 
 // =======================================================================
