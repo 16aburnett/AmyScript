@@ -373,11 +373,19 @@ class CodeGenVisitor (ASTVisitor):
         self.jumpIndex += 1
 
         forLabel = f"__for{forIndex}"
+        elseLabel = f"__forelse{forIndex}"
         endLabel = f"__endfor{forIndex}"
 
         # save loop info for break and continue statements
         node.startLabel = forLabel
-        node.endLabel = endLabel
+        # break label should be end of loop
+        node.breakLabel = endLabel
+        # end label should be the location to go 
+        # when loop terminates normally
+        if (node.elseStmt != None):
+            node.endLabel = elseLabel
+        else:
+            node.endLabel = endLabel
         self.parentLoops += [node]
 
         # init
@@ -400,7 +408,10 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("POP __cond")
         # jump if false - negation of original condition
         self.printCode ("CMP __cond 0")
-        self.printCode (f"JEQ {endLabel}")
+        if (node.elseStmt != None):
+            self.printCode (f"JEQ {elseLabel}")
+        else:
+            self.printCode (f"JEQ {endLabel}")
         self.indentation -= 1
 
         # print the body 
@@ -418,6 +429,16 @@ class CodeGenVisitor (ASTVisitor):
         # add repeating jump
         self.printComment ("Repeat")
         self.printCode (f"JUMP {forLabel}")
+
+        # add else statement if it exists
+        if (node.elseStmt != None):
+            self.printSubDivider ()
+            self.printComment ("For-Else-Statement")
+            self.printCode (f"{elseLabel}:")
+
+            node.elseStmt.body.accept (self)
+
+            self.printSubDivider ()
 
         # end of for 
         self.printComment ("End of For")
@@ -444,6 +465,7 @@ class CodeGenVisitor (ASTVisitor):
 
         # save loop info for break and continue statements
         node.startLabel = whileLabel
+        node.breakLabel = endLabel
         node.endLabel = endLabel
         self.parentLoops += [node]
 
@@ -516,7 +538,7 @@ class CodeGenVisitor (ASTVisitor):
     def visitBreakStatementNode (self, node):
         self.printComment (f"Break out of {self.parentLoops[-1].startLabel}")
         # goes to the end of the loop
-        self.printCode (f"JUMP {self.parentLoops[-1].endLabel}")
+        self.printCode (f"JUMP {self.parentLoops[-1].breakLabel}")
 
     def visitCodeBlockNode (self, node):
         # if this is a function body

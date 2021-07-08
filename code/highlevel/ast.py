@@ -275,11 +275,14 @@ class ElseStatementNode (StatementNode):
 
 class ForStatementNode (StatementNode):
     
-    def __init__(self, init, cond, update, body):
+    def __init__(self, init, cond, update, body, elseStmt):
         self.init = init
         self.cond = cond
         self.update = update
         self.body = body 
+        self.elseStmt = elseStmt
+        self.startLabel = ""
+        self.breakLabel = ""
         self.endLabel = ""
 
         self.lineNumber = 0
@@ -297,6 +300,8 @@ class WhileStatementNode (StatementNode):
     def __init__(self, cond, body):
         self.cond = cond
         self.body = body 
+        self.startLabel = ""
+        self.breakLabel = ""
         self.endLabel = ""
 
         self.lineNumber = 0

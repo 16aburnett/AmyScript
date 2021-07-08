@@ -200,3 +200,36 @@ ProgramNode:
 |   |   |   |   Identifier: println 
 |   |   |   Arguments:
 |   |   |   |   String Literal: "" string
+|   For:
+|   |   Init: Type.INT
+|   |   |   AssignExpression: = int
+|   |   |   |   Type: Type.INT int
+|   |   |   |   Identifier: i int
+|   |   |   |   Int Literal: 0 int
+|   |   Condition: Type.INT
+|   |   |   InequalityExpression: < int
+|   |   |   |   Identifier: i int
+|   |   |   |   Int Literal: 10 int
+|   |   Update: Type.INT
+|   |   |   AssignExpression: = int
+|   |   |   |   Type: Type.INT int
+|   |   |   |   Identifier: i int
+|   |   |   |   AdditiveExpression: + int
+|   |   |   |   |   Identifier: i int
+|   |   |   |   |   Int Literal: 1 int
+|   |   Body:
+|   |   |   CodeBlock:
+|   |   |   |   If:
+|   |   |   |   |   Condition: Type.INT
+|   |   |   |   |   |   EqualityExpression: == int
+|   |   |   |   |   |   |   Identifier: i int
+|   |   |   |   |   |   |   Int Literal: 17 int
+|   |   |   |   |   Body:
+|   |   |   |   |   |   CodeBlock:
+|   |   |   |   |   |   |   BreakStatement:
+|   ExpressionStatement:
+|   |   Function Call: 
+|   |   |   Function Name:
+|   |   |   |   Identifier: println 
+|   |   |   Arguments:
+|   |   |   |   String Literal: "Loop finished!" string

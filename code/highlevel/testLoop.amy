@@ -50,3 +50,18 @@ while (w > 0)
 // w should be 7
 printInt (w);
 println ("");
+
+
+for (i = 0; i < 10; i = i + 1)
+{
+    if (i == 17)
+    {
+        break;
+    }
+}
+else
+{
+    println ("This executes if loop executes normally");
+}
+
+println ("Loop finished!");

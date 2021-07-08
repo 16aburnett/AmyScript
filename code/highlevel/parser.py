@@ -421,8 +421,7 @@ class Parser:
 
     # ====================================================================
     # for loop 
-    # <forloop> -> for ( <expr> ; <expr> ; <expr> ) <statement>
-    # **add for/else
+    # <forloop> -> for ( <expr> ; <expr> ; <expr> ) <statement> [ <else> ]
 
     def forloop (self):
         self.enter ("forloop")
@@ -437,9 +436,14 @@ class Parser:
         self.match ("forloop", "RPAREN")
         body = self.statement ()
 
+        # match 0 or 1 else
+        elseStmt = None
+        if (self.tokens[self.currentToken].type == "ELSE"):
+            elseStmt = self.elseStatement ()
+
         self.leave ("forloop")
 
-        return ForStatementNode (init, cond, update, body)
+        return ForStatementNode (init, cond, update, body, elseStmt)
 
     # ====================================================================
     # while loop 
