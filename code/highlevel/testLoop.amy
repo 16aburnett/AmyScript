@@ -34,3 +34,19 @@ println ("");
 // X should be 10 but it is 7 -__-
 printInt (x);
 println ("");
+
+
+
+int w = 10; 
+int y = 7;
+
+while (w > 0)
+{
+    if (w <= y)
+        break;
+    --w;
+}
+
+// w should be 7
+printInt (w);
+println ("");

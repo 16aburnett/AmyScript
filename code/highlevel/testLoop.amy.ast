@@ -157,3 +157,46 @@ ProgramNode:
 |   |   |   |   Identifier: println 
 |   |   |   Arguments:
 |   |   |   |   String Literal: "" string
+|   ExpressionStatement:
+|   |   AssignExpression: = int
+|   |   |   Type: Type.INT int
+|   |   |   VariableDeclaration: 
+|   |   |   |   Type: Type.INT int
+|   |   |   |   Name: w
+|   |   |   Int Literal: 10 int
+|   ExpressionStatement:
+|   |   AssignExpression: = int
+|   |   |   Type: Type.INT int
+|   |   |   VariableDeclaration: 
+|   |   |   |   Type: Type.INT int
+|   |   |   |   Name: y
+|   |   |   Int Literal: 7 int
+|   While:
+|   |   Condition: Type.INT
+|   |   |   InequalityExpression: > int
+|   |   |   |   Identifier: w int
+|   |   |   |   Int Literal: 0 int
+|   |   Body:
+|   |   |   CodeBlock:
+|   |   |   |   If:
+|   |   |   |   |   Condition: Type.INT
+|   |   |   |   |   |   InequalityExpression: <= int
+|   |   |   |   |   |   |   Identifier: w int
+|   |   |   |   |   |   |   Identifier: y int
+|   |   |   |   |   Body:
+|   |   |   |   |   |   BreakStatement:
+|   |   |   |   ExpressionStatement:
+|   |   |   |   |   UnaryLeftExpression: -- int
+|   |   |   |   |   |   Identifier: w int
+|   ExpressionStatement:
+|   |   Function Call: 
+|   |   |   Function Name:
+|   |   |   |   Identifier: printInt 
+|   |   |   Arguments:
+|   |   |   |   Identifier: w int
+|   ExpressionStatement:
+|   |   Function Call: 
+|   |   |   Function Name:
+|   |   |   |   Identifier: println 
+|   |   |   Arguments:
+|   |   |   |   String Literal: "" string

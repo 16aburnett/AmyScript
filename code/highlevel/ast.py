@@ -280,6 +280,7 @@ class ForStatementNode (StatementNode):
         self.cond = cond
         self.update = update
         self.body = body 
+        self.endLabel = ""
 
         self.lineNumber = 0
         self.columnNumber = 0
@@ -296,6 +297,7 @@ class WhileStatementNode (StatementNode):
     def __init__(self, cond, body):
         self.cond = cond
         self.body = body 
+        self.endLabel = ""
 
         self.lineNumber = 0
         self.columnNumber = 0
