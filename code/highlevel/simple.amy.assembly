@@ -1,0 +1,642 @@
+// AmyAssembly compiled from AmyScript
+// Filename: simple.amy
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+
+jump __endOfLibrary
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__loop:
+    // cond
+    cmp __i __size
+    jge __print__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__loop
+__print__endloop:
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__loop:
+    // cond
+    cmp __i __size
+    jge __println__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__loop
+__println__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void printInt (int intToPrint);
+printInt:
+    // grab string
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// converts an integer to a string
+// char[] intToString (int val);
+intToString:
+    stackget __val 0
+
+    return 0
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//========================================================================
+// Function Declaration - add int
+JUMP __end__add
+add:
+   // Parameters
+      // Param: lhs
+      STACKGET lhs 0
+      // Param: rhs
+      STACKGET rhs 1
+   // Body
+      // Return
+         // Addition
+            // LHS
+               // Identifier
+                  PUSH lhs
+            // RHS
+               // Identifier
+                  PUSH rhs
+            POP __rhs
+            POP __lhs
+            ADD __res __lhs __rhs
+            PUSH __res
+         POP __rVal
+         RETURN __rVal
+   RETURN 0
+__end__add:
+// End Function Declaration - add
+//========================================================================
+
+// Assignment
+   // RHS
+      // Array Allocator
+         // Literal
+            PUSH 5
+         POP __size
+         MALLOC __ptr __size
+         PUSH __ptr
+   // LHS
+      // Variable Declaration
+         ASSIGN nums 0
+   POP __rhs
+   ASSIGN nums __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Array Allocator
+         // Literal
+            PUSH 1
+         POP __size
+         MALLOC __ptr __size
+         PUSH __ptr
+   // LHS
+      // Variable Declaration
+         ASSIGN nl 0
+   POP __rhs
+   ASSIGN nl __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Literal
+         PUSH ' '
+   // LHS
+      // Subscript assignment
+         // LHS
+            // Identifier
+               PUSH nl
+         // OFFSET
+            // Literal
+               PUSH 0
+         POP __offset
+         POP __pointer
+   POP __rhs
+   ASSIGN __pointer[__offset] __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Literal
+         PUSH 28
+   // LHS
+      // Variable Declaration
+         ASSIGN a 0
+   POP __rhs
+   ASSIGN a __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Division
+         // LHS
+            // Subtraction
+               // LHS
+                  // Identifier
+                     PUSH a
+               // RHS
+                  // Literal
+                     PUSH 7
+               POP __rhs
+               POP __lhs
+               SUBTRACT __res __lhs __rhs
+               PUSH __res
+         // RHS
+            // Literal
+               PUSH 3
+         POP __rhs
+         POP __lhs
+         DIVIDE __res __lhs __rhs
+         PUSH __res
+   // LHS
+      // Subscript assignment
+         // LHS
+            // Identifier
+               PUSH nums
+         // OFFSET
+            // Literal
+               PUSH 0
+         POP __offset
+         POP __pointer
+   POP __rhs
+   ASSIGN __pointer[__offset] __rhs
+   PUSH __rhs
+// Function Call
+   // Arguments
+      // Subscript
+         // LHS
+            // Identifier
+               PUSH nums
+         // OFFSET
+            // Literal
+               PUSH 0
+         POP __offset
+         POP __pointer
+         PUSH __pointer[__offset]
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printInt
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH nl
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Assignment
+   // RHS
+      // Literal
+         PUSH 10
+   // LHS
+      // Variable Declaration
+         ASSIGN x 0
+   POP __rhs
+   ASSIGN x __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Literal
+         PUSH 7
+   // LHS
+      // Variable Declaration
+         ASSIGN y 0
+   POP __rhs
+   ASSIGN y __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Assignment
+         // RHS
+            // Function Call
+               // Arguments
+                  // Literal
+                     PUSH 21
+                  POP __arg0
+                  // Literal
+                     PUSH 7
+                  POP __arg1
+               // Pushing args in reverse order
+               PUSH __arg1
+               PUSH __arg0
+               CALL add
+               // Remove args
+               POP __null
+               POP __null
+               RESPONSE __retval
+               PUSH __retval
+         // LHS
+            // Variable Declaration
+               ASSIGN z 0
+         POP __rhs
+         ASSIGN z __rhs
+         PUSH __rhs
+   // LHS
+      // Subscript assignment
+         // LHS
+            // Identifier
+               PUSH nums
+         // OFFSET
+            // Literal
+               PUSH 1
+         POP __offset
+         POP __pointer
+   POP __rhs
+   ASSIGN __pointer[__offset] __rhs
+   PUSH __rhs
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH z
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printInt
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH nl
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Pre-Increment
+         // RHS
+            // Subscript
+               // LHS
+                  // Identifier
+                     PUSH nums
+               // OFFSET
+                  // Literal
+                     PUSH 1
+               POP __offset
+               POP __pointer
+               PUSH __pointer[__offset]
+         POP __rhs
+         // RHS
+            // Subscript assignment
+               // LHS
+                  // Identifier
+                     PUSH nums
+               // OFFSET
+                  // Literal
+                     PUSH 1
+               POP __offset
+               POP __pointer
+         ADD __pointer[__offset] __pointer[__offset] 1
+         ASSIGN __res __pointer[__offset]
+         PUSH __res
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printInt
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH nl
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Post-Decrement
+         // RHS
+            // Subscript assignment
+               // LHS
+                  // Identifier
+                     PUSH nums
+               // OFFSET
+                  // Literal
+                     PUSH 0
+               POP __offset
+               POP __pointer
+         ASSIGN __res __pointer[__offset]
+         SUBTRACT __pointer[__offset] __pointer[__offset] 1
+         PUSH __res
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printInt
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH nl
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Pre-Increment
+         // RHS
+            // Identifier
+               PUSH x
+         POP __rhs
+         ADD x x 1
+         ASSIGN __res x
+         PUSH __res
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printInt
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH nl
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Pre-Increment
+         // RHS
+            // Identifier
+               PUSH x
+         POP __rhs
+         ADD x x 1
+         ASSIGN __res x
+         PUSH __res
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printInt
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH nl
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Pre-Increment
+         // RHS
+            // Identifier
+               PUSH x
+         POP __rhs
+         ADD x x 1
+         ASSIGN __res x
+         PUSH __res
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printInt
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH nl
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Pre-Increment
+         // RHS
+            // Identifier
+               PUSH x
+         POP __rhs
+         ADD x x 1
+         ASSIGN __res x
+         PUSH __res
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printInt
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH nl
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+//------------------------------------------------------------------------
+// If-Statement
+   // Condition
+      // AND
+         // LHS
+            // Greater Than
+               // LHS
+                  // Identifier
+                     PUSH x
+               // RHS
+                  // Literal
+                     PUSH 12
+               POP __rhs
+               POP __lhs
+               GT __res __lhs __rhs
+               PUSH __res
+         // RHS
+            // Equal
+               // LHS
+                  // Subscript
+                     // LHS
+                        // Identifier
+                           PUSH nums
+                     // OFFSET
+                        // Literal
+                           PUSH 0
+                     POP __offset
+                     POP __pointer
+                     PUSH __pointer[__offset]
+               // RHS
+                  // Post-Decrement
+                     // RHS
+                        // Subscript assignment
+                           // LHS
+                              // Identifier
+                                 PUSH nums
+                           // OFFSET
+                              // Literal
+                                 PUSH 0
+                           POP __offset
+                           POP __pointer
+                     ASSIGN __res __pointer[__offset]
+                     SUBTRACT __pointer[__offset] __pointer[__offset] 1
+                     PUSH __res
+               POP __rhs
+               POP __lhs
+               EQUAL __res __lhs __rhs
+               PUSH __res
+         POP __rhs
+         POP __lhs
+         AND __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endif0
+   // Body
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 25
+               ASSIGN __str[0] 'C'
+               ASSIGN __str[1] 'a'
+               ASSIGN __str[2] 'n'
+               ASSIGN __str[3] ' '
+               ASSIGN __str[4] 'y'
+               ASSIGN __str[5] 'o'
+               ASSIGN __str[6] 'u'
+               ASSIGN __str[7] ' '
+               ASSIGN __str[8] 'e'
+               ASSIGN __str[9] 'v'
+               ASSIGN __str[10] 'e'
+               ASSIGN __str[11] 'n'
+               ASSIGN __str[12] ' '
+               ASSIGN __str[13] 'h'
+               ASSIGN __str[14] 'e'
+               ASSIGN __str[15] 'r'
+               ASSIGN __str[16] 'e'
+               ASSIGN __str[17] ' '
+               ASSIGN __str[18] 'm'
+               ASSIGN __str[19] 'e'
+               ASSIGN __str[20] ' '
+               ASSIGN __str[21] 'n'
+               ASSIGN __str[22] 'o'
+               ASSIGN __str[23] 'w'
+               ASSIGN __str[24] '!'
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL println
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+   JUMP __endif0
+   // End of if
+   __endif0:
+//------------------------------------------------------------------------
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

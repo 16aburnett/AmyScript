@@ -42,6 +42,15 @@ class TypeSpecifierNode (Node):
         self.token = token
         self.arrayDimensions = 0
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
+    def __str__(self):
+        s = [self.id]
+        for i in range(self.arrayDimensions):
+            s += ["[]"]
+        return "".join(s)
+
     def accept (self, visitor):
         visitor.visitTypeSpecifierNode (self)
 
@@ -52,6 +61,9 @@ class ProgramNode (Node):
 
     def __init__(self, codeunits):
         self.codeunits = codeunits
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitProgramNode (self)
@@ -65,6 +77,9 @@ class DeclarationNode (Node):
         self.id = id
         self.token = token
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitDeclarationNode (self)
 
@@ -74,6 +89,9 @@ class VariableDeclarationNode (DeclarationNode):
 
     def __init__(self, type:TypeSpecifierNode, id, token):
         super().__init__(type, id, token)
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitVariableDeclarationNode (self)
@@ -85,6 +103,9 @@ class ParameterNode (DeclarationNode):
 
     def __init__(self, type:TypeSpecifierNode, id, token):
         super().__init__(type, id, token)
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitParameterNode (self)
@@ -113,6 +134,9 @@ class FunctionNode (CodeUnitNode):
         self.params = params
         self.body = body 
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitFunctionNode (self)
 
@@ -129,6 +153,9 @@ class ClassDeclarationNode (CodeUnitNode):
         self.fields = fields 
         self.methods = methods 
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitClassDeclarationNode (self)
 
@@ -140,6 +167,9 @@ class FieldDeclarationNode (DeclarationNode):
     def __init__(self, security, type, id, token):
         self.security = security
         super().__init__(type, id, token)
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitFieldDeclarationNode (self)
@@ -155,6 +185,9 @@ class MethodDeclarationNode (DeclarationNode):
         self.params = params
         self.body = body 
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitMethodDeclarationNode (self)
 
@@ -167,6 +200,9 @@ class ConstructorDeclarationNode (DeclarationNode):
         self.token = token
         self.params = params
         self.body = body 
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitConstructorDeclarationNode (self)
@@ -195,6 +231,9 @@ class IfStatementNode (StatementNode):
         self.elifs = elifs
         self.elseStmt = elseStmt 
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitIfStatementNode (self)
 
@@ -208,6 +247,9 @@ class ElifStatementNode (StatementNode):
         self.cond = cond
         self.body = body
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitElifStatementNode (self)
 
@@ -218,6 +260,9 @@ class ElseStatementNode (StatementNode):
     
     def __init__(self, body):
         self.body = body
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitElseStatementNode (self)
@@ -236,6 +281,9 @@ class ForStatementNode (StatementNode):
         self.update = update
         self.body = body 
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitForStatementNode (self)
 
@@ -249,6 +297,9 @@ class WhileStatementNode (StatementNode):
         self.cond = cond
         self.body = body 
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitWhileStatementNode (self)
 
@@ -259,6 +310,9 @@ class ExpressionStatementNode (StatementNode):
     
     def __init__(self, expr=None):
         self.expr = expr  
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitExpressionStatementNode (self)
@@ -271,6 +325,9 @@ class ReturnStatementNode (StatementNode):
     def __init__(self, expr):
         self.expr = expr 
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitReturnStatementNode (self)
 
@@ -279,7 +336,9 @@ class ReturnStatementNode (StatementNode):
 class ContinueStatementNode (StatementNode):
     
     def __init__(self):
-        pass 
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitContinueStatementNode (self)
@@ -289,7 +348,9 @@ class ContinueStatementNode (StatementNode):
 class BreakStatementNode (StatementNode):
     
     def __init__(self):
-        pass 
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitBreakStatementNode (self)
@@ -301,6 +362,9 @@ class CodeBlockNode (StatementNode):
     
     def __init__(self, codeunits):
         self.codeunits = codeunits
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitCodeBlockNode (self)
@@ -321,10 +385,13 @@ class ExpressionNode (Node):
 
 class TupleExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, rhs):
+    def __init__(self, lhs, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.rhs = rhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitTupleExpressionNode (self)
@@ -336,11 +403,14 @@ class TupleExpressionNode (ExpressionNode):
 
 class AssignExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, op, rhs):
+    def __init__(self, lhs, op, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
         self.rhs = rhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitAssignExpressionNode (self)
@@ -351,10 +421,13 @@ class AssignExpressionNode (ExpressionNode):
 
 class LogicalOrExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, rhs):
+    def __init__(self, lhs, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.rhs = rhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitLogicalOrExpressionNode (self)
@@ -365,10 +438,13 @@ class LogicalOrExpressionNode (ExpressionNode):
 
 class LogicalAndExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, rhs):
+    def __init__(self, lhs, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.rhs = rhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitLogicalAndExpressionNode (self)
@@ -380,11 +456,14 @@ class LogicalAndExpressionNode (ExpressionNode):
 
 class EqualityExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, op, rhs):
+    def __init__(self, lhs, op, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
         self.rhs = rhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitEqualityExpressionNode (self)
@@ -396,11 +475,14 @@ class EqualityExpressionNode (ExpressionNode):
 
 class InequalityExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, op, rhs):
+    def __init__(self, lhs, op, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
         self.rhs = rhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitInequalityExpressionNode (self)
@@ -412,11 +494,14 @@ class InequalityExpressionNode (ExpressionNode):
 
 class AdditiveExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, op, rhs):
+    def __init__(self, lhs, op, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
         self.rhs = rhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitAdditiveExpressionNode (self)
@@ -428,11 +513,14 @@ class AdditiveExpressionNode (ExpressionNode):
 
 class MultiplicativeExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, op, rhs):
+    def __init__(self, lhs, op, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
         self.rhs = rhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitMultiplicativeExpressionNode (self)
@@ -443,10 +531,13 @@ class MultiplicativeExpressionNode (ExpressionNode):
 
 class UnaryLeftExpressionNode (ExpressionNode):
 
-    def __init__(self, op, rhs):
+    def __init__(self, op, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.op = op
         self.rhs = rhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitUnaryLeftExpressionNode (self)
@@ -456,9 +547,12 @@ class UnaryLeftExpressionNode (ExpressionNode):
 
 class PostIncrementExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs):
+    def __init__(self, lhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitPostIncrementExpressionNode (self)
@@ -468,9 +562,12 @@ class PostIncrementExpressionNode (ExpressionNode):
 
 class PostDecrementExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs):
+    def __init__(self, lhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitPostDecrementExpressionNode (self)
@@ -481,10 +578,13 @@ class PostDecrementExpressionNode (ExpressionNode):
 
 class SubscriptExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, offset):
+    def __init__(self, lhs, offset, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs 
         self.offset = offset
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitSubscriptExpressionNode (self)
@@ -495,10 +595,13 @@ class SubscriptExpressionNode (ExpressionNode):
 
 class FunctionCallExpressionNode (ExpressionNode):
 
-    def __init__(self, function, args):
+    def __init__(self, function, args, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.function = function
         self.args = args 
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitFunctionCallExpressionNode (self)
@@ -509,10 +612,13 @@ class FunctionCallExpressionNode (ExpressionNode):
 
 class MemberAccessorExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, rhs):
+    def __init__(self, lhs, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.rhs = rhs
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitMemberAccessorExpressionNode (self)
@@ -522,13 +628,44 @@ class MemberAccessorExpressionNode (ExpressionNode):
 
 class IdentifierExpressionNode (ExpressionNode):
 
-    def __init__(self, id, token):
+    def __init__(self, id, token, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.id = id
         self.token = token
 
+        self.lineNumber = line
+        self.columnNumber = column
+
     def accept (self, visitor):
         visitor.visitIdentifierExpressionNode (self)
+
+# ========================================================================
+
+class ArrayAllocatorExpressionNode (ExpressionNode):
+
+    def __init__(self, type, dimensions, line, column):
+        self.type = type
+        self.dimensions = dimensions
+
+        self.lineNumber = line
+        self.columnNumber = column
+
+    def accept (self, visitor):
+        visitor.visitArrayAllocatorExpressionNode (self)
+
+# ========================================================================
+
+class ConstructorCallExpressionNode (ExpressionNode):
+
+    def __init__(self, type, args, line, column):
+        self.type = type
+        self.args = args
+
+        self.lineNumber = line
+        self.columnNumber = column
+
+    def accept (self, visitor):
+        visitor.visitConstructorCallExpressionNode (self)
 
 # ========================================================================
 # value - int
@@ -538,6 +675,9 @@ class IntLiteralExpressionNode (ExpressionNode):
     def __init__(self, value:int):
         self.type = TypeSpecifierNode (Type.INT, "int", None)
         self.value = value
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitIntLiteralExpressionNode (self)
@@ -551,6 +691,9 @@ class FloatLiteralExpressionNode (ExpressionNode):
         self.type = TypeSpecifierNode (Type.FLOAT, "float", None)
         self.value = value
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitFloatLiteralExpressionNode (self)
 
@@ -562,6 +705,9 @@ class CharLiteralExpressionNode (ExpressionNode):
     def __init__(self, value:chr):
         self.type = TypeSpecifierNode (Type.CHAR, "char", None)
         self.value = value
+
+        self.lineNumber = 0
+        self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitCharLiteralExpressionNode (self)
@@ -575,6 +721,9 @@ class StringLiteralExpressionNode (ExpressionNode):
         self.type = TypeSpecifierNode (Type.STRING, "string", None)
         self.value = value
 
+        self.lineNumber = 0
+        self.columnNumber = 0
+
     def accept (self, visitor):
         visitor.visitStringLiteralExpressionNode (self)
 
@@ -583,9 +732,12 @@ class StringLiteralExpressionNode (ExpressionNode):
 
 class ListConstructorExpressionNode (ExpressionNode):
 
-    def __init__(self, elems:list):
+    def __init__(self, elems:list, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.elems = elems
+
+        self.lineNumber = line
+        self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitListConstructorExpressionNode (self)

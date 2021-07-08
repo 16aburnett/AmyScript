@@ -686,8 +686,10 @@ class Parser:
 
             # if there is an assign
             if (self.tokens[self.currentToken].type == "ASSIGN"):
+                line = self.tokens[self.currentToken].line
+                column = self.tokens[self.currentToken].column
                 self.match ("assignexpr", "ASSIGN")
-                rhs = AssignExpressionNode (lhs, "=", None)
+                rhs = AssignExpressionNode (lhs, "=", None, line, column)
                 # if this is the first assignment expression
                 if (root == None):
                     # make this the root 
@@ -725,10 +727,13 @@ class Parser:
         lhs = self.logicalAND ()
 
         while self.tokens[self.currentToken].type == "LOR":
+            
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             self.match ("logicalOR", "LOR")
             rhs = self.logicalAND ()
 
-            lhs = LogicalOrExpressionNode (lhs, rhs)
+            lhs = LogicalOrExpressionNode (lhs, rhs, line, column)
 
         self.leave ("logicalOR")
 
@@ -744,10 +749,13 @@ class Parser:
         lhs = self.equalop ()
 
         while self.tokens[self.currentToken].type == "LAND":
+
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             self.match ("logicalOR", "LAND")
             rhs = self.equalop ()
 
-            lhs = LogicalAndExpressionNode (lhs, rhs)
+            lhs = LogicalAndExpressionNode (lhs, rhs, line, column)
 
         self.leave ("logicalAND")
 
@@ -764,6 +772,9 @@ class Parser:
 
         while self.tokens[self.currentToken].type == "EQ" \
             or self.tokens[self.currentToken].type == "NE": 
+
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             op = ""
             if self.tokens[self.currentToken].type == "EQ":
                 op = "=="
@@ -773,7 +784,7 @@ class Parser:
                 self.match ("equalop", "NE")
             rhs = self.inequalop ()
 
-            lhs = EqualityExpressionNode (lhs, op, rhs)
+            lhs = EqualityExpressionNode (lhs, op, rhs, line, column)
 
         self.leave ("equalop")
 
@@ -792,11 +803,14 @@ class Parser:
             or self.tokens[self.currentToken].type == "LTE" \
             or self.tokens[self.currentToken].type == "GT"  \
             or self.tokens[self.currentToken].type == "GTE":
+
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             op = self.tokens[self.currentToken].lexeme
             self.match ("inequalop", self.tokens[self.currentToken].type)
             rhs = self.addsub ()
 
-            lhs = InequalityExpressionNode (lhs, op, rhs)
+            lhs = InequalityExpressionNode (lhs, op, rhs, line, column)
 
         self.leave ("inequalop")
 
@@ -814,11 +828,13 @@ class Parser:
         while  self.tokens[self.currentToken].type == "PLUS"  \
             or self.tokens[self.currentToken].type == "MINUS":
 
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             op = self.tokens[self.currentToken].lexeme
             self.match ("addsub", self.tokens[self.currentToken].type)
             rhs = self.term ()
 
-            lhs = AdditiveExpressionNode (lhs, op, rhs)
+            lhs = AdditiveExpressionNode (lhs, op, rhs, line, column)
 
         self.leave ("addsub")
 
@@ -837,11 +853,13 @@ class Parser:
             or self.tokens[self.currentToken].type == "DIVIDE" \
             or self.tokens[self.currentToken].type == "MOD":
 
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             op = self.tokens[self.currentToken].lexeme
             self.match ("term", self.tokens[self.currentToken].type)
             rhs = self.unaryleft ()
 
-            lhs = MultiplicativeExpressionNode (lhs, op, rhs)
+            lhs = MultiplicativeExpressionNode (lhs, op, rhs, line, column)
 
         self.leave ("term")
 
@@ -855,6 +873,8 @@ class Parser:
         self.enter ("unaryleft")
 
         op = None
+        line = 0
+        column = 0
         if     self.tokens[self.currentToken].type == "INCR"  \
             or self.tokens[self.currentToken].type == "DECR"  \
             or self.tokens[self.currentToken].type == "PLUS"  \
@@ -862,6 +882,8 @@ class Parser:
             or self.tokens[self.currentToken].type == "LNOT"  \
             or self.tokens[self.currentToken].type == "BNOT":
             op = self.tokens[self.currentToken].lexeme
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             self.match ("unaryleft", self.tokens[self.currentToken].type)
 
         rhs = self.unaryright ()
@@ -869,74 +891,86 @@ class Parser:
         self.leave ("unaryleft")
 
         if (op != None):
-            return UnaryLeftExpressionNode (op, rhs)
+            return UnaryLeftExpressionNode (op, rhs, line, column)
         return rhs
 
     # ====================================================================
-    # unary right operators / funcall / subscript
-    # <unaryright> -> <member> [ ( ++ | -- ) ]
-    #              -> <member> [ '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' ]
-    #              -> <member> { '[' [ <expression> ] ']' }
+    # unary right operators 
+    # <unaryright> -> <arrayAccess> [ ( ++ | -- ) ]
 
     def unaryright (self):
         self.enter ("unaryright")
         
-        lhs = self.member ()
+        lhs = self.arrayAccess ()
 
-        # <unaryright> -> <member> [ ++ ]
+        # <unaryright> -> <arrayAccess> [ ++ ]
         if self.tokens[self.currentToken].type == "INCR":
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             self.match ("unaryright", "INCR")
-            lhs = PostIncrementExpressionNode (lhs)
-        # <unaryright> -> <member> [ -- ]
+            lhs = PostIncrementExpressionNode (lhs, line, column)
+        # <unaryright> -> <arrayAccess> [ -- ]
         elif self.tokens[self.currentToken].type == "DECR":
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             self.match ("unaryright", "DECR")
-            lhs = PostDecrementExpressionNode (lhs)
-        # function call 
-        # <unaryright> -> <member> [ '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' ]
-        elif self.tokens[self.currentToken].type == "LPAREN":
-            self.match ("unaryright", "LPAREN")
-            args = []
-            # optional arguments 
-            if self.tokens[self.currentToken].type != "RPAREN":
-                args += [self.assignexpr ()]
-                # 0 or more additional arguments 
-                while self.tokens[self.currentToken].type == "COMMA":
-                    self.match ("unaryright", "COMMA")
-                    args += [self.assignexpr ()]
-            self.match ("unaryright", "RPAREN")
-            lhs = FunctionCallExpressionNode (lhs, args)
-        # subscript operator 
-        # <unaryright> -> <member> [ '[' <expr> ']' ]
-        else:
-            while self.tokens[self.currentToken].type == "LBRACKET":
-                self.match ("unaryright", "LBRACKET")
-                offset = self.expression ()
-                self.match ("unaryright", "RBRACKET")
-                lhs = SubscriptExpressionNode (lhs, offset)
+            lhs = PostDecrementExpressionNode (lhs, line, column)
 
         self.leave ("unaryright")
 
         return lhs
 
     # ====================================================================
-    # member accessor
+    # array accessor and function call and member accessor
     # string.length
     # string.substring(0, 12).size()
     # string.data[10]
     # (matrixA * matrixB).transpose()
-    # <member> -> <factor> { DOT <factor> }
-    def member (self):
-        self.enter ("member")
+    # <arrayAccess> -> <factor> { ( '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' | '[' [ <expression> ] ']' | DOT <factor> ) }
+    def arrayAccess (self):
+        self.enter ("arrayAccess")
 
         lhs = self.factor ()
 
-        while (self.tokens[self.currentToken].type == "DOT"):
-            self.match ("member", "DOT")
-            rhs = self.factor ()
+        while (self.tokens[self.currentToken].type == "LPAREN" \
+            or self.tokens[self.currentToken].type == "LBRACKET"\
+            or self.tokens[self.currentToken].type == "DOT"):
 
-            lhs = MemberAccessorExpressionNode (lhs, rhs)
+            # function call 
+            # <arrayAccess> -> <factor> { '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' }
+            if self.tokens[self.currentToken].type == "LPAREN":
+                line = self.tokens[self.currentToken].line
+                column = self.tokens[self.currentToken].column
+                self.match ("arrayAccess", "LPAREN")
+                args = []
+                # optional arguments 
+                if self.tokens[self.currentToken].type != "RPAREN":
+                    args += [self.assignexpr ()]
+                    # 0 or more additional arguments 
+                    while self.tokens[self.currentToken].type == "COMMA":
+                        self.match ("arrayAccess", "COMMA")
+                        args += [self.assignexpr ()]
+                self.match ("arrayAccess", "RPAREN")
+                lhs = FunctionCallExpressionNode (lhs, args, line, column)
+            # subscript operator 
+            # <arrayAccess> -> <factor> { '[' <expr> ']' }
+            elif self.tokens[self.currentToken].type == "LBRACKET":
+                line = self.tokens[self.currentToken].line
+                column = self.tokens[self.currentToken].column
+                self.match ("arrayAccess", "LBRACKET")
+                offset = self.expression ()
+                self.match ("arrayAccess", "RBRACKET")
+                lhs = SubscriptExpressionNode (lhs, offset, line, column)
+            # member accessor
+            # <arrayAccess> -> <factor> { DOT <factor> }
+            elif (self.tokens[self.currentToken].type == "DOT"):
+                line = self.tokens[self.currentToken].line
+                column = self.tokens[self.currentToken].column
+                self.match ("arrayAccess", "DOT")
+                rhs = self.factor ()
+                lhs = MemberAccessorExpressionNode (lhs, rhs, line, column)
 
-        self.leave ("member")
+        self.leave ("arrayAccess")
 
         return lhs
 
@@ -945,6 +979,7 @@ class Parser:
     # <factor> -> '(' [ <expr> ] ')'
     #          -> IDENTIFIER
     #          -> '[' [ [ <assignExpression> { COMMA <assignExpression> } ] ] ']'
+    #          -> NEW ( TYPE | IDENTIFIER ) ( '[' <expr> ']' { '[' <expr> ']' } | '(' <args> ')' )
     #          -> <literal>
 
     def factor (self):
@@ -960,13 +995,17 @@ class Parser:
             self.match ("factor", "RPAREN")
         # <factor> -> IDENTIFIER
         elif self.tokens[self.currentToken].type == "IDENTIFIER":
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             id = self.tokens[self.currentToken].lexeme
             token = self.tokens[self.currentToken]
             self.match ("factor", "IDENTIFIER")
-            lhs = IdentifierExpressionNode (id, token)
+            lhs = IdentifierExpressionNode (id, token, line, column)
         # list creator operator  
         # <factor> -> '[' [ [ <assignExpression> { COMMA <assignExpression> } ] ] ']'
         elif self.tokens[self.currentToken].type == "LBRACKET":
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
             self.match ("factor", "LBRACKET")
             items = []
             # optional items 
@@ -977,7 +1016,92 @@ class Parser:
                     self.match ("factor", "COMMA")
                     items += [self.assignexpr ()]
             self.match ("factor", "RBRACKET")
-            lhs = ListConstructorExpressionNode (items)
+            lhs = ListConstructorExpressionNode (items, line, column)
+        # <factor> -> NEW ( TYPE '[' <expr> ']' { '[' <expr> ']' } | IDENTIFIER ( '[' <expr> ']' { '[' <expr> ']' } | '(' <args> ')' ) ) 
+        elif self.tokens[self.currentToken].type == "NEW":
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
+            self.match ("factor", "NEW")
+            # primitive type array allocator 
+            if self.isType ():
+                type = None
+                # <typeSpecifier> -> INTTYPE
+                if (self.tokens[self.currentToken].type == 'INTTYPE'):
+                    type = TypeSpecifierNode (Type.INT, "int", self.tokens[self.currentToken])
+                    self.match ("factor", 'INTTYPE')
+                # <typeSpecifier> -> FLOATTYPE
+                elif (self.tokens[self.currentToken].type == 'FLOATTYPE'):
+                    type = TypeSpecifierNode (Type.FLOAT, "float", self.tokens[self.currentToken])
+                    self.match ("factor", 'FLOATTYPE')
+                # <typeSpecifier> -> CHARTYPE
+                elif (self.tokens[self.currentToken].type == 'CHARTYPE'):
+                    type = TypeSpecifierNode (Type.CHAR, "char", self.tokens[self.currentToken])
+                    self.match ("factor", 'CHARTYPE')
+                # <typeSpecifier> -> BOOLTYPE
+                elif (self.tokens[self.currentToken].type == 'BOOLTYPE'):
+                    type = TypeSpecifierNode (Type.BOOL, "bool", self.tokens[self.currentToken])
+                    self.match ("factor", 'BOOLTYPE')
+                # <typeSpecifier> -> STRINGTYPE
+                elif (self.tokens[self.currentToken].type == 'STRINGTYPE'):
+                    type = TypeSpecifierNode (Type.STRING, "string", self.tokens[self.currentToken])
+                    self.match ("factor", 'STRINGTYPE')
+                # <typeSpecifier> -> VOIDTYPE
+                elif (self.tokens[self.currentToken].type == 'VOIDTYPE'):
+                    type = TypeSpecifierNode (Type.VOID, "void", self.tokens[self.currentToken])
+                    self.match ("factor", 'VOIDTYPE')
+                else:
+                    self.error ("factor", "INTTYPE")
+
+                self.match ("factor", "LBRACKET")
+                offsets = [self.expression ()]
+                type.arrayDimensions += 1
+                self.match ("factor", "RBRACKET")
+
+                while (self.tokens[self.currentToken].type == "LBRACKET"):
+                    self.match ("factor", "LBRACKET")
+                    offsets += [self.expression ()]
+                    type.arrayDimensions += 1
+                    self.match ("factor", "RBRACKET")
+
+                lhs = ArrayAllocatorExpressionNode (type, offsets, line, column)
+            # usertype array alloc or constructor call 
+            else:
+
+                type = TypeSpecifierNode (Type.USERTYPE, self.tokens[self.currentToken].lexeme, self.tokens[self.currentToken])
+                self.match ("factor", "IDENTIFIER")
+
+                # usertype array
+                if (self.tokens[self.currentToken].type == "LBRACKET"):
+                    self.match ("factor", "LBRACKET")
+                    offsets = [self.expression ()]
+                    type.arrayDimensions += 1
+                    self.match ("factor", "RBRACKET")
+
+                    while (self.tokens[self.currentToken].type == "LBRACKET"):
+                        self.match ("factor", "LBRACKET")
+                        offsets += [self.expression ()]
+                        type.arrayDimensions += 1
+                        self.match ("factor", "RBRACKET")
+
+                    lhs = ArrayAllocatorExpressionNode (type, offsets, line, column)
+                # constructor call 
+                elif (self.tokens[self.currentToken].type == "LPAREN"):
+                    self.match ("factor", "LPAREN")
+                    args = []
+                    # optional arguments 
+                    if self.tokens[self.currentToken].type != "RPAREN":
+                        args += [self.assignexpr ()]
+                        # 0 or more additional arguments 
+                        while self.tokens[self.currentToken].type == "COMMA":
+                            self.match ("factor", "COMMA")
+                            args += [self.assignexpr ()]
+                    self.match ("factor", "RPAREN")
+
+                    lhs = ConstructorCallExpressionNode (type, args, line, column)
+
+                else:
+                    self.error ("factor", "LBRACKET", "Expecting an array allocator or class constructor call")
+
         else:
             lhs = self.literal ()
 

@@ -39,6 +39,7 @@ while:
     jge endwhile
     // body 
     print msg[i]
+    // print __lhs[__off]
     // update
     add i i 1
     // repeat

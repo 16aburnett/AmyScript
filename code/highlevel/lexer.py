@@ -43,6 +43,7 @@ token_specification = [
     ('FIELD',    r'field'),  
     ('METHOD',   r'method'),  
     ('CONSTRUCTOR',  r'constructor'),  
+    ('NEW',      r'new'),  
 # Built-in types
     ('INTTYPE',   r'int'),  
     ('FLOATTYPE', r'float'),  

@@ -36,14 +36,19 @@ OPCODE_JUMPNEQ     = 19
 OPCODE_JUMPGE      = 20
 OPCODE_JUMPGT      = 21
 OPCODE_EQUAL       = 22
-OPCODE_COMPARE     = 23
-OPCODE_AND         = 24
-OPCODE_OR          = 25
-OPCODE_NOT         = 26
-OPCODE_SIZEOF      = 27
-OPCODE_PUSH        = 28
-OPCODE_POP         = 29
-OPCODE_STACKGET    = 30
+OPCODE_NEQUAL      = 23
+OPCODE_LT          = 24
+OPCODE_LE          = 25
+OPCODE_GT          = 26
+OPCODE_GE          = 27
+OPCODE_COMPARE     = 28
+OPCODE_AND         = 29
+OPCODE_OR          = 30
+OPCODE_NOT         = 31
+OPCODE_SIZEOF      = 32
+OPCODE_PUSH        = 33
+OPCODE_POP         = 34
+OPCODE_STACKGET    = 35
 toOpCode = {
     "assign"      : OPCODE_ASSIGN,
     "malloc"      : OPCODE_MALLOC,
@@ -67,6 +72,11 @@ toOpCode = {
     "jge"         : OPCODE_JUMPGE,
     "jgt"         : OPCODE_JUMPGT,
     "equal"       : OPCODE_EQUAL,
+    "nequal"      : OPCODE_NEQUAL,
+    "lt"          : OPCODE_LT,
+    "le"          : OPCODE_LE,
+    "gt"          : OPCODE_GT,
+    "ge"          : OPCODE_GE,
     "cmp"         : OPCODE_COMPARE,
     "println"     : OPCODE_PRINTLN,
     "sizeof"      : OPCODE_SIZEOF,
@@ -676,6 +686,106 @@ while instruction_pointer < len(code):
         else:
             print(f"Dest should be memory or stack")
             exit(1)
+    elif cmd == OPCODE_NEQUAL:
+        # NEQUAL dest src1 src2 
+        # dest = src1 != src2
+        # Case1 : variable
+        if params[0] == MODE_STACK:
+            # variable is allowed to not exist for assigning 
+            src1, i = getNextValue(heap, stack, params, 2)
+            src2, i = getNextValue(heap, stack, params, i)
+            stack[base_pointer][params[1]] = 1 if src1 != src2 else 0
+        # Case2 : memory
+        elif params[0] == MODE_MEMORY:
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            src1, i = getNextValue(heap, stack, params, 5)
+            src2, i = getNextValue(heap, stack, params, i)
+            heap.memory[address] = 1 if src1 != src2 else 0
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
+    elif cmd == OPCODE_LT:
+        # LT dest src1 src2 
+        # dest = src1 < src2
+        # Case1 : variable
+        if params[0] == MODE_STACK:
+            # variable is allowed to not exist for assigning 
+            src1, i = getNextValue(heap, stack, params, 2)
+            src2, i = getNextValue(heap, stack, params, i)
+            stack[base_pointer][params[1]] = 1 if src1 < src2 else 0
+        # Case2 : memory
+        elif params[0] == MODE_MEMORY:
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            src1, i = getNextValue(heap, stack, params, 5)
+            src2, i = getNextValue(heap, stack, params, i)
+            heap.memory[address] = 1 if src1 < src2 else 0
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
+    elif cmd == OPCODE_LE:
+        # LE dest src1 src2 
+        # dest = src1 <= src2
+        # Case1 : variable
+        if params[0] == MODE_STACK:
+            # variable is allowed to not exist for assigning 
+            src1, i = getNextValue(heap, stack, params, 2)
+            src2, i = getNextValue(heap, stack, params, i)
+            stack[base_pointer][params[1]] = 1 if src1 <= src2 else 0
+        # Case2 : memory
+        elif params[0] == MODE_MEMORY:
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            src1, i = getNextValue(heap, stack, params, 5)
+            src2, i = getNextValue(heap, stack, params, i)
+            heap.memory[address] = 1 if src1 <= src2 else 0
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
+    elif cmd == OPCODE_GT:
+        # GT dest src1 src2 
+        # dest = src1 > src2
+        # Case1 : variable
+        if params[0] == MODE_STACK:
+            # variable is allowed to not exist for assigning 
+            src1, i = getNextValue(heap, stack, params, 2)
+            src2, i = getNextValue(heap, stack, params, i)
+            stack[base_pointer][params[1]] = 1 if src1 > src2 else 0
+        # Case2 : memory
+        elif params[0] == MODE_MEMORY:
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            src1, i = getNextValue(heap, stack, params, 5)
+            src2, i = getNextValue(heap, stack, params, i)
+            heap.memory[address] = 1 if src1 > src2 else 0
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
+    elif cmd == OPCODE_GE:
+        # GE dest src1 src2 
+        # dest = src1 >= src2
+        # Case1 : variable
+        if params[0] == MODE_STACK:
+            # variable is allowed to not exist for assigning 
+            src1, i = getNextValue(heap, stack, params, 2)
+            src2, i = getNextValue(heap, stack, params, i)
+            stack[base_pointer][params[1]] = 1 if src1 >= src2 else 0
+        # Case2 : memory
+        elif params[0] == MODE_MEMORY:
+            pmode, pointer, omode, offset = params[1:5]
+            address = getMemAddress(stack, pmode, pointer, omode, offset)
+            src1, i = getNextValue(heap, stack, params, 5)
+            src2, i = getNextValue(heap, stack, params, i)
+            heap.memory[address] = 1 if src1 >= src2 else 0
+        # Case 3: Invalid param type
+        else:
+            print(f"Dest should be memory or stack")
+            exit(1)
     elif cmd == OPCODE_AND:
         # AND dest src1 src2 
         # dest = src1 && src2
@@ -792,7 +902,7 @@ while instruction_pointer < len(code):
     instruction_pointer += 1
 
 
-printheap(heap)
+# printheap(heap)
 
 # print("*** End of program ***")
 

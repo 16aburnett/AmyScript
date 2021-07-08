@@ -7,6 +7,7 @@ class Person
     public field string m_name; 
     // fields and methods are private by default 
     field int m_age; 
+    public field float[] m_nums; 
 
     // default constructor
     // constructors are always public so public/private does not need
@@ -15,6 +16,7 @@ class Person
     {
         m_name = "";
         m_age = 0; 
+        m_nums = new float[5];
     }
 
     // overloaded constructors 
@@ -24,6 +26,7 @@ class Person
     {
         m_name = name;
         m_age = age; 
+        m_nums = new float[5];
     }
 
     public method int getAge ()
@@ -43,17 +46,25 @@ function int max (int a, int b)
 
 // =======================================================================
 
-Person amy; 
+Person[] people = new Person[2];
 
-amy.name = "Amy";
-amy.age = 21;
+int camIndex = (int amyIndex = 0) + 1;
 
-println (amy.name.size());
+people[amyIndex] = new Person(); 
+people[camIndex] = new Person ("Cameron", 21);
 
-int[] nums;
+people[amyIndex].m_name = "Amy";
+people[amyIndex].m_age = people[camIndex].getAge ();
+
+people[amyIndex].m_nums[0] = 3.14;
+people[amyIndex].m_nums[1] = 6.28;
+
+println (people[0].m_name);
+
+int[] nums = new int[5];
 
 // you can use sizeof to get the size of an array 
-for (int i = 0; i < nums.size(); ++i)
+for (int i = 0; i < sizeof(nums); ++i)
 {
     print (nums[i], " ");
 }
@@ -61,7 +72,7 @@ println ();
 
 int mybool = 0; 
 
-if (nums.size() > 0)
+if (sizeof(nums) > 0)
 {
     print("Nums: ");
     print(nums); 
@@ -91,14 +102,23 @@ while (1)
 int w = nums[x++] = 21 + 12;
 
 
-int foo = float boat = 7;
+// this line produces semantic errors 
+//int foo = float boat = 7;
 
 
-float[][] board; 
+int nRows = int nCols = 10;
+float[][] board = new float[nRows][nCols]; 
 
 board[0][0] = 7.34;
 
 // foo is not an array
-foo[2] = 7;
+//semantic error
+//foo[2] = 7;
+
+int apple = 1;
+//apple pie = 12;
+
+// semantic error
+//board = new float[2];
 
 // =======================================================================

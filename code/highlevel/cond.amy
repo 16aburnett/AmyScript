@@ -1,0 +1,33 @@
+
+
+
+int x = 10;
+int y = 7; 
+int z = 7; 
+
+if (x == 0)
+{
+    if (1)
+    {
+        println (x);
+    }
+}
+elif (x == y)
+{
+    println (x);
+}
+elif (x == y + 3)
+{
+    println ("WooHoo!");
+}
+else 
+{
+    println ("Nope!");
+}
+
+if ((y == z && z == x) || z + 3 == x)
+{
+    println ("its true");
+}
+
+println ("Interesting...");

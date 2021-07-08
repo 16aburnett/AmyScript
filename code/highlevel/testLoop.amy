@@ -1,0 +1,36 @@
+
+
+for (int i = 0; i < 42; ++i)
+{
+    printInt (i);
+    println ("");
+}
+
+i = 10;
+int x = 10;
+
+while (i > 0)
+{
+    printInt (i--);
+    println ("");
+}
+
+for (i = 0; i < 5; i++)
+{
+    for (int j = 0; j < 5; j++)
+    {
+        if (((i % 2) + (j % 2)) % 2== 0)
+            print ("x");
+        else
+            print (".");
+    }
+    int x = 7;
+    println ("");
+}
+
+printInt (i);
+println ("");
+
+// X should be 10 but it is 7 -__-
+printInt (x);
+println ("");

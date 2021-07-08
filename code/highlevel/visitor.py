@@ -147,6 +147,10 @@ class ASTVisitor (ABC):
         pass
 
     @abstractmethod
+    def visitArrayAllocatorExpressionNode (self, node):
+        pass
+
+    @abstractmethod
     def visitIntLiteralExpressionNode (self, node):
         pass
 
@@ -225,7 +229,15 @@ class PrintVisitor (ASTVisitor):
 
     def visitFunctionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Function: {node.id}\n"]
+        self.outputstrings += [f"Function: {node.id} "]
+
+        if (len(node.params) == 0):
+            self.outputstrings += ["void"]
+        else:
+            self.outputstrings += [f"{node.params[0].type}"]
+            for i in range(1, len(node.params)):
+                self.outputstrings += [f":{node.params[i].type}"]
+        self.outputstrings += [f"->{node.type}\n"]
 
         self.level += 1
 
@@ -298,7 +310,15 @@ class PrintVisitor (ASTVisitor):
 
     def visitMethodDeclarationNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Method: \n"]
+        self.outputstrings += [f"Method: {node.id} "]
+
+        if (len(node.params) == 0):
+            self.outputstrings += ["void"]
+        else:
+            self.outputstrings += [f"{node.params[0].type}"]
+            for i in range(1, len(node.params)):
+                self.outputstrings += [f":{node.params[i].type}"]
+        self.outputstrings += [f"->{node.type}\n"]
 
         self.level += 1
 
@@ -489,9 +509,7 @@ class PrintVisitor (ASTVisitor):
 
         # print expr 
         if node.expr != None:
-            self.level += 1
             node.expr.accept (self)
-            self.level -= 1
 
         self.level -= 1
 
@@ -534,7 +552,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitTupleExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Tuple: {node.type.type}\n"]
+        self.outputstrings += [f"Tuple: {node.type}\n"]
 
         self.level += 1
 
@@ -545,7 +563,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitAssignExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"AssignExpression: {node.op} {node.type.type}\n"]
+        self.outputstrings += [f"AssignExpression: {node.op} {node.type}\n"]
 
         self.level += 1
 
@@ -557,7 +575,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitLogicalOrExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"LogicalOR Expression: || {node.type.type}\n"]
+        self.outputstrings += [f"LogicalOR Expression: || {node.type}\n"]
 
         self.level += 1
 
@@ -568,7 +586,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitLogicalAndExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"LogicalAND Expression: && {node.type.type}\n"]
+        self.outputstrings += [f"LogicalAND Expression: && {node.type}\n"]
 
         self.level += 1
 
@@ -579,7 +597,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitEqualityExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"EqualityExpression: {node.op} {node.type.type}\n"]
+        self.outputstrings += [f"EqualityExpression: {node.op} {node.type}\n"]
 
         self.level += 1
 
@@ -590,7 +608,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitInequalityExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"InequalityExpression: {node.op} {node.type.type}\n"]
+        self.outputstrings += [f"InequalityExpression: {node.op} {node.type}\n"]
 
         self.level += 1
 
@@ -601,7 +619,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitAdditiveExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"AdditiveExpression: {node.op} {node.type.type}\n"]
+        self.outputstrings += [f"AdditiveExpression: {node.op} {node.type}\n"]
 
         self.level += 1
 
@@ -612,7 +630,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitMultiplicativeExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"MultiplicativeExpression: {node.op} {node.type.type}\n"]
+        self.outputstrings += [f"MultiplicativeExpression: {node.op} {node.type}\n"]
 
         self.level += 1
 
@@ -623,7 +641,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitUnaryLeftExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"UnaryLeftExpression: {node.op} {node.type.type}\n"]
+        self.outputstrings += [f"UnaryLeftExpression: {node.op} {node.type}\n"]
 
         self.level += 1
 
@@ -633,7 +651,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitPostIncrementExpressionNode(self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"PostIncrement: {node.type.type}\n"]
+        self.outputstrings += [f"PostIncrement: {node.type}\n"]
 
         self.level += 1
 
@@ -643,7 +661,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitPostDecrementExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"PostDecrement: {node.type.type}\n"]
+        self.outputstrings += [f"PostDecrement: {node.type}\n"]
 
         self.level += 1
 
@@ -653,11 +671,9 @@ class PrintVisitor (ASTVisitor):
 
     def visitSubscriptExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Subscript Operator: {node.type.type}\n"]
+        self.outputstrings += [f"Subscript Operator: {node.type}\n"]
 
         self.level += 1
-
-        node.type.accept (self)
         
         self.printSpaces (self.level)
         self.outputstrings += ["Array:\n"]
@@ -675,7 +691,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitFunctionCallExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Function Call: {node.type.type}\n"]
+        self.outputstrings += [f"Function Call: {node.type}\n"]
 
         self.level += 1
 
@@ -696,7 +712,7 @@ class PrintVisitor (ASTVisitor):
 
     def visitMemberAccessorExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Member Accessor: {node.type.type}\n"]
+        self.outputstrings += [f"Member Accessor: {node.type}\n"]
 
         self.level += 1
 
@@ -707,30 +723,49 @@ class PrintVisitor (ASTVisitor):
 
     def visitIdentifierExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Identifier: {node.id}\n"]
+        self.outputstrings += [f"Identifier: {node.id} {node.type}\n"]
+
+    def visitArrayAllocatorExpressionNode (self, node):
+        self.printSpaces (self.level)
+        self.outputstrings += [f"ArrayAllocator: {node.type}\n"]
         self.level += 1
-        node.type.accept (self)
-        self.level -= 1
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Dimensions: \n"]
+        self.level += 1
+        for d in node.dimensions:
+            d.accept (self)
+        self.level -= 2
+
+    def visitConstructorCallExpressionNode (self, node):
+        self.printSpaces (self.level)
+        self.outputstrings += [f"ConstructorCall: {node.type}\n"]
+        self.level += 1
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Args: \n"]
+        self.level += 1
+        for a in node.args:
+            a.accept (self)
+        self.level -= 2
 
     def visitIntLiteralExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Int Literal: {node.value} {node.type.type}\n"]
+        self.outputstrings += [f"Int Literal: {node.value} {node.type}\n"]
 
     def visitFloatLiteralExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Float Literal: {node.value} {node.type.type}\n"]
+        self.outputstrings += [f"Float Literal: {node.value} {node.type}\n"]
 
     def visitCharLiteralExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Char Literal: {node.value} {node.type.type}\n"]
+        self.outputstrings += [f"Char Literal: {node.value} {node.type}\n"]
 
     def visitStringLiteralExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"String Literal: {node.value} {node.type.type}\n"]
+        self.outputstrings += [f"String Literal: {node.value} {node.type}\n"]
 
     def visitListConstructorExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"List Constructor:\n"]
+        self.outputstrings += [f"List Constructor: {node.type}\n"]
         
         self.level += 1
 
@@ -745,7 +780,7 @@ class PrintVisitor (ASTVisitor):
     
     def printSpaces (self, level):
         while level > 0:
-            self.outputstrings += ["  "]
+            self.outputstrings += ["|   "]
             level -= 1
 
 # ========================================================================

@@ -1,0 +1,550 @@
+// AmyAssembly compiled from AmyScript
+//=========================================================================
+//=========================================================================
+// Class Declaration - Person
+   //----------------------------------------------------------------------
+   // Field - m_name
+   //----------------------------------------------------------------------
+   //----------------------------------------------------------------------
+   // Field - m_age
+   //----------------------------------------------------------------------
+   //----------------------------------------------------------------------
+   // Field - m_nums
+   //----------------------------------------------------------------------
+   //----------------------------------------------------------------------
+   // Constructor
+   // Assignment
+      // RHS
+         // String Literal 
+      // LHS
+         // Identifier
+            PUSH m_name
+      POP __rhs
+      ASSIGN m_name __rhs
+      PUSH __rhs
+   // Assignment
+      // RHS
+         PUSH 0
+      // LHS
+         // Identifier
+            PUSH m_age
+      POP __rhs
+      ASSIGN m_age __rhs
+      PUSH __rhs
+   // Assignment
+      // RHS
+         PUSH 5
+         POP __size
+         MALLOC __ptr __size
+         PUSH __ptr
+      // LHS
+         // Identifier
+            PUSH m_nums
+      POP __rhs
+      ASSIGN m_nums __rhs
+      PUSH __rhs
+   //----------------------------------------------------------------------
+   //----------------------------------------------------------------------
+   // Constructor
+   // Assignment
+      // RHS
+         // Identifier
+            PUSH name
+      // LHS
+         // Identifier
+            PUSH m_name
+      POP __rhs
+      ASSIGN m_name __rhs
+      PUSH __rhs
+   // Assignment
+      // RHS
+         // Identifier
+            PUSH age
+      // LHS
+         // Identifier
+            PUSH m_age
+      POP __rhs
+      ASSIGN m_age __rhs
+      PUSH __rhs
+   // Assignment
+      // RHS
+         PUSH 5
+         POP __size
+         MALLOC __ptr __size
+         PUSH __ptr
+      // LHS
+         // Identifier
+            PUSH m_nums
+      POP __rhs
+      ASSIGN m_nums __rhs
+      PUSH __rhs
+   //----------------------------------------------------------------------
+   //----------------------------------------------------------------------
+   // Method - getAge
+      // Identifier
+         PUSH m_age
+   //----------------------------------------------------------------------
+// End Class Declaration - Person
+//=========================================================================
+//=========================================================================
+// Function Declaration - max int
+max:
+   // Parameters
+      // Param: a
+      POP a
+      // Param: b
+      POP b
+   // Body
+      //-------------------------------------------------------------------
+      // If-Statement
+         // Condition
+         // Identifier
+            PUSH a
+         // Identifier
+            PUSH b
+         // Body
+         // Identifier
+            PUSH a
+      //-------------------------------------------------------------------
+      // Identifier
+         PUSH b
+// End Function Declaration - max
+//=========================================================================
+// Assignment
+   // RHS
+      PUSH 2
+      POP __size
+      MALLOC __ptr __size
+      PUSH __ptr
+   // LHS
+      // Variable Declaration
+         ASSIGN people 0
+   POP __rhs
+   ASSIGN people __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Addition
+         // LHS
+            // Assignment
+               // RHS
+                  PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN amyIndex 0
+               POP __rhs
+               ASSIGN amyIndex __rhs
+               PUSH __rhs
+         // RHS
+            PUSH 1
+         POP __rhs
+         POP __lhs
+         ADD __res __lhs __rhs
+         PUSH __res
+   // LHS
+      // Variable Declaration
+         ASSIGN camIndex 0
+   POP __rhs
+   ASSIGN camIndex __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+   // LHS
+      // Subscript
+         // LHS
+            // Identifier
+               PUSH people
+         // OFFSET
+            // Identifier
+               PUSH amyIndex
+         POP __offset
+         POP __pointer
+         ADD __dest __pointer __offset
+         PUSH __dest
+   POP __lhs
+   POP __rhs
+   ASSIGN __lhs[0] __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // String Literal 
+      PUSH 21
+   // LHS
+      // Subscript
+         // LHS
+            // Identifier
+               PUSH people
+         // OFFSET
+            // Identifier
+               PUSH camIndex
+         POP __offset
+         POP __pointer
+         ADD __dest __pointer __offset
+         PUSH __dest
+   POP __lhs
+   POP __rhs
+   ASSIGN __lhs[0] __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // String Literal 
+   // LHS
+      // Subscript
+         // LHS
+            // Identifier
+               PUSH people
+         // OFFSET
+            // Identifier
+               PUSH amyIndex
+         POP __offset
+         POP __pointer
+         ADD __dest __pointer __offset
+         PUSH __dest
+      // Identifier
+         PUSH m_name
+   PUSH __rhs
+// Assignment
+   // RHS
+      // FunctionCall
+         // Subscript
+            // LHS
+               // Identifier
+                  PUSH people
+            // OFFSET
+               // Identifier
+                  PUSH camIndex
+            POP __offset
+            POP __pointer
+            ADD __dest __pointer __offset
+            PUSH __dest
+         // Identifier
+            PUSH getAge
+   // LHS
+      // Subscript
+         // LHS
+            // Identifier
+               PUSH people
+         // OFFSET
+            // Identifier
+               PUSH amyIndex
+         POP __offset
+         POP __pointer
+         ADD __dest __pointer __offset
+         PUSH __dest
+      // Identifier
+         PUSH m_age
+   PUSH __rhs
+// Assignment
+   // RHS
+      PUSH 3.14
+   // LHS
+      // Subscript
+         // LHS
+            // Subscript
+               // LHS
+                  // Identifier
+                     PUSH people
+               // OFFSET
+                  // Identifier
+                     PUSH amyIndex
+               POP __offset
+               POP __pointer
+               ADD __dest __pointer __offset
+               PUSH __dest
+            // Identifier
+               PUSH m_nums
+         // OFFSET
+            PUSH 0
+         POP __offset
+         POP __pointer
+         ADD __dest __pointer __offset
+         PUSH __dest
+   POP __lhs
+   POP __rhs
+   ASSIGN __lhs[0] __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      PUSH 6.28
+   // LHS
+      // Subscript
+         // LHS
+            // Subscript
+               // LHS
+                  // Identifier
+                     PUSH people
+               // OFFSET
+                  // Identifier
+                     PUSH amyIndex
+               POP __offset
+               POP __pointer
+               ADD __dest __pointer __offset
+               PUSH __dest
+            // Identifier
+               PUSH m_nums
+         // OFFSET
+            PUSH 1
+         POP __offset
+         POP __pointer
+         ADD __dest __pointer __offset
+         PUSH __dest
+   POP __lhs
+   POP __rhs
+   ASSIGN __lhs[0] __rhs
+   PUSH __rhs
+// FunctionCall
+   // Subscript
+      // LHS
+         // Identifier
+            PUSH people
+      // OFFSET
+         PUSH 0
+      POP __offset
+      POP __pointer
+      ADD __dest __pointer __offset
+      PUSH __dest
+   // Identifier
+      PUSH m_name
+   // Identifier
+      PUSH println
+// Assignment
+   // RHS
+      PUSH 5
+      POP __size
+      MALLOC __ptr __size
+      PUSH __ptr
+   // LHS
+      // Variable Declaration
+         ASSIGN nums 0
+   POP __rhs
+   ASSIGN nums __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      PUSH 0
+   // LHS
+      // Variable Declaration
+         ASSIGN i 0
+   POP __rhs
+   ASSIGN i __rhs
+   PUSH __rhs
+// Identifier
+   PUSH i
+// FunctionCall
+   // Identifier
+      PUSH nums
+   // Identifier
+      PUSH sizeof
+// Identifier
+   PUSH i
+// FunctionCall
+   // Subscript
+      // LHS
+         // Identifier
+            PUSH nums
+      // OFFSET
+         // Identifier
+            PUSH i
+      POP __offset
+      POP __pointer
+      ADD __dest __pointer __offset
+      PUSH __dest
+   // String Literal 
+   // Identifier
+      PUSH print
+// FunctionCall
+   // Identifier
+      PUSH println
+// Assignment
+   // RHS
+      PUSH 0
+   // LHS
+      // Variable Declaration
+         ASSIGN mybool 0
+   POP __rhs
+   ASSIGN mybool __rhs
+   PUSH __rhs
+//-------------------------------------------------------------------------
+// If-Statement
+   // Condition
+   // FunctionCall
+      // Identifier
+         PUSH nums
+      // Identifier
+         PUSH sizeof
+   PUSH 0
+   // Body
+   // FunctionCall
+      // String Literal 
+      // Identifier
+         PUSH print
+   // FunctionCall
+      // Identifier
+         PUSH nums
+      // Identifier
+         PUSH print
+   // FunctionCall
+      // Identifier
+         PUSH println
+   //----------------------------------------------------------------------
+   // Elif-Statement
+      // Condition
+      // Identifier
+         PUSH mybool
+      // Body
+      // FunctionCall
+         // Identifier
+            PUSH mybool
+         // Identifier
+            PUSH println
+   //----------------------------------------------------------------------
+   //----------------------------------------------------------------------
+   // Else-Statement
+   // FunctionCall
+      // String Literal 
+      // Identifier
+         PUSH println
+   //----------------------------------------------------------------------
+//-------------------------------------------------------------------------
+// FunctionCall
+   // Assignment
+      // RHS
+         // Assignment
+            // RHS
+               PUSH 10
+            // LHS
+               // Variable Declaration
+                  ASSIGN y 0
+            POP __rhs
+            ASSIGN y __rhs
+            PUSH __rhs
+      // LHS
+         // Variable Declaration
+            ASSIGN x 0
+      POP __rhs
+      ASSIGN x __rhs
+      PUSH __rhs
+   // Identifier
+      PUSH println
+// Assignment
+   // RHS
+      PUSH 0
+   // LHS
+      // Identifier
+         PUSH x
+   POP __rhs
+   ASSIGN x __rhs
+   PUSH __rhs
+PUSH 1
+//-------------------------------------------------------------------------
+// If-Statement
+   // Condition
+   // Identifier
+      PUSH x
+   PUSH 10
+   // Body
+//-------------------------------------------------------------------------
+// Assignment
+   // RHS
+      // Assignment
+         // RHS
+            // Addition
+               // LHS
+                  PUSH 21
+               // RHS
+                  PUSH 12
+               POP __rhs
+               POP __lhs
+               ADD __res __lhs __rhs
+               PUSH __res
+         // LHS
+            // Subscript
+               // LHS
+                  // Identifier
+                     PUSH nums
+               // OFFSET
+                  // Identifier
+                     PUSH x
+               POP __offset
+               POP __pointer
+               ADD __dest __pointer __offset
+               PUSH __dest
+         POP __lhs
+         POP __rhs
+         ASSIGN __lhs[0] __rhs
+         PUSH __rhs
+   // LHS
+      // Variable Declaration
+         ASSIGN w 0
+   POP __rhs
+   ASSIGN w __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Assignment
+         // RHS
+            PUSH 10
+         // LHS
+            // Variable Declaration
+               ASSIGN nCols 0
+         POP __rhs
+         ASSIGN nCols __rhs
+         PUSH __rhs
+   // LHS
+      // Variable Declaration
+         ASSIGN nRows 0
+   POP __rhs
+   ASSIGN nRows __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Identifier
+         PUSH nRows
+      // Identifier
+         PUSH nCols
+      POP __size
+      MALLOC __ptr __size
+      PUSH __ptr
+   // LHS
+      // Variable Declaration
+         ASSIGN board 0
+   POP __rhs
+   ASSIGN board __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      PUSH 7.34
+   // LHS
+      // Subscript
+         // LHS
+            // Subscript
+               // LHS
+                  // Identifier
+                     PUSH board
+               // OFFSET
+                  PUSH 0
+               POP __offset
+               POP __pointer
+               ADD __dest __pointer __offset
+               PUSH __dest
+         // OFFSET
+            PUSH 0
+         POP __offset
+         POP __pointer
+         ADD __dest __pointer __offset
+         PUSH __dest
+   POP __lhs
+   POP __rhs
+   ASSIGN __lhs[0] __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      PUSH 1
+   // LHS
+      // Variable Declaration
+         ASSIGN apple 0
+   POP __rhs
+   ASSIGN apple __rhs
+   PUSH __rhs
+//=========================================================================
+// End of program

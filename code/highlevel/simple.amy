@@ -1,0 +1,52 @@
+// Super simple AmyScript program
+
+function int add (int lhs, int rhs)
+{
+    return lhs + rhs; 
+}
+
+
+int[] nums = new int[5];
+
+char[] nl = new char[1];
+nl[0] = ' ';
+
+int a = 28;
+
+nums[0] = (a - 7) / 3;
+// ASSIGN __sub 0
+// ASSIGN nums[__sub] rhs
+
+printInt (nums[0]);
+println (nl);
+
+int x = 10;
+int y = 7;
+
+// 17 + 27 = 44
+nums[1] = int z = add (21, 7);
+
+printInt (z);
+println (nl);
+
+
+printInt (++nums[1]);
+println (nl);
+
+printInt (nums[0]--);
+println (nl);
+
+printInt (++x);
+println (nl);
+printInt (++x);
+println (nl);
+printInt (++x);
+println (nl);
+printInt (++x);
+println (nl);
+
+
+if (x > 12 && nums[0] == nums[0]--)
+{
+    println ("Can you even here me now!");
+}
