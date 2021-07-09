@@ -3,6 +3,8 @@ AmyScript
 
 AmyScript is a high-level programming language. It is still currently in development and there is no current build for it. The expectation is that AmyScript is compiled to AmyAssembly which will then be interpreted. 
 
+Check out the documentation at https://16aburnett.github.io/AmyScript/website
+
 AmyAssembly is a low-level command-based programming language. 
 The language is similar to assembly with some differences like variable amounts of registers. 
 
