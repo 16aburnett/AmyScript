@@ -1,0 +1,57 @@
+<!--
+    AmyScript Documentation Website
+    
+    Author: Amy Burnett
+    Created: June 9 2021
+
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AmyScript Documentation</title>
+        <!-- <link rel="icon" type="image/png" href="../res/favicon-32x32.png" sizes="32x32" /> -->
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <script type="text/javascript" src="shell.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+    </head>
+    <body>
+        <div id="page_header">
+            <script>loadHeader ("page_header")</script>
+        </div>
+        <div id="page_middle">
+            <div id="page_sidebar">
+                <script>loadSidebar ("page_sidebar", "index.html")</script>
+            </div>
+            <div id="page_content">
+            <!---------------------- CONTENT SECTION ---------------------->
+                <h2>AmyScript - Programming Language</h2>
+                <p>AmyScript is a high level programming language that is similar to C, C++, Java, and Javascript. This language and its compilers/interpreters are a part of a passion project and are not fully supported. Therefore, I do not recommend using this language commercially.</p>
+                
+                <p></p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>AmyScript</h3>
+                    </div>
+                    <pre class="code"><span class="codeKeyword">function</span> int add <span class="codeOperator">(</span>int a, int b<span class="codeOperator">)</span>
+<span class="codeOperator">{</span>
+    <span class="codeKeyword">return</span> a <span class="codeOperator">+</span> b<span class="codeOperator">;</span>
+<span class="codeOperator">}</span>
+
+int c <span class="codeOperator">=</span> add <span class="codeOperator">(</span>7<span class="codeOperator">,</span> 5<span class="codeOperator">);</span>
+
+print <span class="codeOperator">(</span><span class="codeStringLiteral">"7 + 5 = "</span><span class="codeOperator">);</span>
+printInt <span class="codeOperator">(</span>c<span class="codeOperator">);</span>
+println <span class="codeOperator">(</span><span class="codeStringLiteral">""</span><span class="codeOperator">);</span>
+</pre>
+                </div>
+
+            <!-------------------- END CONTENT SECTION -------------------->
+            </div>
+        </div>    
+        <div id="page_footer">
+            <script>loadFooter ("page_footer")</script>
+        </div>
+    </body>
+</html>
