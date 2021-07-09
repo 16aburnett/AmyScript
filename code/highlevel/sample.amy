@@ -4,34 +4,38 @@
 
 class Person
 {
-    public field string m_name; 
+    public field char[]  m_name; 
     // fields and methods are private by default 
-    field int m_age; 
+    field int            m_age; 
     public field float[] m_nums; 
+
+    //--------------------------------------------------------------------
 
     // default constructor
     // constructors are always public so public/private does not need
     // to be provided 
-    constructor ()
+    // ***currently there is no constructor/function overloading
+    //constructor ()
+    //{
+    //    m_name = "";
+    //    m_age = 0; 
+    //    m_nums = new float[5];
+    //}
+
+    //--------------------------------------------------------------------
+
+    constructor (char[] name, int age)
     {
-        m_name = "";
-        m_age = 0; 
-        m_nums = new float[5];
+        this.m_name = name;
+        this.m_age = age; 
+        this.m_nums = new float[5];
     }
 
-    // overloaded constructors 
-    // multiple constructors can be provided as long as 
-    // the parameter signature has different types 
-    constructor (string name, int age)
-    {
-        m_name = name;
-        m_age = age; 
-        m_nums = new float[5];
-    }
+    //--------------------------------------------------------------------
 
     public method int getAge ()
     {
-        return m_age; 
+        return this.m_age; 
     }
 
 }
@@ -68,7 +72,7 @@ for (int i = 0; i < sizeof(nums); ++i)
 {
     print (nums[i], " ");
 }
-println ();
+println ("");
 
 int mybool = 0; 
 

@@ -146,7 +146,8 @@ class FunctionNode (CodeUnitNode):
 
 class ClassDeclarationNode (CodeUnitNode):
     
-    def __init__(self, id, token, constructors, fields, methods):
+    def __init__(self, type, id, token, constructors, fields, methods):
+        self.type = type
         self.id = id
         self.token = token
         self.constructors = constructors
@@ -167,6 +168,7 @@ class FieldDeclarationNode (DeclarationNode):
     def __init__(self, security, type, id, token):
         self.security = security
         super().__init__(type, id, token)
+        self.parentClass = None
 
         self.lineNumber = 0
         self.columnNumber = 0
@@ -184,6 +186,7 @@ class MethodDeclarationNode (DeclarationNode):
         super().__init__(type, id, token)
         self.params = params
         self.body = body 
+        self.parentClass = None
 
         self.lineNumber = 0
         self.columnNumber = 0
@@ -200,6 +203,7 @@ class ConstructorDeclarationNode (DeclarationNode):
         self.token = token
         self.params = params
         self.body = body 
+        self.parentClass = None
 
         self.lineNumber = 0
         self.columnNumber = 0
@@ -623,12 +627,64 @@ class MemberAccessorExpressionNode (ExpressionNode):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.rhs = rhs
+        # id is the assembly representation of the function 
+        # for class method calls 
+        self.id = ""
 
         self.lineNumber = line
         self.columnNumber = column
 
     def accept (self, visitor):
         visitor.visitMemberAccessorExpressionNode (self)
+
+# ========================================================================
+# lhs - ExpressionNode - must be class type 
+# rhs - ExpressionNode  - must be a valid member  
+
+class FieldAccessorExpressionNode (ExpressionNode):
+
+    def __init__(self, lhs, rhs, line, column):
+        self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
+        self.lhs = lhs
+        self.rhs = rhs
+
+        self.lineNumber = line
+        self.columnNumber = column
+
+    def accept (self, visitor):
+        visitor.visitFieldAccessorExpressionNode (self)
+
+# ========================================================================
+# lhs - ExpressionNode - must be class type 
+# rhs - ExpressionNode  - must be a valid member  
+
+class MethodAccessorExpressionNode (ExpressionNode):
+
+    def __init__(self, lhs, rhs, args, line, column):
+        self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
+        self.lhs = lhs
+        self.rhs = rhs
+        self.args = args
+
+        self.lineNumber = line
+        self.columnNumber = column
+
+    def accept (self, visitor):
+        visitor.visitMethodAccessorExpressionNode (self)
+
+# ========================================================================
+
+class ThisExpressionNode (ExpressionNode):
+
+    def __init__(self, token, line, column):
+        self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
+        self.token = token
+
+        self.lineNumber = line
+        self.columnNumber = column
+
+    def accept (self, visitor):
+        visitor.visitThisExpressionNode (self)
 
 # ========================================================================
 # id - string
@@ -725,7 +781,9 @@ class CharLiteralExpressionNode (ExpressionNode):
 class StringLiteralExpressionNode (ExpressionNode):
 
     def __init__(self, value:str):
-        self.type = TypeSpecifierNode (Type.STRING, "string", None)
+        # char[] instead of string
+        self.type = TypeSpecifierNode (Type.CHAR, "char", None)
+        self.type.arrayDimensions = 1
         self.value = value
 
         self.lineNumber = 0

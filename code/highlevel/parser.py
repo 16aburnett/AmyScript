@@ -133,6 +133,7 @@ class Parser:
 
         id = self.tokens[self.currentToken].lexeme
         token = self.tokens[self.currentToken]
+        type = TypeSpecifierNode (Type.USERTYPE, id, token)
         self.match ("classDeclaration", "IDENTIFIER")
         
         self.match ("classDeclaration", "LBRACE")
@@ -167,7 +168,7 @@ class Parser:
 
         self.leave ("classDeclaration")
 
-        return ClassDeclarationNode (id, token, constructors, fields, methods)
+        return ClassDeclarationNode (type, id, token, constructors, fields, methods)
 
     # ====================================================================
     # field declaration
@@ -653,7 +654,7 @@ class Parser:
             # match type
             type = self.typeSpecifier ()
 
-            # assumption was wrong
+            # assumption was wrongthis.name
             # -> <logicalOR> 
             if (type == None or self.tokens[self.currentToken].type != "IDENTIFIER"):
                 # restore state
@@ -682,7 +683,8 @@ class Parser:
         lastAssign = None
 
         # while lhs is var or var declaration
-        while (self.tokens[self.currentToken].type == "IDENTIFIER" \
+        while (self.tokens[self.currentToken].type == "THIS" \
+            or self.tokens[self.currentToken].type == "IDENTIFIER" \
             or self.isType()):
             # save return state
             varIndex = self.currentToken
@@ -966,13 +968,28 @@ class Parser:
                 self.match ("arrayAccess", "RBRACKET")
                 lhs = SubscriptExpressionNode (lhs, offset, line, column)
             # member accessor
-            # <arrayAccess> -> <factor> { DOT <factor> }
+            # <arrayAccess> -> <factor> { DOT <factor> [ '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' ] }
             elif (self.tokens[self.currentToken].type == "DOT"):
                 line = self.tokens[self.currentToken].line
                 column = self.tokens[self.currentToken].column
                 self.match ("arrayAccess", "DOT")
                 rhs = self.factor ()
-                lhs = MemberAccessorExpressionNode (lhs, rhs, line, column)
+                # method call
+                if (self.tokens[self.currentToken].type == "LPAREN"):
+                    self.match ("arrayAccess", "LPAREN")
+                    args = []
+                    # optional arguments 
+                    if self.tokens[self.currentToken].type != "RPAREN":
+                        args += [self.assignexpr ()]
+                        # 0 or more additional arguments 
+                        while self.tokens[self.currentToken].type == "COMMA":
+                            self.match ("arrayAccess", "COMMA")
+                            args += [self.assignexpr ()]
+                    self.match ("arrayAccess", "RPAREN")
+                    lhs = MethodAccessorExpressionNode (lhs, rhs, args, line, column)
+                # field accessor
+                else:
+                    lhs = MemberAccessorExpressionNode (lhs, rhs, line, column)
 
         self.leave ("arrayAccess")
 
@@ -981,6 +998,7 @@ class Parser:
     # ====================================================================
     # parentheses / indentifiers / list / literals 
     # <factor> -> '(' [ <expr> ] ')'
+    #          -> THIS
     #          -> IDENTIFIER
     #          -> '[' [ [ <assignExpression> { COMMA <assignExpression> } ] ] ']'
     #          -> NEW ( TYPE | IDENTIFIER ) ( '[' <expr> ']' { '[' <expr> ']' } | '(' <args> ')' )
@@ -997,6 +1015,13 @@ class Parser:
             if self.tokens[self.currentToken].type != "RPAREN":
                 lhs = self.expression ()
             self.match ("factor", "RPAREN")
+        # <factor> -> THIS
+        elif self.tokens[self.currentToken].type == "THIS":
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
+            token = self.tokens[self.currentToken]
+            self.match ("factor", "THIS")
+            lhs = ThisExpressionNode (token, line, column)
         # <factor> -> IDENTIFIER
         elif self.tokens[self.currentToken].type == "IDENTIFIER":
             line = self.tokens[self.currentToken].line

@@ -1,0 +1,1133 @@
+0000 [15, 1, 0] jump __endOfLibrary
+0001 [0, 1, 1, 0, 0] assign __null 0
+0002 [-1, 2, 2] print:
+0003 [35, 1, 3, 0, 0] stackget __str 0
+0004 [32, 1, 4, 1, 3] sizeof __size __str
+0005 [0, 1, 5, 0, 0] assign __i 0
+0006 [-1, 6, 6] __print__loop:
+0007 [28, 1, 5, 1, 4] cmp __i __size
+0008 [20, 1, 7] jge __print__endloop
+0009 [8, 2, 1, 3, 1, 5] print __str[__i]
+0010 [3, 1, 5, 1, 5, 0, 1] add __i __i 1
+0011 [15, 1, 6] jump __print__loop
+0012 [-1, 7, 12] __print__endloop:
+0013 [13, 0, 0] return 0
+0014 [-1, 8, 14] println:
+0015 [35, 1, 3, 0, 0] stackget __str 0
+0016 [32, 1, 4, 1, 3] sizeof __size __str
+0017 [0, 1, 5, 0, 0] assign __i 0
+0018 [-1, 9, 18] __println__loop:
+0019 [28, 1, 5, 1, 4] cmp __i __size
+0020 [20, 1, 10] jge __println__endloop
+0021 [8, 2, 1, 3, 1, 5] print __str[__i]
+0022 [3, 1, 5, 1, 5, 0, 1] add __i __i 1
+0023 [15, 1, 9] jump __println__loop
+0024 [-1, 10, 24] __println__endloop:
+0025 [9] println
+0026 [13, 0, 0] return 0
+0027 [-1, 11, 27] printInt:
+0028 [35, 1, 3, 0, 0] stackget __str 0
+0029 [8, 1, 3] print __str
+0030 [13, 0, 0] return 0
+0031 [-1, 12, 31] printChar:
+0032 [35, 1, 13, 0, 0] stackget __char 0
+0033 [8, 1, 13] print __char
+0034 [13, 0, 0] return 0
+0035 [-1, 14, 35] input:
+0036 [10, 1, 15] input __line
+0037 [13, 1, 15] return __line
+0038 [-1, 16, 38] intToString:
+0039 [35, 1, 17, 0, 0] stackget __val 0
+0040 [13, 0, 0] return 0
+0041 [-1, 0, 41] __endOfLibrary:
+0042 [0, 1, 18, 0, 0] ASSIGN __field__Person__name 0
+0043 [0, 1, 19, 0, 1] ASSIGN __field__Person__age 1
+0044 [0, 1, 20, 0, 2] ASSIGN __field__Person__friends 2
+0045 [0, 1, 21, 0, 3] ASSIGN __field__Person__nFriends 3
+0046 [15, 1, 22] JUMP __endclass__Person
+0047 [15, 1, 23] JUMP __endctor__Person
+0048 [-1, 24, 48] Person:
+0049 [1, 1, 25, 0, 4] MALLOC __this 4
+0050 [35, 1, 26, 0, 0] STACKGET name 0
+0051 [35, 1, 27, 0, 1] STACKGET age 1
+0052 [33, 1, 26] PUSH name
+0053 [33, 1, 25] PUSH __this
+0054 [33, 1, 18] PUSH __field__Person__name
+0055 [34, 1, 28] POP __child
+0056 [34, 1, 29] POP __parent
+0057 [34, 1, 30] POP __rhs
+0058 [0, 2, 1, 29, 1, 28, 1, 30] ASSIGN __parent[__child] __rhs
+0059 [33, 1, 30] PUSH __rhs
+0060 [33, 1, 27] PUSH age
+0061 [33, 1, 25] PUSH __this
+0062 [33, 1, 19] PUSH __field__Person__age
+0063 [34, 1, 28] POP __child
+0064 [34, 1, 29] POP __parent
+0065 [34, 1, 30] POP __rhs
+0066 [0, 2, 1, 29, 1, 28, 1, 30] ASSIGN __parent[__child] __rhs
+0067 [33, 1, 30] PUSH __rhs
+0068 [33, 0, 5] PUSH 5
+0069 [34, 1, 4] POP __size
+0070 [1, 1, 31, 1, 4] MALLOC __ptr __size
+0071 [33, 1, 31] PUSH __ptr
+0072 [33, 1, 25] PUSH __this
+0073 [33, 1, 20] PUSH __field__Person__friends
+0074 [34, 1, 28] POP __child
+0075 [34, 1, 29] POP __parent
+0076 [34, 1, 30] POP __rhs
+0077 [0, 2, 1, 29, 1, 28, 1, 30] ASSIGN __parent[__child] __rhs
+0078 [33, 1, 30] PUSH __rhs
+0079 [33, 0, 0] PUSH 0
+0080 [33, 1, 25] PUSH __this
+0081 [33, 1, 21] PUSH __field__Person__nFriends
+0082 [34, 1, 28] POP __child
+0083 [34, 1, 29] POP __parent
+0084 [34, 1, 30] POP __rhs
+0085 [0, 2, 1, 29, 1, 28, 1, 30] ASSIGN __parent[__child] __rhs
+0086 [33, 1, 30] PUSH __rhs
+0087 [13, 1, 25] RETURN __this
+0088 [-1, 23, 88] __endctor__Person:
+0089 [15, 1, 32] JUMP __endMethod__Person__getAge
+0090 [-1, 33, 90] __method__Person__getAge:
+0091 [35, 1, 25, 0, 0] STACKGET __this 0
+0092 [33, 1, 25] PUSH __this
+0093 [33, 1, 19] PUSH __field__Person__age
+0094 [34, 1, 28] POP __child
+0095 [34, 1, 29] POP __parent
+0096 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0097 [34, 1, 34] POP __rVal
+0098 [13, 1, 34] RETURN __rVal
+0099 [13, 0, 0] RETURN 0
+0100 [-1, 32, 100] __endMethod__Person__getAge:
+0101 [15, 1, 35] JUMP __endMethod__Person__getName
+0102 [-1, 36, 102] __method__Person__getName:
+0103 [35, 1, 25, 0, 0] STACKGET __this 0
+0104 [33, 1, 25] PUSH __this
+0105 [33, 1, 18] PUSH __field__Person__name
+0106 [34, 1, 28] POP __child
+0107 [34, 1, 29] POP __parent
+0108 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0109 [34, 1, 34] POP __rVal
+0110 [13, 1, 34] RETURN __rVal
+0111 [13, 0, 0] RETURN 0
+0112 [-1, 35, 112] __endMethod__Person__getName:
+0113 [15, 1, 37] JUMP __endMethod__Person__addFriend
+0114 [-1, 38, 114] __method__Person__addFriend:
+0115 [35, 1, 25, 0, 0] STACKGET __this 0
+0116 [35, 1, 39, 0, 1] STACKGET friend 1
+0117 [33, 1, 39] PUSH friend
+0118 [33, 1, 25] PUSH __this
+0119 [33, 1, 20] PUSH __field__Person__friends
+0120 [34, 1, 28] POP __child
+0121 [34, 1, 29] POP __parent
+0122 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0123 [33, 1, 25] PUSH __this
+0124 [33, 1, 21] PUSH __field__Person__nFriends
+0125 [34, 1, 28] POP __child
+0126 [34, 1, 29] POP __parent
+0127 [0, 1, 40, 2, 1, 29, 1, 28] ASSIGN __res __parent[__child]
+0128 [3, 2, 1, 29, 1, 28, 2, 1, 29, 1, 28, 0, 1] ADD __parent[__child] __parent[__child] 1
+0129 [33, 1, 40] PUSH __res
+0130 [34, 1, 41] POP __offset
+0131 [34, 1, 42] POP __pointer
+0132 [34, 1, 30] POP __rhs
+0133 [0, 2, 1, 42, 1, 41, 1, 30] ASSIGN __pointer[__offset] __rhs
+0134 [33, 1, 30] PUSH __rhs
+0135 [13, 0, 0] RETURN 0
+0136 [-1, 37, 136] __endMethod__Person__addFriend:
+0137 [-1, 22, 137] __endclass__Person:
+0138 [1, 1, 3, 0, 3] MALLOC __str 3
+0139 [0, 2, 1, 3, 0, 0, 0, 'A'] ASSIGN __str[0] 'A'
+0140 [0, 2, 1, 3, 0, 1, 0, 'm'] ASSIGN __str[1] 'm'
+0141 [0, 2, 1, 3, 0, 2, 0, 'y'] ASSIGN __str[2] 'y'
+0142 [33, 1, 3] PUSH __str
+0143 [34, 1, 43] POP __arg0
+0144 [33, 0, 22] PUSH 22
+0145 [34, 1, 44] POP __arg1
+0146 [33, 1, 44] PUSH __arg1
+0147 [33, 1, 43] PUSH __arg0
+0148 [12, 1, 24] CALL Person
+0149 [34, 1, 1] POP __null
+0150 [34, 1, 1] POP __null
+0151 [14, 1, 45] RESPONSE __retval
+0152 [33, 1, 45] PUSH __retval
+0153 [34, 1, 30] POP __rhs
+0154 [0, 1, 46, 1, 30] ASSIGN person __rhs
+0155 [33, 1, 30] PUSH __rhs
+0156 [33, 1, 46] PUSH person
+0157 [33, 1, 18] PUSH __field__Person__name
+0158 [34, 1, 28] POP __child
+0159 [34, 1, 29] POP __parent
+0160 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0161 [34, 1, 43] POP __arg0
+0162 [33, 1, 43] PUSH __arg0
+0163 [12, 1, 8] CALL println
+0164 [34, 1, 1] POP __null
+0165 [14, 1, 45] RESPONSE __retval
+0166 [33, 1, 45] PUSH __retval
+0167 [33, 1, 46] PUSH person
+0168 [34, 1, 47] POP __obj
+0169 [33, 1, 47] PUSH __obj
+0170 [12, 1, 33] CALL __method__Person__getAge
+0171 [33, 1, 1] PUSH __null
+0172 [14, 1, 45] RESPONSE __retval
+0173 [33, 1, 45] PUSH __retval
+0174 [34, 1, 43] POP __arg0
+0175 [33, 1, 43] PUSH __arg0
+0176 [12, 1, 11] CALL printInt
+0177 [34, 1, 1] POP __null
+0178 [14, 1, 45] RESPONSE __retval
+0179 [33, 1, 45] PUSH __retval
+0180 [1, 1, 3, 0, 0] MALLOC __str 0
+0181 [33, 1, 3] PUSH __str
+0182 [34, 1, 43] POP __arg0
+0183 [33, 1, 43] PUSH __arg0
+0184 [12, 1, 8] CALL println
+0185 [34, 1, 1] POP __null
+0186 [14, 1, 45] RESPONSE __retval
+0187 [33, 1, 45] PUSH __retval
+0188 [1, 1, 3, 0, 23] MALLOC __str 23
+0189 [0, 2, 1, 3, 0, 0, 0, 'p'] ASSIGN __str[0] 'p'
+0190 [0, 2, 1, 3, 0, 1, 0, 'e'] ASSIGN __str[1] 'e'
+0191 [0, 2, 1, 3, 0, 2, 0, 'r'] ASSIGN __str[2] 'r'
+0192 [0, 2, 1, 3, 0, 3, 0, 's'] ASSIGN __str[3] 's'
+0193 [0, 2, 1, 3, 0, 4, 0, 'o'] ASSIGN __str[4] 'o'
+0194 [0, 2, 1, 3, 0, 5, 0, 'n'] ASSIGN __str[5] 'n'
+0195 [0, 2, 1, 3, 0, 6, 0, '.'] ASSIGN __str[6] '.'
+0196 [0, 2, 1, 3, 0, 7, 0, 'g'] ASSIGN __str[7] 'g'
+0197 [0, 2, 1, 3, 0, 8, 0, 'e'] ASSIGN __str[8] 'e'
+0198 [0, 2, 1, 3, 0, 9, 0, 't'] ASSIGN __str[9] 't'
+0199 [0, 2, 1, 3, 0, 10, 0, 'N'] ASSIGN __str[10] 'N'
+0200 [0, 2, 1, 3, 0, 11, 0, 'a'] ASSIGN __str[11] 'a'
+0201 [0, 2, 1, 3, 0, 12, 0, 'm'] ASSIGN __str[12] 'm'
+0202 [0, 2, 1, 3, 0, 13, 0, 'e'] ASSIGN __str[13] 'e'
+0203 [0, 2, 1, 3, 0, 14, 0, '('] ASSIGN __str[14] '('
+0204 [0, 2, 1, 3, 0, 15, 0, ')'] ASSIGN __str[15] ')'
+0205 [0, 2, 1, 3, 0, 16, 0, '['] ASSIGN __str[16] '['
+0206 [0, 2, 1, 3, 0, 17, 0, '0'] ASSIGN __str[17] '0'
+0207 [0, 2, 1, 3, 0, 18, 0, ']'] ASSIGN __str[18] ']'
+0208 [0, 2, 1, 3, 0, 19, 0, ' '] ASSIGN __str[19] ' '
+0209 [0, 2, 1, 3, 0, 20, 0, '='] ASSIGN __str[20] '='
+0210 [0, 2, 1, 3, 0, 21, 0, '='] ASSIGN __str[21] '='
+0211 [0, 2, 1, 3, 0, 22, 0, ' '] ASSIGN __str[22] ' '
+0212 [33, 1, 3] PUSH __str
+0213 [34, 1, 43] POP __arg0
+0214 [33, 1, 43] PUSH __arg0
+0215 [12, 1, 2] CALL print
+0216 [34, 1, 1] POP __null
+0217 [14, 1, 45] RESPONSE __retval
+0218 [33, 1, 45] PUSH __retval
+0219 [33, 1, 46] PUSH person
+0220 [34, 1, 47] POP __obj
+0221 [33, 1, 47] PUSH __obj
+0222 [12, 1, 36] CALL __method__Person__getName
+0223 [33, 1, 1] PUSH __null
+0224 [14, 1, 45] RESPONSE __retval
+0225 [33, 1, 45] PUSH __retval
+0226 [33, 0, 0] PUSH 0
+0227 [34, 1, 41] POP __offset
+0228 [34, 1, 42] POP __pointer
+0229 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0230 [34, 1, 43] POP __arg0
+0231 [33, 1, 43] PUSH __arg0
+0232 [12, 1, 12] CALL printChar
+0233 [34, 1, 1] POP __null
+0234 [14, 1, 45] RESPONSE __retval
+0235 [33, 1, 45] PUSH __retval
+0236 [1, 1, 3, 0, 0] MALLOC __str 0
+0237 [33, 1, 3] PUSH __str
+0238 [34, 1, 43] POP __arg0
+0239 [33, 1, 43] PUSH __arg0
+0240 [12, 1, 8] CALL println
+0241 [34, 1, 1] POP __null
+0242 [14, 1, 45] RESPONSE __retval
+0243 [33, 1, 45] PUSH __retval
+0244 [33, 0, 5] PUSH 5
+0245 [34, 1, 4] POP __size
+0246 [1, 1, 31, 1, 4] MALLOC __ptr __size
+0247 [33, 1, 31] PUSH __ptr
+0248 [34, 1, 30] POP __rhs
+0249 [0, 1, 48, 1, 30] ASSIGN people __rhs
+0250 [33, 1, 30] PUSH __rhs
+0251 [33, 1, 46] PUSH person
+0252 [33, 1, 48] PUSH people
+0253 [33, 0, 0] PUSH 0
+0254 [34, 1, 41] POP __offset
+0255 [34, 1, 42] POP __pointer
+0256 [34, 1, 30] POP __rhs
+0257 [0, 2, 1, 42, 1, 41, 1, 30] ASSIGN __pointer[__offset] __rhs
+0258 [33, 1, 30] PUSH __rhs
+0259 [1, 1, 3, 0, 6] MALLOC __str 6
+0260 [0, 2, 1, 3, 0, 0, 0, 'A'] ASSIGN __str[0] 'A'
+0261 [0, 2, 1, 3, 0, 1, 0, 'u'] ASSIGN __str[1] 'u'
+0262 [0, 2, 1, 3, 0, 2, 0, 'b'] ASSIGN __str[2] 'b'
+0263 [0, 2, 1, 3, 0, 3, 0, 'r'] ASSIGN __str[3] 'r'
+0264 [0, 2, 1, 3, 0, 4, 0, 'e'] ASSIGN __str[4] 'e'
+0265 [0, 2, 1, 3, 0, 5, 0, 'y'] ASSIGN __str[5] 'y'
+0266 [33, 1, 3] PUSH __str
+0267 [34, 1, 43] POP __arg0
+0268 [33, 0, 21] PUSH 21
+0269 [34, 1, 44] POP __arg1
+0270 [33, 1, 44] PUSH __arg1
+0271 [33, 1, 43] PUSH __arg0
+0272 [12, 1, 24] CALL Person
+0273 [34, 1, 1] POP __null
+0274 [34, 1, 1] POP __null
+0275 [14, 1, 45] RESPONSE __retval
+0276 [33, 1, 45] PUSH __retval
+0277 [33, 1, 48] PUSH people
+0278 [33, 0, 1] PUSH 1
+0279 [34, 1, 41] POP __offset
+0280 [34, 1, 42] POP __pointer
+0281 [34, 1, 30] POP __rhs
+0282 [0, 2, 1, 42, 1, 41, 1, 30] ASSIGN __pointer[__offset] __rhs
+0283 [33, 1, 30] PUSH __rhs
+0284 [1, 1, 3, 0, 5] MALLOC __str 5
+0285 [0, 2, 1, 3, 0, 0, 0, 'T'] ASSIGN __str[0] 'T'
+0286 [0, 2, 1, 3, 0, 1, 0, 'e'] ASSIGN __str[1] 'e'
+0287 [0, 2, 1, 3, 0, 2, 0, 's'] ASSIGN __str[2] 's'
+0288 [0, 2, 1, 3, 0, 3, 0, 's'] ASSIGN __str[3] 's'
+0289 [0, 2, 1, 3, 0, 4, 0, 'a'] ASSIGN __str[4] 'a'
+0290 [33, 1, 3] PUSH __str
+0291 [34, 1, 43] POP __arg0
+0292 [33, 0, 31] PUSH 31
+0293 [34, 1, 44] POP __arg1
+0294 [33, 1, 44] PUSH __arg1
+0295 [33, 1, 43] PUSH __arg0
+0296 [12, 1, 24] CALL Person
+0297 [34, 1, 1] POP __null
+0298 [34, 1, 1] POP __null
+0299 [14, 1, 45] RESPONSE __retval
+0300 [33, 1, 45] PUSH __retval
+0301 [33, 1, 48] PUSH people
+0302 [33, 0, 2] PUSH 2
+0303 [34, 1, 41] POP __offset
+0304 [34, 1, 42] POP __pointer
+0305 [34, 1, 30] POP __rhs
+0306 [0, 2, 1, 42, 1, 41, 1, 30] ASSIGN __pointer[__offset] __rhs
+0307 [33, 1, 30] PUSH __rhs
+0308 [1, 1, 3, 0, 6] MALLOC __str 6
+0309 [0, 2, 1, 3, 0, 0, 0, 'H'] ASSIGN __str[0] 'H'
+0310 [0, 2, 1, 3, 0, 1, 0, 'a'] ASSIGN __str[1] 'a'
+0311 [0, 2, 1, 3, 0, 2, 0, 'l'] ASSIGN __str[2] 'l'
+0312 [0, 2, 1, 3, 0, 3, 0, 's'] ASSIGN __str[3] 's'
+0313 [0, 2, 1, 3, 0, 4, 0, 'e'] ASSIGN __str[4] 'e'
+0314 [0, 2, 1, 3, 0, 5, 0, 'y'] ASSIGN __str[5] 'y'
+0315 [33, 1, 3] PUSH __str
+0316 [34, 1, 43] POP __arg0
+0317 [33, 0, 26] PUSH 26
+0318 [34, 1, 44] POP __arg1
+0319 [33, 1, 44] PUSH __arg1
+0320 [33, 1, 43] PUSH __arg0
+0321 [12, 1, 24] CALL Person
+0322 [34, 1, 1] POP __null
+0323 [34, 1, 1] POP __null
+0324 [14, 1, 45] RESPONSE __retval
+0325 [33, 1, 45] PUSH __retval
+0326 [33, 1, 48] PUSH people
+0327 [33, 0, 3] PUSH 3
+0328 [34, 1, 41] POP __offset
+0329 [34, 1, 42] POP __pointer
+0330 [34, 1, 30] POP __rhs
+0331 [0, 2, 1, 42, 1, 41, 1, 30] ASSIGN __pointer[__offset] __rhs
+0332 [33, 1, 30] PUSH __rhs
+0333 [1, 1, 3, 0, 6] MALLOC __str 6
+0334 [0, 2, 1, 3, 0, 0, 0, 'S'] ASSIGN __str[0] 'S'
+0335 [0, 2, 1, 3, 0, 1, 0, 'i'] ASSIGN __str[1] 'i'
+0336 [0, 2, 1, 3, 0, 2, 0, 'g'] ASSIGN __str[2] 'g'
+0337 [0, 2, 1, 3, 0, 3, 0, 'r'] ASSIGN __str[3] 'r'
+0338 [0, 2, 1, 3, 0, 4, 0, 'i'] ASSIGN __str[4] 'i'
+0339 [0, 2, 1, 3, 0, 5, 0, 'd'] ASSIGN __str[5] 'd'
+0340 [33, 1, 3] PUSH __str
+0341 [34, 1, 43] POP __arg0
+0342 [33, 0, 24] PUSH 24
+0343 [34, 1, 44] POP __arg1
+0344 [33, 1, 44] PUSH __arg1
+0345 [33, 1, 43] PUSH __arg0
+0346 [12, 1, 24] CALL Person
+0347 [34, 1, 1] POP __null
+0348 [34, 1, 1] POP __null
+0349 [14, 1, 45] RESPONSE __retval
+0350 [33, 1, 45] PUSH __retval
+0351 [33, 1, 48] PUSH people
+0352 [33, 0, 4] PUSH 4
+0353 [34, 1, 41] POP __offset
+0354 [34, 1, 42] POP __pointer
+0355 [34, 1, 30] POP __rhs
+0356 [0, 2, 1, 42, 1, 41, 1, 30] ASSIGN __pointer[__offset] __rhs
+0357 [33, 1, 30] PUSH __rhs
+0358 [33, 1, 48] PUSH people
+0359 [33, 0, 0] PUSH 0
+0360 [34, 1, 41] POP __offset
+0361 [34, 1, 42] POP __pointer
+0362 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0363 [33, 1, 48] PUSH people
+0364 [33, 0, 1] PUSH 1
+0365 [34, 1, 41] POP __offset
+0366 [34, 1, 42] POP __pointer
+0367 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0368 [34, 1, 43] POP __arg0
+0369 [34, 1, 47] POP __obj
+0370 [33, 1, 43] PUSH __arg0
+0371 [33, 1, 47] PUSH __obj
+0372 [12, 1, 38] CALL __method__Person__addFriend
+0373 [33, 1, 1] PUSH __null
+0374 [34, 1, 1] POP __null
+0375 [14, 1, 45] RESPONSE __retval
+0376 [33, 1, 45] PUSH __retval
+0377 [33, 1, 48] PUSH people
+0378 [33, 0, 0] PUSH 0
+0379 [34, 1, 41] POP __offset
+0380 [34, 1, 42] POP __pointer
+0381 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0382 [33, 1, 48] PUSH people
+0383 [33, 0, 3] PUSH 3
+0384 [34, 1, 41] POP __offset
+0385 [34, 1, 42] POP __pointer
+0386 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0387 [34, 1, 43] POP __arg0
+0388 [34, 1, 47] POP __obj
+0389 [33, 1, 43] PUSH __arg0
+0390 [33, 1, 47] PUSH __obj
+0391 [12, 1, 38] CALL __method__Person__addFriend
+0392 [33, 1, 1] PUSH __null
+0393 [34, 1, 1] POP __null
+0394 [14, 1, 45] RESPONSE __retval
+0395 [33, 1, 45] PUSH __retval
+0396 [33, 1, 48] PUSH people
+0397 [33, 0, 1] PUSH 1
+0398 [34, 1, 41] POP __offset
+0399 [34, 1, 42] POP __pointer
+0400 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0401 [33, 1, 48] PUSH people
+0402 [33, 0, 0] PUSH 0
+0403 [34, 1, 41] POP __offset
+0404 [34, 1, 42] POP __pointer
+0405 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0406 [34, 1, 43] POP __arg0
+0407 [34, 1, 47] POP __obj
+0408 [33, 1, 43] PUSH __arg0
+0409 [33, 1, 47] PUSH __obj
+0410 [12, 1, 38] CALL __method__Person__addFriend
+0411 [33, 1, 1] PUSH __null
+0412 [34, 1, 1] POP __null
+0413 [14, 1, 45] RESPONSE __retval
+0414 [33, 1, 45] PUSH __retval
+0415 [33, 1, 48] PUSH people
+0416 [33, 0, 2] PUSH 2
+0417 [34, 1, 41] POP __offset
+0418 [34, 1, 42] POP __pointer
+0419 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0420 [33, 1, 48] PUSH people
+0421 [33, 0, 3] PUSH 3
+0422 [34, 1, 41] POP __offset
+0423 [34, 1, 42] POP __pointer
+0424 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0425 [34, 1, 43] POP __arg0
+0426 [34, 1, 47] POP __obj
+0427 [33, 1, 43] PUSH __arg0
+0428 [33, 1, 47] PUSH __obj
+0429 [12, 1, 38] CALL __method__Person__addFriend
+0430 [33, 1, 1] PUSH __null
+0431 [34, 1, 1] POP __null
+0432 [14, 1, 45] RESPONSE __retval
+0433 [33, 1, 45] PUSH __retval
+0434 [33, 1, 48] PUSH people
+0435 [33, 0, 2] PUSH 2
+0436 [34, 1, 41] POP __offset
+0437 [34, 1, 42] POP __pointer
+0438 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0439 [33, 1, 48] PUSH people
+0440 [33, 0, 4] PUSH 4
+0441 [34, 1, 41] POP __offset
+0442 [34, 1, 42] POP __pointer
+0443 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0444 [34, 1, 43] POP __arg0
+0445 [34, 1, 47] POP __obj
+0446 [33, 1, 43] PUSH __arg0
+0447 [33, 1, 47] PUSH __obj
+0448 [12, 1, 38] CALL __method__Person__addFriend
+0449 [33, 1, 1] PUSH __null
+0450 [34, 1, 1] POP __null
+0451 [14, 1, 45] RESPONSE __retval
+0452 [33, 1, 45] PUSH __retval
+0453 [33, 1, 48] PUSH people
+0454 [33, 0, 3] PUSH 3
+0455 [34, 1, 41] POP __offset
+0456 [34, 1, 42] POP __pointer
+0457 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0458 [33, 1, 48] PUSH people
+0459 [33, 0, 2] PUSH 2
+0460 [34, 1, 41] POP __offset
+0461 [34, 1, 42] POP __pointer
+0462 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0463 [34, 1, 43] POP __arg0
+0464 [34, 1, 47] POP __obj
+0465 [33, 1, 43] PUSH __arg0
+0466 [33, 1, 47] PUSH __obj
+0467 [12, 1, 38] CALL __method__Person__addFriend
+0468 [33, 1, 1] PUSH __null
+0469 [34, 1, 1] POP __null
+0470 [14, 1, 45] RESPONSE __retval
+0471 [33, 1, 45] PUSH __retval
+0472 [33, 1, 48] PUSH people
+0473 [33, 0, 3] PUSH 3
+0474 [34, 1, 41] POP __offset
+0475 [34, 1, 42] POP __pointer
+0476 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0477 [33, 1, 48] PUSH people
+0478 [33, 0, 0] PUSH 0
+0479 [34, 1, 41] POP __offset
+0480 [34, 1, 42] POP __pointer
+0481 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0482 [34, 1, 43] POP __arg0
+0483 [34, 1, 47] POP __obj
+0484 [33, 1, 43] PUSH __arg0
+0485 [33, 1, 47] PUSH __obj
+0486 [12, 1, 38] CALL __method__Person__addFriend
+0487 [33, 1, 1] PUSH __null
+0488 [34, 1, 1] POP __null
+0489 [14, 1, 45] RESPONSE __retval
+0490 [33, 1, 45] PUSH __retval
+0491 [33, 1, 48] PUSH people
+0492 [33, 0, 4] PUSH 4
+0493 [34, 1, 41] POP __offset
+0494 [34, 1, 42] POP __pointer
+0495 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0496 [33, 1, 48] PUSH people
+0497 [33, 0, 2] PUSH 2
+0498 [34, 1, 41] POP __offset
+0499 [34, 1, 42] POP __pointer
+0500 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0501 [34, 1, 43] POP __arg0
+0502 [34, 1, 47] POP __obj
+0503 [33, 1, 43] PUSH __arg0
+0504 [33, 1, 47] PUSH __obj
+0505 [12, 1, 38] CALL __method__Person__addFriend
+0506 [33, 1, 1] PUSH __null
+0507 [34, 1, 1] POP __null
+0508 [14, 1, 45] RESPONSE __retval
+0509 [33, 1, 45] PUSH __retval
+0510 [33, 0, 0] PUSH 0
+0511 [34, 1, 30] POP __rhs
+0512 [0, 1, 49, 1, 30] ASSIGN i __rhs
+0513 [33, 1, 30] PUSH __rhs
+0514 [-1, 50, 514] __for0:
+0515 [33, 1, 49] PUSH i
+0516 [33, 0, 5] PUSH 5
+0517 [34, 1, 30] POP __rhs
+0518 [34, 1, 51] POP __lhs
+0519 [24, 1, 40, 1, 51, 1, 30] LT __res __lhs __rhs
+0520 [33, 1, 40] PUSH __res
+0521 [34, 1, 52] POP __cond
+0522 [28, 1, 52, 0, 0] CMP __cond 0
+0523 [18, 1, 53] JEQ __endfor0
+0524 [33, 1, 48] PUSH people
+0525 [33, 1, 49] PUSH i
+0526 [34, 1, 41] POP __offset
+0527 [34, 1, 42] POP __pointer
+0528 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0529 [33, 1, 18] PUSH __field__Person__name
+0530 [34, 1, 28] POP __child
+0531 [34, 1, 29] POP __parent
+0532 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0533 [34, 1, 43] POP __arg0
+0534 [33, 1, 43] PUSH __arg0
+0535 [12, 1, 2] CALL print
+0536 [34, 1, 1] POP __null
+0537 [14, 1, 45] RESPONSE __retval
+0538 [33, 1, 45] PUSH __retval
+0539 [1, 1, 3, 0, 1] MALLOC __str 1
+0540 [0, 2, 1, 3, 0, 0, 0, ' '] ASSIGN __str[0] ' '
+0541 [33, 1, 3] PUSH __str
+0542 [34, 1, 43] POP __arg0
+0543 [33, 1, 43] PUSH __arg0
+0544 [12, 1, 2] CALL print
+0545 [34, 1, 1] POP __null
+0546 [14, 1, 45] RESPONSE __retval
+0547 [33, 1, 45] PUSH __retval
+0548 [33, 1, 48] PUSH people
+0549 [33, 1, 49] PUSH i
+0550 [34, 1, 41] POP __offset
+0551 [34, 1, 42] POP __pointer
+0552 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0553 [33, 1, 19] PUSH __field__Person__age
+0554 [34, 1, 28] POP __child
+0555 [34, 1, 29] POP __parent
+0556 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0557 [34, 1, 43] POP __arg0
+0558 [33, 1, 43] PUSH __arg0
+0559 [12, 1, 11] CALL printInt
+0560 [34, 1, 1] POP __null
+0561 [14, 1, 45] RESPONSE __retval
+0562 [33, 1, 45] PUSH __retval
+0563 [1, 1, 3, 0, 10] MALLOC __str 10
+0564 [0, 2, 1, 3, 0, 0, 0, ' '] ASSIGN __str[0] ' '
+0565 [0, 2, 1, 3, 0, 1, 0, 'F'] ASSIGN __str[1] 'F'
+0566 [0, 2, 1, 3, 0, 2, 0, 'r'] ASSIGN __str[2] 'r'
+0567 [0, 2, 1, 3, 0, 3, 0, 'i'] ASSIGN __str[3] 'i'
+0568 [0, 2, 1, 3, 0, 4, 0, 'e'] ASSIGN __str[4] 'e'
+0569 [0, 2, 1, 3, 0, 5, 0, 'n'] ASSIGN __str[5] 'n'
+0570 [0, 2, 1, 3, 0, 6, 0, 'd'] ASSIGN __str[6] 'd'
+0571 [0, 2, 1, 3, 0, 7, 0, 's'] ASSIGN __str[7] 's'
+0572 [0, 2, 1, 3, 0, 8, 0, ':'] ASSIGN __str[8] ':'
+0573 [0, 2, 1, 3, 0, 9, 0, ' '] ASSIGN __str[9] ' '
+0574 [33, 1, 3] PUSH __str
+0575 [34, 1, 43] POP __arg0
+0576 [33, 1, 43] PUSH __arg0
+0577 [12, 1, 2] CALL print
+0578 [34, 1, 1] POP __null
+0579 [14, 1, 45] RESPONSE __retval
+0580 [33, 1, 45] PUSH __retval
+0581 [33, 0, 0] PUSH 0
+0582 [34, 1, 30] POP __rhs
+0583 [0, 1, 54, 1, 30] ASSIGN j __rhs
+0584 [33, 1, 30] PUSH __rhs
+0585 [-1, 55, 585] __for1:
+0586 [33, 1, 54] PUSH j
+0587 [33, 1, 48] PUSH people
+0588 [33, 1, 49] PUSH i
+0589 [34, 1, 41] POP __offset
+0590 [34, 1, 42] POP __pointer
+0591 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0592 [33, 1, 21] PUSH __field__Person__nFriends
+0593 [34, 1, 28] POP __child
+0594 [34, 1, 29] POP __parent
+0595 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0596 [34, 1, 30] POP __rhs
+0597 [34, 1, 51] POP __lhs
+0598 [24, 1, 40, 1, 51, 1, 30] LT __res __lhs __rhs
+0599 [33, 1, 40] PUSH __res
+0600 [34, 1, 52] POP __cond
+0601 [28, 1, 52, 0, 0] CMP __cond 0
+0602 [18, 1, 56] JEQ __endfor1
+0603 [33, 1, 48] PUSH people
+0604 [33, 1, 49] PUSH i
+0605 [34, 1, 41] POP __offset
+0606 [34, 1, 42] POP __pointer
+0607 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0608 [33, 1, 20] PUSH __field__Person__friends
+0609 [34, 1, 28] POP __child
+0610 [34, 1, 29] POP __parent
+0611 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0612 [33, 1, 54] PUSH j
+0613 [34, 1, 41] POP __offset
+0614 [34, 1, 42] POP __pointer
+0615 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0616 [33, 1, 18] PUSH __field__Person__name
+0617 [34, 1, 28] POP __child
+0618 [34, 1, 29] POP __parent
+0619 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0620 [34, 1, 43] POP __arg0
+0621 [33, 1, 43] PUSH __arg0
+0622 [12, 1, 2] CALL print
+0623 [34, 1, 1] POP __null
+0624 [14, 1, 45] RESPONSE __retval
+0625 [33, 1, 45] PUSH __retval
+0626 [1, 1, 3, 0, 1] MALLOC __str 1
+0627 [0, 2, 1, 3, 0, 0, 0, ' '] ASSIGN __str[0] ' '
+0628 [33, 1, 3] PUSH __str
+0629 [34, 1, 43] POP __arg0
+0630 [33, 1, 43] PUSH __arg0
+0631 [12, 1, 2] CALL print
+0632 [34, 1, 1] POP __null
+0633 [14, 1, 45] RESPONSE __retval
+0634 [33, 1, 45] PUSH __retval
+0635 [33, 1, 54] PUSH j
+0636 [34, 1, 30] POP __rhs
+0637 [3, 1, 54, 1, 54, 0, 1] ADD j j 1
+0638 [0, 1, 40, 1, 54] ASSIGN __res j
+0639 [33, 1, 40] PUSH __res
+0640 [15, 1, 55] JUMP __for1
+0641 [-1, 56, 641] __endfor1:
+0642 [1, 1, 3, 0, 0] MALLOC __str 0
+0643 [33, 1, 3] PUSH __str
+0644 [34, 1, 43] POP __arg0
+0645 [33, 1, 43] PUSH __arg0
+0646 [12, 1, 8] CALL println
+0647 [34, 1, 1] POP __null
+0648 [14, 1, 45] RESPONSE __retval
+0649 [33, 1, 45] PUSH __retval
+0650 [33, 1, 49] PUSH i
+0651 [34, 1, 30] POP __rhs
+0652 [3, 1, 49, 1, 49, 0, 1] ADD i i 1
+0653 [0, 1, 40, 1, 49] ASSIGN __res i
+0654 [33, 1, 40] PUSH __res
+0655 [15, 1, 50] JUMP __for0
+0656 [-1, 53, 656] __endfor0:
+0657 [1, 1, 3, 0, 5] MALLOC __str 5
+0658 [0, 2, 1, 3, 0, 0, 0, 'A'] ASSIGN __str[0] 'A'
+0659 [0, 2, 1, 3, 0, 1, 0, 'm'] ASSIGN __str[1] 'm'
+0660 [0, 2, 1, 3, 0, 2, 0, 'y'] ASSIGN __str[2] 'y'
+0661 [0, 2, 1, 3, 0, 3, 0, '<'] ASSIGN __str[3] '<'
+0662 [0, 2, 1, 3, 0, 4, 0, '3'] ASSIGN __str[4] '3'
+0663 [33, 1, 3] PUSH __str
+0664 [33, 1, 48] PUSH people
+0665 [33, 0, 0] PUSH 0
+0666 [34, 1, 41] POP __offset
+0667 [34, 1, 42] POP __pointer
+0668 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0669 [33, 1, 18] PUSH __field__Person__name
+0670 [34, 1, 28] POP __child
+0671 [34, 1, 29] POP __parent
+0672 [34, 1, 30] POP __rhs
+0673 [0, 2, 1, 29, 1, 28, 1, 30] ASSIGN __parent[__child] __rhs
+0674 [33, 1, 30] PUSH __rhs
+0675 [33, 1, 48] PUSH people
+0676 [33, 0, 0] PUSH 0
+0677 [34, 1, 41] POP __offset
+0678 [34, 1, 42] POP __pointer
+0679 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0680 [33, 1, 18] PUSH __field__Person__name
+0681 [34, 1, 28] POP __child
+0682 [34, 1, 29] POP __parent
+0683 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0684 [34, 1, 43] POP __arg0
+0685 [33, 1, 43] PUSH __arg0
+0686 [12, 1, 8] CALL println
+0687 [34, 1, 1] POP __null
+0688 [14, 1, 45] RESPONSE __retval
+0689 [33, 1, 45] PUSH __retval
+0690 [33, 1, 46] PUSH person
+0691 [33, 1, 18] PUSH __field__Person__name
+0692 [34, 1, 28] POP __child
+0693 [34, 1, 29] POP __parent
+0694 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0695 [34, 1, 43] POP __arg0
+0696 [33, 1, 43] PUSH __arg0
+0697 [12, 1, 8] CALL println
+0698 [34, 1, 1] POP __null
+0699 [14, 1, 45] RESPONSE __retval
+0700 [33, 1, 45] PUSH __retval
+0701 [0, 1, 57, 0, 0] ASSIGN __field__IntArray__data 0
+0702 [0, 1, 58, 0, 1] ASSIGN __field__IntArray__size 1
+0703 [0, 1, 59, 0, 2] ASSIGN __field__IntArray__capacity 2
+0704 [15, 1, 60] JUMP __endclass__IntArray
+0705 [15, 1, 61] JUMP __endctor__IntArray
+0706 [-1, 62, 706] IntArray:
+0707 [1, 1, 25, 0, 3] MALLOC __this 3
+0708 [33, 0, 10] PUSH 10
+0709 [33, 1, 25] PUSH __this
+0710 [33, 1, 59] PUSH __field__IntArray__capacity
+0711 [34, 1, 28] POP __child
+0712 [34, 1, 29] POP __parent
+0713 [34, 1, 30] POP __rhs
+0714 [0, 2, 1, 29, 1, 28, 1, 30] ASSIGN __parent[__child] __rhs
+0715 [33, 1, 30] PUSH __rhs
+0716 [33, 1, 25] PUSH __this
+0717 [33, 1, 59] PUSH __field__IntArray__capacity
+0718 [34, 1, 28] POP __child
+0719 [34, 1, 29] POP __parent
+0720 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0721 [34, 1, 4] POP __size
+0722 [1, 1, 31, 1, 4] MALLOC __ptr __size
+0723 [33, 1, 31] PUSH __ptr
+0724 [33, 1, 25] PUSH __this
+0725 [33, 1, 57] PUSH __field__IntArray__data
+0726 [34, 1, 28] POP __child
+0727 [34, 1, 29] POP __parent
+0728 [34, 1, 30] POP __rhs
+0729 [0, 2, 1, 29, 1, 28, 1, 30] ASSIGN __parent[__child] __rhs
+0730 [33, 1, 30] PUSH __rhs
+0731 [33, 0, 0] PUSH 0
+0732 [33, 1, 25] PUSH __this
+0733 [33, 1, 58] PUSH __field__IntArray__size
+0734 [34, 1, 28] POP __child
+0735 [34, 1, 29] POP __parent
+0736 [34, 1, 30] POP __rhs
+0737 [0, 2, 1, 29, 1, 28, 1, 30] ASSIGN __parent[__child] __rhs
+0738 [33, 1, 30] PUSH __rhs
+0739 [13, 1, 25] RETURN __this
+0740 [-1, 61, 740] __endctor__IntArray:
+0741 [15, 1, 63] JUMP __endMethod__IntArray__pushBack
+0742 [-1, 64, 742] __method__IntArray__pushBack:
+0743 [35, 1, 25, 0, 0] STACKGET __this 0
+0744 [35, 1, 65, 0, 1] STACKGET val 1
+0745 [33, 1, 25] PUSH __this
+0746 [33, 1, 58] PUSH __field__IntArray__size
+0747 [34, 1, 28] POP __child
+0748 [34, 1, 29] POP __parent
+0749 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0750 [33, 0, 1] PUSH 1
+0751 [34, 1, 30] POP __rhs
+0752 [34, 1, 51] POP __lhs
+0753 [3, 1, 40, 1, 51, 1, 30] ADD __res __lhs __rhs
+0754 [33, 1, 40] PUSH __res
+0755 [33, 1, 25] PUSH __this
+0756 [33, 1, 59] PUSH __field__IntArray__capacity
+0757 [34, 1, 28] POP __child
+0758 [34, 1, 29] POP __parent
+0759 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0760 [34, 1, 30] POP __rhs
+0761 [34, 1, 51] POP __lhs
+0762 [27, 1, 40, 1, 51, 1, 30] GE __res __lhs __rhs
+0763 [33, 1, 40] PUSH __res
+0764 [34, 1, 52] POP __cond
+0765 [28, 1, 52, 0, 0] CMP __cond 0
+0766 [18, 1, 66] JEQ __endif2
+0767 [33, 1, 25] PUSH __this
+0768 [33, 1, 59] PUSH __field__IntArray__capacity
+0769 [34, 1, 28] POP __child
+0770 [34, 1, 29] POP __parent
+0771 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0772 [33, 0, 2] PUSH 2
+0773 [34, 1, 30] POP __rhs
+0774 [34, 1, 51] POP __lhs
+0775 [5, 1, 40, 1, 51, 1, 30] MULTIPLY __res __lhs __rhs
+0776 [33, 1, 40] PUSH __res
+0777 [33, 1, 25] PUSH __this
+0778 [33, 1, 59] PUSH __field__IntArray__capacity
+0779 [34, 1, 28] POP __child
+0780 [34, 1, 29] POP __parent
+0781 [34, 1, 30] POP __rhs
+0782 [0, 2, 1, 29, 1, 28, 1, 30] ASSIGN __parent[__child] __rhs
+0783 [33, 1, 30] PUSH __rhs
+0784 [33, 1, 25] PUSH __this
+0785 [33, 1, 59] PUSH __field__IntArray__capacity
+0786 [34, 1, 28] POP __child
+0787 [34, 1, 29] POP __parent
+0788 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0789 [34, 1, 4] POP __size
+0790 [1, 1, 31, 1, 4] MALLOC __ptr __size
+0791 [33, 1, 31] PUSH __ptr
+0792 [34, 1, 30] POP __rhs
+0793 [0, 1, 67, 1, 30] ASSIGN nData __rhs
+0794 [33, 1, 30] PUSH __rhs
+0795 [33, 0, 0] PUSH 0
+0796 [34, 1, 30] POP __rhs
+0797 [0, 1, 49, 1, 30] ASSIGN i __rhs
+0798 [33, 1, 30] PUSH __rhs
+0799 [-1, 68, 799] __for3:
+0800 [33, 1, 49] PUSH i
+0801 [33, 1, 25] PUSH __this
+0802 [33, 1, 58] PUSH __field__IntArray__size
+0803 [34, 1, 28] POP __child
+0804 [34, 1, 29] POP __parent
+0805 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0806 [34, 1, 30] POP __rhs
+0807 [34, 1, 51] POP __lhs
+0808 [24, 1, 40, 1, 51, 1, 30] LT __res __lhs __rhs
+0809 [33, 1, 40] PUSH __res
+0810 [34, 1, 52] POP __cond
+0811 [28, 1, 52, 0, 0] CMP __cond 0
+0812 [18, 1, 69] JEQ __endfor3
+0813 [33, 1, 25] PUSH __this
+0814 [33, 1, 57] PUSH __field__IntArray__data
+0815 [34, 1, 28] POP __child
+0816 [34, 1, 29] POP __parent
+0817 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0818 [33, 1, 49] PUSH i
+0819 [34, 1, 41] POP __offset
+0820 [34, 1, 42] POP __pointer
+0821 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0822 [33, 1, 67] PUSH nData
+0823 [33, 1, 49] PUSH i
+0824 [34, 1, 41] POP __offset
+0825 [34, 1, 42] POP __pointer
+0826 [34, 1, 30] POP __rhs
+0827 [0, 2, 1, 42, 1, 41, 1, 30] ASSIGN __pointer[__offset] __rhs
+0828 [33, 1, 30] PUSH __rhs
+0829 [33, 1, 49] PUSH i
+0830 [34, 1, 30] POP __rhs
+0831 [3, 1, 49, 1, 49, 0, 1] ADD i i 1
+0832 [0, 1, 40, 1, 49] ASSIGN __res i
+0833 [33, 1, 40] PUSH __res
+0834 [15, 1, 68] JUMP __for3
+0835 [-1, 69, 835] __endfor3:
+0836 [33, 1, 67] PUSH nData
+0837 [33, 1, 25] PUSH __this
+0838 [33, 1, 57] PUSH __field__IntArray__data
+0839 [34, 1, 28] POP __child
+0840 [34, 1, 29] POP __parent
+0841 [34, 1, 30] POP __rhs
+0842 [0, 2, 1, 29, 1, 28, 1, 30] ASSIGN __parent[__child] __rhs
+0843 [33, 1, 30] PUSH __rhs
+0844 [15, 1, 66] JUMP __endif2
+0845 [-1, 66, 845] __endif2:
+0846 [33, 1, 65] PUSH val
+0847 [33, 1, 25] PUSH __this
+0848 [33, 1, 57] PUSH __field__IntArray__data
+0849 [34, 1, 28] POP __child
+0850 [34, 1, 29] POP __parent
+0851 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0852 [33, 1, 25] PUSH __this
+0853 [33, 1, 58] PUSH __field__IntArray__size
+0854 [34, 1, 28] POP __child
+0855 [34, 1, 29] POP __parent
+0856 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0857 [34, 1, 41] POP __offset
+0858 [34, 1, 42] POP __pointer
+0859 [34, 1, 30] POP __rhs
+0860 [0, 2, 1, 42, 1, 41, 1, 30] ASSIGN __pointer[__offset] __rhs
+0861 [33, 1, 30] PUSH __rhs
+0862 [33, 1, 25] PUSH __this
+0863 [33, 1, 58] PUSH __field__IntArray__size
+0864 [34, 1, 28] POP __child
+0865 [34, 1, 29] POP __parent
+0866 [0, 1, 40, 2, 1, 29, 1, 28] ASSIGN __res __parent[__child]
+0867 [3, 2, 1, 29, 1, 28, 2, 1, 29, 1, 28, 0, 1] ADD __parent[__child] __parent[__child] 1
+0868 [33, 1, 40] PUSH __res
+0869 [13, 0, 0] RETURN 0
+0870 [-1, 63, 870] __endMethod__IntArray__pushBack:
+0871 [15, 1, 70] JUMP __endMethod__IntArray__popBack
+0872 [-1, 71, 872] __method__IntArray__popBack:
+0873 [35, 1, 25, 0, 0] STACKGET __this 0
+0874 [33, 1, 25] PUSH __this
+0875 [33, 1, 57] PUSH __field__IntArray__data
+0876 [34, 1, 28] POP __child
+0877 [34, 1, 29] POP __parent
+0878 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0879 [33, 1, 25] PUSH __this
+0880 [33, 1, 58] PUSH __field__IntArray__size
+0881 [34, 1, 28] POP __child
+0882 [34, 1, 29] POP __parent
+0883 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0884 [34, 1, 30] POP __rhs
+0885 [33, 1, 25] PUSH __this
+0886 [33, 1, 58] PUSH __field__IntArray__size
+0887 [34, 1, 28] POP __child
+0888 [34, 1, 29] POP __parent
+0889 [4, 2, 1, 29, 1, 28, 2, 1, 29, 1, 28, 0, 1] SUBTRACT __parent[__child] __parent[__child] 1
+0890 [0, 1, 40, 2, 1, 29, 1, 28] ASSIGN __res __parent[__child]
+0891 [33, 1, 40] PUSH __res
+0892 [34, 1, 41] POP __offset
+0893 [34, 1, 42] POP __pointer
+0894 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0895 [34, 1, 34] POP __rVal
+0896 [13, 1, 34] RETURN __rVal
+0897 [13, 0, 0] RETURN 0
+0898 [-1, 70, 898] __endMethod__IntArray__popBack:
+0899 [15, 1, 72] JUMP __endMethod__IntArray__get
+0900 [-1, 73, 900] __method__IntArray__get:
+0901 [35, 1, 25, 0, 0] STACKGET __this 0
+0902 [35, 1, 74, 0, 1] STACKGET index 1
+0903 [33, 1, 25] PUSH __this
+0904 [33, 1, 57] PUSH __field__IntArray__data
+0905 [34, 1, 28] POP __child
+0906 [34, 1, 29] POP __parent
+0907 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0908 [33, 1, 74] PUSH index
+0909 [34, 1, 41] POP __offset
+0910 [34, 1, 42] POP __pointer
+0911 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+0912 [34, 1, 34] POP __rVal
+0913 [13, 1, 34] RETURN __rVal
+0914 [13, 0, 0] RETURN 0
+0915 [-1, 72, 915] __endMethod__IntArray__get:
+0916 [-1, 60, 916] __endclass__IntArray:
+0917 [12, 1, 62] CALL IntArray
+0918 [14, 1, 45] RESPONSE __retval
+0919 [33, 1, 45] PUSH __retval
+0920 [34, 1, 30] POP __rhs
+0921 [0, 1, 75, 1, 30] ASSIGN myArray __rhs
+0922 [33, 1, 30] PUSH __rhs
+0923 [33, 1, 75] PUSH myArray
+0924 [33, 0, 42] PUSH 42
+0925 [34, 1, 43] POP __arg0
+0926 [34, 1, 47] POP __obj
+0927 [33, 1, 43] PUSH __arg0
+0928 [33, 1, 47] PUSH __obj
+0929 [12, 1, 64] CALL __method__IntArray__pushBack
+0930 [33, 1, 1] PUSH __null
+0931 [34, 1, 1] POP __null
+0932 [14, 1, 45] RESPONSE __retval
+0933 [33, 1, 45] PUSH __retval
+0934 [33, 1, 75] PUSH myArray
+0935 [33, 0, 7] PUSH 7
+0936 [34, 1, 43] POP __arg0
+0937 [34, 1, 47] POP __obj
+0938 [33, 1, 43] PUSH __arg0
+0939 [33, 1, 47] PUSH __obj
+0940 [12, 1, 64] CALL __method__IntArray__pushBack
+0941 [33, 1, 1] PUSH __null
+0942 [34, 1, 1] POP __null
+0943 [14, 1, 45] RESPONSE __retval
+0944 [33, 1, 45] PUSH __retval
+0945 [33, 1, 75] PUSH myArray
+0946 [34, 1, 47] POP __obj
+0947 [33, 1, 47] PUSH __obj
+0948 [12, 1, 71] CALL __method__IntArray__popBack
+0949 [33, 1, 1] PUSH __null
+0950 [14, 1, 45] RESPONSE __retval
+0951 [33, 1, 45] PUSH __retval
+0952 [33, 1, 75] PUSH myArray
+0953 [33, 0, 19] PUSH 19
+0954 [34, 1, 43] POP __arg0
+0955 [34, 1, 47] POP __obj
+0956 [33, 1, 43] PUSH __arg0
+0957 [33, 1, 47] PUSH __obj
+0958 [12, 1, 64] CALL __method__IntArray__pushBack
+0959 [33, 1, 1] PUSH __null
+0960 [34, 1, 1] POP __null
+0961 [14, 1, 45] RESPONSE __retval
+0962 [33, 1, 45] PUSH __retval
+0963 [33, 1, 75] PUSH myArray
+0964 [33, 0, 25] PUSH 25
+0965 [34, 1, 43] POP __arg0
+0966 [34, 1, 47] POP __obj
+0967 [33, 1, 43] PUSH __arg0
+0968 [33, 1, 47] PUSH __obj
+0969 [12, 1, 64] CALL __method__IntArray__pushBack
+0970 [33, 1, 1] PUSH __null
+0971 [34, 1, 1] POP __null
+0972 [14, 1, 45] RESPONSE __retval
+0973 [33, 1, 45] PUSH __retval
+0974 [33, 1, 75] PUSH myArray
+0975 [34, 1, 47] POP __obj
+0976 [33, 1, 47] PUSH __obj
+0977 [12, 1, 71] CALL __method__IntArray__popBack
+0978 [33, 1, 1] PUSH __null
+0979 [14, 1, 45] RESPONSE __retval
+0980 [33, 1, 45] PUSH __retval
+0981 [33, 0, 0] PUSH 0
+0982 [34, 1, 30] POP __rhs
+0983 [0, 1, 49, 1, 30] ASSIGN i __rhs
+0984 [33, 1, 30] PUSH __rhs
+0985 [-1, 76, 985] __for4:
+0986 [33, 1, 49] PUSH i
+0987 [33, 1, 75] PUSH myArray
+0988 [33, 1, 58] PUSH __field__IntArray__size
+0989 [34, 1, 28] POP __child
+0990 [34, 1, 29] POP __parent
+0991 [33, 2, 1, 29, 1, 28] PUSH __parent[__child]
+0992 [34, 1, 30] POP __rhs
+0993 [34, 1, 51] POP __lhs
+0994 [24, 1, 40, 1, 51, 1, 30] LT __res __lhs __rhs
+0995 [33, 1, 40] PUSH __res
+0996 [34, 1, 52] POP __cond
+0997 [28, 1, 52, 0, 0] CMP __cond 0
+0998 [18, 1, 77] JEQ __endfor4
+0999 [33, 1, 75] PUSH myArray
+1000 [33, 1, 49] PUSH i
+1001 [34, 1, 43] POP __arg0
+1002 [34, 1, 47] POP __obj
+1003 [33, 1, 43] PUSH __arg0
+1004 [33, 1, 47] PUSH __obj
+1005 [12, 1, 73] CALL __method__IntArray__get
+1006 [33, 1, 1] PUSH __null
+1007 [34, 1, 1] POP __null
+1008 [14, 1, 45] RESPONSE __retval
+1009 [33, 1, 45] PUSH __retval
+1010 [34, 1, 43] POP __arg0
+1011 [33, 1, 43] PUSH __arg0
+1012 [12, 1, 11] CALL printInt
+1013 [34, 1, 1] POP __null
+1014 [14, 1, 45] RESPONSE __retval
+1015 [33, 1, 45] PUSH __retval
+1016 [1, 1, 3, 0, 1] MALLOC __str 1
+1017 [0, 2, 1, 3, 0, 0, 0, ' '] ASSIGN __str[0] ' '
+1018 [33, 1, 3] PUSH __str
+1019 [34, 1, 43] POP __arg0
+1020 [33, 1, 43] PUSH __arg0
+1021 [12, 1, 2] CALL print
+1022 [34, 1, 1] POP __null
+1023 [14, 1, 45] RESPONSE __retval
+1024 [33, 1, 45] PUSH __retval
+1025 [33, 1, 49] PUSH i
+1026 [34, 1, 30] POP __rhs
+1027 [3, 1, 49, 1, 49, 0, 1] ADD i i 1
+1028 [0, 1, 40, 1, 49] ASSIGN __res i
+1029 [33, 1, 40] PUSH __res
+1030 [15, 1, 76] JUMP __for4
+1031 [-1, 77, 1031] __endfor4:
+1032 [1, 1, 3, 0, 0] MALLOC __str 0
+1033 [33, 1, 3] PUSH __str
+1034 [34, 1, 43] POP __arg0
+1035 [33, 1, 43] PUSH __arg0
+1036 [12, 1, 8] CALL println
+1037 [34, 1, 1] POP __null
+1038 [14, 1, 45] RESPONSE __retval
+1039 [33, 1, 45] PUSH __retval
+1040 [33, 0, 5] PUSH 5
+1041 [33, 0, 5] PUSH 5
+1042 [34, 1, 4] POP __size
+1043 [1, 1, 31, 1, 4] MALLOC __ptr __size
+1044 [33, 1, 31] PUSH __ptr
+1045 [34, 1, 30] POP __rhs
+1046 [0, 1, 78, 1, 30] ASSIGN multi __rhs
+1047 [33, 1, 30] PUSH __rhs
+1048 [33, 0, 0] PUSH 0
+1049 [34, 1, 30] POP __rhs
+1050 [0, 1, 49, 1, 30] ASSIGN i __rhs
+1051 [33, 1, 30] PUSH __rhs
+1052 [-1, 79, 1052] __for5:
+1053 [33, 1, 49] PUSH i
+1054 [33, 0, 5] PUSH 5
+1055 [34, 1, 30] POP __rhs
+1056 [34, 1, 51] POP __lhs
+1057 [24, 1, 40, 1, 51, 1, 30] LT __res __lhs __rhs
+1058 [33, 1, 40] PUSH __res
+1059 [34, 1, 52] POP __cond
+1060 [28, 1, 52, 0, 0] CMP __cond 0
+1061 [18, 1, 80] JEQ __endfor5
+1062 [33, 0, 5] PUSH 5
+1063 [34, 1, 4] POP __size
+1064 [1, 1, 31, 1, 4] MALLOC __ptr __size
+1065 [33, 1, 31] PUSH __ptr
+1066 [33, 1, 78] PUSH multi
+1067 [33, 1, 49] PUSH i
+1068 [34, 1, 41] POP __offset
+1069 [34, 1, 42] POP __pointer
+1070 [34, 1, 30] POP __rhs
+1071 [0, 2, 1, 42, 1, 41, 1, 30] ASSIGN __pointer[__offset] __rhs
+1072 [33, 1, 30] PUSH __rhs
+1073 [33, 0, 0] PUSH 0
+1074 [34, 1, 30] POP __rhs
+1075 [0, 1, 54, 1, 30] ASSIGN j __rhs
+1076 [33, 1, 30] PUSH __rhs
+1077 [-1, 81, 1077] __for6:
+1078 [33, 1, 54] PUSH j
+1079 [33, 0, 5] PUSH 5
+1080 [34, 1, 30] POP __rhs
+1081 [34, 1, 51] POP __lhs
+1082 [24, 1, 40, 1, 51, 1, 30] LT __res __lhs __rhs
+1083 [33, 1, 40] PUSH __res
+1084 [34, 1, 52] POP __cond
+1085 [28, 1, 52, 0, 0] CMP __cond 0
+1086 [18, 1, 82] JEQ __endfor6
+1087 [33, 1, 78] PUSH multi
+1088 [33, 1, 49] PUSH i
+1089 [34, 1, 41] POP __offset
+1090 [34, 1, 42] POP __pointer
+1091 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+1092 [33, 1, 54] PUSH j
+1093 [34, 1, 41] POP __offset
+1094 [34, 1, 42] POP __pointer
+1095 [33, 2, 1, 42, 1, 41] PUSH __pointer[__offset]
+1096 [34, 1, 43] POP __arg0
+1097 [33, 1, 43] PUSH __arg0
+1098 [12, 1, 11] CALL printInt
+1099 [34, 1, 1] POP __null
+1100 [14, 1, 45] RESPONSE __retval
+1101 [33, 1, 45] PUSH __retval
+1102 [1, 1, 3, 0, 1] MALLOC __str 1
+1103 [0, 2, 1, 3, 0, 0, 0, ' '] ASSIGN __str[0] ' '
+1104 [33, 1, 3] PUSH __str
+1105 [34, 1, 43] POP __arg0
+1106 [33, 1, 43] PUSH __arg0
+1107 [12, 1, 2] CALL print
+1108 [34, 1, 1] POP __null
+1109 [14, 1, 45] RESPONSE __retval
+1110 [33, 1, 45] PUSH __retval
+1111 [33, 1, 54] PUSH j
+1112 [34, 1, 30] POP __rhs
+1113 [3, 1, 54, 1, 54, 0, 1] ADD j j 1
+1114 [0, 1, 40, 1, 54] ASSIGN __res j
+1115 [33, 1, 40] PUSH __res
+1116 [15, 1, 81] JUMP __for6
+1117 [-1, 82, 1117] __endfor6:
+1118 [1, 1, 3, 0, 0] MALLOC __str 0
+1119 [33, 1, 3] PUSH __str
+1120 [34, 1, 43] POP __arg0
+1121 [33, 1, 43] PUSH __arg0
+1122 [12, 1, 8] CALL println
+1123 [34, 1, 1] POP __null
+1124 [14, 1, 45] RESPONSE __retval
+1125 [33, 1, 45] PUSH __retval
+1126 [33, 1, 49] PUSH i
+1127 [34, 1, 30] POP __rhs
+1128 [3, 1, 49, 1, 49, 0, 1] ADD i i 1
+1129 [0, 1, 40, 1, 49] ASSIGN __res i
+1130 [33, 1, 40] PUSH __res
+1131 [15, 1, 79] JUMP __for5
+1132 [-1, 80, 1132] __endfor5:

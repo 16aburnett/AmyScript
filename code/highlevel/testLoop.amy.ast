@@ -27,7 +27,7 @@ ProgramNode:
 |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   Identifier: println 
 |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   String Literal: "" string
+|   |   |   |   |   |   |   String Literal: "" char[]
 |   ExpressionStatement:
 |   |   AssignExpression: = int
 |   |   |   Type: Type.INT int
@@ -59,7 +59,7 @@ ProgramNode:
 |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   Identifier: println 
 |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   String Literal: "" string
+|   |   |   |   |   |   |   String Literal: "" char[]
 |   For:
 |   |   Init: Type.INT
 |   |   |   AssignExpression: = int
@@ -111,7 +111,7 @@ ProgramNode:
 |   |   |   |   |   |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   |   |   |   |   |   Identifier: print 
 |   |   |   |   |   |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   |   |   |   |   |   String Literal: "x" string
+|   |   |   |   |   |   |   |   |   |   |   |   String Literal: "x" char[]
 |   |   |   |   |   |   |   |   Else:
 |   |   |   |   |   |   |   |   |   Body:
 |   |   |   |   |   |   |   |   |   |   ExpressionStatement:
@@ -119,7 +119,7 @@ ProgramNode:
 |   |   |   |   |   |   |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   |   |   |   |   |   |   Identifier: print 
 |   |   |   |   |   |   |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   |   |   |   |   |   |   String Literal: "." string
+|   |   |   |   |   |   |   |   |   |   |   |   |   String Literal: "." char[]
 |   |   |   |   ExpressionStatement:
 |   |   |   |   |   AssignExpression: = int
 |   |   |   |   |   |   Type: Type.INT int
@@ -132,7 +132,7 @@ ProgramNode:
 |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   Identifier: println 
 |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   String Literal: "" string
+|   |   |   |   |   |   |   String Literal: "" char[]
 |   ExpressionStatement:
 |   |   Function Call: 
 |   |   |   Function Name:
@@ -144,7 +144,7 @@ ProgramNode:
 |   |   |   Function Name:
 |   |   |   |   Identifier: println 
 |   |   |   Arguments:
-|   |   |   |   String Literal: "" string
+|   |   |   |   String Literal: "" char[]
 |   ExpressionStatement:
 |   |   Function Call: 
 |   |   |   Function Name:
@@ -156,7 +156,7 @@ ProgramNode:
 |   |   |   Function Name:
 |   |   |   |   Identifier: println 
 |   |   |   Arguments:
-|   |   |   |   String Literal: "" string
+|   |   |   |   String Literal: "" char[]
 |   ExpressionStatement:
 |   |   AssignExpression: = int
 |   |   |   Type: Type.INT int
@@ -199,7 +199,7 @@ ProgramNode:
 |   |   |   Function Name:
 |   |   |   |   Identifier: println 
 |   |   |   Arguments:
-|   |   |   |   String Literal: "" string
+|   |   |   |   String Literal: "" char[]
 |   For:
 |   |   Init: Type.INT
 |   |   |   AssignExpression: = int
@@ -232,4 +232,4 @@ ProgramNode:
 |   |   |   Function Name:
 |   |   |   |   Identifier: println 
 |   |   |   Arguments:
-|   |   |   |   String Literal: "Loop finished!" string
+|   |   |   |   String Literal: "Loop finished!" char[]

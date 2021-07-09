@@ -42,8 +42,9 @@ token_specification = [
     ('PRIVATE',  r'private'),  
     ('FIELD',    r'field'),  
     ('METHOD',   r'method'),  
-    ('CONSTRUCTOR',  r'constructor'),  
+    ('CONSTRUCTOR',r'constructor'),  
     ('NEW',      r'new'),  
+    ('THIS',     r'this'),  
 # Built-in types
     ('INTTYPE',   r'int'),  
     ('FLOATTYPE', r'float'),  
@@ -72,6 +73,7 @@ token_specification = [
     # ('ASSIGNMINUS', r'\-\='),
     # ('ASSIGNTIMES', r'\*\='),
     # ('ASSIGNDIVIDE',r'\/\='),
+    # ('ASSIGNMOD',r'\%\='),
     ('LOR',      r'\|\|'),
     ('LAND',     r'\&\&'),
     ('LNOT',     r'\!'),

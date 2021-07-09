@@ -263,12 +263,17 @@ greaterThanFlag = 0
 
 def getVariableValue(stack, var):
 
-    # Ensure variable exists in the current scope 
-    if var not in stack[base_pointer]:
-        print(f"variable referenced before assignment - '{var}'")
-        exit(1)
+    # Ensure variable exists in the current scope or parent scopes
+    bptr = base_pointer
+    # top scope will have prev base pointer of -1
+    while bptr != -1:
+        # found variable in bptr's scope
+        if var in stack[bptr]:
+            return stack[bptr][var]
+        bptr = stack[bptr-1]
     
-    return stack[base_pointer][var]
+    print(f"variable referenced before assignment - '{var}'")
+    exit(1)
 
 def getMemAddress(stack, pmode, pointer, omode, offset) -> int:
     """Gets the absolute memory address including any offset

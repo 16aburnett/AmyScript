@@ -233,4 +233,4 @@ ProgramNode:
 |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   Identifier: println 
 |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   String Literal: "Can you even here me now!" string
+|   |   |   |   |   |   |   String Literal: "Can you even here me now!" char[]

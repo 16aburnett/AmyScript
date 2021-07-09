@@ -1,124 +1,287 @@
 // AmyAssembly compiled from AmyScript
-//=========================================================================
-//=========================================================================
+// Filename: sample.amy
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+
+jump __endOfLibrary
+
+//========================================================================
+// Global Variables
+
+    assign __null 0
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__loop:
+    // cond
+    cmp __i __size
+    jge __print__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__loop
+__print__endloop:
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__loop:
+    // cond
+    cmp __i __size
+    jge __println__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__loop
+__println__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void printInt (int intToPrint);
+printInt:
+    // grab string
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void printChar (char charToPrint);
+printChar:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// converts an integer to a string
+// char[] intToString (int val);
+intToString:
+    stackget __val 0
+
+    return 0
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//========================================================================
 // Class Declaration - Person
-   //----------------------------------------------------------------------
+   //---------------------------------------------------------------------
    // Field - m_name
-   //----------------------------------------------------------------------
-   //----------------------------------------------------------------------
+   ASSIGN __field__Person__m_name 0
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
    // Field - m_age
-   //----------------------------------------------------------------------
-   //----------------------------------------------------------------------
+   ASSIGN __field__Person__m_age 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
    // Field - m_nums
-   //----------------------------------------------------------------------
-   //----------------------------------------------------------------------
-   // Constructor
-   // Assignment
-      // RHS
-         // String Literal 
-      // LHS
-         // Identifier
-            PUSH m_name
-      POP __rhs
-      ASSIGN m_name __rhs
-      PUSH __rhs
-   // Assignment
-      // RHS
-         PUSH 0
-      // LHS
-         // Identifier
-            PUSH m_age
-      POP __rhs
-      ASSIGN m_age __rhs
-      PUSH __rhs
-   // Assignment
-      // RHS
-         PUSH 5
-         POP __size
-         MALLOC __ptr __size
-         PUSH __ptr
-      // LHS
-         // Identifier
-            PUSH m_nums
-      POP __rhs
-      ASSIGN m_nums __rhs
-      PUSH __rhs
-   //----------------------------------------------------------------------
-   //----------------------------------------------------------------------
-   // Constructor
-   // Assignment
-      // RHS
-         // Identifier
-            PUSH name
-      // LHS
-         // Identifier
-            PUSH m_name
-      POP __rhs
-      ASSIGN m_name __rhs
-      PUSH __rhs
-   // Assignment
-      // RHS
-         // Identifier
-            PUSH age
-      // LHS
-         // Identifier
-            PUSH m_age
-      POP __rhs
-      ASSIGN m_age __rhs
-      PUSH __rhs
-   // Assignment
-      // RHS
-         PUSH 5
-         POP __size
-         MALLOC __ptr __size
-         PUSH __ptr
-      // LHS
-         // Identifier
-            PUSH m_nums
-      POP __rhs
-      ASSIGN m_nums __rhs
-      PUSH __rhs
-   //----------------------------------------------------------------------
-   //----------------------------------------------------------------------
-   // Method - getAge
-      // Identifier
-         PUSH m_age
-   //----------------------------------------------------------------------
+   ASSIGN __field__Person__m_nums 2
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass__Person
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Person Person
+   JUMP __endctor__Person
+   Person:
+      // Creating Class Instance
+         MALLOC __this 3
+      // Parameters
+         // Param: name
+         STACKGET name 0
+         // Param: age
+         STACKGET age 1
+      // Body
+         // Assignment
+            // RHS
+               // Identifier
+                  PUSH name
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__Person__m_name
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Identifier
+                  PUSH age
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__Person__m_age
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Array Allocator
+                  // Literal
+                     PUSH 5
+                  POP __size
+                  MALLOC __ptr __size
+                  PUSH __ptr
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__Person__m_nums
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+      RETURN __this
+   __endctor__Person:
+   // End Constructor Declaration - Person
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __endMethod__Person__getAge
+   __method__Person__getAge:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         // Return
+            // Member Accessor
+               // LHS
+                  // This keyword
+                     PUSH __this
+               // RHS
+                  PUSH __field__Person__m_age
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+            POP __rVal
+            RETURN __rVal
+      RETURN 0
+   __endMethod__Person__getAge:
+   // End Method Declaration - __method__Person__getAge
+   //---------------------------------------------------------------------
+
+__endclass__Person:
 // End Class Declaration - Person
-//=========================================================================
-//=========================================================================
+//========================================================================
+
+//========================================================================
 // Function Declaration - max int
+JUMP __end__max
 max:
    // Parameters
       // Param: a
-      POP a
+      STACKGET a 0
       // Param: b
-      POP b
+      STACKGET b 1
    // Body
-      //-------------------------------------------------------------------
+      //------------------------------------------------------------------
       // If-Statement
          // Condition
-         // Identifier
-            PUSH a
+            // Greater Than or Equal to
+               // LHS
+                  // Identifier
+                     PUSH a
+               // RHS
+                  // Identifier
+                     PUSH b
+               POP __rhs
+               POP __lhs
+               GE __res __lhs __rhs
+               PUSH __res
+            POP __cond
+            CMP __cond 0
+            JEQ __endif0
+         // Body
+            // Return
+               // Identifier
+                  PUSH a
+               POP __rVal
+               RETURN __rVal
+         JUMP __endif0
+         // End of if
+         __endif0:
+      //------------------------------------------------------------------
+      // Return
          // Identifier
             PUSH b
-         // Body
-         // Identifier
-            PUSH a
-      //-------------------------------------------------------------------
-      // Identifier
-         PUSH b
+         POP __rVal
+         RETURN __rVal
+   RETURN 0
+__end__max:
 // End Function Declaration - max
-//=========================================================================
+//========================================================================
+
 // Assignment
    // RHS
-      PUSH 2
-      POP __size
-      MALLOC __ptr __size
-      PUSH __ptr
-   // LHS
-      // Variable Declaration
-         ASSIGN people 0
+      // Array Allocator
+         // Literal
+            PUSH 2
+         POP __size
+         MALLOC __ptr __size
+         PUSH __ptr
    POP __rhs
    ASSIGN people __rhs
    PUSH __rhs
@@ -128,29 +291,32 @@ max:
          // LHS
             // Assignment
                // RHS
-                  PUSH 0
-               // LHS
-                  // Variable Declaration
-                     ASSIGN amyIndex 0
+                  // Literal
+                     PUSH 0
                POP __rhs
                ASSIGN amyIndex __rhs
                PUSH __rhs
          // RHS
-            PUSH 1
+            // Literal
+               PUSH 1
          POP __rhs
          POP __lhs
          ADD __res __lhs __rhs
          PUSH __res
-   // LHS
-      // Variable Declaration
-         ASSIGN camIndex 0
    POP __rhs
    ASSIGN camIndex __rhs
    PUSH __rhs
 // Assignment
    // RHS
+      // Constructor Call
+         // Arguments
+         // Pushing args in reverse order
+         CALL Person
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
    // LHS
-      // Subscript
+      // Subscript assignment
          // LHS
             // Identifier
                PUSH people
@@ -159,18 +325,38 @@ max:
                PUSH amyIndex
          POP __offset
          POP __pointer
-         ADD __dest __pointer __offset
-         PUSH __dest
-   POP __lhs
    POP __rhs
-   ASSIGN __lhs[0] __rhs
+   ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
 // Assignment
    // RHS
-      // String Literal 
-      PUSH 21
+      // Constructor Call
+         // Arguments
+            // Literal
+               MALLOC __str 7
+               ASSIGN __str[0] 'C'
+               ASSIGN __str[1] 'a'
+               ASSIGN __str[2] 'm'
+               ASSIGN __str[3] 'e'
+               ASSIGN __str[4] 'r'
+               ASSIGN __str[5] 'o'
+               ASSIGN __str[6] 'n'
+               PUSH __str
+            POP __arg0
+            // Literal
+               PUSH 21
+            POP __arg1
+         // Pushing args in reverse order
+         PUSH __arg1
+         PUSH __arg0
+         CALL Person
+         // Remove args
+         POP __null
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
    // LHS
-      // Subscript
+      // Subscript assignment
          // LHS
             // Identifier
                PUSH people
@@ -179,66 +365,19 @@ max:
                PUSH camIndex
          POP __offset
          POP __pointer
-         ADD __dest __pointer __offset
-         PUSH __dest
-   POP __lhs
    POP __rhs
-   ASSIGN __lhs[0] __rhs
+   ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
 // Assignment
    // RHS
-      // String Literal 
+      // Literal
+         MALLOC __str 3
+         ASSIGN __str[0] 'A'
+         ASSIGN __str[1] 'm'
+         ASSIGN __str[2] 'y'
+         PUSH __str
    // LHS
-      // Subscript
-         // LHS
-            // Identifier
-               PUSH people
-         // OFFSET
-            // Identifier
-               PUSH amyIndex
-         POP __offset
-         POP __pointer
-         ADD __dest __pointer __offset
-         PUSH __dest
-      // Identifier
-         PUSH m_name
-   PUSH __rhs
-// Assignment
-   // RHS
-      // FunctionCall
-         // Subscript
-            // LHS
-               // Identifier
-                  PUSH people
-            // OFFSET
-               // Identifier
-                  PUSH camIndex
-            POP __offset
-            POP __pointer
-            ADD __dest __pointer __offset
-            PUSH __dest
-         // Identifier
-            PUSH getAge
-   // LHS
-      // Subscript
-         // LHS
-            // Identifier
-               PUSH people
-         // OFFSET
-            // Identifier
-               PUSH amyIndex
-         POP __offset
-         POP __pointer
-         ADD __dest __pointer __offset
-         PUSH __dest
-      // Identifier
-         PUSH m_age
-   PUSH __rhs
-// Assignment
-   // RHS
-      PUSH 3.14
-   // LHS
-      // Subscript
+      // Member Accessor Assignment
          // LHS
             // Subscript
                // LHS
@@ -249,25 +388,40 @@ max:
                      PUSH amyIndex
                POP __offset
                POP __pointer
-               ADD __dest __pointer __offset
-               PUSH __dest
-            // Identifier
-               PUSH m_nums
-         // OFFSET
-            PUSH 0
-         POP __offset
-         POP __pointer
-         ADD __dest __pointer __offset
-         PUSH __dest
-   POP __lhs
-   POP __rhs
-   ASSIGN __lhs[0] __rhs
+               PUSH __pointer[__offset]
+         // RHS
+            PUSH __field__Person__m_name
+         POP __child
+         POP __parent
+         POP __rhs
+         ASSIGN __parent[__child] __rhs
    PUSH __rhs
 // Assignment
    // RHS
-      PUSH 6.28
+      // Method Call
+         // LHS
+            // Subscript
+               // LHS
+                  // Identifier
+                     PUSH people
+               // OFFSET
+                  // Identifier
+                     PUSH camIndex
+               POP __offset
+               POP __pointer
+               PUSH __pointer[__offset]
+         // RHS
+         // Arguments
+         POP __obj
+         // Pushing args in reverse order
+         PUSH __obj
+         CALL __method__Person__getAge
+         PUSH __null
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
    // LHS
-      // Subscript
+      // Member Accessor Assignment
          // LHS
             // Subscript
                // LHS
@@ -278,204 +432,427 @@ max:
                      PUSH amyIndex
                POP __offset
                POP __pointer
-               ADD __dest __pointer __offset
-               PUSH __dest
-            // Identifier
-               PUSH m_nums
-         // OFFSET
-            PUSH 1
-         POP __offset
-         POP __pointer
-         ADD __dest __pointer __offset
-         PUSH __dest
-   POP __lhs
-   POP __rhs
-   ASSIGN __lhs[0] __rhs
+               PUSH __pointer[__offset]
+         // RHS
+            PUSH __field__Person__m_age
+         POP __child
+         POP __parent
+         POP __rhs
+         ASSIGN __parent[__child] __rhs
    PUSH __rhs
-// FunctionCall
-   // Subscript
-      // LHS
-         // Identifier
-            PUSH people
-      // OFFSET
-         PUSH 0
-      POP __offset
-      POP __pointer
-      ADD __dest __pointer __offset
-      PUSH __dest
-   // Identifier
-      PUSH m_name
-   // Identifier
-      PUSH println
 // Assignment
    // RHS
-      PUSH 5
-      POP __size
-      MALLOC __ptr __size
-      PUSH __ptr
+      // Literal
+         PUSH 3.14
    // LHS
-      // Variable Declaration
-         ASSIGN nums 0
+      // Subscript assignment
+         // LHS
+            // Member Accessor
+               // LHS
+                  // Subscript
+                     // LHS
+                        // Identifier
+                           PUSH people
+                     // OFFSET
+                        // Identifier
+                           PUSH amyIndex
+                     POP __offset
+                     POP __pointer
+                     PUSH __pointer[__offset]
+               // RHS
+                  PUSH __field__Person__m_nums
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+         // OFFSET
+            // Literal
+               PUSH 0
+         POP __offset
+         POP __pointer
+   POP __rhs
+   ASSIGN __pointer[__offset] __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Literal
+         PUSH 6.28
+   // LHS
+      // Subscript assignment
+         // LHS
+            // Member Accessor
+               // LHS
+                  // Subscript
+                     // LHS
+                        // Identifier
+                           PUSH people
+                     // OFFSET
+                        // Identifier
+                           PUSH amyIndex
+                     POP __offset
+                     POP __pointer
+                     PUSH __pointer[__offset]
+               // RHS
+                  PUSH __field__Person__m_nums
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+         // OFFSET
+            // Literal
+               PUSH 1
+         POP __offset
+         POP __pointer
+   POP __rhs
+   ASSIGN __pointer[__offset] __rhs
+   PUSH __rhs
+// Function Call
+   // Arguments
+      // Member Accessor
+         // LHS
+            // Subscript
+               // LHS
+                  // Identifier
+                     PUSH people
+               // OFFSET
+                  // Literal
+                     PUSH 0
+               POP __offset
+               POP __pointer
+               PUSH __pointer[__offset]
+         // RHS
+            PUSH __field__Person__m_name
+         POP __child
+         POP __parent
+         PUSH __parent[__child]
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Assignment
+   // RHS
+      // Array Allocator
+         // Literal
+            PUSH 5
+         POP __size
+         MALLOC __ptr __size
+         PUSH __ptr
    POP __rhs
    ASSIGN nums __rhs
    PUSH __rhs
-// Assignment
-   // RHS
-      PUSH 0
-   // LHS
-      // Variable Declaration
-         ASSIGN i 0
-   POP __rhs
-   ASSIGN i __rhs
-   PUSH __rhs
-// Identifier
-   PUSH i
-// FunctionCall
-   // Identifier
-      PUSH nums
-   // Identifier
-      PUSH sizeof
-// Identifier
-   PUSH i
-// FunctionCall
-   // Subscript
-      // LHS
-         // Identifier
-            PUSH nums
-      // OFFSET
-         // Identifier
-            PUSH i
-      POP __offset
-      POP __pointer
-      ADD __dest __pointer __offset
-      PUSH __dest
-   // String Literal 
-   // Identifier
-      PUSH print
-// FunctionCall
-   // Identifier
-      PUSH println
-// Assignment
-   // RHS
-      PUSH 0
-   // LHS
-      // Variable Declaration
-         ASSIGN mybool 0
-   POP __rhs
-   ASSIGN mybool __rhs
-   PUSH __rhs
-//-------------------------------------------------------------------------
-// If-Statement
-   // Condition
-   // FunctionCall
-      // Identifier
-         PUSH nums
-      // Identifier
-         PUSH sizeof
-   PUSH 0
-   // Body
-   // FunctionCall
-      // String Literal 
-      // Identifier
-         PUSH print
-   // FunctionCall
-      // Identifier
-         PUSH nums
-      // Identifier
-         PUSH print
-   // FunctionCall
-      // Identifier
-         PUSH println
-   //----------------------------------------------------------------------
-   // Elif-Statement
-      // Condition
-      // Identifier
-         PUSH mybool
-      // Body
-      // FunctionCall
-         // Identifier
-            PUSH mybool
-         // Identifier
-            PUSH println
-   //----------------------------------------------------------------------
-   //----------------------------------------------------------------------
-   // Else-Statement
-   // FunctionCall
-      // String Literal 
-      // Identifier
-         PUSH println
-   //----------------------------------------------------------------------
-//-------------------------------------------------------------------------
-// FunctionCall
+//------------------------------------------------------------------------
+// For-Loop
+// Init
    // Assignment
       // RHS
-         // Assignment
-            // RHS
-               PUSH 10
-            // LHS
-               // Variable Declaration
-                  ASSIGN y 0
-            POP __rhs
-            ASSIGN y __rhs
-            PUSH __rhs
-      // LHS
-         // Variable Declaration
-            ASSIGN x 0
+         // Literal
+            PUSH 0
       POP __rhs
-      ASSIGN x __rhs
+      ASSIGN i __rhs
       PUSH __rhs
-   // Identifier
-      PUSH println
-// Assignment
-   // RHS
-      PUSH 0
-   // LHS
-      // Identifier
-         PUSH x
-   POP __rhs
-   ASSIGN x __rhs
-   PUSH __rhs
-PUSH 1
-//-------------------------------------------------------------------------
-// If-Statement
+__for1:
    // Condition
-   // Identifier
-      PUSH x
-   PUSH 10
-   // Body
-//-------------------------------------------------------------------------
-// Assignment
-   // RHS
-      // Assignment
-         // RHS
-            // Addition
-               // LHS
-                  PUSH 21
-               // RHS
-                  PUSH 12
-               POP __rhs
-               POP __lhs
-               ADD __res __lhs __rhs
-               PUSH __res
+      // Less Than
          // LHS
+            // Identifier
+               PUSH i
+         // RHS
+            // Function Call
+               // Arguments
+                  // Identifier
+                     PUSH nums
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               CALL sizeof
+               // Remove args
+               POP __null
+               RESPONSE __retval
+               PUSH __retval
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor1
+   // Body
+      // Function Call
+         // Arguments
             // Subscript
                // LHS
                   // Identifier
                      PUSH nums
                // OFFSET
                   // Identifier
-                     PUSH x
+                     PUSH i
                POP __offset
                POP __pointer
-               ADD __dest __pointer __offset
-               PUSH __dest
-         POP __lhs
+               PUSH __pointer[__offset]
+            POP __arg0
+            // Literal
+               MALLOC __str 1
+               ASSIGN __str[0] ' '
+               PUSH __str
+            POP __arg1
+         // Pushing args in reverse order
+         PUSH __arg1
+         PUSH __arg0
+         CALL print
+         // Remove args
+         POP __null
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier
+               PUSH i
          POP __rhs
-         ASSIGN __lhs[0] __rhs
+         ADD i i 1
+         ASSIGN __res i
+         PUSH __res
+   // Repeat
+   JUMP __for1
+   // End of For
+   __endfor1:
+//------------------------------------------------------------------------
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 0
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Assignment
+   // RHS
+      // Literal
+         PUSH 0
+   POP __rhs
+   ASSIGN mybool __rhs
+   PUSH __rhs
+//------------------------------------------------------------------------
+// If-Statement
+   // Condition
+      // Greater Than
+         // LHS
+            // Function Call
+               // Arguments
+                  // Identifier
+                     PUSH nums
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               CALL sizeof
+               // Remove args
+               POP __null
+               RESPONSE __retval
+               PUSH __retval
+         // RHS
+            // Literal
+               PUSH 0
+         POP __rhs
+         POP __lhs
+         GT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __elif2x0
+   // Body
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 6
+               ASSIGN __str[0] 'N'
+               ASSIGN __str[1] 'u'
+               ASSIGN __str[2] 'm'
+               ASSIGN __str[3] 's'
+               ASSIGN __str[4] ':'
+               ASSIGN __str[5] ' '
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL print
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+      // Function Call
+         // Arguments
+            // Identifier
+               PUSH nums
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL print
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+      // Function Call
+         // Arguments
+         // Pushing args in reverse order
+         CALL println
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   JUMP __endif2
+   //---------------------------------------------------------------------
+   // Elif-Statement
+   __elif2x0:
+      // Condition
+      // Identifier
+         PUSH mybool
+      POP __cond
+      CMP __cond 0
+      JEQ __else2
+      // Body
+      // Function Call
+         // Arguments
+            // Identifier
+               PUSH mybool
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL println
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+      JUMP __endif2
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Else-Statement
+   __else2:
+   // Function Call
+      // Arguments
+         // Literal
+            MALLOC __str 3
+            ASSIGN __str[0] 'Y'
+            ASSIGN __str[1] 'e'
+            ASSIGN __str[2] 's'
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      CALL println
+      // Remove args
+      POP __null
+      RESPONSE __retval
+      PUSH __retval
+   //---------------------------------------------------------------------
+   // End of if
+   __endif2:
+//------------------------------------------------------------------------
+// Function Call
+   // Arguments
+      // Assignment
+         // RHS
+            // Assignment
+               // RHS
+                  // Literal
+                     PUSH 10
+               POP __rhs
+               ASSIGN y __rhs
+               PUSH __rhs
+         POP __rhs
+         ASSIGN x __rhs
          PUSH __rhs
-   // LHS
-      // Variable Declaration
-         ASSIGN w 0
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+// Assignment
+   // RHS
+      // Literal
+         PUSH 0
+   POP __rhs
+   ASSIGN x __rhs
+   PUSH __rhs
+//------------------------------------------------------------------------
+// While-Loop
+__while3:
+   // Condition
+      // Literal
+         PUSH 1
+      POP __cond
+      CMP __cond 0
+      JEQ __endwhile3
+   // Body
+      //------------------------------------------------------------------
+      // If-Statement
+         // Condition
+            // Greater Than
+               // LHS
+                  // Post-Increment
+                     ASSIGN __res x
+                     ADD x x 1
+                     PUSH __res
+               // RHS
+                  // Literal
+                     PUSH 10
+               POP __rhs
+               POP __lhs
+               GT __res __lhs __rhs
+               PUSH __res
+            POP __cond
+            CMP __cond 0
+            JEQ __endif4
+         // Body
+            // Break out of __while3
+            JUMP __endwhile3
+         JUMP __endif4
+         // End of if
+         __endif4:
+      //------------------------------------------------------------------
+   JUMP __while3
+   // End of While
+   __endwhile3:
+//------------------------------------------------------------------------
+// Assignment
+   // RHS
+      // Assignment
+         // RHS
+            // Addition
+               // LHS
+                  // Literal
+                     PUSH 21
+               // RHS
+                  // Literal
+                     PUSH 12
+               POP __rhs
+               POP __lhs
+               ADD __res __lhs __rhs
+               PUSH __res
+         // LHS
+            // Subscript assignment
+               // LHS
+                  // Identifier
+                     PUSH nums
+               // OFFSET
+                  // Post-Increment
+                     ASSIGN __res x
+                     ADD x x 1
+                     PUSH __res
+               POP __offset
+               POP __pointer
+         POP __rhs
+         ASSIGN __pointer[__offset] __rhs
+         PUSH __rhs
    POP __rhs
    ASSIGN w __rhs
    PUSH __rhs
@@ -483,68 +860,60 @@ PUSH 1
    // RHS
       // Assignment
          // RHS
-            PUSH 10
-         // LHS
-            // Variable Declaration
-               ASSIGN nCols 0
+            // Literal
+               PUSH 10
          POP __rhs
          ASSIGN nCols __rhs
          PUSH __rhs
-   // LHS
-      // Variable Declaration
-         ASSIGN nRows 0
    POP __rhs
    ASSIGN nRows __rhs
    PUSH __rhs
 // Assignment
    // RHS
-      // Identifier
-         PUSH nRows
-      // Identifier
-         PUSH nCols
-      POP __size
-      MALLOC __ptr __size
-      PUSH __ptr
-   // LHS
-      // Variable Declaration
-         ASSIGN board 0
+      // Array Allocator
+         // Identifier
+            PUSH nRows
+         // Identifier
+            PUSH nCols
+         POP __size
+         MALLOC __ptr __size
+         PUSH __ptr
    POP __rhs
    ASSIGN board __rhs
    PUSH __rhs
 // Assignment
    // RHS
-      PUSH 7.34
+      // Literal
+         PUSH 7.34
    // LHS
-      // Subscript
+      // Subscript assignment
          // LHS
             // Subscript
                // LHS
                   // Identifier
                      PUSH board
                // OFFSET
-                  PUSH 0
+                  // Literal
+                     PUSH 0
                POP __offset
                POP __pointer
-               ADD __dest __pointer __offset
-               PUSH __dest
+               PUSH __pointer[__offset]
          // OFFSET
-            PUSH 0
+            // Literal
+               PUSH 0
          POP __offset
          POP __pointer
-         ADD __dest __pointer __offset
-         PUSH __dest
-   POP __lhs
    POP __rhs
-   ASSIGN __lhs[0] __rhs
+   ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
 // Assignment
    // RHS
-      PUSH 1
-   // LHS
-      // Variable Declaration
-         ASSIGN apple 0
+      // Literal
+         PUSH 1
    POP __rhs
    ASSIGN apple __rhs
    PUSH __rhs
-//=========================================================================
-// End of program
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

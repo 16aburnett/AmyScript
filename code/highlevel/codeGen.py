@@ -26,6 +26,7 @@ class CodeGenVisitor (ASTVisitor):
         # keeps track of containing loop
         # for break and continue statements 
         self.parentLoops = []
+        self.pushParent = False
 
     # === HELPER FUNCTIONS ===============================================
 
@@ -186,59 +187,139 @@ class CodeGenVisitor (ASTVisitor):
 
         self.printDivider ()
         self.printComment (f"Class Declaration - {node.id}")
-        # add jump to skip over class dec  
-        self.printCode (f"JUMP __end__{node.id}")
 
         self.indentation += 1
 
+        i = 0
         for field in node.fields:
-            field.accept (self)
+            field.parentClass = node
+            self.printSubDivider ()
+            self.printComment (f"Field - {field.id}")
+
+            fieldIndexVarname = f"__field__{node.id}__{field.id}"
+            self.printCode (f"ASSIGN {fieldIndexVarname} {i}")
+            i += 1
+
+            self.printSubDivider ()
+
+        # add jump to skip over class dec  
+        self.indentation -= 1
+        self.printComment ("skip over class methods")
+        self.printCode (f"JUMP __endclass__{node.id}")
+        self.indentation += 1
 
         for ctor in node.constructors:
+            ctor.parentClass = node
             ctor.accept (self)
         
         for method in node.methods:
+            method.parentClass = node
             method.accept (self)
 
         self.indentation -= 1
 
-        self.printCode (f"__end__{node.id}:")
+        self.printCode (f"__endclass__{node.id}:")
 
         self.printComment (f"End Class Declaration - {node.id}")
         self.printDivider ()
         self.printNewline ()
 
     def visitFieldDeclarationNode (self, node):
-        self.printSubDivider ()
-        self.printComment (f"Field - {node.id}")
-        self.printSubDivider ()
+        pass
 
     def visitMethodDeclarationNode (self, node):
+
         self.printSubDivider ()
-        self.printComment (f"Method - {node.id}")
+        self.printComment (f"Method Declaration")
+
+        endLabel = f"__endMethod__{node.parentClass.id}__{node.id}"
+        methodLabel = f"__method__{node.parentClass.id}__{node.id}"
+
+        # add jump to skip over function 
+        self.printCode (f"JUMP {endLabel}")
+
+        # place function jump-point label 
+        self.printCode (methodLabel + ":")
 
         self.indentation += 1
 
-        # grab params so that the body can use them
-        for p in node.params:
-            self.parameters += [p]
+        # load class instance 
+        # first thing on the stack
+        self.printComment ("Class Instance")
+        self.indentation += 1
+        self.printCode ("STACKGET __this 0")
+        self.indentation -= 1 
+
+        # load parameters 
+        self.printComment ("Parameters")
+        self.indentation += 1
+        for i in range(1, len(node.params)+1):
+            self.printComment (f"Param: {node.params[i-1].id}")
+            # keep the same parameter name 
+            self.printCode (f"STACKGET {node.params[i-1].id} {i}")
+        self.indentation -= 1        
+
+        self.printComment ("Body")
+        self.indentation += 1
         node.body.accept (self)
+        self.indentation -= 1
+
+        # extra return statement for if return is not provided 
+        self.printCode ("RETURN 0")
 
         self.indentation -= 1
 
+        self.printCode (f"{endLabel}:")
+
+        self.printComment (f"End Method Declaration - {methodLabel}")
         self.printSubDivider ()
         self.printNewline ()
 
     def visitConstructorDeclarationNode (self, node):
+
         self.printSubDivider ()
-        self.printComment (f"Constructor")
+        self.printComment (f"Constructor Declaration - {node.parentClass.id} {node.parentClass.type}")
 
-        # grab params so that the body can use them
-        for p in node.params:
-            self.parameters += [p]
+        endLabel = f"__endctor__{node.parentClass.id}"
+        ctorLabel = f"{node.parentClass.id}"
 
+        # add jump to skip over function 
+        self.printCode (f"JUMP {endLabel}")
+
+        # place function jump-point label 
+        self.printCode (ctorLabel + ":")
+
+        self.indentation += 1
+
+        # create class instance 
+        self.printComment ("Creating Class Instance")
+        self.indentation += 1
+        self.printCode (f"MALLOC __this {len(node.parentClass.fields)}")
+        # ** maybe initialize entries? or that might be inefficient
+        self.indentation -= 1 
+
+        # load parameters 
+        self.printComment ("Parameters")
+        self.indentation += 1
+        for i in range(0, len(node.params)):
+            self.printComment (f"Param: {node.params[i].id}")
+            # keep the same parameter name 
+            self.printCode (f"STACKGET {node.params[i].id} {i}")
+        self.indentation -= 1        
+
+        self.printComment ("Body")
+        self.indentation += 1
         node.body.accept (self)
+        self.indentation -= 1
 
+        # return constructed class instance
+        self.printCode ("RETURN __this")
+
+        self.indentation -= 1
+
+        self.printCode (f"{endLabel}:")
+
+        self.printComment (f"End Constructor Declaration - {node.parentClass.id}")
         self.printSubDivider ()
         self.printNewline ()
         
@@ -568,7 +649,7 @@ class CodeGenVisitor (ASTVisitor):
         node.rhs.accept (self)
         self.indentation -= 1
 
-        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode):
+        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
             self.printCode (f"POP __rhs")
             self.printCode (f"ASSIGN {node.lhs.id} __rhs")
         elif isinstance(node.lhs, SubscriptExpressionNode):
@@ -596,6 +677,34 @@ class CodeGenVisitor (ASTVisitor):
 
             self.printCode (f"POP __rhs")
             self.printCode (f"ASSIGN __pointer[__offset] __rhs")
+        elif isinstance (node.lhs, MemberAccessorExpressionNode):
+            self.printComment ("LHS")
+            self.indentation += 1
+            self.printComment ("Member Accessor Assignment")
+
+            self.indentation += 1
+
+            self.printComment ("LHS")
+            self.indentation += 1
+            node.lhs.lhs.accept (self)
+            self.indentation -= 1
+
+            self.printComment ("RHS")
+            self.indentation += 1
+            # construct field index var 
+            fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
+            self.printCode (f"PUSH {fieldIndex}")
+            self.indentation -= 1
+
+            self.printCode ("POP __child")
+            self.printCode ("POP __parent")
+
+            self.printCode (f"POP __rhs")
+            self.printCode (f"ASSIGN __parent[__child] __rhs")
+
+            self.indentation -= 1
+            self.indentation -= 1
+
         
         # assign expressions return result of expression
         # ** this should probably be conditional 
@@ -834,7 +943,7 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("POP __rhs")
     
         if node.op == "++":
-            if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode):
+            if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
                 self.printCode (f"ADD {node.rhs.id} {node.rhs.id} 1")
                 self.printCode (f"ASSIGN __res {node.rhs.id}")
             elif isinstance(node.rhs, SubscriptExpressionNode):
@@ -862,11 +971,38 @@ class CodeGenVisitor (ASTVisitor):
 
                 self.printCode (f"ADD __pointer[__offset] __pointer[__offset] 1")
                 self.printCode (f"ASSIGN __res __pointer[__offset]")
+            elif isinstance (node.rhs, MemberAccessorExpressionNode):
+                self.printComment ("LHS")
+                self.indentation += 1
+                self.printComment ("Member Accessor Assignment")
+
+                self.indentation += 1
+
+                self.printComment ("LHS")
+                self.indentation += 1
+                node.rhs.lhs.accept (self)
+                self.indentation -= 1
+
+                self.printComment ("RHS")
+                self.indentation += 1
+                # construct field index var 
+                fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
+                self.printCode (f"PUSH {fieldIndex}")
+                self.indentation -= 1
+
+                self.printCode ("POP __child")
+                self.printCode ("POP __parent")
+
+                self.printCode (f"ADD __parent[__child] __parent[__child] 1")
+                self.printCode (f"ASSIGN __res __parent[__child]")
+
+                self.indentation -= 1
+                self.indentation -= 1
             else:
                 print ("yikes!")
                 exit (1)
         elif node.op == "--":
-            if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode):
+            if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
                 self.printCode (f"SUBTRACT {node.rhs.id} {node.rhs.id} 1")
                 self.printCode (f"ASSIGN __res {node.rhs.id}")
             elif isinstance(node.rhs, SubscriptExpressionNode):
@@ -894,6 +1030,33 @@ class CodeGenVisitor (ASTVisitor):
 
                 self.printCode (f"SUBTRACT __pointer[__offset] __pointer[__offset] 1")
                 self.printCode (f"ASSIGN __res __pointer[__offset]")
+            elif isinstance (node.rhs, MemberAccessorExpressionNode):
+                self.printComment ("LHS")
+                self.indentation += 1
+                self.printComment ("Member Accessor Assignment")
+
+                self.indentation += 1
+
+                self.printComment ("LHS")
+                self.indentation += 1
+                node.rhs.lhs.accept (self)
+                self.indentation -= 1
+
+                self.printComment ("RHS")
+                self.indentation += 1
+                # construct field index var 
+                fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
+                self.printCode (f"PUSH {fieldIndex}")
+                self.indentation -= 1
+
+                self.printCode ("POP __child")
+                self.printCode ("POP __parent")
+
+                self.printCode (f"SUBTRACT __parent[__child] __parent[__child] 1")
+                self.printCode (f"ASSIGN __res __parent[__child]")
+
+                self.indentation -= 1
+                self.indentation -= 1
             else:
                 print ("yikes!")
                 exit (1)
@@ -916,7 +1079,7 @@ class CodeGenVisitor (ASTVisitor):
 
         self.indentation += 1
 
-        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode):
+        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
             self.printCode (f"ASSIGN __res {node.lhs.id}")
             self.printCode (f"ADD {node.lhs.id} {node.lhs.id} 1")
         elif isinstance(node.lhs, SubscriptExpressionNode):
@@ -944,6 +1107,33 @@ class CodeGenVisitor (ASTVisitor):
 
             self.printCode (f"ASSIGN __res __pointer[__offset]")
             self.printCode (f"ADD __pointer[__offset] __pointer[__offset] 1")
+        elif isinstance (node.lhs, MemberAccessorExpressionNode):
+            self.printComment ("LHS")
+            self.indentation += 1
+            self.printComment ("Member Accessor Assignment")
+
+            self.indentation += 1
+
+            self.printComment ("LHS")
+            self.indentation += 1
+            node.lhs.lhs.accept (self)
+            self.indentation -= 1
+
+            self.printComment ("RHS")
+            self.indentation += 1
+            # construct field index var 
+            fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
+            self.printCode (f"PUSH {fieldIndex}")
+            self.indentation -= 1
+
+            self.printCode ("POP __child")
+            self.printCode ("POP __parent")
+
+            self.printCode (f"ASSIGN __res __parent[__child]")
+            self.printCode (f"ADD __parent[__child] __parent[__child] 1")
+
+            self.indentation -= 1
+            self.indentation -= 1
         else:
             print ("yikes!")
             exit (1)
@@ -958,7 +1148,7 @@ class CodeGenVisitor (ASTVisitor):
 
         self.indentation += 1
 
-        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode):
+        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
             self.printCode (f"ASSIGN __res {node.lhs.id}")
             self.printCode (f"SUBTRACT {node.lhs.id} {node.lhs.id} 1")
         elif isinstance(node.lhs, SubscriptExpressionNode):
@@ -986,6 +1176,33 @@ class CodeGenVisitor (ASTVisitor):
 
             self.printCode (f"ASSIGN __res __pointer[__offset]")
             self.printCode (f"SUBTRACT __pointer[__offset] __pointer[__offset] 1")
+        elif isinstance (node.lhs, MemberAccessorExpressionNode):
+            self.printComment ("LHS")
+            self.indentation += 1
+            self.printComment ("Member Accessor Assignment")
+
+            self.indentation += 1
+
+            self.printComment ("LHS")
+            self.indentation += 1
+            node.lhs.lhs.accept (self)
+            self.indentation -= 1
+
+            self.printComment ("RHS")
+            self.indentation += 1
+            # construct field index var 
+            fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
+            self.printCode (f"PUSH {fieldIndex}")
+            self.indentation -= 1
+
+            self.printCode ("POP __child")
+            self.printCode ("POP __parent")
+
+            self.printCode (f"ASSIGN __res __parent[__child]")
+            self.printCode (f"SUBTRACT __parent[__child] __parent[__child] 1")
+
+            self.indentation -= 1
+            self.indentation -= 1
         else:
             print ("yikes!")
             exit (1)
@@ -1054,8 +1271,114 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitMemberAccessorExpressionNode (self, node):
+        self.printComment ("Member Accessor")
+
+        self.indentation += 1
+
+        self.printComment ("LHS")
+        self.indentation += 1
         node.lhs.accept (self)
-        node.rhs.accept (self)
+        self.indentation -= 1
+
+        self.printComment ("RHS")
+        self.indentation += 1
+        # construct field index var 
+        fieldIndex = f"__field__{node.lhs.type.id}__{node.rhs.id}"
+        self.printCode (f"PUSH {fieldIndex}")
+        self.indentation -= 1
+
+        self.printCode ("POP __child")
+        self.printCode ("POP __parent")
+        self.printCode ("PUSH __parent[__child]")
+
+        self.indentation -= 1
+
+    def visitFieldAccessorExpressionNode (self, node):
+        self.printComment ("Field Accessor")
+
+        self.indentation += 1
+
+        self.printComment ("LHS")
+        self.indentation += 1
+        node.lhs.accept (self)
+        self.indentation -= 1
+
+        self.printComment ("RHS")
+        self.indentation += 1
+        # construct field index var 
+        fieldIndex = f"__field__{node.lhs.type.id}__{node.rhs.id}"
+        self.printCode (f"PUSH {fieldIndex}")
+        self.indentation -= 1
+
+        self.printCode ("POP __child")
+        self.printCode ("POP __parent")
+        self.printCode ("PUSH __parent[__child]")
+
+        self.indentation -= 1
+
+    def visitMethodAccessorExpressionNode (self, node):
+        self.printComment ("Method Call")
+
+        self.indentation += 1
+
+        self.printComment ("LHS")
+        self.indentation += 1
+        node.lhs.accept (self)
+        self.indentation -= 1
+
+        self.printComment ("RHS")
+        self.indentation += 1
+        # construct field index var 
+        methodName = f"__method__{node.lhs.type.id}__{node.rhs.id}"
+        self.indentation -= 1
+
+        # calc arguments 
+        argIndex = 0
+        self.printComment ("Arguments")
+        self.indentation += 1
+        for arg in node.args:
+            arg.accept (self)
+            # save argument 
+            argName = f"__arg{argIndex}"
+            argIndex += 1
+            self.printCode (f"POP {argName}")
+        self.indentation -= 1
+        
+        # parent object should be on the stack
+        # *happens after args incase args uses __obj
+        # in another method call
+        self.printCode ("POP __obj")
+
+        # add arguments in reverse order
+        self.printComment ("Pushing args in reverse order")
+        for i in range(argIndex-1, -1, -1):
+            self.printCode (f"PUSH __arg{i}")
+
+        # push parent object instance last
+        self.printCode (f"PUSH __obj")
+
+        # call function
+        self.printCode (f"CALL {methodName}")
+
+        # remove parent object instance
+        self.printCode (f"PUSH __null")
+
+        # remove arguments from stack
+        self.printComment ("Remove args")
+        for i in range(0, argIndex):
+            self.printCode (f"POP __null")
+                
+        # put function's return val on the stack
+        self.printCode ("RESPONSE __retval")
+        self.printCode ("PUSH __retval")
+
+        self.indentation -= 1
+
+    def visitThisExpressionNode (self, node):
+        self.printComment (f"This keyword")
+        self.indentation += 1
+        self.printCode (f"PUSH __this")
+        self.indentation -= 1
 
     def visitIdentifierExpressionNode (self, node):
         self.printComment (f"Identifier")
@@ -1079,10 +1402,41 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitConstructorCallExpressionNode (self, node):
-        node.type.accept (self)
-        for a in node.args:
-            # ensure arguments match 
-            a.accept (self)
+        self.printComment ("Constructor Call")
+
+        self.indentation += 1
+
+        argIndex = 0
+
+        # calc arguments 
+        self.printComment ("Arguments")
+        self.indentation += 1
+        for arg in node.args:
+            arg.accept (self)
+            # save argument 
+            argName = f"__arg{argIndex}"
+            argIndex += 1
+            self.printCode (f"POP {argName}")
+        self.indentation -= 1
+        
+        # add arguments in reverse order
+        self.printComment ("Pushing args in reverse order")
+        for i in range(argIndex-1, -1, -1):
+            self.printCode (f"PUSH __arg{i}")
+
+        # call function
+        self.printCode (f"CALL {node.type.id}")
+
+        # remove arguments from stack
+        self.printComment ("Remove args")
+        for i in range(0, argIndex):
+            self.printCode (f"POP __null")
+        
+        # put function's return val on the stack
+        self.printCode ("RESPONSE __retval")
+        self.printCode ("PUSH __retval")
+
+        self.indentation -= 1
 
     def visitIntLiteralExpressionNode (self, node):
         self.printComment ("Literal")

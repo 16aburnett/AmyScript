@@ -1,0 +1,173 @@
+// AmyScript Test program for classes 
+//========================================================================
+
+class Person
+{
+    public field char[]   name;
+    public field int      age;
+    public field Person[] friends; 
+    public field int      nFriends; 
+
+    constructor (char[] name, int age)
+    {
+        this.name = name; 
+        this.age = age;
+        this.friends = new Person[5];
+        this.nFriends = 0; 
+    }
+
+    public method int getAge ()
+    {
+        return this.age; 
+    }
+
+    public method char[] getName ()
+    {
+        return this.name;
+    }
+
+    public method void addFriend (Person friend)
+    {
+        this.friends[this.nFriends++] = friend; 
+        //this.nFriends = this.nFriends + 1;
+    }
+}
+
+//========================================================================
+
+Person person = new Person("Amy", 22);
+
+println (person.name);
+printInt (person.getAge ());
+println ("");
+
+print ("person.getName()[0] == ");
+printChar (person.getName()[0]);
+println ("");
+
+Person[] people = new Person[5];
+
+people[0] = person; 
+people[1] = new Person ("Aubrey", 21);
+people[2] = new Person ("Tessa", 31);
+people[3] = new Person ("Halsey", 26);
+people[4] = new Person ("Sigrid", 24);
+
+people[0].addFriend (people[1]);
+people[0].addFriend (people[3]);
+
+people[1].addFriend (people[0]);
+
+people[2].addFriend (people[3]);
+people[2].addFriend (people[4]);
+
+people[3].addFriend (people[2]);
+people[3].addFriend (people[0]);
+
+people[4].addFriend (people[2]);
+
+for (int i = 0; i < 5; ++i)
+{
+    print (people[i].name);
+    print (" ");
+    printInt (people[i].age);
+    print (" Friends: ");
+    for (int j = 0; j < people[i].nFriends; ++j)
+    {
+        print (people[i].friends[j].name);
+        print (" ");
+    }
+    println ("");
+}
+
+people[0].name = "Amy<3";
+
+// they should be the same since they both refer to the
+// same object that is stored in memory.
+println (people[0].name);
+println (person.name);
+
+// the heck, this all actually works?
+
+//========================================================================
+
+class IntArray
+{
+    public field int[] data;
+    public field int   size;
+    public field int   capacity;  
+
+    constructor ()
+    {
+        this.capacity = 10;
+        this.data = new int[this.capacity];
+        this.size = 0; 
+    }
+
+    public method void pushBack (int val)
+    {
+        // ensure there is space 
+        if (this.size + 1 >= this.capacity)
+        {
+            this.capacity = this.capacity * 2; 
+            int[] nData = new int[this.capacity];
+            // move old data over
+            for (int i = 0; i < this.size; ++i)
+            {
+                nData[i] = this.data[i];
+            }
+            // free (this.data);
+            this.data = nData; 
+        }
+
+        // add new num
+        this.data[this.size] = val; 
+        this.size++; 
+    }
+
+    public method int popBack ()
+    {
+        return this.data[--this.size];
+    }
+
+    public method int get (int index)
+    {
+        return this.data[index];
+    }
+
+}
+
+//========================================================================
+
+IntArray myArray = new IntArray();
+
+myArray.pushBack (42);
+myArray.pushBack (7);
+myArray.popBack ();
+myArray.pushBack (19);
+myArray.pushBack (25);
+myArray.popBack ();
+
+for (i = 0; i < myArray.size; ++i)
+{
+    printInt (myArray.get(i));
+    print (" ");
+}
+println ("");
+
+//========================================================================
+
+// creates 2d array but columns are uninitialized
+int[][] multi = new int[5][5];
+
+for (i = 0; i < 5; ++i)
+{
+    // must allocate space for columns
+    multi[i] = new int[5];
+    for (int j = 0; j < 5; ++j)
+    {
+        printInt (multi[i][j]);
+        print (" ");
+    }
+    println ("");
+}

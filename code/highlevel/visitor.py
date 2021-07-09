@@ -143,6 +143,18 @@ class ASTVisitor (ABC):
         pass
 
     @abstractmethod
+    def visitFieldAccessorExpressionNode (self, node):
+        pass
+
+    @abstractmethod
+    def visitMethodAccessorExpressionNode (self, node):
+        pass
+
+    @abstractmethod
+    def visitThisExpressionNode (self, node):
+        pass
+
+    @abstractmethod
     def visitIdentifierExpressionNode (self, node):
         pass
 
@@ -720,6 +732,34 @@ class PrintVisitor (ASTVisitor):
         node.rhs.accept (self)
 
         self.level -= 1
+
+    def visitFieldAccessorExpressionNode (self, node):
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Field Accessor: {node.type}\n"]
+
+        self.level += 1
+
+        node.lhs.accept (self)
+        node.rhs.accept (self)
+
+        self.level -= 1
+
+    def visitMethodAccessorExpressionNode (self, node):
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Method Accessor: {node.type}\n"]
+
+        self.level += 1
+
+        node.lhs.accept (self)
+        node.rhs.accept (self)
+        for arg in node.args:
+            arg.accept (self)
+
+        self.level -= 1
+
+    def visitThisExpressionNode (self, node):
+        self.printSpaces (self.level)
+        self.outputstrings += [f"This: {node.type}\n"]
 
     def visitIdentifierExpressionNode (self, node):
         self.printSpaces (self.level)

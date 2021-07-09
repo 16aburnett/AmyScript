@@ -16,6 +16,8 @@ class SymbolTableVisitor (ASTVisitor):
         self.lines = lines 
         self.wasSuccessful = True
         self.checkDeclaration = True
+        # works as a stack for nested class declarations
+        self.containingClass = []
 
     def visitProgramNode (self, node):
         for codeunit in node.codeunits:
@@ -91,6 +93,9 @@ class SymbolTableVisitor (ASTVisitor):
     def visitClassDeclarationNode(self, node):
         wasSuccessful = self.typesTable.insert (node)
 
+        # save the current containing class
+        self.containingClass += [node]
+
         if (not wasSuccessful):
             varname = node.id 
             originalDec = self.typesTable.lookup (varname)
@@ -116,6 +121,9 @@ class SymbolTableVisitor (ASTVisitor):
 
         self.table.exitScope ()
         self.typesTable.exitScope ()
+
+        # remove current containing class (going out of scope)
+        self.containingClass.pop ()
 
     def visitFieldDeclarationNode (self, node):
         node.type.accept (self)
@@ -535,6 +543,117 @@ class SymbolTableVisitor (ASTVisitor):
         node.rhs.accept (self)
         self.checkDeclaration = True
 
+    def visitFieldAccessorExpressionNode (self, node):
+        node.lhs.accept (self)
+        lhsdecl = self.typesTable.lookup (node.lhs.type.id)
+        rhsid = None
+        if (isinstance(node.rhs, IdentifierExpressionNode)):
+            rhsid = node.rhs.id
+        elif (isinstance(node.rhs, SubscriptExpressionNode)):
+            rhsid = node.rhs.lhs.id
+        else:
+            print (f"Invalid member accessor")
+            return
+        # make sure rhs is a member of lhs
+        isMember = False
+        for field in lhsdecl.fields:
+            if (field.id == rhsid):
+                isMember = True
+                node.type = field.type
+                node.rhs.type = node.type
+                break
+        # check if it is a method
+        if not isMember:
+            for method in lhsdecl.methods:
+                if (method.id == rhsid):
+                    isMember = True
+                    node.type = method.type
+                    node.rhs.type = node.type
+                    break
+        if not isMember:
+            print (f"Semantic Error: '{rhsid}' is not a member of '{lhsdecl.id}'")
+            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   line:")
+            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      ",end="")
+            for i in range(node.columnNumber-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
+
+        # check rhs 
+        self.checkDeclaration = False
+        node.rhs.accept (self)
+        self.checkDeclaration = True
+
+    def visitMethodAccessorExpressionNode (self, node):
+        node.lhs.accept (self)
+        lhsdecl = self.typesTable.lookup (node.lhs.type.id)
+        rhsid = None
+        if (isinstance(node.rhs, IdentifierExpressionNode)):
+            rhsid = node.rhs.id
+        elif (isinstance(node.rhs, SubscriptExpressionNode)):
+            rhsid = node.rhs.lhs.id
+        else:
+            print (f"Invalid member accessor")
+            return
+        # make sure rhs is a member of lhs
+        isMember = False
+        for field in lhsdecl.fields:
+            if (field.id == rhsid):
+                isMember = True
+                node.type = field.type
+                node.rhs.type = node.type
+                break
+        # check if it is a method
+        if not isMember:
+            for method in lhsdecl.methods:
+                if (method.id == rhsid):
+                    isMember = True
+                    node.type = method.type
+                    node.rhs.type = node.type
+                    break
+        if not isMember:
+            print (f"Semantic Error: '{rhsid}' is not a member of '{lhsdecl.id}'")
+            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   line:")
+            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      ",end="")
+            for i in range(node.columnNumber-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
+
+        # check rhs 
+        self.checkDeclaration = False
+        node.rhs.accept (self)
+        self.checkDeclaration = True
+
+        # ** make sure argument types and number match 
+
+    def visitThisExpressionNode (self, node):
+        # ensure there is a containing class
+        if (len(self.containingClass) == 0):
+                print (f"Semantic Error: 'this' keyword used outside of class")
+                print (f"   Located on line {node.token.line}: column {node.token.column}")
+                print (f"   line:")
+                print (f"      {self.lines[node.lineNumber-1][:-1]}")
+                print (f"      ",end="")
+                for i in range(node.columnNumber-1):
+                    print (" ", end="")
+                print ("^")
+                print ()
+                self.wasSuccessful = False
+                return
+        
+        # ** make sure this is in a constructor or method
+
+        decl = self.typesTable.lookup (self.containingClass[-1].id)
+        # save declaration's type info
+        node.type = decl.type
+
     def visitIdentifierExpressionNode (self, node):
         if (self.checkDeclaration):
             decl = self.table.lookup (node.id)
@@ -563,6 +682,7 @@ class SymbolTableVisitor (ASTVisitor):
 
     def visitConstructorCallExpressionNode (self, node):
         node.type.accept (self)
+
         for a in node.args:
             # ensure arguments match 
             a.accept (self)

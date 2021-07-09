@@ -2,28 +2,8 @@ ProgramNode:
 |   Class: Person
 |   |   Constructors:
 |   |   |   Constructor: 
-|   |   |   |   Body:
-|   |   |   |   |   CodeBlock:
-|   |   |   |   |   |   ExpressionStatement:
-|   |   |   |   |   |   |   AssignExpression: = string
-|   |   |   |   |   |   |   |   Type: Type.STRING string
-|   |   |   |   |   |   |   |   Identifier: m_name string
-|   |   |   |   |   |   |   |   String Literal: "" string
-|   |   |   |   |   |   ExpressionStatement:
-|   |   |   |   |   |   |   AssignExpression: = int
-|   |   |   |   |   |   |   |   Type: Type.INT int
-|   |   |   |   |   |   |   |   Identifier: m_age int
-|   |   |   |   |   |   |   |   Int Literal: 0 int
-|   |   |   |   |   |   ExpressionStatement:
-|   |   |   |   |   |   |   AssignExpression: = float[]
-|   |   |   |   |   |   |   |   Type: Type.FLOAT float[]
-|   |   |   |   |   |   |   |   Identifier: m_nums float[]
-|   |   |   |   |   |   |   |   ArrayAllocator: float[]
-|   |   |   |   |   |   |   |   |   Dimensions: 
-|   |   |   |   |   |   |   |   |   |   Int Literal: 5 int
-|   |   |   Constructor: 
 |   |   |   |   Parameter: 
-|   |   |   |   |   Type: Type.STRING string
+|   |   |   |   |   Type: Type.CHAR char[]
 |   |   |   |   |   Name: name
 |   |   |   |   Parameter: 
 |   |   |   |   |   Type: Type.INT int
@@ -31,26 +11,32 @@ ProgramNode:
 |   |   |   |   Body:
 |   |   |   |   |   CodeBlock:
 |   |   |   |   |   |   ExpressionStatement:
-|   |   |   |   |   |   |   AssignExpression: = string
-|   |   |   |   |   |   |   |   Type: Type.STRING string
-|   |   |   |   |   |   |   |   Identifier: m_name string
-|   |   |   |   |   |   |   |   Identifier: name string
+|   |   |   |   |   |   |   AssignExpression: = char[]
+|   |   |   |   |   |   |   |   Type: Type.CHAR char[]
+|   |   |   |   |   |   |   |   Member Accessor: char[]
+|   |   |   |   |   |   |   |   |   This: Person
+|   |   |   |   |   |   |   |   |   Identifier: m_name char[]
+|   |   |   |   |   |   |   |   Identifier: name char[]
 |   |   |   |   |   |   ExpressionStatement:
 |   |   |   |   |   |   |   AssignExpression: = int
 |   |   |   |   |   |   |   |   Type: Type.INT int
-|   |   |   |   |   |   |   |   Identifier: m_age int
+|   |   |   |   |   |   |   |   Member Accessor: int
+|   |   |   |   |   |   |   |   |   This: Person
+|   |   |   |   |   |   |   |   |   Identifier: m_age int
 |   |   |   |   |   |   |   |   Identifier: age int
 |   |   |   |   |   |   ExpressionStatement:
 |   |   |   |   |   |   |   AssignExpression: = float[]
 |   |   |   |   |   |   |   |   Type: Type.FLOAT float[]
-|   |   |   |   |   |   |   |   Identifier: m_nums float[]
+|   |   |   |   |   |   |   |   Member Accessor: float[]
+|   |   |   |   |   |   |   |   |   This: Person
+|   |   |   |   |   |   |   |   |   Identifier: m_nums float[]
 |   |   |   |   |   |   |   |   ArrayAllocator: float[]
 |   |   |   |   |   |   |   |   |   Dimensions: 
 |   |   |   |   |   |   |   |   |   |   Int Literal: 5 int
 |   |   Fields:
 |   |   |   Field: 
 |   |   |   |   Security: Security.PUBLIC
-|   |   |   |   Type: Type.STRING string
+|   |   |   |   Type: Type.CHAR char[]
 |   |   |   |   Name: m_name
 |   |   |   Field: 
 |   |   |   |   Security: Security.PRIVATE
@@ -69,7 +55,9 @@ ProgramNode:
 |   |   |   |   Body:
 |   |   |   |   |   CodeBlock:
 |   |   |   |   |   |   ReturnStatement:
-|   |   |   |   |   |   |   |   Identifier: m_age int
+|   |   |   |   |   |   |   |   Member Accessor: int
+|   |   |   |   |   |   |   |   |   This: Person
+|   |   |   |   |   |   |   |   |   Identifier: m_age int
 |   Function: max int:int->int
 |   |   ReturnType:
 |   |   |   Type: Type.INT int
@@ -134,19 +122,19 @@ ProgramNode:
 |   |   |   |   |   Identifier: camIndex int
 |   |   |   ConstructorCall: Person
 |   |   |   |   Args: 
-|   |   |   |   |   String Literal: "Cameron" string
+|   |   |   |   |   String Literal: "Cameron" char[]
 |   |   |   |   |   Int Literal: 21 int
 |   ExpressionStatement:
-|   |   AssignExpression: = string
-|   |   |   Type: Type.STRING string
-|   |   |   Member Accessor: string
+|   |   AssignExpression: = char[]
+|   |   |   Type: Type.CHAR char[]
+|   |   |   Member Accessor: char[]
 |   |   |   |   Subscript Operator: Person
 |   |   |   |   |   Array:
 |   |   |   |   |   |   Identifier: people Person[]
 |   |   |   |   |   Offset:
 |   |   |   |   |   |   Identifier: amyIndex int
-|   |   |   |   Identifier: m_name string
-|   |   |   String Literal: "Amy" string
+|   |   |   |   Identifier: m_name char[]
+|   |   |   String Literal: "Amy" char[]
 |   ExpressionStatement:
 |   |   AssignExpression: = int
 |   |   |   Type: Type.INT int
@@ -157,16 +145,13 @@ ProgramNode:
 |   |   |   |   |   Offset:
 |   |   |   |   |   |   Identifier: amyIndex int
 |   |   |   |   Identifier: m_age int
-|   |   |   Function Call: int
-|   |   |   |   Function Name:
-|   |   |   |   |   Member Accessor: int
-|   |   |   |   |   |   Subscript Operator: Person
-|   |   |   |   |   |   |   Array:
-|   |   |   |   |   |   |   |   Identifier: people Person[]
-|   |   |   |   |   |   |   Offset:
-|   |   |   |   |   |   |   |   Identifier: camIndex int
-|   |   |   |   |   |   Identifier: getAge int
-|   |   |   |   Arguments:
+|   |   |   Method Accessor: int
+|   |   |   |   Subscript Operator: Person
+|   |   |   |   |   Array:
+|   |   |   |   |   |   Identifier: people Person[]
+|   |   |   |   |   Offset:
+|   |   |   |   |   |   Identifier: camIndex int
+|   |   |   |   Identifier: getAge int
 |   ExpressionStatement:
 |   |   AssignExpression: = float
 |   |   |   Type: Type.FLOAT float
@@ -202,13 +187,13 @@ ProgramNode:
 |   |   |   Function Name:
 |   |   |   |   Identifier: println 
 |   |   |   Arguments:
-|   |   |   |   Member Accessor: string
+|   |   |   |   Member Accessor: char[]
 |   |   |   |   |   Subscript Operator: Person
 |   |   |   |   |   |   Array:
 |   |   |   |   |   |   |   Identifier: people Person[]
 |   |   |   |   |   |   Offset:
 |   |   |   |   |   |   |   Int Literal: 0 int
-|   |   |   |   |   Identifier: m_name string
+|   |   |   |   |   Identifier: m_name char[]
 |   ExpressionStatement:
 |   |   AssignExpression: = int[]
 |   |   |   Type: Type.INT int[]
@@ -249,12 +234,13 @@ ProgramNode:
 |   |   |   |   |   |   |   |   |   Identifier: nums int[]
 |   |   |   |   |   |   |   |   Offset:
 |   |   |   |   |   |   |   |   |   Identifier: i int
-|   |   |   |   |   |   |   String Literal: " " string
+|   |   |   |   |   |   |   String Literal: " " char[]
 |   ExpressionStatement:
 |   |   Function Call: 
 |   |   |   Function Name:
 |   |   |   |   Identifier: println 
 |   |   |   Arguments:
+|   |   |   |   String Literal: "" char[]
 |   ExpressionStatement:
 |   |   AssignExpression: = int
 |   |   |   Type: Type.INT int
@@ -278,7 +264,7 @@ ProgramNode:
 |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   Identifier: print 
 |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   String Literal: "Nums: " string
+|   |   |   |   |   |   |   String Literal: "Nums: " char[]
 |   |   |   |   ExpressionStatement:
 |   |   |   |   |   Function Call: 
 |   |   |   |   |   |   Function Name:
@@ -308,7 +294,7 @@ ProgramNode:
 |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   Identifier: println 
 |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   String Literal: "Yes" string
+|   |   |   |   |   |   |   String Literal: "Yes" char[]
 |   ExpressionStatement:
 |   |   Function Call: 
 |   |   |   Function Name:
