@@ -1,0 +1,80 @@
+00 [15, 1, 0] jump __endOfLibrary
+01 [0, 1, 1, 0, 0] assign __null 0
+02 [-1, 2, 2] print:
+03 [35, 1, 3, 0, 0] stackget __str 0
+04 [32, 1, 4, 1, 3] sizeof __size __str
+05 [0, 1, 5, 0, 0] assign __i 0
+06 [-1, 6, 6] __print__loop:
+07 [28, 1, 5, 1, 4] cmp __i __size
+08 [20, 1, 7] jge __print__endloop
+09 [8, 2, 1, 3, 1, 5] print __str[__i]
+10 [3, 1, 5, 1, 5, 0, 1] add __i __i 1
+11 [15, 1, 6] jump __print__loop
+12 [-1, 7, 12] __print__endloop:
+13 [13, 0, 0] return 0
+14 [-1, 8, 14] println:
+15 [35, 1, 3, 0, 0] stackget __str 0
+16 [32, 1, 4, 1, 3] sizeof __size __str
+17 [0, 1, 5, 0, 0] assign __i 0
+18 [-1, 9, 18] __println__loop:
+19 [28, 1, 5, 1, 4] cmp __i __size
+20 [20, 1, 10] jge __println__endloop
+21 [8, 2, 1, 3, 1, 5] print __str[__i]
+22 [3, 1, 5, 1, 5, 0, 1] add __i __i 1
+23 [15, 1, 9] jump __println__loop
+24 [-1, 10, 24] __println__endloop:
+25 [9] println
+26 [13, 0, 0] return 0
+27 [-1, 11, 27] printInt:
+28 [35, 1, 3, 0, 0] stackget __str 0
+29 [8, 1, 3] print __str
+30 [13, 0, 0] return 0
+31 [-1, 12, 31] printChar:
+32 [35, 1, 13, 0, 0] stackget __char 0
+33 [8, 1, 13] print __char
+34 [13, 0, 0] return 0
+35 [-1, 14, 35] input:
+36 [10, 1, 15] input __line
+37 [13, 1, 15] return __line
+38 [-1, 16, 38] intToString:
+39 [35, 1, 17, 0, 0] stackget __val 0
+40 [13, 0, 0] return 0
+41 [-1, 0, 41] __endOfLibrary:
+42 [33, 0, 0] PUSH 0
+43 [34, 1, 18] POP __rhs
+44 [0, 1, 19, 1, 18] ASSIGN i __rhs
+45 [33, 1, 18] PUSH __rhs
+46 [15, 1, 20] JUMP __forcond0
+47 [-1, 21, 47] __for0:
+48 [33, 1, 19] PUSH i
+49 [34, 1, 18] POP __rhs
+50 [4, 1, 19, 1, 19, 0, 1] SUBTRACT i i 1
+51 [0, 1, 22, 1, 19] ASSIGN __res i
+52 [33, 1, 22] PUSH __res
+53 [-1, 20, 53] __forcond0:
+54 [33, 1, 19] PUSH i
+55 [33, 0, 10] PUSH 10
+56 [34, 1, 18] POP __rhs
+57 [34, 1, 23] POP __lhs
+58 [24, 1, 22, 1, 23, 1, 18] LT __res __lhs __rhs
+59 [33, 1, 22] PUSH __res
+60 [34, 1, 24] POP __cond
+61 [28, 1, 24, 0, 0] CMP __cond 0
+62 [18, 1, 25] JEQ __endfor0
+63 [33, 1, 19] PUSH i
+64 [34, 1, 26] POP __arg0
+65 [33, 1, 26] PUSH __arg0
+66 [12, 1, 11] CALL printInt
+67 [34, 1, 1] POP __null
+68 [14, 1, 27] RESPONSE __retval
+69 [33, 1, 27] PUSH __retval
+70 [1, 1, 3, 0, 0] MALLOC __str 0
+71 [33, 1, 3] PUSH __str
+72 [34, 1, 26] POP __arg0
+73 [33, 1, 26] PUSH __arg0
+74 [12, 1, 8] CALL println
+75 [34, 1, 1] POP __null
+76 [14, 1, 27] RESPONSE __retval
+77 [33, 1, 27] PUSH __retval
+78 [15, 1, 21] JUMP __for0
+79 [-1, 25, 79] __endfor0:

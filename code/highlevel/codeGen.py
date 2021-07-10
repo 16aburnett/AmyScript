@@ -454,6 +454,7 @@ class CodeGenVisitor (ASTVisitor):
         self.jumpIndex += 1
 
         forLabel = f"__for{forIndex}"
+        condLabel = f"__forcond{forIndex}"
         elseLabel = f"__forelse{forIndex}"
         endLabel = f"__endfor{forIndex}"
 
@@ -475,9 +476,20 @@ class CodeGenVisitor (ASTVisitor):
         node.init.accept (self)
         self.indentation -= 1
 
+        # skip over update
+        self.printCode (f"JUMP {condLabel}")
+
         self.printCode (f"{forLabel}:")
 
         self.indentation += 1
+
+        # perform update
+        self.printComment ("Update")
+        self.indentation += 1
+        node.update.accept (self)
+        self.indentation -= 1
+
+        self.printCode (f"{condLabel}:")
 
         self.printComment ("Condition")
         self.indentation += 1
@@ -499,12 +511,6 @@ class CodeGenVisitor (ASTVisitor):
         self.printComment ("Body")
         self.indentation += 1
         node.body.accept (self)
-        self.indentation -= 1
-
-        # perform update
-        self.printComment ("Update")
-        self.indentation += 1
-        node.update.accept (self)
         self.indentation -= 1
 
         # add repeating jump

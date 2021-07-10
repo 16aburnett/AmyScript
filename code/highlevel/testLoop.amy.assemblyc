@@ -44,361 +44,369 @@
 043 [34, 1, 18] POP __rhs
 044 [0, 1, 19, 1, 18] ASSIGN i __rhs
 045 [33, 1, 18] PUSH __rhs
-046 [-1, 20, 46] __for0:
-047 [33, 1, 19] PUSH i
-048 [33, 0, 42] PUSH 42
+046 [15, 1, 20] JUMP __forcond0
+047 [-1, 21, 47] __for0:
+048 [33, 1, 19] PUSH i
 049 [34, 1, 18] POP __rhs
-050 [34, 1, 21] POP __lhs
-051 [24, 1, 22, 1, 21, 1, 18] LT __res __lhs __rhs
+050 [3, 1, 19, 1, 19, 0, 1] ADD i i 1
+051 [0, 1, 22, 1, 19] ASSIGN __res i
 052 [33, 1, 22] PUSH __res
-053 [34, 1, 23] POP __cond
-054 [28, 1, 23, 0, 0] CMP __cond 0
-055 [18, 1, 24] JEQ __endfor0
-056 [33, 1, 19] PUSH i
-057 [34, 1, 25] POP __arg0
-058 [33, 1, 25] PUSH __arg0
-059 [12, 1, 11] CALL printInt
-060 [34, 1, 1] POP __null
-061 [14, 1, 26] RESPONSE __retval
-062 [33, 1, 26] PUSH __retval
-063 [1, 1, 3, 0, 0] MALLOC __str 0
-064 [33, 1, 3] PUSH __str
-065 [34, 1, 25] POP __arg0
-066 [33, 1, 25] PUSH __arg0
-067 [12, 1, 8] CALL println
-068 [34, 1, 1] POP __null
-069 [14, 1, 26] RESPONSE __retval
-070 [33, 1, 26] PUSH __retval
-071 [33, 1, 19] PUSH i
-072 [34, 1, 18] POP __rhs
-073 [3, 1, 19, 1, 19, 0, 1] ADD i i 1
-074 [0, 1, 22, 1, 19] ASSIGN __res i
-075 [33, 1, 22] PUSH __res
-076 [15, 1, 20] JUMP __for0
-077 [-1, 24, 77] __endfor0:
-078 [33, 0, 10] PUSH 10
-079 [34, 1, 18] POP __rhs
-080 [0, 1, 19, 1, 18] ASSIGN i __rhs
-081 [33, 1, 18] PUSH __rhs
-082 [33, 0, 10] PUSH 10
-083 [34, 1, 18] POP __rhs
-084 [0, 1, 27, 1, 18] ASSIGN x __rhs
-085 [33, 1, 18] PUSH __rhs
-086 [-1, 28, 86] __while1:
-087 [33, 1, 19] PUSH i
-088 [33, 0, 0] PUSH 0
-089 [34, 1, 18] POP __rhs
-090 [34, 1, 21] POP __lhs
-091 [26, 1, 22, 1, 21, 1, 18] GT __res __lhs __rhs
-092 [33, 1, 22] PUSH __res
-093 [34, 1, 23] POP __cond
-094 [28, 1, 23, 0, 0] CMP __cond 0
-095 [18, 1, 29] JEQ __endwhile1
-096 [0, 1, 22, 1, 19] ASSIGN __res i
-097 [4, 1, 19, 1, 19, 0, 1] SUBTRACT i i 1
-098 [33, 1, 22] PUSH __res
-099 [34, 1, 25] POP __arg0
-100 [33, 1, 25] PUSH __arg0
-101 [12, 1, 11] CALL printInt
-102 [34, 1, 1] POP __null
-103 [14, 1, 26] RESPONSE __retval
-104 [33, 1, 26] PUSH __retval
-105 [1, 1, 3, 0, 0] MALLOC __str 0
-106 [33, 1, 3] PUSH __str
-107 [34, 1, 25] POP __arg0
-108 [33, 1, 25] PUSH __arg0
-109 [12, 1, 8] CALL println
-110 [34, 1, 1] POP __null
-111 [14, 1, 26] RESPONSE __retval
-112 [33, 1, 26] PUSH __retval
-113 [15, 1, 28] JUMP __while1
-114 [-1, 29, 114] __endwhile1:
-115 [33, 0, 0] PUSH 0
-116 [34, 1, 18] POP __rhs
-117 [0, 1, 19, 1, 18] ASSIGN i __rhs
-118 [33, 1, 18] PUSH __rhs
-119 [-1, 30, 119] __for2:
-120 [33, 1, 19] PUSH i
-121 [33, 0, 5] PUSH 5
-122 [34, 1, 18] POP __rhs
-123 [34, 1, 21] POP __lhs
-124 [24, 1, 22, 1, 21, 1, 18] LT __res __lhs __rhs
+053 [-1, 20, 53] __forcond0:
+054 [33, 1, 19] PUSH i
+055 [33, 0, 42] PUSH 42
+056 [34, 1, 18] POP __rhs
+057 [34, 1, 23] POP __lhs
+058 [24, 1, 22, 1, 23, 1, 18] LT __res __lhs __rhs
+059 [33, 1, 22] PUSH __res
+060 [34, 1, 24] POP __cond
+061 [28, 1, 24, 0, 0] CMP __cond 0
+062 [18, 1, 25] JEQ __endfor0
+063 [33, 1, 19] PUSH i
+064 [34, 1, 26] POP __arg0
+065 [33, 1, 26] PUSH __arg0
+066 [12, 1, 11] CALL printInt
+067 [34, 1, 1] POP __null
+068 [14, 1, 27] RESPONSE __retval
+069 [33, 1, 27] PUSH __retval
+070 [1, 1, 3, 0, 0] MALLOC __str 0
+071 [33, 1, 3] PUSH __str
+072 [34, 1, 26] POP __arg0
+073 [33, 1, 26] PUSH __arg0
+074 [12, 1, 8] CALL println
+075 [34, 1, 1] POP __null
+076 [14, 1, 27] RESPONSE __retval
+077 [33, 1, 27] PUSH __retval
+078 [15, 1, 21] JUMP __for0
+079 [-1, 25, 79] __endfor0:
+080 [33, 0, 10] PUSH 10
+081 [34, 1, 18] POP __rhs
+082 [0, 1, 19, 1, 18] ASSIGN i __rhs
+083 [33, 1, 18] PUSH __rhs
+084 [33, 0, 10] PUSH 10
+085 [34, 1, 18] POP __rhs
+086 [0, 1, 28, 1, 18] ASSIGN x __rhs
+087 [33, 1, 18] PUSH __rhs
+088 [-1, 29, 88] __while1:
+089 [33, 1, 19] PUSH i
+090 [33, 0, 0] PUSH 0
+091 [34, 1, 18] POP __rhs
+092 [34, 1, 23] POP __lhs
+093 [26, 1, 22, 1, 23, 1, 18] GT __res __lhs __rhs
+094 [33, 1, 22] PUSH __res
+095 [34, 1, 24] POP __cond
+096 [28, 1, 24, 0, 0] CMP __cond 0
+097 [18, 1, 30] JEQ __endwhile1
+098 [0, 1, 22, 1, 19] ASSIGN __res i
+099 [4, 1, 19, 1, 19, 0, 1] SUBTRACT i i 1
+100 [33, 1, 22] PUSH __res
+101 [34, 1, 26] POP __arg0
+102 [33, 1, 26] PUSH __arg0
+103 [12, 1, 11] CALL printInt
+104 [34, 1, 1] POP __null
+105 [14, 1, 27] RESPONSE __retval
+106 [33, 1, 27] PUSH __retval
+107 [1, 1, 3, 0, 0] MALLOC __str 0
+108 [33, 1, 3] PUSH __str
+109 [34, 1, 26] POP __arg0
+110 [33, 1, 26] PUSH __arg0
+111 [12, 1, 8] CALL println
+112 [34, 1, 1] POP __null
+113 [14, 1, 27] RESPONSE __retval
+114 [33, 1, 27] PUSH __retval
+115 [15, 1, 29] JUMP __while1
+116 [-1, 30, 116] __endwhile1:
+117 [33, 0, 0] PUSH 0
+118 [34, 1, 18] POP __rhs
+119 [0, 1, 19, 1, 18] ASSIGN i __rhs
+120 [33, 1, 18] PUSH __rhs
+121 [15, 1, 31] JUMP __forcond2
+122 [-1, 32, 122] __for2:
+123 [0, 1, 22, 1, 19] ASSIGN __res i
+124 [3, 1, 19, 1, 19, 0, 1] ADD i i 1
 125 [33, 1, 22] PUSH __res
-126 [34, 1, 23] POP __cond
-127 [28, 1, 23, 0, 0] CMP __cond 0
-128 [18, 1, 31] JEQ __endfor2
-129 [33, 0, 0] PUSH 0
-130 [34, 1, 18] POP __rhs
-131 [0, 1, 32, 1, 18] ASSIGN j __rhs
-132 [33, 1, 18] PUSH __rhs
-133 [-1, 33, 133] __for3:
-134 [33, 1, 32] PUSH j
-135 [33, 0, 5] PUSH 5
-136 [34, 1, 18] POP __rhs
-137 [34, 1, 21] POP __lhs
-138 [24, 1, 22, 1, 21, 1, 18] LT __res __lhs __rhs
-139 [33, 1, 22] PUSH __res
-140 [34, 1, 23] POP __cond
-141 [28, 1, 23, 0, 0] CMP __cond 0
-142 [18, 1, 34] JEQ __endfor3
-143 [33, 1, 19] PUSH i
-144 [33, 0, 2] PUSH 2
-145 [34, 1, 18] POP __rhs
-146 [34, 1, 21] POP __lhs
-147 [7, 1, 22, 1, 21, 1, 18] MOD __res __lhs __rhs
-148 [33, 1, 22] PUSH __res
-149 [33, 1, 32] PUSH j
-150 [33, 0, 2] PUSH 2
-151 [34, 1, 18] POP __rhs
-152 [34, 1, 21] POP __lhs
-153 [7, 1, 22, 1, 21, 1, 18] MOD __res __lhs __rhs
-154 [33, 1, 22] PUSH __res
-155 [34, 1, 18] POP __rhs
-156 [34, 1, 21] POP __lhs
-157 [3, 1, 22, 1, 21, 1, 18] ADD __res __lhs __rhs
-158 [33, 1, 22] PUSH __res
-159 [33, 0, 2] PUSH 2
-160 [34, 1, 18] POP __rhs
-161 [34, 1, 21] POP __lhs
-162 [7, 1, 22, 1, 21, 1, 18] MOD __res __lhs __rhs
-163 [33, 1, 22] PUSH __res
-164 [33, 0, 0] PUSH 0
-165 [34, 1, 18] POP __rhs
-166 [34, 1, 21] POP __lhs
-167 [22, 1, 22, 1, 21, 1, 18] EQUAL __res __lhs __rhs
-168 [33, 1, 22] PUSH __res
-169 [34, 1, 23] POP __cond
-170 [28, 1, 23, 0, 0] CMP __cond 0
-171 [18, 1, 35] JEQ __else4
-172 [1, 1, 3, 0, 1] MALLOC __str 1
-173 [0, 2, 1, 3, 0, 0, 0, 'x'] ASSIGN __str[0] 'x'
-174 [33, 1, 3] PUSH __str
-175 [34, 1, 25] POP __arg0
-176 [33, 1, 25] PUSH __arg0
-177 [12, 1, 2] CALL print
-178 [34, 1, 1] POP __null
-179 [14, 1, 26] RESPONSE __retval
-180 [33, 1, 26] PUSH __retval
-181 [15, 1, 36] JUMP __endif4
-182 [-1, 35, 182] __else4:
-183 [1, 1, 3, 0, 1] MALLOC __str 1
-184 [0, 2, 1, 3, 0, 0, 0, '.'] ASSIGN __str[0] '.'
-185 [33, 1, 3] PUSH __str
-186 [34, 1, 25] POP __arg0
-187 [33, 1, 25] PUSH __arg0
-188 [12, 1, 2] CALL print
-189 [34, 1, 1] POP __null
-190 [14, 1, 26] RESPONSE __retval
-191 [33, 1, 26] PUSH __retval
-192 [-1, 36, 192] __endif4:
-193 [0, 1, 22, 1, 32] ASSIGN __res j
-194 [3, 1, 32, 1, 32, 0, 1] ADD j j 1
-195 [33, 1, 22] PUSH __res
-196 [15, 1, 33] JUMP __for3
-197 [-1, 34, 197] __endfor3:
-198 [33, 0, 7] PUSH 7
-199 [34, 1, 18] POP __rhs
-200 [0, 1, 27, 1, 18] ASSIGN x __rhs
-201 [33, 1, 18] PUSH __rhs
-202 [1, 1, 3, 0, 0] MALLOC __str 0
-203 [33, 1, 3] PUSH __str
-204 [34, 1, 25] POP __arg0
-205 [33, 1, 25] PUSH __arg0
-206 [12, 1, 8] CALL println
-207 [34, 1, 1] POP __null
-208 [14, 1, 26] RESPONSE __retval
-209 [33, 1, 26] PUSH __retval
-210 [0, 1, 22, 1, 19] ASSIGN __res i
-211 [3, 1, 19, 1, 19, 0, 1] ADD i i 1
-212 [33, 1, 22] PUSH __res
-213 [15, 1, 30] JUMP __for2
-214 [-1, 31, 214] __endfor2:
-215 [33, 1, 19] PUSH i
-216 [34, 1, 25] POP __arg0
-217 [33, 1, 25] PUSH __arg0
-218 [12, 1, 11] CALL printInt
-219 [34, 1, 1] POP __null
-220 [14, 1, 26] RESPONSE __retval
-221 [33, 1, 26] PUSH __retval
-222 [1, 1, 3, 0, 0] MALLOC __str 0
-223 [33, 1, 3] PUSH __str
-224 [34, 1, 25] POP __arg0
-225 [33, 1, 25] PUSH __arg0
-226 [12, 1, 8] CALL println
-227 [34, 1, 1] POP __null
-228 [14, 1, 26] RESPONSE __retval
-229 [33, 1, 26] PUSH __retval
-230 [33, 1, 27] PUSH x
-231 [34, 1, 25] POP __arg0
-232 [33, 1, 25] PUSH __arg0
-233 [12, 1, 11] CALL printInt
-234 [34, 1, 1] POP __null
-235 [14, 1, 26] RESPONSE __retval
-236 [33, 1, 26] PUSH __retval
-237 [1, 1, 3, 0, 0] MALLOC __str 0
-238 [33, 1, 3] PUSH __str
-239 [34, 1, 25] POP __arg0
-240 [33, 1, 25] PUSH __arg0
-241 [12, 1, 8] CALL println
-242 [34, 1, 1] POP __null
-243 [14, 1, 26] RESPONSE __retval
-244 [33, 1, 26] PUSH __retval
-245 [33, 0, 10] PUSH 10
-246 [34, 1, 18] POP __rhs
-247 [0, 1, 37, 1, 18] ASSIGN w __rhs
-248 [33, 1, 18] PUSH __rhs
-249 [33, 0, 7] PUSH 7
-250 [34, 1, 18] POP __rhs
-251 [0, 1, 38, 1, 18] ASSIGN y __rhs
-252 [33, 1, 18] PUSH __rhs
-253 [-1, 39, 253] __while5:
-254 [33, 1, 37] PUSH w
-255 [33, 0, 0] PUSH 0
+126 [-1, 31, 126] __forcond2:
+127 [33, 1, 19] PUSH i
+128 [33, 0, 5] PUSH 5
+129 [34, 1, 18] POP __rhs
+130 [34, 1, 23] POP __lhs
+131 [24, 1, 22, 1, 23, 1, 18] LT __res __lhs __rhs
+132 [33, 1, 22] PUSH __res
+133 [34, 1, 24] POP __cond
+134 [28, 1, 24, 0, 0] CMP __cond 0
+135 [18, 1, 33] JEQ __endfor2
+136 [33, 0, 0] PUSH 0
+137 [34, 1, 18] POP __rhs
+138 [0, 1, 34, 1, 18] ASSIGN j __rhs
+139 [33, 1, 18] PUSH __rhs
+140 [15, 1, 35] JUMP __forcond3
+141 [-1, 36, 141] __for3:
+142 [0, 1, 22, 1, 34] ASSIGN __res j
+143 [3, 1, 34, 1, 34, 0, 1] ADD j j 1
+144 [33, 1, 22] PUSH __res
+145 [-1, 35, 145] __forcond3:
+146 [33, 1, 34] PUSH j
+147 [33, 0, 5] PUSH 5
+148 [34, 1, 18] POP __rhs
+149 [34, 1, 23] POP __lhs
+150 [24, 1, 22, 1, 23, 1, 18] LT __res __lhs __rhs
+151 [33, 1, 22] PUSH __res
+152 [34, 1, 24] POP __cond
+153 [28, 1, 24, 0, 0] CMP __cond 0
+154 [18, 1, 37] JEQ __endfor3
+155 [33, 1, 19] PUSH i
+156 [33, 0, 2] PUSH 2
+157 [34, 1, 18] POP __rhs
+158 [34, 1, 23] POP __lhs
+159 [7, 1, 22, 1, 23, 1, 18] MOD __res __lhs __rhs
+160 [33, 1, 22] PUSH __res
+161 [33, 1, 34] PUSH j
+162 [33, 0, 2] PUSH 2
+163 [34, 1, 18] POP __rhs
+164 [34, 1, 23] POP __lhs
+165 [7, 1, 22, 1, 23, 1, 18] MOD __res __lhs __rhs
+166 [33, 1, 22] PUSH __res
+167 [34, 1, 18] POP __rhs
+168 [34, 1, 23] POP __lhs
+169 [3, 1, 22, 1, 23, 1, 18] ADD __res __lhs __rhs
+170 [33, 1, 22] PUSH __res
+171 [33, 0, 2] PUSH 2
+172 [34, 1, 18] POP __rhs
+173 [34, 1, 23] POP __lhs
+174 [7, 1, 22, 1, 23, 1, 18] MOD __res __lhs __rhs
+175 [33, 1, 22] PUSH __res
+176 [33, 0, 0] PUSH 0
+177 [34, 1, 18] POP __rhs
+178 [34, 1, 23] POP __lhs
+179 [22, 1, 22, 1, 23, 1, 18] EQUAL __res __lhs __rhs
+180 [33, 1, 22] PUSH __res
+181 [34, 1, 24] POP __cond
+182 [28, 1, 24, 0, 0] CMP __cond 0
+183 [18, 1, 38] JEQ __else4
+184 [1, 1, 3, 0, 1] MALLOC __str 1
+185 [0, 2, 1, 3, 0, 0, 0, 'x'] ASSIGN __str[0] 'x'
+186 [33, 1, 3] PUSH __str
+187 [34, 1, 26] POP __arg0
+188 [33, 1, 26] PUSH __arg0
+189 [12, 1, 2] CALL print
+190 [34, 1, 1] POP __null
+191 [14, 1, 27] RESPONSE __retval
+192 [33, 1, 27] PUSH __retval
+193 [15, 1, 39] JUMP __endif4
+194 [-1, 38, 194] __else4:
+195 [1, 1, 3, 0, 1] MALLOC __str 1
+196 [0, 2, 1, 3, 0, 0, 0, '.'] ASSIGN __str[0] '.'
+197 [33, 1, 3] PUSH __str
+198 [34, 1, 26] POP __arg0
+199 [33, 1, 26] PUSH __arg0
+200 [12, 1, 2] CALL print
+201 [34, 1, 1] POP __null
+202 [14, 1, 27] RESPONSE __retval
+203 [33, 1, 27] PUSH __retval
+204 [-1, 39, 204] __endif4:
+205 [15, 1, 36] JUMP __for3
+206 [-1, 37, 206] __endfor3:
+207 [33, 0, 7] PUSH 7
+208 [34, 1, 18] POP __rhs
+209 [0, 1, 28, 1, 18] ASSIGN x __rhs
+210 [33, 1, 18] PUSH __rhs
+211 [1, 1, 3, 0, 0] MALLOC __str 0
+212 [33, 1, 3] PUSH __str
+213 [34, 1, 26] POP __arg0
+214 [33, 1, 26] PUSH __arg0
+215 [12, 1, 8] CALL println
+216 [34, 1, 1] POP __null
+217 [14, 1, 27] RESPONSE __retval
+218 [33, 1, 27] PUSH __retval
+219 [15, 1, 32] JUMP __for2
+220 [-1, 33, 220] __endfor2:
+221 [33, 1, 19] PUSH i
+222 [34, 1, 26] POP __arg0
+223 [33, 1, 26] PUSH __arg0
+224 [12, 1, 11] CALL printInt
+225 [34, 1, 1] POP __null
+226 [14, 1, 27] RESPONSE __retval
+227 [33, 1, 27] PUSH __retval
+228 [1, 1, 3, 0, 0] MALLOC __str 0
+229 [33, 1, 3] PUSH __str
+230 [34, 1, 26] POP __arg0
+231 [33, 1, 26] PUSH __arg0
+232 [12, 1, 8] CALL println
+233 [34, 1, 1] POP __null
+234 [14, 1, 27] RESPONSE __retval
+235 [33, 1, 27] PUSH __retval
+236 [33, 1, 28] PUSH x
+237 [34, 1, 26] POP __arg0
+238 [33, 1, 26] PUSH __arg0
+239 [12, 1, 11] CALL printInt
+240 [34, 1, 1] POP __null
+241 [14, 1, 27] RESPONSE __retval
+242 [33, 1, 27] PUSH __retval
+243 [1, 1, 3, 0, 0] MALLOC __str 0
+244 [33, 1, 3] PUSH __str
+245 [34, 1, 26] POP __arg0
+246 [33, 1, 26] PUSH __arg0
+247 [12, 1, 8] CALL println
+248 [34, 1, 1] POP __null
+249 [14, 1, 27] RESPONSE __retval
+250 [33, 1, 27] PUSH __retval
+251 [33, 0, 10] PUSH 10
+252 [34, 1, 18] POP __rhs
+253 [0, 1, 40, 1, 18] ASSIGN w __rhs
+254 [33, 1, 18] PUSH __rhs
+255 [33, 0, 7] PUSH 7
 256 [34, 1, 18] POP __rhs
-257 [34, 1, 21] POP __lhs
-258 [26, 1, 22, 1, 21, 1, 18] GT __res __lhs __rhs
-259 [33, 1, 22] PUSH __res
-260 [34, 1, 23] POP __cond
-261 [28, 1, 23, 0, 0] CMP __cond 0
-262 [18, 1, 40] JEQ __endwhile5
-263 [33, 1, 37] PUSH w
-264 [33, 1, 38] PUSH y
-265 [34, 1, 18] POP __rhs
-266 [34, 1, 21] POP __lhs
-267 [25, 1, 22, 1, 21, 1, 18] LE __res __lhs __rhs
-268 [33, 1, 22] PUSH __res
-269 [34, 1, 23] POP __cond
-270 [28, 1, 23, 0, 0] CMP __cond 0
-271 [18, 1, 41] JEQ __endif6
-272 [15, 1, 40] JUMP __endwhile5
-273 [15, 1, 41] JUMP __endif6
-274 [-1, 41, 274] __endif6:
-275 [33, 1, 37] PUSH w
-276 [34, 1, 18] POP __rhs
-277 [4, 1, 37, 1, 37, 0, 1] SUBTRACT w w 1
-278 [0, 1, 22, 1, 37] ASSIGN __res w
-279 [33, 1, 22] PUSH __res
-280 [15, 1, 39] JUMP __while5
-281 [-1, 40, 281] __endwhile5:
-282 [33, 1, 37] PUSH w
-283 [34, 1, 25] POP __arg0
-284 [33, 1, 25] PUSH __arg0
-285 [12, 1, 11] CALL printInt
-286 [34, 1, 1] POP __null
-287 [14, 1, 26] RESPONSE __retval
-288 [33, 1, 26] PUSH __retval
-289 [1, 1, 3, 0, 0] MALLOC __str 0
-290 [33, 1, 3] PUSH __str
-291 [34, 1, 25] POP __arg0
-292 [33, 1, 25] PUSH __arg0
-293 [12, 1, 8] CALL println
-294 [34, 1, 1] POP __null
-295 [14, 1, 26] RESPONSE __retval
-296 [33, 1, 26] PUSH __retval
-297 [33, 0, 0] PUSH 0
-298 [34, 1, 18] POP __rhs
-299 [0, 1, 19, 1, 18] ASSIGN i __rhs
-300 [33, 1, 18] PUSH __rhs
-301 [-1, 42, 301] __for7:
-302 [33, 1, 19] PUSH i
-303 [33, 0, 10] PUSH 10
+257 [0, 1, 41, 1, 18] ASSIGN y __rhs
+258 [33, 1, 18] PUSH __rhs
+259 [-1, 42, 259] __while5:
+260 [33, 1, 40] PUSH w
+261 [33, 0, 0] PUSH 0
+262 [34, 1, 18] POP __rhs
+263 [34, 1, 23] POP __lhs
+264 [26, 1, 22, 1, 23, 1, 18] GT __res __lhs __rhs
+265 [33, 1, 22] PUSH __res
+266 [34, 1, 24] POP __cond
+267 [28, 1, 24, 0, 0] CMP __cond 0
+268 [18, 1, 43] JEQ __endwhile5
+269 [33, 1, 40] PUSH w
+270 [33, 1, 41] PUSH y
+271 [34, 1, 18] POP __rhs
+272 [34, 1, 23] POP __lhs
+273 [25, 1, 22, 1, 23, 1, 18] LE __res __lhs __rhs
+274 [33, 1, 22] PUSH __res
+275 [34, 1, 24] POP __cond
+276 [28, 1, 24, 0, 0] CMP __cond 0
+277 [18, 1, 44] JEQ __endif6
+278 [15, 1, 43] JUMP __endwhile5
+279 [15, 1, 44] JUMP __endif6
+280 [-1, 44, 280] __endif6:
+281 [33, 1, 40] PUSH w
+282 [34, 1, 18] POP __rhs
+283 [4, 1, 40, 1, 40, 0, 1] SUBTRACT w w 1
+284 [0, 1, 22, 1, 40] ASSIGN __res w
+285 [33, 1, 22] PUSH __res
+286 [15, 1, 42] JUMP __while5
+287 [-1, 43, 287] __endwhile5:
+288 [33, 1, 40] PUSH w
+289 [34, 1, 26] POP __arg0
+290 [33, 1, 26] PUSH __arg0
+291 [12, 1, 11] CALL printInt
+292 [34, 1, 1] POP __null
+293 [14, 1, 27] RESPONSE __retval
+294 [33, 1, 27] PUSH __retval
+295 [1, 1, 3, 0, 0] MALLOC __str 0
+296 [33, 1, 3] PUSH __str
+297 [34, 1, 26] POP __arg0
+298 [33, 1, 26] PUSH __arg0
+299 [12, 1, 8] CALL println
+300 [34, 1, 1] POP __null
+301 [14, 1, 27] RESPONSE __retval
+302 [33, 1, 27] PUSH __retval
+303 [33, 0, 0] PUSH 0
 304 [34, 1, 18] POP __rhs
-305 [34, 1, 21] POP __lhs
-306 [24, 1, 22, 1, 21, 1, 18] LT __res __lhs __rhs
-307 [33, 1, 22] PUSH __res
-308 [34, 1, 23] POP __cond
-309 [28, 1, 23, 0, 0] CMP __cond 0
-310 [18, 1, 43] JEQ __forelse7
-311 [33, 1, 19] PUSH i
-312 [33, 0, 17] PUSH 17
-313 [34, 1, 18] POP __rhs
-314 [34, 1, 21] POP __lhs
-315 [22, 1, 22, 1, 21, 1, 18] EQUAL __res __lhs __rhs
-316 [33, 1, 22] PUSH __res
-317 [34, 1, 23] POP __cond
-318 [28, 1, 23, 0, 0] CMP __cond 0
-319 [18, 1, 44] JEQ __endif8
-320 [15, 1, 45] JUMP __endfor7
-321 [15, 1, 44] JUMP __endif8
-322 [-1, 44, 322] __endif8:
-323 [33, 1, 19] PUSH i
-324 [33, 0, 1] PUSH 1
-325 [34, 1, 18] POP __rhs
-326 [34, 1, 21] POP __lhs
-327 [3, 1, 22, 1, 21, 1, 18] ADD __res __lhs __rhs
-328 [33, 1, 22] PUSH __res
-329 [34, 1, 18] POP __rhs
-330 [0, 1, 19, 1, 18] ASSIGN i __rhs
-331 [33, 1, 18] PUSH __rhs
-332 [15, 1, 42] JUMP __for7
-333 [-1, 43, 333] __forelse7:
-334 [1, 1, 3, 0, 39] MALLOC __str 39
-335 [0, 2, 1, 3, 0, 0, 0, 'T'] ASSIGN __str[0] 'T'
-336 [0, 2, 1, 3, 0, 1, 0, 'h'] ASSIGN __str[1] 'h'
-337 [0, 2, 1, 3, 0, 2, 0, 'i'] ASSIGN __str[2] 'i'
-338 [0, 2, 1, 3, 0, 3, 0, 's'] ASSIGN __str[3] 's'
-339 [0, 2, 1, 3, 0, 4, 0, ' '] ASSIGN __str[4] ' '
-340 [0, 2, 1, 3, 0, 5, 0, 'e'] ASSIGN __str[5] 'e'
-341 [0, 2, 1, 3, 0, 6, 0, 'x'] ASSIGN __str[6] 'x'
-342 [0, 2, 1, 3, 0, 7, 0, 'e'] ASSIGN __str[7] 'e'
-343 [0, 2, 1, 3, 0, 8, 0, 'c'] ASSIGN __str[8] 'c'
-344 [0, 2, 1, 3, 0, 9, 0, 'u'] ASSIGN __str[9] 'u'
-345 [0, 2, 1, 3, 0, 10, 0, 't'] ASSIGN __str[10] 't'
-346 [0, 2, 1, 3, 0, 11, 0, 'e'] ASSIGN __str[11] 'e'
-347 [0, 2, 1, 3, 0, 12, 0, 's'] ASSIGN __str[12] 's'
-348 [0, 2, 1, 3, 0, 13, 0, ' '] ASSIGN __str[13] ' '
-349 [0, 2, 1, 3, 0, 14, 0, 'i'] ASSIGN __str[14] 'i'
-350 [0, 2, 1, 3, 0, 15, 0, 'f'] ASSIGN __str[15] 'f'
-351 [0, 2, 1, 3, 0, 16, 0, ' '] ASSIGN __str[16] ' '
-352 [0, 2, 1, 3, 0, 17, 0, 'l'] ASSIGN __str[17] 'l'
-353 [0, 2, 1, 3, 0, 18, 0, 'o'] ASSIGN __str[18] 'o'
-354 [0, 2, 1, 3, 0, 19, 0, 'o'] ASSIGN __str[19] 'o'
-355 [0, 2, 1, 3, 0, 20, 0, 'p'] ASSIGN __str[20] 'p'
-356 [0, 2, 1, 3, 0, 21, 0, ' '] ASSIGN __str[21] ' '
-357 [0, 2, 1, 3, 0, 22, 0, 'e'] ASSIGN __str[22] 'e'
-358 [0, 2, 1, 3, 0, 23, 0, 'x'] ASSIGN __str[23] 'x'
-359 [0, 2, 1, 3, 0, 24, 0, 'e'] ASSIGN __str[24] 'e'
-360 [0, 2, 1, 3, 0, 25, 0, 'c'] ASSIGN __str[25] 'c'
-361 [0, 2, 1, 3, 0, 26, 0, 'u'] ASSIGN __str[26] 'u'
-362 [0, 2, 1, 3, 0, 27, 0, 't'] ASSIGN __str[27] 't'
-363 [0, 2, 1, 3, 0, 28, 0, 'e'] ASSIGN __str[28] 'e'
-364 [0, 2, 1, 3, 0, 29, 0, 's'] ASSIGN __str[29] 's'
-365 [0, 2, 1, 3, 0, 30, 0, ' '] ASSIGN __str[30] ' '
-366 [0, 2, 1, 3, 0, 31, 0, 'n'] ASSIGN __str[31] 'n'
-367 [0, 2, 1, 3, 0, 32, 0, 'o'] ASSIGN __str[32] 'o'
-368 [0, 2, 1, 3, 0, 33, 0, 'r'] ASSIGN __str[33] 'r'
-369 [0, 2, 1, 3, 0, 34, 0, 'm'] ASSIGN __str[34] 'm'
-370 [0, 2, 1, 3, 0, 35, 0, 'a'] ASSIGN __str[35] 'a'
-371 [0, 2, 1, 3, 0, 36, 0, 'l'] ASSIGN __str[36] 'l'
-372 [0, 2, 1, 3, 0, 37, 0, 'l'] ASSIGN __str[37] 'l'
-373 [0, 2, 1, 3, 0, 38, 0, 'y'] ASSIGN __str[38] 'y'
-374 [33, 1, 3] PUSH __str
-375 [34, 1, 25] POP __arg0
-376 [33, 1, 25] PUSH __arg0
-377 [12, 1, 8] CALL println
-378 [34, 1, 1] POP __null
-379 [14, 1, 26] RESPONSE __retval
-380 [33, 1, 26] PUSH __retval
-381 [-1, 45, 381] __endfor7:
-382 [1, 1, 3, 0, 14] MALLOC __str 14
-383 [0, 2, 1, 3, 0, 0, 0, 'L'] ASSIGN __str[0] 'L'
-384 [0, 2, 1, 3, 0, 1, 0, 'o'] ASSIGN __str[1] 'o'
-385 [0, 2, 1, 3, 0, 2, 0, 'o'] ASSIGN __str[2] 'o'
-386 [0, 2, 1, 3, 0, 3, 0, 'p'] ASSIGN __str[3] 'p'
-387 [0, 2, 1, 3, 0, 4, 0, ' '] ASSIGN __str[4] ' '
-388 [0, 2, 1, 3, 0, 5, 0, 'f'] ASSIGN __str[5] 'f'
-389 [0, 2, 1, 3, 0, 6, 0, 'i'] ASSIGN __str[6] 'i'
-390 [0, 2, 1, 3, 0, 7, 0, 'n'] ASSIGN __str[7] 'n'
-391 [0, 2, 1, 3, 0, 8, 0, 'i'] ASSIGN __str[8] 'i'
-392 [0, 2, 1, 3, 0, 9, 0, 's'] ASSIGN __str[9] 's'
-393 [0, 2, 1, 3, 0, 10, 0, 'h'] ASSIGN __str[10] 'h'
-394 [0, 2, 1, 3, 0, 11, 0, 'e'] ASSIGN __str[11] 'e'
-395 [0, 2, 1, 3, 0, 12, 0, 'd'] ASSIGN __str[12] 'd'
-396 [0, 2, 1, 3, 0, 13, 0, '!'] ASSIGN __str[13] '!'
-397 [33, 1, 3] PUSH __str
-398 [34, 1, 25] POP __arg0
-399 [33, 1, 25] PUSH __arg0
-400 [12, 1, 8] CALL println
-401 [34, 1, 1] POP __null
-402 [14, 1, 26] RESPONSE __retval
-403 [33, 1, 26] PUSH __retval
+305 [0, 1, 19, 1, 18] ASSIGN i __rhs
+306 [33, 1, 18] PUSH __rhs
+307 [15, 1, 45] JUMP __forcond7
+308 [-1, 46, 308] __for7:
+309 [33, 1, 19] PUSH i
+310 [33, 0, 1] PUSH 1
+311 [34, 1, 18] POP __rhs
+312 [34, 1, 23] POP __lhs
+313 [3, 1, 22, 1, 23, 1, 18] ADD __res __lhs __rhs
+314 [33, 1, 22] PUSH __res
+315 [34, 1, 18] POP __rhs
+316 [0, 1, 19, 1, 18] ASSIGN i __rhs
+317 [33, 1, 18] PUSH __rhs
+318 [-1, 45, 318] __forcond7:
+319 [33, 1, 19] PUSH i
+320 [33, 0, 10] PUSH 10
+321 [34, 1, 18] POP __rhs
+322 [34, 1, 23] POP __lhs
+323 [24, 1, 22, 1, 23, 1, 18] LT __res __lhs __rhs
+324 [33, 1, 22] PUSH __res
+325 [34, 1, 24] POP __cond
+326 [28, 1, 24, 0, 0] CMP __cond 0
+327 [18, 1, 47] JEQ __forelse7
+328 [33, 1, 19] PUSH i
+329 [33, 0, 17] PUSH 17
+330 [34, 1, 18] POP __rhs
+331 [34, 1, 23] POP __lhs
+332 [22, 1, 22, 1, 23, 1, 18] EQUAL __res __lhs __rhs
+333 [33, 1, 22] PUSH __res
+334 [34, 1, 24] POP __cond
+335 [28, 1, 24, 0, 0] CMP __cond 0
+336 [18, 1, 48] JEQ __endif8
+337 [15, 1, 49] JUMP __endfor7
+338 [15, 1, 48] JUMP __endif8
+339 [-1, 48, 339] __endif8:
+340 [15, 1, 46] JUMP __for7
+341 [-1, 47, 341] __forelse7:
+342 [1, 1, 3, 0, 39] MALLOC __str 39
+343 [0, 2, 1, 3, 0, 0, 0, 'T'] ASSIGN __str[0] 'T'
+344 [0, 2, 1, 3, 0, 1, 0, 'h'] ASSIGN __str[1] 'h'
+345 [0, 2, 1, 3, 0, 2, 0, 'i'] ASSIGN __str[2] 'i'
+346 [0, 2, 1, 3, 0, 3, 0, 's'] ASSIGN __str[3] 's'
+347 [0, 2, 1, 3, 0, 4, 0, ' '] ASSIGN __str[4] ' '
+348 [0, 2, 1, 3, 0, 5, 0, 'e'] ASSIGN __str[5] 'e'
+349 [0, 2, 1, 3, 0, 6, 0, 'x'] ASSIGN __str[6] 'x'
+350 [0, 2, 1, 3, 0, 7, 0, 'e'] ASSIGN __str[7] 'e'
+351 [0, 2, 1, 3, 0, 8, 0, 'c'] ASSIGN __str[8] 'c'
+352 [0, 2, 1, 3, 0, 9, 0, 'u'] ASSIGN __str[9] 'u'
+353 [0, 2, 1, 3, 0, 10, 0, 't'] ASSIGN __str[10] 't'
+354 [0, 2, 1, 3, 0, 11, 0, 'e'] ASSIGN __str[11] 'e'
+355 [0, 2, 1, 3, 0, 12, 0, 's'] ASSIGN __str[12] 's'
+356 [0, 2, 1, 3, 0, 13, 0, ' '] ASSIGN __str[13] ' '
+357 [0, 2, 1, 3, 0, 14, 0, 'i'] ASSIGN __str[14] 'i'
+358 [0, 2, 1, 3, 0, 15, 0, 'f'] ASSIGN __str[15] 'f'
+359 [0, 2, 1, 3, 0, 16, 0, ' '] ASSIGN __str[16] ' '
+360 [0, 2, 1, 3, 0, 17, 0, 'l'] ASSIGN __str[17] 'l'
+361 [0, 2, 1, 3, 0, 18, 0, 'o'] ASSIGN __str[18] 'o'
+362 [0, 2, 1, 3, 0, 19, 0, 'o'] ASSIGN __str[19] 'o'
+363 [0, 2, 1, 3, 0, 20, 0, 'p'] ASSIGN __str[20] 'p'
+364 [0, 2, 1, 3, 0, 21, 0, ' '] ASSIGN __str[21] ' '
+365 [0, 2, 1, 3, 0, 22, 0, 'e'] ASSIGN __str[22] 'e'
+366 [0, 2, 1, 3, 0, 23, 0, 'x'] ASSIGN __str[23] 'x'
+367 [0, 2, 1, 3, 0, 24, 0, 'e'] ASSIGN __str[24] 'e'
+368 [0, 2, 1, 3, 0, 25, 0, 'c'] ASSIGN __str[25] 'c'
+369 [0, 2, 1, 3, 0, 26, 0, 'u'] ASSIGN __str[26] 'u'
+370 [0, 2, 1, 3, 0, 27, 0, 't'] ASSIGN __str[27] 't'
+371 [0, 2, 1, 3, 0, 28, 0, 'e'] ASSIGN __str[28] 'e'
+372 [0, 2, 1, 3, 0, 29, 0, 's'] ASSIGN __str[29] 's'
+373 [0, 2, 1, 3, 0, 30, 0, ' '] ASSIGN __str[30] ' '
+374 [0, 2, 1, 3, 0, 31, 0, 'n'] ASSIGN __str[31] 'n'
+375 [0, 2, 1, 3, 0, 32, 0, 'o'] ASSIGN __str[32] 'o'
+376 [0, 2, 1, 3, 0, 33, 0, 'r'] ASSIGN __str[33] 'r'
+377 [0, 2, 1, 3, 0, 34, 0, 'm'] ASSIGN __str[34] 'm'
+378 [0, 2, 1, 3, 0, 35, 0, 'a'] ASSIGN __str[35] 'a'
+379 [0, 2, 1, 3, 0, 36, 0, 'l'] ASSIGN __str[36] 'l'
+380 [0, 2, 1, 3, 0, 37, 0, 'l'] ASSIGN __str[37] 'l'
+381 [0, 2, 1, 3, 0, 38, 0, 'y'] ASSIGN __str[38] 'y'
+382 [33, 1, 3] PUSH __str
+383 [34, 1, 26] POP __arg0
+384 [33, 1, 26] PUSH __arg0
+385 [12, 1, 8] CALL println
+386 [34, 1, 1] POP __null
+387 [14, 1, 27] RESPONSE __retval
+388 [33, 1, 27] PUSH __retval
+389 [-1, 49, 389] __endfor7:
+390 [1, 1, 3, 0, 14] MALLOC __str 14
+391 [0, 2, 1, 3, 0, 0, 0, 'L'] ASSIGN __str[0] 'L'
+392 [0, 2, 1, 3, 0, 1, 0, 'o'] ASSIGN __str[1] 'o'
+393 [0, 2, 1, 3, 0, 2, 0, 'o'] ASSIGN __str[2] 'o'
+394 [0, 2, 1, 3, 0, 3, 0, 'p'] ASSIGN __str[3] 'p'
+395 [0, 2, 1, 3, 0, 4, 0, ' '] ASSIGN __str[4] ' '
+396 [0, 2, 1, 3, 0, 5, 0, 'f'] ASSIGN __str[5] 'f'
+397 [0, 2, 1, 3, 0, 6, 0, 'i'] ASSIGN __str[6] 'i'
+398 [0, 2, 1, 3, 0, 7, 0, 'n'] ASSIGN __str[7] 'n'
+399 [0, 2, 1, 3, 0, 8, 0, 'i'] ASSIGN __str[8] 'i'
+400 [0, 2, 1, 3, 0, 9, 0, 's'] ASSIGN __str[9] 's'
+401 [0, 2, 1, 3, 0, 10, 0, 'h'] ASSIGN __str[10] 'h'
+402 [0, 2, 1, 3, 0, 11, 0, 'e'] ASSIGN __str[11] 'e'
+403 [0, 2, 1, 3, 0, 12, 0, 'd'] ASSIGN __str[12] 'd'
+404 [0, 2, 1, 3, 0, 13, 0, '!'] ASSIGN __str[13] '!'
+405 [33, 1, 3] PUSH __str
+406 [34, 1, 26] POP __arg0
+407 [33, 1, 26] PUSH __arg0
+408 [12, 1, 8] CALL println
+409 [34, 1, 1] POP __null
+410 [14, 1, 27] RESPONSE __retval
+411 [33, 1, 27] PUSH __retval

@@ -25,9 +25,245 @@
             </div>
             <div id="page_content">
             <!---------------------- CONTENT SECTION ---------------------->
-                <h2>AmyScript - Types</h2>
+                <h2>AmyScript - Data Types</h2>
 
+                <p>AmyScript has a few built-in types. Currently there isn't a system to create sub-types or unions, however, you can create your own classes which become a new Object type.</p>
 
+                <ul class="dashed">
+                    <li><a href="#link_integers">Integers (<span class="inlineCode">int</span>)</a></li>
+                    <li><a href="#link_decimal">Decimal (<span class="inlineCode">float</span>)</a></li>
+                    <li><a href="#link_characters">Characters (<span class="inlineCode">char</span>)</a></li>
+                    <li><a href="#link_void">Void (<span class="inlineCode">void</span>)</a></li>
+                    <li><a href="#link_arrays">Arrays</a></li>
+                    <li><a href="#link_strings">String Literals</a></li>
+                    <li><a href="#link_objects">Objects</a></li>
+                </ul>
+                
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- INTEGERS -->
+
+                <h3 id="link_integers">Integers (<span class="inlineCode">int</span>)</h3>
+
+                <p> 
+                    Integers are any number (positive or negative) without a decimal point. 
+                    This is one of the most common types that you could use all over like in loops, conditionals, data, etc. 
+                </p>
+
+                <ul style="font-family:monospace">
+                    <li>0</li>
+                    <li>1</li>
+                    <li>12131421313</li>
+                    <li>-18</li>
+                    <li>-594</li>
+                </ul>
+
+                <p>
+                    <strong>Unbounded:</strong> Fortunately, the AmyAssembly interpreter is written in Python3 which means any integer has an unbounded range!
+                    This means you do not have to worry about overflow which is a common concern in languages like C, C++, or Java.
+                </p>
+
+                <p>
+                    You can declare an integer variable using the below statement. This is very similar to C++ and Java. 
+                    Integer values can be expressed by simply typing the number (<span class="inlineCode">-7</span>), however, it cannot have a decimal point! 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Integer Variable</h3>
+                    </div>
+                    <pre class="code">int x = -7;</pre>
+                </div>
+                
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- FLOAT -->
+
+                <h3 id="link_decimal">Floating Point Numbers (<span class="inlineCode">float</span>)</h3>
+
+                <p> 
+                    Floating point numbers are any number that includes a decimal point. 
+                    Here are some examples of valid floating point numbers:
+                </p>
+
+                <ul style="font-family:monospace">
+                    <li>1.0</li>
+                    <li>3.14159</li>
+                    <li>-6.25</li>
+                    <li>0.005</li>
+                    <li>0.0</li>
+                </ul>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Floating Point Variable</h3>
+                    </div>
+                    <pre class="code">float y = 3.14;</pre>
+                </div>
+                
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- CHAR -->
+
+                <h3 id="link_characters">Characters (<span class="inlineCode">char</span>)</h3>
+
+                <p> 
+                    Characters are letters, numbers, whitespace, symbols, etc. 
+                </p>
+
+                <p> 
+                    Character literals are denoted by single quotes surrounding a single character. Examples:
+                </p>
+
+                <ul style="font-family:monospace">
+                    <li>'a'</li>
+                    <li>'9'</li>
+                    <li>' '</li>
+                    <li>'\n'</li>
+                </ul>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Character Variable</h3>
+                    </div>
+                    <pre class="code">char c = 'w';</pre>
+                </div>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- VOID -->
+
+                <h3 id="link_void">Void Types (<span class="inlineCode">void</span>)</h3>
+
+                <p> 
+                    Void types are a little weird. 
+                    They are most commonly used with functions to describe 
+                    that the function does not return anything. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Void Type</h3>
+                    </div>
+                    <pre class="code">function void myFunction () {...}</pre>
+                </div>
+
+                <p> 
+                    <strong>NOTE:</strong> Variables cannot have a void type.
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- ARRAY -->
+
+                <h3 id="link_arrays">Arrays</h3>
+
+                <p> 
+                    Arrays are an incredibly useful data type. 
+                    An array in AmyScript is a homogeneous list of values. 
+                    You can have an array of integers, floats, characters, or even other arrays. 
+                </p>
+
+                <p>
+                    Below is an array of 5 integers. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Array</h3>
+                    </div>
+                    <pre class="code">int[] nums = new int[5];</pre>
+                </div>
+                
+                <p>
+                    The <span class="inlineCode">nums</span> variable contains space for the 5 integers
+                    and you can use <span class="inlineCode">nums</span> to access those values.
+                </p>
+
+                <p>
+                    The <a href="arrays.html">Array</a> section describes arrays in more detail.
+                </p>
+                
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- STRING -->
+
+                <h3 id="link_strings">String Literals</h3>
+
+                <p> 
+                    AmyScript does not have a string type for storing a list of characters, 
+                    however, you can always create an array of characters. 
+                    For convenience, AmyScript allows you to easily create character arrays for strings of text using string literals.
+                </p>
+
+                <p>
+                    A string literal is denoted using double quotes (similar to other languages). See below:
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>String Literals</h3>
+                    </div>
+                    <pre class="code">char[] str = "This is a string of text!";</pre>
+                </div>
+                
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- OBJECTS -->
+
+                <h3 id="link_objects">Objects</h3>
+
+                <p> 
+                    An object is another data structure that can store more than one element.
+                    However, an object stores specific values and has functions that operate on that object's data.
+                </p>
+                <p>
+                    Objects are a part of <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">Object-Oriented Programming</a> and exist within C++ and Java. 
+                    AmyScript follows a similar syntax to C++ and Java for declaring and creating objects.
+                </p>
+                <p>
+                    Below is a brief example of creating an object. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Object</h3>
+                    </div>
+                    <pre class="code">
+// Definition for an object/class
+// this describes the structure of the object
+class Person
+{
+    public field char[] name;
+    public field int    age; 
+    constructor (char[] name, int age)
+    {
+        this.name = name;
+        this.age  = age;
+    }
+}
+
+// Creating an actual instance of the object
+Person person = new Person("Amy", 22);</pre>
+                </div>
+                
+                <p>
+                    The <span class="inlineCode">person</span> variable contains an object that is structured like the class definition for a <span class="inlineCode">Person</span>.
+                    The <span class="inlineCode">person</span> object stores 2 elements: a name (<span class="inlineCode">char[]</span>) and an age (<span class="inlineCode">int</span>).
+                </p>
+
+                <p>
+                    The <a href="classes.html">Classes</a> section describes objects in more detail.
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
             <!-------------------- END CONTENT SECTION -------------------->
             </div>
         </div>    

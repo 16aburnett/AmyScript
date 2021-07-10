@@ -27,7 +27,187 @@
             <!---------------------- CONTENT SECTION ---------------------->
                 <h2>AmyScript - Variables</h2>
 
+                <p>
+                    Variables are a crucial component for programming.
+                    They allow us to store values to use them later in arithmetic calculations, loops, printing, etc. 
+                    They can also allow us to reference a value that might be inputted by a user.
+                </p>
 
+                <p>
+                    This section goes over how to declare, assign, and access variables and their values. 
+                </p>
+
+                <ul class="dashed">
+                    <li><a href="#link_declaration">Declaration</a></li>
+                    <li><a href="#link_assigning">Assigning Values</a></li>
+                    <li><a href="#link_accessing">Using Variables</a></li>
+                </ul>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- DECLARING VARIABLES -->
+
+                <h3 id="link_declaration">Declaring Variables</h3>
+
+                <p>
+                    Variables have 2 crucial components: The <strong>type</strong> and the <strong>value</strong>. 
+                    AmyScript is <strong>statically typed</strong> which means when you declare variables, you have to specify the variable's type. See below:
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Variable Declaration Syntax</h3>
+                    </div>
+                    <pre class="code">&#60;type-specifier&#62; &#60;variable-name&#62;;</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Variable Declaration Example</h3>
+                    </div>
+                    <pre class="code">int x;</pre>
+                    <p><span class="inlineCode">int</span> denotes that the variable <span class="inlineCode">x</span> stores an <a href="types.html#link_integers">integer</a> value</p>
+                </div>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- ASSIGNING VALUES -->
+
+                <h3 id="link_assigning">Assigning Variables to Values</h3>
+
+                <p>
+                    Variables can store values through assignment statements. 
+                    Assignment statements use assignment operators to store a value in a given variable.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Variable Assignment Syntax</h3>
+                    </div>
+                    <pre class="code">&#60;type-specifier&#62; &#60;variable-name&#62; = &#60;expression&#62;;</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Variable Assignment Example</h3>
+                    </div>
+                    <pre class="code">int x = 7;</pre>
+                    <p>
+                        <span class="inlineCode">x</span> is assigned the value of <span class="inlineCode">7</span>. 
+                        When <span class="inlineCode">x</span> is used in arithmetic expressions or other contexts, it will be treated as a <span class="inlineCode">7</span> until it is reassigned.
+                    </p>
+                </div>
+
+                <p>
+                    Variables can be reassigned to new values later on. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Variable Reassignment Syntax</h3>
+                    </div>
+                    <pre class="code">&#60;variable-name&#62; = &#60;expression&#62;;</pre>
+                    <p>
+                        The variable's type only needs to be specified the first time that the variable is referenced.
+                    </p>
+                    <div class="codeBlockHeader">
+                        <h3>Variable Reassignment Example</h3>
+                    </div>
+                    <pre class="code">int x = 7;
+x = 16;</pre>
+                    <p>
+                        <span class="inlineCode">x</span> is reassigned to the value of <span class="inlineCode">16</span>. 
+                    </p>
+                </div>
+
+                <p>
+                    <strong>NOTE:</strong> Variables must be assigned to a value with a matching type.
+                    A variable's type cannot change. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Valid Variable Assignments</h3>
+                    </div>
+                    <pre class="code">int a = 7;            // int var assigned to 7 (int)
+float b = 3.14;       // float var assigned to 3.14 (float)
+char[] str = "text";  // char[] var assigned to string literal
+int[] l = new int[5]; // int[] var assigned to an int array allocator expression</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Invalid Variable Assignments</h3>
+                    </div>
+                    <pre class="code">int a = 6.24;       // Error: 6.24 is a float
+float b = "string"; // Error: float cannot be assigned a char[]
+int[] l = 10;       // Error: int[] cannot be assigned an int</pre>
+                </div>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- ACCESSING VALUES -->
+
+                <h3 id="link_accessing">Accessing Variable Values</h3>
+
+                <p>
+                    Variables can be accessed through the variable's name. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Accessing Variable Example</h3>
+                    </div>
+                    <pre class="code">int a = 7;
+int b = 3;
+int c = a * b;</pre>
+                    <p>
+                        Variables <span class="inlineCode">a</span> and <span class="inlineCode">b</span> are assigned to 7 and 3 respectively,
+                        and <span class="inlineCode">c</span> is assigned to the result of the multiplication of <span class="inlineCode">a</span> and <span class="inlineCode">b</span> 
+                        (which is <span style="font-family:monospace">7 * 3 = 21</span>).
+                    </p>
+                </div>
+
+                <p>
+                    Certain variables, like objects and arrays, need the use of other operators to access certain values in the variable. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Accessing from an Array</h3>
+                    </div>
+                    <pre class="code">int[] nums = new int[4];
+// use the subscript operator to assign values to specific indexes
+nums[0] = 1;
+nums[1] = 42;
+nums[2] = 17;
+// use the subscript operator to look up the value at a specific index
+nums[3] = nums[0] + nums[1]; // 1 + 42 = 43</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Accessing from an Object</h3>
+                    </div>
+                    <pre class="code">class Person
+{
+    public field char[] name;
+    private field int   age;
+    constructor (char[] name, int age)
+    {
+        this.name = name;
+        this.age = age;
+    }
+    public method int getAge ()
+    {
+        return this.age;
+    }
+}
+Person person = new Person ("Amy", 22);
+// use dot operator to access fields 
+person.name;      // returns "Amy"
+// use dot operator to access methods 
+// methods are functions so you also need the parentheses and any arguments
+person.getAge();  // returns 22 (int)</pre>
+
+                    <p>
+                        Visit the <a href="arrays.html">Arrays</a> or <a href="classes.html">Classes</a> sections for more information on Arrays and Classes.
+                    </p>
+                </div>
+
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
             <!-------------------- END CONTENT SECTION -------------------->
             </div>
         </div>    

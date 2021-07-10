@@ -123,7 +123,18 @@ __endOfLibrary:
       POP __rhs
       ASSIGN i __rhs
       PUSH __rhs
+JUMP __forcond0
 __for0:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier
+               PUSH i
+         POP __rhs
+         ADD i i 1
+         ASSIGN __res i
+         PUSH __res
+   __forcond0:
    // Condition
       // Less Than
          // LHS
@@ -165,15 +176,6 @@ __for0:
          POP __null
          RESPONSE __retval
          PUSH __retval
-   // Update
-      // Pre-Increment
-         // RHS
-            // Identifier
-               PUSH i
-         POP __rhs
-         ADD i i 1
-         ASSIGN __res i
-         PUSH __res
    // Repeat
    JUMP __for0
    // End of For
@@ -253,7 +255,14 @@ __while1:
       POP __rhs
       ASSIGN i __rhs
       PUSH __rhs
+JUMP __forcond2
 __for2:
+   // Update
+      // Post-Increment
+         ASSIGN __res i
+         ADD i i 1
+         PUSH __res
+   __forcond2:
    // Condition
       // Less Than
          // LHS
@@ -280,7 +289,14 @@ __for2:
             POP __rhs
             ASSIGN j __rhs
             PUSH __rhs
+      JUMP __forcond3
       __for3:
+         // Update
+            // Post-Increment
+               ASSIGN __res j
+               ADD j j 1
+               PUSH __res
+         __forcond3:
          // Condition
             // Less Than
                // LHS
@@ -387,11 +403,6 @@ __for2:
                // End of if
                __endif4:
             //------------------------------------------------------------
-         // Update
-            // Post-Increment
-               ASSIGN __res j
-               ADD j j 1
-               PUSH __res
          // Repeat
          JUMP __for3
          // End of For
@@ -417,11 +428,6 @@ __for2:
          POP __null
          RESPONSE __retval
          PUSH __retval
-   // Update
-      // Post-Increment
-         ASSIGN __res i
-         ADD i i 1
-         PUSH __res
    // Repeat
    JUMP __for2
    // End of For
@@ -581,7 +587,26 @@ __while5:
       POP __rhs
       ASSIGN i __rhs
       PUSH __rhs
+JUMP __forcond7
 __for7:
+   // Update
+      // Assignment
+         // RHS
+            // Addition
+               // LHS
+                  // Identifier
+                     PUSH i
+               // RHS
+                  // Literal
+                     PUSH 1
+               POP __rhs
+               POP __lhs
+               ADD __res __lhs __rhs
+               PUSH __res
+         POP __rhs
+         ASSIGN i __rhs
+         PUSH __rhs
+   __forcond7:
    // Condition
       // Less Than
          // LHS
@@ -622,23 +647,6 @@ __for7:
          // End of if
          __endif8:
       //------------------------------------------------------------------
-   // Update
-      // Assignment
-         // RHS
-            // Addition
-               // LHS
-                  // Identifier
-                     PUSH i
-               // RHS
-                  // Literal
-                     PUSH 1
-               POP __rhs
-               POP __lhs
-               ADD __res __lhs __rhs
-               PUSH __res
-         POP __rhs
-         ASSIGN i __rhs
-         PUSH __rhs
    // Repeat
    JUMP __for7
    //---------------------------------------------------------------------

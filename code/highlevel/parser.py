@@ -1088,7 +1088,10 @@ class Parser:
 
                 while (self.tokens[self.currentToken].type == "LBRACKET"):
                     self.match ("factor", "LBRACKET")
-                    offsets += [self.expression ()]
+                    # higher than 1d arrays dont need sizes
+                    if (type.arrayDimensions < 1 or self.tokens[self.currentToken].type != "RBRACKET"):
+                        # offsets += [self.expression ()]
+                        self.expression()
                     type.arrayDimensions += 1
                     self.match ("factor", "RBRACKET")
 

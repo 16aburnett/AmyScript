@@ -1,0 +1,79 @@
+<!--
+    AmyScript Documentation Website
+    
+    Author: Amy Burnett
+    Created: June 9 2021
+
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AmyScript Documentation</title>
+        <!-- <link rel="icon" type="image/png" href="../res/favicon-32x32.png" sizes="32x32" /> -->
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <script type="text/javascript" src="shell.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+    </head>
+    <body>
+        <div id="page_header">
+            <script>loadHeader ("page_header")</script>
+        </div>
+        <div id="page_middle">
+            <div id="page_sidebar">
+                <script>loadSidebar ("page_sidebar", "comments.html")</script>
+            </div>
+            <div id="page_content">
+            <!---------------------- CONTENT SECTION ---------------------->
+                <h2>AmyScript - Comments</h2>
+
+                <p>
+                    Comments are a very important component of programming languages. 
+                    Comments allow you to annotate your code and provide explanations to what/how/why a piece of code works. 
+                    Comments allow you to give information to other programmers that are working on the same program
+                    or can give information to yourself when you return to a part of the program.
+                </p>
+
+                <p>
+                    Comments are skipped over by the compiler/interpreter and don't change anything about the code.
+                </p>
+
+                <p>
+                    Currently, AmyScript only has Single-line Comments.
+                </p>
+
+                <h3>Single-Line Comments</h3>
+
+                <p>
+                    Single-line comments in AmyScript are similar to C++, Java, and Javascript. 
+                    Single-line comments are denoted by <span class="inlineCode">//</span> and 
+                    span over the rest of that line, until a newline or end-of-file is reached.
+                    Everything from the <span class="inlineCode">//</span> to the newline or end-of-file will be ignored by the computer,
+                    so you can write anything there to give information about the code around it.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Single-line Comment Syntax</h3>
+                    </div>
+                    <pre class="code">//&#60;text&#62;</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Single-line Comment Example</h3>
+                    </div>
+                    <pre class="code">// This is a single-line comment
+// The below function adds two given integers together and returns the result
+function int add (int a, int b)
+{
+    // returning the result
+    return a + b;
+}</pre>
+                </div>
+
+            <!-------------------- END CONTENT SECTION -------------------->
+            </div>
+        </div>    
+        <div id="page_footer">
+            <script>loadFooter ("page_footer")</script>
+        </div>
+    </body>
+</html>

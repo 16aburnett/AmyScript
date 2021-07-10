@@ -26,9 +26,11 @@
             <div id="page_content">
             <!---------------------- CONTENT SECTION ---------------------->
                 <h2>AmyScript - Programming Language</h2>
-                <p>AmyScript is a high level programming language that is similar to C, C++, Java, and Javascript. This language and its compilers/interpreters are a part of a passion project and are not fully supported. Therefore, I do not recommend using this language commercially.</p>
+                <p>AmyScript is a middle-to-high-level programming language that is similar to C, C++, Java, and Javascript. This language and its compilers/interpreters are a part of a passion project and are not fully supported. Therefore, I do not recommend using this language commercially.</p>
                 
-                <p></p>
+                <p>AmyScript is still currently in development. The expectation is that AmyScript is compiled to AmyAssembly which will then be interpreted. AmyAssembly is a lower-level assembly-like language that can be executed with the AmyAssembly Interpreter (Also in development).</p>
+
+                <p>Below is an example program written in AmyScript.</p>
 
                 <div class="codeBlock">
                     <div class="codeBlockHeader">
@@ -47,7 +49,92 @@ println <span class="codeOperator">(</span><span class="codeStringLiteral">""</s
 </pre>
                 </div>
 
-            <!-------------------- END CONTENT SECTION -------------------->
+                <p>Below is an equivalent program written in AmyAssembly (generated from the AmyScript Compiler). The library functions have been omitted to keep the program short.</p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>AmyAssembly Equivalent</h3>
+                    </div>
+                    <pre class="code">
+// ** Library Code omitted 
+    JUMP __end__add
+add:
+    STACKGET a 0
+    STACKGET b 1
+    PUSH a
+    PUSH b
+    POP __rhs
+    POP __lhs
+    ADD __res __lhs __rhs
+    PUSH __res
+    POP __rVal
+    RETURN __rVal
+    RETURN 0
+__end__add: 
+
+    PUSH 7
+    POP __arg0
+    PUSH 5
+    POP __arg1
+    PUSH __arg1
+    PUSH __arg0
+    CALL add
+    POP __null
+    POP __null
+    RESPONSE __retval
+    PUSH __retval
+    POP __rhs
+    ASSIGN c __rhs
+    PUSH __rhs
+
+    MALLOC __str 8
+    ASSIGN __str[0] '7'
+    ASSIGN __str[1] ' '
+    ASSIGN __str[2] '+'
+    ASSIGN __str[3] ' '
+    ASSIGN __str[4] '5'
+    ASSIGN __str[5] ' '
+    ASSIGN __str[6] '='
+    ASSIGN __str[7] ' '
+    PUSH __str
+    POP __arg0
+    PUSH __arg0
+    CALL print
+    POP __null
+    RESPONSE __retval
+    PUSH __retval
+    PUSH c
+    POP __arg0
+    PUSH __arg0
+    CALL printInt
+    POP __null
+    RESPONSE __retval
+    PUSH __retval
+    MALLOC __str 0
+    PUSH __str
+    POP __arg0
+    PUSH __arg0
+    CALL println
+    POP __null
+    RESPONSE __retval
+    PUSH __retval</pre>
+                </div>
+
+                <p>You can then run the code with the AmyAssembly Interpreter and you will get the output below.</p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Console Output</h3>
+                    </div>
+                    <pre class="code">
+7 + 5 = 12</pre>
+                </div>
+
+                <p>As you can see, it can be very tedious to write code in AmyAssembly, but the AmyScript code is significantly shorter.</p>
+
+                
+
+                <!-------------------- END CONTENT SECTION -------------------->
             </div>
         </div>    
         <div id="page_footer">

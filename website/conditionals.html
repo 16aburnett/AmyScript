@@ -27,6 +27,266 @@
             <!---------------------- CONTENT SECTION ---------------------->
                 <h2>AmyScript - Conditionals</h2>
 
+                <p>
+                    The ability to do different things based on a given input condition is a crucial component of programming.
+                </p>
+
+                <p>
+                    We've gone over comparison operators and logical operators in the <a href="operators.html">Operators</a> section, but they only return true or false values. 
+                    We need a system to choose which code to run. AmyScript's answer to this is <a href="#link_ifStatement">If-Statements</a></strong>.
+                </p>
+
+                <ul class="dashed">
+                    <li><a href="#link_ifStatement">If-Statement</a></li>
+                    <li><a href="#link_else">If-Else-Statement</a></li>
+                    <li><a href="#link_elif">If-Elif-Statement</a></li>
+                    <li><a href="#link_nested">Nested If-Statements</a></li>
+                </ul>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- IF STATEMENTS -->
+
+                <h3 id="link_ifStatement">If-Statements</h3>
+
+                <p>
+                    An If-Statement is a structure that runs a series of code only if a given condition evaluates to true.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>If-Statement Syntax</h3>
+                    </div>
+                    <pre class="code">if (&#60;expression&#62;) &#60;expression&#62;;
+if (&#60;expression&#62;) 
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}</pre>
+                    <div class="codeBlockHeader">
+                        <h3>If-Statement Example</h3>
+                    </div>
+                    <pre class="code">int x = 7;
+if (x &#62; 0)
+{
+    println ("x is positive");
+}
+if (x == 0)
+{
+    println ("x is zero");
+}
+// curly braces are not needed for single statements 
+if (x &#60; 0)
+    println ("x is negative");</pre>
+                    <p>Result:</p>
+                    <pre class="code">x is positive</pre>
+                </div>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- ELSE STATEMENTS -->
+
+                <h3 id="link_else">If-Else-Statements</h3>
+
+                <p>
+                    Sometimes you might want to do something <i>else</i> if a condition is false. 
+                    You can achieve this by having another if-statement with the opposite condition as the first,
+                    however, that seems tedious. 
+                </p>
+                
+                <p>
+                    AmyScript has an <strong>Else-Statement</strong> structure which can come after an if-statement. 
+                    An else-statement will only execute it's code if the previous if-statement's condition was false. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>If-Else-Statement Syntax</h3>
+                    </div>
+                    <pre class="code">// Option 1 - Statement instead of Code Block
+if (&#60;expression&#62;) &#60;expression&#62;;
+else &#60;expression&#62;;
+// Option 2 - Code Block
+if (&#60;expression&#62;) 
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}
+else 
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}</pre>
+                    <div class="codeBlockHeader">
+                        <h3>If-Else-Statement Example</h3>
+                    </div>
+                    <pre class="code">int x = -20;
+if (x &#62; 0)
+{
+    println ("x is positive");
+}
+else
+{
+    println ("x is either zero or negative");   
+}</pre>
+                    <p>Result:</p>
+                    <pre class="code">x is either zero or negative</pre>
+                </div>
+
+                <p>
+                    <strong>NOTE:</strong> You can only have an else-statement immediately after an if-statement. 
+                    You will get an error if there is other code inbetween the if-statement and else-statement.
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- ELIF STATEMENTS -->
+
+                <h3 id="link_elif">If-Elif-Statements</h3>
+
+                <p>
+                    Sometimes it can be nice to make more than two choices. That's what <strong>Elif-Statements</strong> are for.
+                </p>
+
+                <p>
+                    Like else-statements, elif-statements need to come immediately after an if-statement or another elif-statement.
+                    An elif-statement is mostly the same as an if-statement; 
+                    It has a condition and a body of code that will execute if that condition is true.
+                    If an if-statement's condition is false, then the elif-statement's condition is checked.
+                </p>
+
+                <p>
+                    Elif-statements can be chained together off of the same if-statement. An else-statement can also come after an elif-statement, however, an elif-statement cannot come after an else-statement.
+                    An else-statement can only be the last in a conditional chain. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>If-Elif-Else-Statement Syntax</h3>
+                    </div>
+                    <pre class="code">// Option 1 - Statement instead of Code Block
+if (&#60;expression&#62;) &#60;expression&#62;;
+elif (&#60;expression&#62;) &#60;expression&#62;;
+elif (&#60;expression&#62;) &#60;expression&#62;;
+//... there can be unlimited elif-statements
+else &#60;expression&#62;;
+// Option 2 - Code Block
+if (&#60;expression&#62;) 
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}
+elif (&#60;expression&#62;)
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}
+elif (&#60;expression&#62;)
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}
+//... many more elif-statements
+else 
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}</pre>
+                    <div class="codeBlockHeader">
+                        <h3>If-Elif-Else-Statement Example 1</h3>
+                    </div>
+                    <pre class="code">int x = -20;
+if (x &#62; 0) // false; -20 is less than 0
+{
+    println ("x is positive");
+}
+elif (x == 0) // false; -20 does not equal 0
+{
+    println ("x is zero");   
+}
+// this else runs if none of the above ifs/elifs run
+else
+{
+    println ("x is negative");
+}</pre>
+                    <p>Result:</p>
+                    <pre class="code">x is negative</pre>
+                    <div class="codeBlockHeader">
+                        <h3>If-Elif-Else-Statement Example 2</h3>
+                    </div>
+                    <pre class="code">int x = 0;
+if (x &#62; 0) // false; 0 is not greater than 0
+{
+    println ("x is positive");
+}
+elif (x == 0) // true; 0 == 0
+{
+    println ("x is zero");   
+}
+// this else does not run because an above elif-statement was true
+else
+{
+    println ("x is negative");
+}</pre>
+                    <p>Result:</p>
+                    <pre class="code">x is zero</pre>
+                </div>
+
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- NESTED STATEMENTS -->
+
+                <h3 id="link_nested">Nested If-Statements</h3>
+
+                <p>
+                    Since if-statements can have statements in their body of code, 
+                    that means you can have if-statements inside if-statements! 
+                    This is called <strong>Nesting</strong>.
+                </p>
+
+                <p>
+                    Nesting if-statements can allow for more complex choices to be made based on many conditions.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Nesting Example 1</h3>
+                    </div>
+                    <pre class="code">int x = -20;
+if (x &#62; 0) // false; -20 is not greater than 0
+{
+    println ("x is positive");
+}
+// this else runs if x &#60;= 0
+else
+{
+    // nested if-else-statement
+    if (x == 0)
+        println ("x is zero");
+    else
+        println ("x is negative");
+}</pre>
+                    <p>Result:</p>
+                    <pre class="code">x is negative</pre>
+                </div>
+
+                <p>
+                    If-statements can also be nested with For-Statements and While-Statements (See <a href="loops.html">Loops</a>).
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
 
             <!-------------------- END CONTENT SECTION -------------------->
             </div>

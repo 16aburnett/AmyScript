@@ -1,0 +1,30 @@
+ProgramNode:
+|   For:
+|   |   Init: Type.INT
+|   |   |   AssignExpression: = int
+|   |   |   |   Type: Type.INT int
+|   |   |   |   VariableDeclaration: 
+|   |   |   |   |   Type: Type.INT int
+|   |   |   |   |   Name: i
+|   |   |   |   Int Literal: 0 int
+|   |   Condition: Type.INT
+|   |   |   InequalityExpression: < int
+|   |   |   |   Identifier: i int
+|   |   |   |   Int Literal: 10 int
+|   |   Update: Type.INT
+|   |   |   UnaryLeftExpression: -- int
+|   |   |   |   Identifier: i int
+|   |   Body:
+|   |   |   CodeBlock:
+|   |   |   |   ExpressionStatement:
+|   |   |   |   |   Function Call: 
+|   |   |   |   |   |   Function Name:
+|   |   |   |   |   |   |   Identifier: printInt 
+|   |   |   |   |   |   Arguments:
+|   |   |   |   |   |   |   Identifier: i int
+|   |   |   |   ExpressionStatement:
+|   |   |   |   |   Function Call: 
+|   |   |   |   |   |   Function Name:
+|   |   |   |   |   |   |   Identifier: println 
+|   |   |   |   |   |   Arguments:
+|   |   |   |   |   |   |   String Literal: "" char[]

@@ -27,6 +27,401 @@
             <!---------------------- CONTENT SECTION ---------------------->
                 <h2>AmyScript - Loops</h2>
 
+                <p>
+                    Sometimes working with arrays can get tedious when you have to access all of the variables, 
+                    or sometimes it could even be impossible if the size of an array is not known while writing the code.
+                </p>
+
+                <p>
+                    To help with this problem, programming languages use <strong>loops</strong>. 
+                    Loops are a structure, similar to if-statements, that repeatedly run code until a 
+                    condition becomes false. 
+                </p>
+
+                <p>
+                    AmyScript currently supports two types of loops: <a href="#link_whileLoop">While-Loops</a> and <a href="#link_forLoop">For-Loops</a>.
+                </p>
+
+                <ul class="dashed">
+                    <li><a href="#link_whileLoop">While Loop</a></li>
+                    <li><a href="#link_forLoop">For Loop</a></li>
+                    <li><a href="#link_break">Break Statement</a></li>
+                    <li><a href="#link_continue">Continue Statement</a></li>
+                    <li><a href="#link_forElse">For-Else Loop</a></li>
+                    <li><a href="#link_infinite">Infinite Loops</a></li>
+                </ul>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- WHILE LOOP -->
+
+                <h3 id="link_whileLoop">While Loop</h3>
+
+                <p>
+                    A while loop is the simplest of the two. 
+                    In fact, the while loop closely resembles and works similarly to an if-statement, just with 
+                    the keyword <span class="inlineCode">while</span> instead of <span class="inlineCode">if</span> and a while loop repeats.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>While Loop Syntax</h3>
+                    </div>
+                    <pre class="code">// Option 1 - expression ending in semicolon
+while (&#60;expression&#62;) &#60;expression&#62;;
+// Option 2 - Code Block
+while (&#60;expression&#62;) 
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}</pre>
+                    <div class="codeBlockHeader">
+                        <h3>While Loop Example 1</h3>
+                    </div>
+                    <pre class="code">int x = 0;
+while (x &#60; 10)
+{
+    printInt (x);
+    println ("");
+    // Update
+    ++x;
+}</pre>
+                    <p>This prints out every integer from 0 to 9.</p>
+                    <p>Result:</p>
+                    <pre class="code">0
+1
+2
+3
+4
+5
+6
+7
+8
+9</pre>
+                </div>
+
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- FOR LOOP -->
+
+                <h3 id="link_forLoop">For Loop</h3>
+
+                <p>
+                    A for loop is more involved. Like a while loop and if-statement, a for loop has a 
+                    condition and a body of code. 
+                    However, a for loop also needs an initialization statement and an update statement.
+                    Those 3 components (init, condition, update) lay in the for loop's parentheses (<span class="inlineCode">()</span>) separated by semicolons (<span class="inlineCode">;</span>).
+                </p>
+
+                <p>
+                    A while loop also requires an init, condition, and update, however, the init and update are in statements elsewhere,
+                    and it becomes the programmer's responsibility for creating those.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>For Loop Syntax</h3>
+                    </div>
+                    <pre class="code">// Option 1 - expression ending in semicolon
+for (&#60;init-expression&#62;; &#60;condition-expression&#62;; &#60;update-expression&#62;) 
+    &#60;expression&#62;;
+// Option 2 - Code Block
+for (&#60;init-expression&#62;; &#60;condition-expression&#62;; &#60;update-expression&#62;) 
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}</pre>
+                    <div class="codeBlockHeader">
+                        <h3>For Loop Example 1</h3>
+                    </div>
+                    <pre class="code">for (int i = 0; i &#60; 10; ++i)
+{
+    printInt (i);
+    println ("");
+}</pre>
+                    <p>This prints out every integer from 0 to 9 (same as while loop example 1).</p>
+                    <p>Result:</p>
+                    <pre class="code">0
+1
+2
+3
+4
+5
+6
+7
+8
+9</pre>
+                </div>
+
+                <p>
+                    As you can see, since the init and update expressions are in the for loop,
+                    it shortens the amount of lines which can help with readability. 
+                </p>
+                
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- BREAK -->
+
+                <h3 id="link_break">Break Statement</h3>
+
+                <p>
+                    Sometimes, you might want to break out of the loop before the condition becomes false.
+                    For this, you can use the <strong>Break-Statement</strong>.
+                </p>
+
+                <p>
+                    The break-statement is a statement that can only be used inside the body of a loop.
+                    When a break-statement is reached, the loop ends and program continues running code after the loop's body.
+                </p>
+
+                <p>
+                    Breaks can be useful for if you are searching for a value in an array,
+                    and you want to break out of the loop when you find the value. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Break Syntax</h3>
+                    </div>
+                    <pre class="code">break;</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Break Example 1</h3>
+                    </div>
+                    <pre class="code">int[] nums = new int[5];
+nums[0] = 3;
+nums[1] = 5;
+nums[2] = 1;
+nums[3] = 13;
+nums[4] = 9;
+// loop over all elements in array
+int i;
+for (i = 0; i &#60; 5; ++i)
+{
+    if (nums[i] == 13)
+    {
+        println ("Found 13!");
+        break;
+    }
+}
+printInt (i);
+println ("");</pre>
+                    <p>This searches the array of integers for the int 13 and breaks if it finds it, otherwise the loop ends normally when i == 5.</p>
+                    <p>Result:</p>
+                    <pre class="code">Found 13!
+3</pre>
+                </div>
+
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- CONTINUE -->
+
+                <h3 id="link_continue">Continue Statement</h3>
+
+                <p>
+                    Sometimes in a loop, you might want to continue to the next loop iteration and skip over some code in the body. 
+                    The <strong>Continue-Statement</strong> allows you to do this easily.
+                </p>
+
+                <p>
+                    The continue-statement has a similar syntax to the break-statement, 
+                    however, the continue-statement jumps to the beginning of the loop's body and checks the condition.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Continue Syntax</h3>
+                    </div>
+                    <pre class="code">continue;</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Continue Example 1</h3>
+                    </div>
+                    <pre class="code">int[] nums = new int[5];
+nums[0] = 3;
+nums[1] = 5;
+nums[2] = 1;
+nums[3] = 13;
+nums[4] = 9;
+// loop over all elements in array
+int i;
+for (i = 0; i &#60; 5; ++i)
+{
+    if (nums[i] == 13)
+    {
+        continue;
+    }
+    printInt (nums[i]);
+    println ("");
+}</pre>
+                    <p>This prints all elements in the array except for the number 13</p>
+                    <p>Result:</p>
+                    <pre class="code">3
+5
+1
+9</pre>
+                </div>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- FOR ELSE -->
+
+                <h3 id="link_forElse">For-Else Loops</h3>
+
+                <p>
+                    For loops can have else-statements! 
+                    An else-statement attached to a for loop will execute if the loop terminates <strong>normally</strong>.
+                    A loop terminates <strong>normally</strong> when it stops due to the condition rather than a break-statement. 
+                </p>
+
+                <p>
+                    For-Else Statements are a construct in Python3, but not in C, C++, or Java.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>For-Else Loop Syntax</h3>
+                    </div>
+                    <pre class="code">// Option 1 - expression ending in semicolon
+for (&#60;init-expression&#62;; &#60;condition-expression&#62;; &#60;update-expression&#62;) 
+    &#60;expression&#62;;
+else
+    &#60;expression&#62;;                
+// Option 2 - Code Block
+for (&#60;init-expression&#62;; &#60;condition-expression&#62;; &#60;update-expression&#62;) 
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}
+else
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}</pre>
+                    <div class="codeBlockHeader">
+                        <h3>For-Else Loop Example 1</h3>
+                    </div>
+                    <pre class="code">int[] nums = new int[5];
+nums[0] = 3;
+nums[1] = 5;
+nums[2] = 1;
+nums[3] = 16;
+nums[4] = 9;
+// loop over all elements in array
+int i;
+for (i = 0; i &#60; 5; ++i)
+{
+    if (nums[i] == 13)
+    {
+        println ("Found 13!");
+        break;
+    }
+}
+// this else is executed since the loop never found 13 
+// to execute the break-statement
+else
+{
+    println ("13 not found");
+}
+printInt (i);
+println ("");</pre>
+                    <p>This searches for the number 13 and prints <span class="inlineCode">"Found 13!"</span> if found, otherwise <span class="inlineCode">"13 not found"</span></p>
+                    <p>Result:</p>
+                    <pre class="code">13 not found
+5</pre>
+                </div>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- INFINITE -->
+
+                <h3 id="link_infinite">Infinite Loops</h3>
+
+                <p>
+                    A potential problem to watch out for is an <strong>infinite loop</strong>. 
+                    An infinite loop is a loop that never ends.
+                    An infinite loop happens when the condition never reaches false and a break statement is never reached. 
+                    Infinite loops can make your computer cry, so it's good to avoid them.
+                </p>
+
+                <p>
+                    Infinite loops are more common with while loops due to forgetting to update the counting variable. 
+                    Below is an example of an infinite loop.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Infinite Loop Example 1</h3>
+                    </div>
+                    <pre class="code">int x = 0;
+while (x &#60; 10)
+{
+    printInt (x);
+    println ("");
+}</pre>
+                    <p>
+                        This prints the value of <span class="inlineCode">x</span> until <span class="inlineCode">x</span> is not <span class="inlineCode">&#60; 10</span>, 
+                        but the value of <span class="inlineCode">x</span> is never updated so <span class="inlineCode">x</span> will never not be <span class="inlineCode">&#60; 10</span>.
+                    </p>
+                    <p>Result:</p>
+                    <pre class="code">0
+0
+0
+0
+0
+0
+0
+0
+0
+... repeatedly forever</pre>
+                </div>
+
+                <p>
+                    For loops can also be infinite, 
+                    and a condition can still always be false even if the counter is updated.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Infinite Loop Example 2</h3>
+                    </div>
+                    <pre class="code">for (int i = 0; i &#60; 10; --i)
+{
+    printInt (i);
+    println ("");
+}</pre>
+                    <p>
+                        This prints the value of <span class="inlineCode">i</span> until <span class="inlineCode">i</span> is not <span class="inlineCode">&#60; 10</span>, 
+                        but the value of <span class="inlineCode">i</span> is constantly decreasing so <span class="inlineCode">i</span> will never not be <span class="inlineCode">&#60; 10</span>.
+                    </p>
+                    <p>Result:</p>
+                    <pre class="code">0
+-1
+-2
+-3
+-4
+-5
+-6
+-7
+-8
+... repeatedly forever</pre>
+                </div>
+
+                <p>
+                    When you write a loop, just double check that you have an update that will approach the counter to the terminal condition.
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
 
             <!-------------------- END CONTENT SECTION -------------------->
             </div>

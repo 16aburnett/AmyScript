@@ -1,0 +1,187 @@
+// AmyAssembly compiled from AmyScript
+// Filename: test.amy
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+
+jump __endOfLibrary
+
+//========================================================================
+// Global Variables
+
+    assign __null 0
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__loop:
+    // cond
+    cmp __i __size
+    jge __print__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__loop
+__print__endloop:
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__loop:
+    // cond
+    cmp __i __size
+    jge __println__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__loop
+__println__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void printInt (int intToPrint);
+printInt:
+    // grab string
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void printChar (char charToPrint);
+printChar:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// converts an integer to a string
+// char[] intToString (int val);
+intToString:
+    stackget __val 0
+
+    return 0
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//------------------------------------------------------------------------
+// For-Loop
+// Init
+   // Assignment
+      // RHS
+         // Literal
+            PUSH 0
+      POP __rhs
+      ASSIGN i __rhs
+      PUSH __rhs
+JUMP __forcond0
+__for0:
+   // Update
+      // Pre-Decrement
+         // RHS
+            // Identifier
+               PUSH i
+         POP __rhs
+         SUBTRACT i i 1
+         ASSIGN __res i
+         PUSH __res
+   __forcond0:
+   // Condition
+      // Less Than
+         // LHS
+            // Identifier
+               PUSH i
+         // RHS
+            // Literal
+               PUSH 10
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor0
+   // Body
+      // Function Call
+         // Arguments
+            // Identifier
+               PUSH i
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL printInt
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 0
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL println
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+   // Repeat
+   JUMP __for0
+   // End of For
+   __endfor0:
+//------------------------------------------------------------------------
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

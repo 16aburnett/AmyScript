@@ -1,0 +1,466 @@
+<!--
+    AmyScript Documentation Website
+    
+    Author: Amy Burnett
+    Created: June 9 2021
+
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AmyScript Documentation</title>
+        <!-- <link rel="icon" type="image/png" href="../res/favicon-32x32.png" sizes="32x32" /> -->
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <script type="text/javascript" src="shell.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+    </head>
+    <body>
+        <div id="page_header">
+            <script>loadHeader ("page_header")</script>
+        </div>
+        <div id="page_middle">
+            <div id="page_sidebar">
+                <script>loadSidebar ("page_sidebar", "operators.html")</script>
+            </div>
+            <div id="page_content">
+            <!---------------------- CONTENT SECTION ---------------------->
+                <h2>AmyScript - Operators</h2>
+
+                <p>
+                    <strong>Operators</strong> are symbols that represent a mathematical, relational, or logical operation. 
+                </p>
+
+                <p>
+                    AmyScript has many different operators that do different things. 
+                    Below are the different types of Operators. 
+                </p>
+
+                <ul class="dashed">
+                    <li><a href="#link_arithmetic">Arithmetic Operators</a></li>
+                    <li><a href="#link_assignment">Assignment Operators</a></li>
+                    <li><a href="#link_comparison">Comparison Operators</a></li>
+                    <li><a href="#link_logical">Logical Operators</a></li>
+                    <li><a href="#link_other">Other Operators</a></li>
+                    <li><a href="#link_precedence">Operator Precedence</a></li>
+                </ul>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr/>
+
+                <!-- ARITHMETIC OPERATORS -->
+
+                <h3 id="link_arithmetic">Arithmetic Operators</h3>
+
+                <table class="table">
+                    <tr>
+                        <th>Operator</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">+</span></td>
+                        <td>Addition<br />Adds LHS and RHS</td>
+                        <td><pre class="code">x = 3 + 7;</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">-</span></td>
+                        <td>
+                            Subtraction/Negation<br />
+                            Subtracts RHS from LHS<br />
+                            Flips the sign of a value
+                        </td>
+                        <td><pre class="code">x = 10 - 3;<br />x = -y;</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">*</span></td>
+                        <td>Multiplication<br />Multiplies LHS by RHS</td>
+                        <td><pre class="code">x = 2 * 5;</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">/</span></td>
+                        <td>Division<br />Divides LHS from RHS</td>
+                        <td><pre class="code">x = 25 / 5;</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">%</span></td>
+                        <td>Modulus (Division Remainder)<br />Divides LHS by RHS and returns remainder</td>
+                        <td><pre class="code">x = 9 % 2;</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">++</span></td>
+                        <td>
+                            Increment*<br />
+                            Pre-increment (<span class="inlineCode">++x</span>) adds 1 to <span class="inlineCode">x</span> and returns the new value.<br />
+                            Post-increment (<span class="inlineCode">x++</span>) adds 1 to <span class="inlineCode">x</span> and returns the old value.
+                        </td>
+                        <td><pre class="code">x = y++;<br />x = ++y;</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">--</span></td>
+                        <td>
+                            Decrement*<br />
+                            Pre-decrement (<span class="inlineCode">--x</span>) subtracts 1 from <span class="inlineCode">x</span> and returns the new value.<br />
+                            Post-decrement (<span class="inlineCode">x--</span>) subtracts 1 from <span class="inlineCode">x</span> and returns the old value.
+                        </td>
+                        <td><pre class="code">x = y--;<br />x = --y;</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">()</span></td>
+                        <td>
+                            Parentheses<br />
+                            Gives an expression higher precedence
+                        </td>
+                        <td><pre class="code">x = (3 + 5) * 10;</pre></td>
+                    </tr>
+                </table>
+
+                <p>
+                    * These operators perform an assignment and therefore require a variable.
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr/>
+
+                <!-- ASSIGNMENT OPERATORS -->
+
+                <h3 id="link_assignment">Assignment Operators</h3>
+
+                <table class="table">
+                    <tr>
+                        <th>Operator</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">=</span></td>
+                        <td>Assignment<br />Assigns LHS to RHS</td>
+                        <td><pre class="code">int x = 7;</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">++</span></td>
+                        <td>
+                            Increment<br />
+                            Pre-increment (<span class="inlineCode">++x</span>) adds 1 to <span class="inlineCode">x</span> and returns the new value.<br />
+                            Post-increment (<span class="inlineCode">x++</span>) adds 1 to <span class="inlineCode">x</span> and returns the old value.
+                        </td>
+                        <td><pre class="code">x = y++;<br />x = ++y;</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">--</span></td>
+                        <td>
+                            Decrement<br />
+                            Pre-decrement (<span class="inlineCode">--x</span>) subtracts 1 from <span class="inlineCode">x</span> and returns the new value.<br />
+                            Post-decrement (<span class="inlineCode">x--</span>) subtracts 1 from <span class="inlineCode">x</span> and returns the old value.
+                        </td>
+                        <td><pre class="code">x = y--;<br />x = --y;</pre></td>
+                    </tr>
+                </table>
+
+                <p>
+                    More assignment operators are in development.
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr/>
+
+                <!-- COMPARISON OPERATORS -->
+
+                <h3 id="link_comparison">Comparison Operators</h3>
+
+                <p>
+                    AmyScript does not have a boolean type (true/false), 
+                    therefore, AmyScript uses integers to represent true or false.
+                    Any non-zero value represents true, and zero represents false. 
+                </p>
+
+                <p>
+                    Comparison operators are useful for <a href="conditionals.html">If-Statements</a> and <a href="loops.html">Loops</a>.
+                </p>
+
+                <table class="table">
+                    <tr>
+                        <th>Operator</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">==</span></td>
+                        <td>
+                            Equal to<br />
+                            Returns true if LHS equals RHS, false otherwise
+                        </td>
+                        <td><pre class="code">x = 5 == 5;// true<br />y = 6 == x;<br />// false, x is 5 which doesnt equal 6</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">!=</span></td>
+                        <td>
+                            Not equal to<br />
+                            Returns true if LHS does not equal RHS, false otherwise
+                        </td>
+                        <td><pre class="code">x = 5 != 5;// false<br />y = 6 != x;<br />// true, x is 5 which doesnt equal 6</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">&#60;</span></td>
+                        <td>
+                            Less than<br />
+                            Returns true if LHS is less than RHS, false otherwise
+                        </td>
+                        <td><pre class="code">x = 3 &#60; 5;//true<br />x = 5 &#60; 3;//false</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">&#60;=</span></td>
+                        <td>
+                            Less than or equal to<br />
+                            Returns true if LHS is less than or equal to RHS, false otherwise
+                        </td>
+                        <td><pre class="code">x = 3 &#60;= 5;//true<br />x = 3 &#60;= 3;//true<br />x = 5 &#60;= 3;//false</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">&#62;</span></td>
+                        <td>
+                            Greater than<br />
+                            Returns true if LHS is greater than RHS, false otherwise
+                        </td>
+                        <td><pre class="code">x = 5 &#60; 3;//true<br />x = 3 &#60; 5;//false</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">&#62;=</span></td>
+                        <td>
+                            Greater than or equal to<br />
+                            Returns true if LHS is greater than or equal to RHS, false otherwise
+                        </td>
+                        <td><pre class="code">x = 5 &#62;= 3;//true<br />x = 3 &#62;= 3;//true<br />x = 3 &#62;= 5;//false</pre></td>
+                    </tr>
+                </table>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr/>
+
+                <!-- LOGICAL OPERATORS -->
+
+                <h3 id="link_logical">Logical Operators</h3>
+
+                <table class="table">
+                    <tr>
+                        <th>Operator</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">&&</span></td>
+                        <td>
+                            Logical AND<br />
+                            Returns true if LHS and RHS are true, false otherwise
+                        </td>
+                        <td><pre class="code">x = 1;<br />y = 0;<br />x && x //true<br/>x && y //false<br/>y && x //false<br/>y && y //false</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">||</span></td>
+                        <td>
+                            Logical OR<br />
+                            Returns true if LHS or RHS is true, false otherwise
+                        </td>
+                        <td><pre class="code">x = 1;<br />y = 0;<br />x || x //true<br/>x || y //true<br/>y || x //true<br/>y || y //false</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">!</span></td>
+                        <td>
+                            Logical NOT<br />
+                            Returns true if operand is false, false otherwise
+                        </td>
+                        <td><pre class="code">x = 1;<br/>y = 0;<br/>!x //false<br/>!y //true</pre></td>
+                    </tr>
+                </table>
+
+                <p>
+                    <strong>NOTE:</strong> AmyScript does not yet have short circuit evaluation
+                    which is a feature in other languages like C, C++, and Java. 
+                    This means that if the LHS of Logical AND is false, then the RHS will still be evaluated.
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr/>
+
+                <!-- OTHER OPERATORS -->
+
+                <h3 id="link_other">Other Operators</h3>
+
+                <table class="table">
+                    <tr>
+                        <th>Operator</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">[]</span></td>
+                        <td>
+                            Subscript<br />
+                            Accesses a specific index from an array.
+                        </td>
+                        <td><pre class="code">int[] nums = new int[5];<br/>nums[0] = 17; //Assignment<br/>nums[1] = nums[0] * 2; //Grabs value</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">()</span></td>
+                        <td>
+                            Function Call<br />
+                            Returns the value returned by the function
+                        </td>
+                        <td><pre class="code">function int add (int a, int b)<br/>{<br/>   return a + b;<br/>}<br/>add (5, 7); // returns 12</pre></td>
+                    </tr>
+                    <tr>
+                        <td><span class="inlineCode">.</span></td>
+                        <td>
+                            Dot Operator (Member Accessor)<br />
+                            Accesses a member of a class (field or method)
+                        </td>
+                        <td><pre class="code">class Person
+{
+    public field char[] name;
+    private field int   age;
+    constructor (char[] name, int age)
+    {
+        this.name = name;
+        this.age = age;
+    }
+    public method int getAge ()
+    {
+        return this.age;
+    }
+}
+Person person = new Person ("Amy", 22);
+person.name;      // returns "Amy"
+person.getAge();  // returns 22 (int)</pre></td>
+                    </tr>
+                </table>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr/>
+
+                <!-- PRECEDENCE -->
+
+                <h3 id="link_precedence">Operator Precedence</h3>
+
+                <p>
+                    In expressions, some operators are evaluated before others which is called <strong>Operator Precedence</strong>.
+                    AmyScript uses a very similar operator precedence to C++ (<a href="https://en.cppreference.com/w/cpp/language/operator_precedence">C++ Operator Precedence</a>). Below is the precedence chart. 
+                    Operators at the top are evaluated first starting with paretheses similarly to in mathematics (<a href="https://en.wikipedia.org/wiki/Order_of_operations#Programming_languages">Order of Operations</a>).
+                </p>
+
+                <p>
+                    <strong>Associativity</strong> is the order that successive operators of the same precedence are evaluated.
+                    For example, subtraction has left to right associativity since in mathematics we evaluate it left to right (3 - 1 - 2 = 2 - 2 = 0), 
+                    if it were right to left, then we would get a different result (3 - 1 - 2 = 3 - -1 = 4). 
+                </p>
+
+                <table class="table">
+                    <tr>
+                        <th>Precedence</th>
+                        <th>Operator</th>
+                        <th>Description</th>
+                        <th>Associativity</th>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">1</td>
+                        <td><span class="inlineCode">()</span></td>
+                        <td>Parentheses</td>
+                        <td>Left->Right</td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">2</td>
+                        <td style="padding:0">
+                            <table class="subtable">
+                                <tr><td><span class="inlineCode">a++ a--</span></td></tr>
+                                <tr><td><span class="inlineCode">a()</span></td></tr>
+                                <tr><td><span class="inlineCode">a[]</span></td></tr>
+                                <tr><td style="border:none"><span class="inlineCode">.</span></td></tr>
+                            </table>
+                        </td>
+                        <td style="padding:0">
+                            <table class="subtable">
+                                <tr><td>Postfix Increment/Decrement</td></tr>
+                                <tr><td>Function Call</td></tr>
+                                <tr><td>Subscript</td></tr>
+                                <tr><td style="border:none">Member Access</td></tr>
+                            </table>
+                        </td>
+                        <td>Left->Right</td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">3</td>
+                        <td style="padding:0">
+                            <table class="subtable">
+                                <tr><td><span class="inlineCode">!</span></td></tr>
+                                <tr><td><span class="inlineCode">-a</span></td></tr>
+                                <tr><td style="border: none;"><span class="inlineCode">++a --a</span></td></tr>
+                            </table>
+                        </td>
+                        <td style="padding:0">
+                            <table class="subtable">
+                                <tr><td>Logical NOT</td></tr>
+                                <tr><td>Unary Sign</td></tr>
+                                <tr><td style="border:none;">Prefix Increment/Decrement</td></tr>
+                            </table>
+                        </td>
+                        <td>Right->Left</td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">4</td>
+                        <td><span class="inlineCode">* / %</span></td>
+                        <td>Mult/Divide/Mod</td>
+                        <td style="border:none;">Left->Right</td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">5</td>
+                        <td><span class="inlineCode">+ -</span></td>
+                        <td>Addition/Subtraction</td>
+                        <td style="border:none;"></td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">6</td>
+                        <td><span class="inlineCode">&#60; &#60;=<br/>&#62; &#62;=</span></td>
+                        <td>Inequality</td>
+                        <td style="border:none;"></td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">7</td>
+                        <td><span class="inlineCode">== !=</span></td>
+                        <td>Equality</td>
+                        <td style="border:none;"></td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">8</td>
+                        <td><span class="inlineCode">&&</span></td>
+                        <td>Logical AND</td>
+                        <td style="border:none;"></td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">9</td>
+                        <td><span class="inlineCode">||</span></td>
+                        <td>Logical OR</td>
+                        <td style="border:none;"></td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">10</td>
+                        <td><span class="inlineCode">=</span></td>
+                        <td>Assignment</td>
+                        <td>Right->Left</td>
+                    </tr>
+                    <tr>
+                        <td class="tableColumnHeader">11</td>
+                        <td><span class="inlineCode">,</span></td>
+                        <td>Comma (arg lists)</td> 
+                        <td>Left->Right</td>
+                    </tr>
+                </table>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+
+            <!-------------------- END CONTENT SECTION -------------------->
+            </div>
+        </div>    
+        <div id="page_footer">
+            <script>loadFooter ("page_footer")</script>
+        </div>
+    </body>
+</html>

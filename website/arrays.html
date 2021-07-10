@@ -27,6 +27,171 @@
             <!---------------------- CONTENT SECTION ---------------------->
                 <h2>AmyScript - Arrays</h2>
 
+                <p>
+                    An array is a very useful data type. 
+                    They can store a lot of values and be referenced using just one variable name, 
+                    which greatly helps with organization and processing large amounts of data. 
+                </p>
+
+                <p>
+                    <strong>Homogeneous:</strong> Arrays are homogeneous, 
+                    meaning that you can store any type in an array, but all values in an array must be the same type.
+                    For example, you can have an array of integers, but all values in that array must be an integer. 
+                    Same for arrays of floats, characters, or objects. 
+                </p>
+
+                <ul class="dashed">
+                    <li><a href="#link_declaration">Array Declaration</a></li>
+                    <li><a href="#link_initialization">Array Initialization</a></li>
+                    <li><a href="#link_accessing">Accessing Array Values</a></li>
+                    <li><a href="#link_multiArray">2D Arrays</a></li>
+                </ul>
+
+                <p>
+                    <strong>Heap:</strong> In AmyScript, all arrays and objects are allocated on the heap. 
+                    The heap is a data structure stored in memory that allows consecutive blocks of memory to be allocated for a program's use.
+                    In contrast, C and C++ can allocate arrays on the stack and on the heap. 
+                    The actual value of an array variable is the address in memory where the array's values are located. 
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- DECLARATION -->
+
+                <h3 id="link_declaration">Array Declaration</h3>
+
+                <p>
+                    Declaring an array simply sets up a variable to store the array's address for when the array is initialized.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Array Declaration Syntax</h3>
+                    </div>
+                    <pre class="code">&#60;type-specifier&#62;[] &#60;variable-name&#62;;</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Array Declaration Example</h3>
+                    </div>
+                    <pre class="code">int[] x;</pre>
+                    <p><span class="inlineCode">int[]</span> denotes an array of integers.</p>
+                </div>
+
+                <p>
+                    <strong>NOTE:</strong> If you declare the array without initializing it, the value stored in <span class="inlineCode">x</span> will be undefined.
+                    Make sure you initialize the array before trying to access/assign it's values
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- INITIALIZATION -->
+
+                <h3 id="link_initialization">Array Initialization</h3>
+
+                <p>
+                    Initializing an array allocates a given amount space in memory (on the heap).
+                    Once the array is allocated, it's address can be saved to an array variable for later use.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Array Initialization Expression Syntax</h3>
+                    </div>
+                    <pre class="code">new &#60;type-specifier&#62;[&#60;expression&#62;]<br/></pre>
+                    <div class="codeBlockHeader">
+                        <h3>Array Initialization Example</h3>
+                    </div>
+                    <pre class="code">int[] myArray = new int[5];</pre>
+                    <p>This creates an array that stores <span class="inlineCode">5</span> integers and saves the address of that array in the variable <span class="inlineCode">myArray</span>.</p>
+                </div>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- ACCESSING -->
+
+                <h3 id="link_accessing">Accessing Array Values</h3>
+
+                <p>
+                    The array variable stores the address of where all the array's values are stored,
+                    but how are the values accessed?
+                </p>
+
+                <p>
+                    Values can be accessed using the <strong>Subscript Operator</strong> (<span class="inlineCode">[]</span>). 
+                    The subscript operator requires an index value (<span class="inlineCode">int</span>) and can locate a specific element in the array.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Subscript Operator Syntax</h3>
+                    </div>
+                    <pre class="code">&#60;array-name&#62;[&#60;offset&#62;]<br/></pre>
+                    <div class="codeBlockHeader">
+                        <h3>Subscript Operator Example</h3>
+                    </div>
+                    <pre class="code">int[] myArray = new int[5];
+myArray[0] = 1;</pre>
+                    <p>This creates an array and sets the first value of the array to <span class="inlineCode">1</span>.</p>
+                </div>
+                
+                <p>
+                    <strong>NOTE:</strong> It's very important to keep track of the size of the array because 
+                    if you try to access values that are outside the bounds of the array, 
+                    then you could overwrite values that might break the interpreter and crash your program. 
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- 2D ARRAYS -->
+
+                <h3 id="link_multiArray">2D Arrays</h3>
+
+                <p>
+                    Sometimes you might want to create an array of arrays
+                    which can be helpful for images, boards, grids, or even matrix calculations.   
+                    Fortunately, this is possible in AmyScript since arrays can store any type 
+                    including other arrays. You could even have an array of arrays of arrays (<span class="inlineCode">int[][][]</span>). Array inception! 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Multi-Dimensional Arrays</h3>
+                    </div>
+                    <pre class="code">&#60;type-specifier&#62;[][] &#60;array-name&#62; = new &#60;type-specifier&#62;[&#60;offset&#62;][];<br/></pre>
+                    <div class="codeBlockHeader">
+                        <h3>Multi-Dimensional Arrays Example</h3>
+                    </div>
+                    <pre class="code">int[][] myArray = new int[5][];
+for (int i = 0; i < 5; ++i)
+{
+    // remember to initialize each subarray!
+    myArray[i] = new int[5];
+    for (int j = 0; j < 5; ++j)
+    {
+        myArray[i][j] = i * 5 + j;
+    }
+}</pre>
+                    <p>
+                        <strong>NOTE:</strong> Only the first array size is required in the initializer <span class="inlineCode">new int[5][]</span>. 
+                        The subarrays will need to be initialized separately (and can vary in sizes).
+                    </p>
+                    <p>Above creates a 5x5 array with values:</p>
+                    <pre class="code"> 0  1  2  3  4 
+ 5  6  7  8  9 
+10 11 12 13 14 
+15 16 17 18 19 
+20 21 22 23 24 </pre>
+                </div>
+                
+                <p>
+                    If you would like to work with 2D arrays, then you should learn about <a href="loops.html">Loops</a> 
+                    because they can be massively helpful.
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
 
             <!-------------------- END CONTENT SECTION -------------------->
             </div>

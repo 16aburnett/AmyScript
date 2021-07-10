@@ -6,17 +6,54 @@
 
 */
 
+html {
+    height: 100%;
+}
+
+div {
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul.dashed > li:before{
+    content: "- ";
+}
+
 body {
     margin: 0;
-    height: auto;
+    padding: 0;
+    height: 100%;
     width: auto;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: #222;
+    /* spacing between lines */
+    line-height: 1.7;
 }
 
 a {
     text-decoration: none;
+    color: #5c55c5;
+    font-weight: bold;
+}
+
+.normColor {
     color: #222;
+}
+
+hr {
+    background-color: #5c55c5;
+    border: solid 2px #5c55c5;
+    border-radius: 0px;
+    margin-bottom: 50px;
+    padding: 0;
+}
+
+.backToTop {
+    text-align: right;
+    margin-bottom: -10px;
 }
 
 #page_header {
@@ -39,11 +76,14 @@ a {
     background-color: #fff;
     padding-left: 5%;
     padding-right: 5%;
+    padding-top: 20px;
+    padding-bottom: 20px;
     margin:0;
-    width: 70%;
-    min-height: 600px;
+    width: 75%;
+    min-height: 1000px;
     height: 100%;
     float:left;
+    box-shadow: -5px 0px 5px -2px #aaa;
 }
 
 #page_sidebar {
@@ -52,9 +92,7 @@ a {
     border-right: solid 2px black; */
     /* padding: 10px; */
     margin:0;
-    width: 20%;
-    min-height: 600px;
-    height: 100%;
+    width: 15%;
     float: left;
 }
 
@@ -63,7 +101,7 @@ a {
     padding: 5px;
     padding-left: 10px;
     margin: 0;
-    font-weight: lighter;
+    /* font-weight: lighter; */
 }
 
 .page_sidebar_links {
@@ -91,23 +129,38 @@ a {
 }
 
 #page_middle {
+    background-color: #dedded;
     width: 100%;
     display: inline-block; 
+    margin-bottom: -5px;
 }
 
 .codeBlock {
     width: 100%;
-    min-height: 100px;
+    /* min-height: 100px; */
     background-color: #eee;
     border-radius: 7px;
-    padding: 20px;
+    /* padding: 20px; */
     padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.codeBlock p {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 5px;
 }
 
 .codeBlockHeader {
     /* background-color: red; */
     width: 100%;
     margin: 0;
+    margin-top: -15px;
+    margin-bottom: -10px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .code {
@@ -116,6 +169,9 @@ a {
     border-radius: 3px;
     border-left: solid 5px #5c55c5;
     font-weight: bold;
+    margin-left: 20px;
+    margin-right: 20px;
+    overflow-x: auto;
 }
 
 .codeKeyword {
@@ -128,4 +184,70 @@ a {
 
 .codeStringLiteral {
     color: #dbbb00;
+}
+
+.inlineCode {
+    font-family: monospace;
+    background-color: #eee;
+    padding: 2px;
+    /* border: solid 1px #333; */
+    border-radius: 5px;
+    color: #cc44aa;
+    font-weight: bold;
+}
+
+.table {
+    width: 100%;
+    /* min-height: 100px; */
+    background-color: #eee;
+    border: solid 2px #222;
+    border-radius: 7px;
+    /* padding: 20px; */
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-collapse: collapse;
+}
+
+.table th {
+    background-color: #5c55c5;
+    color: #eee;
+}
+
+.table td, .table th {
+    border: solid 2px #222;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 0;
+}
+
+.subtable {
+    width: 100%;
+    /* min-height: 100px; */
+    background-color: #eee;
+    /* border: solid 2px #222; */
+    /* border-radius: 7px; */
+    /* padding: 20px; */
+    /* padding-top: 10px;
+    padding-bottom: 10px; */
+    /* margin-top: 10px;
+    margin-bottom: 10px; */
+    /* border-collapse: collapse; */
+}
+
+.subtable td {
+    border: none;
+    border-bottom: solid 2px #222;
+}
+
+.tableColumnHeader {
+    background-color: #7e77e7;
+    color: #eee;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.noBorder {
+    border: none;
 }
