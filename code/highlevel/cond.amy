@@ -1,4 +1,4 @@
-
+// Testing If-statements 
 
 
 int x = 10;
@@ -9,12 +9,12 @@ if (x == 0)
 {
     if (1)
     {
-        println (x);
+        printInt (x);
     }
 }
 elif (x == y)
 {
-    println (x);
+    printInt (x);
 }
 elif (x == y + 3)
 {

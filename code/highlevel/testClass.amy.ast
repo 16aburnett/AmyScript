@@ -234,9 +234,9 @@ ProgramNode:
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 0 int
 |   |   |   Identifier: addFriend void
-|   |   |   Subscript Operator: 
+|   |   |   Subscript Operator: Person
 |   |   |   |   Array:
-|   |   |   |   |   Identifier: people 
+|   |   |   |   |   Identifier: people Person[]
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 1 int
 |   ExpressionStatement:
@@ -247,9 +247,9 @@ ProgramNode:
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 0 int
 |   |   |   Identifier: addFriend void
-|   |   |   Subscript Operator: 
+|   |   |   Subscript Operator: Person
 |   |   |   |   Array:
-|   |   |   |   |   Identifier: people 
+|   |   |   |   |   Identifier: people Person[]
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 3 int
 |   ExpressionStatement:
@@ -260,9 +260,9 @@ ProgramNode:
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 1 int
 |   |   |   Identifier: addFriend void
-|   |   |   Subscript Operator: 
+|   |   |   Subscript Operator: Person
 |   |   |   |   Array:
-|   |   |   |   |   Identifier: people 
+|   |   |   |   |   Identifier: people Person[]
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 0 int
 |   ExpressionStatement:
@@ -273,9 +273,9 @@ ProgramNode:
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 2 int
 |   |   |   Identifier: addFriend void
-|   |   |   Subscript Operator: 
+|   |   |   Subscript Operator: Person
 |   |   |   |   Array:
-|   |   |   |   |   Identifier: people 
+|   |   |   |   |   Identifier: people Person[]
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 3 int
 |   ExpressionStatement:
@@ -286,9 +286,9 @@ ProgramNode:
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 2 int
 |   |   |   Identifier: addFriend void
-|   |   |   Subscript Operator: 
+|   |   |   Subscript Operator: Person
 |   |   |   |   Array:
-|   |   |   |   |   Identifier: people 
+|   |   |   |   |   Identifier: people Person[]
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 4 int
 |   ExpressionStatement:
@@ -299,9 +299,9 @@ ProgramNode:
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 3 int
 |   |   |   Identifier: addFriend void
-|   |   |   Subscript Operator: 
+|   |   |   Subscript Operator: Person
 |   |   |   |   Array:
-|   |   |   |   |   Identifier: people 
+|   |   |   |   |   Identifier: people Person[]
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 2 int
 |   ExpressionStatement:
@@ -312,9 +312,9 @@ ProgramNode:
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 3 int
 |   |   |   Identifier: addFriend void
-|   |   |   Subscript Operator: 
+|   |   |   Subscript Operator: Person
 |   |   |   |   Array:
-|   |   |   |   |   Identifier: people 
+|   |   |   |   |   Identifier: people Person[]
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 0 int
 |   ExpressionStatement:
@@ -325,9 +325,9 @@ ProgramNode:
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 4 int
 |   |   |   Identifier: addFriend void
-|   |   |   Subscript Operator: 
+|   |   |   Subscript Operator: Person
 |   |   |   |   Array:
-|   |   |   |   |   Identifier: people 
+|   |   |   |   |   Identifier: people Person[]
 |   |   |   |   Offset:
 |   |   |   |   |   Int Literal: 2 int
 |   For:
@@ -712,7 +712,7 @@ ProgramNode:
 |   |   |   |   |   |   |   Method Accessor: int
 |   |   |   |   |   |   |   |   Identifier: myArray IntArray
 |   |   |   |   |   |   |   |   Identifier: get int
-|   |   |   |   |   |   |   |   Identifier: i 
+|   |   |   |   |   |   |   |   Identifier: i int
 |   |   |   |   ExpressionStatement:
 |   |   |   |   |   Function Call: 
 |   |   |   |   |   |   Function Name:
@@ -733,7 +733,6 @@ ProgramNode:
 |   |   |   |   Name: multi
 |   |   |   ArrayAllocator: int[][]
 |   |   |   |   Dimensions: 
-|   |   |   |   |   Int Literal: 5 int
 |   |   |   |   |   Int Literal: 5 int
 |   For:
 |   |   Init: Type.INT

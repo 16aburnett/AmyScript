@@ -1244,22 +1244,28 @@ class CodeGenVisitor (ASTVisitor):
 
         self.indentation += 1
 
-        argIndex = 0
-
-        # calc arguments 
         self.printComment ("Arguments")
         self.indentation += 1
+        # calc arguments first
+        # an argument could be another function call
+        # to avoid conflicts with variables, 
+        # we will have a separate loop to pop the values
         for arg in node.args:
             arg.accept (self)
+
+        # retrieve argument values 
+        # values will be popped off the stack in reverse order
+        argIndex = len(node.args)-1
+        for arg in node.args:
             # save argument 
             argName = f"__arg{argIndex}"
-            argIndex += 1
+            argIndex -= 1
             self.printCode (f"POP {argName}")
         self.indentation -= 1
         
         # add arguments in reverse order
         self.printComment ("Pushing args in reverse order")
-        for i in range(argIndex-1, -1, -1):
+        for i in range(len(node.args)-1, -1, -1):
             self.printCode (f"PUSH __arg{i}")
 
         # call function
@@ -1267,7 +1273,7 @@ class CodeGenVisitor (ASTVisitor):
 
         # remove arguments from stack
         self.printComment ("Remove args")
-        for i in range(0, argIndex):
+        for i in range(0, len(node.args)):
             self.printCode (f"POP __null")
         
         # put function's return val on the stack
@@ -1338,15 +1344,21 @@ class CodeGenVisitor (ASTVisitor):
         methodName = f"__method__{node.lhs.type.id}__{node.rhs.id}"
         self.indentation -= 1
 
-        # calc arguments 
-        argIndex = 0
+
         self.printComment ("Arguments")
         self.indentation += 1
+        # calc arguments first
+        # an argument could be another function call
+        # to avoid conflicts with variables, 
+        # we will have a separate loop to pop the values
         for arg in node.args:
             arg.accept (self)
+
+        argIndex = len(node.args)-1
+        for arg in node.args:
             # save argument 
             argName = f"__arg{argIndex}"
-            argIndex += 1
+            argIndex -= 1
             self.printCode (f"POP {argName}")
         self.indentation -= 1
         
@@ -1357,7 +1369,7 @@ class CodeGenVisitor (ASTVisitor):
 
         # add arguments in reverse order
         self.printComment ("Pushing args in reverse order")
-        for i in range(argIndex-1, -1, -1):
+        for i in range(len(node.args)-1, -1, -1):
             self.printCode (f"PUSH __arg{i}")
 
         # push parent object instance last
@@ -1371,7 +1383,7 @@ class CodeGenVisitor (ASTVisitor):
 
         # remove arguments from stack
         self.printComment ("Remove args")
-        for i in range(0, argIndex):
+        for i in range(0, len(node.args)):
             self.printCode (f"POP __null")
                 
         # put function's return val on the stack
@@ -1412,22 +1424,27 @@ class CodeGenVisitor (ASTVisitor):
 
         self.indentation += 1
 
-        argIndex = 0
-
-        # calc arguments 
         self.printComment ("Arguments")
         self.indentation += 1
+        # calc arguments first
+        # an argument could be another function call
+        # to avoid conflicts with variables, 
+        # we will have a separate loop to pop the values
         for arg in node.args:
             arg.accept (self)
+
+        # retrieve values in reverse order
+        argIndex = len(node.args)-1
+        for arg in node.args:
             # save argument 
             argName = f"__arg{argIndex}"
-            argIndex += 1
+            argIndex -= 1
             self.printCode (f"POP {argName}")
         self.indentation -= 1
         
         # add arguments in reverse order
         self.printComment ("Pushing args in reverse order")
-        for i in range(argIndex-1, -1, -1):
+        for i in range(len(node.args)-1, -1, -1):
             self.printCode (f"PUSH __arg{i}")
 
         # call function
@@ -1435,7 +1452,7 @@ class CodeGenVisitor (ASTVisitor):
 
         # remove arguments from stack
         self.printComment ("Remove args")
-        for i in range(0, argIndex):
+        for i in range(0, len(node.args)):
             self.printCode (f"POP __null")
         
         # put function's return val on the stack
@@ -1473,8 +1490,37 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitListConstructorExpressionNode (self, node):
+
+        self.printComment ("Array Constructor")
+
+        self.indentation += 1
+
+        # evaluate each element
+        # elements could be list constructors 
+        #  so we don't want to pop values into variables yet
+        self.printComment ("Elements")
         for elem in node.elems:
             elem.accept (self)
+            
+        elemIndex = len(node.elems)-1
+        # retrieve values in reverse order
+        for elem in node.elems:
+            # save element 
+            elemName = f"__elem{elemIndex}"
+            elemIndex -= 1
+            self.printCode (f"POP {elemName}")
+
+        self.printCode (f"MALLOC __list {len(node.elems)}")
+
+        # add elements to list in correct order
+        for i in range(len(node.elems)):
+            self.printCode (f"ASSIGN __list[{i}] __elem{i}")
+
+        # push array onto stack
+        self.printCode ("PUSH __list")
+
+        self.indentation -= 1
+        
 
 
 # ========================================================================

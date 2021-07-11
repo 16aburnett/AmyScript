@@ -35,7 +35,7 @@ ProgramNode:
 |   |   |   |   |   |   |   ExpressionStatement:
 |   |   |   |   |   |   |   |   Function Call: 
 |   |   |   |   |   |   |   |   |   Function Name:
-|   |   |   |   |   |   |   |   |   |   Identifier: println 
+|   |   |   |   |   |   |   |   |   |   Identifier: printInt 
 |   |   |   |   |   |   |   |   |   Arguments:
 |   |   |   |   |   |   |   |   |   |   Identifier: x int
 |   |   Elif:
@@ -48,7 +48,7 @@ ProgramNode:
 |   |   |   |   |   ExpressionStatement:
 |   |   |   |   |   |   Function Call: 
 |   |   |   |   |   |   |   Function Name:
-|   |   |   |   |   |   |   |   Identifier: println 
+|   |   |   |   |   |   |   |   Identifier: printInt 
 |   |   |   |   |   |   |   Arguments:
 |   |   |   |   |   |   |   |   Identifier: x int
 |   |   Elif:
@@ -65,7 +65,7 @@ ProgramNode:
 |   |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   |   Identifier: println 
 |   |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   |   String Literal: "WooHoo!" string
+|   |   |   |   |   |   |   |   String Literal: "WooHoo!" char[]
 |   |   Else:
 |   |   |   Body:
 |   |   |   |   CodeBlock:
@@ -74,7 +74,7 @@ ProgramNode:
 |   |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   |   Identifier: println 
 |   |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   |   String Literal: "Nope!" string
+|   |   |   |   |   |   |   |   String Literal: "Nope!" char[]
 |   If:
 |   |   Condition: Type.INT
 |   |   |   LogicalOR Expression: || int
@@ -97,10 +97,10 @@ ProgramNode:
 |   |   |   |   |   |   Function Name:
 |   |   |   |   |   |   |   Identifier: println 
 |   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   String Literal: "its true" string
+|   |   |   |   |   |   |   String Literal: "its true" char[]
 |   ExpressionStatement:
 |   |   Function Call: 
 |   |   |   Function Name:
 |   |   |   |   Identifier: println 
 |   |   |   Arguments:
-|   |   |   |   String Literal: "Interesting..." string
+|   |   |   |   String Literal: "Interesting..." char[]

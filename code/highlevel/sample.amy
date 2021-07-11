@@ -11,19 +11,6 @@ class Person
 
     //--------------------------------------------------------------------
 
-    // default constructor
-    // constructors are always public so public/private does not need
-    // to be provided 
-    // ***currently there is no constructor/function overloading
-    //constructor ()
-    //{
-    //    m_name = "";
-    //    m_age = 0; 
-    //    m_nums = new float[5];
-    //}
-
-    //--------------------------------------------------------------------
-
     constructor (char[] name, int age)
     {
         this.m_name = name;
@@ -54,7 +41,7 @@ Person[] people = new Person[2];
 
 int camIndex = (int amyIndex = 0) + 1;
 
-people[amyIndex] = new Person(); 
+people[amyIndex] = new Person ("", 0); 
 people[camIndex] = new Person ("Cameron", 21);
 
 people[amyIndex].m_name = "Amy";
@@ -68,23 +55,20 @@ println (people[0].m_name);
 int[] nums = new int[5];
 
 // you can use sizeof to get the size of an array 
-for (int i = 0; i < sizeof(nums); ++i)
+for (int i = 0; i < 5; ++i)
 {
-    print (nums[i], " ");
+    printInt (nums[i]);
 }
 println ("");
 
 int mybool = 0; 
 
-if (sizeof(nums) > 0)
+if (5 > 0)
 {
-    print("Nums: ");
-    print(nums); 
-    println();
 }
 elif (mybool)
 {
-    println (mybool);
+    printInt (mybool);
 }
 else
     println ("Yes");
@@ -94,35 +78,16 @@ else
 // <declaration> -> <type> ID
 // <declaration> -> ID1 ID2
 // adds ID2 to the symbol table with type ID1
-println (int x = int y = 10);
+printInt (int x = int y = 10);
 
 // if, for, while statements can be 
 // completed with another statement
 x = 0;
 while (1)
-    if (x++ > 10)
+    if (x++ > 3)
         break;
 
-int w = nums[x++] = 21 + 12;
+int w = nums[--x] = 21 + 12;
 
-
-// this line produces semantic errors 
-//int foo = float boat = 7;
-
-
-int nRows = int nCols = 10;
-float[][] board = new float[nRows][nCols]; 
-
-board[0][0] = 7.34;
-
-// foo is not an array
-//semantic error
-//foo[2] = 7;
-
-int apple = 1;
-//apple pie = 12;
-
-// semantic error
-//board = new float[2];
 
 // =======================================================================

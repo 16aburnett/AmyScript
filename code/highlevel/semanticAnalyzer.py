@@ -479,9 +479,9 @@ class SymbolTableVisitor (ASTVisitor):
                 print ()
                 self.wasSuccessful = False
 
-            # the type for this is lhs - 1 dimension
-            node.type = TypeSpecifierNode (node.lhs.type.type, node.lhs.type.id, None)
-        
+        # the type for this is lhs - 1 dimension
+        node.type = TypeSpecifierNode (node.lhs.type.type, node.lhs.type.id, None)
+
         node.type.arrayDimensions = node.lhs.type.arrayDimensions - 1
 
         node.offset.accept (self)
@@ -695,6 +695,10 @@ class SymbolTableVisitor (ASTVisitor):
         node.rhs.accept (self)
         self.checkDeclaration = True
 
+        # eval arguments to get types 
+        for arg in node.args:
+            arg.accept (self)
+
         # ensure the correct number of parameters 
         if (len(node.args) != len(node.methodDecl.params)):
             print (f"Semantic Error: Invalid number of parameters in method call")
@@ -858,6 +862,41 @@ class SymbolTableVisitor (ASTVisitor):
     def visitListConstructorExpressionNode (self, node):
         for elem in node.elems:
             elem.accept (self)
+
+        if len(node.elems) == 0:
+            print (f"Semantic Error: Empty list constructor")
+            print (f"   List constructor needs at least one value")
+            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   line:")
+            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      ",end="")
+            for i in range(node.columnNumber-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
+            return 
+
+        # save type 
+        firstType = node.elems[0].type
+        node.type = TypeSpecifierNode(node.elems[0].type.type, node.elems[0].type.id, None)
+        node.type.arrayDimensions = firstType.arrayDimensions + 1
+
+        # ensure each element has the same type
+        for elem in node.elems:
+            if elem.type.type != firstType.type or elem.type.arrayDimensions != firstType.arrayDimensions:
+                print (f"Semantic Error: All elements in a list constructor must have the same type")
+                print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+                print (f"   line:")
+                print (f"      {self.lines[node.lineNumber-1][:-1]}")
+                print (f"      ",end="")
+                for i in range(node.columnNumber-1):
+                    print (" ", end="")
+                print ("^")
+                print ()
+                self.wasSuccessful = False
+                return 
+
 
 
 # ========================================================================

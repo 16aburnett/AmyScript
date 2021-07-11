@@ -1,7 +1,4 @@
-
-
-
-
+// Testing the List Constructor feature
 
 int[][] nums = [
     [1, 2, 3], 

@@ -112,6 +112,8 @@ ProgramNode:
 |   |   |   |   |   Identifier: amyIndex int
 |   |   |   ConstructorCall: Person
 |   |   |   |   Args: 
+|   |   |   |   |   String Literal: "" char[]
+|   |   |   |   |   Int Literal: 0 int
 |   ExpressionStatement:
 |   |   AssignExpression: = Person
 |   |   |   Type: Type.USERTYPE Person
@@ -214,11 +216,7 @@ ProgramNode:
 |   |   Condition: Type.INT
 |   |   |   InequalityExpression: < int
 |   |   |   |   Identifier: i int
-|   |   |   |   Function Call: 
-|   |   |   |   |   Function Name:
-|   |   |   |   |   |   Identifier: sizeof 
-|   |   |   |   |   Arguments:
-|   |   |   |   |   |   Identifier: nums int[]
+|   |   |   |   Int Literal: 5 int
 |   |   Update: Type.INT
 |   |   |   UnaryLeftExpression: ++ int
 |   |   |   |   Identifier: i int
@@ -227,14 +225,13 @@ ProgramNode:
 |   |   |   |   ExpressionStatement:
 |   |   |   |   |   Function Call: 
 |   |   |   |   |   |   Function Name:
-|   |   |   |   |   |   |   Identifier: print 
+|   |   |   |   |   |   |   Identifier: printInt 
 |   |   |   |   |   |   Arguments:
 |   |   |   |   |   |   |   Subscript Operator: int
 |   |   |   |   |   |   |   |   Array:
 |   |   |   |   |   |   |   |   |   Identifier: nums int[]
 |   |   |   |   |   |   |   |   Offset:
 |   |   |   |   |   |   |   |   |   Identifier: i int
-|   |   |   |   |   |   |   String Literal: " " char[]
 |   ExpressionStatement:
 |   |   Function Call: 
 |   |   |   Function Name:
@@ -250,32 +247,11 @@ ProgramNode:
 |   |   |   Int Literal: 0 int
 |   If:
 |   |   Condition: Type.INT
-|   |   |   InequalityExpression: > 
-|   |   |   |   Function Call: 
-|   |   |   |   |   Function Name:
-|   |   |   |   |   |   Identifier: sizeof 
-|   |   |   |   |   Arguments:
-|   |   |   |   |   |   Identifier: nums int[]
+|   |   |   InequalityExpression: > int
+|   |   |   |   Int Literal: 5 int
 |   |   |   |   Int Literal: 0 int
 |   |   Body:
 |   |   |   CodeBlock:
-|   |   |   |   ExpressionStatement:
-|   |   |   |   |   Function Call: 
-|   |   |   |   |   |   Function Name:
-|   |   |   |   |   |   |   Identifier: print 
-|   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   String Literal: "Nums: " char[]
-|   |   |   |   ExpressionStatement:
-|   |   |   |   |   Function Call: 
-|   |   |   |   |   |   Function Name:
-|   |   |   |   |   |   |   Identifier: print 
-|   |   |   |   |   |   Arguments:
-|   |   |   |   |   |   |   Identifier: nums int[]
-|   |   |   |   ExpressionStatement:
-|   |   |   |   |   Function Call: 
-|   |   |   |   |   |   Function Name:
-|   |   |   |   |   |   |   Identifier: println 
-|   |   |   |   |   |   Arguments:
 |   |   Elif:
 |   |   |   Condition: Type.INT
 |   |   |   |   Identifier: mybool int
@@ -284,7 +260,7 @@ ProgramNode:
 |   |   |   |   |   ExpressionStatement:
 |   |   |   |   |   |   Function Call: 
 |   |   |   |   |   |   |   Function Name:
-|   |   |   |   |   |   |   |   Identifier: println 
+|   |   |   |   |   |   |   |   Identifier: printInt 
 |   |   |   |   |   |   |   Arguments:
 |   |   |   |   |   |   |   |   Identifier: mybool int
 |   |   Else:
@@ -298,7 +274,7 @@ ProgramNode:
 |   ExpressionStatement:
 |   |   Function Call: 
 |   |   |   Function Name:
-|   |   |   |   Identifier: println 
+|   |   |   |   Identifier: printInt 
 |   |   |   Arguments:
 |   |   |   |   AssignExpression: = int
 |   |   |   |   |   Type: Type.INT int
@@ -325,7 +301,7 @@ ProgramNode:
 |   |   |   |   |   InequalityExpression: > int
 |   |   |   |   |   |   PostIncrement: int
 |   |   |   |   |   |   |   Identifier: x int
-|   |   |   |   |   |   Int Literal: 10 int
+|   |   |   |   |   |   Int Literal: 3 int
 |   |   |   |   Body:
 |   |   |   |   |   BreakStatement:
 |   ExpressionStatement:
@@ -340,50 +316,8 @@ ProgramNode:
 |   |   |   |   |   Array:
 |   |   |   |   |   |   Identifier: nums int[]
 |   |   |   |   |   Offset:
-|   |   |   |   |   |   PostIncrement: int
+|   |   |   |   |   |   UnaryLeftExpression: -- int
 |   |   |   |   |   |   |   Identifier: x int
 |   |   |   |   AdditiveExpression: + int
 |   |   |   |   |   Int Literal: 21 int
 |   |   |   |   |   Int Literal: 12 int
-|   ExpressionStatement:
-|   |   AssignExpression: = int
-|   |   |   Type: Type.INT int
-|   |   |   VariableDeclaration: 
-|   |   |   |   Type: Type.INT int
-|   |   |   |   Name: nRows
-|   |   |   AssignExpression: = int
-|   |   |   |   Type: Type.INT int
-|   |   |   |   VariableDeclaration: 
-|   |   |   |   |   Type: Type.INT int
-|   |   |   |   |   Name: nCols
-|   |   |   |   Int Literal: 10 int
-|   ExpressionStatement:
-|   |   AssignExpression: = float[][]
-|   |   |   Type: Type.FLOAT float[][]
-|   |   |   VariableDeclaration: 
-|   |   |   |   Type: Type.FLOAT float[][]
-|   |   |   |   Name: board
-|   |   |   ArrayAllocator: float[][]
-|   |   |   |   Dimensions: 
-|   |   |   |   |   Identifier: nRows int
-|   |   |   |   |   Identifier: nCols int
-|   ExpressionStatement:
-|   |   AssignExpression: = float
-|   |   |   Type: Type.FLOAT float
-|   |   |   Subscript Operator: float
-|   |   |   |   Array:
-|   |   |   |   |   Subscript Operator: float[]
-|   |   |   |   |   |   Array:
-|   |   |   |   |   |   |   Identifier: board float[][]
-|   |   |   |   |   |   Offset:
-|   |   |   |   |   |   |   Int Literal: 0 int
-|   |   |   |   Offset:
-|   |   |   |   |   Int Literal: 0 int
-|   |   |   Float Literal: 7.34 float
-|   ExpressionStatement:
-|   |   AssignExpression: = int
-|   |   |   Type: Type.INT int
-|   |   |   VariableDeclaration: 
-|   |   |   |   Type: Type.INT int
-|   |   |   |   Name: apple
-|   |   |   Int Literal: 1 int

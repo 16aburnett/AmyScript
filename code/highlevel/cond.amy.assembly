@@ -1,12 +1,129 @@
 // AmyAssembly compiled from AmyScript
-//=========================================================================
+// Filename: cond.amy
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+
+jump __endOfLibrary
+
+//========================================================================
+// Global Variables
+
+    assign __null 0
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__loop:
+    // cond
+    cmp __i __size
+    jge __print__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__loop
+__print__endloop:
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__loop:
+    // cond
+    cmp __i __size
+    jge __println__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__loop
+__println__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void printInt (int intToPrint);
+printInt:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void printFloat (float floatToPrint);
+printFloat:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void printChar (char charToPrint);
+printChar:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// converts an integer to a string
+// char[] intToString (int val);
+intToString:
+    stackget __val 0
+
+    return 0
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
 // Assignment
    // RHS
       // Literal
          PUSH 10
-   // LHS
-      // Variable Declaration
-         ASSIGN x 0
    POP __rhs
    ASSIGN x __rhs
    PUSH __rhs
@@ -14,9 +131,6 @@
    // RHS
       // Literal
          PUSH 7
-   // LHS
-      // Variable Declaration
-         ASSIGN y 0
    POP __rhs
    ASSIGN y __rhs
    PUSH __rhs
@@ -24,13 +138,10 @@
    // RHS
       // Literal
          PUSH 7
-   // LHS
-      // Variable Declaration
-         ASSIGN z 0
    POP __rhs
    ASSIGN z __rhs
    PUSH __rhs
-//-------------------------------------------------------------------------
+//------------------------------------------------------------------------
 // If-Statement
    // Condition
       // Equal
@@ -48,7 +159,7 @@
       CMP __cond 0
       JEQ __elif0x0
    // Body
-      //-------------------------------------------------------------------
+      //------------------------------------------------------------------
       // If-Statement
          // Condition
             // Literal
@@ -57,17 +168,24 @@
             CMP __cond 0
             JEQ __endif1
          // Body
-            // FunctionCall
-               // Identifier
-                  PUSH x
-               // Identifier
-                  PUSH println
-         JMP __endif1
+            // Function Call
+               // Arguments
+                  // Identifier
+                     PUSH x
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               CALL printInt
+               // Remove args
+               POP __null
+               RESPONSE __retval
+               PUSH __retval
+         JUMP __endif1
          // End of if
          __endif1:
-      //-------------------------------------------------------------------
-   JMP __endif0
-   //----------------------------------------------------------------------
+      //------------------------------------------------------------------
+   JUMP __endif0
+   //---------------------------------------------------------------------
    // Elif-Statement
    __elif0x0:
       // Condition
@@ -86,14 +204,21 @@
       CMP __cond 0
       JEQ __elif0x1
       // Body
-      // FunctionCall
-         // Identifier
-            PUSH x
-         // Identifier
-            PUSH println
-      JMP __endif0
-   //----------------------------------------------------------------------
-   //----------------------------------------------------------------------
+      // Function Call
+         // Arguments
+            // Identifier
+               PUSH x
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL printInt
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+      JUMP __endif0
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
    // Elif-Statement
    __elif0x1:
       // Condition
@@ -121,39 +246,54 @@
       CMP __cond 0
       JEQ __else0
       // Body
-      // FunctionCall
-         // Literal
-            // String Literal 
-         // Identifier
-            PUSH println
-      JMP __endif0
-   //----------------------------------------------------------------------
-   //----------------------------------------------------------------------
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 7
+               ASSIGN __str[0] 'W'
+               ASSIGN __str[1] 'o'
+               ASSIGN __str[2] 'o'
+               ASSIGN __str[3] 'H'
+               ASSIGN __str[4] 'o'
+               ASSIGN __str[5] 'o'
+               ASSIGN __str[6] '!'
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL println
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+      JUMP __endif0
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
    // Else-Statement
    __else0:
-   //----------------------------------------------------------------------
-   // If-Statement
-      // Condition
+   // Function Call
+      // Arguments
          // Literal
-            PUSH 1
-         POP __cond
-         CMP __cond 0
-         JEQ __endif2
-      // Body
-         // FunctionCall
-            // Identifier
-               PUSH x
-            // Identifier
-               PUSH println
-      JMP __endif2
-      // End of if
-      __endif2:
-   //----------------------------------------------------------------------
-   //----------------------------------------------------------------------
+            MALLOC __str 5
+            ASSIGN __str[0] 'N'
+            ASSIGN __str[1] 'o'
+            ASSIGN __str[2] 'p'
+            ASSIGN __str[3] 'e'
+            ASSIGN __str[4] '!'
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      CALL println
+      // Remove args
+      POP __null
+      RESPONSE __retval
+      PUSH __retval
+   //---------------------------------------------------------------------
    // End of if
    __endif0:
-//-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
 // If-Statement
    // Condition
       // OR
@@ -214,21 +354,61 @@
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endif3
+      JEQ __endif2
    // Body
-      // FunctionCall
-         // Literal
-            // String Literal 
-         // Identifier
-            PUSH println
-   JMP __endif3
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 8
+               ASSIGN __str[0] 'i'
+               ASSIGN __str[1] 't'
+               ASSIGN __str[2] 's'
+               ASSIGN __str[3] ' '
+               ASSIGN __str[4] 't'
+               ASSIGN __str[5] 'r'
+               ASSIGN __str[6] 'u'
+               ASSIGN __str[7] 'e'
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL println
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+   JUMP __endif2
    // End of if
-   __endif3:
-//-------------------------------------------------------------------------
-// FunctionCall
-   // Literal
-      // String Literal 
-   // Identifier
-      PUSH println
-//=========================================================================
-// End of program
+   __endif2:
+//------------------------------------------------------------------------
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 14
+         ASSIGN __str[0] 'I'
+         ASSIGN __str[1] 'n'
+         ASSIGN __str[2] 't'
+         ASSIGN __str[3] 'e'
+         ASSIGN __str[4] 'r'
+         ASSIGN __str[5] 'e'
+         ASSIGN __str[6] 's'
+         ASSIGN __str[7] 't'
+         ASSIGN __str[8] 'i'
+         ASSIGN __str[9] 'n'
+         ASSIGN __str[10] 'g'
+         ASSIGN __str[11] '.'
+         ASSIGN __str[12] '.'
+         ASSIGN __str[13] '.'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __null
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

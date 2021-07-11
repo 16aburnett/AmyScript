@@ -68,7 +68,14 @@ __println__endloop:
 // Prints an int to the screen
 // void printInt (int intToPrint);
 printInt:
-    // grab string
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void printFloat (float floatToPrint);
+printFloat:
     stackget __str 0
     print __str
     return 0
@@ -332,10 +339,10 @@ __endclass__Person:
                ASSIGN __str[1] 'm'
                ASSIGN __str[2] 'y'
                PUSH __str
-            POP __arg0
             // Literal
                PUSH 22
             POP __arg1
+            POP __arg0
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
@@ -526,10 +533,10 @@ __endclass__Person:
                ASSIGN __str[4] 'e'
                ASSIGN __str[5] 'y'
                PUSH __str
-            POP __arg0
             // Literal
                PUSH 21
             POP __arg1
+            POP __arg0
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
@@ -564,10 +571,10 @@ __endclass__Person:
                ASSIGN __str[3] 's'
                ASSIGN __str[4] 'a'
                PUSH __str
-            POP __arg0
             // Literal
                PUSH 31
             POP __arg1
+            POP __arg0
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
@@ -603,10 +610,10 @@ __endclass__Person:
                ASSIGN __str[4] 'e'
                ASSIGN __str[5] 'y'
                PUSH __str
-            POP __arg0
             // Literal
                PUSH 26
             POP __arg1
+            POP __arg0
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
@@ -642,10 +649,10 @@ __endclass__Person:
                ASSIGN __str[4] 'i'
                ASSIGN __str[5] 'd'
                PUSH __str
-            POP __arg0
             // Literal
                PUSH 24
             POP __arg1
+            POP __arg0
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
@@ -958,7 +965,18 @@ __endclass__Person:
       POP __rhs
       ASSIGN i __rhs
       PUSH __rhs
+JUMP __forcond0
 __for0:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier
+               PUSH i
+         POP __rhs
+         ADD i i 1
+         ASSIGN __res i
+         PUSH __res
+   __forcond0:
    // Condition
       // Less Than
          // LHS
@@ -1076,7 +1094,18 @@ __for0:
             POP __rhs
             ASSIGN j __rhs
             PUSH __rhs
+      JUMP __forcond1
       __for1:
+         // Update
+            // Pre-Increment
+               // RHS
+                  // Identifier
+                     PUSH j
+               POP __rhs
+               ADD j j 1
+               ASSIGN __res j
+               PUSH __res
+         __forcond1:
          // Condition
             // Less Than
                // LHS
@@ -1164,15 +1193,6 @@ __for0:
                POP __null
                RESPONSE __retval
                PUSH __retval
-         // Update
-            // Pre-Increment
-               // RHS
-                  // Identifier
-                     PUSH j
-               POP __rhs
-               ADD j j 1
-               ASSIGN __res j
-               PUSH __res
          // Repeat
          JUMP __for1
          // End of For
@@ -1191,15 +1211,6 @@ __for0:
          POP __null
          RESPONSE __retval
          PUSH __retval
-   // Update
-      // Pre-Increment
-         // RHS
-            // Identifier
-               PUSH i
-         POP __rhs
-         ADD i i 1
-         ASSIGN __res i
-         PUSH __res
    // Repeat
    JUMP __for0
    // End of For
@@ -1480,7 +1491,18 @@ JUMP __endclass__IntArray
                      POP __rhs
                      ASSIGN i __rhs
                      PUSH __rhs
+               JUMP __forcond3
                __for3:
+                  // Update
+                     // Pre-Increment
+                        // RHS
+                           // Identifier
+                              PUSH i
+                        POP __rhs
+                        ADD i i 1
+                        ASSIGN __res i
+                        PUSH __res
+                  __forcond3:
                   // Condition
                      // Less Than
                         // LHS
@@ -1536,15 +1558,6 @@ JUMP __endclass__IntArray
                         POP __rhs
                         ASSIGN __pointer[__offset] __rhs
                         PUSH __rhs
-                  // Update
-                     // Pre-Increment
-                        // RHS
-                           // Identifier
-                              PUSH i
-                        POP __rhs
-                        ADD i i 1
-                        ASSIGN __res i
-                        PUSH __res
                   // Repeat
                   JUMP __for3
                   // End of For
@@ -1839,7 +1852,18 @@ __endclass__IntArray:
       POP __rhs
       ASSIGN i __rhs
       PUSH __rhs
+JUMP __forcond4
 __for4:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier
+               PUSH i
+         POP __rhs
+         ADD i i 1
+         ASSIGN __res i
+         PUSH __res
+   __forcond4:
    // Condition
       // Less Than
          // LHS
@@ -1906,15 +1930,6 @@ __for4:
          POP __null
          RESPONSE __retval
          PUSH __retval
-   // Update
-      // Pre-Increment
-         // RHS
-            // Identifier
-               PUSH i
-         POP __rhs
-         ADD i i 1
-         ASSIGN __res i
-         PUSH __res
    // Repeat
    JUMP __for4
    // End of For
@@ -1938,8 +1953,6 @@ __for4:
       // Array Allocator
          // Literal
             PUSH 5
-         // Literal
-            PUSH 5
          POP __size
          MALLOC __ptr __size
          PUSH __ptr
@@ -1956,7 +1969,18 @@ __for4:
       POP __rhs
       ASSIGN i __rhs
       PUSH __rhs
+JUMP __forcond5
 __for5:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier
+               PUSH i
+         POP __rhs
+         ADD i i 1
+         ASSIGN __res i
+         PUSH __res
+   __forcond5:
    // Condition
       // Less Than
          // LHS
@@ -2004,7 +2028,18 @@ __for5:
             POP __rhs
             ASSIGN j __rhs
             PUSH __rhs
+      JUMP __forcond6
       __for6:
+         // Update
+            // Pre-Increment
+               // RHS
+                  // Identifier
+                     PUSH j
+               POP __rhs
+               ADD j j 1
+               ASSIGN __res j
+               PUSH __res
+         __forcond6:
          // Condition
             // Less Than
                // LHS
@@ -2063,15 +2098,6 @@ __for5:
                POP __null
                RESPONSE __retval
                PUSH __retval
-         // Update
-            // Pre-Increment
-               // RHS
-                  // Identifier
-                     PUSH j
-               POP __rhs
-               ADD j j 1
-               ASSIGN __res j
-               PUSH __res
          // Repeat
          JUMP __for6
          // End of For
@@ -2090,15 +2116,6 @@ __for5:
          POP __null
          RESPONSE __retval
          PUSH __retval
-   // Update
-      // Pre-Increment
-         // RHS
-            // Identifier
-               PUSH i
-         POP __rhs
-         ADD i i 1
-         ASSIGN __res i
-         PUSH __res
    // Repeat
    JUMP __for5
    // End of For
