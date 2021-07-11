@@ -1460,6 +1460,23 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("PUSH __retval")
 
         self.indentation -= 1
+    
+    def visitSizeofExpressionNode(self, node):
+        self.printComment ("Sizeof Operator")
+        self.indentation += 1
+
+        # calc rhs
+        self.printComment ("RHS")
+        self.indentation += 1
+        node.rhs.accept (self)
+        self.indentation -= 1
+
+        self.printComment ("Calculate array size")
+        self.printCode ("POP __array")
+        self.printCode ("SIZEOF __size __array")
+        self.printCode ("PUSH __size")
+
+        self.indentation -= 1
 
     def visitIntLiteralExpressionNode (self, node):
         self.printComment ("Literal")

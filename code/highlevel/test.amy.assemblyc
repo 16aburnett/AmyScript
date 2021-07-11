@@ -44,133 +44,179 @@
 043 [35, 1, 18, 0, 0] stackget __val 0
 044 [13, 0, 0] return 0
 045 [-1, 0, 45] __endOfLibrary:
-046 [33, 0, 1] PUSH 1
-047 [33, 0, 2] PUSH 2
-048 [33, 0, 3] PUSH 3
-049 [34, 1, 19] POP __elem2
-050 [34, 1, 20] POP __elem1
-051 [34, 1, 21] POP __elem0
-052 [1, 1, 22, 0, 3] MALLOC __list 3
-053 [0, 2, 1, 22, 0, 0, 1, 21] ASSIGN __list[0] __elem0
-054 [0, 2, 1, 22, 0, 1, 1, 20] ASSIGN __list[1] __elem1
-055 [0, 2, 1, 22, 0, 2, 1, 19] ASSIGN __list[2] __elem2
-056 [33, 1, 22] PUSH __list
-057 [33, 0, 4] PUSH 4
-058 [33, 0, 5] PUSH 5
-059 [33, 0, 6] PUSH 6
-060 [34, 1, 19] POP __elem2
-061 [34, 1, 20] POP __elem1
-062 [34, 1, 21] POP __elem0
-063 [1, 1, 22, 0, 3] MALLOC __list 3
-064 [0, 2, 1, 22, 0, 0, 1, 21] ASSIGN __list[0] __elem0
-065 [0, 2, 1, 22, 0, 1, 1, 20] ASSIGN __list[1] __elem1
-066 [0, 2, 1, 22, 0, 2, 1, 19] ASSIGN __list[2] __elem2
-067 [33, 1, 22] PUSH __list
-068 [33, 0, 7] PUSH 7
-069 [33, 0, 8] PUSH 8
-070 [33, 0, 9] PUSH 9
-071 [34, 1, 19] POP __elem2
-072 [34, 1, 20] POP __elem1
-073 [34, 1, 21] POP __elem0
-074 [1, 1, 22, 0, 3] MALLOC __list 3
-075 [0, 2, 1, 22, 0, 0, 1, 21] ASSIGN __list[0] __elem0
-076 [0, 2, 1, 22, 0, 1, 1, 20] ASSIGN __list[1] __elem1
-077 [0, 2, 1, 22, 0, 2, 1, 19] ASSIGN __list[2] __elem2
-078 [33, 1, 22] PUSH __list
-079 [34, 1, 19] POP __elem2
-080 [34, 1, 20] POP __elem1
-081 [34, 1, 21] POP __elem0
-082 [1, 1, 22, 0, 3] MALLOC __list 3
-083 [0, 2, 1, 22, 0, 0, 1, 21] ASSIGN __list[0] __elem0
-084 [0, 2, 1, 22, 0, 1, 1, 20] ASSIGN __list[1] __elem1
-085 [0, 2, 1, 22, 0, 2, 1, 19] ASSIGN __list[2] __elem2
-086 [33, 1, 22] PUSH __list
-087 [34, 1, 23] POP __rhs
-088 [0, 1, 24, 1, 23] ASSIGN nums __rhs
-089 [33, 1, 23] PUSH __rhs
-090 [33, 0, 0] PUSH 0
-091 [34, 1, 23] POP __rhs
-092 [0, 1, 25, 1, 23] ASSIGN i __rhs
-093 [33, 1, 23] PUSH __rhs
-094 [15, 1, 26] JUMP __forcond0
-095 [-1, 27, 95] __for0:
-096 [33, 1, 25] PUSH i
-097 [34, 1, 23] POP __rhs
-098 [3, 1, 25, 1, 25, 0, 1] ADD i i 1
-099 [0, 1, 28, 1, 25] ASSIGN __res i
-100 [33, 1, 28] PUSH __res
-101 [-1, 26, 101] __forcond0:
-102 [33, 1, 25] PUSH i
-103 [33, 0, 3] PUSH 3
-104 [34, 1, 23] POP __rhs
-105 [34, 1, 29] POP __lhs
-106 [24, 1, 28, 1, 29, 1, 23] LT __res __lhs __rhs
-107 [33, 1, 28] PUSH __res
-108 [34, 1, 30] POP __cond
-109 [28, 1, 30, 0, 0] CMP __cond 0
-110 [18, 1, 31] JEQ __endfor0
-111 [33, 0, 0] PUSH 0
-112 [34, 1, 23] POP __rhs
-113 [0, 1, 32, 1, 23] ASSIGN j __rhs
-114 [33, 1, 23] PUSH __rhs
-115 [15, 1, 33] JUMP __forcond1
-116 [-1, 34, 116] __for1:
-117 [33, 1, 32] PUSH j
-118 [34, 1, 23] POP __rhs
-119 [3, 1, 32, 1, 32, 0, 1] ADD j j 1
-120 [0, 1, 28, 1, 32] ASSIGN __res j
-121 [33, 1, 28] PUSH __res
-122 [-1, 33, 122] __forcond1:
-123 [33, 1, 32] PUSH j
-124 [33, 0, 3] PUSH 3
-125 [34, 1, 23] POP __rhs
-126 [34, 1, 29] POP __lhs
-127 [24, 1, 28, 1, 29, 1, 23] LT __res __lhs __rhs
-128 [33, 1, 28] PUSH __res
-129 [34, 1, 30] POP __cond
-130 [28, 1, 30, 0, 0] CMP __cond 0
-131 [18, 1, 35] JEQ __endfor1
-132 [33, 1, 24] PUSH nums
-133 [33, 1, 25] PUSH i
-134 [34, 1, 36] POP __offset
-135 [34, 1, 37] POP __pointer
-136 [33, 2, 1, 37, 1, 36] PUSH __pointer[__offset]
-137 [33, 1, 32] PUSH j
-138 [34, 1, 36] POP __offset
-139 [34, 1, 37] POP __pointer
-140 [33, 2, 1, 37, 1, 36] PUSH __pointer[__offset]
-141 [34, 1, 38] POP __arg0
-142 [33, 1, 38] PUSH __arg0
-143 [12, 1, 11] CALL printInt
-144 [34, 1, 1] POP __null
-145 [14, 1, 39] RESPONSE __retval
-146 [33, 1, 39] PUSH __retval
-147 [1, 1, 3, 0, 1] MALLOC __str 1
-148 [0, 2, 1, 3, 0, 0, 0, ' '] ASSIGN __str[0] ' '
-149 [33, 1, 3] PUSH __str
-150 [34, 1, 38] POP __arg0
-151 [33, 1, 38] PUSH __arg0
-152 [12, 1, 2] CALL print
-153 [34, 1, 1] POP __null
-154 [14, 1, 39] RESPONSE __retval
-155 [33, 1, 39] PUSH __retval
-156 [15, 1, 34] JUMP __for1
-157 [-1, 35, 157] __endfor1:
-158 [1, 1, 3, 0, 0] MALLOC __str 0
-159 [33, 1, 3] PUSH __str
-160 [34, 1, 38] POP __arg0
-161 [33, 1, 38] PUSH __arg0
-162 [12, 1, 8] CALL println
-163 [34, 1, 1] POP __null
-164 [14, 1, 39] RESPONSE __retval
-165 [33, 1, 39] PUSH __retval
-166 [15, 1, 27] JUMP __for0
-167 [-1, 31, 167] __endfor0:
-168 [1, 1, 3, 0, 0] MALLOC __str 0
-169 [33, 1, 3] PUSH __str
-170 [34, 1, 38] POP __arg0
-171 [33, 1, 38] PUSH __arg0
-172 [12, 1, 8] CALL println
-173 [34, 1, 1] POP __null
-174 [14, 1, 39] RESPONSE __retval
-175 [33, 1, 39] PUSH __retval
+046 [15, 1, 19] JUMP __end__printIntArray
+047 [-1, 20, 47] printIntArray:
+048 [35, 1, 21, 0, 0] STACKGET arr 0
+049 [1, 1, 3, 0, 1] MALLOC __str 1
+050 [0, 2, 1, 3, 0, 0, 0, '['] ASSIGN __str[0] '['
+051 [33, 1, 3] PUSH __str
+052 [34, 1, 22] POP __arg0
+053 [33, 1, 22] PUSH __arg0
+054 [12, 1, 2] CALL print
+055 [34, 1, 1] POP __null
+056 [14, 1, 23] RESPONSE __retval
+057 [33, 1, 23] PUSH __retval
+058 [33, 1, 21] PUSH arr
+059 [34, 1, 24] POP __array
+060 [32, 1, 4, 1, 24] SIZEOF __size __array
+061 [33, 1, 4] PUSH __size
+062 [33, 0, 0] PUSH 0
+063 [34, 1, 25] POP __rhs
+064 [34, 1, 26] POP __lhs
+065 [26, 1, 27, 1, 26, 1, 25] GT __res __lhs __rhs
+066 [33, 1, 27] PUSH __res
+067 [34, 1, 28] POP __cond
+068 [28, 1, 28, 0, 0] CMP __cond 0
+069 [18, 1, 29] JEQ __endif0
+070 [33, 1, 21] PUSH arr
+071 [33, 0, 0] PUSH 0
+072 [34, 1, 30] POP __offset
+073 [34, 1, 31] POP __pointer
+074 [33, 2, 1, 31, 1, 30] PUSH __pointer[__offset]
+075 [34, 1, 22] POP __arg0
+076 [33, 1, 22] PUSH __arg0
+077 [12, 1, 11] CALL printInt
+078 [34, 1, 1] POP __null
+079 [14, 1, 23] RESPONSE __retval
+080 [33, 1, 23] PUSH __retval
+081 [15, 1, 29] JUMP __endif0
+082 [-1, 29, 82] __endif0:
+083 [33, 0, 1] PUSH 1
+084 [34, 1, 25] POP __rhs
+085 [0, 1, 32, 1, 25] ASSIGN i __rhs
+086 [33, 1, 25] PUSH __rhs
+087 [15, 1, 33] JUMP __forcond1
+088 [-1, 34, 88] __for1:
+089 [33, 1, 32] PUSH i
+090 [34, 1, 25] POP __rhs
+091 [3, 1, 32, 1, 32, 0, 1] ADD i i 1
+092 [0, 1, 27, 1, 32] ASSIGN __res i
+093 [33, 1, 27] PUSH __res
+094 [-1, 33, 94] __forcond1:
+095 [33, 1, 32] PUSH i
+096 [33, 1, 21] PUSH arr
+097 [34, 1, 24] POP __array
+098 [32, 1, 4, 1, 24] SIZEOF __size __array
+099 [33, 1, 4] PUSH __size
+100 [34, 1, 25] POP __rhs
+101 [34, 1, 26] POP __lhs
+102 [24, 1, 27, 1, 26, 1, 25] LT __res __lhs __rhs
+103 [33, 1, 27] PUSH __res
+104 [34, 1, 28] POP __cond
+105 [28, 1, 28, 0, 0] CMP __cond 0
+106 [18, 1, 35] JEQ __endfor1
+107 [1, 1, 3, 0, 2] MALLOC __str 2
+108 [0, 2, 1, 3, 0, 0, 0, ','] ASSIGN __str[0] ','
+109 [0, 2, 1, 3, 0, 1, 0, ' '] ASSIGN __str[1] ' '
+110 [33, 1, 3] PUSH __str
+111 [34, 1, 22] POP __arg0
+112 [33, 1, 22] PUSH __arg0
+113 [12, 1, 2] CALL print
+114 [34, 1, 1] POP __null
+115 [14, 1, 23] RESPONSE __retval
+116 [33, 1, 23] PUSH __retval
+117 [33, 1, 21] PUSH arr
+118 [33, 1, 32] PUSH i
+119 [34, 1, 30] POP __offset
+120 [34, 1, 31] POP __pointer
+121 [33, 2, 1, 31, 1, 30] PUSH __pointer[__offset]
+122 [34, 1, 22] POP __arg0
+123 [33, 1, 22] PUSH __arg0
+124 [12, 1, 11] CALL printInt
+125 [34, 1, 1] POP __null
+126 [14, 1, 23] RESPONSE __retval
+127 [33, 1, 23] PUSH __retval
+128 [15, 1, 34] JUMP __for1
+129 [-1, 35, 129] __endfor1:
+130 [1, 1, 3, 0, 1] MALLOC __str 1
+131 [0, 2, 1, 3, 0, 0, 0, ']'] ASSIGN __str[0] ']'
+132 [33, 1, 3] PUSH __str
+133 [34, 1, 22] POP __arg0
+134 [33, 1, 22] PUSH __arg0
+135 [12, 1, 8] CALL println
+136 [34, 1, 1] POP __null
+137 [14, 1, 23] RESPONSE __retval
+138 [33, 1, 23] PUSH __retval
+139 [13, 0, 0] RETURN 0
+140 [-1, 19, 140] __end__printIntArray:
+141 [33, 0, 1] PUSH 1
+142 [33, 0, 2] PUSH 2
+143 [33, 0, 3] PUSH 3
+144 [34, 1, 36] POP __elem2
+145 [34, 1, 37] POP __elem1
+146 [34, 1, 38] POP __elem0
+147 [1, 1, 39, 0, 3] MALLOC __list 3
+148 [0, 2, 1, 39, 0, 0, 1, 38] ASSIGN __list[0] __elem0
+149 [0, 2, 1, 39, 0, 1, 1, 37] ASSIGN __list[1] __elem1
+150 [0, 2, 1, 39, 0, 2, 1, 36] ASSIGN __list[2] __elem2
+151 [33, 1, 39] PUSH __list
+152 [33, 0, 4] PUSH 4
+153 [33, 0, 5] PUSH 5
+154 [33, 0, 6] PUSH 6
+155 [33, 0, 7] PUSH 7
+156 [34, 1, 40] POP __elem3
+157 [34, 1, 36] POP __elem2
+158 [34, 1, 37] POP __elem1
+159 [34, 1, 38] POP __elem0
+160 [1, 1, 39, 0, 4] MALLOC __list 4
+161 [0, 2, 1, 39, 0, 0, 1, 38] ASSIGN __list[0] __elem0
+162 [0, 2, 1, 39, 0, 1, 1, 37] ASSIGN __list[1] __elem1
+163 [0, 2, 1, 39, 0, 2, 1, 36] ASSIGN __list[2] __elem2
+164 [0, 2, 1, 39, 0, 3, 1, 40] ASSIGN __list[3] __elem3
+165 [33, 1, 39] PUSH __list
+166 [33, 0, 8] PUSH 8
+167 [33, 0, 9] PUSH 9
+168 [34, 1, 37] POP __elem1
+169 [34, 1, 38] POP __elem0
+170 [1, 1, 39, 0, 2] MALLOC __list 2
+171 [0, 2, 1, 39, 0, 0, 1, 38] ASSIGN __list[0] __elem0
+172 [0, 2, 1, 39, 0, 1, 1, 37] ASSIGN __list[1] __elem1
+173 [33, 1, 39] PUSH __list
+174 [34, 1, 36] POP __elem2
+175 [34, 1, 37] POP __elem1
+176 [34, 1, 38] POP __elem0
+177 [1, 1, 39, 0, 3] MALLOC __list 3
+178 [0, 2, 1, 39, 0, 0, 1, 38] ASSIGN __list[0] __elem0
+179 [0, 2, 1, 39, 0, 1, 1, 37] ASSIGN __list[1] __elem1
+180 [0, 2, 1, 39, 0, 2, 1, 36] ASSIGN __list[2] __elem2
+181 [33, 1, 39] PUSH __list
+182 [34, 1, 25] POP __rhs
+183 [0, 1, 41, 1, 25] ASSIGN nums __rhs
+184 [33, 1, 25] PUSH __rhs
+185 [33, 0, 0] PUSH 0
+186 [34, 1, 25] POP __rhs
+187 [0, 1, 32, 1, 25] ASSIGN i __rhs
+188 [33, 1, 25] PUSH __rhs
+189 [15, 1, 42] JUMP __forcond2
+190 [-1, 43, 190] __for2:
+191 [33, 1, 32] PUSH i
+192 [34, 1, 25] POP __rhs
+193 [3, 1, 32, 1, 32, 0, 1] ADD i i 1
+194 [0, 1, 27, 1, 32] ASSIGN __res i
+195 [33, 1, 27] PUSH __res
+196 [-1, 42, 196] __forcond2:
+197 [33, 1, 32] PUSH i
+198 [33, 1, 41] PUSH nums
+199 [34, 1, 24] POP __array
+200 [32, 1, 4, 1, 24] SIZEOF __size __array
+201 [33, 1, 4] PUSH __size
+202 [34, 1, 25] POP __rhs
+203 [34, 1, 26] POP __lhs
+204 [24, 1, 27, 1, 26, 1, 25] LT __res __lhs __rhs
+205 [33, 1, 27] PUSH __res
+206 [34, 1, 28] POP __cond
+207 [28, 1, 28, 0, 0] CMP __cond 0
+208 [18, 1, 44] JEQ __endfor2
+209 [33, 1, 41] PUSH nums
+210 [33, 1, 32] PUSH i
+211 [34, 1, 30] POP __offset
+212 [34, 1, 31] POP __pointer
+213 [33, 2, 1, 31, 1, 30] PUSH __pointer[__offset]
+214 [34, 1, 22] POP __arg0
+215 [33, 1, 22] PUSH __arg0
+216 [12, 1, 20] CALL printIntArray
+217 [34, 1, 1] POP __null
+218 [14, 1, 23] RESPONSE __retval
+219 [33, 1, 23] PUSH __retval
+220 [15, 1, 43] JUMP __for2
+221 [-1, 44, 221] __endfor2:

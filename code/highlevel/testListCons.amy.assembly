@@ -148,29 +148,29 @@ __endOfLibrary:
                PUSH 5
             // Literal
                PUSH 6
+            // Literal
+               PUSH 7
+            POP __elem3
             POP __elem2
             POP __elem1
             POP __elem0
-            MALLOC __list 3
+            MALLOC __list 4
             ASSIGN __list[0] __elem0
             ASSIGN __list[1] __elem1
             ASSIGN __list[2] __elem2
+            ASSIGN __list[3] __elem3
             PUSH __list
          // Array Constructor
             // Elements
             // Literal
-               PUSH 7
-            // Literal
                PUSH 8
             // Literal
                PUSH 9
-            POP __elem2
             POP __elem1
             POP __elem0
-            MALLOC __list 3
+            MALLOC __list 2
             ASSIGN __list[0] __elem0
             ASSIGN __list[1] __elem1
-            ASSIGN __list[2] __elem2
             PUSH __list
          POP __elem2
          POP __elem1
@@ -211,8 +211,14 @@ __for0:
             // Identifier
                PUSH i
          // RHS
-            // Literal
-               PUSH 3
+            // Sizeof Operator
+               // RHS
+                  // Identifier
+                     PUSH nums
+               // Calculate array size
+               POP __array
+               SIZEOF __size __array
+               PUSH __size
          POP __rhs
          POP __lhs
          LT __res __lhs __rhs
@@ -249,8 +255,22 @@ __for0:
                   // Identifier
                      PUSH j
                // RHS
-                  // Literal
-                     PUSH 3
+                  // Sizeof Operator
+                     // RHS
+                        // Subscript
+                           // LHS
+                              // Identifier
+                                 PUSH nums
+                           // OFFSET
+                              // Identifier
+                                 PUSH i
+                           POP __offset
+                           POP __pointer
+                           PUSH __pointer[__offset]
+                     // Calculate array size
+                     POP __array
+                     SIZEOF __size __array
+                     PUSH __size
                POP __rhs
                POP __lhs
                LT __res __lhs __rhs
@@ -324,19 +344,6 @@ __for0:
    // End of For
    __endfor0:
 //------------------------------------------------------------------------
-// Function Call
-   // Arguments
-      // Literal
-         MALLOC __str 0
-         PUSH __str
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   CALL println
-   // Remove args
-   POP __null
-   RESPONSE __retval
-   PUSH __retval
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

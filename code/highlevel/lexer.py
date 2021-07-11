@@ -45,6 +45,7 @@ token_specification = [
     ('CONSTRUCTOR',r'constructor'),  
     ('NEW',      r'new'),  
     ('THIS',     r'this'),  
+    ('SIZEOF',   r'sizeof'),  
 # Built-in types
     ('INTTYPE',   r'int'),  
     ('FLOATTYPE', r'float'),  

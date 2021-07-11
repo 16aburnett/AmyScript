@@ -120,6 +120,179 @@ __endOfLibrary:
 //### COMPILED CODE ######################################################
 //========================================================================
 
+//========================================================================
+// Function Declaration - printIntArray void
+JUMP __end__printIntArray
+printIntArray:
+   // Parameters
+      // Param: arr
+      STACKGET arr 0
+   // Body
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 1
+               ASSIGN __str[0] '['
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL print
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+      //------------------------------------------------------------------
+      // If-Statement
+         // Condition
+            // Greater Than
+               // LHS
+                  // Sizeof Operator
+                     // RHS
+                        // Identifier
+                           PUSH arr
+                     // Calculate array size
+                     POP __array
+                     SIZEOF __size __array
+                     PUSH __size
+               // RHS
+                  // Literal
+                     PUSH 0
+               POP __rhs
+               POP __lhs
+               GT __res __lhs __rhs
+               PUSH __res
+            POP __cond
+            CMP __cond 0
+            JEQ __endif0
+         // Body
+            // Function Call
+               // Arguments
+                  // Subscript
+                     // LHS
+                        // Identifier
+                           PUSH arr
+                     // OFFSET
+                        // Literal
+                           PUSH 0
+                     POP __offset
+                     POP __pointer
+                     PUSH __pointer[__offset]
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               CALL printInt
+               // Remove args
+               POP __null
+               RESPONSE __retval
+               PUSH __retval
+         JUMP __endif0
+         // End of if
+         __endif0:
+      //------------------------------------------------------------------
+      //------------------------------------------------------------------
+      // For-Loop
+      // Init
+         // Assignment
+            // RHS
+               // Literal
+                  PUSH 1
+            POP __rhs
+            ASSIGN i __rhs
+            PUSH __rhs
+      JUMP __forcond1
+      __for1:
+         // Update
+            // Pre-Increment
+               // RHS
+                  // Identifier
+                     PUSH i
+               POP __rhs
+               ADD i i 1
+               ASSIGN __res i
+               PUSH __res
+         __forcond1:
+         // Condition
+            // Less Than
+               // LHS
+                  // Identifier
+                     PUSH i
+               // RHS
+                  // Sizeof Operator
+                     // RHS
+                        // Identifier
+                           PUSH arr
+                     // Calculate array size
+                     POP __array
+                     SIZEOF __size __array
+                     PUSH __size
+               POP __rhs
+               POP __lhs
+               LT __res __lhs __rhs
+               PUSH __res
+            POP __cond
+            CMP __cond 0
+            JEQ __endfor1
+         // Body
+            // Function Call
+               // Arguments
+                  // Literal
+                     MALLOC __str 2
+                     ASSIGN __str[0] ','
+                     ASSIGN __str[1] ' '
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               CALL print
+               // Remove args
+               POP __null
+               RESPONSE __retval
+               PUSH __retval
+            // Function Call
+               // Arguments
+                  // Subscript
+                     // LHS
+                        // Identifier
+                           PUSH arr
+                     // OFFSET
+                        // Identifier
+                           PUSH i
+                     POP __offset
+                     POP __pointer
+                     PUSH __pointer[__offset]
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               CALL printInt
+               // Remove args
+               POP __null
+               RESPONSE __retval
+               PUSH __retval
+         // Repeat
+         JUMP __for1
+         // End of For
+         __endfor1:
+      //------------------------------------------------------------------
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 1
+               ASSIGN __str[0] ']'
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL println
+         // Remove args
+         POP __null
+         RESPONSE __retval
+         PUSH __retval
+   RETURN 0
+__end__printIntArray:
+// End Function Declaration - printIntArray
+//========================================================================
+
 // Assignment
    // RHS
       // Array Constructor
@@ -148,29 +321,29 @@ __endOfLibrary:
                PUSH 5
             // Literal
                PUSH 6
+            // Literal
+               PUSH 7
+            POP __elem3
             POP __elem2
             POP __elem1
             POP __elem0
-            MALLOC __list 3
+            MALLOC __list 4
             ASSIGN __list[0] __elem0
             ASSIGN __list[1] __elem1
             ASSIGN __list[2] __elem2
+            ASSIGN __list[3] __elem3
             PUSH __list
          // Array Constructor
             // Elements
             // Literal
-               PUSH 7
-            // Literal
                PUSH 8
             // Literal
                PUSH 9
-            POP __elem2
             POP __elem1
             POP __elem0
-            MALLOC __list 3
+            MALLOC __list 2
             ASSIGN __list[0] __elem0
             ASSIGN __list[1] __elem1
-            ASSIGN __list[2] __elem2
             PUSH __list
          POP __elem2
          POP __elem1
@@ -193,8 +366,8 @@ __endOfLibrary:
       POP __rhs
       ASSIGN i __rhs
       PUSH __rhs
-JUMP __forcond0
-__for0:
+JUMP __forcond2
+__for2:
    // Update
       // Pre-Increment
          // RHS
@@ -204,139 +377,54 @@ __for0:
          ADD i i 1
          ASSIGN __res i
          PUSH __res
-   __forcond0:
+   __forcond2:
    // Condition
       // Less Than
          // LHS
             // Identifier
                PUSH i
          // RHS
-            // Literal
-               PUSH 3
+            // Sizeof Operator
+               // RHS
+                  // Identifier
+                     PUSH nums
+               // Calculate array size
+               POP __array
+               SIZEOF __size __array
+               PUSH __size
          POP __rhs
          POP __lhs
          LT __res __lhs __rhs
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endfor0
+      JEQ __endfor2
    // Body
-      //------------------------------------------------------------------
-      // For-Loop
-      // Init
-         // Assignment
-            // RHS
-               // Literal
-                  PUSH 0
-            POP __rhs
-            ASSIGN j __rhs
-            PUSH __rhs
-      JUMP __forcond1
-      __for1:
-         // Update
-            // Pre-Increment
-               // RHS
-                  // Identifier
-                     PUSH j
-               POP __rhs
-               ADD j j 1
-               ASSIGN __res j
-               PUSH __res
-         __forcond1:
-         // Condition
-            // Less Than
-               // LHS
-                  // Identifier
-                     PUSH j
-               // RHS
-                  // Literal
-                     PUSH 3
-               POP __rhs
-               POP __lhs
-               LT __res __lhs __rhs
-               PUSH __res
-            POP __cond
-            CMP __cond 0
-            JEQ __endfor1
-         // Body
-            // Function Call
-               // Arguments
-                  // Subscript
-                     // LHS
-                        // Subscript
-                           // LHS
-                              // Identifier
-                                 PUSH nums
-                           // OFFSET
-                              // Identifier
-                                 PUSH i
-                           POP __offset
-                           POP __pointer
-                           PUSH __pointer[__offset]
-                     // OFFSET
-                        // Identifier
-                           PUSH j
-                     POP __offset
-                     POP __pointer
-                     PUSH __pointer[__offset]
-                  POP __arg0
-               // Pushing args in reverse order
-               PUSH __arg0
-               CALL printInt
-               // Remove args
-               POP __null
-               RESPONSE __retval
-               PUSH __retval
-            // Function Call
-               // Arguments
-                  // Literal
-                     MALLOC __str 1
-                     ASSIGN __str[0] ' '
-                     PUSH __str
-                  POP __arg0
-               // Pushing args in reverse order
-               PUSH __arg0
-               CALL print
-               // Remove args
-               POP __null
-               RESPONSE __retval
-               PUSH __retval
-         // Repeat
-         JUMP __for1
-         // End of For
-         __endfor1:
-      //------------------------------------------------------------------
       // Function Call
          // Arguments
-            // Literal
-               MALLOC __str 0
-               PUSH __str
+            // Subscript
+               // LHS
+                  // Identifier
+                     PUSH nums
+               // OFFSET
+                  // Identifier
+                     PUSH i
+               POP __offset
+               POP __pointer
+               PUSH __pointer[__offset]
             POP __arg0
          // Pushing args in reverse order
          PUSH __arg0
-         CALL println
+         CALL printIntArray
          // Remove args
          POP __null
          RESPONSE __retval
          PUSH __retval
    // Repeat
-   JUMP __for0
+   JUMP __for2
    // End of For
-   __endfor0:
+   __endfor2:
 //------------------------------------------------------------------------
-// Function Call
-   // Arguments
-      // Literal
-         MALLOC __str 0
-         PUSH __str
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   CALL println
-   // Remove args
-   POP __null
-   RESPONSE __retval
-   PUSH __retval
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

@@ -33,8 +33,10 @@
                     </div>
                     <ul class="dashed">
                         <li><a href="#link_declaration">Array Declaration</a></li>
-                        <li><a href="#link_initialization">Array Initialization</a></li>
+                        <li><a href="#link_allocation">Array Allocation</a></li>
                         <li><a href="#link_accessing">Accessing Array Values</a></li>
+                        <li><a href="#link_sizeof">Sizeof Keyword (<span class="inlineCode">sizeof</span>)</a></li>
+                        <li><a href="#link_initialization">Array Initializer List Operator</a></li>
                         <li><a href="#link_multiArray">2D Arrays</a></li>
                     </ul>
                 </div>
@@ -84,32 +86,137 @@
                 </div>
 
                 <p>
-                    <strong>NOTE:</strong> If you declare the array without initializing it, the value stored in <span class="inlineCode">x</span> will be undefined.
-                    Make sure you initialize the array before trying to access/assign it's values
+                    <strong>NOTE:</strong> If you declare the array without allocating it, the value stored in <span class="inlineCode">x</span> will be undefined.
+                    Make sure you allocate the array before trying to access/assign it's values
                 </p>
 
                 <a href="#page_header"><p class="backToTop">back to top</p></a>
                 <hr />
 
-                <!-- INITIALIZATION -->
+                <!-- ALLOCATION -->
 
-                <h3 id="link_initialization">Array Initialization</h3>
+                <h3 id="link_allocation">Array Allocation</h3>
 
                 <p>
-                    Initializing an array allocates a given amount space in memory (on the heap).
-                    Once the array is allocated, it's address can be saved to an array variable for later use.
+                    Allocating an array tells the computer to reserve an amount of memory (on the heap) to store the array's values.
+                    Once the array is allocated, its address can be saved to a variable for later use.
                 </p>
 
                 <div class="codeBlock">
                     <div class="codeBlockHeader">
-                        <h3>Array Initialization Expression Syntax</h3>
+                        <h3>Array Allocation Expression Syntax</h3>
                     </div>
                     <pre class="code">new &#60;type-specifier&#62;[&#60;expression&#62;]<br/></pre>
                     <div class="codeBlockHeader">
-                        <h3>Array Initialization Example</h3>
+                        <h3>Array Allocation Example 1</h3>
                     </div>
                     <pre class="code">int[] myArray = new int[5];</pre>
                     <p>This creates an array that stores <span class="inlineCode">5</span> integers and saves the address of that array in the variable <span class="inlineCode">myArray</span>.</p>
+                </div>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- ACCESSING -->
+
+                <h3 id="link_accessing">Accessing Array Values</h3>
+
+                <p>
+                    The array variable stores the address of where all the array's values are stored,
+                    but how are the values accessed?
+                </p>
+
+                <p>
+                    Values can be accessed using the <strong>Subscript Operator</strong> (<span class="inlineCode">[]</span>). 
+                    The subscript operator requires an index value (<span class="inlineCode">int</span>) and can locate a specific element in the array.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Subscript Operator Syntax</h3>
+                    </div>
+                    <pre class="code">&#60;array-name&#62;[&#60;offset&#62;]<br/></pre>
+                    <p>
+                        The offset must be an integer (<span class="inlineCode">int</span>) 
+                        between 0 and the size of the array [0, <span class="inlineCode">sizeof</span> (array)-1]
+                    </p>
+                    <div class="codeBlockHeader">
+                        <h3>Subscript Operator Example</h3>
+                    </div>
+                    <pre class="code">int[] myArray = new int[5];
+myArray[0] = 1;</pre>
+                    <p>This creates an array and sets the first value of the array to <span class="inlineCode">1</span>.</p>
+                </div>
+                
+                <p>
+                    <strong>NOTE:</strong> It's very important to keep track of the size of the array because 
+                    if you try to access values that are outside the bounds of the array, 
+                    then you could overwrite values that might break the interpreter and crash your program. 
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- SIZEOF -->
+
+                <h3 id="link_sizeof">Sizeof Keyword (<span class="inlineCode">sizeof</span>)</h3>
+
+                <p>
+                    The <span class="inlineCode">sizeof</span> keyword returns the size of a given array. 
+                </p>
+
+                <p>
+                    The <span class="inlineCode">sizeof</span> keyword looks like a function call, however,
+                    it is its own structure. <span class="inlineCode">sizeof</span> takes only one parameter, 
+                    and that parameter can be any type as long as it is an array.
+                    <span class="inlineCode">sizeof</span> always returns an integer (<span class="inlineCode">int</span>) representing the size.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Sizeof Syntax</h3>
+                    </div>
+                    <pre class="code">sizeof (&#60;expression&#62;)</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Sizeof Example 1</h3>
+                    </div>
+                    <pre class="code">// creating an array with size 5
+int[] myArray = new int[5];
+myArray[0] = 12;
+myArray[1] = 4;
+myArray[2] = 18;
+myArray[3] = 42;
+myArray[4] = 7;
+
+// sizeof returns an integer 
+print ("size = ");
+printInt (sizeof (myArray));
+println ("");
+
+// sizeof is useful in loops
+print ("vals = ");
+for (int i = 0; i < sizeof (myArray); ++i)
+{
+    printInt (myArray[i]);
+    print (" ");
+}    
+println ("");
+
+// sizeof can get the size of arrays that are passed as parameters 
+// this allows the function to handle arrays of varying sizes 
+// the alternative would be to pass the size as a separate parameter 
+function void printSize (int[] arr)
+{
+    print ("size = ");
+    printInt (sizeof (arr));
+    println ("");
+}
+
+printSize (myArray);</pre>
+                    <p>Result</p>
+                    <pre class="code">size = 5
+vals = 12 4 18 42 7 
+size = 5</pre>
                 </div>
 
                 <a href="#page_header"><p class="backToTop">back to top</p></a>
@@ -146,6 +253,47 @@ myArray[0] = 1;</pre>
                     <strong>NOTE:</strong> It's very important to keep track of the size of the array because 
                     if you try to access values that are outside the bounds of the array, 
                     then you could overwrite values that might break the interpreter and crash your program. 
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- INITIALIZER -->
+
+                <h3 id="link_initialization">Array Initializer List Operator</h3>
+
+                <p>
+                    The initializer operator allocates an array and fills it with the values that you provide. 
+                    The size of the array becomes the number of values provided.
+                </p>
+
+                <p>
+                    Since arrays are homogeneous, all values in the initializer must be the same type.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Array Initializer Syntax</h3>
+                    </div>
+                    <pre class="code">[&#60;expression0&#62;, &#60;expression1&#62;, ..., &#60;expressionN&#62;]</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Array Initializer Example 1</h3>
+                    </div>
+                    <pre class="code">// creates an array with values 12, 7, 42, and 22
+int[] nums = [12, 7, 42, 22];
+for (int i = 0; i < sizeof (nums); ++i)
+{
+    printInt (nums[i]);
+    print (" ");
+}</pre>
+                    <p>
+                        Result:
+                    </p>
+                    <pre class="code">12 7 42 22 </pre>
+                </div>
+
+                <p>
+                    <strong>NOTE:</strong> Array initializer lists cannot be empty. 
                 </p>
 
                 <a href="#page_header"><p class="backToTop">back to top</p></a>
@@ -196,6 +344,27 @@ for (int i = 0; i < 5; ++i)
                     If you would like to work with 2D arrays, then you should learn about <a href="loops.html">Loops</a> 
                     because they can be massively helpful.
                 </p>
+
+                <p>
+                    Multi-Dimensional arrays can also be intialized using initializer lists. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Multi-Dimensional Arrays with Initializer Lists Example 1</h3>
+                    </div>
+                    <pre class="code">int[][] nums = [[1, 2, 3], [4, 5, 6, 7], [8, 9]];</pre>
+                    <p>
+                        Produces a 2D array with values:
+                    </p>
+                    <pre class="code">row0: 1 2 3
+row1: 4 5 6 7 
+row2: 8 9</pre>
+                    <p>
+                        Multi-Dimensional arrays can have subarrays of different sizes. 
+                        This is called a <strong>Jagged Array</strong>.
+                    </p>
+                </div>
 
                 <a href="#page_header"><p class="backToTop">back to top</p></a>
 

@@ -846,6 +846,24 @@ class SymbolTableVisitor (ASTVisitor):
                 print ()
                 self.wasSuccessful = False
                 return 
+    
+    def visitSizeofExpressionNode(self, node):
+        node.rhs.accept (self)
+        # ensure RHS is an array
+        if node.rhs.type.arrayDimensions == 0:
+            print (f"Semantic Error: Sizeof requires an array")
+            print (f"   Expected: <type>[]")
+            print (f"   But got:  {node.rhs.type}")
+            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   line:")
+            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      ",end="")
+            for i in range(node.columnNumber-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
+            return 
 
     def visitIntLiteralExpressionNode (self, node):
         pass

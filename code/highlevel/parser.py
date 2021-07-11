@@ -15,11 +15,12 @@ class Node:
 
 class Parser:
 
-    def __init__(self, tokens, doDebug=False):
+    def __init__(self, tokens, lines, doDebug=False):
         self.tokens = tokens
         self.currentToken = 0
         self.doDebug = doDebug
         self.level = 0
+        self.lines = lines
 
     # <start> -> { <codeunit> }
     def parse(self):
@@ -1030,7 +1031,7 @@ class Parser:
             token = self.tokens[self.currentToken]
             self.match ("factor", "IDENTIFIER")
             lhs = IdentifierExpressionNode (id, token, line, column)
-        # list creator operator  
+        # list constructor operator  
         # <factor> -> '[' [ [ <assignExpression> { COMMA <assignExpression> } ] ] ']'
         elif self.tokens[self.currentToken].type == "LBRACKET":
             line = self.tokens[self.currentToken].line
@@ -1038,7 +1039,7 @@ class Parser:
             self.match ("factor", "LBRACKET")
             items = []
             # optional items 
-            if self.tokens[self.currentToken].type != "RPAREN":
+            if self.tokens[self.currentToken].type != "RBRACKET":
                 items += [self.assignexpr ()]
                 # 0 or more additional items 
                 while self.tokens[self.currentToken].type == "COMMA":
@@ -1096,43 +1097,43 @@ class Parser:
                     self.match ("factor", "RBRACKET")
 
                 lhs = ArrayAllocatorExpressionNode (type, offsets, line, column)
-            # usertype array alloc or constructor call 
-            else:
 
-                type = TypeSpecifierNode (Type.USERTYPE, self.tokens[self.currentToken].lexeme, self.tokens[self.currentToken])
-                self.match ("factor", "IDENTIFIER")
-
-                # usertype array
-                if (self.tokens[self.currentToken].type == "LBRACKET"):
-                    self.match ("factor", "LBRACKET")
-                    offsets = [self.expression ()]
-                    type.arrayDimensions += 1
-                    self.match ("factor", "RBRACKET")
-
-                    while (self.tokens[self.currentToken].type == "LBRACKET"):
-                        self.match ("factor", "LBRACKET")
-                        offsets += [self.expression ()]
-                        type.arrayDimensions += 1
-                        self.match ("factor", "RBRACKET")
-
-                    lhs = ArrayAllocatorExpressionNode (type, offsets, line, column)
-                # constructor call 
-                elif (self.tokens[self.currentToken].type == "LPAREN"):
-                    self.match ("factor", "LPAREN")
-                    args = []
-                    # optional arguments 
-                    if self.tokens[self.currentToken].type != "RPAREN":
-                        args += [self.assignexpr ()]
-                        # 0 or more additional arguments 
-                        while self.tokens[self.currentToken].type == "COMMA":
-                            self.match ("factor", "COMMA")
-                            args += [self.assignexpr ()]
-                    self.match ("factor", "RPAREN")
-
-                    lhs = ConstructorCallExpressionNode (type, type.id, args, line, column)
-
-                else:
-                    self.error ("factor", "LBRACKET", "Expecting an array allocator or class constructor call")
+        # <factor> -> SIZEOF ( <expression> ) 
+        elif self.tokens[self.currentToken].type == "SIZEOF":
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
+            self.match ("factor", "SIZEOF")
+            self.match ("factor", "LPAREN")
+            type = TypeSpecifierNode (Type.INT, "int", None)
+            # ensure there is an expression
+            if self.tokens[self.currentToken].type == "RPAREN":
+                print (f"Parsing Error: Sizeof requires an expression")
+                print (f"   Located on line {line}: column {column}")
+                print (f"   line:")
+                print (f"      {self.lines[line-1][:-1]}")
+                print (f"      ",end="")
+                for i in range(column-1):
+                    print (" ", end="")
+                print ("^")
+                print ()
+                exit(1)
+            # assignexpr instead of expression because expressions could be tuples 
+            # tuples are not yet supported 
+            rhs = self.assignexpr ()
+            # ensure user didn't try to provide more than one expression
+            if self.tokens[self.currentToken].type == "COMMA":
+                print (f"Parsing Error: Sizeof only takes one array parameter")
+                print (f"   Located on line {line}: column {column}")
+                print (f"   line:")
+                print (f"      {self.lines[line-1][:-1]}")
+                print (f"      ",end="")
+                for i in range(column-1):
+                    print (" ", end="")
+                print ("^")
+                print ()
+                exit(1)
+            self.match ("factor", "RPAREN")
+            lhs = SizeofExpressionNode (type, rhs, line, column)
 
         else:
             lhs = self.literal ()

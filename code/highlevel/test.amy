@@ -1,25 +1,26 @@
 
-
-
-
+function void printIntArray (int[] arr)
+{
+    print ("[");
+    // fence post
+    if (sizeof(arr) > 0)
+    {
+        printInt(arr[0]);
+    }
+    for (int i = 1; i < sizeof(arr); ++i)
+    {
+        print (", ");
+        printInt (arr[i]);
+    }
+    println ("]");
+}
 
 int[][] nums = [
     [1, 2, 3], 
-    [4, 5, 6], 
-    [7, 8, 9]
+    [4, 5, 6, 7], 
+    [8, 9]
 ];
 
-for (int i = 0; i < 3; ++i)
-{
-    for (int j = 0; j < 3; ++j)
-    {
-        printInt (nums[i][j]);
-        print (" ");
-    }
-    println ("");
-}
-
-println ("");
-
-
+for (int i = 0; i < sizeof (nums); ++i)
+    printIntArray (nums[i]);
 

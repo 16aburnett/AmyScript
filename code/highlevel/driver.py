@@ -38,7 +38,7 @@ tokens = lexer.tokenize(statements)
 #=== PARSING =============================================================
 
 print ("Parsing...")
-parser = Parser(tokens, False)
+parser = Parser(tokens, lines, False)
 ast = parser.parse()
 
 #=== SEMANTIC ANALYSIS ===================================================
@@ -79,10 +79,6 @@ param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
 param0.type.arrayDimensions += 1
 printlnFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "println", None, [param0], None)
 symbolTableVisitor.table.insert (printlnFunc)
-
-# sizeof function for arrays
-sizeofFunc = FunctionNode (TypeSpecifierNode (Type.INT, "", None), "sizeof", None, [], None)
-symbolTableVisitor.table.insert (sizeofFunc)
 
 # Check AST
 # checks for 

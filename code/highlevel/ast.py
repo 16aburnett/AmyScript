@@ -735,6 +735,20 @@ class ConstructorCallExpressionNode (ExpressionNode):
         visitor.visitConstructorCallExpressionNode (self)
 
 # ========================================================================
+
+class SizeofExpressionNode (ExpressionNode):
+
+    def __init__(self, type, rhs, line, column):
+        self.type = type
+        self.rhs = rhs
+
+        self.lineNumber = line
+        self.columnNumber = column
+
+    def accept (self, visitor):
+        visitor.visitSizeofExpressionNode (self)
+
+# ========================================================================
 # value - int
 
 class IntLiteralExpressionNode (ExpressionNode):
