@@ -1097,6 +1097,44 @@ class Parser:
                     self.match ("factor", "RBRACKET")
 
                 lhs = ArrayAllocatorExpressionNode (type, offsets, line, column)
+            
+            # usertype array alloc or constructor call 
+            else:
+
+                type = TypeSpecifierNode (Type.USERTYPE, self.tokens[self.currentToken].lexeme, self.tokens[self.currentToken])
+                self.match ("factor", "IDENTIFIER")
+
+                # usertype array
+                if (self.tokens[self.currentToken].type == "LBRACKET"):
+                    self.match ("factor", "LBRACKET")
+                    offsets = [self.expression ()]
+                    type.arrayDimensions += 1
+                    self.match ("factor", "RBRACKET")
+
+                    while (self.tokens[self.currentToken].type == "LBRACKET"):
+                        self.match ("factor", "LBRACKET")
+                        offsets += [self.expression ()]
+                        type.arrayDimensions += 1
+                        self.match ("factor", "RBRACKET")
+
+                    lhs = ArrayAllocatorExpressionNode (type, offsets, line, column)
+                # constructor call 
+                elif (self.tokens[self.currentToken].type == "LPAREN"):
+                    self.match ("factor", "LPAREN")
+                    args = []
+                    # optional arguments 
+                    if self.tokens[self.currentToken].type != "RPAREN":
+                        args += [self.assignexpr ()]
+                        # 0 or more additional arguments 
+                        while self.tokens[self.currentToken].type == "COMMA":
+                            self.match ("factor", "COMMA")
+                            args += [self.assignexpr ()]
+                    self.match ("factor", "RPAREN")
+
+                    lhs = ConstructorCallExpressionNode (type, type.id, args, line, column)
+
+                else:
+                    self.error ("factor", "LBRACKET", "Expecting an array allocator or class constructor call")
 
         # <factor> -> SIZEOF ( <expression> ) 
         elif self.tokens[self.currentToken].type == "SIZEOF":

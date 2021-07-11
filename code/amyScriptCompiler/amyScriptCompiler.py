@@ -19,7 +19,7 @@ file = sys.stdin
 srcFilename = ""
 astFilename = "output.amy.ast"
 destFilename = "output.amy.assembly"
-libFilename = "AmyScriptLib.amy"
+libFilename = "AmyScriptLib.amy.assembly"
 if (len(sys.argv) == 2):
     srcFilename = sys.argv[1]
     file = open(srcFilename)
