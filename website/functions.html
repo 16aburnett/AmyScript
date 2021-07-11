@@ -27,7 +27,289 @@
             <!---------------------- CONTENT SECTION ---------------------->
                 <h2>AmyScript - Functions</h2>
 
+                <div class="section_links">
+                    <div class="section_links_header">
+                        <h3>Sections</h3>
+                    </div>
+                    <ul class="dashed">
+                        <li><a href="#link_declaration">Declaring Functions</a></li>
+                        <li><a href="#link_calling">Calling/Running Functions</a></li>
+                        <li><a href="#link_parameters">Passing Parameters to Functions</a></li>
+                        <li><a href="#link_return">Returning from Functions</a></li>
+                    </ul>
+                </div>
 
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Function Declaration Example 1</h3>
+                    </div>
+                    <pre class="code">function int add (int a, int b)
+{
+    return a + b; 
+}</pre>
+                </div>
+
+                <p>
+                    A function is a useful tool used to break up a program into reusable subprograms. 
+                    Similar to <a href="conditionals.html">If-Statements</a> and <a href="loops.html">Loops</a>, a function has a body of code
+                    that can be executed, however,
+                    a function's code can be executed whenever you <strong>Call
+                    the function</strong>.
+                </p>
+
+                <p>
+                    <strong>Calling a Function:</strong> Calling a function tells the computer to 
+                    run the code in the body of the function. 
+                </p>
+
+                <p>
+                    Functions are very useful because they act as their own contained program,
+                    meaning that any variables that you declare in the function's body will not 
+                    affect the code outside of the body. 
+                    Functions also accept <strong>Parameters</strong> (or input variables), 
+                    and they have a <strong>Return Value</strong>. 
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- DECLARATION -->
+
+                <h3 id="link_declaration">Declaring Functions</h3>
+
+                <p>
+                    Creating a function requires 4 main components: 
+                </p>
+
+
+                <ul class="dashed">
+                    <li>A return type</li>
+                    <li>The function's name</li>
+                    <li>A list of parameters (comma separated)</li>
+                    <li>A code body</li>
+                </ul>
+
+                <p>
+                    Below is the syntax for a function declaration in AmyScript.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Function Declaration Syntax</h3>
+                    </div>
+                    <pre class="code">// Without Parameters
+function &#60;return-type-specifier&#62; &#60;function-name&#62; ()
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}
+// With Parameters
+function &#60;return-type-specifier&#62; &#60;function-name&#62; (&#60;param0-type-specifier&#62; &#60;param0-name&#62;, &#60;param1-type-specifier&#62; &#60;param1-name&#62;, ... &#60;paramN-type-specifier&#62; &#60;paramN-name&#62;)
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+}</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Function Example</h3>
+                    </div>
+                    <pre class="code">// This function takes two parameters, a and b, and returns the larger
+function int max (int a, int b)
+{
+    if (a &#62;= b) 
+        return a;
+    else
+        return b;
+}</pre>
+                </div>
+
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- CALLING -->
+
+                <h3 id="link_calling">Calling Functions</h3>
+
+                <p>
+                    We now know how to create a function but how do we tell the computer to run the code in the function's body?
+                    With a <strong>function call</strong>! 
+                </p>
+
+                <p>
+                    A function call is a type of expression that allows you to tell the computer when to run a function
+                    and with what inputs (parameters).
+                </p>
+
+                <p>
+                    A function call is very simple, all you need is the name of the function followed by parentheses (<span class="inlineCode">()</span>).
+                    If a function requires parameters (inputs), then you can put them in between the parentheses separated by commas. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Function Call Syntax</h3>
+                    </div>
+                    <pre class="code">// Without Parameters
+&#60;function-name&#62; ()
+// With Parameters - separated by commas 
+&#60;function-name&#62; (&#60;expression0&#62;, &#60;expression1&#62;, ..., &#60;expressionN&#62;)
+</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Function Call Example</h3>
+                    </div>
+                    <pre class="code">// This function takes two parameters, a and b, and returns the larger
+function int max (int a, int b)
+{
+    if (a &#62;= b) 
+        return a;
+    else
+        return b;
+}
+// Calling the above function:
+int result = max (5, 7);
+printInt (result);
+println ("");
+</pre>
+                    <p>
+                        Result:
+                    </p>
+                    <pre class="code">7</pre>
+                </div>
+
+                <p>
+                    In fact, <span class="inlineCode">printInt</span> and <span class="inlineCode">println</span> are also functions.
+                    They are built-in functions that are a part of AmyScript's Standard Library used for outputting information.
+                </p>
+
+                <p>
+                    <span class="inlineCode">printInt</span> requires an int as a parameter and it prints the given integer to the console. 
+                </p>
+
+                <p>
+                    <span class="inlineCode">println</span> requires a char[] as a parameter and it prints the characters to the console followed by a newline character.
+                </p>
+
+                <p>
+                    Both of those functions don't return anything and have <a href="types.html">Void</a> as their return types.
+                </p>
+
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- PARAMETERS -->
+
+                <h3 id="link_parameters">Passing Parameters to Functions</h3>
+
+                <p>
+                    Let's go more in depth about parameters. 
+                </p>
+
+                <p>
+                    Parameters are variables that you can pass to a function for it to use in its body. 
+                </p>
+
+                <p>
+                    Let's revisit the <span class="inlineCode">max</span> function example.
+                </p>
+
+                <div class="codeBlock">
+                    <pre class="code">// This function takes two parameters, a and b, and returns the larger
+function int max (int a, int b)
+{
+    if (a &#62;= b) 
+        return a;
+    else
+        return b;
+}</pre>
+                </div>
+
+                <p>
+                    The max function takes two integer parameters as input and based on the code 
+                    in the function's body, it returns the value of the larger parameter. 
+                </p>
+
+                <div class="codeBlock">
+                    <pre class="code">max (5, 7)</pre>
+                </div>
+
+                <p>
+                    In the above function call, the 5 becomes the value of the first parameter (<span class="inlineCode">a</span>) and the 7 becomes the value of the second (<span class="inlineCode">b</span>).
+                </p>
+
+                <p>
+                    <strong>Be Careful!</strong>
+                    The number of arguments and their types in the function call <strong>MUST</strong> match the number of parameters and their types in the function declaration. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Invalid Parameters Example</h3>
+                    </div>
+                    <pre class="code">max (5)       // Error: Not enough parameters
+max (5, 7, 3) // Error: Too many Parameters
+max (10, 4.7) // Error: 4.7 (float) is not an int</pre>
+                </div>
+
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- RETURN -->
+
+                <h3 id="link_return">Returning from Functions</h3>
+
+                <p>
+                    As mentioned previously, functions can return a value when they are done executing. 
+                    The <strong>Return-Statement</strong> tells the computer what value to return. 
+                    The Return-Statement also exits the function similar to a <a href="conditionals.html">Break-Statement</a>. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Return Statement Syntax</h3>
+                    </div>
+                    <pre class="code">return &#60;expression&#62;;</pre>
+                </div>
+
+                <p>
+                    In our max function example, we use the return statement to return either a or b, whichever is larger.
+                </p>
+
+                <div class="codeBlock">
+                    <pre class="code">// This function takes two parameters, a and b, and returns the larger
+function int max (int a, int b)
+{
+    if (a &#62;= b) 
+        // function exits here with the value of a 
+        return a;
+    else
+        // function exits here with the value of b 
+        return b;
+}</pre>
+                </div>
+
+                <p>
+                    Since a function stops executing code when a return statement is reached, 
+                    we can actually get rid of the else statement in our example.
+                </p>
+
+                <div class="codeBlock">
+                    <pre class="code">// This function takes two parameters, a and b, and returns the larger
+function int max (int a, int b)
+{
+    if (a &#62;= b) 
+        // function exits here with the value of a 
+        return a;
+    // function exits here with the value of b 
+    return b;
+}</pre>
+                </div>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                
             <!-------------------- END CONTENT SECTION -------------------->
             </div>
         </div>    

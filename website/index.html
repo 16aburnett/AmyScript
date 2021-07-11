@@ -36,16 +36,16 @@
                     <div class="codeBlockHeader">
                         <h3>AmyScript</h3>
                     </div>
-                    <pre class="code"><span class="codeKeyword">function</span> int add <span class="codeOperator">(</span>int a, int b<span class="codeOperator">)</span>
-<span class="codeOperator">{</span>
-    <span class="codeKeyword">return</span> a <span class="codeOperator">+</span> b<span class="codeOperator">;</span>
-<span class="codeOperator">}</span>
+                    <pre class="code">function int add (int a, int b)
+{
+    return a + b;
+}
 
-int c <span class="codeOperator">=</span> add <span class="codeOperator">(</span>7<span class="codeOperator">,</span> 5<span class="codeOperator">);</span>
+int c = add (7, 5);
 
-print <span class="codeOperator">(</span><span class="codeStringLiteral">"7 + 5 = "</span><span class="codeOperator">);</span>
-printInt <span class="codeOperator">(</span>c<span class="codeOperator">);</span>
-println <span class="codeOperator">(</span><span class="codeStringLiteral">""</span><span class="codeOperator">);</span>
+print ("7 + 5 = ");
+printInt (c);
+println ("");
 </pre>
                 </div>
 
@@ -130,8 +130,23 @@ __end__add:
 7 + 5 = 12</pre>
                 </div>
 
-                <p>As you can see, it can be very tedious to write code in AmyAssembly, but the AmyScript code is significantly shorter.</p>
+                <p>
+                    As you can see, it can be very tedious to write code in AmyAssembly, but the AmyScript code is significantly shorter
+                    and a lot closer to languages like C, C++, Java, or Javascript.
+                </p>
 
+                
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- COMPILING -->
+
+                <h3 id="link_compiling">Compiling and Running</h3>
+
+                <p>
+                    The AmyScript Compiler and AmyAssembly Interpreter are on <a href="https://github.com/16aburnett/AmyScript">GitHub</a>.
+                    They are still in development, however, you can check out the README for more information on using the compiler and interpreter.
+                </p>
                 
 
                 <!-------------------- END CONTENT SECTION -------------------->

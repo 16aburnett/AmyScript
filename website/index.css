@@ -251,3 +251,30 @@ hr {
 .noBorder {
     border: none;
 }
+
+.section_links {
+    background-color: #eee;
+    border: solid 2px #222;
+    width: 400px;
+    /* float:left; */
+    margin: 20px;
+    margin-left: 0px;
+    /* margin-top: 10px; */
+}
+
+.section_links_header {
+    background-color: #7e77e7;
+    color: #eee;
+    margin: 0;
+}
+
+.section_links_header h3 {
+    margin: 0;
+    padding-left: 10px;
+}
+
+.section_links ul {
+    /* background-color: lime; */
+    padding: 20px;
+    margin: 0;
+}

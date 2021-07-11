@@ -1,5 +1,28 @@
-for (int i = 0; i < 10; --i)
+class Person
 {
-    printInt (i);
-    println ("");
+    public field char[] name;
+    public field int    age; 
+    constructor (char[] name, int age)
+    {
+        this.name = name;
+        this.age  = age;
+    }
+    public method int getAge ()
+    {
+        return this.age; 
+    }
 }
+
+Person person1 = new Person ("Amy", 22);
+Person person2 = new Person ("Tessa", 0);
+// Assigning fields
+person1.name = "Violet";
+person2.age = 31;
+
+println (person1.name);
+printInt (person1.age);
+println ("");
+
+println (person2.name);
+printInt (person2.getAge());
+println ("");

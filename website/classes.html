@@ -25,8 +25,368 @@
             </div>
             <div id="page_content">
             <!---------------------- CONTENT SECTION ---------------------->
+            
                 <h2>AmyScript - Classes</h2>
 
+                <div class="section_links">
+                    <div class="section_links_header">
+                        <h3>Sections</h3>
+                    </div>
+                    <ul class="dashed">
+                        <li><a href="#link_fields">Fields</a></li>
+                        <li><a href="#link_methods">Methods</a></li>
+                        <li><a href="#link_constructors">Constructors</a></li>
+                        <li><a href="#link_this">This Keyword</a></li>
+                        <li><a href="#link_instance">Using a Class</a></li>
+                        <li><a href="#link_dot">Accessing Members (Dot Operator)</a></li>
+                    </ul>
+                </div>
+
+                <p>
+                    Classes are structured containers for data. 
+                    Classes/objects are a part of <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">Object-Oriented Programming</a> and exist within C++ and Java. 
+                    AmyScript follows a similar syntax to C++ and Java for declaring and creating objects.
+                </p>
+
+                <p>
+                    Classes allow you to put together different data that can be refered to as one entity.
+                    For example, you might be writing a program that works with data about people.
+                    A person could have a name (char[]), an age (int), a driver's license number (int), 
+                    and an address (char[]). Classes allow you to put those variables together under one data type.
+                </p>
+
+                <p>
+                    Below is a class for our example:
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Class Example</h3>
+                    </div>
+                    <pre class="code">
+// Definition for an object/class
+// this describes the structure of the object
+class Person
+{
+    public field char[] name;
+    public field int    age; 
+    constructor (char[] name, int age)
+    {
+        this.name = name;
+        this.age  = age;
+    }
+    public method int getAge ()
+    {
+        return this.age; 
+    }
+}
+
+// Creating an actual instance of the object
+Person person = new Person("Amy", 22);</pre>
+                </div>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- FIELDS -->
+
+                <h3 id="link_fields">Fields</h3>
+
+                <p>
+                    A field is any variable that is stored in an object. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Field Syntax</h3>
+                    </div>
+                    <pre class="code">&#60;visibility&#62; field &#60;type-spec&#62; &#60;field-name&#62;;</pre>
+                </div>
+
+                <p>
+                    For our Person example, the fields would be the person's name and age.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Field Example</h3>
+                    </div>
+                    <pre class="code">public field char[] name;
+public field int age;</pre>
+                </div>
+
+                <p>
+                    <strong>***Visibility:</strong> Visibility is currently a work-in-progress (everything is treated as public). 
+                    The visibility could be <span class="inlineCode">public</span> or <span class="inlineCode">private</span>
+                    which simply determines if the field can be accessed from outside the class using the dot operator.
+                </p>
+
+                <p>
+                    <strong>NOTE:</strong> A field declaration must be in the body of a class. 
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- METHODS -->
+
+                <h3 id="link_methods">Methods</h3>
+
+                <p>
+                    A method is a function that operates directly on the data of a class.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Method Syntax</h3>
+                    </div>
+                    <pre class="code">&#60;visibility&#62; method &#60;return-type-spec&#62; &#60;method-name&#62; (&#60;param0&#62;, &#60;param1&#62;, ..., &#60;paramN&#62;)
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+    &#60;statement&#62;
+}
+                    </pre>
+                </div>
+
+                <p>
+                    For our Person example, we had a method called getAge that returns the person's age.
+                    Methods called on an object have access to the data of that object whereas normal functions require data to be passed as parameters.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Method Example</h3>
+                    </div>
+                    <pre class="code">public method int getAge ()
+{
+    return this.age; 
+}</pre>
+                </div>
+
+                <p>
+                    <strong>***Visibility:</strong> Visibility is currently a work-in-progress (everything is treated as public). 
+                    The visibility could be <span class="inlineCode">public</span> or <span class="inlineCode">private</span>
+                    which simply determines if the method can be accessed from outside the class using the dot operator.
+                </p>
+
+                <p>
+                    <strong>NOTE:</strong> A method declaration must be in the body of a class. 
+                </p>
+
+                <p>
+                    <strong>Overloading?</strong> Unfortunately AmyScript doesn't yet support function overloading which means 
+                    a class can't have multiple methods with the same names.
+                </p>
+
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- CONSTRUCTOR -->
+
+                <h3 id="link_constructors">Constructors</h3>
+
+                <p>
+                    A constructor is a function that returns the object associated with the class. 
+                    Any code that you put in the body of the constructor will be executed when 
+                    you create an object instance for that class. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Constructor Syntax</h3>
+                    </div>
+                    <pre class="code">constructor (&#60;param0&#62;, &#60;param1&#62;, ..., &#60;paramN&#62;)
+{
+    &#60;statement&#62;
+    &#60;statement&#62;
+    ...
+    &#60;statement&#62;
+}
+                    </pre>
+                </div>
+
+                <p>
+                    For our Person example, there is a constructor that takes a name and an age 
+                    and sets the object's name and age fields to the parameter's values.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Constructor Example</h3>
+                    </div>
+                    <pre class="code">constructor (char[] name, int age)
+{
+    this.name = name;
+    this.age = age;  
+}</pre>
+                </div>
+
+                <p>
+                    Constructors are always public so there is no need to specify public or private.
+                </p>
+
+                <p>
+                    Constructors do not need a name. The name of a constructor is the same as the class.
+                </p>
+
+                <p>
+                    Constructors also do not need a return statement. The return is implied and it returns the object. 
+                </p>
+
+                <p>
+                    <strong>NOTE:</strong> A constructor must be in the body of a class. 
+                </p>
+
+                <p>
+                    <strong>Overloading?</strong> Unfortunately AmyScript doesn't yet support function overloading which means 
+                    a class can only have one constructor. 
+                </p>
+
+
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- THIS -->
+
+                <h3 id="link_this">This Keyword</h3>
+
+                <p>
+                    The <span class="inlineCode">this</span> keyword is a variable that 
+                    refers to the object's instance that called the method it is used in.
+                </p>
+
+                <p>
+                    You can use the <span class="inlineCode">this</span> keyword when you want to refer to 
+                    the object's fields or other methods. If you try to access the fields or methods (within a method or constructor) without the <span class="inlineCode">this</span> keyword, then you will get an undefined variable error. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>This Keyword Example</h3>
+                    </div>
+                    <pre class="code">public method void myMethod ()
+{
+    this.name = "Amy";
+    this.age = 22;
+    age = 22; // Error: age is undefined 
+}</pre>
+                </div>
+                
+                <p>
+                    <strong>NOTE:</strong> The <span class="inlineCode">this</span> keyword can only be used within a class's method or constructor.
+                    The object's variable can be used outside of methods and constructors.
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- INSTANCE -->
+
+                <h3 id="link_instance">Using a Class</h3>
+
+                <p>
+                    We've scene how to create classes, but how do we use them to store data?
+                </p>
+
+                <p>
+                    To use a class, we need to create an <strong>instance</strong>. An instance is similar to an array where 
+                    the computer will allocate space in memory to store the object's values. 
+                    Below is the syntax for creating an instance of a class.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Creating an Instance Syntax</h3>
+                    </div>
+                    <pre class="code">&#60;class-name&#62; &#60;variable-name&#62; = new &#60;class-name&#62; (&#60;expression0&#62;, &#60;expression1&#62;, ..., &#60;expressionN&#62;);</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Creating an Instance Example</h3>
+                    </div>
+                    <pre class="code">Person person = new Person ("Amy", 22);</pre>
+                </div>
+
+                <p>
+                    The <span class="inlineCode">Person("Amy", 22)</span> part is a call to the <span class="inlineCode">Person</span> constructor from our above examples.
+                </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- DOT -->
+
+                <h3 id="link_dot">Accessing Members (Dot Operator)</h3>
+
+                <p>
+                    To access fields and methods of an object's instance, you need to use the <strong>Dot Operator</strong>.
+                </p>
+
+                <p>
+                    The dot operator requires two parts: The object instance variable and the field or method call to access.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Dot Operator Syntax</h3>
+                    </div>
+                    <pre class="code">
+// Accessing fields
+&#60;object-var-name&#62;.&#60;field-name&#62;
+// Accessing methods
+&#60;object-var-name&#62;.&#60;method-name&#62; (&#60;expression0&#62;, &#60;expression1&#62;, ..., &#60;expressionN&#62;);</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Dot Operator Example 1</h3>
+                    </div>
+                    <pre class="code">
+Person person = new Person ("Amy", 22);
+// Accessing fields
+person.name // returns "Amy"
+// Accessing methods
+person.getAge (); // returns 22</pre>
+                </div>
+
+                <p>
+                    Using the dot operator, you can assign or get the value of fields, 
+                    and you can run methods and get the result. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Dot Operator Example 2</h3>
+                    </div>
+                    <pre class="code">
+Person person1 = new Person ("Amy", 22);
+Person person2 = new Person ("Tessa", 0);
+
+// reassigning fields
+person1.name = "Violet";
+person2.age = 31;
+
+// accessing fields' values 
+println (person1.name);
+printInt (person1.age);
+println ("");
+
+// calling a method 
+println (person2.name);
+printInt (person2.getAge());
+println ("");</pre>
+                    <p>
+                        Result:
+                    </p>
+                    <pre class="code">
+Violet
+22
+Tessa
+31</pre>
+                </div>
+
+
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
 
             <!-------------------- END CONTENT SECTION -------------------->
             </div>

@@ -1,80 +1,204 @@
-00 [15, 1, 0] jump __endOfLibrary
-01 [0, 1, 1, 0, 0] assign __null 0
-02 [-1, 2, 2] print:
-03 [35, 1, 3, 0, 0] stackget __str 0
-04 [32, 1, 4, 1, 3] sizeof __size __str
-05 [0, 1, 5, 0, 0] assign __i 0
-06 [-1, 6, 6] __print__loop:
-07 [28, 1, 5, 1, 4] cmp __i __size
-08 [20, 1, 7] jge __print__endloop
-09 [8, 2, 1, 3, 1, 5] print __str[__i]
-10 [3, 1, 5, 1, 5, 0, 1] add __i __i 1
-11 [15, 1, 6] jump __print__loop
-12 [-1, 7, 12] __print__endloop:
-13 [13, 0, 0] return 0
-14 [-1, 8, 14] println:
-15 [35, 1, 3, 0, 0] stackget __str 0
-16 [32, 1, 4, 1, 3] sizeof __size __str
-17 [0, 1, 5, 0, 0] assign __i 0
-18 [-1, 9, 18] __println__loop:
-19 [28, 1, 5, 1, 4] cmp __i __size
-20 [20, 1, 10] jge __println__endloop
-21 [8, 2, 1, 3, 1, 5] print __str[__i]
-22 [3, 1, 5, 1, 5, 0, 1] add __i __i 1
-23 [15, 1, 9] jump __println__loop
-24 [-1, 10, 24] __println__endloop:
-25 [9] println
-26 [13, 0, 0] return 0
-27 [-1, 11, 27] printInt:
-28 [35, 1, 3, 0, 0] stackget __str 0
-29 [8, 1, 3] print __str
-30 [13, 0, 0] return 0
-31 [-1, 12, 31] printChar:
-32 [35, 1, 13, 0, 0] stackget __char 0
-33 [8, 1, 13] print __char
-34 [13, 0, 0] return 0
-35 [-1, 14, 35] input:
-36 [10, 1, 15] input __line
-37 [13, 1, 15] return __line
-38 [-1, 16, 38] intToString:
-39 [35, 1, 17, 0, 0] stackget __val 0
-40 [13, 0, 0] return 0
-41 [-1, 0, 41] __endOfLibrary:
-42 [33, 0, 0] PUSH 0
-43 [34, 1, 18] POP __rhs
-44 [0, 1, 19, 1, 18] ASSIGN i __rhs
-45 [33, 1, 18] PUSH __rhs
-46 [15, 1, 20] JUMP __forcond0
-47 [-1, 21, 47] __for0:
-48 [33, 1, 19] PUSH i
-49 [34, 1, 18] POP __rhs
-50 [4, 1, 19, 1, 19, 0, 1] SUBTRACT i i 1
-51 [0, 1, 22, 1, 19] ASSIGN __res i
-52 [33, 1, 22] PUSH __res
-53 [-1, 20, 53] __forcond0:
-54 [33, 1, 19] PUSH i
-55 [33, 0, 10] PUSH 10
-56 [34, 1, 18] POP __rhs
-57 [34, 1, 23] POP __lhs
-58 [24, 1, 22, 1, 23, 1, 18] LT __res __lhs __rhs
-59 [33, 1, 22] PUSH __res
-60 [34, 1, 24] POP __cond
-61 [28, 1, 24, 0, 0] CMP __cond 0
-62 [18, 1, 25] JEQ __endfor0
-63 [33, 1, 19] PUSH i
-64 [34, 1, 26] POP __arg0
-65 [33, 1, 26] PUSH __arg0
-66 [12, 1, 11] CALL printInt
-67 [34, 1, 1] POP __null
-68 [14, 1, 27] RESPONSE __retval
-69 [33, 1, 27] PUSH __retval
-70 [1, 1, 3, 0, 0] MALLOC __str 0
-71 [33, 1, 3] PUSH __str
-72 [34, 1, 26] POP __arg0
-73 [33, 1, 26] PUSH __arg0
-74 [12, 1, 8] CALL println
-75 [34, 1, 1] POP __null
-76 [14, 1, 27] RESPONSE __retval
-77 [33, 1, 27] PUSH __retval
-78 [15, 1, 21] JUMP __for0
-79 [-1, 25, 79] __endfor0:
+000 [15, 1, 0] jump __endOfLibrary
+001 [0, 1, 1, 0, 0] assign __null 0
+002 [-1, 2, 2] print:
+003 [35, 1, 3, 0, 0] stackget __str 0
+004 [32, 1, 4, 1, 3] sizeof __size __str
+005 [0, 1, 5, 0, 0] assign __i 0
+006 [-1, 6, 6] __print__loop:
+007 [28, 1, 5, 1, 4] cmp __i __size
+008 [20, 1, 7] jge __print__endloop
+009 [8, 2, 1, 3, 1, 5] print __str[__i]
+010 [3, 1, 5, 1, 5, 0, 1] add __i __i 1
+011 [15, 1, 6] jump __print__loop
+012 [-1, 7, 12] __print__endloop:
+013 [13, 0, 0] return 0
+014 [-1, 8, 14] println:
+015 [35, 1, 3, 0, 0] stackget __str 0
+016 [32, 1, 4, 1, 3] sizeof __size __str
+017 [0, 1, 5, 0, 0] assign __i 0
+018 [-1, 9, 18] __println__loop:
+019 [28, 1, 5, 1, 4] cmp __i __size
+020 [20, 1, 10] jge __println__endloop
+021 [8, 2, 1, 3, 1, 5] print __str[__i]
+022 [3, 1, 5, 1, 5, 0, 1] add __i __i 1
+023 [15, 1, 9] jump __println__loop
+024 [-1, 10, 24] __println__endloop:
+025 [9] println
+026 [13, 0, 0] return 0
+027 [-1, 11, 27] printInt:
+028 [35, 1, 3, 0, 0] stackget __str 0
+029 [8, 1, 3] print __str
+030 [13, 0, 0] return 0
+031 [-1, 12, 31] printChar:
+032 [35, 1, 13, 0, 0] stackget __char 0
+033 [8, 1, 13] print __char
+034 [13, 0, 0] return 0
+035 [-1, 14, 35] input:
+036 [10, 1, 15] input __line
+037 [13, 1, 15] return __line
+038 [-1, 16, 38] intToString:
+039 [35, 1, 17, 0, 0] stackget __val 0
+040 [13, 0, 0] return 0
+041 [-1, 0, 41] __endOfLibrary:
+042 [0, 1, 18, 0, 0] ASSIGN __field__Person__name 0
+043 [0, 1, 19, 0, 1] ASSIGN __field__Person__age 1
+044 [15, 1, 20] JUMP __endclass__Person
+045 [15, 1, 21] JUMP __endctor__Person
+046 [-1, 22, 46] Person:
+047 [1, 1, 23, 0, 2] MALLOC __this 2
+048 [35, 1, 24, 0, 0] STACKGET name 0
+049 [35, 1, 25, 0, 1] STACKGET age 1
+050 [33, 1, 24] PUSH name
+051 [33, 1, 23] PUSH __this
+052 [33, 1, 18] PUSH __field__Person__name
+053 [34, 1, 26] POP __child
+054 [34, 1, 27] POP __parent
+055 [34, 1, 28] POP __rhs
+056 [0, 2, 1, 27, 1, 26, 1, 28] ASSIGN __parent[__child] __rhs
+057 [33, 1, 28] PUSH __rhs
+058 [33, 1, 25] PUSH age
+059 [33, 1, 23] PUSH __this
+060 [33, 1, 19] PUSH __field__Person__age
+061 [34, 1, 26] POP __child
+062 [34, 1, 27] POP __parent
+063 [34, 1, 28] POP __rhs
+064 [0, 2, 1, 27, 1, 26, 1, 28] ASSIGN __parent[__child] __rhs
+065 [33, 1, 28] PUSH __rhs
+066 [13, 1, 23] RETURN __this
+067 [-1, 21, 67] __endctor__Person:
+068 [15, 1, 29] JUMP __endMethod__Person__getAge
+069 [-1, 30, 69] __method__Person__getAge:
+070 [35, 1, 23, 0, 0] STACKGET __this 0
+071 [33, 1, 23] PUSH __this
+072 [33, 1, 19] PUSH __field__Person__age
+073 [34, 1, 26] POP __child
+074 [34, 1, 27] POP __parent
+075 [33, 2, 1, 27, 1, 26] PUSH __parent[__child]
+076 [34, 1, 31] POP __rVal
+077 [13, 1, 31] RETURN __rVal
+078 [13, 0, 0] RETURN 0
+079 [-1, 29, 79] __endMethod__Person__getAge:
+080 [-1, 20, 80] __endclass__Person:
+081 [1, 1, 3, 0, 3] MALLOC __str 3
+082 [0, 2, 1, 3, 0, 0, 0, 'A'] ASSIGN __str[0] 'A'
+083 [0, 2, 1, 3, 0, 1, 0, 'm'] ASSIGN __str[1] 'm'
+084 [0, 2, 1, 3, 0, 2, 0, 'y'] ASSIGN __str[2] 'y'
+085 [33, 1, 3] PUSH __str
+086 [34, 1, 32] POP __arg0
+087 [33, 0, 22] PUSH 22
+088 [34, 1, 33] POP __arg1
+089 [33, 1, 33] PUSH __arg1
+090 [33, 1, 32] PUSH __arg0
+091 [12, 1, 22] CALL Person
+092 [34, 1, 1] POP __null
+093 [34, 1, 1] POP __null
+094 [14, 1, 34] RESPONSE __retval
+095 [33, 1, 34] PUSH __retval
+096 [34, 1, 28] POP __rhs
+097 [0, 1, 35, 1, 28] ASSIGN person1 __rhs
+098 [33, 1, 28] PUSH __rhs
+099 [1, 1, 3, 0, 5] MALLOC __str 5
+100 [0, 2, 1, 3, 0, 0, 0, 'T'] ASSIGN __str[0] 'T'
+101 [0, 2, 1, 3, 0, 1, 0, 'e'] ASSIGN __str[1] 'e'
+102 [0, 2, 1, 3, 0, 2, 0, 's'] ASSIGN __str[2] 's'
+103 [0, 2, 1, 3, 0, 3, 0, 's'] ASSIGN __str[3] 's'
+104 [0, 2, 1, 3, 0, 4, 0, 'a'] ASSIGN __str[4] 'a'
+105 [33, 1, 3] PUSH __str
+106 [34, 1, 32] POP __arg0
+107 [33, 0, 0] PUSH 0
+108 [34, 1, 33] POP __arg1
+109 [33, 1, 33] PUSH __arg1
+110 [33, 1, 32] PUSH __arg0
+111 [12, 1, 22] CALL Person
+112 [34, 1, 1] POP __null
+113 [34, 1, 1] POP __null
+114 [14, 1, 34] RESPONSE __retval
+115 [33, 1, 34] PUSH __retval
+116 [34, 1, 28] POP __rhs
+117 [0, 1, 36, 1, 28] ASSIGN person2 __rhs
+118 [33, 1, 28] PUSH __rhs
+119 [1, 1, 3, 0, 6] MALLOC __str 6
+120 [0, 2, 1, 3, 0, 0, 0, 'V'] ASSIGN __str[0] 'V'
+121 [0, 2, 1, 3, 0, 1, 0, 'i'] ASSIGN __str[1] 'i'
+122 [0, 2, 1, 3, 0, 2, 0, 'o'] ASSIGN __str[2] 'o'
+123 [0, 2, 1, 3, 0, 3, 0, 'l'] ASSIGN __str[3] 'l'
+124 [0, 2, 1, 3, 0, 4, 0, 'e'] ASSIGN __str[4] 'e'
+125 [0, 2, 1, 3, 0, 5, 0, 't'] ASSIGN __str[5] 't'
+126 [33, 1, 3] PUSH __str
+127 [33, 1, 35] PUSH person1
+128 [33, 1, 18] PUSH __field__Person__name
+129 [34, 1, 26] POP __child
+130 [34, 1, 27] POP __parent
+131 [34, 1, 28] POP __rhs
+132 [0, 2, 1, 27, 1, 26, 1, 28] ASSIGN __parent[__child] __rhs
+133 [33, 1, 28] PUSH __rhs
+134 [33, 0, 31] PUSH 31
+135 [33, 1, 36] PUSH person2
+136 [33, 1, 19] PUSH __field__Person__age
+137 [34, 1, 26] POP __child
+138 [34, 1, 27] POP __parent
+139 [34, 1, 28] POP __rhs
+140 [0, 2, 1, 27, 1, 26, 1, 28] ASSIGN __parent[__child] __rhs
+141 [33, 1, 28] PUSH __rhs
+142 [33, 1, 35] PUSH person1
+143 [33, 1, 18] PUSH __field__Person__name
+144 [34, 1, 26] POP __child
+145 [34, 1, 27] POP __parent
+146 [33, 2, 1, 27, 1, 26] PUSH __parent[__child]
+147 [34, 1, 32] POP __arg0
+148 [33, 1, 32] PUSH __arg0
+149 [12, 1, 8] CALL println
+150 [34, 1, 1] POP __null
+151 [14, 1, 34] RESPONSE __retval
+152 [33, 1, 34] PUSH __retval
+153 [33, 1, 35] PUSH person1
+154 [33, 1, 19] PUSH __field__Person__age
+155 [34, 1, 26] POP __child
+156 [34, 1, 27] POP __parent
+157 [33, 2, 1, 27, 1, 26] PUSH __parent[__child]
+158 [34, 1, 32] POP __arg0
+159 [33, 1, 32] PUSH __arg0
+160 [12, 1, 11] CALL printInt
+161 [34, 1, 1] POP __null
+162 [14, 1, 34] RESPONSE __retval
+163 [33, 1, 34] PUSH __retval
+164 [1, 1, 3, 0, 0] MALLOC __str 0
+165 [33, 1, 3] PUSH __str
+166 [34, 1, 32] POP __arg0
+167 [33, 1, 32] PUSH __arg0
+168 [12, 1, 8] CALL println
+169 [34, 1, 1] POP __null
+170 [14, 1, 34] RESPONSE __retval
+171 [33, 1, 34] PUSH __retval
+172 [33, 1, 36] PUSH person2
+173 [33, 1, 18] PUSH __field__Person__name
+174 [34, 1, 26] POP __child
+175 [34, 1, 27] POP __parent
+176 [33, 2, 1, 27, 1, 26] PUSH __parent[__child]
+177 [34, 1, 32] POP __arg0
+178 [33, 1, 32] PUSH __arg0
+179 [12, 1, 8] CALL println
+180 [34, 1, 1] POP __null
+181 [14, 1, 34] RESPONSE __retval
+182 [33, 1, 34] PUSH __retval
+183 [33, 1, 36] PUSH person2
+184 [34, 1, 37] POP __obj
+185 [33, 1, 37] PUSH __obj
+186 [12, 1, 30] CALL __method__Person__getAge
+187 [33, 1, 1] PUSH __null
+188 [14, 1, 34] RESPONSE __retval
+189 [33, 1, 34] PUSH __retval
+190 [34, 1, 32] POP __arg0
+191 [33, 1, 32] PUSH __arg0
+192 [12, 1, 11] CALL printInt
+193 [34, 1, 1] POP __null
+194 [14, 1, 34] RESPONSE __retval
+195 [33, 1, 34] PUSH __retval
+196 [1, 1, 3, 0, 0] MALLOC __str 0
+197 [33, 1, 3] PUSH __str
+198 [34, 1, 32] POP __arg0
+199 [33, 1, 32] PUSH __arg0
+200 [12, 1, 8] CALL println
+201 [34, 1, 1] POP __null
+202 [14, 1, 34] RESPONSE __retval
+203 [33, 1, 34] PUSH __retval
