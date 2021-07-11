@@ -493,7 +493,70 @@ class SymbolTableVisitor (ASTVisitor):
 
         node.function.accept (self)
 
-        # make sure lhs is a function
+        # search for function
+        decl = self.table.lookup (node.function.id)
+        # make sure the function declaration exists and its a function
+        if (decl == None or not isinstance (decl, FunctionNode)):
+            print (f"Semantic Error: '{node.function.id}' is not a function")
+            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   line:")
+            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      ",end="")
+            for i in range(node.columnNumber-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
+            return 
+
+        # save declaration with function call
+        node.decl = decl 
+
+        # ensure the correct number of parameters 
+        if (len(node.args) != len(decl.params)):
+            print (f"Semantic Error: Invalid number of parameters")
+            print (f"   Expected: {len(decl.params)}")
+            print (f"   But got:  {len(node.args)}")
+            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   line:")
+            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      ",end="")
+            for i in range(node.columnNumber-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
+            return 
+
+        # ensure each argument type matches the function's types
+        for i in range(len(node.args)):
+            # check for mismatched type
+            if (node.args[i].type.type != decl.params[i].type.type
+                or node.args[i].type.arrayDimensions != decl.params[i].type.arrayDimensions):
+                print (f"Semantic Error: Parameter types in function call do not match function declaration")
+                print (f"   Expected: {node.function.id}(", end="")
+                if len(decl.params) > 0:
+                    print (f"{decl.params[0].type}", end="")
+                for i in range(1, len(decl.params)):
+                    print (f", {decl.params[i].type}", end="")
+                print (")")
+
+                print (f"   But got:  {node.function.id}(", end="")
+                if len(node.args) > 0:
+                    print (f"{node.args[0].type}", end="")
+                for i in range(1, len(node.args)):
+                    print (f", {node.args[i].type}", end="")
+                print (")")
+                print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+                print (f"   line:")
+                print (f"      {self.lines[node.lineNumber-1][:-1]}")
+                print (f"      ",end="")
+                for i in range(node.columnNumber-1):
+                    print (" ", end="")
+                print ("^")
+                print ()
+                self.wasSuccessful = False
+                return 
 
         node.type = node.function.type 
 
@@ -613,6 +676,7 @@ class SymbolTableVisitor (ASTVisitor):
                     isMember = True
                     node.type = method.type
                     node.rhs.type = node.type
+                    node.methodDecl = method
                     break
         if not isMember:
             print (f"Semantic Error: '{rhsid}' is not a member of '{lhsdecl.id}'")
@@ -631,7 +695,51 @@ class SymbolTableVisitor (ASTVisitor):
         node.rhs.accept (self)
         self.checkDeclaration = True
 
-        # ** make sure argument types and number match 
+        # ensure the correct number of parameters 
+        if (len(node.args) != len(node.methodDecl.params)):
+            print (f"Semantic Error: Invalid number of parameters in method call")
+            print (f"   Expected: {len(node.methodDecl.params)}")
+            print (f"   But got:  {len(node.args)}")
+            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   line:")
+            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      ",end="")
+            for i in range(node.columnNumber-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
+            return 
+
+        # ensure each argument type matches the function's types
+        for i in range(len(node.args)):
+            # check for mismatched type
+            if (node.args[i].type.type != node.methodDecl.params[i].type.type
+                or node.args[i].type.arrayDimensions != node.methodDecl.params[i].type.arrayDimensions):
+                print (f"Semantic Error: Parameter types in method call do not match method declaration")
+                print (f"   Expected: {node.methodDecl.id}(", end="")
+                if len(node.methodDecl.params) > 0:
+                    print (f"{node.methodDecl.params[0].type}", end="")
+                for i in range(1, len(node.methodDecl.params)):
+                    print (f", {node.methodDecl.params[i].type}", end="")
+                print (")")
+
+                print (f"   But got:  {node.methodDecl.id}(", end="")
+                if len(node.args) > 0:
+                    print (f"{node.args[0].type}", end="")
+                for i in range(1, len(node.args)):
+                    print (f", {node.args[i].type}", end="")
+                print (")")
+                print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+                print (f"   line:")
+                print (f"      {self.lines[node.lineNumber-1][:-1]}")
+                print (f"      ",end="")
+                for i in range(node.columnNumber-1):
+                    print (" ", end="")
+                print ("^")
+                print ()
+                self.wasSuccessful = False
+                return 
 
     def visitThisExpressionNode (self, node):
         # ensure there is a containing class
@@ -678,14 +786,62 @@ class SymbolTableVisitor (ASTVisitor):
         node.type.accept (self)
         for d in node.dimensions:
             d.accept (self)
-            # ensure each expression is an int 
 
     def visitConstructorCallExpressionNode (self, node):
         node.type.accept (self)
 
+        # take the first constructor declaration
+        node.decl = self.typesTable.lookup (node.id).constructors[0]
+
         for a in node.args:
             # ensure arguments match 
             a.accept (self)
+
+        # ensure the correct number of parameters 
+        if (len(node.args) != len(node.decl.params)):
+            print (f"Semantic Error: Invalid number of parameters in constructor call")
+            print (f"   Expected: {len(node.decl.params)}")
+            print (f"   But got:  {len(node.args)}")
+            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   line:")
+            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      ",end="")
+            for i in range(node.columnNumber-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
+            return 
+
+        # ensure each argument type matches the function's types
+        for i in range(len(node.args)):
+            # check for mismatched type
+            if (node.args[i].type.type != node.decl.params[i].type.type
+                or node.args[i].type.arrayDimensions != node.decl.params[i].type.arrayDimensions):
+                print (f"Semantic Error: Parameter types in constructor call do not match constructor declaration")
+                print (f"   Expected: {node.id}(", end="")
+                if len(node.decl.params) > 0:
+                    print (f"{node.decl.params[0].type}", end="")
+                for i in range(1, len(node.decl.params)):
+                    print (f", {node.decl.params[i].type}", end="")
+                print (")")
+
+                print (f"   But got:  {node.id}(", end="")
+                if len(node.args) > 0:
+                    print (f"{node.args[0].type}", end="")
+                for i in range(1, len(node.args)):
+                    print (f", {node.args[i].type}", end="")
+                print (")")
+                print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+                print (f"   line:")
+                print (f"      {self.lines[node.lineNumber-1][:-1]}")
+                print (f"      ",end="")
+                for i in range(node.columnNumber-1):
+                    print (" ", end="")
+                print ("^")
+                print ()
+                self.wasSuccessful = False
+                return 
 
     def visitIntLiteralExpressionNode (self, node):
         pass

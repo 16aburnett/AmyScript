@@ -1129,7 +1129,7 @@ class Parser:
                             args += [self.assignexpr ()]
                     self.match ("factor", "RPAREN")
 
-                    lhs = ConstructorCallExpressionNode (type, args, line, column)
+                    lhs = ConstructorCallExpressionNode (type, type.id, args, line, column)
 
                 else:
                     self.error ("factor", "LBRACKET", "Expecting an array allocator or class constructor call")

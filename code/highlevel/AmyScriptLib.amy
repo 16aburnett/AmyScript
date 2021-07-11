@@ -60,7 +60,14 @@ __println__endloop:
 // Prints an int to the screen
 // void printInt (int intToPrint);
 printInt:
-    // grab string
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void printFloat (float floatToPrint);
+printFloat:
     stackget __str 0
     print __str
     return 0

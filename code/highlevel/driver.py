@@ -30,29 +30,56 @@ lines = file.readlines ()
 
 statements = "".join(lines)
 
-# tokenize the input 
+#=== TOKENIZATION ========================================================
+
 print ("Tokenizing...")
 tokens = lexer.tokenize(statements)
 
-# parse the syntax 
+#=== PARSING =============================================================
+
 print ("Parsing...")
 parser = Parser(tokens, False)
 ast = parser.parse()
 
-# Semantic Analysis Phase 1
+#=== SEMANTIC ANALYSIS ===================================================
+
 print ("Analyzing Semantics...")
 symbolTableVisitor = SymbolTableVisitor (lines)
-# add built-in functions/variables 
-inputFunc = FunctionNode (TypeSpecifierNode (Type.STRING, "", None), "input", None, [], None)
-printFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "print", None, [], None)
-printIntFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printInt", None, [], None)
-printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printChar", None, [], None)
-printlnFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "println", None, [], None)
+
+# Add built-in functions/variables 
+
+#  char[] input ();
+inputFunc = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None), "input", None, [], None)
+inputFunc.type.arrayDimensions += 1
 symbolTableVisitor.table.insert (inputFunc)
+
+#  void print (char[] str);
+param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
+param0.type.arrayDimensions += 1
+printFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "print", None, [param0], None)
 symbolTableVisitor.table.insert (printFunc)
+
+#  void printInt (int intToPrint);
+param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "intToPrint", None)
+printIntFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printInt", None, [param0], None)
 symbolTableVisitor.table.insert (printIntFunc)
+
+#  void printFloat (float floatToPrint);
+param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
+printFloatFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printFloat", None, [param0], None)
+symbolTableVisitor.table.insert (printFloatFunc)
+
+#  void printChar (char c);
+param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
+printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printChar", None, [param0], None)
 symbolTableVisitor.table.insert (printCharFunc)
+
+#  void println (char[] str);
+param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
+param0.type.arrayDimensions += 1
+printlnFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "println", None, [param0], None)
 symbolTableVisitor.table.insert (printlnFunc)
+
 # sizeof function for arrays
 sizeofFunc = FunctionNode (TypeSpecifierNode (Type.INT, "", None), "sizeof", None, [], None)
 symbolTableVisitor.table.insert (sizeofFunc)
@@ -78,7 +105,8 @@ astOutput = "".join(visitor.outputstrings)
 file = open(astFilename, "w")
 file.write (astOutput)
 
-# CODE GENERATION
+#=== CODE GENERATION =====================================================
+
 codeGenVisitor = CodeGenVisitor (lines, srcFilename, libFilename)
 # generate code
 ast.accept (codeGenVisitor)
@@ -88,3 +116,6 @@ file = open(destFilename, "w")
 file.write ("".join(codeGenVisitor.code))
 
 print ("Code written to file", destFilename)
+
+
+#=== END =================================================================

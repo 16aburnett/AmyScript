@@ -68,7 +68,14 @@ __println__endloop:
 // Prints an int to the screen
 // void printInt (int intToPrint);
 printInt:
-    // grab string
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void printFloat (float floatToPrint);
+printFloat:
     stackget __str 0
     print __str
     return 0
@@ -227,151 +234,14 @@ __endclass__Person:
          RESPONSE __retval
          PUSH __retval
    POP __rhs
-   ASSIGN person1 __rhs
+   ASSIGN person __rhs
    PUSH __rhs
-// Assignment
-   // RHS
-      // Constructor Call
-         // Arguments
-            // Literal
-               MALLOC __str 5
-               ASSIGN __str[0] 'T'
-               ASSIGN __str[1] 'e'
-               ASSIGN __str[2] 's'
-               ASSIGN __str[3] 's'
-               ASSIGN __str[4] 'a'
-               PUSH __str
-            POP __arg0
-            // Literal
-               PUSH 0
-            POP __arg1
-         // Pushing args in reverse order
-         PUSH __arg1
-         PUSH __arg0
-         CALL Person
-         // Remove args
-         POP __null
-         POP __null
-         RESPONSE __retval
-         PUSH __retval
-   POP __rhs
-   ASSIGN person2 __rhs
-   PUSH __rhs
-// Assignment
-   // RHS
-      // Literal
-         MALLOC __str 6
-         ASSIGN __str[0] 'V'
-         ASSIGN __str[1] 'i'
-         ASSIGN __str[2] 'o'
-         ASSIGN __str[3] 'l'
-         ASSIGN __str[4] 'e'
-         ASSIGN __str[5] 't'
-         PUSH __str
-   // LHS
-      // Member Accessor Assignment
-         // LHS
-            // Identifier
-               PUSH person1
-         // RHS
-            PUSH __field__Person__name
-         POP __child
-         POP __parent
-         POP __rhs
-         ASSIGN __parent[__child] __rhs
-   PUSH __rhs
-// Assignment
-   // RHS
-      // Literal
-         PUSH 31
-   // LHS
-      // Member Accessor Assignment
-         // LHS
-            // Identifier
-               PUSH person2
-         // RHS
-            PUSH __field__Person__age
-         POP __child
-         POP __parent
-         POP __rhs
-         ASSIGN __parent[__child] __rhs
-   PUSH __rhs
-// Function Call
-   // Arguments
-      // Member Accessor
-         // LHS
-            // Identifier
-               PUSH person1
-         // RHS
-            PUSH __field__Person__name
-         POP __child
-         POP __parent
-         PUSH __parent[__child]
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   CALL println
-   // Remove args
-   POP __null
-   RESPONSE __retval
-   PUSH __retval
-// Function Call
-   // Arguments
-      // Member Accessor
-         // LHS
-            // Identifier
-               PUSH person1
-         // RHS
-            PUSH __field__Person__age
-         POP __child
-         POP __parent
-         PUSH __parent[__child]
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   CALL printInt
-   // Remove args
-   POP __null
-   RESPONSE __retval
-   PUSH __retval
-// Function Call
-   // Arguments
-      // Literal
-         MALLOC __str 0
-         PUSH __str
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   CALL println
-   // Remove args
-   POP __null
-   RESPONSE __retval
-   PUSH __retval
-// Function Call
-   // Arguments
-      // Member Accessor
-         // LHS
-            // Identifier
-               PUSH person2
-         // RHS
-            PUSH __field__Person__name
-         POP __child
-         POP __parent
-         PUSH __parent[__child]
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   CALL println
-   // Remove args
-   POP __null
-   RESPONSE __retval
-   PUSH __retval
 // Function Call
    // Arguments
       // Method Call
          // LHS
             // Identifier
-               PUSH person2
+               PUSH person
          // RHS
          // Arguments
          POP __obj

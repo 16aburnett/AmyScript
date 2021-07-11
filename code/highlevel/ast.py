@@ -610,6 +610,7 @@ class FunctionCallExpressionNode (ExpressionNode):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.function = function
         self.args = args 
+        self.decl = None
 
         self.lineNumber = line
         self.columnNumber = column
@@ -665,6 +666,7 @@ class MethodAccessorExpressionNode (ExpressionNode):
         self.lhs = lhs
         self.rhs = rhs
         self.args = args
+        self.methodDecl = None
 
         self.lineNumber = line
         self.columnNumber = column
@@ -720,9 +722,11 @@ class ArrayAllocatorExpressionNode (ExpressionNode):
 
 class ConstructorCallExpressionNode (ExpressionNode):
 
-    def __init__(self, type, args, line, column):
+    def __init__(self, type, id, args, line, column):
         self.type = type
+        self.id = id
         self.args = args
+        self.decl = None
 
         self.lineNumber = line
         self.columnNumber = column
