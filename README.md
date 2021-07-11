@@ -14,7 +14,7 @@ to compile an AmyScript file, navigate to the highlevel directory which is where
 
 Run the following command to compile a file 
 ```
-$ python3 driver.py yourFile.amy
+$ python3 amyScriptCompiler.py yourFile.amy
 ```
 If your code successfully compiles, you will get a .assembly file including the compiled AmyAssembly. Check out the AmyAssembly if you want! It's pretty cool!
 
@@ -50,7 +50,7 @@ AmyAssembly is an interpreted language. You can write your code in a file and us
 This implementation is written in python 3.8 so make sure you use python 3.8 or higher to run the interpreter.
 Documentation coming soon. 
 ```
-$ python3 amy_lang.py yourFile.amy.assembly
+$ python3 amyAssemblyInterpreter.py yourFile.amy.assembly
 ```
 
 Sample AmyAssembly Program
