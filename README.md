@@ -1,20 +1,30 @@
 AmyScript
 ===========
 
-AmyScript is a high-level programming language. It is still currently in development and there is no current build for it. The expectation is that AmyScript is compiled to AmyAssembly which will then be interpreted. 
+AmyScript is a middle-to-high-level programming language. It is still currently in development and the compiler exists in code/highlevel. The expectation is that AmyScript is compiled to AmyAssembly which will then be interpreted. 
 
 Check out the documentation at https://16aburnett.github.io/AmyScript/website
 
 AmyAssembly is a low-level command-based programming language. 
 The language is similar to assembly with some differences like variable amounts of registers. 
 
+Compiling AmyScript to AmyAssembly
+==================================
+to compile an AmyScript file, navigate to the highlevel directory which is where the compiler (and built-in library code) is located. 
+
+Run the following command to compile a file 
+```
+$ python3 driver.py yourFile.amy
+```
+If your code successfully compiles, you will get a .assembly file including the compiled AmyAssembly. Check out the AmyAssembly if you want! It's pretty cool!
+
 Running An AmyAssembly Program
 ==============================
-AmyAssembly is an interpreted language. You can write your code in a file and use the below command to execute your code. 
+AmyAssembly is an interpreted language. You can write your code in a file and use the below command to execute it (or use the AmyAssembly generated from the AmyScript compiler). 
 This implementation is written in python 3.8 so make sure you use python 3.8 or higher to run the interpreter.
 Documentation coming soon. 
 ```
-$ python amy_lang.py yourFile.amy
+$ python3 amy_lang.py yourFile.amy.assembly
 ```
 
 Sample AmyAssembly Program
