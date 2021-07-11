@@ -1,3 +1,7 @@
+# amy assembly compiled 
 *.assemblyc
+# amy assembly intcode 
 *.assemblyi
+# abstract syntax tree files
+*.ast
 __pycache__/
