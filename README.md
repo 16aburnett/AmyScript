@@ -10,7 +10,7 @@ The language is similar to assembly with some differences like variable amounts 
 
 Compiling AmyScript to AmyAssembly
 ==================================
-to compile an AmyScript file, navigate to the highlevel directory which is where the compiler (and built-in library code) is located. 
+to compile an AmyScript file, navigate to the amyScriptCompiler directory which is where the compiler (and built-in library code) is located. 
 
 Run the following command to compile a file 
 ```
@@ -46,7 +46,10 @@ Hello, World!
 
 Running An AmyAssembly Program
 ==============================
-AmyAssembly is an interpreted language. You can write your code in a file and use the below command to execute it (or use the AmyAssembly generated from the AmyScript compiler). 
+AmyAssembly is an interpreted language. 
+
+First navigate to the amyAssemblyInterpreter directory. 
+You can write your code in a file and use the below command to execute it (or use the AmyAssembly generated from the AmyScript compiler). 
 This implementation is written in python 3.8 so make sure you use python 3.8 or higher to run the interpreter.
 Documentation coming soon. 
 ```
