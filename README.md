@@ -18,6 +18,32 @@ $ python3 driver.py yourFile.amy
 ```
 If your code successfully compiles, you will get a .assembly file including the compiled AmyAssembly. Check out the AmyAssembly if you want! It's pretty cool!
 
+AmyScript Example Program
+=========================
+
+AmyScript code:
+```
+function void printSubstring (char[] str, int start, int end)
+{
+    for (int i = start; i < end; ++i)
+    {
+        printChar (str[i]);
+    }
+}
+
+char[] msg = "Hello, World!";
+
+printSubstring (msg, 0, 5);
+printSubstring (msg, 5, 13);
+
+println ("");
+```
+Output:
+```
+Hello, World!
+```
+
+
 Running An AmyAssembly Program
 ==============================
 AmyAssembly is an interpreted language. You can write your code in a file and use the below command to execute it (or use the AmyAssembly generated from the AmyScript compiler). 
