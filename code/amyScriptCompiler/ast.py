@@ -17,7 +17,8 @@ class Type(Enum):
     STRING = 5
     VOID = 6
     USERTYPE = 7
-    UNKNOWN = 8
+    NULL = 8
+    UNKNOWN = 9
 
 class Security (Enum):
     PUBLIC = 1
@@ -824,5 +825,19 @@ class ListConstructorExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitListConstructorExpressionNode (self)
+
+# ========================================================================
+
+class NullExpressionNode (ExpressionNode):
+
+    def __init__(self, line, column):
+        self.type = TypeSpecifierNode (Type.NULL, "null", None)
+        self.value = 0
+
+        self.lineNumber = line
+        self.columnNumber = column
+
+    def accept (self, visitor):
+        visitor.visitNullExpressionNode (self)
 
 # ========================================================================

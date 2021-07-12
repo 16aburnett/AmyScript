@@ -190,6 +190,10 @@ class ASTVisitor (ABC):
     def visitListConstructorExpressionNode (self, node):
         pass
 
+    @abstractmethod
+    def visitNullExpressionNode (self, node):
+        pass
+
 # ========================================================================
 
 class PrintVisitor (ASTVisitor):
@@ -836,6 +840,10 @@ class PrintVisitor (ASTVisitor):
         self.level -= 1
 
         self.level -= 1
+
+    def visitNullExpressionNode (self, node):
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Null Literal: {node.type}\n"]
     
     def printSpaces (self, level):
         while level > 0:

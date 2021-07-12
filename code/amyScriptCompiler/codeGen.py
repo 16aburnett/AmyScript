@@ -1274,7 +1274,7 @@ class CodeGenVisitor (ASTVisitor):
         # remove arguments from stack
         self.printComment ("Remove args")
         for i in range(0, len(node.args)):
-            self.printCode (f"POP __null")
+            self.printCode (f"POP __void")
         
         # put function's return val on the stack
         self.printCode ("RESPONSE __retval")
@@ -1379,12 +1379,12 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode (f"CALL {methodName}")
 
         # remove parent object instance
-        self.printCode (f"PUSH __null")
+        self.printCode (f"PUSH __void")
 
         # remove arguments from stack
         self.printComment ("Remove args")
         for i in range(0, len(node.args)):
-            self.printCode (f"POP __null")
+            self.printCode (f"POP __void")
                 
         # put function's return val on the stack
         self.printCode ("RESPONSE __retval")
@@ -1453,7 +1453,7 @@ class CodeGenVisitor (ASTVisitor):
         # remove arguments from stack
         self.printComment ("Remove args")
         for i in range(0, len(node.args)):
-            self.printCode (f"POP __null")
+            self.printCode (f"POP __void")
         
         # put function's return val on the stack
         self.printCode ("RESPONSE __retval")
@@ -1538,6 +1538,13 @@ class CodeGenVisitor (ASTVisitor):
 
         self.indentation -= 1
         
+
+    def visitNullExpressionNode (self, node):
+        self.printComment ("Null Literal")
+        self.indentation += 1
+        self.printCode ("ASSIGN __null 0")
+        self.printCode ("PUSH __null")
+        self.indentation -= 1
 
 
 # ========================================================================

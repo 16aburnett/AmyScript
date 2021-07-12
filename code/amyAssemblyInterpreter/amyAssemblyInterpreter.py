@@ -8,6 +8,7 @@ import sys
 from lexer import *
 from memory import Heap
 from memory import printheap
+from memory import MEMORY_NULL
 
 ##########################################################################
 # Globals/Constants
@@ -287,6 +288,11 @@ def getMemAddress(stack, pmode, pointer, omode, offset) -> int:
     # grab pointer value
     address = getVariableValue(stack, pointer)
 
+    # make sure pointer is not null 
+    if (address == MEMORY_NULL):
+        print (f"Error: Cannot read from null address")
+        exit (1)
+
     # add offset
     if omode == MODE_STACK:
         address += getVariableValue(stack, offset)
@@ -314,6 +320,10 @@ def getNextValue(heap, stack, params, i, reject=[]):
             offset = getVariableValue(stack, offset)
         # heap address must be int
         if isinstance(address, int):
+            # make sure pointer is not null 
+            if (address == MEMORY_NULL):
+                print (f"Error: Cannot read from null address")
+                exit (1)
             return heap.memory[address+offset], i+5
         # float is invalid
         if isinstance(address, float):

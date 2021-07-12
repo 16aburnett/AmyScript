@@ -8,6 +8,8 @@ from __future__ import annotations # for using type hint of containing class nam
 
 ##########################################################################
 
+MEMORY_NULL = 0
+
 class BlockHeader:
     def __init__(self, prevBlock:BlockHeader, payloadSize:int, isAlloc:bool):
         self.prevBlock = prevBlock

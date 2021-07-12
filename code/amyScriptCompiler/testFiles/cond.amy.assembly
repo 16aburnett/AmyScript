@@ -177,7 +177,7 @@ __endOfLibrary:
                PUSH __arg0
                CALL printInt
                // Remove args
-               POP __null
+               POP __void
                RESPONSE __retval
                PUSH __retval
          JUMP __endif1
@@ -213,7 +213,7 @@ __endOfLibrary:
          PUSH __arg0
          CALL printInt
          // Remove args
-         POP __null
+         POP __void
          RESPONSE __retval
          PUSH __retval
       JUMP __endif0
@@ -263,7 +263,7 @@ __endOfLibrary:
          PUSH __arg0
          CALL println
          // Remove args
-         POP __null
+         POP __void
          RESPONSE __retval
          PUSH __retval
       JUMP __endif0
@@ -286,7 +286,7 @@ __endOfLibrary:
       PUSH __arg0
       CALL println
       // Remove args
-      POP __null
+      POP __void
       RESPONSE __retval
       PUSH __retval
    //---------------------------------------------------------------------
@@ -374,7 +374,7 @@ __endOfLibrary:
          PUSH __arg0
          CALL println
          // Remove args
-         POP __null
+         POP __void
          RESPONSE __retval
          PUSH __retval
    JUMP __endif2
@@ -405,7 +405,7 @@ __endOfLibrary:
    PUSH __arg0
    CALL println
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 //========================================================================

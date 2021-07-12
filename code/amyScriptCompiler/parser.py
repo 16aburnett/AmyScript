@@ -1186,6 +1186,7 @@ class Parser:
     #           -> FLOAT
     #           -> CHAR
     #           -> STRING
+    #           -> NULL
 
     def literal (self):
         self.enter ("literal")
@@ -1208,6 +1209,9 @@ class Parser:
             value = self.tokens[self.currentToken].value
             self.match ("literal", "STRING")
             node = StringLiteralExpressionNode (value)
+        elif self.tokens[self.currentToken].type == "NULL":
+            node = NullExpressionNode (self.tokens[self.currentToken].line, self.tokens[self.currentToken].column)
+            self.match ("literal", "NULL")
         # expected literal but didnt get one 
         else:
             self.error ("literal", "INT")

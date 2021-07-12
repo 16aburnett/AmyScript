@@ -245,8 +245,11 @@ class SymbolTableVisitor (ASTVisitor):
         node.type = node.lhs.type
 
         # ensure types work 
-        if (node.lhs.type.type != node.rhs.type.type \
-            or node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions):
+        isDiffType = node.lhs.type.type != node.rhs.type.type
+        isDiffDimensions = node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions
+        isArrayNullOp = node.lhs.type.arrayDimensions > 0 and node.rhs.type.type == Type.NULL
+        isObjectNullOp = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and node.rhs.type.type == Type.NULL
+        if (not isArrayNullOp and not isObjectNullOp and (isDiffType or isDiffDimensions)):
             print (f"Semantic Error: mismatching types in assign")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   {node.lhs.type} != {node.rhs.type}")
@@ -266,10 +269,14 @@ class SymbolTableVisitor (ASTVisitor):
         node.type = node.lhs.type
 
         # ensure types work
-        if (node.lhs.type.type != node.rhs.type.type
+        isLHSArray = node.lhs.type.arrayDimensions > 0
+        isRHSArray = node.rhs.type.arrayDimensions > 0
+        isLHSObject = node.lhs.type.type == Type.USERTYPE
+        isRHSObject = node.rhs.type.type == Type.USERTYPE
+        if (not isLHSArray and not isRHSArray and  not isLHSObject and not isRHSObject and (node.lhs.type.type != node.rhs.type.type
             or (node.lhs.type.type != Type.INT)
                 or node.lhs.type.arrayDimensions > 0
-                or node.rhs.type.arrayDimensions > 0):
+                or node.rhs.type.arrayDimensions > 0)):
             print (f"Semantic Error: mismatching types in ||")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   {node.lhs.type} != {node.rhs.type}")
@@ -289,10 +296,14 @@ class SymbolTableVisitor (ASTVisitor):
         node.type = node.lhs.type
 
         # ensure types work
-        if (node.lhs.type.type != node.rhs.type.type
+        isLHSArray = node.lhs.type.arrayDimensions > 0
+        isRHSArray = node.rhs.type.arrayDimensions > 0
+        isLHSObject = node.lhs.type.type == Type.USERTYPE
+        isRHSObject = node.rhs.type.type == Type.USERTYPE
+        if (not isLHSArray and not isRHSArray and not isLHSObject and not isRHSObject and (node.lhs.type.type != node.rhs.type.type
             or (node.lhs.type.type != Type.INT)
                 or node.lhs.type.arrayDimensions > 0
-                or node.rhs.type.arrayDimensions > 0):
+                or node.rhs.type.arrayDimensions > 0)):
             print (f"Semantic Error: mismatching types in &&")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   {node.lhs.type} != {node.rhs.type}")
@@ -312,11 +323,10 @@ class SymbolTableVisitor (ASTVisitor):
         node.type = node.lhs.type
 
         # ensure types work 
-        if (node.lhs.type.type != node.rhs.type.type
-            or (node.lhs.type.type != Type.INT
-                and node.lhs.type.type != Type.FLOAT)
-                or node.lhs.type.arrayDimensions > 0
-                or node.rhs.type.arrayDimensions > 0):
+        isArrayNullOp = node.lhs.type.arrayDimensions > 0 and node.rhs.type.type == Type.NULL
+        isObjectNullOp = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and node.rhs.type.type == Type.NULL
+        if (not isArrayNullOp and not isObjectNullOp and (node.lhs.type.type != node.rhs.type.type
+                or node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions)):
             print (f"Semantic Error: mismatching types in equality")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   {node.lhs.type} != {node.rhs.type}")
@@ -915,6 +925,9 @@ class SymbolTableVisitor (ASTVisitor):
                 self.wasSuccessful = False
                 return 
 
+
+    def visitNullExpressionNode (self, node):
+        pass
 
 
 # ========================================================================

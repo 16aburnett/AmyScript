@@ -39,6 +39,7 @@
                         <li><a href="#link_arrays">Arrays</a></li>
                         <li><a href="#link_strings">String Literals</a></li>
                         <li><a href="#link_objects">Objects</a></li>
+                        <li><a href="#link_null">Null (<span class="inlineCode">null</span>)</a></li>
                     </ul>
                 </div>
 
@@ -268,6 +269,70 @@ Person person = new Person("Amy", 22);</pre>
                 <p>
                     The <a href="classes.html">Classes</a> section describes objects in more detail.
                 </p>
+
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- NULL -->
+
+                <h3 id="link_null">Null (<span class="inlineCode">null</span>)</h3>
+
+                <p> 
+                    <span class="inlineCode">null</span> is another weird type. The <span class="inlineCode">null</span> keyword returns an invalid memory address and
+                    can be assigned to Arrays and Objects for security. <span class="inlineCode">null</span> can be used to denote 
+                    Arrays and Objects that are uninitialized/unallocated. 
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Null Example 1</h3>
+                    </div>
+                    <pre class="code">int[] arr = null;
+Person p = null;</pre>
+                </div>
+
+                <p> 
+                    You can check if an array/object is null using the equality operator (<span class="inlineCode">==</span> or <span class="inlineCode">!=</span>).
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Null Example 2</h3>
+                    </div>
+                    <pre class="code">int[] arr = null;
+arr == null; // returns true 
+                    </pre>
+                </div>
+
+                <p> 
+                    Arrays and Objects can also be evaluated as true or false whether it is null or not.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Null Example 3</h3>
+                    </div>
+                    <pre class="code">int[] a = new int[5];
+Person b = null; 
+
+// a will return 1 if it is allocated 
+// and 0 if it is null
+if (a)
+    println ("a is allocated");
+else
+    println ("a is null");
+
+if (b)
+    println ("b is allocated");
+else
+    println ("b is null");</pre>
+                        <p>
+                            Result:
+                        </p>
+                        <pre class="code">a is allocated
+b is null</pre>
+                </div>
+
 
                 <a href="#page_header"><p class="backToTop">back to top</p></a>
             <!-------------------- END CONTENT SECTION -------------------->

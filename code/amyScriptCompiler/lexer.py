@@ -46,6 +46,7 @@ token_specification = [
     ('NEW',      r'new'),  
     ('THIS',     r'this'),  
     ('SIZEOF',   r'sizeof'),  
+    ('NULL',     r'null'),  
 # Built-in types
     ('INTTYPE',   r'int'),  
     ('FLOATTYPE', r'float'),  
