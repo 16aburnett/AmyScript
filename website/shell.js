@@ -44,6 +44,7 @@ function loadSidebar (parentID, currentPage)
     createNavLink (navList, "Loops",        "loops.html", currentPage);
     createNavLink (navList, "Functions",    "functions.html", currentPage);
     createNavLink (navList, "Classes",      "classes.html", currentPage);
+    createNavLink (navList, "Examples",     "examples.html", currentPage);
     // add nav list to sidebar
     parent.appendChild (navList);
 

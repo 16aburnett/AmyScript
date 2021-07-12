@@ -1,0 +1,219 @@
+// LinkedList implementation in AmyScript!
+// Author: Amy Burnett
+//========================================================================
+
+class Node 
+{
+    public field int data;
+    public field Node next;
+    public field Node prev;
+
+    constructor (int data, Node prev, Node next)
+    {
+        this.data = data;
+        this.next = next;
+        this.prev = prev; 
+    }
+}
+
+//========================================================================
+
+class LinkedList 
+{
+    public field Node header;
+    public field int  size; 
+
+    constructor () 
+    {
+        this.header = new Node (0, null, null);
+        this.header.next = this.header;
+        this.header.prev = this.header; 
+        
+        this.size = 0;
+    }
+
+    public method void pushBack (int val)
+    {
+        Node tail = this.header.prev;
+        Node node = new Node (val, tail, this.header);
+        tail.next = node; 
+        this.header.prev = node; 
+
+        ++this.size;
+    }
+
+    public method void pushFront (int val)
+    {
+        Node head = this.header.next;
+        Node node = new Node (val, this.header, head);
+        head.prev = node; 
+        this.header.next = node; 
+
+        ++this.size;
+    }
+
+    public method int popBack ()
+    {
+        if (this.size <= 0)
+            return 0;
+        
+        Node tail = this.header.prev;
+        tail.prev.next = this.header;
+        this.header.prev = tail.prev; 
+
+        --this.size; 
+
+        return tail.data; 
+
+    }
+
+    public method int popFront ()
+    {
+        if (this.size <= 0)
+            return 0;
+
+        Node head = this.header.next;
+        head.next.prev = this.header;
+        this.header.next = head.next; 
+
+        --this.size; 
+
+        return head.data; 
+    }
+
+    public method Node begin ()
+    {
+        return this.header.next;
+    }
+
+    public method Node end ()
+    {
+        return this.header;
+    }
+
+    public method Node rbegin ()
+    {
+        return this.header.prev;
+    }
+
+    public method Node rend ()
+    {
+        return this.header;
+    }
+
+}
+
+//========================================================================
+
+function void printForwards (LinkedList list)
+{
+    print ("   Forwards: ");
+    for (Node iter = list.begin (); iter != list.end (); iter = iter.next)
+    {
+        printInt (iter.data);
+        print (" -> ");
+    }
+    println ("");
+}
+
+//========================================================================
+
+function void printBackwards (LinkedList list)
+{
+    print ("   Backwards: ");
+    for (Node iter = list.rbegin (); iter != list.rend (); iter = iter.prev)
+    {
+        printInt (iter.data);
+        print (" <- ");
+    }
+    println ("");
+}
+
+//========================================================================
+
+function void printRecursive (Node node, Node end)
+{
+    // base-case 
+    if (node == end)
+        return;
+    printInt (node.data);
+    print (" -> ");
+    // recursive step
+    printRecursive (node.next, end);
+}
+
+//========================================================================
+
+LinkedList list = new LinkedList ();
+
+list.pushBack (7);
+list.pushBack (42);
+list.pushBack (16);
+list.pushBack (3);
+list.pushFront (17);
+list.pushFront (8);
+list.popBack ();
+list.popFront ();
+
+printForwards (list);
+printBackwards (list);
+
+// pop front 
+println ("Pop Front");
+list.popFront ();
+
+printForwards (list);
+printBackwards (list);
+
+// pop back 
+println ("Pop Back");
+list.popBack ();
+
+printForwards (list);
+printBackwards (list);
+
+// pop front 
+println ("Pop Front");
+list.popFront ();
+
+printForwards (list);
+printBackwards (list);
+
+// pop front 
+println ("Pop Front");
+list.popFront ();
+
+printForwards (list);
+printBackwards (list);
+
+// pop front 
+println ("Pop Front");
+list.popFront ();
+
+printForwards (list);
+printBackwards (list);
+
+// push front 
+println ("Push Front 15");
+list.pushFront (15);
+
+printForwards (list);
+printBackwards (list);
+
+// push back  
+println ("Push Back 6");
+list.pushBack (6);
+
+printForwards (list);
+printBackwards (list);
+
+// push front
+println ("Push Front 47");
+list.pushFront (47);
+
+printForwards (list);
+printBackwards (list);
+
+print ("   Recursive Print: ");
+printRecursive (list.begin (), list.end ());
+println ("");

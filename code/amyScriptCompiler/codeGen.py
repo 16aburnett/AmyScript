@@ -1379,7 +1379,7 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode (f"CALL {methodName}")
 
         # remove parent object instance
-        self.printCode (f"PUSH __void")
+        self.printCode (f"POP __void")
 
         # remove arguments from stack
         self.printComment ("Remove args")

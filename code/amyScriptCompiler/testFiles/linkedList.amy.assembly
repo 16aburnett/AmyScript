@@ -1,0 +1,2255 @@
+// AmyAssembly compiled from AmyScript
+// Filename: testFiles/linkedList.amy
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+
+jump __endOfLibrary
+
+//========================================================================
+// Global Variables
+
+    assign __null 0
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__loop:
+    // cond
+    cmp __i __size
+    jge __print__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__loop
+__print__endloop:
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__loop:
+    // cond
+    cmp __i __size
+    jge __println__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__loop
+__println__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void printInt (int intToPrint);
+printInt:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void printFloat (float floatToPrint);
+printFloat:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void printChar (char charToPrint);
+printChar:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// converts an integer to a string
+// char[] intToString (int val);
+intToString:
+    stackget __val 0
+
+    return 0
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//========================================================================
+// Class Declaration - Node
+   //---------------------------------------------------------------------
+   // Field - data
+   ASSIGN __field__Node__data 0
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - next
+   ASSIGN __field__Node__next 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - prev
+   ASSIGN __field__Node__prev 2
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass__Node
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Node Node
+   JUMP __endctor__Node
+   Node:
+      // Creating Class Instance
+         MALLOC __this 3
+      // Parameters
+         // Param: data
+         STACKGET data 0
+         // Param: prev
+         STACKGET prev 1
+         // Param: next
+         STACKGET next 2
+      // Body
+         // Assignment
+            // RHS
+               // Identifier
+                  PUSH data
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__Node__data
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Identifier
+                  PUSH next
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__Node__next
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Identifier
+                  PUSH prev
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__Node__prev
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+      RETURN __this
+   __endctor__Node:
+   // End Constructor Declaration - Node
+   //---------------------------------------------------------------------
+
+__endclass__Node:
+// End Class Declaration - Node
+//========================================================================
+
+//========================================================================
+// Class Declaration - LinkedList
+   //---------------------------------------------------------------------
+   // Field - header
+   ASSIGN __field__LinkedList__header 0
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - size
+   ASSIGN __field__LinkedList__size 1
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass__LinkedList
+   //---------------------------------------------------------------------
+   // Constructor Declaration - LinkedList LinkedList
+   JUMP __endctor__LinkedList
+   LinkedList:
+      // Creating Class Instance
+         MALLOC __this 2
+      // Parameters
+      // Body
+         // Assignment
+            // RHS
+               // Constructor Call
+                  // Arguments
+                     // Literal
+                        PUSH 0
+                     // Null Literal
+                        ASSIGN __null 0
+                        PUSH __null
+                     // Null Literal
+                        ASSIGN __null 0
+                        PUSH __null
+                     POP __arg2
+                     POP __arg1
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg2
+                  PUSH __arg1
+                  PUSH __arg0
+                  CALL Node
+                  // Remove args
+                  POP __void
+                  POP __void
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__header
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__header
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__next
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__header
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__prev
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Literal
+                  PUSH 0
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__size
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+      RETURN __this
+   __endctor__LinkedList:
+   // End Constructor Declaration - LinkedList
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __endMethod__LinkedList__pushBack
+   __method__LinkedList__pushBack:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+         // Param: val
+         STACKGET val 1
+      // Body
+         // Assignment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__prev
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            POP __rhs
+            ASSIGN tail __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Constructor Call
+                  // Arguments
+                     // Identifier
+                        PUSH val
+                     // Identifier
+                        PUSH tail
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                     POP __arg2
+                     POP __arg1
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg2
+                  PUSH __arg1
+                  PUSH __arg0
+                  CALL Node
+                  // Remove args
+                  POP __void
+                  POP __void
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+            POP __rhs
+            ASSIGN node __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Identifier
+                  PUSH node
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // Identifier
+                        PUSH tail
+                  // RHS
+                     PUSH __field__Node__next
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Identifier
+                  PUSH node
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__prev
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Pre-Increment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__size
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            POP __rhs
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__size
+                  POP __child
+                  POP __parent
+                  ADD __parent[__child] __parent[__child] 1
+                  ASSIGN __res __parent[__child]
+            PUSH __res
+      RETURN 0
+   __endMethod__LinkedList__pushBack:
+   // End Method Declaration - __method__LinkedList__pushBack
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __endMethod__LinkedList__pushFront
+   __method__LinkedList__pushFront:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+         // Param: val
+         STACKGET val 1
+      // Body
+         // Assignment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__next
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            POP __rhs
+            ASSIGN head __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Constructor Call
+                  // Arguments
+                     // Identifier
+                        PUSH val
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                     // Identifier
+                        PUSH head
+                     POP __arg2
+                     POP __arg1
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg2
+                  PUSH __arg1
+                  PUSH __arg0
+                  CALL Node
+                  // Remove args
+                  POP __void
+                  POP __void
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+            POP __rhs
+            ASSIGN node __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Identifier
+                  PUSH node
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // Identifier
+                        PUSH head
+                  // RHS
+                     PUSH __field__Node__prev
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Identifier
+                  PUSH node
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__next
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Pre-Increment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__size
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            POP __rhs
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__size
+                  POP __child
+                  POP __parent
+                  ADD __parent[__child] __parent[__child] 1
+                  ASSIGN __res __parent[__child]
+            PUSH __res
+      RETURN 0
+   __endMethod__LinkedList__pushFront:
+   // End Method Declaration - __method__LinkedList__pushFront
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __endMethod__LinkedList__popBack
+   __method__LinkedList__popBack:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Less Than or Equal to
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__size
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     // Literal
+                        PUSH 0
+                  POP __rhs
+                  POP __lhs
+                  LE __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif0
+            // Body
+               // Return
+                  // Literal
+                     PUSH 0
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif0
+            // End of if
+            __endif0:
+         //---------------------------------------------------------------
+         // Assignment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__prev
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            POP __rhs
+            ASSIGN tail __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__header
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // Identifier
+                              PUSH tail
+                        // RHS
+                           PUSH __field__Node__prev
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__next
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // Identifier
+                        PUSH tail
+                  // RHS
+                     PUSH __field__Node__prev
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__prev
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Pre-Decrement
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__size
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            POP __rhs
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__size
+                  POP __child
+                  POP __parent
+                  SUBTRACT __parent[__child] __parent[__child] 1
+                  ASSIGN __res __parent[__child]
+            PUSH __res
+         // Return
+            // Member Accessor
+               // LHS
+                  // Identifier
+                     PUSH tail
+               // RHS
+                  PUSH __field__Node__data
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+            POP __rVal
+            RETURN __rVal
+      RETURN 0
+   __endMethod__LinkedList__popBack:
+   // End Method Declaration - __method__LinkedList__popBack
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __endMethod__LinkedList__popFront
+   __method__LinkedList__popFront:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Less Than or Equal to
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__size
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     // Literal
+                        PUSH 0
+                  POP __rhs
+                  POP __lhs
+                  LE __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif1
+            // Body
+               // Return
+                  // Literal
+                     PUSH 0
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif1
+            // End of if
+            __endif1:
+         //---------------------------------------------------------------
+         // Assignment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__next
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            POP __rhs
+            ASSIGN head __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__header
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // Identifier
+                              PUSH head
+                        // RHS
+                           PUSH __field__Node__next
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__prev
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // Identifier
+                        PUSH head
+                  // RHS
+                     PUSH __field__Node__next
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field__LinkedList__header
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     PUSH __field__Node__next
+                  POP __child
+                  POP __parent
+                  POP __rhs
+                  ASSIGN __parent[__child] __rhs
+            PUSH __rhs
+         // Pre-Decrement
+            // RHS
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__size
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+            POP __rhs
+            // LHS
+               // Member Accessor Assignment
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field__LinkedList__size
+                  POP __child
+                  POP __parent
+                  SUBTRACT __parent[__child] __parent[__child] 1
+                  ASSIGN __res __parent[__child]
+            PUSH __res
+         // Return
+            // Member Accessor
+               // LHS
+                  // Identifier
+                     PUSH head
+               // RHS
+                  PUSH __field__Node__data
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+            POP __rVal
+            RETURN __rVal
+      RETURN 0
+   __endMethod__LinkedList__popFront:
+   // End Method Declaration - __method__LinkedList__popFront
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __endMethod__LinkedList__begin
+   __method__LinkedList__begin:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         // Return
+            // Member Accessor
+               // LHS
+                  // Member Accessor
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field__LinkedList__header
+                     POP __child
+                     POP __parent
+                     PUSH __parent[__child]
+               // RHS
+                  PUSH __field__Node__next
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+            POP __rVal
+            RETURN __rVal
+      RETURN 0
+   __endMethod__LinkedList__begin:
+   // End Method Declaration - __method__LinkedList__begin
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __endMethod__LinkedList__end
+   __method__LinkedList__end:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         // Return
+            // Member Accessor
+               // LHS
+                  // This keyword
+                     PUSH __this
+               // RHS
+                  PUSH __field__LinkedList__header
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+            POP __rVal
+            RETURN __rVal
+      RETURN 0
+   __endMethod__LinkedList__end:
+   // End Method Declaration - __method__LinkedList__end
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __endMethod__LinkedList__rbegin
+   __method__LinkedList__rbegin:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         // Return
+            // Member Accessor
+               // LHS
+                  // Member Accessor
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field__LinkedList__header
+                     POP __child
+                     POP __parent
+                     PUSH __parent[__child]
+               // RHS
+                  PUSH __field__Node__prev
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+            POP __rVal
+            RETURN __rVal
+      RETURN 0
+   __endMethod__LinkedList__rbegin:
+   // End Method Declaration - __method__LinkedList__rbegin
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __endMethod__LinkedList__rend
+   __method__LinkedList__rend:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         // Return
+            // Member Accessor
+               // LHS
+                  // This keyword
+                     PUSH __this
+               // RHS
+                  PUSH __field__LinkedList__header
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+            POP __rVal
+            RETURN __rVal
+      RETURN 0
+   __endMethod__LinkedList__rend:
+   // End Method Declaration - __method__LinkedList__rend
+   //---------------------------------------------------------------------
+
+__endclass__LinkedList:
+// End Class Declaration - LinkedList
+//========================================================================
+
+//========================================================================
+// Function Declaration - printForwards void
+JUMP __end__printForwards
+printForwards:
+   // Parameters
+      // Param: list
+      STACKGET list 0
+   // Body
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 13
+               ASSIGN __str[0] ' '
+               ASSIGN __str[1] ' '
+               ASSIGN __str[2] ' '
+               ASSIGN __str[3] 'F'
+               ASSIGN __str[4] 'o'
+               ASSIGN __str[5] 'r'
+               ASSIGN __str[6] 'w'
+               ASSIGN __str[7] 'a'
+               ASSIGN __str[8] 'r'
+               ASSIGN __str[9] 'd'
+               ASSIGN __str[10] 's'
+               ASSIGN __str[11] ':'
+               ASSIGN __str[12] ' '
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL print
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      //------------------------------------------------------------------
+      // For-Loop
+      // Init
+         // Assignment
+            // RHS
+               // Method Call
+                  // LHS
+                     // Identifier
+                        PUSH list
+                  // RHS
+                  // Arguments
+                  POP __obj
+                  // Pushing args in reverse order
+                  PUSH __obj
+                  CALL __method__LinkedList__begin
+                  POP __void
+                  // Remove args
+                  RESPONSE __retval
+                  PUSH __retval
+            POP __rhs
+            ASSIGN iter __rhs
+            PUSH __rhs
+      JUMP __forcond2
+      __for2:
+         // Update
+            // Assignment
+               // RHS
+                  // Member Accessor
+                     // LHS
+                        // Identifier
+                           PUSH iter
+                     // RHS
+                        PUSH __field__Node__next
+                     POP __child
+                     POP __parent
+                     PUSH __parent[__child]
+               POP __rhs
+               ASSIGN iter __rhs
+               PUSH __rhs
+         __forcond2:
+         // Condition
+            // Not Equal
+               // LHS
+                  // Identifier
+                     PUSH iter
+               // RHS
+                  // Method Call
+                     // LHS
+                        // Identifier
+                           PUSH list
+                     // RHS
+                     // Arguments
+                     POP __obj
+                     // Pushing args in reverse order
+                     PUSH __obj
+                     CALL __method__LinkedList__end
+                     POP __void
+                     // Remove args
+                     RESPONSE __retval
+                     PUSH __retval
+               POP __rhs
+               POP __lhs
+               NEQUAL __res __lhs __rhs
+               PUSH __res
+            POP __cond
+            CMP __cond 0
+            JEQ __endfor2
+         // Body
+            // Function Call
+               // Arguments
+                  // Member Accessor
+                     // LHS
+                        // Identifier
+                           PUSH iter
+                     // RHS
+                        PUSH __field__Node__data
+                     POP __child
+                     POP __parent
+                     PUSH __parent[__child]
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               CALL printInt
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Function Call
+               // Arguments
+                  // Literal
+                     MALLOC __str 4
+                     ASSIGN __str[0] ' '
+                     ASSIGN __str[1] '-'
+                     ASSIGN __str[2] '>'
+                     ASSIGN __str[3] ' '
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               CALL print
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         // Repeat
+         JUMP __for2
+         // End of For
+         __endfor2:
+      //------------------------------------------------------------------
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 0
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL println
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   RETURN 0
+__end__printForwards:
+// End Function Declaration - printForwards
+//========================================================================
+
+//========================================================================
+// Function Declaration - printBackwards void
+JUMP __end__printBackwards
+printBackwards:
+   // Parameters
+      // Param: list
+      STACKGET list 0
+   // Body
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 14
+               ASSIGN __str[0] ' '
+               ASSIGN __str[1] ' '
+               ASSIGN __str[2] ' '
+               ASSIGN __str[3] 'B'
+               ASSIGN __str[4] 'a'
+               ASSIGN __str[5] 'c'
+               ASSIGN __str[6] 'k'
+               ASSIGN __str[7] 'w'
+               ASSIGN __str[8] 'a'
+               ASSIGN __str[9] 'r'
+               ASSIGN __str[10] 'd'
+               ASSIGN __str[11] 's'
+               ASSIGN __str[12] ':'
+               ASSIGN __str[13] ' '
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL print
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      //------------------------------------------------------------------
+      // For-Loop
+      // Init
+         // Assignment
+            // RHS
+               // Method Call
+                  // LHS
+                     // Identifier
+                        PUSH list
+                  // RHS
+                  // Arguments
+                  POP __obj
+                  // Pushing args in reverse order
+                  PUSH __obj
+                  CALL __method__LinkedList__rbegin
+                  POP __void
+                  // Remove args
+                  RESPONSE __retval
+                  PUSH __retval
+            POP __rhs
+            ASSIGN iter __rhs
+            PUSH __rhs
+      JUMP __forcond3
+      __for3:
+         // Update
+            // Assignment
+               // RHS
+                  // Member Accessor
+                     // LHS
+                        // Identifier
+                           PUSH iter
+                     // RHS
+                        PUSH __field__Node__prev
+                     POP __child
+                     POP __parent
+                     PUSH __parent[__child]
+               POP __rhs
+               ASSIGN iter __rhs
+               PUSH __rhs
+         __forcond3:
+         // Condition
+            // Not Equal
+               // LHS
+                  // Identifier
+                     PUSH iter
+               // RHS
+                  // Method Call
+                     // LHS
+                        // Identifier
+                           PUSH list
+                     // RHS
+                     // Arguments
+                     POP __obj
+                     // Pushing args in reverse order
+                     PUSH __obj
+                     CALL __method__LinkedList__rend
+                     POP __void
+                     // Remove args
+                     RESPONSE __retval
+                     PUSH __retval
+               POP __rhs
+               POP __lhs
+               NEQUAL __res __lhs __rhs
+               PUSH __res
+            POP __cond
+            CMP __cond 0
+            JEQ __endfor3
+         // Body
+            // Function Call
+               // Arguments
+                  // Member Accessor
+                     // LHS
+                        // Identifier
+                           PUSH iter
+                     // RHS
+                        PUSH __field__Node__data
+                     POP __child
+                     POP __parent
+                     PUSH __parent[__child]
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               CALL printInt
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Function Call
+               // Arguments
+                  // Literal
+                     MALLOC __str 4
+                     ASSIGN __str[0] ' '
+                     ASSIGN __str[1] '<'
+                     ASSIGN __str[2] '-'
+                     ASSIGN __str[3] ' '
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               CALL print
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         // Repeat
+         JUMP __for3
+         // End of For
+         __endfor3:
+      //------------------------------------------------------------------
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 0
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL println
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   RETURN 0
+__end__printBackwards:
+// End Function Declaration - printBackwards
+//========================================================================
+
+//========================================================================
+// Function Declaration - printRecursive void
+JUMP __end__printRecursive
+printRecursive:
+   // Parameters
+      // Param: node
+      STACKGET node 0
+      // Param: end
+      STACKGET end 1
+   // Body
+      //------------------------------------------------------------------
+      // If-Statement
+         // Condition
+            // Equal
+               // LHS
+                  // Identifier
+                     PUSH node
+               // RHS
+                  // Identifier
+                     PUSH end
+               POP __rhs
+               POP __lhs
+               EQUAL __res __lhs __rhs
+               PUSH __res
+            POP __cond
+            CMP __cond 0
+            JEQ __endif4
+         // Body
+            // Return
+               RETURN 0
+         JUMP __endif4
+         // End of if
+         __endif4:
+      //------------------------------------------------------------------
+      // Function Call
+         // Arguments
+            // Member Accessor
+               // LHS
+                  // Identifier
+                     PUSH node
+               // RHS
+                  PUSH __field__Node__data
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL printInt
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      // Function Call
+         // Arguments
+            // Literal
+               MALLOC __str 4
+               ASSIGN __str[0] ' '
+               ASSIGN __str[1] '-'
+               ASSIGN __str[2] '>'
+               ASSIGN __str[3] ' '
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL print
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      // Function Call
+         // Arguments
+            // Member Accessor
+               // LHS
+                  // Identifier
+                     PUSH node
+               // RHS
+                  PUSH __field__Node__next
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+            // Identifier
+               PUSH end
+            POP __arg1
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg1
+         PUSH __arg0
+         CALL printRecursive
+         // Remove args
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   RETURN 0
+__end__printRecursive:
+// End Function Declaration - printRecursive
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call
+         // Arguments
+         // Pushing args in reverse order
+         CALL LinkedList
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   POP __rhs
+   ASSIGN list __rhs
+   PUSH __rhs
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+      // Literal
+         PUSH 7
+      POP __arg0
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __arg0
+   PUSH __obj
+   CALL __method__LinkedList__pushBack
+   POP __void
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+      // Literal
+         PUSH 42
+      POP __arg0
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __arg0
+   PUSH __obj
+   CALL __method__LinkedList__pushBack
+   POP __void
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+      // Literal
+         PUSH 16
+      POP __arg0
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __arg0
+   PUSH __obj
+   CALL __method__LinkedList__pushBack
+   POP __void
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+      // Literal
+         PUSH 3
+      POP __arg0
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __arg0
+   PUSH __obj
+   CALL __method__LinkedList__pushBack
+   POP __void
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+      // Literal
+         PUSH 17
+      POP __arg0
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __arg0
+   PUSH __obj
+   CALL __method__LinkedList__pushFront
+   POP __void
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+      // Literal
+         PUSH 8
+      POP __arg0
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __arg0
+   PUSH __obj
+   CALL __method__LinkedList__pushFront
+   POP __void
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __obj
+   CALL __method__LinkedList__popBack
+   POP __void
+   // Remove args
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __obj
+   CALL __method__LinkedList__popFront
+   POP __void
+   // Remove args
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printForwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printBackwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 9
+         ASSIGN __str[0] 'P'
+         ASSIGN __str[1] 'o'
+         ASSIGN __str[2] 'p'
+         ASSIGN __str[3] ' '
+         ASSIGN __str[4] 'F'
+         ASSIGN __str[5] 'r'
+         ASSIGN __str[6] 'o'
+         ASSIGN __str[7] 'n'
+         ASSIGN __str[8] 't'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __obj
+   CALL __method__LinkedList__popFront
+   POP __void
+   // Remove args
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printForwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printBackwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 8
+         ASSIGN __str[0] 'P'
+         ASSIGN __str[1] 'o'
+         ASSIGN __str[2] 'p'
+         ASSIGN __str[3] ' '
+         ASSIGN __str[4] 'B'
+         ASSIGN __str[5] 'a'
+         ASSIGN __str[6] 'c'
+         ASSIGN __str[7] 'k'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __obj
+   CALL __method__LinkedList__popBack
+   POP __void
+   // Remove args
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printForwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printBackwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 9
+         ASSIGN __str[0] 'P'
+         ASSIGN __str[1] 'o'
+         ASSIGN __str[2] 'p'
+         ASSIGN __str[3] ' '
+         ASSIGN __str[4] 'F'
+         ASSIGN __str[5] 'r'
+         ASSIGN __str[6] 'o'
+         ASSIGN __str[7] 'n'
+         ASSIGN __str[8] 't'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __obj
+   CALL __method__LinkedList__popFront
+   POP __void
+   // Remove args
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printForwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printBackwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 9
+         ASSIGN __str[0] 'P'
+         ASSIGN __str[1] 'o'
+         ASSIGN __str[2] 'p'
+         ASSIGN __str[3] ' '
+         ASSIGN __str[4] 'F'
+         ASSIGN __str[5] 'r'
+         ASSIGN __str[6] 'o'
+         ASSIGN __str[7] 'n'
+         ASSIGN __str[8] 't'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __obj
+   CALL __method__LinkedList__popFront
+   POP __void
+   // Remove args
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printForwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printBackwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 9
+         ASSIGN __str[0] 'P'
+         ASSIGN __str[1] 'o'
+         ASSIGN __str[2] 'p'
+         ASSIGN __str[3] ' '
+         ASSIGN __str[4] 'F'
+         ASSIGN __str[5] 'r'
+         ASSIGN __str[6] 'o'
+         ASSIGN __str[7] 'n'
+         ASSIGN __str[8] 't'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __obj
+   CALL __method__LinkedList__popFront
+   POP __void
+   // Remove args
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printForwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printBackwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 13
+         ASSIGN __str[0] 'P'
+         ASSIGN __str[1] 'u'
+         ASSIGN __str[2] 's'
+         ASSIGN __str[3] 'h'
+         ASSIGN __str[4] ' '
+         ASSIGN __str[5] 'F'
+         ASSIGN __str[6] 'r'
+         ASSIGN __str[7] 'o'
+         ASSIGN __str[8] 'n'
+         ASSIGN __str[9] 't'
+         ASSIGN __str[10] ' '
+         ASSIGN __str[11] '1'
+         ASSIGN __str[12] '5'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+      // Literal
+         PUSH 15
+      POP __arg0
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __arg0
+   PUSH __obj
+   CALL __method__LinkedList__pushFront
+   POP __void
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printForwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printBackwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 11
+         ASSIGN __str[0] 'P'
+         ASSIGN __str[1] 'u'
+         ASSIGN __str[2] 's'
+         ASSIGN __str[3] 'h'
+         ASSIGN __str[4] ' '
+         ASSIGN __str[5] 'B'
+         ASSIGN __str[6] 'a'
+         ASSIGN __str[7] 'c'
+         ASSIGN __str[8] 'k'
+         ASSIGN __str[9] ' '
+         ASSIGN __str[10] '6'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+      // Literal
+         PUSH 6
+      POP __arg0
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __arg0
+   PUSH __obj
+   CALL __method__LinkedList__pushBack
+   POP __void
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printForwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printBackwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 13
+         ASSIGN __str[0] 'P'
+         ASSIGN __str[1] 'u'
+         ASSIGN __str[2] 's'
+         ASSIGN __str[3] 'h'
+         ASSIGN __str[4] ' '
+         ASSIGN __str[5] 'F'
+         ASSIGN __str[6] 'r'
+         ASSIGN __str[7] 'o'
+         ASSIGN __str[8] 'n'
+         ASSIGN __str[9] 't'
+         ASSIGN __str[10] ' '
+         ASSIGN __str[11] '4'
+         ASSIGN __str[12] '7'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Method Call
+   // LHS
+      // Identifier
+         PUSH list
+   // RHS
+   // Arguments
+      // Literal
+         PUSH 47
+      POP __arg0
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __arg0
+   PUSH __obj
+   CALL __method__LinkedList__pushFront
+   POP __void
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printForwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier
+         PUSH list
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL printBackwards
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 20
+         ASSIGN __str[0] ' '
+         ASSIGN __str[1] ' '
+         ASSIGN __str[2] ' '
+         ASSIGN __str[3] 'R'
+         ASSIGN __str[4] 'e'
+         ASSIGN __str[5] 'c'
+         ASSIGN __str[6] 'u'
+         ASSIGN __str[7] 'r'
+         ASSIGN __str[8] 's'
+         ASSIGN __str[9] 'i'
+         ASSIGN __str[10] 'v'
+         ASSIGN __str[11] 'e'
+         ASSIGN __str[12] ' '
+         ASSIGN __str[13] 'P'
+         ASSIGN __str[14] 'r'
+         ASSIGN __str[15] 'i'
+         ASSIGN __str[16] 'n'
+         ASSIGN __str[17] 't'
+         ASSIGN __str[18] ':'
+         ASSIGN __str[19] ' '
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL print
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Method Call
+         // LHS
+            // Identifier
+               PUSH list
+         // RHS
+         // Arguments
+         POP __obj
+         // Pushing args in reverse order
+         PUSH __obj
+         CALL __method__LinkedList__begin
+         POP __void
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+      // Method Call
+         // LHS
+            // Identifier
+               PUSH list
+         // RHS
+         // Arguments
+         POP __obj
+         // Pushing args in reverse order
+         PUSH __obj
+         CALL __method__LinkedList__end
+         POP __void
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+      POP __arg1
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg1
+   PUSH __arg0
+   CALL printRecursive
+   // Remove args
+   POP __void
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 0
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

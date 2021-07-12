@@ -541,7 +541,9 @@ class SymbolTableVisitor (ASTVisitor):
         # ensure each argument type matches the function's types
         for i in range(len(node.args)):
             # check for mismatched type
-            if (node.args[i].type.type != decl.params[i].type.type
+            isArrayNullOp = decl.params[i].type.arrayDimensions > 0 and node.args[i].type.type == Type.NULL
+            isObjectNullOp = decl.params[i].type.type == Type.USERTYPE and node.args[i].type.type == Type.NULL
+            if not isArrayNullOp and not isObjectNullOp and (node.args[i].type.type != decl.params[i].type.type
                 or node.args[i].type.arrayDimensions != decl.params[i].type.arrayDimensions):
                 print (f"Semantic Error: Parameter types in function call do not match function declaration")
                 print (f"   Expected: {node.function.id}(", end="")
@@ -728,7 +730,9 @@ class SymbolTableVisitor (ASTVisitor):
         # ensure each argument type matches the function's types
         for i in range(len(node.args)):
             # check for mismatched type
-            if (node.args[i].type.type != node.methodDecl.params[i].type.type
+            isArrayNullOp = node.methodDecl.params[i].type.arrayDimensions > 0 and node.args[i].type.type == Type.NULL
+            isObjectNullOp = node.methodDecl.params[i].type.type == Type.USERTYPE and node.args[i].type.type == Type.NULL
+            if not isArrayNullOp and not isObjectNullOp and (node.args[i].type.type != node.methodDecl.params[i].type.type
                 or node.args[i].type.arrayDimensions != node.methodDecl.params[i].type.arrayDimensions):
                 print (f"Semantic Error: Parameter types in method call do not match method declaration")
                 print (f"   Expected: {node.methodDecl.id}(", end="")
@@ -830,7 +834,9 @@ class SymbolTableVisitor (ASTVisitor):
         # ensure each argument type matches the function's types
         for i in range(len(node.args)):
             # check for mismatched type
-            if (node.args[i].type.type != node.decl.params[i].type.type
+            isArrayNullOp = node.decl.params[i].type.arrayDimensions > 0 and node.args[i].type.type == Type.NULL
+            isObjectNullOp = node.decl.params[i].type.type == Type.USERTYPE and node.args[i].type.type == Type.NULL
+            if not isArrayNullOp and not isObjectNullOp and (node.args[i].type.type != node.decl.params[i].type.type
                 or node.args[i].type.arrayDimensions != node.decl.params[i].type.arrayDimensions):
                 print (f"Semantic Error: Parameter types in constructor call do not match constructor declaration")
                 print (f"   Expected: {node.id}(", end="")
