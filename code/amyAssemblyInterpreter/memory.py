@@ -4,14 +4,12 @@
 ##########################################################################
 # Imports
 
-from __future__ import annotations # for using type hint of containing class name
-
 ##########################################################################
 
 MEMORY_NULL = 0
 
 class BlockHeader:
-    def __init__(self, prevBlock:BlockHeader, payloadSize:int, isAlloc:bool):
+    def __init__(self, prevBlock, payloadSize:int, isAlloc:bool):
         self.prevBlock = prevBlock
         self.payloadSize = payloadSize
         self.isAlloc = isAlloc
@@ -115,7 +113,7 @@ class Heap:
 
 
 
-def printheap(heap:Heap):
+def printheap(heap):
     for i in range(len(heap.memory)):
         if isinstance(heap.memory[i], BlockHeader):
             print(f"{i} {heap.memory[i].payloadSize} {heap.memory[i].isAlloc}")

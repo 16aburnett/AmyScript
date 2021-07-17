@@ -1,5 +1,4 @@
 // AmyAssembly compiled from AmyScript
-// Filename: testFiles/testClass.amy
 //========================================================================
 
 //========================================================================
@@ -97,12 +96,8 @@ input:
     return __line
 
 //========================================================================
-// converts an integer to a string
-// char[] intToString (int val);
-intToString:
-    stackget __val 0
 
-    return 0
+
 
 //========================================================================
 
@@ -121,212 +116,224 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Class Declaration - Person
+// Class Declaration - __main__Person
    //---------------------------------------------------------------------
-   // Field - name
-   ASSIGN __field__Person__name 0
-   //---------------------------------------------------------------------
-   //---------------------------------------------------------------------
-   // Field - age
-   ASSIGN __field__Person__age 1
+   // Field - __field____main__Person__name
+   ASSIGN __field____main__Person__name 0
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
-   // Field - friends
-   ASSIGN __field__Person__friends 2
+   // Field - __field____main__Person__age
+   ASSIGN __field____main__Person__age 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
-   // Field - nFriends
-   ASSIGN __field__Person__nFriends 3
+   // Field - __field____main__Person__friends
+   ASSIGN __field____main__Person__friends 2
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - __field____main__Person__nFriends
+   ASSIGN __field____main__Person__nFriends 3
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass__Person
+JUMP __endclass____main__Person
    //---------------------------------------------------------------------
-   // Constructor Declaration - Person Person
-   JUMP __endctor__Person
-   Person:
+   // Constructor Declaration - __ctor____main__Person__Person Person
+   JUMP __end__ctor____main__Person__Person
+   __ctor____main__Person__Person:
       // Creating Class Instance
          MALLOC __this 4
       // Parameters
          // Param: name
-         STACKGET name 0
+         STACKGET __main__Person__name 0
          // Param: age
-         STACKGET age 1
+         STACKGET __main__Person__age 1
       // Body
-         // Assignment
-            // RHS
-               // Identifier
-                  PUSH name
-            // LHS
-               // Member Accessor Assignment
-                  // LHS
-                     // This keyword
-                        PUSH __this
-                  // RHS
-                     PUSH __field__Person__name
-                  POP __child
-                  POP __parent
-                  POP __rhs
-                  ASSIGN __parent[__child] __rhs
-            PUSH __rhs
-         // Assignment
-            // RHS
-               // Identifier
-                  PUSH age
-            // LHS
-               // Member Accessor Assignment
-                  // LHS
-                     // This keyword
-                        PUSH __this
-                  // RHS
-                     PUSH __field__Person__age
-                  POP __child
-                  POP __parent
-                  POP __rhs
-                  ASSIGN __parent[__child] __rhs
-            PUSH __rhs
-         // Assignment
-            // RHS
-               // Array Allocator
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Identifier - name
+                     PUSH __main__Person__name
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Person__name
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - age
+                     PUSH __main__Person__age
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Person__age
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Array Allocator
+                     // Literal
+                        PUSH 5
+                     POP __size
+                     MALLOC __ptr __size
+                     PUSH __ptr
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Person__friends
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
                   // Literal
-                     PUSH 5
-                  POP __size
-                  MALLOC __ptr __size
-                  PUSH __ptr
-            // LHS
-               // Member Accessor Assignment
-                  // LHS
-                     // This keyword
-                        PUSH __this
-                  // RHS
-                     PUSH __field__Person__friends
-                  POP __child
-                  POP __parent
-                  POP __rhs
-                  ASSIGN __parent[__child] __rhs
-            PUSH __rhs
-         // Assignment
-            // RHS
-               // Literal
-                  PUSH 0
-            // LHS
-               // Member Accessor Assignment
-                  // LHS
-                     // This keyword
-                        PUSH __this
-                  // RHS
-                     PUSH __field__Person__nFriends
-                  POP __child
-                  POP __parent
-                  POP __rhs
-                  ASSIGN __parent[__child] __rhs
-            PUSH __rhs
+                     PUSH 0
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Person__nFriends
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
       RETURN __this
-   __endctor__Person:
-   // End Constructor Declaration - Person
+   __end__ctor____main__Person__Person:
+   // End Constructor Declaration - __ctor____main__Person__Person
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration
-   JUMP __endMethod__Person__getAge
-   __method__Person__getAge:
+   JUMP __end__method____main__Person__getAge
+   __method____main__Person__getAge:
       // Class Instance
          STACKGET __this 0
       // Parameters
       // Body
-         // Return
-            // Member Accessor
-               // LHS
-                  // This keyword
-                     PUSH __this
-               // RHS
-                  PUSH __field__Person__age
-               POP __child
-               POP __parent
-               PUSH __parent[__child]
-            POP __rVal
-            RETURN __rVal
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field____main__Person__age
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
       RETURN 0
-   __endMethod__Person__getAge:
-   // End Method Declaration - __method__Person__getAge
+   __end__method____main__Person__getAge:
+   // End Method Declaration - __method____main__Person__getAge
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration
-   JUMP __endMethod__Person__getName
-   __method__Person__getName:
+   JUMP __end__method____main__Person__getName
+   __method____main__Person__getName:
       // Class Instance
          STACKGET __this 0
       // Parameters
       // Body
-         // Return
-            // Member Accessor
-               // LHS
-                  // This keyword
-                     PUSH __this
-               // RHS
-                  PUSH __field__Person__name
-               POP __child
-               POP __parent
-               PUSH __parent[__child]
-            POP __rVal
-            RETURN __rVal
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field____main__Person__name
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
       RETURN 0
-   __endMethod__Person__getName:
-   // End Method Declaration - __method__Person__getName
+   __end__method____main__Person__getName:
+   // End Method Declaration - __method____main__Person__getName
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration
-   JUMP __endMethod__Person__addFriend
-   __method__Person__addFriend:
+   JUMP __end__method____main__Person__addFriend
+   __method____main__Person__addFriend:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: friend
-         STACKGET friend 1
+         STACKGET __main__Person__friend 1
       // Body
-         // Assignment
-            // RHS
-               // Identifier
-                  PUSH friend
-            // LHS
-               // Subscript assignment
-                  // LHS
-                     // Member Accessor
-                        // LHS
-                           // This keyword
-                              PUSH __this
-                        // RHS
-                           PUSH __field__Person__friends
-                        POP __child
-                        POP __parent
-                        PUSH __parent[__child]
-                  // OFFSET
-                     // Post-Increment
-                        // LHS
-                           // Member Accessor Assignment
-                              // LHS
-                                 // This keyword
-                                    PUSH __this
-                              // RHS
-                                 PUSH __field__Person__nFriends
-                              POP __child
-                              POP __parent
-                              ASSIGN __res __parent[__child]
-                              ADD __parent[__child] __parent[__child] 1
-                        PUSH __res
-                  POP __offset
-                  POP __pointer
-            POP __rhs
-            ASSIGN __pointer[__offset] __rhs
-            PUSH __rhs
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Identifier - friend
+                     PUSH __main__Person__friend
+               // LHS
+                  // Subscript assignment
+                     // LHS
+                        // Member Accessor
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main__Person__friends
+                           POP __child
+                           POP __parent
+                           PUSH __parent[__child]
+                     // OFFSET
+                        // Post-Increment
+                           // LHS
+                              // Member Accessor Assignment
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main__Person__nFriends
+                                 POP __child
+                                 POP __parent
+                                 ASSIGN __res __parent[__child]
+                                 ADD __parent[__child] __parent[__child] 1
+                           PUSH __res
+                     POP __offset
+                     POP __pointer
+               POP __rhs
+               ASSIGN __pointer[__offset] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
       RETURN 0
-   __endMethod__Person__addFriend:
-   // End Method Declaration - __method__Person__addFriend
+   __end__method____main__Person__addFriend:
+   // End Method Declaration - __method____main__Person__addFriend
    //---------------------------------------------------------------------
 
-__endclass__Person:
-// End Class Declaration - Person
+__endclass____main__Person:
+// End Class Declaration - __main__Person
 //========================================================================
 
 // Assignment
@@ -346,56 +353,61 @@ __endclass__Person:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL Person
+         CALL __ctor____main__Person__Person
          // Remove args
-         POP __null
-         POP __null
+         POP __void
+         POP __void
          RESPONSE __retval
          PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__person 0
    POP __rhs
-   ASSIGN person __rhs
+   ASSIGN __main__person __rhs
    PUSH __rhs
 // Function Call
    // Arguments
       // Member Accessor
          // LHS
-            // Identifier
-               PUSH person
+            // Identifier - person
+               PUSH __main__person
          // RHS
-            PUSH __field__Person__name
+            PUSH __field____main__Person__name
          POP __child
          POP __parent
          PUSH __parent[__child]
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
+   // *** println
    CALL println
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Function Call
    // Arguments
       // Method Call
          // LHS
-            // Identifier
-               PUSH person
+            // Identifier - person
+               PUSH __main__person
          // RHS
          // Arguments
          POP __obj
          // Pushing args in reverse order
          PUSH __obj
-         CALL __method__Person__getAge
-         PUSH __null
+         CALL __method____main__Person__getAge
+         POP __void
          // Remove args
          RESPONSE __retval
          PUSH __retval
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
+   // *** printInt
    CALL printInt
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Function Call
@@ -406,9 +418,10 @@ __endclass__Person:
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
+   // *** println
    CALL println
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Function Call
@@ -442,9 +455,10 @@ __endclass__Person:
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
+   // *** print
    CALL print
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Function Call
@@ -453,15 +467,15 @@ __endclass__Person:
          // LHS
             // Method Call
                // LHS
-                  // Identifier
-                     PUSH person
+                  // Identifier - person
+                     PUSH __main__person
                // RHS
                // Arguments
                POP __obj
                // Pushing args in reverse order
                PUSH __obj
-               CALL __method__Person__getName
-               PUSH __null
+               CALL __method____main__Person__getName
+               POP __void
                // Remove args
                RESPONSE __retval
                PUSH __retval
@@ -474,9 +488,10 @@ __endclass__Person:
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
+   // *** printChar
    CALL printChar
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Function Call
@@ -487,9 +502,10 @@ __endclass__Person:
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
+   // *** println
    CALL println
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Assignment
@@ -500,18 +516,21 @@ __endclass__Person:
          POP __size
          MALLOC __ptr __size
          PUSH __ptr
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__people 0
    POP __rhs
-   ASSIGN people __rhs
+   ASSIGN __main__people __rhs
    PUSH __rhs
 // Assignment
    // RHS
-      // Identifier
-         PUSH person
+      // Identifier - person
+         PUSH __main__person
    // LHS
       // Subscript assignment
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 0
@@ -540,17 +559,17 @@ __endclass__Person:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL Person
+         CALL __ctor____main__Person__Person
          // Remove args
-         POP __null
-         POP __null
+         POP __void
+         POP __void
          RESPONSE __retval
          PUSH __retval
    // LHS
       // Subscript assignment
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 1
@@ -578,17 +597,17 @@ __endclass__Person:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL Person
+         CALL __ctor____main__Person__Person
          // Remove args
-         POP __null
-         POP __null
+         POP __void
+         POP __void
          RESPONSE __retval
          PUSH __retval
    // LHS
       // Subscript assignment
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 2
@@ -617,17 +636,17 @@ __endclass__Person:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL Person
+         CALL __ctor____main__Person__Person
          // Remove args
-         POP __null
-         POP __null
+         POP __void
+         POP __void
          RESPONSE __retval
          PUSH __retval
    // LHS
       // Subscript assignment
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 3
@@ -656,17 +675,17 @@ __endclass__Person:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL Person
+         CALL __ctor____main__Person__Person
          // Remove args
-         POP __null
-         POP __null
+         POP __void
+         POP __void
          RESPONSE __retval
          PUSH __retval
    // LHS
       // Subscript assignment
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 4
@@ -679,8 +698,8 @@ __endclass__Person:
    // LHS
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 0
@@ -691,8 +710,8 @@ __endclass__Person:
    // Arguments
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 1
@@ -704,18 +723,18 @@ __endclass__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__Person__addFriend
-   PUSH __null
+   CALL __method____main__Person__addFriend
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 0
@@ -726,8 +745,8 @@ __endclass__Person:
    // Arguments
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 3
@@ -739,18 +758,18 @@ __endclass__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__Person__addFriend
-   PUSH __null
+   CALL __method____main__Person__addFriend
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 1
@@ -761,8 +780,8 @@ __endclass__Person:
    // Arguments
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 0
@@ -774,18 +793,18 @@ __endclass__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__Person__addFriend
-   PUSH __null
+   CALL __method____main__Person__addFriend
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 2
@@ -796,8 +815,8 @@ __endclass__Person:
    // Arguments
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 3
@@ -809,18 +828,18 @@ __endclass__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__Person__addFriend
-   PUSH __null
+   CALL __method____main__Person__addFriend
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 2
@@ -831,8 +850,8 @@ __endclass__Person:
    // Arguments
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 4
@@ -844,18 +863,18 @@ __endclass__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__Person__addFriend
-   PUSH __null
+   CALL __method____main__Person__addFriend
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 3
@@ -866,8 +885,8 @@ __endclass__Person:
    // Arguments
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 2
@@ -879,18 +898,18 @@ __endclass__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__Person__addFriend
-   PUSH __null
+   CALL __method____main__Person__addFriend
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 3
@@ -901,8 +920,8 @@ __endclass__Person:
    // Arguments
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 0
@@ -914,18 +933,18 @@ __endclass__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__Person__addFriend
-   PUSH __null
+   CALL __method____main__Person__addFriend
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 4
@@ -936,8 +955,8 @@ __endclass__Person:
    // Arguments
       // Subscript
          // LHS
-            // Identifier
-               PUSH people
+            // Identifier - people
+               PUSH __main__people
          // OFFSET
             // Literal
                PUSH 2
@@ -949,10 +968,10 @@ __endclass__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__Person__addFriend
-   PUSH __null
+   CALL __method____main__Person__addFriend
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 //------------------------------------------------------------------------
@@ -962,26 +981,29 @@ __endclass__Person:
       // RHS
          // Literal
             PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__4__i 0
       POP __rhs
-      ASSIGN i __rhs
+      ASSIGN __main__for__4__i __rhs
       PUSH __rhs
-JUMP __forcond0
-__for0:
+JUMP __forcond__4
+__for__4:
    // Update
       // Pre-Increment
          // RHS
-            // Identifier
-               PUSH i
+            // Identifier - i
+               PUSH __main__for__4__i
          POP __rhs
-         ADD i i 1
-         ASSIGN __res i
+         ADD __main__for__4__i __main__for__4__i 1
+         ASSIGN __res __main__for__4__i
          PUSH __res
-   __forcond0:
+   __forcond__4:
    // Condition
       // Less Than
          // LHS
-            // Identifier
-               PUSH i
+            // Identifier - i
+               PUSH __main__for__4__i
          // RHS
             // Literal
                PUSH 5
@@ -991,230 +1013,246 @@ __for0:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endfor0
+      JEQ __endfor__4
    // Body
-      // Function Call
-         // Arguments
-            // Member Accessor
-               // LHS
-                  // Subscript
-                     // LHS
-                        // Identifier
-                           PUSH people
-                     // OFFSET
-                        // Identifier
-                           PUSH i
-                     POP __offset
-                     POP __pointer
-                     PUSH __pointer[__offset]
-               // RHS
-                  PUSH __field__Person__name
-               POP __child
-               POP __parent
-               PUSH __parent[__child]
-            POP __arg0
-         // Pushing args in reverse order
-         PUSH __arg0
-         CALL print
-         // Remove args
-         POP __null
-         RESPONSE __retval
-         PUSH __retval
-      // Function Call
-         // Arguments
-            // Literal
-               MALLOC __str 1
-               ASSIGN __str[0] ' '
-               PUSH __str
-            POP __arg0
-         // Pushing args in reverse order
-         PUSH __arg0
-         CALL print
-         // Remove args
-         POP __null
-         RESPONSE __retval
-         PUSH __retval
-      // Function Call
-         // Arguments
-            // Member Accessor
-               // LHS
-                  // Subscript
-                     // LHS
-                        // Identifier
-                           PUSH people
-                     // OFFSET
-                        // Identifier
-                           PUSH i
-                     POP __offset
-                     POP __pointer
-                     PUSH __pointer[__offset]
-               // RHS
-                  PUSH __field__Person__age
-               POP __child
-               POP __parent
-               PUSH __parent[__child]
-            POP __arg0
-         // Pushing args in reverse order
-         PUSH __arg0
-         CALL printInt
-         // Remove args
-         POP __null
-         RESPONSE __retval
-         PUSH __retval
-      // Function Call
-         // Arguments
-            // Literal
-               MALLOC __str 10
-               ASSIGN __str[0] ' '
-               ASSIGN __str[1] 'F'
-               ASSIGN __str[2] 'r'
-               ASSIGN __str[3] 'i'
-               ASSIGN __str[4] 'e'
-               ASSIGN __str[5] 'n'
-               ASSIGN __str[6] 'd'
-               ASSIGN __str[7] 's'
-               ASSIGN __str[8] ':'
-               ASSIGN __str[9] ' '
-               PUSH __str
-            POP __arg0
-         // Pushing args in reverse order
-         PUSH __arg0
-         CALL print
-         // Remove args
-         POP __null
-         RESPONSE __retval
-         PUSH __retval
       //------------------------------------------------------------------
-      // For-Loop
-      // Init
-         // Assignment
-            // RHS
+      // Code Block
+         // Function Call
+            // Arguments
+               // Member Accessor
+                  // LHS
+                     // Subscript
+                        // LHS
+                           // Identifier - people
+                              PUSH __main__people
+                        // OFFSET
+                           // Identifier - i
+                              PUSH __main__for__4__i
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // RHS
+                     PUSH __field____main__Person__name
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Function Call
+            // Arguments
                // Literal
-                  PUSH 0
-            POP __rhs
-            ASSIGN j __rhs
-            PUSH __rhs
-      JUMP __forcond1
-      __for1:
-         // Update
-            // Pre-Increment
+                  MALLOC __str 1
+                  ASSIGN __str[0] ' '
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Function Call
+            // Arguments
+               // Member Accessor
+                  // LHS
+                     // Subscript
+                        // LHS
+                           // Identifier - people
+                              PUSH __main__people
+                        // OFFSET
+                           // Identifier - i
+                              PUSH __main__for__4__i
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // RHS
+                     PUSH __field____main__Person__age
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** printInt
+            CALL printInt
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Function Call
+            // Arguments
+               // Literal
+                  MALLOC __str 10
+                  ASSIGN __str[0] ' '
+                  ASSIGN __str[1] 'F'
+                  ASSIGN __str[2] 'r'
+                  ASSIGN __str[3] 'i'
+                  ASSIGN __str[4] 'e'
+                  ASSIGN __str[5] 'n'
+                  ASSIGN __str[6] 'd'
+                  ASSIGN __str[7] 's'
+                  ASSIGN __str[8] ':'
+                  ASSIGN __str[9] ' '
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment
                // RHS
-                  // Identifier
-                     PUSH j
-               POP __rhs
-               ADD j j 1
-               ASSIGN __res j
-               PUSH __res
-         __forcond1:
-         // Condition
-            // Less Than
-               // LHS
-                  // Identifier
-                     PUSH j
-               // RHS
-                  // Member Accessor
-                     // LHS
-                        // Subscript
-                           // LHS
-                              // Identifier
-                                 PUSH people
-                           // OFFSET
-                              // Identifier
-                                 PUSH i
-                           POP __offset
-                           POP __pointer
-                           PUSH __pointer[__offset]
-                     // RHS
-                        PUSH __field__Person__nFriends
-                     POP __child
-                     POP __parent
-                     PUSH __parent[__child]
-               POP __rhs
-               POP __lhs
-               LT __res __lhs __rhs
-               PUSH __res
-            POP __cond
-            CMP __cond 0
-            JEQ __endfor1
-         // Body
-            // Function Call
-               // Arguments
-                  // Member Accessor
-                     // LHS
-                        // Subscript
-                           // LHS
-                              // Member Accessor
-                                 // LHS
-                                    // Subscript
-                                       // LHS
-                                          // Identifier
-                                             PUSH people
-                                       // OFFSET
-                                          // Identifier
-                                             PUSH i
-                                       POP __offset
-                                       POP __pointer
-                                       PUSH __pointer[__offset]
-                                 // RHS
-                                    PUSH __field__Person__friends
-                                 POP __child
-                                 POP __parent
-                                 PUSH __parent[__child]
-                           // OFFSET
-                              // Identifier
-                                 PUSH j
-                           POP __offset
-                           POP __pointer
-                           PUSH __pointer[__offset]
-                     // RHS
-                        PUSH __field__Person__name
-                     POP __child
-                     POP __parent
-                     PUSH __parent[__child]
-                  POP __arg0
-               // Pushing args in reverse order
-               PUSH __arg0
-               CALL print
-               // Remove args
-               POP __null
-               RESPONSE __retval
-               PUSH __retval
-            // Function Call
-               // Arguments
                   // Literal
-                     MALLOC __str 1
-                     ASSIGN __str[0] ' '
-                     PUSH __str
-                  POP __arg0
-               // Pushing args in reverse order
-               PUSH __arg0
-               CALL print
-               // Remove args
-               POP __null
-               RESPONSE __retval
-               PUSH __retval
-         // Repeat
-         JUMP __for1
-         // End of For
-         __endfor1:
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__for__4__block__5__for__6__j 0
+               POP __rhs
+               ASSIGN __main__for__4__block__5__for__6__j __rhs
+               PUSH __rhs
+         JUMP __forcond__6
+         __for__6:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - j
+                        PUSH __main__for__4__block__5__for__6__j
+                  POP __rhs
+                  ADD __main__for__4__block__5__for__6__j __main__for__4__block__5__for__6__j 1
+                  ASSIGN __res __main__for__4__block__5__for__6__j
+                  PUSH __res
+            __forcond__6:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - j
+                        PUSH __main__for__4__block__5__for__6__j
+                  // RHS
+                     // Member Accessor
+                        // LHS
+                           // Subscript
+                              // LHS
+                                 // Identifier - people
+                                    PUSH __main__people
+                              // OFFSET
+                                 // Identifier - i
+                                    PUSH __main__for__4__i
+                              POP __offset
+                              POP __pointer
+                              PUSH __pointer[__offset]
+                        // RHS
+                           PUSH __field____main__Person__nFriends
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__6
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Function Call
+                     // Arguments
+                        // Member Accessor
+                           // LHS
+                              // Subscript
+                                 // LHS
+                                    // Member Accessor
+                                       // LHS
+                                          // Subscript
+                                             // LHS
+                                                // Identifier - people
+                                                   PUSH __main__people
+                                             // OFFSET
+                                                // Identifier - i
+                                                   PUSH __main__for__4__i
+                                             POP __offset
+                                             POP __pointer
+                                             PUSH __pointer[__offset]
+                                       // RHS
+                                          PUSH __field____main__Person__friends
+                                       POP __child
+                                       POP __parent
+                                       PUSH __parent[__child]
+                                 // OFFSET
+                                    // Identifier - j
+                                       PUSH __main__for__4__block__5__for__6__j
+                                 POP __offset
+                                 POP __pointer
+                                 PUSH __pointer[__offset]
+                           // RHS
+                              PUSH __field____main__Person__name
+                           POP __child
+                           POP __parent
+                           PUSH __parent[__child]
+                        POP __arg0
+                     // Pushing args in reverse order
+                     PUSH __arg0
+                     // *** print
+                     CALL print
+                     // Remove args
+                     POP __void
+                     RESPONSE __retval
+                     PUSH __retval
+                  // Function Call
+                     // Arguments
+                        // Literal
+                           MALLOC __str 1
+                           ASSIGN __str[0] ' '
+                           PUSH __str
+                        POP __arg0
+                     // Pushing args in reverse order
+                     PUSH __arg0
+                     // *** print
+                     CALL print
+                     // Remove args
+                     POP __void
+                     RESPONSE __retval
+                     PUSH __retval
+               //---------------------------------------------------------
+            // Repeat
+            JUMP __for__6
+            // End of For
+            __endfor__6:
+         //---------------------------------------------------------------
+         // Function Call
+            // Arguments
+               // Literal
+                  MALLOC __str 0
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
       //------------------------------------------------------------------
-      // Function Call
-         // Arguments
-            // Literal
-               MALLOC __str 0
-               PUSH __str
-            POP __arg0
-         // Pushing args in reverse order
-         PUSH __arg0
-         CALL println
-         // Remove args
-         POP __null
-         RESPONSE __retval
-         PUSH __retval
    // Repeat
-   JUMP __for0
+   JUMP __for__4
    // End of For
-   __endfor0:
+   __endfor__4:
 //------------------------------------------------------------------------
 // Assignment
    // RHS
@@ -1231,8 +1269,8 @@ __for0:
          // LHS
             // Subscript
                // LHS
-                  // Identifier
-                     PUSH people
+                  // Identifier - people
+                     PUSH __main__people
                // OFFSET
                   // Literal
                      PUSH 0
@@ -1240,7 +1278,7 @@ __for0:
                POP __pointer
                PUSH __pointer[__offset]
          // RHS
-            PUSH __field__Person__name
+            PUSH __field____main__Person__name
          POP __child
          POP __parent
          POP __rhs
@@ -1252,8 +1290,8 @@ __for0:
          // LHS
             // Subscript
                // LHS
-                  // Identifier
-                     PUSH people
+                  // Identifier - people
+                     PUSH __main__people
                // OFFSET
                   // Literal
                      PUSH 0
@@ -1261,469 +1299,495 @@ __for0:
                POP __pointer
                PUSH __pointer[__offset]
          // RHS
-            PUSH __field__Person__name
+            PUSH __field____main__Person__name
          POP __child
          POP __parent
          PUSH __parent[__child]
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
+   // *** println
    CALL println
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Function Call
    // Arguments
       // Member Accessor
          // LHS
-            // Identifier
-               PUSH person
+            // Identifier - person
+               PUSH __main__person
          // RHS
-            PUSH __field__Person__name
+            PUSH __field____main__Person__name
          POP __child
          POP __parent
          PUSH __parent[__child]
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
+   // *** println
    CALL println
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 //========================================================================
-// Class Declaration - IntArray
+// Class Declaration - __main__IntArray
    //---------------------------------------------------------------------
-   // Field - data
-   ASSIGN __field__IntArray__data 0
-   //---------------------------------------------------------------------
-   //---------------------------------------------------------------------
-   // Field - size
-   ASSIGN __field__IntArray__size 1
+   // Field - __field____main__IntArray__data
+   ASSIGN __field____main__IntArray__data 0
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
-   // Field - capacity
-   ASSIGN __field__IntArray__capacity 2
+   // Field - __field____main__IntArray__size
+   ASSIGN __field____main__IntArray__size 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - __field____main__IntArray__capacity
+   ASSIGN __field____main__IntArray__capacity 2
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass__IntArray
+JUMP __endclass____main__IntArray
    //---------------------------------------------------------------------
-   // Constructor Declaration - IntArray IntArray
-   JUMP __endctor__IntArray
-   IntArray:
+   // Constructor Declaration - __ctor____main__IntArray__IntArray IntArray
+   JUMP __end__ctor____main__IntArray__IntArray
+   __ctor____main__IntArray__IntArray:
       // Creating Class Instance
          MALLOC __this 3
       // Parameters
       // Body
-         // Assignment
-            // RHS
-               // Literal
-                  PUSH 10
-            // LHS
-               // Member Accessor Assignment
-                  // LHS
-                     // This keyword
-                        PUSH __this
-                  // RHS
-                     PUSH __field__IntArray__capacity
-                  POP __child
-                  POP __parent
-                  POP __rhs
-                  ASSIGN __parent[__child] __rhs
-            PUSH __rhs
-         // Assignment
-            // RHS
-               // Array Allocator
-                  // Member Accessor
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Literal
+                     PUSH 10
+               // LHS
+                  // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field__IntArray__capacity
+                        PUSH __field____main__IntArray__capacity
                      POP __child
                      POP __parent
-                     PUSH __parent[__child]
-                  POP __size
-                  MALLOC __ptr __size
-                  PUSH __ptr
-            // LHS
-               // Member Accessor Assignment
-                  // LHS
-                     // This keyword
-                        PUSH __this
-                  // RHS
-                     PUSH __field__IntArray__data
-                  POP __child
-                  POP __parent
-                  POP __rhs
-                  ASSIGN __parent[__child] __rhs
-            PUSH __rhs
-         // Assignment
-            // RHS
-               // Literal
-                  PUSH 0
-            // LHS
-               // Member Accessor Assignment
-                  // LHS
-                     // This keyword
-                        PUSH __this
-                  // RHS
-                     PUSH __field__IntArray__size
-                  POP __child
-                  POP __parent
-                  POP __rhs
-                  ASSIGN __parent[__child] __rhs
-            PUSH __rhs
-      RETURN __this
-   __endctor__IntArray:
-   // End Constructor Declaration - IntArray
-   //---------------------------------------------------------------------
-
-   //---------------------------------------------------------------------
-   // Method Declaration
-   JUMP __endMethod__IntArray__pushBack
-   __method__IntArray__pushBack:
-      // Class Instance
-         STACKGET __this 0
-      // Parameters
-         // Param: val
-         STACKGET val 1
-      // Body
-         //---------------------------------------------------------------
-         // If-Statement
-            // Condition
-               // Greater Than or Equal to
-                  // LHS
-                     // Addition
-                        // LHS
-                           // Member Accessor
-                              // LHS
-                                 // This keyword
-                                    PUSH __this
-                              // RHS
-                                 PUSH __field__IntArray__size
-                              POP __child
-                              POP __parent
-                              PUSH __parent[__child]
-                        // RHS
-                           // Literal
-                              PUSH 1
-                        POP __rhs
-                        POP __lhs
-                        ADD __res __lhs __rhs
-                        PUSH __res
-                  // RHS
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Array Allocator
                      // Member Accessor
                         // LHS
                            // This keyword
                               PUSH __this
                         // RHS
-                           PUSH __field__IntArray__capacity
+                           PUSH __field____main__IntArray__capacity
                         POP __child
                         POP __parent
                         PUSH __parent[__child]
-                  POP __rhs
-                  POP __lhs
-                  GE __res __lhs __rhs
-                  PUSH __res
-               POP __cond
-               CMP __cond 0
-               JEQ __endif2
-            // Body
-               // Assignment
-                  // RHS
-                     // Multiplication
-                        // LHS
-                           // Member Accessor
-                              // LHS
-                                 // This keyword
-                                    PUSH __this
-                              // RHS
-                                 PUSH __field__IntArray__capacity
-                              POP __child
-                              POP __parent
-                              PUSH __parent[__child]
-                        // RHS
-                           // Literal
-                              PUSH 2
-                        POP __rhs
-                        POP __lhs
-                        MULTIPLY __res __lhs __rhs
-                        PUSH __res
-                  // LHS
-                     // Member Accessor Assignment
-                        // LHS
-                           // This keyword
-                              PUSH __this
-                        // RHS
-                           PUSH __field__IntArray__capacity
-                        POP __child
-                        POP __parent
-                        POP __rhs
-                        ASSIGN __parent[__child] __rhs
-                  PUSH __rhs
-               // Assignment
-                  // RHS
-                     // Array Allocator
+                     POP __size
+                     MALLOC __ptr __size
+                     PUSH __ptr
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__IntArray__data
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Literal
+                     PUSH 0
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__IntArray__size
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__IntArray__IntArray:
+   // End Constructor Declaration - __ctor____main__IntArray__IntArray
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __end__method____main__IntArray__pushBack
+   __method____main__IntArray__pushBack:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+         // Param: val
+         STACKGET __main__IntArray__val 1
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            //------------------------------------------------------------
+            // If-Statement
+               // Condition
+                  // Greater Than or Equal to
+                     // LHS
+                        // Addition
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main__IntArray__size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // RHS
+                              // Literal
+                                 PUSH 1
+                           POP __rhs
+                           POP __lhs
+                           ADD __res __lhs __rhs
+                           PUSH __res
+                     // RHS
                         // Member Accessor
                            // LHS
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field__IntArray__capacity
+                              PUSH __field____main__IntArray__capacity
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
-                        POP __size
-                        MALLOC __ptr __size
-                        PUSH __ptr
-                  POP __rhs
-                  ASSIGN nData __rhs
-                  PUSH __rhs
-               //---------------------------------------------------------
-               // For-Loop
-               // Init
-                  // Assignment
-                     // RHS
-                        // Literal
-                           PUSH 0
                      POP __rhs
-                     ASSIGN i __rhs
-                     PUSH __rhs
-               JUMP __forcond3
-               __for3:
-                  // Update
-                     // Pre-Increment
-                        // RHS
-                           // Identifier
-                              PUSH i
-                        POP __rhs
-                        ADD i i 1
-                        ASSIGN __res i
-                        PUSH __res
-                  __forcond3:
-                  // Condition
-                     // Less Than
-                        // LHS
-                           // Identifier
-                              PUSH i
-                        // RHS
-                           // Member Accessor
-                              // LHS
-                                 // This keyword
-                                    PUSH __this
-                              // RHS
-                                 PUSH __field__IntArray__size
-                              POP __child
-                              POP __parent
-                              PUSH __parent[__child]
-                        POP __rhs
-                        POP __lhs
-                        LT __res __lhs __rhs
-                        PUSH __res
-                     POP __cond
-                     CMP __cond 0
-                     JEQ __endfor3
-                  // Body
+                     POP __lhs
+                     GE __res __lhs __rhs
+                     PUSH __res
+                  POP __cond
+                  CMP __cond 0
+                  JEQ __endif__10
+               // Body
+                  //------------------------------------------------------
+                  // Code Block
                      // Assignment
                         // RHS
-                           // Subscript
+                           // Multiplication
                               // LHS
                                  // Member Accessor
                                     // LHS
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field__IntArray__data
+                                       PUSH __field____main__IntArray__capacity
                                     POP __child
                                     POP __parent
                                     PUSH __parent[__child]
-                              // OFFSET
-                                 // Identifier
-                                    PUSH i
-                              POP __offset
-                              POP __pointer
-                              PUSH __pointer[__offset]
+                              // RHS
+                                 // Literal
+                                    PUSH 2
+                              POP __rhs
+                              POP __lhs
+                              MULTIPLY __res __lhs __rhs
+                              PUSH __res
                         // LHS
-                           // Subscript assignment
+                           // Member Accessor Assignment
                               // LHS
-                                 // Identifier
-                                    PUSH nData
-                              // OFFSET
-                                 // Identifier
-                                    PUSH i
-                              POP __offset
-                              POP __pointer
-                        POP __rhs
-                        ASSIGN __pointer[__offset] __rhs
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main__IntArray__capacity
+                              POP __child
+                              POP __parent
+                              POP __rhs
+                              ASSIGN __parent[__child] __rhs
                         PUSH __rhs
-                  // Repeat
-                  JUMP __for3
-                  // End of For
-                  __endfor3:
-               //---------------------------------------------------------
-               // Assignment
-                  // RHS
-                     // Identifier
-                        PUSH nData
-                  // LHS
-                     // Member Accessor Assignment
-                        // LHS
-                           // This keyword
-                              PUSH __this
+                     // Assignment
                         // RHS
-                           PUSH __field__IntArray__data
-                        POP __child
-                        POP __parent
+                           // Array Allocator
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main__IntArray__capacity
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                              POP __size
+                              MALLOC __ptr __size
+                              PUSH __ptr
+                        // LHS
+                           // Variable Declaration
+                              ASSIGN __main__IntArray__block__9__if__10__block__11__nData 0
                         POP __rhs
-                        ASSIGN __parent[__child] __rhs
-                  PUSH __rhs
-            JUMP __endif2
-            // End of if
-            __endif2:
-         //---------------------------------------------------------------
-         // Assignment
-            // RHS
-               // Identifier
-                  PUSH val
-            // LHS
-               // Subscript assignment
-                  // LHS
-                     // Member Accessor
-                        // LHS
-                           // This keyword
-                              PUSH __this
+                        ASSIGN __main__IntArray__block__9__if__10__block__11__nData __rhs
+                        PUSH __rhs
+                     //---------------------------------------------------
+                     // For-Loop
+                     // Init
+                        // Assignment
+                           // RHS
+                              // Literal
+                                 PUSH 0
+                           // LHS
+                              // Variable Declaration
+                                 ASSIGN __main__IntArray__block__9__if__10__block__11__for__12__i 0
+                           POP __rhs
+                           ASSIGN __main__IntArray__block__9__if__10__block__11__for__12__i __rhs
+                           PUSH __rhs
+                     JUMP __forcond__12
+                     __for__12:
+                        // Update
+                           // Pre-Increment
+                              // RHS
+                                 // Identifier - i
+                                    PUSH __main__IntArray__block__9__if__10__block__11__for__12__i
+                              POP __rhs
+                              ADD __main__IntArray__block__9__if__10__block__11__for__12__i __main__IntArray__block__9__if__10__block__11__for__12__i 1
+                              ASSIGN __res __main__IntArray__block__9__if__10__block__11__for__12__i
+                              PUSH __res
+                        __forcond__12:
+                        // Condition
+                           // Less Than
+                              // LHS
+                                 // Identifier - i
+                                    PUSH __main__IntArray__block__9__if__10__block__11__for__12__i
+                              // RHS
+                                 // Member Accessor
+                                    // LHS
+                                       // This keyword
+                                          PUSH __this
+                                    // RHS
+                                       PUSH __field____main__IntArray__size
+                                    POP __child
+                                    POP __parent
+                                    PUSH __parent[__child]
+                              POP __rhs
+                              POP __lhs
+                              LT __res __lhs __rhs
+                              PUSH __res
+                           POP __cond
+                           CMP __cond 0
+                           JEQ __endfor__12
+                        // Body
+                           //---------------------------------------------
+                           // Code Block
+                              // Assignment
+                                 // RHS
+                                    // Subscript
+                                       // LHS
+                                          // Member Accessor
+                                             // LHS
+                                                // This keyword
+                                                   PUSH __this
+                                             // RHS
+                                                PUSH __field____main__IntArray__data
+                                             POP __child
+                                             POP __parent
+                                             PUSH __parent[__child]
+                                       // OFFSET
+                                          // Identifier - i
+                                             PUSH __main__IntArray__block__9__if__10__block__11__for__12__i
+                                       POP __offset
+                                       POP __pointer
+                                       PUSH __pointer[__offset]
+                                 // LHS
+                                    // Subscript assignment
+                                       // LHS
+                                          // Identifier - nData
+                                             PUSH __main__IntArray__block__9__if__10__block__11__nData
+                                       // OFFSET
+                                          // Identifier - i
+                                             PUSH __main__IntArray__block__9__if__10__block__11__for__12__i
+                                       POP __offset
+                                       POP __pointer
+                                 POP __rhs
+                                 ASSIGN __pointer[__offset] __rhs
+                                 PUSH __rhs
+                           //---------------------------------------------
+                        // Repeat
+                        JUMP __for__12
+                        // End of For
+                        __endfor__12:
+                     //---------------------------------------------------
+                     // Assignment
                         // RHS
-                           PUSH __field__IntArray__data
-                        POP __child
-                        POP __parent
-                        PUSH __parent[__child]
-                  // OFFSET
-                     // Member Accessor
+                           // Identifier - nData
+                              PUSH __main__IntArray__block__9__if__10__block__11__nData
                         // LHS
-                           // This keyword
-                              PUSH __this
-                        // RHS
-                           PUSH __field__IntArray__size
-                        POP __child
-                        POP __parent
-                        PUSH __parent[__child]
-                  POP __offset
-                  POP __pointer
-            POP __rhs
-            ASSIGN __pointer[__offset] __rhs
-            PUSH __rhs
-         // Post-Increment
-            // LHS
-               // Member Accessor Assignment
-                  // LHS
-                     // This keyword
-                        PUSH __this
-                  // RHS
-                     PUSH __field__IntArray__size
-                  POP __child
-                  POP __parent
-                  ASSIGN __res __parent[__child]
-                  ADD __parent[__child] __parent[__child] 1
-            PUSH __res
-      RETURN 0
-   __endMethod__IntArray__pushBack:
-   // End Method Declaration - __method__IntArray__pushBack
-   //---------------------------------------------------------------------
-
-   //---------------------------------------------------------------------
-   // Method Declaration
-   JUMP __endMethod__IntArray__popBack
-   __method__IntArray__popBack:
-      // Class Instance
-         STACKGET __this 0
-      // Parameters
-      // Body
-         // Return
-            // Subscript
+                           // Member Accessor Assignment
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main__IntArray__data
+                              POP __child
+                              POP __parent
+                              POP __rhs
+                              ASSIGN __parent[__child] __rhs
+                        PUSH __rhs
+                  //------------------------------------------------------
+               JUMP __endif__10
+               // End of if
+               __endif__10:
+            //------------------------------------------------------------
+            // Assignment
+               // RHS
+                  // Identifier - val
+                     PUSH __main__IntArray__val
                // LHS
-                  // Member Accessor
+                  // Subscript assignment
                      // LHS
-                        // This keyword
-                           PUSH __this
-                     // RHS
-                        PUSH __field__IntArray__data
-                     POP __child
-                     POP __parent
-                     PUSH __parent[__child]
-               // OFFSET
-                  // Pre-Decrement
-                     // RHS
                         // Member Accessor
                            // LHS
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field__IntArray__size
+                              PUSH __field____main__IntArray__data
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
-                     POP __rhs
-                     // LHS
-                        // Member Accessor Assignment
+                     // OFFSET
+                        // Member Accessor
                            // LHS
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field__IntArray__size
+                              PUSH __field____main__IntArray__size
                            POP __child
                            POP __parent
-                           SUBTRACT __parent[__child] __parent[__child] 1
-                           ASSIGN __res __parent[__child]
-                     PUSH __res
-               POP __offset
-               POP __pointer
-               PUSH __pointer[__offset]
-            POP __rVal
-            RETURN __rVal
-      RETURN 0
-   __endMethod__IntArray__popBack:
-   // End Method Declaration - __method__IntArray__popBack
-   //---------------------------------------------------------------------
-
-   //---------------------------------------------------------------------
-   // Method Declaration
-   JUMP __endMethod__IntArray__get
-   __method__IntArray__get:
-      // Class Instance
-         STACKGET __this 0
-      // Parameters
-         // Param: index
-         STACKGET index 1
-      // Body
-         // Return
-            // Subscript
+                           PUSH __parent[__child]
+                     POP __offset
+                     POP __pointer
+               POP __rhs
+               ASSIGN __pointer[__offset] __rhs
+               PUSH __rhs
+            // Post-Increment
                // LHS
-                  // Member Accessor
+                  // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field__IntArray__data
+                        PUSH __field____main__IntArray__size
                      POP __child
                      POP __parent
-                     PUSH __parent[__child]
-               // OFFSET
-                  // Identifier
-                     PUSH index
-               POP __offset
-               POP __pointer
-               PUSH __pointer[__offset]
-            POP __rVal
-            RETURN __rVal
+                     ASSIGN __res __parent[__child]
+                     ADD __parent[__child] __parent[__child] 1
+               PUSH __res
+         //---------------------------------------------------------------
       RETURN 0
-   __endMethod__IntArray__get:
-   // End Method Declaration - __method__IntArray__get
+   __end__method____main__IntArray__pushBack:
+   // End Method Declaration - __method____main__IntArray__pushBack
    //---------------------------------------------------------------------
 
-__endclass__IntArray:
-// End Class Declaration - IntArray
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __end__method____main__IntArray__popBack
+   __method____main__IntArray__popBack:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Subscript
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field____main__IntArray__data
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // OFFSET
+                     // Pre-Decrement
+                        // RHS
+                           // Member Accessor
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main__IntArray__size
+                              POP __child
+                              POP __parent
+                              PUSH __parent[__child]
+                        POP __rhs
+                        // LHS
+                           // Member Accessor Assignment
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main__IntArray__size
+                              POP __child
+                              POP __parent
+                              SUBTRACT __parent[__child] __parent[__child] 1
+                              ASSIGN __res __parent[__child]
+                        PUSH __res
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__IntArray__popBack:
+   // End Method Declaration - __method____main__IntArray__popBack
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration
+   JUMP __end__method____main__IntArray__get
+   __method____main__IntArray__get:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+         // Param: index
+         STACKGET __main__IntArray__index 1
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Subscript
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field____main__IntArray__data
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // OFFSET
+                     // Identifier - index
+                        PUSH __main__IntArray__index
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__IntArray__get:
+   // End Method Declaration - __method____main__IntArray__get
+   //---------------------------------------------------------------------
+
+__endclass____main__IntArray:
+// End Class Declaration - __main__IntArray
 //========================================================================
 
 // Assignment
@@ -1731,17 +1795,20 @@ __endclass__IntArray:
       // Constructor Call
          // Arguments
          // Pushing args in reverse order
-         CALL IntArray
+         CALL __ctor____main__IntArray__IntArray
          // Remove args
          RESPONSE __retval
          PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__myArray 0
    POP __rhs
-   ASSIGN myArray __rhs
+   ASSIGN __main__myArray __rhs
    PUSH __rhs
 // Method Call
    // LHS
-      // Identifier
-         PUSH myArray
+      // Identifier - myArray
+         PUSH __main__myArray
    // RHS
    // Arguments
       // Literal
@@ -1751,16 +1818,16 @@ __endclass__IntArray:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__IntArray__pushBack
-   PUSH __null
+   CALL __method____main__IntArray__pushBack
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
-      // Identifier
-         PUSH myArray
+      // Identifier - myArray
+         PUSH __main__myArray
    // RHS
    // Arguments
       // Literal
@@ -1770,30 +1837,30 @@ __endclass__IntArray:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__IntArray__pushBack
-   PUSH __null
+   CALL __method____main__IntArray__pushBack
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
-      // Identifier
-         PUSH myArray
+      // Identifier - myArray
+         PUSH __main__myArray
    // RHS
    // Arguments
    POP __obj
    // Pushing args in reverse order
    PUSH __obj
-   CALL __method__IntArray__popBack
-   PUSH __null
+   CALL __method____main__IntArray__popBack
+   POP __void
    // Remove args
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
-      // Identifier
-         PUSH myArray
+      // Identifier - myArray
+         PUSH __main__myArray
    // RHS
    // Arguments
       // Literal
@@ -1803,16 +1870,16 @@ __endclass__IntArray:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__IntArray__pushBack
-   PUSH __null
+   CALL __method____main__IntArray__pushBack
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
-      // Identifier
-         PUSH myArray
+      // Identifier - myArray
+         PUSH __main__myArray
    // RHS
    // Arguments
       // Literal
@@ -1822,23 +1889,23 @@ __endclass__IntArray:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method__IntArray__pushBack
-   PUSH __null
+   CALL __method____main__IntArray__pushBack
+   POP __void
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Method Call
    // LHS
-      // Identifier
-         PUSH myArray
+      // Identifier - myArray
+         PUSH __main__myArray
    // RHS
    // Arguments
    POP __obj
    // Pushing args in reverse order
    PUSH __obj
-   CALL __method__IntArray__popBack
-   PUSH __null
+   CALL __method____main__IntArray__popBack
+   POP __void
    // Remove args
    RESPONSE __retval
    PUSH __retval
@@ -1849,33 +1916,36 @@ __endclass__IntArray:
       // RHS
          // Literal
             PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__16__i 0
       POP __rhs
-      ASSIGN i __rhs
+      ASSIGN __main__for__16__i __rhs
       PUSH __rhs
-JUMP __forcond4
-__for4:
+JUMP __forcond__16
+__for__16:
    // Update
       // Pre-Increment
          // RHS
-            // Identifier
-               PUSH i
+            // Identifier - i
+               PUSH __main__for__16__i
          POP __rhs
-         ADD i i 1
-         ASSIGN __res i
+         ADD __main__for__16__i __main__for__16__i 1
+         ASSIGN __res __main__for__16__i
          PUSH __res
-   __forcond4:
+   __forcond__16:
    // Condition
       // Less Than
          // LHS
-            // Identifier
-               PUSH i
+            // Identifier - i
+               PUSH __main__for__16__i
          // RHS
             // Member Accessor
                // LHS
-                  // Identifier
-                     PUSH myArray
+                  // Identifier - myArray
+                     PUSH __main__myArray
                // RHS
-                  PUSH __field__IntArray__size
+                  PUSH __field____main__IntArray__size
                POP __child
                POP __parent
                PUSH __parent[__child]
@@ -1885,55 +1955,60 @@ __for4:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endfor4
+      JEQ __endfor__16
    // Body
-      // Function Call
-         // Arguments
-            // Method Call
-               // LHS
-                  // Identifier
-                     PUSH myArray
-               // RHS
-               // Arguments
-                  // Identifier
-                     PUSH i
-                  POP __arg0
-               POP __obj
-               // Pushing args in reverse order
-               PUSH __arg0
-               PUSH __obj
-               CALL __method__IntArray__get
-               PUSH __null
-               // Remove args
-               POP __null
-               RESPONSE __retval
-               PUSH __retval
-            POP __arg0
-         // Pushing args in reverse order
-         PUSH __arg0
-         CALL printInt
-         // Remove args
-         POP __null
-         RESPONSE __retval
-         PUSH __retval
-      // Function Call
-         // Arguments
-            // Literal
-               MALLOC __str 1
-               ASSIGN __str[0] ' '
-               PUSH __str
-            POP __arg0
-         // Pushing args in reverse order
-         PUSH __arg0
-         CALL print
-         // Remove args
-         POP __null
-         RESPONSE __retval
-         PUSH __retval
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call
+            // Arguments
+               // Method Call
+                  // LHS
+                     // Identifier - myArray
+                        PUSH __main__myArray
+                  // RHS
+                  // Arguments
+                     // Identifier - i
+                        PUSH __main__for__16__i
+                     POP __arg0
+                  POP __obj
+                  // Pushing args in reverse order
+                  PUSH __arg0
+                  PUSH __obj
+                  CALL __method____main__IntArray__get
+                  POP __void
+                  // Remove args
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** printInt
+            CALL printInt
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Function Call
+            // Arguments
+               // Literal
+                  MALLOC __str 1
+                  ASSIGN __str[0] ' '
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
    // Repeat
-   JUMP __for4
+   JUMP __for__16
    // End of For
-   __endfor4:
+   __endfor__16:
 //------------------------------------------------------------------------
 // Function Call
    // Arguments
@@ -1943,9 +2018,10 @@ __for4:
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
+   // *** println
    CALL println
    // Remove args
-   POP __null
+   POP __void
    RESPONSE __retval
    PUSH __retval
 // Assignment
@@ -1956,8 +2032,11 @@ __for4:
          POP __size
          MALLOC __ptr __size
          PUSH __ptr
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__multi 0
    POP __rhs
-   ASSIGN multi __rhs
+   ASSIGN __main__multi __rhs
    PUSH __rhs
 //------------------------------------------------------------------------
 // For-Loop
@@ -1966,26 +2045,29 @@ __for4:
       // RHS
          // Literal
             PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__18__i 0
       POP __rhs
-      ASSIGN i __rhs
+      ASSIGN __main__for__18__i __rhs
       PUSH __rhs
-JUMP __forcond5
-__for5:
+JUMP __forcond__18
+__for__18:
    // Update
       // Pre-Increment
          // RHS
-            // Identifier
-               PUSH i
+            // Identifier - i
+               PUSH __main__for__18__i
          POP __rhs
-         ADD i i 1
-         ASSIGN __res i
+         ADD __main__for__18__i __main__for__18__i 1
+         ASSIGN __res __main__for__18__i
          PUSH __res
-   __forcond5:
+   __forcond__18:
    // Condition
       // Less Than
          // LHS
-            // Identifier
-               PUSH i
+            // Identifier - i
+               PUSH __main__for__18__i
          // RHS
             // Literal
                PUSH 5
@@ -1995,131 +2077,143 @@ __for5:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endfor5
+      JEQ __endfor__18
    // Body
-      // Assignment
-         // RHS
-            // Array Allocator
-               // Literal
-                  PUSH 5
-               POP __size
-               MALLOC __ptr __size
-               PUSH __ptr
-         // LHS
-            // Subscript assignment
-               // LHS
-                  // Identifier
-                     PUSH multi
-               // OFFSET
-                  // Identifier
-                     PUSH i
-               POP __offset
-               POP __pointer
-         POP __rhs
-         ASSIGN __pointer[__offset] __rhs
-         PUSH __rhs
       //------------------------------------------------------------------
-      // For-Loop
-      // Init
+      // Code Block
          // Assignment
             // RHS
-               // Literal
-                  PUSH 0
-            POP __rhs
-            ASSIGN j __rhs
-            PUSH __rhs
-      JUMP __forcond6
-      __for6:
-         // Update
-            // Pre-Increment
-               // RHS
-                  // Identifier
-                     PUSH j
-               POP __rhs
-               ADD j j 1
-               ASSIGN __res j
-               PUSH __res
-         __forcond6:
-         // Condition
-            // Less Than
-               // LHS
-                  // Identifier
-                     PUSH j
-               // RHS
+               // Array Allocator
                   // Literal
                      PUSH 5
+                  POP __size
+                  MALLOC __ptr __size
+                  PUSH __ptr
+            // LHS
+               // Subscript assignment
+                  // LHS
+                     // Identifier - multi
+                        PUSH __main__multi
+                  // OFFSET
+                     // Identifier - i
+                        PUSH __main__for__18__i
+                  POP __offset
+                  POP __pointer
+            POP __rhs
+            ASSIGN __pointer[__offset] __rhs
+            PUSH __rhs
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment
+               // RHS
+                  // Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__for__18__block__19__for__20__j 0
                POP __rhs
-               POP __lhs
-               LT __res __lhs __rhs
-               PUSH __res
-            POP __cond
-            CMP __cond 0
-            JEQ __endfor6
-         // Body
-            // Function Call
-               // Arguments
-                  // Subscript
-                     // LHS
+               ASSIGN __main__for__18__block__19__for__20__j __rhs
+               PUSH __rhs
+         JUMP __forcond__20
+         __for__20:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - j
+                        PUSH __main__for__18__block__19__for__20__j
+                  POP __rhs
+                  ADD __main__for__18__block__19__for__20__j __main__for__18__block__19__for__20__j 1
+                  ASSIGN __res __main__for__18__block__19__for__20__j
+                  PUSH __res
+            __forcond__20:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - j
+                        PUSH __main__for__18__block__19__for__20__j
+                  // RHS
+                     // Literal
+                        PUSH 5
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__20
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Function Call
+                     // Arguments
                         // Subscript
                            // LHS
-                              // Identifier
-                                 PUSH multi
+                              // Subscript
+                                 // LHS
+                                    // Identifier - multi
+                                       PUSH __main__multi
+                                 // OFFSET
+                                    // Identifier - i
+                                       PUSH __main__for__18__i
+                                 POP __offset
+                                 POP __pointer
+                                 PUSH __pointer[__offset]
                            // OFFSET
-                              // Identifier
-                                 PUSH i
+                              // Identifier - j
+                                 PUSH __main__for__18__block__19__for__20__j
                            POP __offset
                            POP __pointer
                            PUSH __pointer[__offset]
-                     // OFFSET
-                        // Identifier
-                           PUSH j
-                     POP __offset
-                     POP __pointer
-                     PUSH __pointer[__offset]
-                  POP __arg0
-               // Pushing args in reverse order
-               PUSH __arg0
-               CALL printInt
-               // Remove args
-               POP __null
-               RESPONSE __retval
-               PUSH __retval
-            // Function Call
-               // Arguments
-                  // Literal
-                     MALLOC __str 1
-                     ASSIGN __str[0] ' '
-                     PUSH __str
-                  POP __arg0
-               // Pushing args in reverse order
-               PUSH __arg0
-               CALL print
-               // Remove args
-               POP __null
-               RESPONSE __retval
-               PUSH __retval
-         // Repeat
-         JUMP __for6
-         // End of For
-         __endfor6:
+                        POP __arg0
+                     // Pushing args in reverse order
+                     PUSH __arg0
+                     // *** printInt
+                     CALL printInt
+                     // Remove args
+                     POP __void
+                     RESPONSE __retval
+                     PUSH __retval
+                  // Function Call
+                     // Arguments
+                        // Literal
+                           MALLOC __str 1
+                           ASSIGN __str[0] ' '
+                           PUSH __str
+                        POP __arg0
+                     // Pushing args in reverse order
+                     PUSH __arg0
+                     // *** print
+                     CALL print
+                     // Remove args
+                     POP __void
+                     RESPONSE __retval
+                     PUSH __retval
+               //---------------------------------------------------------
+            // Repeat
+            JUMP __for__20
+            // End of For
+            __endfor__20:
+         //---------------------------------------------------------------
+         // Function Call
+            // Arguments
+               // Literal
+                  MALLOC __str 0
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
       //------------------------------------------------------------------
-      // Function Call
-         // Arguments
-            // Literal
-               MALLOC __str 0
-               PUSH __str
-            POP __arg0
-         // Pushing args in reverse order
-         PUSH __arg0
-         CALL println
-         // Remove args
-         POP __null
-         RESPONSE __retval
-         PUSH __retval
    // Repeat
-   JUMP __for5
+   JUMP __for__18
    // End of For
-   __endfor5:
+   __endfor__18:
 //------------------------------------------------------------------------
 //========================================================================
 //### END OF CODE ########################################################

@@ -1,0 +1,1075 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+
+jump __endOfLibrary
+
+//========================================================================
+// Global Variables
+
+    assign __null 0
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__loop:
+    // cond
+    cmp __i __size
+    jge __print__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__loop
+__print__endloop:
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__loop:
+    // cond
+    cmp __i __size
+    jge __println__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__loop
+__println__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void printInt (int intToPrint);
+printInt:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void printFloat (float floatToPrint);
+printFloat:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void printChar (char charToPrint);
+printChar:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+
+
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//========================================================================
+// Function Declaration - stringToInt int
+JUMP __end__stringToInt
+stringToInt:
+   // Parameters
+      // Param: str
+      STACKGET str 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Assignment
+            // RHS
+               // Literal
+                  PUSH 0
+            POP __rhs
+            ASSIGN val __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Literal
+                  PUSH 0
+            POP __rhs
+            ASSIGN isNegative __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Literal
+                  PUSH 0
+            POP __rhs
+            ASSIGN i __rhs
+            PUSH __rhs
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Identifier
+               PUSH i
+         JUMP __forcond0
+         __for0:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier
+                        PUSH i
+                  POP __rhs
+                  ADD i i 1
+                  ASSIGN __res i
+                  PUSH __res
+            __forcond0:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier
+                        PUSH i
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier
+                              PUSH str
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor0
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // If-Statement
+                     // Condition
+                        // Not Equal
+                           // LHS
+                              // Subscript
+                                 // LHS
+                                    // Identifier
+                                       PUSH str
+                                 // OFFSET
+                                    // Identifier
+                                       PUSH i
+                                 POP __offset
+                                 POP __pointer
+                                 PUSH __pointer[__offset]
+                           // RHS
+                              // Literal
+                                 PUSH ' '
+                           POP __rhs
+                           POP __lhs
+                           NEQUAL __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endif1
+                     // Body
+                        //------------------------------------------------
+                        // Code Block
+                           // Break out of __for0
+                           JUMP __endfor0
+                        //------------------------------------------------
+                     JUMP __endif1
+                     // End of if
+                     __endif1:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            // Repeat
+            JUMP __for0
+            // End of For
+            __endfor0:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Equal
+                  // LHS
+                     // Subscript
+                        // LHS
+                           // Identifier
+                              PUSH str
+                        // OFFSET
+                           // Identifier
+                              PUSH i
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // RHS
+                     // Literal
+                        PUSH '-'
+                  POP __rhs
+                  POP __lhs
+                  EQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif2
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment
+                     // RHS
+                        // Literal
+                           PUSH 1
+                     POP __rhs
+                     ASSIGN isNegative __rhs
+                     PUSH __rhs
+                  // Post-Increment
+                     ASSIGN __res i
+                     ADD i i 1
+                     PUSH __res
+               //---------------------------------------------------------
+            JUMP __endif2
+            // End of if
+            __endif2:
+         //---------------------------------------------------------------
+         // Assignment
+            // RHS
+               // Literal
+                  MALLOC __str 10
+                  ASSIGN __str[0] '0'
+                  ASSIGN __str[1] '1'
+                  ASSIGN __str[2] '2'
+                  ASSIGN __str[3] '3'
+                  ASSIGN __str[4] '4'
+                  ASSIGN __str[5] '5'
+                  ASSIGN __str[6] '6'
+                  ASSIGN __str[7] '7'
+                  ASSIGN __str[8] '8'
+                  ASSIGN __str[9] '9'
+                  PUSH __str
+            POP __rhs
+            ASSIGN digits __rhs
+            PUSH __rhs
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Identifier
+               PUSH i
+         JUMP __forcond3
+         __for3:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier
+                        PUSH i
+                  POP __rhs
+                  ADD i i 1
+                  ASSIGN __res i
+                  PUSH __res
+            __forcond3:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier
+                        PUSH i
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier
+                              PUSH str
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor3
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // For-Loop
+                  // Init
+                     // Assignment
+                        // RHS
+                           // Literal
+                              PUSH 0
+                        POP __rhs
+                        ASSIGN j __rhs
+                        PUSH __rhs
+                  JUMP __forcond4
+                  __for4:
+                     // Update
+                        // Pre-Increment
+                           // RHS
+                              // Identifier
+                                 PUSH j
+                           POP __rhs
+                           ADD j j 1
+                           ASSIGN __res j
+                           PUSH __res
+                     __forcond4:
+                     // Condition
+                        // Less Than
+                           // LHS
+                              // Identifier
+                                 PUSH j
+                           // RHS
+                              // Sizeof Operator
+                                 // RHS
+                                    // Identifier
+                                       PUSH digits
+                                 // Calculate array size
+                                 POP __array
+                                 SIZEOF __size __array
+                                 PUSH __size
+                           POP __rhs
+                           POP __lhs
+                           LT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __forelse4
+                     // Body
+                        //------------------------------------------------
+                        // Code Block
+                           //---------------------------------------------
+                           // If-Statement
+                              // Condition
+                                 // Equal
+                                    // LHS
+                                       // Subscript
+                                          // LHS
+                                             // Identifier
+                                                PUSH str
+                                          // OFFSET
+                                             // Identifier
+                                                PUSH i
+                                          POP __offset
+                                          POP __pointer
+                                          PUSH __pointer[__offset]
+                                    // RHS
+                                       // Literal
+                                          PUSH ' '
+                                    POP __rhs
+                                    POP __lhs
+                                    EQUAL __res __lhs __rhs
+                                    PUSH __res
+                                 POP __cond
+                                 CMP __cond 0
+                                 JEQ __endif5
+                              // Body
+                                 //---------------------------------------
+                                 // Code Block
+                                    // Assignment
+                                       // RHS
+                                          // Sizeof Operator
+                                             // RHS
+                                                // Identifier
+                                                   PUSH str
+                                             // Calculate array size
+                                             POP __array
+                                             SIZEOF __size __array
+                                             PUSH __size
+                                       POP __rhs
+                                       ASSIGN i __rhs
+                                       PUSH __rhs
+                                    // Break out of __for4
+                                    JUMP __endfor4
+                                 //---------------------------------------
+                              JUMP __endif5
+                              // End of if
+                              __endif5:
+                           //---------------------------------------------
+                           //---------------------------------------------
+                           // If-Statement
+                              // Condition
+                                 // Equal
+                                    // LHS
+                                       // Subscript
+                                          // LHS
+                                             // Identifier
+                                                PUSH str
+                                          // OFFSET
+                                             // Identifier
+                                                PUSH i
+                                          POP __offset
+                                          POP __pointer
+                                          PUSH __pointer[__offset]
+                                    // RHS
+                                       // Subscript
+                                          // LHS
+                                             // Identifier
+                                                PUSH digits
+                                          // OFFSET
+                                             // Identifier
+                                                PUSH j
+                                          POP __offset
+                                          POP __pointer
+                                          PUSH __pointer[__offset]
+                                    POP __rhs
+                                    POP __lhs
+                                    EQUAL __res __lhs __rhs
+                                    PUSH __res
+                                 POP __cond
+                                 CMP __cond 0
+                                 JEQ __endif6
+                              // Body
+                                 //---------------------------------------
+                                 // Code Block
+                                    // Assignment
+                                       // RHS
+                                          // Addition
+                                             // LHS
+                                                // Multiplication
+                                                   // LHS
+                                                      // Identifier
+                                                         PUSH val
+                                                   // RHS
+                                                      // Literal
+                                                         PUSH 10
+                                                   POP __rhs
+                                                   POP __lhs
+                                                   MULTIPLY __res __lhs __rhs
+                                                   PUSH __res
+                                             // RHS
+                                                // Identifier
+                                                   PUSH j
+                                             POP __rhs
+                                             POP __lhs
+                                             ADD __res __lhs __rhs
+                                             PUSH __res
+                                       POP __rhs
+                                       ASSIGN val __rhs
+                                       PUSH __rhs
+                                    // Break out of __for4
+                                    JUMP __endfor4
+                                 //---------------------------------------
+                              JUMP __endif6
+                              // End of if
+                              __endif6:
+                           //---------------------------------------------
+                        //------------------------------------------------
+                     // Repeat
+                     JUMP __for4
+                     //---------------------------------------------------
+                     // For-Else-Statement
+                     __forelse4:
+                     //---------------------------------------------------
+                     // Code Block
+                        // Function Call
+                           // Arguments
+                              // Literal
+                                 MALLOC __str 20
+                                 ASSIGN __str[0] 'C'
+                                 ASSIGN __str[1] 'a'
+                                 ASSIGN __str[2] 'n'
+                                 ASSIGN __str[3] 'n'
+                                 ASSIGN __str[4] 'o'
+                                 ASSIGN __str[5] 't'
+                                 ASSIGN __str[6] ' '
+                                 ASSIGN __str[7] 'P'
+                                 ASSIGN __str[8] 'a'
+                                 ASSIGN __str[9] 'r'
+                                 ASSIGN __str[10] 's'
+                                 ASSIGN __str[11] 'e'
+                                 ASSIGN __str[12] ' '
+                                 ASSIGN __str[13] 'i'
+                                 ASSIGN __str[14] 'n'
+                                 ASSIGN __str[15] 't'
+                                 ASSIGN __str[16] 'e'
+                                 ASSIGN __str[17] 'g'
+                                 ASSIGN __str[18] 'e'
+                                 ASSIGN __str[19] 'r'
+                                 PUSH __str
+                              POP __arg0
+                           // Pushing args in reverse order
+                           PUSH __arg0
+                           CALL println
+                           // Remove args
+                           POP __void
+                           RESPONSE __retval
+                           PUSH __retval
+                        // Return
+                           // Negative
+                              // RHS
+                                 // Literal
+                                    PUSH 1
+                              POP __rhs
+                              SUBTRACT __res 0 __rhs
+                              PUSH __res
+                           POP __rVal
+                           RETURN __rVal
+                     //---------------------------------------------------
+                     //---------------------------------------------------
+                     // End of For
+                     __endfor4:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            // Repeat
+            JUMP __for3
+            // End of For
+            __endfor3:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Identifier
+                  PUSH isNegative
+               POP __cond
+               CMP __cond 0
+               JEQ __endif7
+            // Body
+               // Return
+                  // Negative
+                     // RHS
+                        // Identifier
+                           PUSH val
+                     POP __rhs
+                     SUBTRACT __res 0 __rhs
+                     PUSH __res
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif7
+            // End of if
+            __endif7:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier
+               PUSH val
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end__stringToInt:
+// End Function Declaration - stringToInt
+//========================================================================
+
+//========================================================================
+// Function Declaration - intToString char[]
+JUMP __end__intToString
+intToString:
+   // Parameters
+      // Param: num
+      STACKGET num 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Equal
+                  // LHS
+                     // Identifier
+                        PUSH num
+                  // RHS
+                     // Literal
+                        PUSH 0
+                  POP __rhs
+                  POP __lhs
+                  EQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif8
+            // Body
+               // Return
+                  // Literal
+                     MALLOC __str 1
+                     ASSIGN __str[0] '0'
+                     PUSH __str
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif8
+            // End of if
+            __endif8:
+         //---------------------------------------------------------------
+         // Assignment
+            // RHS
+               // Literal
+                  PUSH 0
+            POP __rhs
+            ASSIGN isNegative __rhs
+            PUSH __rhs
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier
+                        PUSH num
+                  // RHS
+                     // Literal
+                        PUSH 0
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif9
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment
+                     // RHS
+                        // Literal
+                           PUSH 1
+                     POP __rhs
+                     ASSIGN isNegative __rhs
+                     PUSH __rhs
+                  // Assignment
+                     // RHS
+                        // Negative
+                           // RHS
+                              // Identifier
+                                 PUSH num
+                           POP __rhs
+                           SUBTRACT __res 0 __rhs
+                           PUSH __res
+                     POP __rhs
+                     ASSIGN num __rhs
+                     PUSH __rhs
+               //---------------------------------------------------------
+            JUMP __endif9
+            // End of if
+            __endif9:
+         //---------------------------------------------------------------
+         // Assignment
+            // RHS
+               // Literal
+                  MALLOC __str 10
+                  ASSIGN __str[0] '0'
+                  ASSIGN __str[1] '1'
+                  ASSIGN __str[2] '2'
+                  ASSIGN __str[3] '3'
+                  ASSIGN __str[4] '4'
+                  ASSIGN __str[5] '5'
+                  ASSIGN __str[6] '6'
+                  ASSIGN __str[7] '7'
+                  ASSIGN __str[8] '8'
+                  ASSIGN __str[9] '9'
+                  PUSH __str
+            POP __rhs
+            ASSIGN digits __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Literal
+                  PUSH 0
+            POP __rhs
+            ASSIGN nDigits __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Identifier
+                  PUSH num
+            POP __rhs
+            ASSIGN temp __rhs
+            PUSH __rhs
+         //---------------------------------------------------------------
+         // While-Loop
+         __while10:
+            // Condition
+               // Greater Than
+                  // LHS
+                     // Identifier
+                        PUSH temp
+                  // RHS
+                     // Literal
+                        PUSH 0
+                  POP __rhs
+                  POP __lhs
+                  GT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endwhile10
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Post-Increment
+                     ASSIGN __res nDigits
+                     ADD nDigits nDigits 1
+                     PUSH __res
+                  // Assignment
+                     // RHS
+                        // Division
+                           // LHS
+                              // Identifier
+                                 PUSH temp
+                           // RHS
+                              // Literal
+                                 PUSH 10
+                           POP __rhs
+                           POP __lhs
+                           DIVIDE __res __lhs __rhs
+                           PUSH __res
+                     POP __rhs
+                     ASSIGN temp __rhs
+                     PUSH __rhs
+               //---------------------------------------------------------
+            JUMP __while10
+            // End of While
+            __endwhile10:
+         //---------------------------------------------------------------
+         // Assignment
+            // RHS
+               // Array Allocator
+                  // Addition
+                     // LHS
+                        // Identifier
+                           PUSH nDigits
+                     // RHS
+                        // Identifier
+                           PUSH isNegative
+                     POP __rhs
+                     POP __lhs
+                     ADD __res __lhs __rhs
+                     PUSH __res
+                  POP __size
+                  MALLOC __ptr __size
+                  PUSH __ptr
+            POP __rhs
+            ASSIGN result __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Array Allocator
+                  // Addition
+                     // LHS
+                        // Identifier
+                           PUSH nDigits
+                     // RHS
+                        // Identifier
+                           PUSH isNegative
+                     POP __rhs
+                     POP __lhs
+                     ADD __res __lhs __rhs
+                     PUSH __res
+                  POP __size
+                  MALLOC __ptr __size
+                  PUSH __ptr
+            POP __rhs
+            ASSIGN reversed __rhs
+            PUSH __rhs
+         // Assignment
+            // RHS
+               // Literal
+                  PUSH 0
+            POP __rhs
+            ASSIGN i __rhs
+            PUSH __rhs
+         //---------------------------------------------------------------
+         // While-Loop
+         __while11:
+            // Condition
+               // Greater Than
+                  // LHS
+                     // Identifier
+                        PUSH num
+                  // RHS
+                     // Literal
+                        PUSH 0
+                  POP __rhs
+                  POP __lhs
+                  GT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endwhile11
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment
+                     // RHS
+                        // Subscript
+                           // LHS
+                              // Identifier
+                                 PUSH digits
+                           // OFFSET
+                              // Mod
+                                 // LHS
+                                    // Identifier
+                                       PUSH num
+                                 // RHS
+                                    // Literal
+                                       PUSH 10
+                                 POP __rhs
+                                 POP __lhs
+                                 MOD __res __lhs __rhs
+                                 PUSH __res
+                           POP __offset
+                           POP __pointer
+                           PUSH __pointer[__offset]
+                     // LHS
+                        // Subscript assignment
+                           // LHS
+                              // Identifier
+                                 PUSH result
+                           // OFFSET
+                              // Identifier
+                                 PUSH i
+                           POP __offset
+                           POP __pointer
+                     POP __rhs
+                     ASSIGN __pointer[__offset] __rhs
+                     PUSH __rhs
+                  // Post-Increment
+                     ASSIGN __res i
+                     ADD i i 1
+                     PUSH __res
+                  // Assignment
+                     // RHS
+                        // Division
+                           // LHS
+                              // Identifier
+                                 PUSH num
+                           // RHS
+                              // Literal
+                                 PUSH 10
+                           POP __rhs
+                           POP __lhs
+                           DIVIDE __res __lhs __rhs
+                           PUSH __res
+                     POP __rhs
+                     ASSIGN num __rhs
+                     PUSH __rhs
+               //---------------------------------------------------------
+            JUMP __while11
+            // End of While
+            __endwhile11:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Identifier
+                  PUSH isNegative
+               POP __cond
+               CMP __cond 0
+               JEQ __endif12
+            // Body
+               // Assignment
+                  // RHS
+                     // Literal
+                        PUSH '-'
+                  // LHS
+                     // Subscript assignment
+                        // LHS
+                           // Identifier
+                              PUSH result
+                        // OFFSET
+                           // Identifier
+                              PUSH nDigits
+                        POP __offset
+                        POP __pointer
+                  POP __rhs
+                  ASSIGN __pointer[__offset] __rhs
+                  PUSH __rhs
+            JUMP __endif12
+            // End of if
+            __endif12:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment
+               // RHS
+                  // Literal
+                     PUSH 0
+               POP __rhs
+               ASSIGN i __rhs
+               PUSH __rhs
+         JUMP __forcond13
+         __for13:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier
+                        PUSH i
+                  POP __rhs
+                  ADD i i 1
+                  ASSIGN __res i
+                  PUSH __res
+            __forcond13:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier
+                        PUSH i
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier
+                              PUSH result
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor13
+            // Body
+               // Assignment
+                  // RHS
+                     // Subscript
+                        // LHS
+                           // Identifier
+                              PUSH result
+                        // OFFSET
+                           // Subtraction
+                              // LHS
+                                 // Subtraction
+                                    // LHS
+                                       // Sizeof Operator
+                                          // RHS
+                                             // Identifier
+                                                PUSH result
+                                          // Calculate array size
+                                          POP __array
+                                          SIZEOF __size __array
+                                          PUSH __size
+                                    // RHS
+                                       // Literal
+                                          PUSH 1
+                                    POP __rhs
+                                    POP __lhs
+                                    SUBTRACT __res __lhs __rhs
+                                    PUSH __res
+                              // RHS
+                                 // Identifier
+                                    PUSH i
+                              POP __rhs
+                              POP __lhs
+                              SUBTRACT __res __lhs __rhs
+                              PUSH __res
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // LHS
+                     // Subscript assignment
+                        // LHS
+                           // Identifier
+                              PUSH reversed
+                        // OFFSET
+                           // Identifier
+                              PUSH i
+                        POP __offset
+                        POP __pointer
+                  POP __rhs
+                  ASSIGN __pointer[__offset] __rhs
+                  PUSH __rhs
+            // Repeat
+            JUMP __for13
+            // End of For
+            __endfor13:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier
+               PUSH reversed
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end__intToString:
+// End Function Declaration - intToString
+//========================================================================
+
+// Function Call
+   // Arguments
+      // Function Call
+         // Arguments
+            // Multiplication
+               // LHS
+                  // Function Call
+                     // Arguments
+                        // Function Call
+                           // Arguments
+                           // Pushing args in reverse order
+                           CALL input
+                           // Remove args
+                           RESPONSE __retval
+                           PUSH __retval
+                        POP __arg0
+                     // Pushing args in reverse order
+                     PUSH __arg0
+                     CALL stringToInt
+                     // Remove args
+                     POP __void
+                     RESPONSE __retval
+                     PUSH __retval
+               // RHS
+                  // Literal
+                     PUSH 2
+               POP __rhs
+               POP __lhs
+               MULTIPLY __res __lhs __rhs
+               PUSH __res
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL intToString
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   CALL println
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

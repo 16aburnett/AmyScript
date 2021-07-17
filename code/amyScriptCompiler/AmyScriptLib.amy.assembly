@@ -89,12 +89,8 @@ input:
     return __line
 
 //========================================================================
-// converts an integer to a string
-// char[] intToString (int val);
-intToString:
-    stackget __val 0
 
-    return 0
+
 
 //========================================================================
 

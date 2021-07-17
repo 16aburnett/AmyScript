@@ -1,0 +1,13 @@
+// Kattis Solution to Echo Echo Echo 
+// Author: Amy Burnett
+//========================================================================
+
+
+char[] msg = input ();
+print (msg);
+print (" ");
+print (msg);
+print (" ");
+println (msg);
+
+

@@ -5,113 +5,162 @@
 
 import sys 
 
-import lexer
-from parser import Parser
-from ast import *
-from visitor import *
-from semanticAnalyzer import SymbolTableVisitor
-from codeGen import CodeGenVisitor
+if __name__ == "__main__":
+    from tokenizer import tokenize
+    from parser import Parser
+    from ast import *
+    from visitor import *
+    from semanticAnalyzer import SymbolTableVisitor
+    from codeGen import CodeGenVisitor
+else:
+    from .tokenizer import tokenize
+    from .parser import Parser
+    from .ast import *
+    from .visitor import *
+    from .semanticAnalyzer import SymbolTableVisitor
+    from .codeGen import CodeGenVisitor
+
 
 # ========================================================================
 
-# determine what file to read from
-file = sys.stdin
-srcFilename = ""
-astFilename = "output.amy.ast"
-destFilename = "output.amy.assembly"
-libFilename = "AmyScriptLib.amy.assembly"
-if (len(sys.argv) == 2):
-    srcFilename = sys.argv[1]
-    file = open(srcFilename)
-    astFilename = srcFilename + ".ast"
-    destFilename = srcFilename + ".assembly"
+class AmyScriptCompiler:
 
-lines = file.readlines ()
+    def __init__(self):
+        self.debug = False
+        self.ast = ""
 
-statements = "".join(lines)
+    #---------------------------------------------------------------------
 
-#=== TOKENIZATION ========================================================
+    def compile (self, code):
 
-print ("Tokenizing...")
-tokens = lexer.tokenize(statements)
+        lines = code.split ("\n")
 
-#=== PARSING =============================================================
+        statements = code
 
-print ("Parsing...")
-parser = Parser(tokens, lines, False)
-ast = parser.parse()
+        #=== TOKENIZATION ========================================================
 
-#=== SEMANTIC ANALYSIS ===================================================
+        if (self.debug):
+            print ("Tokenizing...")
+        tokens = tokenize(statements)
 
-print ("Analyzing Semantics...")
-symbolTableVisitor = SymbolTableVisitor (lines)
+        #=== PARSING =============================================================
 
-# Add built-in functions/variables 
+        if (self.debug):
+            print ("Parsing...")    
+        parser = Parser(tokens, lines, False)
+        ast = parser.parse()
 
-#  char[] input ();
-inputFunc = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None), "input", None, [], None)
-inputFunc.type.arrayDimensions += 1
-symbolTableVisitor.table.insert (inputFunc)
+        #=== SEMANTIC ANALYSIS ===================================================
 
-#  void print (char[] str);
-param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
-param0.type.arrayDimensions += 1
-printFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "print", None, [param0], None)
-symbolTableVisitor.table.insert (printFunc)
+        if (self.debug):
+            print ("Analyzing Semantics...")
+        symbolTableVisitor = SymbolTableVisitor (lines)
 
-#  void printInt (int intToPrint);
-param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "intToPrint", None)
-printIntFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printInt", None, [param0], None)
-symbolTableVisitor.table.insert (printIntFunc)
+        # Add built-in functions/variables 
 
-#  void printFloat (float floatToPrint);
-param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
-printFloatFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printFloat", None, [param0], None)
-symbolTableVisitor.table.insert (printFloatFunc)
+        #  char[] input ();
+        inputFunc = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None), "input", None, [], None)
+        inputFunc.scopeName = "input"
+        inputFunc.type.arrayDimensions += 1
+        symbolTableVisitor.table.insert (inputFunc)
 
-#  void printChar (char c);
-param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
-printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printChar", None, [param0], None)
-symbolTableVisitor.table.insert (printCharFunc)
+        #  void print (char[] str);
+        param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
+        param0.type.arrayDimensions += 1
+        printFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "print", None, [param0], None)
+        printFunc.scopeName = "print"
+        symbolTableVisitor.table.insert (printFunc)
 
-#  void println (char[] str);
-param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
-param0.type.arrayDimensions += 1
-printlnFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "println", None, [param0], None)
-symbolTableVisitor.table.insert (printlnFunc)
+        #  void printInt (int intToPrint);
+        param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "intToPrint", None)
+        printIntFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printInt", None, [param0], None)
+        printIntFunc.scopeName = "printInt"
+        symbolTableVisitor.table.insert (printIntFunc)
 
-# Check AST
-# checks for 
-# - undeclared vars 
-# - redeclared vars 
-# - matching operand types 
-ast.accept (symbolTableVisitor)
-# ensure it was successful 
-if (not symbolTableVisitor.wasSuccessful):
-    exit (1)
+        #  void printFloat (float floatToPrint);
+        param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
+        printFloatFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printFloat", None, [param0], None)
+        printFloatFunc.scopeName = "printFloat"
+        symbolTableVisitor.table.insert (printFloatFunc)
 
-# Reaches Here if the code is valid
-print ("Valid!")
+        #  void printChar (char c);
+        param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
+        printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printChar", None, [param0], None)
+        printCharFunc.scopeName = "printChar"
+        symbolTableVisitor.table.insert (printCharFunc)
 
-# get a string representation of the ast 
-visitor = PrintVisitor ()
-visitor.visitProgramNode (ast)
-astOutput = "".join(visitor.outputstrings)
+        #  void println (char[] str);
+        param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
+        param0.type.arrayDimensions += 1
+        printlnFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "println", None, [param0], None)
+        printlnFunc.scopeName = "println"
+        symbolTableVisitor.table.insert (printlnFunc)
 
-file = open(astFilename, "w")
-file.write (astOutput)
+        # Check AST
+        # checks for 
+        # - undeclared vars 
+        # - redeclared vars 
+        # - matching operand types 
+        ast.accept (symbolTableVisitor)
+        # ensure it was successful 
+        if (not symbolTableVisitor.wasSuccessful):
+            exit (1)
 
-#=== CODE GENERATION =====================================================
+        # Reaches Here if the code is valid
+        if (self.debug):
+            print ("Valid!")
 
-codeGenVisitor = CodeGenVisitor (lines, srcFilename, libFilename)
-# generate code
-ast.accept (codeGenVisitor)
+        # get a string representation of the ast 
+        visitor = PrintVisitor ()
+        visitor.visitProgramNode (ast)
+        astOutput = "".join(visitor.outputstrings)
 
-# output generated/compiled code to separate file
-file = open(destFilename, "w")
-file.write ("".join(codeGenVisitor.code))
+        # save ast 
+        self.ast = astOutput
 
-print ("Code written to file", destFilename)
+        # file = open(astFilename, "w")
+        # file.write (astOutput)
+
+        #=== CODE GENERATION =====================================================
+
+        codeGenVisitor = CodeGenVisitor (lines)
+        # generate code
+        ast.accept (codeGenVisitor)
+
+        #=== OUTPUT ==============================================================
+
+        return "".join(codeGenVisitor.code)
+
+        #=== END =================================================================
 
 
-#=== END =================================================================
+# ========================================================================
+
+if __name__ == "__main__":
+
+    # if len(sys.argv) < 2:
+    #     print("Please provide a file_name")
+    #     exit()
+
+    # determine what file to read from
+    file = sys.stdin
+    srcFilename = ""
+    astFilename = "output.amy.ast"
+    destFilename = "output.amy.assembly"
+    if (len(sys.argv) == 2):
+        srcFilename = sys.argv[1]
+        file = open(srcFilename)
+        astFilename = srcFilename + ".ast"
+        destFilename = srcFilename + ".assembly"
+        
+    srcCode = file.readlines ()
+
+    compiler = AmyScriptCompiler ()
+    destCode = compiler.compile ("".join(srcCode))
+
+    # output generated/compiled code to separate file
+    print (f"Writing compiled code to {destFilename}")
+    file = open(destFilename, "w")
+    file.write (destCode)
+
+

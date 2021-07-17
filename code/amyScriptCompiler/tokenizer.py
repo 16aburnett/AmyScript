@@ -27,33 +27,32 @@ token_specification = [
     ('INT',      r'\d+(\.\d*)?'), 
     ('CHAR',     r'\'.\''),   
     ('STRING',   r'"[^"\\]*(\\.[^"\\]*)*"'),   
-# Keywords 
-    ('IF',       r'if'),  
-    ('ELIF',     r'elif'),  
-    ('ELSE',     r'else'),   
-    ('FOR',      r'for'),  
-    ('WHILE',    r'while'),  
-    ('RETURN',   r'return'),  
-    ('BREAK',    r'break'),  
-    ('CONTINUE', r'continue'),  
-    ('FUNCTION', r'function'),  
-    ('CLASS',    r'class'),  
-    ('PUBLIC',   r'public'),  
-    ('PRIVATE',  r'private'),  
-    ('FIELD',    r'field'),  
-    ('METHOD',   r'method'),  
-    ('CONSTRUCTOR',r'constructor'),  
-    ('NEW',      r'new'),  
-    ('THIS',     r'this'),  
-    ('SIZEOF',   r'sizeof'),  
-    ('NULL',     r'null'),  
-# Built-in types
-    ('INTTYPE',   r'int'),  
-    ('FLOATTYPE', r'float'),  
-    ('BOOLTYPE',  r'bool'),  
-    ('CHARTYPE',  r'char'),  
-    ('STRINGTYPE',r'string'), 
-    ('VOIDTYPE',  r'void'),  
+# Keywords - handled after identifiers are matched
+    # ('IF',       r'if'),  
+    # ('ELIF',     r'elif'),  
+    # ('ELSE',     r'else'),   
+    # ('FOR',      r'for'),  
+    # ('WHILE',    r'while'),  
+    # ('RETURN',   r'return'),  
+    # ('BREAK',    r'break'),  
+    # ('CONTINUE', r'continue'),  
+    # ('FUNCTION', r'function'),  
+    # ('CLASS',    r'class'),  
+    # ('PUBLIC',   r'public'),  
+    # ('PRIVATE',  r'private'),  
+    # ('FIELD',    r'field'),  
+    # ('METHOD',   r'method'),  
+    # ('CONSTRUCTOR',r'constructor'),  
+    # ('NEW',      r'new'),  
+    # ('THIS',     r'this'),  
+    # ('SIZEOF',   r'sizeof'),  
+    # ('NULL',     r'null'),  
+# Built-in types - handled after identifiers are matched
+    # ('INTTYPE',   r'int'),  
+    # ('FLOATTYPE', r'float'),  
+    # ('BOOLTYPE',  r'bool'),  
+    # ('CHARTYPE',  r'char'),  
+    # ('VOIDTYPE',  r'void'),  
 # Identifier
     ('IDENTIFIER',r'[A-Za-z_][A-Za-z_0-9]*'),    # Identifiers
 # Operators
@@ -125,6 +124,57 @@ def tokenize(code):
             continue
         elif kind == 'ERROR':
             pass
+        # match keywords 
+        elif kind == 'IDENTIFIER':
+            if (lexeme == "if"):
+                kind = "IF"
+            elif (lexeme == "elif"):
+                kind = "ELIF"
+            elif (lexeme == "else"):
+                kind = "ELSE"
+            elif (lexeme == "for"):
+                kind = "FOR"
+            elif (lexeme == "while"):
+                kind = "WHILE"
+            elif (lexeme == "return"):
+                kind = "RETURN"
+            elif (lexeme == "break"):
+                kind = "BREAK"
+            elif (lexeme == "continue"):
+                kind = "CONTINUE"
+            elif (lexeme == "function"):
+                kind = "FUNCTION"
+            elif (lexeme == "class"):
+                kind = "CLASS"
+            elif (lexeme == "public"):
+                kind = "PUBLIC"
+            elif (lexeme == "private"):
+                kind = "PRIVATE"
+            elif (lexeme == "field"):
+                kind = "FIELD"
+            elif (lexeme == "method"):
+                kind = "METHOD"
+            elif (lexeme == "constructor"):
+                kind = "CONSTRUCTOR"
+            elif (lexeme == "new"):
+                kind = "NEW"
+            elif (lexeme == "this"):
+                kind = "THIS"
+            elif (lexeme == "sizeof"):
+                kind = "SIZEOF"
+            elif (lexeme == "null"):
+                kind = "NULL"
+            elif (lexeme == "int"):
+                kind = "INTTYPE"
+            elif (lexeme == "float"):
+                kind = "FLOATTYPE"
+            elif (lexeme == "bool"):
+                kind = "BOOLTYPE"
+            elif (lexeme == "char"):
+                kind = "CHARTYPE"
+            elif (lexeme == "void"):
+                kind = "VOIDTYPE"
+
         tokens +=  [Token(kind, lexeme, value, line_num, column)]
     # add end of file token
     tokens += [Token("END_OF_FILE", "EOF", 0, line_num, len(code) - line_start + 1)]

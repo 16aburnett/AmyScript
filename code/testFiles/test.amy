@@ -1,0 +1,109 @@
+// AmyScript testing file
+// Author: Amy Burnett
+//========================================================================
+
+// 
+function int stringToInt (char[] str)
+{
+    int val = 0;
+    int isNegative = 0;
+    int i = 0;
+
+    // skip over any leading whitespace
+    for (i ; i < sizeof (str); ++i)
+    {
+        if (str[i] != ' ')
+        {
+            break; 
+        }
+    }
+
+    // test if negative 
+    if (str[i] == '-') 
+    {
+        isNegative = 1; 
+        i++;
+    }
+
+    char[] digits = "0123456789";
+
+    for (i ; i < sizeof (str); ++i)
+    {
+        for (int j = 0; j < sizeof (digits); ++j)
+        {
+            // stop parsing if whitespace is reached 
+            if (str[i] == ' ')
+            {
+                i = sizeof (str);
+                break; 
+            }
+            if (str[i] == digits[j])
+            {
+                val = val * 10 + j;
+                break;
+            }
+        }
+        else
+        {
+            println ("Cannot Parse integer");
+            return -1; 
+        }
+    }
+
+    if (isNegative)
+        return -val; 
+    return val; 
+}
+
+//========================================================================
+
+function char[] intToString (int num)
+{
+
+    if (num == 0)
+        return "0";
+
+    int isNegative = 0;
+    if (num < 0)
+    {
+        isNegative = 1;
+        num = -num;
+    }
+
+    char[] digits = "0123456789";
+
+    // count digits 
+    int nDigits = 0;
+    int temp = num;
+    while (temp > 0)
+    {
+        nDigits++; 
+        temp = temp / 10;
+    }
+
+    char[] result = new char[nDigits + isNegative];
+    char[] reversed = new char[nDigits + isNegative];
+
+    int i = 0;
+    while (num > 0)
+    {
+        result[i] = digits[num % 10];
+        i++; 
+        num = num / 10;
+    }
+
+    if (isNegative)
+        result[nDigits] = '-';
+
+    // reverse number
+    for (i = 0; i < sizeof (result); ++i)
+        reversed[i] = result[sizeof (result) - 1 - i];
+    
+    return reversed; 
+
+}
+
+//========================================================================
+
+
+println (intToString (stringToInt (input ()) * 2));

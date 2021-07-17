@@ -3,9 +3,16 @@
 # April 11 2021
 # ========================================================================
 
-from ast import *
-from visitor import ASTVisitor
-from symbolTable import SymbolTable
+if __name__ == "semanticAnalyzer":
+    from ast import *
+    from visitor import ASTVisitor
+    from symbolTable import SymbolTable
+else:
+    from .ast import *
+    from .visitor import ASTVisitor
+    from .symbolTable import SymbolTable
+
+# ========================================================================
 
 class SymbolTableVisitor (ASTVisitor):
 
@@ -169,8 +176,17 @@ class SymbolTableVisitor (ASTVisitor):
         pass
 
     def visitIfStatementNode (self, node):
+        # create scope to include variables in condition 
+        self.table.enterScope ()
+        self.typesTable.enterScope ()
+
         node.cond.accept (self)
         node.body.accept (self)
+        
+        # exit scope before reaching elifs and else
+        self.typesTable.exitScope ()
+        self.table.exitScope ()
+
         # print elifs 
         for e in node.elifs:
             e.accept (self)
@@ -179,21 +195,46 @@ class SymbolTableVisitor (ASTVisitor):
             node.elseStmt.accept (self)
 
     def visitElifStatementNode (self, node):
+        # create scope to include variables in condition 
+        self.table.enterScope ()
+        self.typesTable.enterScope ()
+
         node.cond.accept (self)
         node.body.accept (self)
+
+        # exit scope before reaching elifs and else
+        self.typesTable.exitScope ()
+        self.table.exitScope ()
 
     def visitElseStatementNode (self, node):
         node.body.accept (self)
 
     def visitForStatementNode (self, node):
+        # create scope to include variables in condition 
+        self.table.enterScope ()
+        self.typesTable.enterScope ()
+
         node.init.accept (self)
         node.cond.accept (self)
         node.update.accept (self)
         node.body.accept (self)
 
+        if node.elseStmt:
+            node.elseStmt.accept (self)
+
+        self.typesTable.exitScope ()
+        self.table.exitScope ()
+
     def visitWhileStatementNode (self, node):
+        # create scope to include variables in condition 
+        self.table.enterScope ()
+        self.typesTable.enterScope ()
+
         node.cond.accept (self)
         node.body.accept (self)
+
+        self.typesTable.exitScope ()
+        self.table.exitScope ()
 
     def visitExpressionStatementNode (self, node):
         if node.expr != None:
@@ -505,6 +546,10 @@ class SymbolTableVisitor (ASTVisitor):
 
         # search for function
         decl = self.table.lookup (node.function.id)
+
+        # save declaration with function call
+        node.decl = decl 
+
         # make sure the function declaration exists and its a function
         if (decl == None or not isinstance (decl, FunctionNode)):
             print (f"Semantic Error: '{node.function.id}' is not a function")
@@ -519,8 +564,6 @@ class SymbolTableVisitor (ASTVisitor):
             self.wasSuccessful = False
             return 
 
-        # save declaration with function call
-        node.decl = decl 
 
         # ensure the correct number of parameters 
         if (len(node.args) != len(decl.params)):
@@ -592,6 +635,7 @@ class SymbolTableVisitor (ASTVisitor):
                 isMember = True
                 node.type = field.type
                 node.rhs.type = node.type
+                node.decl = field
                 break
         # check if it is a method
         if not isMember:
@@ -600,6 +644,7 @@ class SymbolTableVisitor (ASTVisitor):
                     isMember = True
                     node.type = method.type
                     node.rhs.type = node.type
+                    node.decl = method
                     break
         if not isMember:
             print (f"Semantic Error: '{rhsid}' is not a member of '{lhsdecl.id}'")
@@ -688,7 +733,7 @@ class SymbolTableVisitor (ASTVisitor):
                     isMember = True
                     node.type = method.type
                     node.rhs.type = node.type
-                    node.methodDecl = method
+                    node.decl = method
                     break
         if not isMember:
             print (f"Semantic Error: '{rhsid}' is not a member of '{lhsdecl.id}'")
@@ -712,9 +757,9 @@ class SymbolTableVisitor (ASTVisitor):
             arg.accept (self)
 
         # ensure the correct number of parameters 
-        if (len(node.args) != len(node.methodDecl.params)):
+        if (len(node.args) != len(node.decl.params)):
             print (f"Semantic Error: Invalid number of parameters in method call")
-            print (f"   Expected: {len(node.methodDecl.params)}")
+            print (f"   Expected: {len(node.decl.params)}")
             print (f"   But got:  {len(node.args)}")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   line:")
@@ -730,19 +775,19 @@ class SymbolTableVisitor (ASTVisitor):
         # ensure each argument type matches the function's types
         for i in range(len(node.args)):
             # check for mismatched type
-            isArrayNullOp = node.methodDecl.params[i].type.arrayDimensions > 0 and node.args[i].type.type == Type.NULL
-            isObjectNullOp = node.methodDecl.params[i].type.type == Type.USERTYPE and node.args[i].type.type == Type.NULL
-            if not isArrayNullOp and not isObjectNullOp and (node.args[i].type.type != node.methodDecl.params[i].type.type
-                or node.args[i].type.arrayDimensions != node.methodDecl.params[i].type.arrayDimensions):
+            isArrayNullOp = node.decl.params[i].type.arrayDimensions > 0 and node.args[i].type.type == Type.NULL
+            isObjectNullOp = node.decl.params[i].type.type == Type.USERTYPE and node.args[i].type.type == Type.NULL
+            if not isArrayNullOp and not isObjectNullOp and (node.args[i].type.type != node.decl.params[i].type.type
+                or node.args[i].type.arrayDimensions != node.decl.params[i].type.arrayDimensions):
                 print (f"Semantic Error: Parameter types in method call do not match method declaration")
-                print (f"   Expected: {node.methodDecl.id}(", end="")
-                if len(node.methodDecl.params) > 0:
-                    print (f"{node.methodDecl.params[0].type}", end="")
-                for i in range(1, len(node.methodDecl.params)):
-                    print (f", {node.methodDecl.params[i].type}", end="")
+                print (f"   Expected: {node.decl.id}(", end="")
+                if len(node.decl.params) > 0:
+                    print (f"{node.decl.params[0].type}", end="")
+                for i in range(1, len(node.decl.params)):
+                    print (f", {node.decl.params[i].type}", end="")
                 print (")")
 
-                print (f"   But got:  {node.methodDecl.id}(", end="")
+                print (f"   But got:  {node.decl.id}(", end="")
                 if len(node.args) > 0:
                     print (f"{node.args[0].type}", end="")
                 for i in range(1, len(node.args)):
@@ -779,6 +824,8 @@ class SymbolTableVisitor (ASTVisitor):
         decl = self.typesTable.lookup (self.containingClass[-1].id)
         # save declaration's type info
         node.type = decl.type
+        # save declaration 
+        node.decl = decl 
 
     def visitIdentifierExpressionNode (self, node):
         if (self.checkDeclaration):
@@ -799,6 +846,8 @@ class SymbolTableVisitor (ASTVisitor):
             else:
                 # save declaration's type info
                 node.type = decl.type
+                # save declaration 
+                node.decl = decl 
 
     def visitArrayAllocatorExpressionNode (self, node):
         node.type.accept (self)

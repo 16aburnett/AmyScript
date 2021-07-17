@@ -1,6 +1,13 @@
+# The Amy Programming Language
+# By Amy Burnett
+# November 5 2020
+##########################################################################
+
 from typing import NamedTuple
 import re
 import sys
+
+##########################################################################
 
 class Token(NamedTuple):
     type: str

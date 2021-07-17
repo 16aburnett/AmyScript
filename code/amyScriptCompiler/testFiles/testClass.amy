@@ -148,7 +148,7 @@ myArray.pushBack (19);
 myArray.pushBack (25);
 myArray.popBack ();
 
-for (i = 0; i < myArray.size; ++i)
+for (int i = 0; i < myArray.size; ++i)
 {
     printInt (myArray.get(i));
     print (" ");
@@ -160,7 +160,7 @@ println ("");
 // creates 2d array but columns are uninitialized
 int[][] multi = new int[5][5];
 
-for (i = 0; i < 5; ++i)
+for (int i = 0; i < 5; ++i)
 {
     // must allocate space for columns
     multi[i] = new int[5];

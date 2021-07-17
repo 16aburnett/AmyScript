@@ -1,6 +1,14 @@
+# Amy Script Compiler
+# By Amy Burnett
+# April 11 2021
+# ========================================================================
 
+if __name__ == "symbolTable":
+    from ast import FunctionNode   
+else:
+    from .ast import FunctionNode   
 
-from ast import FunctionNode
+# ========================================================================
 
 class SymbolTable:
 
@@ -49,3 +57,5 @@ class SymbolTable:
                 
         # reaches here if no matching variable declaration was found
         return None
+
+# ========================================================================

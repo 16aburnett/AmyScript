@@ -5,9 +5,14 @@
 
 # for abstract classes 
 from abc import ABC, abstractmethod
-from visitor import *
-
 from enum import Enum
+
+if __name__ == "ast":
+    from visitor import *
+else:
+    from .visitor import *
+
+# ========================================================================
 
 class Type(Enum):
     INT = 1
@@ -78,6 +83,8 @@ class DeclarationNode (Node):
         self.id = id
         self.token = token
 
+        self.scopeName = ""
+
         self.lineNumber = 0
         self.columnNumber = 0
 
@@ -135,6 +142,8 @@ class FunctionNode (CodeUnitNode):
         self.params = params
         self.body = body 
 
+        self.scopeName = ""
+
         self.lineNumber = 0
         self.columnNumber = 0
 
@@ -155,6 +164,8 @@ class ClassDeclarationNode (CodeUnitNode):
         self.fields = fields 
         self.methods = methods 
 
+        self.scopeName = ""
+
         self.lineNumber = 0
         self.columnNumber = 0
 
@@ -170,6 +181,7 @@ class FieldDeclarationNode (DeclarationNode):
         self.security = security
         super().__init__(type, id, token)
         self.parentClass = None
+        self.index = 0
 
         self.lineNumber = 0
         self.columnNumber = 0
@@ -611,6 +623,7 @@ class FunctionCallExpressionNode (ExpressionNode):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.function = function
         self.args = args 
+
         self.decl = None
 
         self.lineNumber = line
@@ -633,6 +646,8 @@ class MemberAccessorExpressionNode (ExpressionNode):
         # for class method calls 
         self.id = ""
 
+        self.decl = None
+
         self.lineNumber = line
         self.columnNumber = column
 
@@ -649,6 +664,8 @@ class FieldAccessorExpressionNode (ExpressionNode):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.rhs = rhs
+
+        self.decl = None
 
         self.lineNumber = line
         self.columnNumber = column
@@ -667,7 +684,8 @@ class MethodAccessorExpressionNode (ExpressionNode):
         self.lhs = lhs
         self.rhs = rhs
         self.args = args
-        self.methodDecl = None
+
+        self.decl = None
 
         self.lineNumber = line
         self.columnNumber = column
@@ -682,6 +700,8 @@ class ThisExpressionNode (ExpressionNode):
     def __init__(self, token, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.token = token
+
+        self.decl = None
 
         self.lineNumber = line
         self.columnNumber = column
@@ -699,6 +719,8 @@ class IdentifierExpressionNode (ExpressionNode):
         self.id = id
         self.token = token
 
+        self.decl = None
+
         self.lineNumber = line
         self.columnNumber = column
 
@@ -712,6 +734,8 @@ class ArrayAllocatorExpressionNode (ExpressionNode):
     def __init__(self, type, dimensions, line, column):
         self.type = type
         self.dimensions = dimensions
+
+        self.decl = None
 
         self.lineNumber = line
         self.columnNumber = column
@@ -727,6 +751,7 @@ class ConstructorCallExpressionNode (ExpressionNode):
         self.type = type
         self.id = id
         self.args = args
+
         self.decl = None
 
         self.lineNumber = line

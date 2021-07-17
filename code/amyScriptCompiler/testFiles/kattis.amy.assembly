@@ -115,40 +115,6 @@ __endOfLibrary:
 //### COMPILED CODE ######################################################
 //========================================================================
 
-// Function Call
-   // Arguments
-      // Literal
-         MALLOC __str 20
-         ASSIGN __str[0] 'E'
-         ASSIGN __str[1] 'n'
-         ASSIGN __str[2] 't'
-         ASSIGN __str[3] 'e'
-         ASSIGN __str[4] 'r'
-         ASSIGN __str[5] ' '
-         ASSIGN __str[6] 'y'
-         ASSIGN __str[7] 'o'
-         ASSIGN __str[8] 'u'
-         ASSIGN __str[9] 'r'
-         ASSIGN __str[10] ' '
-         ASSIGN __str[11] 'n'
-         ASSIGN __str[12] 'a'
-         ASSIGN __str[13] 'm'
-         ASSIGN __str[14] 'e'
-         ASSIGN __str[15] ' '
-         ASSIGN __str[16] '='
-         ASSIGN __str[17] '='
-         ASSIGN __str[18] '>'
-         ASSIGN __str[19] ' '
-         PUSH __str
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   // *** print
-   CALL print
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
 // Assignment
    // RHS
       // Function Call
@@ -161,21 +127,28 @@ __endOfLibrary:
          PUSH __retval
    // LHS
       // Variable Declaration
-         ASSIGN __main__name 0
+         ASSIGN __main__msg 0
    POP __rhs
-   ASSIGN __main__name __rhs
+   ASSIGN __main__msg __rhs
    PUSH __rhs
 // Function Call
    // Arguments
+      // Identifier - msg
+         PUSH __main__msg
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** print
+   CALL print
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
       // Literal
-         MALLOC __str 7
-         ASSIGN __str[0] 'H'
-         ASSIGN __str[1] 'e'
-         ASSIGN __str[2] 'l'
-         ASSIGN __str[3] 'l'
-         ASSIGN __str[4] 'o'
-         ASSIGN __str[5] ','
-         ASSIGN __str[6] ' '
+         MALLOC __str 1
+         ASSIGN __str[0] ' '
          PUSH __str
       POP __arg0
    // Pushing args in reverse order
@@ -188,8 +161,36 @@ __endOfLibrary:
    PUSH __retval
 // Function Call
    // Arguments
-      // Identifier - name
-         PUSH __main__name
+      // Identifier - msg
+         PUSH __main__msg
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** print
+   CALL print
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Literal
+         MALLOC __str 1
+         ASSIGN __str[0] ' '
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** print
+   CALL print
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call
+   // Arguments
+      // Identifier - msg
+         PUSH __main__msg
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0

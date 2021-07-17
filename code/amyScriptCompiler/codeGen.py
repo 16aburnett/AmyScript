@@ -3,16 +3,29 @@
 # April 11 2021
 # ========================================================================
 
-from ast import *
-from visitor import ASTVisitor
-from symbolTable import SymbolTable
+import os 
+
+if __name__ == "codeGen":
+    from ast import *
+    from visitor import ASTVisitor
+    from symbolTable import SymbolTable
+else:
+    from .ast import *
+    from .visitor import ASTVisitor
+    from .symbolTable import SymbolTable
+
+# ========================================================================
 
 DIVIDER_LENGTH = 75 
 TAB_LENGTH = 3
 
+LIB_FILENAME = os.path.dirname(__file__) + "/AmyScriptLib.amy.assembly"
+
+# ========================================================================
+
 class CodeGenVisitor (ASTVisitor):
 
-    def __init__(self, lines, srcFilename, libFilename):
+    def __init__(self, lines):
         self.parameters = []
         self.lines = lines 
         self.indentation = 0
@@ -20,13 +33,12 @@ class CodeGenVisitor (ASTVisitor):
         self.lhs = "null"
         self.jumpIndex = 0
         self.shouldComment = True
-        self.srcFilename = srcFilename
-        self.libFilename = libFilename
         # stack implementation
         # keeps track of containing loop
         # for break and continue statements 
         self.parentLoops = []
         self.pushParent = False
+        self.scopeNames = ["__main"]
 
     # === HELPER FUNCTIONS ===============================================
 
@@ -92,12 +104,17 @@ class CodeGenVisitor (ASTVisitor):
             return 
         self.code += ["\n"]
 
+    def enterScope (self, name):
+        self.scopeNames += [f"__{name}"]
+
+    def exitScope (self):
+        self.scopeNames.pop ()
+
     # === VISITOR FUNCTIONS ==============================================
 
     def visitProgramNode (self, node):
 
         self.printComment ("AmyAssembly compiled from AmyScript")
-        self.printComment (f"Filename: {self.srcFilename}")
         self.printDivider ()
         self.printNewline ()
 
@@ -107,7 +124,7 @@ class CodeGenVisitor (ASTVisitor):
         self.printNewline ()
 
         # add library code
-        file = open (self.libFilename, "r")
+        file = open (LIB_FILENAME, "r")
         for line in file.readlines ():
             self.code += [line]
 
@@ -130,6 +147,7 @@ class CodeGenVisitor (ASTVisitor):
 
     def visitParameterNode (self, node):
         node.type.accept (self)
+        node.scopeName = "".join (self.scopeNames) + "__" + node.id
 
     def visitCodeUnitNode (self, node):
         pass
@@ -140,21 +158,32 @@ class CodeGenVisitor (ASTVisitor):
 
         self.indentation += 1
 
+        # variable names are modified by its scope 
+        scopeName = "".join (self.scopeNames) + "__" + node.id
+
         # declare the variable with default value 
-        self.printCode (f"ASSIGN {node.id} 0")
+        self.printCode (f"ASSIGN {scopeName} 0")
         self.lhs = node.id
+        node.scopeName = scopeName
 
         self.indentation -= 1
 
     def visitFunctionNode (self, node):
 
+        # variable names are modified by its scope 
+        scopeName = "".join (self.scopeNames) + "__" + node.id
+        node.scopeName = scopeName
+
+        # create new scope level 
+        self.scopeNames += [f"__{node.id}"]
+
         self.printDivider ()
-        self.printComment (f"Function Declaration - {node.id} {node.type}")
+        self.printComment (f"Function Declaration - {node.scopeName} {node.type}")
         # add jump to skip over function 
-        self.printCode (f"JUMP __end__{node.id}")
+        self.printCode (f"JUMP __end__{node.scopeName}")
 
         # place function jump-point label 
-        self.printCode (node.id + ":")
+        self.printCode (node.scopeName + ":")
 
         self.indentation += 1
 
@@ -163,8 +192,9 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation += 1
         for i in range(len(node.params)):
             self.printComment (f"Param: {node.params[i].id}")
+            node.params[i].accept (self)
             # keep the same parameter name 
-            self.printCode (f"STACKGET {node.params[i].id} {i}")
+            self.printCode (f"STACKGET {node.params[i].scopeName} {i}")
         self.indentation -= 1
 
         self.printComment ("Body")
@@ -177,35 +207,40 @@ class CodeGenVisitor (ASTVisitor):
 
         self.indentation -= 1
 
-        self.printCode (f"__end__{node.id}:")
+        self.printCode (f"__end__{node.scopeName}:")
 
-        self.printComment (f"End Function Declaration - {node.id}")
+        self.printComment (f"End Function Declaration - {node.scopeName}")
         self.printDivider ()
         self.printNewline ()
 
+        # remove scope level 
+        self.scopeNames.pop ()
+
     def visitClassDeclarationNode(self, node):
 
+        # variable names are modified by its scope 
+        scopeName = "".join (self.scopeNames) + "__" + node.id
+        node.scopeName = scopeName
+
+        # create new scope level 
+        self.scopeNames += [f"__{node.id}"]
+
         self.printDivider ()
-        self.printComment (f"Class Declaration - {node.id}")
+        self.printComment (f"Class Declaration - {node.scopeName}")
 
         self.indentation += 1
 
         i = 0
         for field in node.fields:
             field.parentClass = node
-            self.printSubDivider ()
-            self.printComment (f"Field - {field.id}")
-
-            fieldIndexVarname = f"__field__{node.id}__{field.id}"
-            self.printCode (f"ASSIGN {fieldIndexVarname} {i}")
+            field.index = i 
+            field.accept (self)
             i += 1
-
-            self.printSubDivider ()
 
         # add jump to skip over class dec  
         self.indentation -= 1
         self.printComment ("skip over class methods")
-        self.printCode (f"JUMP __endclass__{node.id}")
+        self.printCode (f"JUMP __endclass__{node.scopeName}")
         self.indentation += 1
 
         for ctor in node.constructors:
@@ -218,22 +253,38 @@ class CodeGenVisitor (ASTVisitor):
 
         self.indentation -= 1
 
-        self.printCode (f"__endclass__{node.id}:")
+        self.printCode (f"__endclass__{node.scopeName}:")
 
-        self.printComment (f"End Class Declaration - {node.id}")
+        self.printComment (f"End Class Declaration - {node.scopeName}")
         self.printDivider ()
         self.printNewline ()
 
+        # remove scope level 
+        self.scopeNames.pop ()
+
     def visitFieldDeclarationNode (self, node):
-        pass
+        # variable names are modified by its scope 
+        fieldScopeName = "__field__" + "".join (self.scopeNames) + "__" + node.id
+        node.scopeName = fieldScopeName
+        self.printSubDivider ()
+        self.printComment (f"Field - {node.scopeName}")
+
+        # fieldIndexVarname = f"__field__{node.id}__{field.id}"
+        self.printCode (f"ASSIGN {node.scopeName} {node.index}")
+
+        self.printSubDivider ()
 
     def visitMethodDeclarationNode (self, node):
+
+        # variable names are modified by its scope 
+        scopeName = "__method__" + "".join (self.scopeNames) + "__" + node.id
+        node.scopeName = scopeName
 
         self.printSubDivider ()
         self.printComment (f"Method Declaration")
 
-        endLabel = f"__endMethod__{node.parentClass.id}__{node.id}"
-        methodLabel = f"__method__{node.parentClass.id}__{node.id}"
+        endLabel = f"__end{node.scopeName}"
+        methodLabel = node.scopeName
 
         # add jump to skip over function 
         self.printCode (f"JUMP {endLabel}")
@@ -255,8 +306,9 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation += 1
         for i in range(1, len(node.params)+1):
             self.printComment (f"Param: {node.params[i-1].id}")
+            node.params[i-1].accept (self)
             # keep the same parameter name 
-            self.printCode (f"STACKGET {node.params[i-1].id} {i}")
+            self.printCode (f"STACKGET {node.params[i-1].scopeName} {i}")
         self.indentation -= 1        
 
         self.printComment ("Body")
@@ -277,11 +329,15 @@ class CodeGenVisitor (ASTVisitor):
 
     def visitConstructorDeclarationNode (self, node):
 
-        self.printSubDivider ()
-        self.printComment (f"Constructor Declaration - {node.parentClass.id} {node.parentClass.type}")
+        # variable names are modified by its scope 
+        scopeName = "__ctor__"+ "".join (self.scopeNames) + "__" + node.parentClass.id
+        node.scopeName = scopeName
 
-        endLabel = f"__endctor__{node.parentClass.id}"
-        ctorLabel = f"{node.parentClass.id}"
+        self.printSubDivider ()
+        self.printComment (f"Constructor Declaration - {node.scopeName} {node.parentClass.type}")
+
+        endLabel = f"__end{node.scopeName}"
+        ctorLabel = f"{node.scopeName}"
 
         # add jump to skip over function 
         self.printCode (f"JUMP {endLabel}")
@@ -301,10 +357,11 @@ class CodeGenVisitor (ASTVisitor):
         # load parameters 
         self.printComment ("Parameters")
         self.indentation += 1
-        for i in range(0, len(node.params)):
+        for i in range(len(node.params)):
             self.printComment (f"Param: {node.params[i].id}")
+            node.params[i].accept (self)
             # keep the same parameter name 
-            self.printCode (f"STACKGET {node.params[i].id} {i}")
+            self.printCode (f"STACKGET {node.params[i].scopeName} {i}")
         self.indentation -= 1        
 
         self.printComment ("Body")
@@ -319,7 +376,7 @@ class CodeGenVisitor (ASTVisitor):
 
         self.printCode (f"{endLabel}:")
 
-        self.printComment (f"End Constructor Declaration - {node.parentClass.id}")
+        self.printComment (f"End Constructor Declaration - {node.scopeName}")
         self.printSubDivider ()
         self.printNewline ()
         
@@ -328,6 +385,7 @@ class CodeGenVisitor (ASTVisitor):
         pass
 
     def visitIfStatementNode (self, node):
+
         self.printSubDivider ()
         self.printComment ("If-Statement")
 
@@ -336,8 +394,11 @@ class CodeGenVisitor (ASTVisitor):
         elifIndex = 0
         self.jumpIndex += 1
 
-        elseLabel = f"__else{ifIndex}"
-        endLabel = f"__endif{ifIndex}"
+        elseLabel = f"__else__{ifIndex}"
+        endLabel = f"__endif__{ifIndex}"
+
+        # create new scope level 
+        self.scopeNames += [f"__if__{ifIndex}"]
 
         self.indentation += 1
 
@@ -354,7 +415,7 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("CMP __cond 0")
         # jump to next elif if there is one 
         if (len(node.elifs) > 0):
-            firstElif = f"__elif{ifIndex}x{elifIndex}"
+            firstElif = f"__elif__{ifIndex}x{elifIndex}"
             self.printCode (f"JEQ {firstElif}")
         # no elifs but has an else
         elif node.elseStmt != None:
@@ -374,14 +435,20 @@ class CodeGenVisitor (ASTVisitor):
         # skips over elifs and else
         self.printCode (f"JUMP {endLabel}")
 
+        # exit if scope
+        self.scopeNames.pop ()
+
         # print elifs 
         for i in range(len(node.elifs)):
             elifNode = node.elifs[i]
 
             self.printSubDivider ()
             self.printComment ("Elif-Statement")
-            self.printCode (f"__elif{ifIndex}x{elifIndex}:")
+            self.printCode (f"__elif__{ifIndex}x{elifIndex}:")
             elifIndex += 1
+
+            # create new scope level 
+            self.scopeNames += [f"__elif__{ifIndex}x{elifIndex}"]
 
             self.indentation += 1
 
@@ -398,7 +465,7 @@ class CodeGenVisitor (ASTVisitor):
             self.printCode ("CMP __cond 0")
             # jump to next elif if there is one 
             if (i+1 < len(node.elifs)):
-                nextElif = f"__elif{ifIndex}x{elifIndex}"
+                nextElif = f"__elif__{ifIndex}x{elifIndex}"
                 self.printCode (f"JEQ {nextElif}")
             # no more elifs but has an else
             elif node.elseStmt != None:
@@ -419,17 +486,26 @@ class CodeGenVisitor (ASTVisitor):
 
             self.printSubDivider ()
 
+            # exit scope
+            self.scopeNames.pop ()
+
         # print else 
         if node.elseStmt != None:
             self.printSubDivider ()
             self.printComment ("Else-Statement")
             self.printCode (f"{elseLabel}:")
 
+            # create new scope level 
+            self.scopeNames += [elseLabel]
+
             node.elseStmt.body.accept (self)
 
             # jump to endif not necessary since else is always at the end 
 
             self.printSubDivider ()
+
+            # exit scope
+            self.scopeNames.pop ()
 
         # end of if 
         self.printComment ("End of if")
@@ -453,10 +529,13 @@ class CodeGenVisitor (ASTVisitor):
         forIndex = self.jumpIndex
         self.jumpIndex += 1
 
-        forLabel = f"__for{forIndex}"
-        condLabel = f"__forcond{forIndex}"
-        elseLabel = f"__forelse{forIndex}"
-        endLabel = f"__endfor{forIndex}"
+        forLabel = f"__for__{forIndex}"
+        condLabel = f"__forcond__{forIndex}"
+        elseLabel = f"__forelse__{forIndex}"
+        endLabel = f"__endfor__{forIndex}"
+
+        # create new scope level 
+        self.scopeNames += [forLabel]
 
         # save loop info for break and continue statements
         node.startLabel = forLabel
@@ -523,7 +602,13 @@ class CodeGenVisitor (ASTVisitor):
             self.printComment ("For-Else-Statement")
             self.printCode (f"{elseLabel}:")
 
+            # create new scope level 
+            self.scopeNames += [elseLabel]
+
             node.elseStmt.body.accept (self)
+
+            # exit scope
+            self.scopeNames.pop ()
 
             self.printSubDivider ()
 
@@ -539,6 +624,9 @@ class CodeGenVisitor (ASTVisitor):
 
         self.printSubDivider ()
 
+        # exit scope
+        self.scopeNames.pop ()
+
     def visitWhileStatementNode (self, node):
         self.printSubDivider ()
         self.printComment ("While-Loop")
@@ -547,8 +635,11 @@ class CodeGenVisitor (ASTVisitor):
         whileIndex = self.jumpIndex
         self.jumpIndex += 1
 
-        whileLabel = f"__while{whileIndex}"
-        endLabel = f"__endwhile{whileIndex}"
+        whileLabel = f"__while__{whileIndex}"
+        endLabel = f"__endwhile__{whileIndex}"
+
+        # create new scope level 
+        self.scopeNames += [whileLabel]
 
         # save loop info for break and continue statements
         node.startLabel = whileLabel
@@ -596,6 +687,9 @@ class CodeGenVisitor (ASTVisitor):
 
         self.printSubDivider ()
 
+        # exit scope 
+        self.scopeNames.pop ()
+
     def visitExpressionStatementNode (self, node):
         if node.expr != None:
             node.expr.accept (self)
@@ -628,6 +722,14 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode (f"JUMP {self.parentLoops[-1].breakLabel}")
 
     def visitCodeBlockNode (self, node):
+        self.printSubDivider ()
+        self.printComment ("Code Block")
+        self.indentation += 1
+
+        # create new scope level 
+        self.scopeNames += [f"__block__{self.jumpIndex}"]
+        self.jumpIndex += 1
+
         # if this is a function body
         # then add the parameters to this scope
         for p in self.parameters:
@@ -637,6 +739,12 @@ class CodeGenVisitor (ASTVisitor):
         # print each codeunit
         for unit in node.codeunits:
             unit.accept (self)
+
+        # exit scope
+        self.scopeNames.pop ()
+
+        self.indentation -= 1
+        self.printSubDivider ()
 
     def visitExpressionNode (self, node):
         pass
@@ -655,9 +763,16 @@ class CodeGenVisitor (ASTVisitor):
         node.rhs.accept (self)
         self.indentation -= 1
 
-        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
+        if isinstance(node.lhs, VariableDeclarationNode):
+            self.printComment ("LHS")
+            self.indentation += 1
+            node.lhs.accept (self)
+            self.indentation -= 1
             self.printCode (f"POP __rhs")
-            self.printCode (f"ASSIGN {node.lhs.id} __rhs")
+            self.printCode (f"ASSIGN {node.lhs.scopeName} __rhs")
+        elif isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
+            self.printCode (f"POP __rhs")
+            self.printCode (f"ASSIGN {node.lhs.decl.scopeName} __rhs")
         elif isinstance(node.lhs, SubscriptExpressionNode):
             self.printComment ("LHS")
             self.indentation += 1
@@ -697,9 +812,9 @@ class CodeGenVisitor (ASTVisitor):
 
             self.printComment ("RHS")
             self.indentation += 1
-            # construct field index var 
-            fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"PUSH {fieldIndex}")
+            # # construct field index var 
+            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
+            self.printCode (f"PUSH {node.lhs.decl.scopeName}")
             self.indentation -= 1
 
             self.printCode ("POP __child")
@@ -950,8 +1065,8 @@ class CodeGenVisitor (ASTVisitor):
     
         if node.op == "++":
             if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
-                self.printCode (f"ADD {node.rhs.id} {node.rhs.id} 1")
-                self.printCode (f"ASSIGN __res {node.rhs.id}")
+                self.printCode (f"ADD {node.rhs.decl.scopeName} {node.rhs.decl.scopeName} 1")
+                self.printCode (f"ASSIGN __res {node.rhs.decl.scopeName}")
             elif isinstance(node.rhs, SubscriptExpressionNode):
                 self.printComment ("RHS")
                 self.indentation += 1
@@ -992,8 +1107,8 @@ class CodeGenVisitor (ASTVisitor):
                 self.printComment ("RHS")
                 self.indentation += 1
                 # construct field index var 
-                fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
-                self.printCode (f"PUSH {fieldIndex}")
+                # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
+                self.printCode (f"PUSH {node.rhs.decl.scopeName}")
                 self.indentation -= 1
 
                 self.printCode ("POP __child")
@@ -1009,8 +1124,8 @@ class CodeGenVisitor (ASTVisitor):
                 exit (1)
         elif node.op == "--":
             if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
-                self.printCode (f"SUBTRACT {node.rhs.id} {node.rhs.id} 1")
-                self.printCode (f"ASSIGN __res {node.rhs.id}")
+                self.printCode (f"SUBTRACT {node.rhs.decl.scopeName} {node.rhs.decl.scopeName} 1")
+                self.printCode (f"ASSIGN __res {node.rhs.decl.scopeName}")
             elif isinstance(node.rhs, SubscriptExpressionNode):
                 self.printComment ("RHS")
                 self.indentation += 1
@@ -1051,8 +1166,8 @@ class CodeGenVisitor (ASTVisitor):
                 self.printComment ("RHS")
                 self.indentation += 1
                 # construct field index var 
-                fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
-                self.printCode (f"PUSH {fieldIndex}")
+                # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
+                self.printCode (f"PUSH {node.rhs.decl.scopeName}")
                 self.indentation -= 1
 
                 self.printCode ("POP __child")
@@ -1086,8 +1201,8 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation += 1
 
         if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-            self.printCode (f"ASSIGN __res {node.lhs.id}")
-            self.printCode (f"ADD {node.lhs.id} {node.lhs.id} 1")
+            self.printCode (f"ASSIGN __res {node.lhs.decl.scopeName}")
+            self.printCode (f"ADD {node.lhs.decl.scopeName} {node.lhs.decl.scopeName} 1")
         elif isinstance(node.lhs, SubscriptExpressionNode):
             self.printComment ("RHS")
             self.indentation += 1
@@ -1128,8 +1243,8 @@ class CodeGenVisitor (ASTVisitor):
             self.printComment ("RHS")
             self.indentation += 1
             # construct field index var 
-            fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"PUSH {fieldIndex}")
+            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
+            self.printCode (f"PUSH {node.lhs.decl.scopeName}")
             self.indentation -= 1
 
             self.printCode ("POP __child")
@@ -1155,8 +1270,8 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation += 1
 
         if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-            self.printCode (f"ASSIGN __res {node.lhs.id}")
-            self.printCode (f"SUBTRACT {node.lhs.id} {node.lhs.id} 1")
+            self.printCode (f"ASSIGN __res {node.lhs.decl.scopeName}")
+            self.printCode (f"SUBTRACT {node.lhs.decl.scopeName} {node.lhs.decl.scopeName} 1")
         elif isinstance(node.lhs, SubscriptExpressionNode):
             self.printComment ("RHS")
             self.indentation += 1
@@ -1197,8 +1312,8 @@ class CodeGenVisitor (ASTVisitor):
             self.printComment ("RHS")
             self.indentation += 1
             # construct field index var 
-            fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"PUSH {fieldIndex}")
+            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
+            self.printCode (f"PUSH {node.lhs.decl.scopeName}")
             self.indentation -= 1
 
             self.printCode ("POP __child")
@@ -1269,7 +1384,8 @@ class CodeGenVisitor (ASTVisitor):
             self.printCode (f"PUSH __arg{i}")
 
         # call function
-        self.printCode (f"CALL {node.function.id}")
+        self.printComment (f"*** {node.function.id}")
+        self.printCode (f"CALL {node.decl.scopeName}")
 
         # remove arguments from stack
         self.printComment ("Remove args")
@@ -1294,9 +1410,7 @@ class CodeGenVisitor (ASTVisitor):
 
         self.printComment ("RHS")
         self.indentation += 1
-        # construct field index var 
-        fieldIndex = f"__field__{node.lhs.type.id}__{node.rhs.id}"
-        self.printCode (f"PUSH {fieldIndex}")
+        self.printCode (f"PUSH {node.decl.scopeName}")
         self.indentation -= 1
 
         self.printCode ("POP __child")
@@ -1318,8 +1432,7 @@ class CodeGenVisitor (ASTVisitor):
         self.printComment ("RHS")
         self.indentation += 1
         # construct field index var 
-        fieldIndex = f"__field__{node.lhs.type.id}__{node.rhs.id}"
-        self.printCode (f"PUSH {fieldIndex}")
+        self.printCode (f"PUSH {node.decl.scopeName}")
         self.indentation -= 1
 
         self.printCode ("POP __child")
@@ -1341,7 +1454,7 @@ class CodeGenVisitor (ASTVisitor):
         self.printComment ("RHS")
         self.indentation += 1
         # construct field index var 
-        methodName = f"__method__{node.lhs.type.id}__{node.rhs.id}"
+        # methodName = f"__method__{node.lhs.type.id}__{node.rhs.id}"
         self.indentation -= 1
 
 
@@ -1376,7 +1489,7 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode (f"PUSH __obj")
 
         # call function
-        self.printCode (f"CALL {methodName}")
+        self.printCode (f"CALL {node.decl.scopeName}")
 
         # remove parent object instance
         self.printCode (f"POP __void")
@@ -1399,9 +1512,9 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitIdentifierExpressionNode (self, node):
-        self.printComment (f"Identifier")
+        self.printComment (f"Identifier - {node.id}")
         self.indentation += 1
-        self.printCode (f"PUSH {node.id}")
+        self.printCode (f"PUSH {node.decl.scopeName}")
         self.indentation -= 1
 
     def visitArrayAllocatorExpressionNode (self, node):
@@ -1448,7 +1561,7 @@ class CodeGenVisitor (ASTVisitor):
             self.printCode (f"PUSH __arg{i}")
 
         # call function
-        self.printCode (f"CALL {node.type.id}")
+        self.printCode (f"CALL {node.decl.scopeName}")
 
         # remove arguments from stack
         self.printComment ("Remove args")
