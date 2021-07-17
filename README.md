@@ -1,7 +1,7 @@
 AmyScript
 ===========
 
-AmyScript is a middle-to-high-level programming language. It is still currently in development and the compiler exists in code/highlevel. The expectation is that AmyScript is compiled to AmyAssembly which will then be interpreted. 
+AmyScript is a middle-to-high-level programming language. It is still currently in development and the compiler exists in code/amyScriptCompiler. The expectation is that AmyScript is compiled to AmyAssembly which will then be interpreted. 
 
 Check out the documentation at https://16aburnett.github.io/AmyScript/website
 
