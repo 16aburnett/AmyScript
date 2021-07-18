@@ -19,73 +19,105 @@ jump __endOfLibrary
 //========================================================================
 // Prints a given string to the screen
 // void print (char[] stringToPrint);
-print:
+print__char__1:
     // grab string
     stackget __str 0
     sizeof __size __str
     // print each char
     // init
     assign __i 0
-__print__loop:
+__print__char__1__loop:
     // cond
     cmp __i __size
-    jge __print__endloop
+    jge __print__char__1__endloop
     // Body
     print __str[__i]
     // update
     add __i __i 1
     // repeat
-    jump __print__loop
-__print__endloop:
-    return 0
-
-//========================================================================
-// Prints a given string to the screen with a newline at the end
-// void println (char[] stringToPrint);
-println:
-    // grab string
-    stackget __str 0
-    sizeof __size __str
-    // print each char
-    // init
-    assign __i 0
-__println__loop:
-    // cond
-    cmp __i __size
-    jge __println__endloop
-    // Body
-    print __str[__i]
-    // update
-    add __i __i 1
-    // repeat
-    jump __println__loop
-__println__endloop:
-    println
+    jump __print__char__1__loop
+__print__char__1__endloop:
     return 0
 
 //========================================================================
 // Prints an int to the screen
-// void printInt (int intToPrint);
-printInt:
+// void print (int intToPrint);
+print__int:
     stackget __str 0
     print __str
     return 0
 
 //========================================================================
 // Prints a float to the screen
-// void printFloat (float floatToPrint);
-printFloat:
+// void print (float floatToPrint);
+print__float:
     stackget __str 0
     print __str
     return 0
 
 //========================================================================
 // Prints a char to the screen
-// void printChar (char charToPrint);
-printChar:
+// void print (char charToPrint);
+print__char:
     // grab string
     stackget __char 0
     print __char
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
     return 0
 
 //========================================================================
@@ -96,8 +128,9 @@ input:
     return __line
 
 //========================================================================
-
-
+// exits/stops the program 
+exit:
+    halt
 
 //========================================================================
 
@@ -118,41 +151,41 @@ __endOfLibrary:
 //========================================================================
 // Class Declaration - __main__Person
    //---------------------------------------------------------------------
-   // Field - __field____main__Person__name
+   // Field - char[] Person::name
    ASSIGN __field____main__Person__name 0
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
-   // Field - __field____main__Person__age
+   // Field - int Person::age
    ASSIGN __field____main__Person__age 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
-   // Field - __field____main__Person__friends
+   // Field - Person[] Person::friends
    ASSIGN __field____main__Person__friends 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
-   // Field - __field____main__Person__nFriends
+   // Field - int Person::nFriends
    ASSIGN __field____main__Person__nFriends 3
    //---------------------------------------------------------------------
 // skip over class methods
 JUMP __endclass____main__Person
    //---------------------------------------------------------------------
-   // Constructor Declaration - __ctor____main__Person__Person Person
-   JUMP __end__ctor____main__Person__Person
-   __ctor____main__Person__Person:
+   // Constructor Declaration - Person Person::Person(char[], int)
+   JUMP __end__ctor____main__Person____Person__char__1__int
+   __ctor____main__Person____Person__char__1__int:
       // Creating Class Instance
          MALLOC __this 4
       // Parameters
          // Param: name
-         STACKGET __main__Person__name 0
+         STACKGET __main__Person__Person__name 0
          // Param: age
-         STACKGET __main__Person__age 1
+         STACKGET __main__Person__Person__age 1
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - name
-                     PUSH __main__Person__name
+                     PUSH __main__Person__Person__name
                // LHS
                   // Member Accessor Assignment
                      // LHS
@@ -168,7 +201,7 @@ JUMP __endclass____main__Person
             // Assignment
                // RHS
                   // Identifier - age
-                     PUSH __main__Person__age
+                     PUSH __main__Person__Person__age
                // LHS
                   // Member Accessor Assignment
                      // LHS
@@ -219,14 +252,14 @@ JUMP __endclass____main__Person
                PUSH __rhs
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Person__Person:
-   // End Constructor Declaration - __ctor____main__Person__Person
+   __end__ctor____main__Person____Person__char__1__int:
+   // End Constructor Declaration - __ctor____main__Person____Person__char__1__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration
-   JUMP __end__method____main__Person__getAge
-   __method____main__Person__getAge:
+   // Method Declaration - int Person::getAge()
+   JUMP __end__method____main__Person____getAge
+   __method____main__Person____getAge:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -247,14 +280,14 @@ JUMP __endclass____main__Person
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Person__getAge:
-   // End Method Declaration - __method____main__Person__getAge
+   __end__method____main__Person____getAge:
+   // End Method Declaration - __method____main__Person____getAge
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration
-   JUMP __end__method____main__Person__getName
-   __method____main__Person__getName:
+   // Method Declaration - char[] Person::getName()
+   JUMP __end__method____main__Person____getName
+   __method____main__Person____getName:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -275,26 +308,26 @@ JUMP __endclass____main__Person
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Person__getName:
-   // End Method Declaration - __method____main__Person__getName
+   __end__method____main__Person____getName:
+   // End Method Declaration - __method____main__Person____getName
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration
-   JUMP __end__method____main__Person__addFriend
-   __method____main__Person__addFriend:
+   // Method Declaration - void Person::addFriend(Person)
+   JUMP __end__method____main__Person____addFriend__Person
+   __method____main__Person____addFriend__Person:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: friend
-         STACKGET __main__Person__friend 1
+         STACKGET __main__Person__addFriend__friend 1
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - friend
-                     PUSH __main__Person__friend
+                     PUSH __main__Person__addFriend__friend
                // LHS
                   // Subscript assignment
                      // LHS
@@ -328,8 +361,8 @@ JUMP __endclass____main__Person
                PUSH __rhs
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Person__addFriend:
-   // End Method Declaration - __method____main__Person__addFriend
+   __end__method____main__Person____addFriend__Person:
+   // End Method Declaration - __method____main__Person____addFriend__Person
    //---------------------------------------------------------------------
 
 __endclass____main__Person:
@@ -338,7 +371,7 @@ __endclass____main__Person:
 
 // Assignment
    // RHS
-      // Constructor Call
+      // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
             // Literal
                MALLOC __str 3
@@ -353,7 +386,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__Person__Person
+         CALL __ctor____main__Person____Person__char__1__int
          // Remove args
          POP __void
          POP __void
@@ -365,7 +398,7 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __main__person __rhs
    PUSH __rhs
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Member Accessor
          // LHS
@@ -380,14 +413,14 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - print(int) -> void
    // Arguments
-      // Method Call
+      // Method Call - Person::getAge() -> int
          // LHS
             // Identifier - person
                PUSH __main__person
@@ -396,7 +429,7 @@ __endclass____main__Person:
          POP __obj
          // Pushing args in reverse order
          PUSH __obj
-         CALL __method____main__Person__getAge
+         CALL __method____main__Person____getAge
          POP __void
          // Remove args
          RESPONSE __retval
@@ -404,13 +437,13 @@ __endclass____main__Person:
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
-   // *** printInt
-   CALL printInt
+   // *** print
+   CALL print__int
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Literal
          MALLOC __str 0
@@ -419,12 +452,12 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - print(char[]) -> void
    // Arguments
       // Literal
          MALLOC __str 23
@@ -456,16 +489,16 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    // *** print
-   CALL print
+   CALL print__char__1
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - print(char) -> void
    // Arguments
       // Subscript
          // LHS
-            // Method Call
+            // Method Call - Person::getName() -> char[]
                // LHS
                   // Identifier - person
                      PUSH __main__person
@@ -474,7 +507,7 @@ __endclass____main__Person:
                POP __obj
                // Pushing args in reverse order
                PUSH __obj
-               CALL __method____main__Person__getName
+               CALL __method____main__Person____getName
                POP __void
                // Remove args
                RESPONSE __retval
@@ -488,13 +521,13 @@ __endclass____main__Person:
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
-   // *** printChar
-   CALL printChar
+   // *** print
+   CALL print__char
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Literal
          MALLOC __str 0
@@ -503,7 +536,7 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
@@ -541,7 +574,7 @@ __endclass____main__Person:
    PUSH __rhs
 // Assignment
    // RHS
-      // Constructor Call
+      // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
             // Literal
                MALLOC __str 6
@@ -559,7 +592,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__Person__Person
+         CALL __ctor____main__Person____Person__char__1__int
          // Remove args
          POP __void
          POP __void
@@ -580,7 +613,7 @@ __endclass____main__Person:
    PUSH __rhs
 // Assignment
    // RHS
-      // Constructor Call
+      // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
             // Literal
                MALLOC __str 5
@@ -597,7 +630,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__Person__Person
+         CALL __ctor____main__Person____Person__char__1__int
          // Remove args
          POP __void
          POP __void
@@ -618,7 +651,7 @@ __endclass____main__Person:
    PUSH __rhs
 // Assignment
    // RHS
-      // Constructor Call
+      // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
             // Literal
                MALLOC __str 6
@@ -636,7 +669,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__Person__Person
+         CALL __ctor____main__Person____Person__char__1__int
          // Remove args
          POP __void
          POP __void
@@ -657,7 +690,7 @@ __endclass____main__Person:
    PUSH __rhs
 // Assignment
    // RHS
-      // Constructor Call
+      // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
             // Literal
                MALLOC __str 6
@@ -675,7 +708,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__Person__Person
+         CALL __ctor____main__Person____Person__char__1__int
          // Remove args
          POP __void
          POP __void
@@ -694,7 +727,7 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
-// Method Call
+// Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
          // LHS
@@ -723,13 +756,13 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__Person__addFriend
+   CALL __method____main__Person____addFriend__Person
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
          // LHS
@@ -758,13 +791,13 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__Person__addFriend
+   CALL __method____main__Person____addFriend__Person
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
          // LHS
@@ -793,13 +826,13 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__Person__addFriend
+   CALL __method____main__Person____addFriend__Person
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
          // LHS
@@ -828,13 +861,13 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__Person__addFriend
+   CALL __method____main__Person____addFriend__Person
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
          // LHS
@@ -863,13 +896,13 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__Person__addFriend
+   CALL __method____main__Person____addFriend__Person
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
          // LHS
@@ -898,13 +931,13 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__Person__addFriend
+   CALL __method____main__Person____addFriend__Person
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
          // LHS
@@ -933,13 +966,13 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__Person__addFriend
+   CALL __method____main__Person____addFriend__Person
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
          // LHS
@@ -968,7 +1001,7 @@ __endclass____main__Person:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__Person__addFriend
+   CALL __method____main__Person____addFriend__Person
    POP __void
    // Remove args
    POP __void
@@ -1017,7 +1050,7 @@ __for__4:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - print(char[]) -> void
             // Arguments
                // Member Accessor
                   // LHS
@@ -1040,12 +1073,12 @@ __for__4:
             // Pushing args in reverse order
             PUSH __arg0
             // *** print
-            CALL print
+            CALL print__char__1
             // Remove args
             POP __void
             RESPONSE __retval
             PUSH __retval
-         // Function Call
+         // Function Call - print(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 1
@@ -1055,12 +1088,12 @@ __for__4:
             // Pushing args in reverse order
             PUSH __arg0
             // *** print
-            CALL print
+            CALL print__char__1
             // Remove args
             POP __void
             RESPONSE __retval
             PUSH __retval
-         // Function Call
+         // Function Call - print(int) -> void
             // Arguments
                // Member Accessor
                   // LHS
@@ -1082,13 +1115,13 @@ __for__4:
                POP __arg0
             // Pushing args in reverse order
             PUSH __arg0
-            // *** printInt
-            CALL printInt
+            // *** print
+            CALL print__int
             // Remove args
             POP __void
             RESPONSE __retval
             PUSH __retval
-         // Function Call
+         // Function Call - print(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 10
@@ -1107,7 +1140,7 @@ __for__4:
             // Pushing args in reverse order
             PUSH __arg0
             // *** print
-            CALL print
+            CALL print__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -1170,7 +1203,7 @@ __for__4:
             // Body
                //---------------------------------------------------------
                // Code Block
-                  // Function Call
+                  // Function Call - print(char[]) -> void
                      // Arguments
                         // Member Accessor
                            // LHS
@@ -1208,12 +1241,12 @@ __for__4:
                      // Pushing args in reverse order
                      PUSH __arg0
                      // *** print
-                     CALL print
+                     CALL print__char__1
                      // Remove args
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
-                  // Function Call
+                  // Function Call - print(char[]) -> void
                      // Arguments
                         // Literal
                            MALLOC __str 1
@@ -1223,7 +1256,7 @@ __for__4:
                      // Pushing args in reverse order
                      PUSH __arg0
                      // *** print
-                     CALL print
+                     CALL print__char__1
                      // Remove args
                      POP __void
                      RESPONSE __retval
@@ -1234,7 +1267,7 @@ __for__4:
             // End of For
             __endfor__6:
          //---------------------------------------------------------------
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 0
@@ -1243,7 +1276,7 @@ __for__4:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -1284,7 +1317,7 @@ __for__4:
          POP __rhs
          ASSIGN __parent[__child] __rhs
    PUSH __rhs
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Member Accessor
          // LHS
@@ -1307,12 +1340,12 @@ __for__4:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Member Accessor
          // LHS
@@ -1327,7 +1360,7 @@ __for__4:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
@@ -1335,23 +1368,23 @@ __for__4:
 //========================================================================
 // Class Declaration - __main__IntArray
    //---------------------------------------------------------------------
-   // Field - __field____main__IntArray__data
+   // Field - int[] IntArray::data
    ASSIGN __field____main__IntArray__data 0
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
-   // Field - __field____main__IntArray__size
+   // Field - int IntArray::size
    ASSIGN __field____main__IntArray__size 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
-   // Field - __field____main__IntArray__capacity
+   // Field - int IntArray::capacity
    ASSIGN __field____main__IntArray__capacity 2
    //---------------------------------------------------------------------
 // skip over class methods
 JUMP __endclass____main__IntArray
    //---------------------------------------------------------------------
-   // Constructor Declaration - __ctor____main__IntArray__IntArray IntArray
-   JUMP __end__ctor____main__IntArray__IntArray
-   __ctor____main__IntArray__IntArray:
+   // Constructor Declaration - IntArray IntArray::IntArray()
+   JUMP __end__ctor____main__IntArray____IntArray
+   __ctor____main__IntArray____IntArray:
       // Creating Class Instance
          MALLOC __this 3
       // Parameters
@@ -1419,19 +1452,19 @@ JUMP __endclass____main__IntArray
                PUSH __rhs
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__IntArray__IntArray:
-   // End Constructor Declaration - __ctor____main__IntArray__IntArray
+   __end__ctor____main__IntArray____IntArray:
+   // End Constructor Declaration - __ctor____main__IntArray____IntArray
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration
-   JUMP __end__method____main__IntArray__pushBack
-   __method____main__IntArray__pushBack:
+   // Method Declaration - void IntArray::pushBack(int)
+   JUMP __end__method____main__IntArray____pushBack__int
+   __method____main__IntArray____pushBack__int:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: val
-         STACKGET __main__IntArray__val 1
+         STACKGET __main__IntArray__pushBack__val 1
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -1527,9 +1560,9 @@ JUMP __endclass____main__IntArray
                               PUSH __ptr
                         // LHS
                            // Variable Declaration
-                              ASSIGN __main__IntArray__block__9__if__10__block__11__nData 0
+                              ASSIGN __main__IntArray__pushBack__block__9__if__10__block__11__nData 0
                         POP __rhs
-                        ASSIGN __main__IntArray__block__9__if__10__block__11__nData __rhs
+                        ASSIGN __main__IntArray__pushBack__block__9__if__10__block__11__nData __rhs
                         PUSH __rhs
                      //---------------------------------------------------
                      // For-Loop
@@ -1540,9 +1573,9 @@ JUMP __endclass____main__IntArray
                                  PUSH 0
                            // LHS
                               // Variable Declaration
-                                 ASSIGN __main__IntArray__block__9__if__10__block__11__for__12__i 0
+                                 ASSIGN __main__IntArray__pushBack__block__9__if__10__block__11__for__12__i 0
                            POP __rhs
-                           ASSIGN __main__IntArray__block__9__if__10__block__11__for__12__i __rhs
+                           ASSIGN __main__IntArray__pushBack__block__9__if__10__block__11__for__12__i __rhs
                            PUSH __rhs
                      JUMP __forcond__12
                      __for__12:
@@ -1550,17 +1583,17 @@ JUMP __endclass____main__IntArray
                            // Pre-Increment
                               // RHS
                                  // Identifier - i
-                                    PUSH __main__IntArray__block__9__if__10__block__11__for__12__i
+                                    PUSH __main__IntArray__pushBack__block__9__if__10__block__11__for__12__i
                               POP __rhs
-                              ADD __main__IntArray__block__9__if__10__block__11__for__12__i __main__IntArray__block__9__if__10__block__11__for__12__i 1
-                              ASSIGN __res __main__IntArray__block__9__if__10__block__11__for__12__i
+                              ADD __main__IntArray__pushBack__block__9__if__10__block__11__for__12__i __main__IntArray__pushBack__block__9__if__10__block__11__for__12__i 1
+                              ASSIGN __res __main__IntArray__pushBack__block__9__if__10__block__11__for__12__i
                               PUSH __res
                         __forcond__12:
                         // Condition
                            // Less Than
                               // LHS
                                  // Identifier - i
-                                    PUSH __main__IntArray__block__9__if__10__block__11__for__12__i
+                                    PUSH __main__IntArray__pushBack__block__9__if__10__block__11__for__12__i
                               // RHS
                                  // Member Accessor
                                     // LHS
@@ -1596,7 +1629,7 @@ JUMP __endclass____main__IntArray
                                              PUSH __parent[__child]
                                        // OFFSET
                                           // Identifier - i
-                                             PUSH __main__IntArray__block__9__if__10__block__11__for__12__i
+                                             PUSH __main__IntArray__pushBack__block__9__if__10__block__11__for__12__i
                                        POP __offset
                                        POP __pointer
                                        PUSH __pointer[__offset]
@@ -1604,10 +1637,10 @@ JUMP __endclass____main__IntArray
                                     // Subscript assignment
                                        // LHS
                                           // Identifier - nData
-                                             PUSH __main__IntArray__block__9__if__10__block__11__nData
+                                             PUSH __main__IntArray__pushBack__block__9__if__10__block__11__nData
                                        // OFFSET
                                           // Identifier - i
-                                             PUSH __main__IntArray__block__9__if__10__block__11__for__12__i
+                                             PUSH __main__IntArray__pushBack__block__9__if__10__block__11__for__12__i
                                        POP __offset
                                        POP __pointer
                                  POP __rhs
@@ -1622,7 +1655,7 @@ JUMP __endclass____main__IntArray
                      // Assignment
                         // RHS
                            // Identifier - nData
-                              PUSH __main__IntArray__block__9__if__10__block__11__nData
+                              PUSH __main__IntArray__pushBack__block__9__if__10__block__11__nData
                         // LHS
                            // Member Accessor Assignment
                               // LHS
@@ -1643,7 +1676,7 @@ JUMP __endclass____main__IntArray
             // Assignment
                // RHS
                   // Identifier - val
-                     PUSH __main__IntArray__val
+                     PUSH __main__IntArray__pushBack__val
                // LHS
                   // Subscript assignment
                      // LHS
@@ -1686,14 +1719,14 @@ JUMP __endclass____main__IntArray
                PUSH __res
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__IntArray__pushBack:
-   // End Method Declaration - __method____main__IntArray__pushBack
+   __end__method____main__IntArray____pushBack__int:
+   // End Method Declaration - __method____main__IntArray____pushBack__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration
-   JUMP __end__method____main__IntArray__popBack
-   __method____main__IntArray__popBack:
+   // Method Declaration - int IntArray::popBack()
+   JUMP __end__method____main__IntArray____popBack
+   __method____main__IntArray____popBack:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -1744,19 +1777,19 @@ JUMP __endclass____main__IntArray
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__IntArray__popBack:
-   // End Method Declaration - __method____main__IntArray__popBack
+   __end__method____main__IntArray____popBack:
+   // End Method Declaration - __method____main__IntArray____popBack
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration
-   JUMP __end__method____main__IntArray__get
-   __method____main__IntArray__get:
+   // Method Declaration - int IntArray::get(int)
+   JUMP __end__method____main__IntArray____get__int
+   __method____main__IntArray____get__int:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: index
-         STACKGET __main__IntArray__index 1
+         STACKGET __main__IntArray__get__index 1
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -1774,7 +1807,7 @@ JUMP __endclass____main__IntArray
                         PUSH __parent[__child]
                   // OFFSET
                      // Identifier - index
-                        PUSH __main__IntArray__index
+                        PUSH __main__IntArray__get__index
                   POP __offset
                   POP __pointer
                   PUSH __pointer[__offset]
@@ -1782,8 +1815,8 @@ JUMP __endclass____main__IntArray
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__IntArray__get:
-   // End Method Declaration - __method____main__IntArray__get
+   __end__method____main__IntArray____get__int:
+   // End Method Declaration - __method____main__IntArray____get__int
    //---------------------------------------------------------------------
 
 __endclass____main__IntArray:
@@ -1792,10 +1825,10 @@ __endclass____main__IntArray:
 
 // Assignment
    // RHS
-      // Constructor Call
+      // Constructor Call - IntArray::IntArray() -> IntArray
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__IntArray__IntArray
+         CALL __ctor____main__IntArray____IntArray
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -1805,7 +1838,7 @@ __endclass____main__IntArray:
    POP __rhs
    ASSIGN __main__myArray __rhs
    PUSH __rhs
-// Method Call
+// Method Call - IntArray::pushBack(int) -> void
    // LHS
       // Identifier - myArray
          PUSH __main__myArray
@@ -1818,13 +1851,13 @@ __endclass____main__IntArray:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__IntArray__pushBack
+   CALL __method____main__IntArray____pushBack__int
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - IntArray::pushBack(int) -> void
    // LHS
       // Identifier - myArray
          PUSH __main__myArray
@@ -1837,13 +1870,13 @@ __endclass____main__IntArray:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__IntArray__pushBack
+   CALL __method____main__IntArray____pushBack__int
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - IntArray::popBack() -> int
    // LHS
       // Identifier - myArray
          PUSH __main__myArray
@@ -1852,12 +1885,12 @@ __endclass____main__IntArray:
    POP __obj
    // Pushing args in reverse order
    PUSH __obj
-   CALL __method____main__IntArray__popBack
+   CALL __method____main__IntArray____popBack
    POP __void
    // Remove args
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - IntArray::pushBack(int) -> void
    // LHS
       // Identifier - myArray
          PUSH __main__myArray
@@ -1870,13 +1903,13 @@ __endclass____main__IntArray:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__IntArray__pushBack
+   CALL __method____main__IntArray____pushBack__int
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - IntArray::pushBack(int) -> void
    // LHS
       // Identifier - myArray
          PUSH __main__myArray
@@ -1889,13 +1922,13 @@ __endclass____main__IntArray:
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main__IntArray__pushBack
+   CALL __method____main__IntArray____pushBack__int
    POP __void
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Method Call
+// Method Call - IntArray::popBack() -> int
    // LHS
       // Identifier - myArray
          PUSH __main__myArray
@@ -1904,7 +1937,7 @@ __endclass____main__IntArray:
    POP __obj
    // Pushing args in reverse order
    PUSH __obj
-   CALL __method____main__IntArray__popBack
+   CALL __method____main__IntArray____popBack
    POP __void
    // Remove args
    RESPONSE __retval
@@ -1959,9 +1992,9 @@ __for__16:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - print(int) -> void
             // Arguments
-               // Method Call
+               // Method Call - IntArray::get(int) -> int
                   // LHS
                      // Identifier - myArray
                         PUSH __main__myArray
@@ -1974,7 +2007,7 @@ __for__16:
                   // Pushing args in reverse order
                   PUSH __arg0
                   PUSH __obj
-                  CALL __method____main__IntArray__get
+                  CALL __method____main__IntArray____get__int
                   POP __void
                   // Remove args
                   POP __void
@@ -1983,13 +2016,13 @@ __for__16:
                POP __arg0
             // Pushing args in reverse order
             PUSH __arg0
-            // *** printInt
-            CALL printInt
+            // *** print
+            CALL print__int
             // Remove args
             POP __void
             RESPONSE __retval
             PUSH __retval
-         // Function Call
+         // Function Call - print(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 1
@@ -1999,7 +2032,7 @@ __for__16:
             // Pushing args in reverse order
             PUSH __arg0
             // *** print
-            CALL print
+            CALL print__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -2010,7 +2043,7 @@ __for__16:
    // End of For
    __endfor__16:
 //------------------------------------------------------------------------
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Literal
          MALLOC __str 0
@@ -2019,7 +2052,7 @@ __for__16:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
@@ -2145,7 +2178,7 @@ __for__18:
             // Body
                //---------------------------------------------------------
                // Code Block
-                  // Function Call
+                  // Function Call - print(int) -> void
                      // Arguments
                         // Subscript
                            // LHS
@@ -2168,13 +2201,13 @@ __for__18:
                         POP __arg0
                      // Pushing args in reverse order
                      PUSH __arg0
-                     // *** printInt
-                     CALL printInt
+                     // *** print
+                     CALL print__int
                      // Remove args
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
-                  // Function Call
+                  // Function Call - print(char[]) -> void
                      // Arguments
                         // Literal
                            MALLOC __str 1
@@ -2184,7 +2217,7 @@ __for__18:
                      // Pushing args in reverse order
                      PUSH __arg0
                      // *** print
-                     CALL print
+                     CALL print__char__1
                      // Remove args
                      POP __void
                      RESPONSE __retval
@@ -2195,7 +2228,7 @@ __for__18:
             // End of For
             __endfor__20:
          //---------------------------------------------------------------
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 0
@@ -2204,7 +2237,7 @@ __for__18:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval

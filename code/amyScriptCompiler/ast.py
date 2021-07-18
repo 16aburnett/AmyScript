@@ -142,6 +142,8 @@ class FunctionNode (CodeUnitNode):
         self.params = params
         self.body = body 
 
+        self.signature = ""
+
         self.scopeName = ""
 
         self.lineNumber = 0
@@ -213,6 +215,7 @@ class MethodDeclarationNode (DeclarationNode):
 class ConstructorDeclarationNode (DeclarationNode):
     
     def __init__(self, token, params, body):
+        self.id = ""
         self.token = token
         self.params = params
         self.body = body 

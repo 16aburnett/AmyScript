@@ -62,39 +62,159 @@ class AmyScriptCompiler:
         inputFunc = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None), "input", None, [], None)
         inputFunc.scopeName = "input"
         inputFunc.type.arrayDimensions += 1
+        # create signature for node
+        signature = [f"{inputFunc.id}("]
+        if len(inputFunc.params) > 0:
+            signature += [inputFunc.params[0].type.__str__()]
+        for i in range(1, len(inputFunc.params)):
+            signature += [f", {inputFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        inputFunc.signature = signature
         symbolTableVisitor.table.insert (inputFunc)
 
         #  void print (char[] str);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
         param0.type.arrayDimensions += 1
-        printFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "print", None, [param0], None)
-        printFunc.scopeName = "print"
+        printFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "print", None, [param0], None)
+        printFunc.scopeName = "print__char__1"
+        # create signature for node
+        signature = [f"{printFunc.id}("]
+        if len(printFunc.params) > 0:
+            signature += [printFunc.params[0].type.__str__()]
+        for i in range(1, len(printFunc.params)):
+            signature += [f", {printFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printFunc.signature = signature
         symbolTableVisitor.table.insert (printFunc)
 
-        #  void printInt (int intToPrint);
+        #  void print (int intToPrint);
         param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "intToPrint", None)
-        printIntFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printInt", None, [param0], None)
-        printIntFunc.scopeName = "printInt"
+        printIntFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "print", None, [param0], None)
+        printIntFunc.scopeName = "print__int"
+        # create signature for node
+        signature = [f"{printIntFunc.id}("]
+        if len(printIntFunc.params) > 0:
+            signature += [printIntFunc.params[0].type.__str__()]
+        for i in range(1, len(printIntFunc.params)):
+            signature += [f", {printIntFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printIntFunc.signature = signature
         symbolTableVisitor.table.insert (printIntFunc)
 
-        #  void printFloat (float floatToPrint);
+        #  void print (float floatToPrint);
         param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
-        printFloatFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printFloat", None, [param0], None)
-        printFloatFunc.scopeName = "printFloat"
+        printFloatFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "print", None, [param0], None)
+        printFloatFunc.scopeName = "print__float"
+        # create signature for node
+        signature = [f"{printFloatFunc.id}("]
+        if len(printFloatFunc.params) > 0:
+            signature += [printFloatFunc.params[0].type.__str__()]
+        for i in range(1, len(printFloatFunc.params)):
+            signature += [f", {printFloatFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printFloatFunc.signature = signature
         symbolTableVisitor.table.insert (printFloatFunc)
 
-        #  void printChar (char c);
+        #  void print (char c);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
-        printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "printChar", None, [param0], None)
-        printCharFunc.scopeName = "printChar"
+        printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "print", None, [param0], None)
+        printCharFunc.scopeName = "print__char"
+        # create signature for node
+        signature = [f"{printCharFunc.id}("]
+        if len(printCharFunc.params) > 0:
+            signature += [printCharFunc.params[0].type.__str__()]
+        for i in range(1, len(printCharFunc.params)):
+            signature += [f", {printCharFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printCharFunc.signature = signature
         symbolTableVisitor.table.insert (printCharFunc)
 
         #  void println (char[] str);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
         param0.type.arrayDimensions += 1
-        printlnFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "", None), "println", None, [param0], None)
-        printlnFunc.scopeName = "println"
+        printlnFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [param0], None)
+        printlnFunc.scopeName = "println__char__1"
+        # create signature for node
+        signature = [f"{printlnFunc.id}("]
+        if len(printlnFunc.params) > 0:
+            signature += [printlnFunc.params[0].type.__str__()]
+        for i in range(1, len(printlnFunc.params)):
+            signature += [f", {printlnFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printlnFunc.signature = signature
         symbolTableVisitor.table.insert (printlnFunc)
+
+        #  void println (int intToPrint);
+        param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "intToPrint", None)
+        printIntFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [param0], None)
+        printIntFunc.scopeName = "println__int"
+        # create signature for node
+        signature = [f"{printIntFunc.id}("]
+        if len(printIntFunc.params) > 0:
+            signature += [printIntFunc.params[0].type.__str__()]
+        for i in range(1, len(printIntFunc.params)):
+            signature += [f", {printIntFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printIntFunc.signature = signature
+        symbolTableVisitor.table.insert (printIntFunc)
+
+        #  void println (float floatToPrint);
+        param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
+        printFloatFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [param0], None)
+        printFloatFunc.scopeName = "println__float"
+        # create signature for node
+        signature = [f"{printFloatFunc.id}("]
+        if len(printFloatFunc.params) > 0:
+            signature += [printFloatFunc.params[0].type.__str__()]
+        for i in range(1, len(printFloatFunc.params)):
+            signature += [f", {printFloatFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printFloatFunc.signature = signature
+        symbolTableVisitor.table.insert (printFloatFunc)
+
+        #  void println (char c);
+        param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
+        printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [param0], None)
+        printCharFunc.scopeName = "println__char"
+        # create signature for node
+        signature = [f"{printCharFunc.id}("]
+        if len(printCharFunc.params) > 0:
+            signature += [printCharFunc.params[0].type.__str__()]
+        for i in range(1, len(printCharFunc.params)):
+            signature += [f", {printCharFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printCharFunc.signature = signature
+        symbolTableVisitor.table.insert (printCharFunc)
+
+        #  void println ();
+        printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [], None)
+        printCharFunc.scopeName = "println"
+        # create signature for node
+        signature = [f"{printCharFunc.id}("]
+        if len(printCharFunc.params) > 0:
+            signature += [printCharFunc.params[0].type.__str__()]
+        for i in range(1, len(printCharFunc.params)):
+            signature += [f", {printCharFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printCharFunc.signature = signature
+        symbolTableVisitor.table.insert (printCharFunc)
+
+        #  void exit ();
+        exitFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "exit", None, [], None)
+        exitFunc.scopeName = "exit"
+        # create signature for node
+        exitFunc.signature = "exit()"
+        symbolTableVisitor.table.insert (exitFunc)
 
         # Check AST
         # checks for 

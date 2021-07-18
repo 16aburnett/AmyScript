@@ -19,73 +19,105 @@ jump __endOfLibrary
 //========================================================================
 // Prints a given string to the screen
 // void print (char[] stringToPrint);
-print:
+print__char__1:
     // grab string
     stackget __str 0
     sizeof __size __str
     // print each char
     // init
     assign __i 0
-__print__loop:
+__print__char__1__loop:
     // cond
     cmp __i __size
-    jge __print__endloop
+    jge __print__char__1__endloop
     // Body
     print __str[__i]
     // update
     add __i __i 1
     // repeat
-    jump __print__loop
-__print__endloop:
-    return 0
-
-//========================================================================
-// Prints a given string to the screen with a newline at the end
-// void println (char[] stringToPrint);
-println:
-    // grab string
-    stackget __str 0
-    sizeof __size __str
-    // print each char
-    // init
-    assign __i 0
-__println__loop:
-    // cond
-    cmp __i __size
-    jge __println__endloop
-    // Body
-    print __str[__i]
-    // update
-    add __i __i 1
-    // repeat
-    jump __println__loop
-__println__endloop:
-    println
+    jump __print__char__1__loop
+__print__char__1__endloop:
     return 0
 
 //========================================================================
 // Prints an int to the screen
-// void printInt (int intToPrint);
-printInt:
+// void print (int intToPrint);
+print__int:
     stackget __str 0
     print __str
     return 0
 
 //========================================================================
 // Prints a float to the screen
-// void printFloat (float floatToPrint);
-printFloat:
+// void print (float floatToPrint);
+print__float:
     stackget __str 0
     print __str
     return 0
 
 //========================================================================
 // Prints a char to the screen
-// void printChar (char charToPrint);
-printChar:
+// void print (char charToPrint);
+print__char:
     // grab string
     stackget __char 0
     print __char
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
     return 0
 
 //========================================================================
@@ -96,8 +128,9 @@ input:
     return __line
 
 //========================================================================
-
-
+// exits/stops the program 
+exit:
+    halt
 
 //========================================================================
 
@@ -118,15 +151,15 @@ __endOfLibrary:
 //========================================================================
 // Class Declaration - __main__Person
    //---------------------------------------------------------------------
-   // Field - __field____main__Person__name
+   // Field - char[] Person::name
    ASSIGN __field____main__Person__name 0
    //---------------------------------------------------------------------
 // skip over class methods
 JUMP __endclass____main__Person
    //---------------------------------------------------------------------
-   // Constructor Declaration - __ctor____main__Person__Person Person
-   JUMP __end__ctor____main__Person__Person
-   __ctor____main__Person__Person:
+   // Constructor Declaration - Person Person::Person()
+   JUMP __end__ctor____main__Person____Person
+   __ctor____main__Person____Person:
       // Creating Class Instance
          MALLOC __this 1
       // Parameters
@@ -135,8 +168,8 @@ JUMP __endclass____main__Person
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Person__Person:
-   // End Constructor Declaration - __ctor____main__Person__Person
+   __end__ctor____main__Person____Person:
+   // End Constructor Declaration - __ctor____main__Person____Person
    //---------------------------------------------------------------------
 
 __endclass____main__Person:
@@ -145,10 +178,10 @@ __endclass____main__Person:
 
 // Assignment
    // RHS
-      // Constructor Call
+      // Constructor Call - Person::Person() -> Person
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__Person__Person
+         CALL __ctor____main__Person____Person
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -189,7 +222,7 @@ __endclass____main__Person:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 33
@@ -231,7 +264,7 @@ __endclass____main__Person:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -260,7 +293,7 @@ __endclass____main__Person:
       // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 20
@@ -289,7 +322,7 @@ __endclass____main__Person:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -309,7 +342,7 @@ __endclass____main__Person:
       // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 20
@@ -338,7 +371,7 @@ __endclass____main__Person:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -351,7 +384,7 @@ __endclass____main__Person:
    __else__1:
    //---------------------------------------------------------------------
    // Code Block
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 28
@@ -388,7 +421,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -416,7 +449,7 @@ __endclass____main__Person:
       CMP __cond 0
       JEQ __elif__6x0
    // Body
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 18
@@ -443,7 +476,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -468,7 +501,7 @@ __endclass____main__Person:
       CMP __cond 0
       JEQ __endif__6
       // Body
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 18
@@ -495,7 +528,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -550,7 +583,7 @@ __endclass____main__Person:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 21
@@ -580,7 +613,7 @@ __endclass____main__Person:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -609,7 +642,7 @@ __endclass____main__Person:
       // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 14
@@ -632,7 +665,7 @@ __endclass____main__Person:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -652,7 +685,7 @@ __endclass____main__Person:
       // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 14
@@ -675,7 +708,7 @@ __endclass____main__Person:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -688,7 +721,7 @@ __endclass____main__Person:
    __else__7:
    //---------------------------------------------------------------------
    // Code Block
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 16
@@ -713,7 +746,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -741,7 +774,7 @@ __endclass____main__Person:
       CMP __cond 0
       JEQ __elif__12x0
    // Body
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 6
@@ -756,7 +789,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -781,7 +814,7 @@ __endclass____main__Person:
       CMP __cond 0
       JEQ __endif__12
       // Body
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 6
@@ -796,7 +829,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -851,7 +884,7 @@ __endclass____main__Person:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 33
@@ -893,7 +926,7 @@ __endclass____main__Person:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -922,7 +955,7 @@ __endclass____main__Person:
       // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 20
@@ -951,7 +984,7 @@ __endclass____main__Person:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -971,7 +1004,7 @@ __endclass____main__Person:
       // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 20
@@ -1000,7 +1033,7 @@ __endclass____main__Person:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -1013,7 +1046,7 @@ __endclass____main__Person:
    __else__13:
    //---------------------------------------------------------------------
    // Code Block
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 28
@@ -1050,7 +1083,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -1078,7 +1111,7 @@ __endclass____main__Person:
       CMP __cond 0
       JEQ __elif__18x0
    // Body
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 18
@@ -1105,7 +1138,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -1130,7 +1163,7 @@ __endclass____main__Person:
       CMP __cond 0
       JEQ __endif__18
       // Body
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 18
@@ -1157,7 +1190,7 @@ __endclass____main__Person:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -1169,10 +1202,10 @@ __endclass____main__Person:
 //------------------------------------------------------------------------
 // Assignment
    // RHS
-      // Constructor Call
+      // Constructor Call - Person::Person() -> Person
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__Person__Person
+         CALL __ctor____main__Person____Person
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -1191,10 +1224,10 @@ __endclass____main__Person:
    PUSH __rhs
 // Assignment
    // RHS
-      // Constructor Call
+      // Constructor Call - Person::Person() -> Person
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__Person__Person
+         CALL __ctor____main__Person____Person
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -1231,10 +1264,10 @@ __endclass____main__Person:
    PUSH __rhs
 // Assignment
    // RHS
-      // Constructor Call
+      // Constructor Call - Person::Person() -> Person
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__Person__Person
+         CALL __ctor____main__Person____Person
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -1335,7 +1368,7 @@ __for__19:
                CMP __cond 0
                JEQ __else__21
             // Body
-               // Function Call
+               // Function Call - println(char[]) -> void
                   // Arguments
                      // Literal
                         MALLOC __str 9
@@ -1353,7 +1386,7 @@ __for__19:
                   // Pushing args in reverse order
                   PUSH __arg0
                   // *** println
-                  CALL println
+                  CALL println__char__1
                   // Remove args
                   POP __void
                   RESPONSE __retval
@@ -1362,7 +1395,7 @@ __for__19:
             //------------------------------------------------------------
             // Else-Statement
             __else__21:
-            // Function Call
+            // Function Call - println(char[]) -> void
                // Arguments
                   // Literal
                      MALLOC __str 4
@@ -1375,7 +1408,7 @@ __for__19:
                // Pushing args in reverse order
                PUSH __arg0
                // *** println
-               CALL println
+               CALL println__char__1
                // Remove args
                POP __void
                RESPONSE __retval

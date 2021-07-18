@@ -19,73 +19,105 @@ jump __endOfLibrary
 //========================================================================
 // Prints a given string to the screen
 // void print (char[] stringToPrint);
-print:
+print__char__1:
     // grab string
     stackget __str 0
     sizeof __size __str
     // print each char
     // init
     assign __i 0
-__print__loop:
+__print__char__1__loop:
     // cond
     cmp __i __size
-    jge __print__endloop
+    jge __print__char__1__endloop
     // Body
     print __str[__i]
     // update
     add __i __i 1
     // repeat
-    jump __print__loop
-__print__endloop:
-    return 0
-
-//========================================================================
-// Prints a given string to the screen with a newline at the end
-// void println (char[] stringToPrint);
-println:
-    // grab string
-    stackget __str 0
-    sizeof __size __str
-    // print each char
-    // init
-    assign __i 0
-__println__loop:
-    // cond
-    cmp __i __size
-    jge __println__endloop
-    // Body
-    print __str[__i]
-    // update
-    add __i __i 1
-    // repeat
-    jump __println__loop
-__println__endloop:
-    println
+    jump __print__char__1__loop
+__print__char__1__endloop:
     return 0
 
 //========================================================================
 // Prints an int to the screen
-// void printInt (int intToPrint);
-printInt:
+// void print (int intToPrint);
+print__int:
     stackget __str 0
     print __str
     return 0
 
 //========================================================================
 // Prints a float to the screen
-// void printFloat (float floatToPrint);
-printFloat:
+// void print (float floatToPrint);
+print__float:
     stackget __str 0
     print __str
     return 0
 
 //========================================================================
 // Prints a char to the screen
-// void printChar (char charToPrint);
-printChar:
+// void print (char charToPrint);
+print__char:
     // grab string
     stackget __char 0
     print __char
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
     return 0
 
 //========================================================================
@@ -96,8 +128,9 @@ input:
     return __line
 
 //========================================================================
-
-
+// exits/stops the program 
+exit:
+    halt
 
 //========================================================================
 
@@ -158,20 +191,20 @@ __for__0:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - print(int) -> void
             // Arguments
                // Identifier - i
                   PUSH __main__for__0__i
                POP __arg0
             // Pushing args in reverse order
             PUSH __arg0
-            // *** printInt
-            CALL printInt
+            // *** print
+            CALL print__int
             // Remove args
             POP __void
             RESPONSE __retval
             PUSH __retval
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 0
@@ -180,7 +213,7 @@ __for__0:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -232,7 +265,7 @@ __while__2:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call
+         // Function Call - print(int) -> void
             // Arguments
                // Post-Decrement
                   ASSIGN __res __main__i
@@ -241,13 +274,13 @@ __while__2:
                POP __arg0
             // Pushing args in reverse order
             PUSH __arg0
-            // *** printInt
-            CALL printInt
+            // *** print
+            CALL print__int
             // Remove args
             POP __void
             RESPONSE __retval
             PUSH __retval
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 0
@@ -256,7 +289,7 @@ __while__2:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -402,7 +435,7 @@ __for__4:
                         CMP __cond 0
                         JEQ __else__8
                      // Body
-                        // Function Call
+                        // Function Call - print(char[]) -> void
                            // Arguments
                               // Literal
                                  MALLOC __str 1
@@ -412,7 +445,7 @@ __for__4:
                            // Pushing args in reverse order
                            PUSH __arg0
                            // *** print
-                           CALL print
+                           CALL print__char__1
                            // Remove args
                            POP __void
                            RESPONSE __retval
@@ -421,7 +454,7 @@ __for__4:
                      //---------------------------------------------------
                      // Else-Statement
                      __else__8:
-                     // Function Call
+                     // Function Call - print(char[]) -> void
                         // Arguments
                            // Literal
                               MALLOC __str 1
@@ -431,7 +464,7 @@ __for__4:
                         // Pushing args in reverse order
                         PUSH __arg0
                         // *** print
-                        CALL print
+                        CALL print__char__1
                         // Remove args
                         POP __void
                         RESPONSE __retval
@@ -456,7 +489,7 @@ __for__4:
             POP __rhs
             ASSIGN __main__for__4__block__5__x __rhs
             PUSH __rhs
-         // Function Call
+         // Function Call - println(char[]) -> void
             // Arguments
                // Literal
                   MALLOC __str 0
@@ -465,7 +498,7 @@ __for__4:
             // Pushing args in reverse order
             PUSH __arg0
             // *** println
-            CALL println
+            CALL println__char__1
             // Remove args
             POP __void
             RESPONSE __retval
@@ -476,20 +509,20 @@ __for__4:
    // End of For
    __endfor__4:
 //------------------------------------------------------------------------
-// Function Call
+// Function Call - print(int) -> void
    // Arguments
       // Identifier - i
          PUSH __main__i
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
-   // *** printInt
-   CALL printInt
+   // *** print
+   CALL print__int
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Literal
          MALLOC __str 0
@@ -498,12 +531,12 @@ __for__4:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Literal
          MALLOC __str 14
@@ -526,12 +559,12 @@ __for__4:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - print(char[]) -> void
    // Arguments
       // Literal
          MALLOC __str 4
@@ -544,25 +577,25 @@ __for__4:
    // Pushing args in reverse order
    PUSH __arg0
    // *** print
-   CALL print
+   CALL print__char__1
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - print(int) -> void
    // Arguments
       // Identifier - x
          PUSH __main__x
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
-   // *** printInt
-   CALL printInt
+   // *** print
+   CALL print__int
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Literal
          MALLOC __str 0
@@ -571,7 +604,7 @@ __for__4:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
@@ -594,7 +627,7 @@ __for__4:
       CMP __cond 0
       JEQ __endif__9
    // Body
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 21
@@ -624,7 +657,7 @@ __for__4:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -711,20 +744,20 @@ __while__10:
    // End of While
    __endwhile__10:
 //------------------------------------------------------------------------
-// Function Call
+// Function Call - print(int) -> void
    // Arguments
       // Identifier - w
          PUSH __main__w
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
-   // *** printInt
-   CALL printInt
+   // *** print
+   CALL print__int
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Literal
          MALLOC __str 0
@@ -733,7 +766,7 @@ __while__10:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
@@ -824,7 +857,7 @@ __for__13:
    __forelse__13:
    //---------------------------------------------------------------------
    // Code Block
-      // Function Call
+      // Function Call - println(char[]) -> void
          // Arguments
             // Literal
                MALLOC __str 39
@@ -872,7 +905,7 @@ __for__13:
          // Pushing args in reverse order
          PUSH __arg0
          // *** println
-         CALL println
+         CALL println__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -882,7 +915,7 @@ __for__13:
    // End of For
    __endfor__13:
 //------------------------------------------------------------------------
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
       // Literal
          MALLOC __str 14
@@ -905,7 +938,7 @@ __for__13:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval

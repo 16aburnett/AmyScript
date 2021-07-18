@@ -1,0 +1,148 @@
+
+
+class Name 
+{
+    public field char[] name;
+    constructor (char[] name)
+    {
+        this.name = name;
+    }
+}
+
+class Person 
+{
+    public field Name name;
+    public field int age;
+    public field float gpa; 
+
+    constructor ()
+    {
+        this.name = new Name ("");
+        this.age = 0;
+        this.gpa = 0.0;
+    }
+
+    constructor (char[] name, int age, float gpa)
+    {
+        this.name = new Name(name);
+        this.age = age;
+        this.gpa = gpa; 
+    }
+
+    public method int add (int a, int b)
+    {
+        return this.age + a + b;
+    }
+
+    public method float add (float a, float b)
+    {
+        return this.gpa + a + b;
+    }
+
+    //public method int add (int a, int b)
+    //{
+    //    return this.age + a + b;
+    //}
+
+    public method Name doThing (char[] name)
+    {
+        // class within a method!
+        class Thing
+        {
+            public field Name name;
+            public field int age;
+            public field float gpa; 
+            constructor ()
+            {
+                this.name = new Name(name);
+                this.age = 0;
+                this.gpa = 0.0;
+            }
+        }
+        Thing t = new Thing ();
+        return t.name;
+    }
+}
+
+
+function int add (int a, int b)
+{
+    return a + b;
+}
+
+function float add (float a, float b)
+{
+    return a + b; 
+}
+
+//function float add (int a, int b)
+//{
+//    return a + b;
+//}
+
+function int sum (int[] a)
+{
+    int sum = 0; 
+    for (int i = 0; i < sizeof (a); ++i)
+    {
+        sum = sum + a[i];
+    }
+    return sum; 
+}
+
+function float sum (float[] a)
+{
+    float sum = 0.0; 
+    for (int i = 0; i < sizeof (a); ++i)
+    {
+        sum = sum + a[i];
+    }
+    return sum; 
+}
+
+function float sum (float a)
+{
+    return a;
+}
+
+println (add(4, 6));
+println (add(3.14, 6.1));
+
+print ("sum = ");
+println (sum ([1,2,3,4,5,6]));
+
+print ("sum = ");
+println (sum ([1.0,2.0,3.0,4.0,5.0,6.0]));
+
+
+println ("=========================");
+
+Person p = new Person (null, 22, 3.69);
+
+p.name = new Name("Amy");
+print (p.name.name);
+print (' ');
+print (p.age);
+print (' ');
+print (p.add (1, 2));
+print (' ');
+println (p.add (1.0, 2.0));
+
+println ("=========================");
+
+p = new Person ();
+
+print (p.name.name);
+print (" ");
+print (p.age);
+print (" ");
+print (p.add (1, 2));
+print (" ");
+println (p.add (1.0, 2.0));
+
+//p.add (34); // Error: no matching signature
+
+
+println (p.doThing ("Hippo").name);
+
+println ('W');

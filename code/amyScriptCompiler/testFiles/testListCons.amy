@@ -10,7 +10,7 @@ for (int i = 0; i < sizeof(nums); ++i)
 {
     for (int j = 0; j < sizeof(nums[i]); ++j)
     {
-        printInt (nums[i][j]);
+        print (nums[i][j]);
         print (" ");
     }
     println ("");

@@ -2,7 +2,7 @@
 
 for (int i = 0; i < 16; ++i)
 {
-    printInt (i);
+    print (i);
     println ("");
 }
 
@@ -11,7 +11,7 @@ int x = 10;
 
 while (i > 0)
 {
-    printInt (i--);
+    print (i--);
     println ("");
 }
 
@@ -28,13 +28,13 @@ for (int i = 0; i < 5; i++)
     println ("");
 }
 
-printInt (i);
+print (i);
 println ("");
 
 // X should be 10 and it is ;)
 println ("x should be 10");
 print ("x = ");
-printInt (x);
+print (x);
 println ("");
 
 if (x == 10)
@@ -52,7 +52,7 @@ while (w > 0)
 }
 
 // w should be 7
-printInt (w);
+print (w);
 println ("");
 
 

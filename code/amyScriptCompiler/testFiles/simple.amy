@@ -17,7 +17,7 @@ nums[0] = (a - 7) / 3;
 // ASSIGN __sub 0
 // ASSIGN nums[__sub] rhs
 
-printInt (nums[0]);
+print (nums[0]);
 println (nl);
 
 int x = 10;
@@ -26,23 +26,23 @@ int y = 7;
 // 17 + 27 = 44
 nums[1] = int z = add (21, 7);
 
-printInt (z);
+print (z);
 println (nl);
 
 
-printInt (++nums[1]);
+print (++nums[1]);
 println (nl);
 
-printInt (nums[0]--);
+print (nums[0]--);
 println (nl);
 
-printInt (++x);
+print (++x);
 println (nl);
-printInt (++x);
+print (++x);
 println (nl);
-printInt (++x);
+print (++x);
 println (nl);
-printInt (++x);
+print (++x);
 println (nl);
 
 

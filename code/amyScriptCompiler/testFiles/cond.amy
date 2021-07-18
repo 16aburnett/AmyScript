@@ -9,12 +9,12 @@ if (x == 0)
 {
     if (1)
     {
-        printInt (x);
+        print (x);
     }
 }
 elif (x == y)
 {
-    printInt (x);
+    print (x);
 }
 elif (x == y + 3)
 {

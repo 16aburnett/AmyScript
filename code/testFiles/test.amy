@@ -46,7 +46,7 @@ function int stringToInt (char[] str)
         else
         {
             println ("Cannot Parse integer");
-            return -1; 
+            exit(); // close the program 
         }
     }
 

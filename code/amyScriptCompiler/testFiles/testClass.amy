@@ -38,11 +38,11 @@ class Person
 Person person = new Person("Amy", 22);
 
 println (person.name);
-printInt (person.getAge ());
+print (person.getAge ());
 println ("");
 
 print ("person.getName()[0] == ");
-printChar (person.getName()[0]);
+print (person.getName()[0]);
 println ("");
 
 Person[] people = new Person[5];
@@ -70,7 +70,7 @@ for (int i = 0; i < 5; ++i)
 {
     print (people[i].name);
     print (" ");
-    printInt (people[i].age);
+    print (people[i].age);
     print (" Friends: ");
     for (int j = 0; j < people[i].nFriends; ++j)
     {
@@ -150,7 +150,7 @@ myArray.popBack ();
 
 for (int i = 0; i < myArray.size; ++i)
 {
-    printInt (myArray.get(i));
+    print (myArray.get(i));
     print (" ");
 }
 println ("");
@@ -166,7 +166,7 @@ for (int i = 0; i < 5; ++i)
     multi[i] = new int[5];
     for (int j = 0; j < 5; ++j)
     {
-        printInt (multi[i][j]);
+        print (multi[i][j]);
         print (" ");
     }
     println ("");

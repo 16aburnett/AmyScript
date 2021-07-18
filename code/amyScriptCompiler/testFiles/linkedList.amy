@@ -110,7 +110,7 @@ function void printForwards (LinkedList list)
     print ("   Forwards: ");
     for (Node iter = list.begin (); iter != list.end (); iter = iter.next)
     {
-        printInt (iter.data);
+        print (iter.data);
         print (" -> ");
     }
     println ("");
@@ -123,7 +123,7 @@ function void printBackwards (LinkedList list)
     print ("   Backwards: ");
     for (Node iter = list.rbegin (); iter != list.rend (); iter = iter.prev)
     {
-        printInt (iter.data);
+        print (iter.data);
         print (" <- ");
     }
     println ("");
@@ -136,7 +136,7 @@ function void printRecursive (Node node, Node end)
     // base-case 
     if (node == end)
         return;
-    printInt (node.data);
+    print (node.data);
     print (" -> ");
     // recursive step
     printRecursive (node.next, end);

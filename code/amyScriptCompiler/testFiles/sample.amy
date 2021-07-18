@@ -57,7 +57,7 @@ int[] nums = new int[5];
 // you can use sizeof to get the size of an array 
 for (int i = 0; i < 5; ++i)
 {
-    printInt (nums[i]);
+    print (nums[i]);
 }
 println ("");
 
@@ -68,7 +68,7 @@ if (5 > 0)
 }
 elif (mybool)
 {
-    printInt (mybool);
+    print (mybool);
 }
 else
     println ("Yes");
@@ -78,7 +78,7 @@ else
 // <declaration> -> <type> ID
 // <declaration> -> ID1 ID2
 // adds ID2 to the symbol table with type ID1
-printInt (int x = int y = 10);
+print (int x = int y = 10);
 
 // if, for, while statements can be 
 // completed with another statement

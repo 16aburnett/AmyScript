@@ -171,14 +171,25 @@ class CodeGenVisitor (ASTVisitor):
     def visitFunctionNode (self, node):
 
         # variable names are modified by its scope 
-        scopeName = "".join (self.scopeNames) + "__" + node.id
-        node.scopeName = scopeName
+        scopeName = ["".join (self.scopeNames), "____", node.id]
+        # add signature to scopeName for overloaded functions
+        if len(node.params) > 0:
+            scopeName += [f"__{node.params[0].type.id}"]
+            # add array dimensions
+            if node.params[0].type.arrayDimensions > 0:
+                scopeName += [f"__{node.params[0].type.arrayDimensions}"]
+        for i in range(1, len(node.params)):
+            scopeName += [f"__{node.params[i].type.id}"]
+            # add array dimensions
+            if node.params[i].type.arrayDimensions > 0:
+                scopeName += [f"__{node.params[i].type.arrayDimensions}"]
+        node.scopeName = "".join(scopeName)
 
         # create new scope level 
         self.scopeNames += [f"__{node.id}"]
 
         self.printDivider ()
-        self.printComment (f"Function Declaration - {node.scopeName} {node.type}")
+        self.printComment (f"Function Declaration - {node.signature} -> {node.type}")
         # add jump to skip over function 
         self.printCode (f"JUMP __end__{node.scopeName}")
 
@@ -267,7 +278,7 @@ class CodeGenVisitor (ASTVisitor):
         fieldScopeName = "__field__" + "".join (self.scopeNames) + "__" + node.id
         node.scopeName = fieldScopeName
         self.printSubDivider ()
-        self.printComment (f"Field - {node.scopeName}")
+        self.printComment (f"Field - {node.type} {node.signature}")
 
         # fieldIndexVarname = f"__field__{node.id}__{field.id}"
         self.printCode (f"ASSIGN {node.scopeName} {node.index}")
@@ -277,11 +288,25 @@ class CodeGenVisitor (ASTVisitor):
     def visitMethodDeclarationNode (self, node):
 
         # variable names are modified by its scope 
-        scopeName = "__method__" + "".join (self.scopeNames) + "__" + node.id
-        node.scopeName = scopeName
+        scopeName = ["__method__", "".join (self.scopeNames), "____", node.id]
+        # add signature to scopeName for overloaded functions
+        if len(node.params) > 0:
+            scopeName += [f"__{node.params[0].type.id}"]
+            # add array dimensions
+            if node.params[0].type.arrayDimensions > 0:
+                scopeName += [f"__{node.params[0].type.arrayDimensions}"]
+        for i in range(1, len(node.params)):
+            scopeName += [f"__{node.params[i].type.id}"]
+            # add array dimensions
+            if node.params[i].type.arrayDimensions > 0:
+                scopeName += [f"__{node.params[i].type.arrayDimensions}"]
+        node.scopeName = "".join(scopeName)
+
+        # create new scope level 
+        self.scopeNames += [f"__{node.id}"]
 
         self.printSubDivider ()
-        self.printComment (f"Method Declaration")
+        self.printComment (f"Method Declaration - {node.signature} -> {node.type}")
 
         endLabel = f"__end{node.scopeName}"
         methodLabel = node.scopeName
@@ -327,14 +352,31 @@ class CodeGenVisitor (ASTVisitor):
         self.printSubDivider ()
         self.printNewline ()
 
+        # remove scope level 
+        self.scopeNames.pop ()
+
     def visitConstructorDeclarationNode (self, node):
 
         # variable names are modified by its scope 
-        scopeName = "__ctor__"+ "".join (self.scopeNames) + "__" + node.parentClass.id
-        node.scopeName = scopeName
+        scopeName = ["__ctor__", "".join (self.scopeNames), "____", node.parentClass.id]
+        # add signature to scopeName for overloaded functions
+        if len(node.params) > 0:
+            scopeName += [f"__{node.params[0].type.id}"]
+            # add array dimensions
+            if node.params[0].type.arrayDimensions > 0:
+                scopeName += [f"__{node.params[0].type.arrayDimensions}"]
+        for i in range(1, len(node.params)):
+            scopeName += [f"__{node.params[i].type.id}"]
+            # add array dimensions
+            if node.params[i].type.arrayDimensions > 0:
+                scopeName += [f"__{node.params[i].type.arrayDimensions}"]
+        node.scopeName = "".join(scopeName)
+
+        # create new scope level 
+        self.scopeNames += [f"__{node.parentClass.id}"]
 
         self.printSubDivider ()
-        self.printComment (f"Constructor Declaration - {node.scopeName} {node.parentClass.type}")
+        self.printComment (f"Constructor Declaration - {node.signature} -> {node.parentClass.type}")
 
         endLabel = f"__end{node.scopeName}"
         ctorLabel = f"{node.scopeName}"
@@ -379,6 +421,9 @@ class CodeGenVisitor (ASTVisitor):
         self.printComment (f"End Constructor Declaration - {node.scopeName}")
         self.printSubDivider ()
         self.printNewline ()
+
+        # remove scope level 
+        self.scopeNames.pop ()
         
 
     def visitStatementNode (self, node):
@@ -1355,7 +1400,7 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitFunctionCallExpressionNode (self, node):
-        self.printComment ("Function Call")
+        self.printComment (f"Function Call - {node.decl.signature} -> {node.decl.type}")
 
         self.indentation += 1
 
@@ -1442,7 +1487,7 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitMethodAccessorExpressionNode (self, node):
-        self.printComment ("Method Call")
+        self.printComment (f"Method Call - {node.decl.signature} -> {node.decl.type}")
 
         self.indentation += 1
 
@@ -1533,7 +1578,7 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitConstructorCallExpressionNode (self, node):
-        self.printComment ("Constructor Call")
+        self.printComment (f"Constructor Call - {node.decl.signature} -> {node.decl.parentClass.type}")
 
         self.indentation += 1
 

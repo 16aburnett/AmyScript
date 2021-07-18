@@ -19,73 +19,105 @@ jump __endOfLibrary
 //========================================================================
 // Prints a given string to the screen
 // void print (char[] stringToPrint);
-print:
+print__char__1:
     // grab string
     stackget __str 0
     sizeof __size __str
     // print each char
     // init
     assign __i 0
-__print__loop:
+__print__char__1__loop:
     // cond
     cmp __i __size
-    jge __print__endloop
+    jge __print__char__1__endloop
     // Body
     print __str[__i]
     // update
     add __i __i 1
     // repeat
-    jump __print__loop
-__print__endloop:
-    return 0
-
-//========================================================================
-// Prints a given string to the screen with a newline at the end
-// void println (char[] stringToPrint);
-println:
-    // grab string
-    stackget __str 0
-    sizeof __size __str
-    // print each char
-    // init
-    assign __i 0
-__println__loop:
-    // cond
-    cmp __i __size
-    jge __println__endloop
-    // Body
-    print __str[__i]
-    // update
-    add __i __i 1
-    // repeat
-    jump __println__loop
-__println__endloop:
-    println
+    jump __print__char__1__loop
+__print__char__1__endloop:
     return 0
 
 //========================================================================
 // Prints an int to the screen
-// void printInt (int intToPrint);
-printInt:
+// void print (int intToPrint);
+print__int:
     stackget __str 0
     print __str
     return 0
 
 //========================================================================
 // Prints a float to the screen
-// void printFloat (float floatToPrint);
-printFloat:
+// void print (float floatToPrint);
+print__float:
     stackget __str 0
     print __str
     return 0
 
 //========================================================================
 // Prints a char to the screen
-// void printChar (char charToPrint);
-printChar:
+// void print (char charToPrint);
+print__char:
     // grab string
     stackget __char 0
     print __char
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
     return 0
 
 //========================================================================
@@ -96,8 +128,9 @@ input:
     return __line
 
 //========================================================================
-
-
+// exits/stops the program 
+exit:
+    halt
 
 //========================================================================
 
@@ -116,12 +149,12 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Function Declaration - stringToInt int
-JUMP __end__stringToInt
-stringToInt:
+// Function Declaration - stringToInt(char[]) -> int
+JUMP __end____main____stringToInt__char__1
+__main____stringToInt__char__1:
    // Parameters
       // Param: str
-      STACKGET str 0
+      STACKGET __main__stringToInt__str 0
    // Body
       //------------------------------------------------------------------
       // Code Block
@@ -129,50 +162,59 @@ stringToInt:
             // RHS
                // Literal
                   PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__stringToInt__block__0__val 0
             POP __rhs
-            ASSIGN val __rhs
+            ASSIGN __main__stringToInt__block__0__val __rhs
             PUSH __rhs
          // Assignment
             // RHS
                // Literal
                   PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__stringToInt__block__0__isNegative 0
             POP __rhs
-            ASSIGN isNegative __rhs
+            ASSIGN __main__stringToInt__block__0__isNegative __rhs
             PUSH __rhs
          // Assignment
             // RHS
                // Literal
                   PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__stringToInt__block__0__i 0
             POP __rhs
-            ASSIGN i __rhs
+            ASSIGN __main__stringToInt__block__0__i __rhs
             PUSH __rhs
          //---------------------------------------------------------------
          // For-Loop
          // Init
-            // Identifier
-               PUSH i
-         JUMP __forcond0
-         __for0:
+            // Identifier - i
+               PUSH __main__stringToInt__block__0__i
+         JUMP __forcond__1
+         __for__1:
             // Update
                // Pre-Increment
                   // RHS
-                     // Identifier
-                        PUSH i
+                     // Identifier - i
+                        PUSH __main__stringToInt__block__0__i
                   POP __rhs
-                  ADD i i 1
-                  ASSIGN __res i
+                  ADD __main__stringToInt__block__0__i __main__stringToInt__block__0__i 1
+                  ASSIGN __res __main__stringToInt__block__0__i
                   PUSH __res
-            __forcond0:
+            __forcond__1:
             // Condition
                // Less Than
                   // LHS
-                     // Identifier
-                        PUSH i
+                     // Identifier - i
+                        PUSH __main__stringToInt__block__0__i
                   // RHS
                      // Sizeof Operator
                         // RHS
-                           // Identifier
-                              PUSH str
+                           // Identifier - str
+                              PUSH __main__stringToInt__str
                         // Calculate array size
                         POP __array
                         SIZEOF __size __array
@@ -183,7 +225,7 @@ stringToInt:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor0
+               JEQ __endfor__1
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -194,11 +236,11 @@ stringToInt:
                            // LHS
                               // Subscript
                                  // LHS
-                                    // Identifier
-                                       PUSH str
+                                    // Identifier - str
+                                       PUSH __main__stringToInt__str
                                  // OFFSET
-                                    // Identifier
-                                       PUSH i
+                                    // Identifier - i
+                                       PUSH __main__stringToInt__block__0__i
                                  POP __offset
                                  POP __pointer
                                  PUSH __pointer[__offset]
@@ -211,22 +253,22 @@ stringToInt:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif1
+                        JEQ __endif__3
                      // Body
                         //------------------------------------------------
                         // Code Block
-                           // Break out of __for0
-                           JUMP __endfor0
+                           // Break out of __for__1
+                           JUMP __endfor__1
                         //------------------------------------------------
-                     JUMP __endif1
+                     JUMP __endif__3
                      // End of if
-                     __endif1:
+                     __endif__3:
                   //------------------------------------------------------
                //---------------------------------------------------------
             // Repeat
-            JUMP __for0
+            JUMP __for__1
             // End of For
-            __endfor0:
+            __endfor__1:
          //---------------------------------------------------------------
          //---------------------------------------------------------------
          // If-Statement
@@ -235,11 +277,11 @@ stringToInt:
                   // LHS
                      // Subscript
                         // LHS
-                           // Identifier
-                              PUSH str
+                           // Identifier - str
+                              PUSH __main__stringToInt__str
                         // OFFSET
-                           // Identifier
-                              PUSH i
+                           // Identifier - i
+                              PUSH __main__stringToInt__block__0__i
                         POP __offset
                         POP __pointer
                         PUSH __pointer[__offset]
@@ -252,7 +294,7 @@ stringToInt:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif2
+               JEQ __endif__5
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -261,16 +303,16 @@ stringToInt:
                         // Literal
                            PUSH 1
                      POP __rhs
-                     ASSIGN isNegative __rhs
+                     ASSIGN __main__stringToInt__block__0__isNegative __rhs
                      PUSH __rhs
                   // Post-Increment
-                     ASSIGN __res i
-                     ADD i i 1
+                     ASSIGN __res __main__stringToInt__block__0__i
+                     ADD __main__stringToInt__block__0__i __main__stringToInt__block__0__i 1
                      PUSH __res
                //---------------------------------------------------------
-            JUMP __endif2
+            JUMP __endif__5
             // End of if
-            __endif2:
+            __endif__5:
          //---------------------------------------------------------------
          // Assignment
             // RHS
@@ -287,36 +329,39 @@ stringToInt:
                   ASSIGN __str[8] '8'
                   ASSIGN __str[9] '9'
                   PUSH __str
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__stringToInt__block__0__digits 0
             POP __rhs
-            ASSIGN digits __rhs
+            ASSIGN __main__stringToInt__block__0__digits __rhs
             PUSH __rhs
          //---------------------------------------------------------------
          // For-Loop
          // Init
-            // Identifier
-               PUSH i
-         JUMP __forcond3
-         __for3:
+            // Identifier - i
+               PUSH __main__stringToInt__block__0__i
+         JUMP __forcond__7
+         __for__7:
             // Update
                // Pre-Increment
                   // RHS
-                     // Identifier
-                        PUSH i
+                     // Identifier - i
+                        PUSH __main__stringToInt__block__0__i
                   POP __rhs
-                  ADD i i 1
-                  ASSIGN __res i
+                  ADD __main__stringToInt__block__0__i __main__stringToInt__block__0__i 1
+                  ASSIGN __res __main__stringToInt__block__0__i
                   PUSH __res
-            __forcond3:
+            __forcond__7:
             // Condition
                // Less Than
                   // LHS
-                     // Identifier
-                        PUSH i
+                     // Identifier - i
+                        PUSH __main__stringToInt__block__0__i
                   // RHS
                      // Sizeof Operator
                         // RHS
-                           // Identifier
-                              PUSH str
+                           // Identifier - str
+                              PUSH __main__stringToInt__str
                         // Calculate array size
                         POP __array
                         SIZEOF __size __array
@@ -327,7 +372,7 @@ stringToInt:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor3
+               JEQ __endfor__7
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -338,31 +383,34 @@ stringToInt:
                         // RHS
                            // Literal
                               PUSH 0
+                        // LHS
+                           // Variable Declaration
+                              ASSIGN __main__stringToInt__block__0__for__7__block__8__for__9__j 0
                         POP __rhs
-                        ASSIGN j __rhs
+                        ASSIGN __main__stringToInt__block__0__for__7__block__8__for__9__j __rhs
                         PUSH __rhs
-                  JUMP __forcond4
-                  __for4:
+                  JUMP __forcond__9
+                  __for__9:
                      // Update
                         // Pre-Increment
                            // RHS
-                              // Identifier
-                                 PUSH j
+                              // Identifier - j
+                                 PUSH __main__stringToInt__block__0__for__7__block__8__for__9__j
                            POP __rhs
-                           ADD j j 1
-                           ASSIGN __res j
+                           ADD __main__stringToInt__block__0__for__7__block__8__for__9__j __main__stringToInt__block__0__for__7__block__8__for__9__j 1
+                           ASSIGN __res __main__stringToInt__block__0__for__7__block__8__for__9__j
                            PUSH __res
-                     __forcond4:
+                     __forcond__9:
                      // Condition
                         // Less Than
                            // LHS
-                              // Identifier
-                                 PUSH j
+                              // Identifier - j
+                                 PUSH __main__stringToInt__block__0__for__7__block__8__for__9__j
                            // RHS
                               // Sizeof Operator
                                  // RHS
-                                    // Identifier
-                                       PUSH digits
+                                    // Identifier - digits
+                                       PUSH __main__stringToInt__block__0__digits
                                  // Calculate array size
                                  POP __array
                                  SIZEOF __size __array
@@ -373,7 +421,7 @@ stringToInt:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __forelse4
+                        JEQ __forelse__9
                      // Body
                         //------------------------------------------------
                         // Code Block
@@ -384,11 +432,11 @@ stringToInt:
                                     // LHS
                                        // Subscript
                                           // LHS
-                                             // Identifier
-                                                PUSH str
+                                             // Identifier - str
+                                                PUSH __main__stringToInt__str
                                           // OFFSET
-                                             // Identifier
-                                                PUSH i
+                                             // Identifier - i
+                                                PUSH __main__stringToInt__block__0__i
                                           POP __offset
                                           POP __pointer
                                           PUSH __pointer[__offset]
@@ -401,7 +449,7 @@ stringToInt:
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __endif5
+                                 JEQ __endif__11
                               // Body
                                  //---------------------------------------
                                  // Code Block
@@ -409,21 +457,21 @@ stringToInt:
                                        // RHS
                                           // Sizeof Operator
                                              // RHS
-                                                // Identifier
-                                                   PUSH str
+                                                // Identifier - str
+                                                   PUSH __main__stringToInt__str
                                              // Calculate array size
                                              POP __array
                                              SIZEOF __size __array
                                              PUSH __size
                                        POP __rhs
-                                       ASSIGN i __rhs
+                                       ASSIGN __main__stringToInt__block__0__i __rhs
                                        PUSH __rhs
-                                    // Break out of __for4
-                                    JUMP __endfor4
+                                    // Break out of __for__9
+                                    JUMP __endfor__9
                                  //---------------------------------------
-                              JUMP __endif5
+                              JUMP __endif__11
                               // End of if
-                              __endif5:
+                              __endif__11:
                            //---------------------------------------------
                            //---------------------------------------------
                            // If-Statement
@@ -432,22 +480,22 @@ stringToInt:
                                     // LHS
                                        // Subscript
                                           // LHS
-                                             // Identifier
-                                                PUSH str
+                                             // Identifier - str
+                                                PUSH __main__stringToInt__str
                                           // OFFSET
-                                             // Identifier
-                                                PUSH i
+                                             // Identifier - i
+                                                PUSH __main__stringToInt__block__0__i
                                           POP __offset
                                           POP __pointer
                                           PUSH __pointer[__offset]
                                     // RHS
                                        // Subscript
                                           // LHS
-                                             // Identifier
-                                                PUSH digits
+                                             // Identifier - digits
+                                                PUSH __main__stringToInt__block__0__digits
                                           // OFFSET
-                                             // Identifier
-                                                PUSH j
+                                             // Identifier - j
+                                                PUSH __main__stringToInt__block__0__for__7__block__8__for__9__j
                                           POP __offset
                                           POP __pointer
                                           PUSH __pointer[__offset]
@@ -457,7 +505,7 @@ stringToInt:
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __endif6
+                                 JEQ __endif__13
                               // Body
                                  //---------------------------------------
                                  // Code Block
@@ -467,8 +515,8 @@ stringToInt:
                                              // LHS
                                                 // Multiplication
                                                    // LHS
-                                                      // Identifier
-                                                         PUSH val
+                                                      // Identifier - val
+                                                         PUSH __main__stringToInt__block__0__val
                                                    // RHS
                                                       // Literal
                                                          PUSH 10
@@ -477,31 +525,31 @@ stringToInt:
                                                    MULTIPLY __res __lhs __rhs
                                                    PUSH __res
                                              // RHS
-                                                // Identifier
-                                                   PUSH j
+                                                // Identifier - j
+                                                   PUSH __main__stringToInt__block__0__for__7__block__8__for__9__j
                                              POP __rhs
                                              POP __lhs
                                              ADD __res __lhs __rhs
                                              PUSH __res
                                        POP __rhs
-                                       ASSIGN val __rhs
+                                       ASSIGN __main__stringToInt__block__0__val __rhs
                                        PUSH __rhs
-                                    // Break out of __for4
-                                    JUMP __endfor4
+                                    // Break out of __for__9
+                                    JUMP __endfor__9
                                  //---------------------------------------
-                              JUMP __endif6
+                              JUMP __endif__13
                               // End of if
-                              __endif6:
+                              __endif__13:
                            //---------------------------------------------
                         //------------------------------------------------
                      // Repeat
-                     JUMP __for4
+                     JUMP __for__9
                      //---------------------------------------------------
                      // For-Else-Statement
-                     __forelse4:
+                     __forelse__9:
                      //---------------------------------------------------
                      // Code Block
-                        // Function Call
+                        // Function Call - println(char[]) -> void
                            // Arguments
                               // Literal
                                  MALLOC __str 20
@@ -529,73 +577,72 @@ stringToInt:
                               POP __arg0
                            // Pushing args in reverse order
                            PUSH __arg0
-                           CALL println
+                           // *** println
+                           CALL println__char__1
                            // Remove args
                            POP __void
                            RESPONSE __retval
                            PUSH __retval
-                        // Return
-                           // Negative
-                              // RHS
-                                 // Literal
-                                    PUSH 1
-                              POP __rhs
-                              SUBTRACT __res 0 __rhs
-                              PUSH __res
-                           POP __rVal
-                           RETURN __rVal
+                        // Function Call - exit() -> void
+                           // Arguments
+                           // Pushing args in reverse order
+                           // *** exit
+                           CALL exit
+                           // Remove args
+                           RESPONSE __retval
+                           PUSH __retval
                      //---------------------------------------------------
                      //---------------------------------------------------
                      // End of For
-                     __endfor4:
+                     __endfor__9:
                   //------------------------------------------------------
                //---------------------------------------------------------
             // Repeat
-            JUMP __for3
+            JUMP __for__7
             // End of For
-            __endfor3:
+            __endfor__7:
          //---------------------------------------------------------------
          //---------------------------------------------------------------
          // If-Statement
             // Condition
-               // Identifier
-                  PUSH isNegative
+               // Identifier - isNegative
+                  PUSH __main__stringToInt__block__0__isNegative
                POP __cond
                CMP __cond 0
-               JEQ __endif7
+               JEQ __endif__16
             // Body
                // Return
                   // Negative
                      // RHS
-                        // Identifier
-                           PUSH val
+                        // Identifier - val
+                           PUSH __main__stringToInt__block__0__val
                      POP __rhs
                      SUBTRACT __res 0 __rhs
                      PUSH __res
                   POP __rVal
                   RETURN __rVal
-            JUMP __endif7
+            JUMP __endif__16
             // End of if
-            __endif7:
+            __endif__16:
          //---------------------------------------------------------------
          // Return
-            // Identifier
-               PUSH val
+            // Identifier - val
+               PUSH __main__stringToInt__block__0__val
             POP __rVal
             RETURN __rVal
       //------------------------------------------------------------------
    RETURN 0
-__end__stringToInt:
-// End Function Declaration - stringToInt
+__end____main____stringToInt__char__1:
+// End Function Declaration - __main____stringToInt__char__1
 //========================================================================
 
 //========================================================================
-// Function Declaration - intToString char[]
-JUMP __end__intToString
-intToString:
+// Function Declaration - intToString(int) -> char[]
+JUMP __end____main____intToString__int
+__main____intToString__int:
    // Parameters
       // Param: num
-      STACKGET num 0
+      STACKGET __main__intToString__num 0
    // Body
       //------------------------------------------------------------------
       // Code Block
@@ -604,8 +651,8 @@ intToString:
             // Condition
                // Equal
                   // LHS
-                     // Identifier
-                        PUSH num
+                     // Identifier - num
+                        PUSH __main__intToString__num
                   // RHS
                      // Literal
                         PUSH 0
@@ -615,7 +662,7 @@ intToString:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif8
+               JEQ __endif__18
             // Body
                // Return
                   // Literal
@@ -624,24 +671,27 @@ intToString:
                      PUSH __str
                   POP __rVal
                   RETURN __rVal
-            JUMP __endif8
+            JUMP __endif__18
             // End of if
-            __endif8:
+            __endif__18:
          //---------------------------------------------------------------
          // Assignment
             // RHS
                // Literal
                   PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__intToString__block__17__isNegative 0
             POP __rhs
-            ASSIGN isNegative __rhs
+            ASSIGN __main__intToString__block__17__isNegative __rhs
             PUSH __rhs
          //---------------------------------------------------------------
          // If-Statement
             // Condition
                // Less Than
                   // LHS
-                     // Identifier
-                        PUSH num
+                     // Identifier - num
+                        PUSH __main__intToString__num
                   // RHS
                      // Literal
                         PUSH 0
@@ -651,7 +701,7 @@ intToString:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif9
+               JEQ __endif__19
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -660,24 +710,24 @@ intToString:
                         // Literal
                            PUSH 1
                      POP __rhs
-                     ASSIGN isNegative __rhs
+                     ASSIGN __main__intToString__block__17__isNegative __rhs
                      PUSH __rhs
                   // Assignment
                      // RHS
                         // Negative
                            // RHS
-                              // Identifier
-                                 PUSH num
+                              // Identifier - num
+                                 PUSH __main__intToString__num
                            POP __rhs
                            SUBTRACT __res 0 __rhs
                            PUSH __res
                      POP __rhs
-                     ASSIGN num __rhs
+                     ASSIGN __main__intToString__num __rhs
                      PUSH __rhs
                //---------------------------------------------------------
-            JUMP __endif9
+            JUMP __endif__19
             // End of if
-            __endif9:
+            __endif__19:
          //---------------------------------------------------------------
          // Assignment
             // RHS
@@ -694,31 +744,40 @@ intToString:
                   ASSIGN __str[8] '8'
                   ASSIGN __str[9] '9'
                   PUSH __str
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__intToString__block__17__digits 0
             POP __rhs
-            ASSIGN digits __rhs
+            ASSIGN __main__intToString__block__17__digits __rhs
             PUSH __rhs
          // Assignment
             // RHS
                // Literal
                   PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__intToString__block__17__nDigits 0
             POP __rhs
-            ASSIGN nDigits __rhs
+            ASSIGN __main__intToString__block__17__nDigits __rhs
             PUSH __rhs
          // Assignment
             // RHS
-               // Identifier
-                  PUSH num
+               // Identifier - num
+                  PUSH __main__intToString__num
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__intToString__block__17__temp 0
             POP __rhs
-            ASSIGN temp __rhs
+            ASSIGN __main__intToString__block__17__temp __rhs
             PUSH __rhs
          //---------------------------------------------------------------
          // While-Loop
-         __while10:
+         __while__21:
             // Condition
                // Greater Than
                   // LHS
-                     // Identifier
-                        PUSH temp
+                     // Identifier - temp
+                        PUSH __main__intToString__block__17__temp
                   // RHS
                      // Literal
                         PUSH 0
@@ -728,20 +787,20 @@ intToString:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endwhile10
+               JEQ __endwhile__21
             // Body
                //---------------------------------------------------------
                // Code Block
                   // Post-Increment
-                     ASSIGN __res nDigits
-                     ADD nDigits nDigits 1
+                     ASSIGN __res __main__intToString__block__17__nDigits
+                     ADD __main__intToString__block__17__nDigits __main__intToString__block__17__nDigits 1
                      PUSH __res
                   // Assignment
                      // RHS
                         // Division
                            // LHS
-                              // Identifier
-                                 PUSH temp
+                              // Identifier - temp
+                                 PUSH __main__intToString__block__17__temp
                            // RHS
                               // Literal
                                  PUSH 10
@@ -750,23 +809,23 @@ intToString:
                            DIVIDE __res __lhs __rhs
                            PUSH __res
                      POP __rhs
-                     ASSIGN temp __rhs
+                     ASSIGN __main__intToString__block__17__temp __rhs
                      PUSH __rhs
                //---------------------------------------------------------
-            JUMP __while10
+            JUMP __while__21
             // End of While
-            __endwhile10:
+            __endwhile__21:
          //---------------------------------------------------------------
          // Assignment
             // RHS
                // Array Allocator
                   // Addition
                      // LHS
-                        // Identifier
-                           PUSH nDigits
+                        // Identifier - nDigits
+                           PUSH __main__intToString__block__17__nDigits
                      // RHS
-                        // Identifier
-                           PUSH isNegative
+                        // Identifier - isNegative
+                           PUSH __main__intToString__block__17__isNegative
                      POP __rhs
                      POP __lhs
                      ADD __res __lhs __rhs
@@ -774,19 +833,22 @@ intToString:
                   POP __size
                   MALLOC __ptr __size
                   PUSH __ptr
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__intToString__block__17__result 0
             POP __rhs
-            ASSIGN result __rhs
+            ASSIGN __main__intToString__block__17__result __rhs
             PUSH __rhs
          // Assignment
             // RHS
                // Array Allocator
                   // Addition
                      // LHS
-                        // Identifier
-                           PUSH nDigits
+                        // Identifier - nDigits
+                           PUSH __main__intToString__block__17__nDigits
                      // RHS
-                        // Identifier
-                           PUSH isNegative
+                        // Identifier - isNegative
+                           PUSH __main__intToString__block__17__isNegative
                      POP __rhs
                      POP __lhs
                      ADD __res __lhs __rhs
@@ -794,24 +856,30 @@ intToString:
                   POP __size
                   MALLOC __ptr __size
                   PUSH __ptr
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__intToString__block__17__reversed 0
             POP __rhs
-            ASSIGN reversed __rhs
+            ASSIGN __main__intToString__block__17__reversed __rhs
             PUSH __rhs
          // Assignment
             // RHS
                // Literal
                   PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__intToString__block__17__i 0
             POP __rhs
-            ASSIGN i __rhs
+            ASSIGN __main__intToString__block__17__i __rhs
             PUSH __rhs
          //---------------------------------------------------------------
          // While-Loop
-         __while11:
+         __while__23:
             // Condition
                // Greater Than
                   // LHS
-                     // Identifier
-                        PUSH num
+                     // Identifier - num
+                        PUSH __main__intToString__num
                   // RHS
                      // Literal
                         PUSH 0
@@ -821,7 +889,7 @@ intToString:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endwhile11
+               JEQ __endwhile__23
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -829,13 +897,13 @@ intToString:
                      // RHS
                         // Subscript
                            // LHS
-                              // Identifier
-                                 PUSH digits
+                              // Identifier - digits
+                                 PUSH __main__intToString__block__17__digits
                            // OFFSET
                               // Mod
                                  // LHS
-                                    // Identifier
-                                       PUSH num
+                                    // Identifier - num
+                                       PUSH __main__intToString__num
                                  // RHS
                                     // Literal
                                        PUSH 10
@@ -849,26 +917,26 @@ intToString:
                      // LHS
                         // Subscript assignment
                            // LHS
-                              // Identifier
-                                 PUSH result
+                              // Identifier - result
+                                 PUSH __main__intToString__block__17__result
                            // OFFSET
-                              // Identifier
-                                 PUSH i
+                              // Identifier - i
+                                 PUSH __main__intToString__block__17__i
                            POP __offset
                            POP __pointer
                      POP __rhs
                      ASSIGN __pointer[__offset] __rhs
                      PUSH __rhs
                   // Post-Increment
-                     ASSIGN __res i
-                     ADD i i 1
+                     ASSIGN __res __main__intToString__block__17__i
+                     ADD __main__intToString__block__17__i __main__intToString__block__17__i 1
                      PUSH __res
                   // Assignment
                      // RHS
                         // Division
                            // LHS
-                              // Identifier
-                                 PUSH num
+                              // Identifier - num
+                                 PUSH __main__intToString__num
                            // RHS
                               // Literal
                                  PUSH 10
@@ -877,21 +945,21 @@ intToString:
                            DIVIDE __res __lhs __rhs
                            PUSH __res
                      POP __rhs
-                     ASSIGN num __rhs
+                     ASSIGN __main__intToString__num __rhs
                      PUSH __rhs
                //---------------------------------------------------------
-            JUMP __while11
+            JUMP __while__23
             // End of While
-            __endwhile11:
+            __endwhile__23:
          //---------------------------------------------------------------
          //---------------------------------------------------------------
          // If-Statement
             // Condition
-               // Identifier
-                  PUSH isNegative
+               // Identifier - isNegative
+                  PUSH __main__intToString__block__17__isNegative
                POP __cond
                CMP __cond 0
-               JEQ __endif12
+               JEQ __endif__25
             // Body
                // Assignment
                   // RHS
@@ -900,19 +968,19 @@ intToString:
                   // LHS
                      // Subscript assignment
                         // LHS
-                           // Identifier
-                              PUSH result
+                           // Identifier - result
+                              PUSH __main__intToString__block__17__result
                         // OFFSET
-                           // Identifier
-                              PUSH nDigits
+                           // Identifier - nDigits
+                              PUSH __main__intToString__block__17__nDigits
                         POP __offset
                         POP __pointer
                   POP __rhs
                   ASSIGN __pointer[__offset] __rhs
                   PUSH __rhs
-            JUMP __endif12
+            JUMP __endif__25
             // End of if
-            __endif12:
+            __endif__25:
          //---------------------------------------------------------------
          //---------------------------------------------------------------
          // For-Loop
@@ -922,30 +990,30 @@ intToString:
                   // Literal
                      PUSH 0
                POP __rhs
-               ASSIGN i __rhs
+               ASSIGN __main__intToString__block__17__i __rhs
                PUSH __rhs
-         JUMP __forcond13
-         __for13:
+         JUMP __forcond__26
+         __for__26:
             // Update
                // Pre-Increment
                   // RHS
-                     // Identifier
-                        PUSH i
+                     // Identifier - i
+                        PUSH __main__intToString__block__17__i
                   POP __rhs
-                  ADD i i 1
-                  ASSIGN __res i
+                  ADD __main__intToString__block__17__i __main__intToString__block__17__i 1
+                  ASSIGN __res __main__intToString__block__17__i
                   PUSH __res
-            __forcond13:
+            __forcond__26:
             // Condition
                // Less Than
                   // LHS
-                     // Identifier
-                        PUSH i
+                     // Identifier - i
+                        PUSH __main__intToString__block__17__i
                   // RHS
                      // Sizeof Operator
                         // RHS
-                           // Identifier
-                              PUSH result
+                           // Identifier - result
+                              PUSH __main__intToString__block__17__result
                         // Calculate array size
                         POP __array
                         SIZEOF __size __array
@@ -956,14 +1024,14 @@ intToString:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor13
+               JEQ __endfor__26
             // Body
                // Assignment
                   // RHS
                      // Subscript
                         // LHS
-                           // Identifier
-                              PUSH result
+                           // Identifier - result
+                              PUSH __main__intToString__block__17__result
                         // OFFSET
                            // Subtraction
                               // LHS
@@ -971,8 +1039,8 @@ intToString:
                                     // LHS
                                        // Sizeof Operator
                                           // RHS
-                                             // Identifier
-                                                PUSH result
+                                             // Identifier - result
+                                                PUSH __main__intToString__block__17__result
                                           // Calculate array size
                                           POP __array
                                           SIZEOF __size __array
@@ -985,8 +1053,8 @@ intToString:
                                     SUBTRACT __res __lhs __rhs
                                     PUSH __res
                               // RHS
-                                 // Identifier
-                                    PUSH i
+                                 // Identifier - i
+                                    PUSH __main__intToString__block__17__i
                               POP __rhs
                               POP __lhs
                               SUBTRACT __res __lhs __rhs
@@ -997,43 +1065,44 @@ intToString:
                   // LHS
                      // Subscript assignment
                         // LHS
-                           // Identifier
-                              PUSH reversed
+                           // Identifier - reversed
+                              PUSH __main__intToString__block__17__reversed
                         // OFFSET
-                           // Identifier
-                              PUSH i
+                           // Identifier - i
+                              PUSH __main__intToString__block__17__i
                         POP __offset
                         POP __pointer
                   POP __rhs
                   ASSIGN __pointer[__offset] __rhs
                   PUSH __rhs
             // Repeat
-            JUMP __for13
+            JUMP __for__26
             // End of For
-            __endfor13:
+            __endfor__26:
          //---------------------------------------------------------------
          // Return
-            // Identifier
-               PUSH reversed
+            // Identifier - reversed
+               PUSH __main__intToString__block__17__reversed
             POP __rVal
             RETURN __rVal
       //------------------------------------------------------------------
    RETURN 0
-__end__intToString:
-// End Function Declaration - intToString
+__end____main____intToString__int:
+// End Function Declaration - __main____intToString__int
 //========================================================================
 
-// Function Call
+// Function Call - println(char[]) -> void
    // Arguments
-      // Function Call
+      // Function Call - intToString(int) -> char[]
          // Arguments
             // Multiplication
                // LHS
-                  // Function Call
+                  // Function Call - stringToInt(char[]) -> int
                      // Arguments
-                        // Function Call
+                        // Function Call - input() -> char[]
                            // Arguments
                            // Pushing args in reverse order
+                           // *** input
                            CALL input
                            // Remove args
                            RESPONSE __retval
@@ -1041,7 +1110,8 @@ __end__intToString:
                         POP __arg0
                      // Pushing args in reverse order
                      PUSH __arg0
-                     CALL stringToInt
+                     // *** stringToInt
+                     CALL __main____stringToInt__char__1
                      // Remove args
                      POP __void
                      RESPONSE __retval
@@ -1056,7 +1126,8 @@ __end__intToString:
             POP __arg0
          // Pushing args in reverse order
          PUSH __arg0
-         CALL intToString
+         // *** intToString
+         CALL __main____intToString__int
          // Remove args
          POP __void
          RESPONSE __retval
@@ -1064,7 +1135,8 @@ __end__intToString:
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
-   CALL println
+   // *** println
+   CALL println__char__1
    // Remove args
    POP __void
    RESPONSE __retval
