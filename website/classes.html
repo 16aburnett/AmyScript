@@ -39,6 +39,7 @@
                         <li><a href="#link_this">This Keyword (<span class="inlineCode">this</span>)</a></li>
                         <li><a href="#link_instance">Using a Class</a></li>
                         <li><a href="#link_dot">Accessing Members (<span class="inlineCode">.</span>)</a></li>
+                        <li><a href="#link_free">Object Deallocation (<span class="inlineCode">free</span>)</a></li>
                     </ul>
                 </div>
 
@@ -176,9 +177,77 @@ public field int age;</pre>
                 </p>
 
                 <p>
-                    <strong>Overloading?</strong> Unfortunately AmyScript doesn't yet support function overloading which means 
-                    a class can't have multiple methods with the same names.
+                    <strong>Overloading?</strong> AmyScript also supports method overloading which is similar to 
+                    <a href="functions.html#link_overload">Function Overloading</a>. 
+                    You can create methods with the same name in the same class as long as they have different parameter types or amounts. 
                 </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Method Overloading Example</h3>
+                    </div>
+                    <pre class="code">class Math
+{
+    constructor () {}
+    public method int sum (int a, int b)
+    {
+        return a + b;
+    }
+
+    public method int sum (int a, int b, int c)
+    {
+        return a + b + c;
+    }
+
+    public method float sum (float a, float b)
+    {
+        return a + b;
+    }
+
+    public method float sum (float a, float b, int c)
+    {
+        return a + b + intToFloat (c);
+    }
+}
+
+Math math = new Math();
+println (math.sum (3, 5));        // Math::sum (int, int)
+println (math.sum (3, 5, 7));     // Math::sum (int, int)
+println (math.sum (3.1, 0.5));    // Math::sum (float, float)
+println (math.sum (4.5, 0.3, 1)); // Math::sum (float, float, int)</pre>
+                    <p>
+                        Result:
+                    </p>
+                    <pre class="code">8
+15
+3.6
+5.8</pre>
+                </div>
+
+                <p>
+                    <strong>Method Recursion:</strong> AmyScript supports recursion with methods.
+                    You can call a method within itself using the <span class="inlineCode">this</span> keyword.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Method Recursion Example</h3>
+                    </div>
+                    <pre class="code">class Math
+{
+    constructor () {}
+    public method int sum (int[] nums, int i)
+    {
+        if (i >= sizeof (nums))
+            return 0; 
+        return this.sum (nums, i+1) + nums[i];
+    }
+}
+
+Math math = new Math ();
+
+println (math.sum ([42,31,1,3,6], 0)); // 83</pre>
+                </div>
 
 
                 <a href="#page_header"><p class="backToTop">back to top</p></a>
@@ -241,10 +310,41 @@ public field int age;</pre>
                 </p>
 
                 <p>
-                    <strong>Overloading?</strong> Unfortunately AmyScript doesn't yet support function overloading which means 
-                    a class can only have one constructor. 
+                    <strong>Overloading?</strong> AmyScript also supports constructor overloading which is similar to 
+                    <a href="functions.html#link_overload">Function Overloading</a>. 
+                    You can create multiple constructors for the same class as long as they have different parameter types or amounts. 
                 </p>
 
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Constructor Overloading Example</h3>
+                    </div>
+                    <pre class="code">class Person
+{
+    public field char[] name;
+    public field int age; 
+
+    // default constructor 
+    constructor ()
+    {
+        this.name = "";
+        this.age = 0; 
+    }
+
+    // constructor that initializes the name and age fields
+    constructor (char[] name, int age)
+    {
+        this.name = name; 
+        this.age = age; 
+    }
+}
+
+// Creates a Person with name="" and age=0
+Person p1 = new Person (); 
+
+// Creates a Person with name="Amy" and age=22
+Person p2 = new Person ("Amy", 22); </pre>
+                </div>
 
 
                 <a href="#page_header"><p class="backToTop">back to top</p></a>
@@ -367,13 +467,11 @@ person2.age = 31;
 
 // accessing fields' values 
 println (person1.name);
-printInt (person1.age);
-println ("");
+println (person1.age);
 
 // calling a method 
 println (person2.name);
-printInt (person2.getAge());
-println ("");</pre>
+println (person2.getAge());</pre>
                     <p>
                         Result:
                     </p>
@@ -384,6 +482,44 @@ Tessa
 31</pre>
                 </div>
 
+                <a href="#page_header"><p class="backToTop">back to top</p></a>
+                <hr />
+
+                <!-- FREE -->
+
+                <h3 id="link_free">Object Deallocation (<span class="inlineCode">free</span>)</h3>
+
+                <p>
+                    Object Instances are allocated in memory on the heap and take up space. 
+                    Unfortunately, AmyScript does not have a garbage collector like Java,
+                    so you need to remember to manage the memory on your own to avoid <strong>memory leaks</strong>. 
+                    The <span class="inlineCode">free</span> keyword deallocates the memory associated with an object instance
+                    so that memory can be used for something else later on. 
+                </p>
+
+                <p>
+                    <strong>Memory Leak:</strong> A memory leak happens when you allocate space for an array or object 
+                    and the variable that stores the reference to that array or object goes out of scope. 
+                    When this happens, the memory stays allocated even though the variable no longer exists. 
+                    And overtime, your program will run out of memory if it runs for long enough. 
+                    This is why it is important to free up any memory that you are no longer using.
+                </p>
+
+                <div class="codeBlock">
+                    <div class="codeBlockHeader">
+                        <h3>Free Syntax</h3>
+                    </div>
+                    <pre class="code">free (&#60;expression&#62;)</pre>
+                    <div class="codeBlockHeader">
+                        <h3>Free Example 1</h3>
+                    </div>
+                    <pre class="code">Person person = new Person ("Amy", 22);
+
+//... using the object instance
+
+free (person);</pre>
+
+                </div>
 
 
                 <a href="#page_header"><p class="backToTop">back to top</p></a>

@@ -2,4 +2,103 @@
 // Author: Amy Burnett
 //========================================================================
 
-println (string (stringToInt (input ()) / 2));
+function char[] concat (char[] a, char[] b)
+{
+    char[] c = new char[sizeof (a) + sizeof (b)];
+    for (int i = 0; i < sizeof (a); ++i)
+        c[i] = a[i];
+    for (int i = 0; i < sizeof (b); ++i)
+        c[sizeof (a) + i] = b[i];
+    return c;
+}
+
+
+class Matrix 
+{
+    public field int[][] data;
+    public field int rows;
+    public field int cols;
+
+    constructor ()
+    {
+        this.rows = 0; 
+        this.cols = 0;
+        this.data = null; 
+    }
+
+    constructor (int rows, int cols)
+    {
+        this.rows = rows;
+        this.cols = cols; 
+        this.data = new int[rows][];
+        for (int i = 0; i < rows; ++i)
+            this.data[i] = new int[cols]; 
+    }
+
+    constructor (int[][] data)
+    {
+        this.rows = sizeof (data);
+        this.cols = sizeof (data[0]);
+        this.data = data; 
+    }
+
+    // staticmethod Matrix createZero (int rows, int cols) {}
+
+    public method Matrix add (Matrix other)
+    {
+        // ensure matrix sizes match 
+        if (this.rows != other.rows || this.cols != other.cols)
+            return null; 
+        
+        // perform element-wise addition
+        Matrix res = new Matrix (this.rows, this.cols);
+        for (int i = 0; i < this.rows; ++i)
+            for (int j = 0; j < this.cols; ++j)
+                res.data[i][j] = this.data[i][j] + other.data[i][j];
+        return res; 
+    }
+
+    public method char[] toString ()
+    {
+        char[] res = "";
+        char[] space = " ";
+        char[] newline = "\n";
+        int k = 0;
+        for (int i = 0; i < this.rows; ++i)
+        {
+            for (int j = 0; j < this.cols; ++j)
+            {
+                char[] temp2 = string (this.data[i][j]);
+                char[] temp = concat (res, temp2);
+                free (temp2);
+                free (res);
+                res = temp;
+                temp = concat (res, space);
+                free (res);
+                res = temp; 
+            }
+            char[] temp = concat (res, newline);
+            free (res);
+            res = temp; 
+        }
+        free (newline);
+        free (space);
+        return res; 
+    }
+}
+
+Matrix a = new Matrix ([
+    [0,1,2],
+    [3,4,5],
+    [6,7,8]
+]);
+
+Matrix b = new Matrix ([
+    [1,1,1],
+    [1,1,1],
+    [1,1,1]
+]);
+
+char[] temp = a.add(b).toString();
+print (temp);
+free (temp);

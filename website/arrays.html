@@ -36,6 +36,7 @@
                         <li><a href="#link_allocation">Array Allocation</a></li>
                         <li><a href="#link_accessing">Accessing Array Values</a></li>
                         <li><a href="#link_sizeof">Sizeof Keyword (<span class="inlineCode">sizeof</span>)</a></li>
+                        <li><a href="#link_free">Array Deallocation (<span class="inlineCode">free</span>)</a></li>
                         <li><a href="#link_initialization">Array Initializer List Operator</a></li>
                         <li><a href="#link_multiArray">2D Arrays</a></li>
                     </ul>
@@ -190,17 +191,16 @@ myArray[4] = 7;
 
 // sizeof returns an integer 
 print ("size = ");
-printInt (sizeof (myArray));
-println ("");
+println (sizeof (myArray));
 
 // sizeof is useful in loops
 print ("vals = ");
 for (int i = 0; i < sizeof (myArray); ++i)
 {
-    printInt (myArray[i]);
+    print (myArray[i]);
     print (" ");
 }    
-println ("");
+println ();
 
 // sizeof can get the size of arrays that are passed as parameters 
 // this allows the function to handle arrays of varying sizes 
@@ -208,8 +208,7 @@ println ("");
 function void printSize (int[] arr)
 {
     print ("size = ");
-    printInt (sizeof (arr));
-    println ("");
+    println (sizeof (arr));
 }
 
 printSize (myArray);</pre>
@@ -222,38 +221,42 @@ size = 5</pre>
                 <a href="#page_header"><p class="backToTop">back to top</p></a>
                 <hr />
 
-                <!-- ACCESSING -->
+                <!-- FREE -->
 
-                <h3 id="link_accessing">Accessing Array Values</h3>
+                <h3 id="link_free">Array Deallocation (<span class="inlineCode">free</span>)</h3>
 
                 <p>
-                    The array variable stores the address of where all the array's values are stored,
-                    but how are the values accessed?
+                    Arrays are allocated in memory on the heap and take up space. 
+                    Unfortunately, AmyScript does not have a garbage collector like Java,
+                    so you need to remember to manage the memory on your own to avoid <strong>memory leaks</strong>. 
+                    The <span class="inlineCode">free</span> keyword deallocates the memory associated with an array
+                    so that memory can be used for something else later on. 
                 </p>
 
                 <p>
-                    Values can be accessed using the <strong>Subscript Operator</strong> (<span class="inlineCode">[]</span>). 
-                    The subscript operator requires an index value (<span class="inlineCode">int</span>) and can locate a specific element in the array.
+                    <strong>Memory Leak:</strong> A memory leak happens when you allocate space for an array or object 
+                    and the variable that stores the reference to that array or object goes out of scope. 
+                    When this happens, the memory stays allocated even though the variable no longer exists. 
+                    And overtime, your program will run out of memory if it runs for long enough. 
+                    This is why it is important to free up any memory that you are no longer using.
                 </p>
 
                 <div class="codeBlock">
                     <div class="codeBlockHeader">
-                        <h3>Subscript Operator Syntax</h3>
+                        <h3>Free Syntax</h3>
                     </div>
-                    <pre class="code">&#60;array-name&#62;[&#60;offset&#62;]<br/></pre>
+                    <pre class="code">free (&#60;expression&#62;)</pre>
                     <div class="codeBlockHeader">
-                        <h3>Subscript Operator Example</h3>
+                        <h3>Free Example 1</h3>
                     </div>
-                    <pre class="code">int[] myArray = new int[5];
-myArray[0] = 1;</pre>
-                    <p>This creates an array and sets the first value of the array to <span class="inlineCode">1</span>.</p>
+                    <pre class="code">// creating an array
+int[] myArray = new int[5];
+
+//... using the array
+
+free (myArray);</pre>
+
                 </div>
-                
-                <p>
-                    <strong>NOTE:</strong> It's very important to keep track of the size of the array because 
-                    if you try to access values that are outside the bounds of the array, 
-                    then you could overwrite values that might break the interpreter and crash your program. 
-                </p>
 
                 <a href="#page_header"><p class="backToTop">back to top</p></a>
                 <hr />
@@ -283,7 +286,7 @@ myArray[0] = 1;</pre>
 int[] nums = [12, 7, 42, 22];
 for (int i = 0; i < sizeof (nums); ++i)
 {
-    printInt (nums[i]);
+    print (nums[i]);
     print (" ");
 }</pre>
                     <p>

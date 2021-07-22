@@ -44,8 +44,7 @@
 int c = add (7, 5);
 
 print ("7 + 5 = ");
-printInt (c);
-println ("");
+println (c);
 </pre>
                 </div>
 
@@ -57,8 +56,8 @@ println ("");
                     </div>
                     <pre class="code">
 // ** Library Code omitted 
-    JUMP __end__add
-add:
+    JUMP __end____main__add__int__int
+__main__add__int__int:
     STACKGET a 0
     STACKGET b 1
     PUSH a
@@ -70,7 +69,7 @@ add:
     POP __rVal
     RETURN __rVal
     RETURN 0
-__end__add: 
+__end____main__add__int__int: 
 
     PUSH 7
     POP __arg0
@@ -78,9 +77,9 @@ __end__add:
     POP __arg1
     PUSH __arg1
     PUSH __arg0
-    CALL add
-    POP __null
-    POP __null
+    CALL __main__add__int__int
+    POP __void
+    POP __void
     RESPONSE __retval
     PUSH __retval
     POP __rhs
@@ -99,23 +98,15 @@ __end__add:
     PUSH __str
     POP __arg0
     PUSH __arg0
-    CALL print
-    POP __null
+    CALL print__char__1
+    POP __void
     RESPONSE __retval
     PUSH __retval
     PUSH c
     POP __arg0
     PUSH __arg0
-    CALL printInt
-    POP __null
-    RESPONSE __retval
-    PUSH __retval
-    MALLOC __str 0
-    PUSH __str
-    POP __arg0
-    PUSH __arg0
-    CALL println
-    POP __null
+    CALL println__int
+    POP __void
     RESPONSE __retval
     PUSH __retval</pre>
                 </div>

@@ -196,56 +196,1450 @@ __endOfLibrary:
 //### COMPILED CODE ######################################################
 //========================================================================
 
-// Function Call - println(char[]) -> void
-   // Arguments
-      // Function Call - string(int) -> char[]
-         // Arguments
-            // Division
+//========================================================================
+// Function Declaration - concat(char[], char[]) -> char[]
+JUMP __end____main____concat__char__1__char__1
+__main____concat__char__1__char__1:
+   // Parameters
+      // Param: a
+      STACKGET __main__concat__a 0
+      // Param: b
+      STACKGET __main__concat__b 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Assignment
+            // RHS
+               // Array Allocator
+                  // Addition
+                     // LHS
+                        // Sizeof Operator
+                           // RHS
+                              // Identifier - a
+                                 PUSH __main__concat__a
+                           // Calculate array size
+                           POP __array
+                           SIZEOF __size __array
+                           PUSH __size
+                     // RHS
+                        // Sizeof Operator
+                           // RHS
+                              // Identifier - b
+                                 PUSH __main__concat__b
+                           // Calculate array size
+                           POP __array
+                           SIZEOF __size __array
+                           PUSH __size
+                     POP __rhs
+                     POP __lhs
+                     ADD __res __lhs __rhs
+                     PUSH __res
+                  POP __size
+                  MALLOC __ptr __size
+                  PUSH __ptr
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__concat__block__0__c 0
+            POP __rhs
+            ASSIGN __main__concat__block__0__c __rhs
+            PUSH __rhs
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment
+               // RHS
+                  // Int Literal
+                     PUSH 0
                // LHS
-                  // Function Call - stringToInt(char[]) -> int
+                  // Variable Declaration
+                     ASSIGN __main__concat__block__0__for__1__i 0
+               POP __rhs
+               ASSIGN __main__concat__block__0__for__1__i __rhs
+               PUSH __rhs
+         JUMP __forcond__1
+         __for__1:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - i
+                        PUSH __main__concat__block__0__for__1__i
+                  POP __rhs
+                  ADD __main__concat__block__0__for__1__i __main__concat__block__0__for__1__i 1
+                  ASSIGN __res __main__concat__block__0__for__1__i
+                  PUSH __res
+            __forcond__1:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - i
+                        PUSH __main__concat__block__0__for__1__i
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier - a
+                              PUSH __main__concat__a
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__1
+            // Body
+               // Assignment
+                  // RHS
+                     // Subscript
+                        // LHS
+                           // Identifier - a
+                              PUSH __main__concat__a
+                        // OFFSET
+                           // Identifier - i
+                              PUSH __main__concat__block__0__for__1__i
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // LHS
+                     // Subscript assignment
+                        // LHS
+                           // Identifier - c
+                              PUSH __main__concat__block__0__c
+                        // OFFSET
+                           // Identifier - i
+                              PUSH __main__concat__block__0__for__1__i
+                        POP __offset
+                        POP __pointer
+                  POP __rhs
+                  ASSIGN __pointer[__offset] __rhs
+                  PUSH __rhs
+            // Repeat
+            JUMP __for__1
+            // End of For
+            __endfor__1:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__concat__block__0__for__2__i 0
+               POP __rhs
+               ASSIGN __main__concat__block__0__for__2__i __rhs
+               PUSH __rhs
+         JUMP __forcond__2
+         __for__2:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - i
+                        PUSH __main__concat__block__0__for__2__i
+                  POP __rhs
+                  ADD __main__concat__block__0__for__2__i __main__concat__block__0__for__2__i 1
+                  ASSIGN __res __main__concat__block__0__for__2__i
+                  PUSH __res
+            __forcond__2:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - i
+                        PUSH __main__concat__block__0__for__2__i
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier - b
+                              PUSH __main__concat__b
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__2
+            // Body
+               // Assignment
+                  // RHS
+                     // Subscript
+                        // LHS
+                           // Identifier - b
+                              PUSH __main__concat__b
+                        // OFFSET
+                           // Identifier - i
+                              PUSH __main__concat__block__0__for__2__i
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // LHS
+                     // Subscript assignment
+                        // LHS
+                           // Identifier - c
+                              PUSH __main__concat__block__0__c
+                        // OFFSET
+                           // Addition
+                              // LHS
+                                 // Sizeof Operator
+                                    // RHS
+                                       // Identifier - a
+                                          PUSH __main__concat__a
+                                    // Calculate array size
+                                    POP __array
+                                    SIZEOF __size __array
+                                    PUSH __size
+                              // RHS
+                                 // Identifier - i
+                                    PUSH __main__concat__block__0__for__2__i
+                              POP __rhs
+                              POP __lhs
+                              ADD __res __lhs __rhs
+                              PUSH __res
+                        POP __offset
+                        POP __pointer
+                  POP __rhs
+                  ASSIGN __pointer[__offset] __rhs
+                  PUSH __rhs
+            // Repeat
+            JUMP __for__2
+            // End of For
+            __endfor__2:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - c
+               PUSH __main__concat__block__0__c
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____concat__char__1__char__1:
+// End Function Declaration - __main____concat__char__1__char__1
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__Matrix
+   //---------------------------------------------------------------------
+   // Field - int[][] Matrix::data
+   ASSIGN __field____main__Matrix__data 0
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int Matrix::rows
+   ASSIGN __field____main__Matrix__rows 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int Matrix::cols
+   ASSIGN __field____main__Matrix__cols 2
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__Matrix
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Matrix::Matrix() -> Matrix
+   JUMP __end__ctor____main__Matrix____Matrix
+   __ctor____main__Matrix____Matrix:
+      // Creating Class Instance
+         MALLOC __this 3
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Matrix__rows
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Matrix__cols
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Null Literal
+                     ASSIGN __null 0
+                     PUSH __null
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Matrix__data
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Matrix____Matrix:
+   // End Constructor Declaration - __ctor____main__Matrix____Matrix
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Matrix::Matrix(int, int) -> Matrix
+   JUMP __end__ctor____main__Matrix____Matrix__int__int
+   __ctor____main__Matrix____Matrix__int__int:
+      // Creating Class Instance
+         MALLOC __this 3
+      // Parameters
+         // Param: rows
+         STACKGET __main__Matrix__Matrix__rows 0
+         // Param: cols
+         STACKGET __main__Matrix__Matrix__cols 1
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Identifier - rows
+                     PUSH __main__Matrix__Matrix__rows
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Matrix__rows
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - cols
+                     PUSH __main__Matrix__Matrix__cols
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Matrix__cols
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Array Allocator
+                     // Identifier - rows
+                        PUSH __main__Matrix__Matrix__rows
+                     POP __size
+                     MALLOC __ptr __size
+                     PUSH __ptr
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Matrix__data
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            //------------------------------------------------------------
+            // For-Loop
+            // Init
+               // Assignment
+                  // RHS
+                     // Int Literal
+                        PUSH 0
+                  // LHS
+                     // Variable Declaration
+                        ASSIGN __main__Matrix__Matrix__block__4__for__5__i 0
+                  POP __rhs
+                  ASSIGN __main__Matrix__Matrix__block__4__for__5__i __rhs
+                  PUSH __rhs
+            JUMP __forcond__5
+            __for__5:
+               // Update
+                  // Pre-Increment
+                     // RHS
+                        // Identifier - i
+                           PUSH __main__Matrix__Matrix__block__4__for__5__i
+                     POP __rhs
+                     ADD __main__Matrix__Matrix__block__4__for__5__i __main__Matrix__Matrix__block__4__for__5__i 1
+                     ASSIGN __res __main__Matrix__Matrix__block__4__for__5__i
+                     PUSH __res
+               __forcond__5:
+               // Condition
+                  // Less Than
+                     // LHS
+                        // Identifier - i
+                           PUSH __main__Matrix__Matrix__block__4__for__5__i
+                     // RHS
+                        // Identifier - rows
+                           PUSH __main__Matrix__Matrix__rows
+                     POP __rhs
+                     POP __lhs
+                     LT __res __lhs __rhs
+                     PUSH __res
+                  POP __cond
+                  CMP __cond 0
+                  JEQ __endfor__5
+               // Body
+                  // Assignment
+                     // RHS
+                        // Array Allocator
+                           // Identifier - cols
+                              PUSH __main__Matrix__Matrix__cols
+                           POP __size
+                           MALLOC __ptr __size
+                           PUSH __ptr
+                     // LHS
+                        // Subscript assignment
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main__Matrix__data
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // OFFSET
+                              // Identifier - i
+                                 PUSH __main__Matrix__Matrix__block__4__for__5__i
+                           POP __offset
+                           POP __pointer
+                     POP __rhs
+                     ASSIGN __pointer[__offset] __rhs
+                     PUSH __rhs
+               // Repeat
+               JUMP __for__5
+               // End of For
+               __endfor__5:
+            //------------------------------------------------------------
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Matrix____Matrix__int__int:
+   // End Constructor Declaration - __ctor____main__Matrix____Matrix__int__int
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Matrix::Matrix(int[][]) -> Matrix
+   JUMP __end__ctor____main__Matrix____Matrix__int__2
+   __ctor____main__Matrix____Matrix__int__2:
+      // Creating Class Instance
+         MALLOC __this 3
+      // Parameters
+         // Param: data
+         STACKGET __main__Matrix__Matrix__data 0
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Sizeof Operator
+                     // RHS
+                        // Identifier - data
+                           PUSH __main__Matrix__Matrix__data
+                     // Calculate array size
+                     POP __array
+                     SIZEOF __size __array
+                     PUSH __size
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Matrix__rows
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Sizeof Operator
+                     // RHS
+                        // Subscript
+                           // LHS
+                              // Identifier - data
+                                 PUSH __main__Matrix__Matrix__data
+                           // OFFSET
+                              // Int Literal
+                                 PUSH 0
+                           POP __offset
+                           POP __pointer
+                           PUSH __pointer[__offset]
+                     // Calculate array size
+                     POP __array
+                     SIZEOF __size __array
+                     PUSH __size
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Matrix__cols
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - data
+                     PUSH __main__Matrix__Matrix__data
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Matrix__data
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Matrix____Matrix__int__2:
+   // End Constructor Declaration - __ctor____main__Matrix____Matrix__int__2
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - Matrix::add(Matrix) -> Matrix
+   JUMP __end__method____main__Matrix____add__Matrix
+   __method____main__Matrix____add__Matrix:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+         // Param: other
+         STACKGET __main__Matrix__add__other 1
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            //------------------------------------------------------------
+            // If-Statement
+               // Condition
+                  // OR
+                     // LHS
+                        // Not Equal
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main__Matrix__rows
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // RHS
+                              // Member Accessor
+                                 // LHS
+                                    // Identifier - other
+                                       PUSH __main__Matrix__add__other
+                                 // RHS
+                                    PUSH __field____main__Matrix__rows
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           POP __rhs
+                           POP __lhs
+                           NEQUAL __res __lhs __rhs
+                           PUSH __res
+                     // RHS
+                        // Not Equal
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main__Matrix__cols
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // RHS
+                              // Member Accessor
+                                 // LHS
+                                    // Identifier - other
+                                       PUSH __main__Matrix__add__other
+                                 // RHS
+                                    PUSH __field____main__Matrix__cols
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           POP __rhs
+                           POP __lhs
+                           NEQUAL __res __lhs __rhs
+                           PUSH __res
+                     POP __rhs
+                     POP __lhs
+                     OR __res __lhs __rhs
+                     PUSH __res
+                  POP __cond
+                  CMP __cond 0
+                  JEQ __endif__8
+               // Body
+                  // Return
+                     // Null Literal
+                        ASSIGN __null 0
+                        PUSH __null
+                     POP __rVal
+                     RETURN __rVal
+               JUMP __endif__8
+               // End of if
+               __endif__8:
+            //------------------------------------------------------------
+            // Assignment
+               // RHS
+                  // Constructor Call - Matrix::Matrix(int, int) -> Matrix
                      // Arguments
-                        // Function Call - input() -> char[]
-                           // Arguments
-                           // Pushing args in reverse order
-                           // *** input
-                           CALL input
-                           // Remove args
-                           RESPONSE __retval
-                           PUSH __retval
+                        // Member Accessor
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main__Matrix__rows
+                           POP __child
+                           POP __parent
+                           PUSH __parent[__child]
+                        // Member Accessor
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main__Matrix__cols
+                           POP __child
+                           POP __parent
+                           PUSH __parent[__child]
+                        POP __arg1
                         POP __arg0
                      // Pushing args in reverse order
+                     PUSH __arg1
                      PUSH __arg0
-                     // *** stringToInt
-                     CALL stringToInt__char__1
+                     CALL __ctor____main__Matrix____Matrix__int__int
                      // Remove args
+                     POP __void
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__Matrix__add__block__7__res 0
+               POP __rhs
+               ASSIGN __main__Matrix__add__block__7__res __rhs
+               PUSH __rhs
+            //------------------------------------------------------------
+            // For-Loop
+            // Init
+               // Assignment
+                  // RHS
+                     // Int Literal
+                        PUSH 0
+                  // LHS
+                     // Variable Declaration
+                        ASSIGN __main__Matrix__add__block__7__for__9__i 0
+                  POP __rhs
+                  ASSIGN __main__Matrix__add__block__7__for__9__i __rhs
+                  PUSH __rhs
+            JUMP __forcond__9
+            __for__9:
+               // Update
+                  // Pre-Increment
+                     // RHS
+                        // Identifier - i
+                           PUSH __main__Matrix__add__block__7__for__9__i
+                     POP __rhs
+                     ADD __main__Matrix__add__block__7__for__9__i __main__Matrix__add__block__7__for__9__i 1
+                     ASSIGN __res __main__Matrix__add__block__7__for__9__i
+                     PUSH __res
+               __forcond__9:
+               // Condition
+                  // Less Than
+                     // LHS
+                        // Identifier - i
+                           PUSH __main__Matrix__add__block__7__for__9__i
+                     // RHS
+                        // Member Accessor
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main__Matrix__rows
+                           POP __child
+                           POP __parent
+                           PUSH __parent[__child]
+                     POP __rhs
+                     POP __lhs
+                     LT __res __lhs __rhs
+                     PUSH __res
+                  POP __cond
+                  CMP __cond 0
+                  JEQ __endfor__9
+               // Body
+                  //------------------------------------------------------
+                  // For-Loop
+                  // Init
+                     // Assignment
+                        // RHS
+                           // Int Literal
+                              PUSH 0
+                        // LHS
+                           // Variable Declaration
+                              ASSIGN __main__Matrix__add__block__7__for__9__for__10__j 0
+                        POP __rhs
+                        ASSIGN __main__Matrix__add__block__7__for__9__for__10__j __rhs
+                        PUSH __rhs
+                  JUMP __forcond__10
+                  __for__10:
+                     // Update
+                        // Pre-Increment
+                           // RHS
+                              // Identifier - j
+                                 PUSH __main__Matrix__add__block__7__for__9__for__10__j
+                           POP __rhs
+                           ADD __main__Matrix__add__block__7__for__9__for__10__j __main__Matrix__add__block__7__for__9__for__10__j 1
+                           ASSIGN __res __main__Matrix__add__block__7__for__9__for__10__j
+                           PUSH __res
+                     __forcond__10:
+                     // Condition
+                        // Less Than
+                           // LHS
+                              // Identifier - j
+                                 PUSH __main__Matrix__add__block__7__for__9__for__10__j
+                           // RHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main__Matrix__cols
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           POP __rhs
+                           POP __lhs
+                           LT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endfor__10
+                     // Body
+                        // Assignment
+                           // RHS
+                              // Addition
+                                 // LHS
+                                    // Subscript
+                                       // LHS
+                                          // Subscript
+                                             // LHS
+                                                // Member Accessor
+                                                   // LHS
+                                                      // This keyword
+                                                         PUSH __this
+                                                   // RHS
+                                                      PUSH __field____main__Matrix__data
+                                                   POP __child
+                                                   POP __parent
+                                                   PUSH __parent[__child]
+                                             // OFFSET
+                                                // Identifier - i
+                                                   PUSH __main__Matrix__add__block__7__for__9__i
+                                             POP __offset
+                                             POP __pointer
+                                             PUSH __pointer[__offset]
+                                       // OFFSET
+                                          // Identifier - j
+                                             PUSH __main__Matrix__add__block__7__for__9__for__10__j
+                                       POP __offset
+                                       POP __pointer
+                                       PUSH __pointer[__offset]
+                                 // RHS
+                                    // Subscript
+                                       // LHS
+                                          // Subscript
+                                             // LHS
+                                                // Member Accessor
+                                                   // LHS
+                                                      // Identifier - other
+                                                         PUSH __main__Matrix__add__other
+                                                   // RHS
+                                                      PUSH __field____main__Matrix__data
+                                                   POP __child
+                                                   POP __parent
+                                                   PUSH __parent[__child]
+                                             // OFFSET
+                                                // Identifier - i
+                                                   PUSH __main__Matrix__add__block__7__for__9__i
+                                             POP __offset
+                                             POP __pointer
+                                             PUSH __pointer[__offset]
+                                       // OFFSET
+                                          // Identifier - j
+                                             PUSH __main__Matrix__add__block__7__for__9__for__10__j
+                                       POP __offset
+                                       POP __pointer
+                                       PUSH __pointer[__offset]
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                           // LHS
+                              // Subscript assignment
+                                 // LHS
+                                    // Subscript
+                                       // LHS
+                                          // Member Accessor
+                                             // LHS
+                                                // Identifier - res
+                                                   PUSH __main__Matrix__add__block__7__res
+                                             // RHS
+                                                PUSH __field____main__Matrix__data
+                                             POP __child
+                                             POP __parent
+                                             PUSH __parent[__child]
+                                       // OFFSET
+                                          // Identifier - i
+                                             PUSH __main__Matrix__add__block__7__for__9__i
+                                       POP __offset
+                                       POP __pointer
+                                       PUSH __pointer[__offset]
+                                 // OFFSET
+                                    // Identifier - j
+                                       PUSH __main__Matrix__add__block__7__for__9__for__10__j
+                                 POP __offset
+                                 POP __pointer
+                           POP __rhs
+                           ASSIGN __pointer[__offset] __rhs
+                           PUSH __rhs
+                     // Repeat
+                     JUMP __for__10
+                     // End of For
+                     __endfor__10:
+                  //------------------------------------------------------
+               // Repeat
+               JUMP __for__9
+               // End of For
+               __endfor__9:
+            //------------------------------------------------------------
+            // Return
+               // Identifier - res
+                  PUSH __main__Matrix__add__block__7__res
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__Matrix____add__Matrix:
+   // End Method Declaration - __method____main__Matrix____add__Matrix
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - Matrix::toString() -> char[]
+   JUMP __end__method____main__Matrix____toString
+   __method____main__Matrix____toString:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // String Literal
+                     MALLOC __str 0
+                     PUSH __str
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__Matrix__toString__block__11__res 0
+               POP __rhs
+               ASSIGN __main__Matrix__toString__block__11__res __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // String Literal
+                     MALLOC __str 1
+                     ASSIGN __str[0] ' '
+                     PUSH __str
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__Matrix__toString__block__11__space 0
+               POP __rhs
+               ASSIGN __main__Matrix__toString__block__11__space __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // String Literal
+                     MALLOC __str 1
+                     ASSIGN __str[0] '\n'
+                     PUSH __str
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__Matrix__toString__block__11__newline 0
+               POP __rhs
+               ASSIGN __main__Matrix__toString__block__11__newline __rhs
+               PUSH __rhs
+            // Assignment
                // RHS
                   // Int Literal
-                     PUSH 2
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__Matrix__toString__block__11__k 0
                POP __rhs
-               POP __lhs
-               DIVIDE __res __lhs __rhs
-               PUSH __res
+               ASSIGN __main__Matrix__toString__block__11__k __rhs
+               PUSH __rhs
+            //------------------------------------------------------------
+            // For-Loop
+            // Init
+               // Assignment
+                  // RHS
+                     // Int Literal
+                        PUSH 0
+                  // LHS
+                     // Variable Declaration
+                        ASSIGN __main__Matrix__toString__block__11__for__12__i 0
+                  POP __rhs
+                  ASSIGN __main__Matrix__toString__block__11__for__12__i __rhs
+                  PUSH __rhs
+            JUMP __forcond__12
+            __for__12:
+               // Update
+                  // Pre-Increment
+                     // RHS
+                        // Identifier - i
+                           PUSH __main__Matrix__toString__block__11__for__12__i
+                     POP __rhs
+                     ADD __main__Matrix__toString__block__11__for__12__i __main__Matrix__toString__block__11__for__12__i 1
+                     ASSIGN __res __main__Matrix__toString__block__11__for__12__i
+                     PUSH __res
+               __forcond__12:
+               // Condition
+                  // Less Than
+                     // LHS
+                        // Identifier - i
+                           PUSH __main__Matrix__toString__block__11__for__12__i
+                     // RHS
+                        // Member Accessor
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main__Matrix__rows
+                           POP __child
+                           POP __parent
+                           PUSH __parent[__child]
+                     POP __rhs
+                     POP __lhs
+                     LT __res __lhs __rhs
+                     PUSH __res
+                  POP __cond
+                  CMP __cond 0
+                  JEQ __endfor__12
+               // Body
+                  //------------------------------------------------------
+                  // Code Block
+                     //---------------------------------------------------
+                     // For-Loop
+                     // Init
+                        // Assignment
+                           // RHS
+                              // Int Literal
+                                 PUSH 0
+                           // LHS
+                              // Variable Declaration
+                                 ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__j 0
+                           POP __rhs
+                           ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__j __rhs
+                           PUSH __rhs
+                     JUMP __forcond__14
+                     __for__14:
+                        // Update
+                           // Pre-Increment
+                              // RHS
+                                 // Identifier - j
+                                    PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__j
+                              POP __rhs
+                              ADD __main__Matrix__toString__block__11__for__12__block__13__for__14__j __main__Matrix__toString__block__11__for__12__block__13__for__14__j 1
+                              ASSIGN __res __main__Matrix__toString__block__11__for__12__block__13__for__14__j
+                              PUSH __res
+                        __forcond__14:
+                        // Condition
+                           // Less Than
+                              // LHS
+                                 // Identifier - j
+                                    PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__j
+                              // RHS
+                                 // Member Accessor
+                                    // LHS
+                                       // This keyword
+                                          PUSH __this
+                                    // RHS
+                                       PUSH __field____main__Matrix__cols
+                                    POP __child
+                                    POP __parent
+                                    PUSH __parent[__child]
+                              POP __rhs
+                              POP __lhs
+                              LT __res __lhs __rhs
+                              PUSH __res
+                           POP __cond
+                           CMP __cond 0
+                           JEQ __endfor__14
+                        // Body
+                           //---------------------------------------------
+                           // Code Block
+                              // Assignment
+                                 // RHS
+                                    // Function Call - string(int) -> char[]
+                                       // Arguments
+                                          // Subscript
+                                             // LHS
+                                                // Subscript
+                                                   // LHS
+                                                      // Member Accessor
+                                                         // LHS
+                                                            // This keyword
+                                                               PUSH __this
+                                                         // RHS
+                                                            PUSH __field____main__Matrix__data
+                                                         POP __child
+                                                         POP __parent
+                                                         PUSH __parent[__child]
+                                                   // OFFSET
+                                                      // Identifier - i
+                                                         PUSH __main__Matrix__toString__block__11__for__12__i
+                                                   POP __offset
+                                                   POP __pointer
+                                                   PUSH __pointer[__offset]
+                                             // OFFSET
+                                                // Identifier - j
+                                                   PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__j
+                                             POP __offset
+                                             POP __pointer
+                                             PUSH __pointer[__offset]
+                                          POP __arg0
+                                       // Pushing args in reverse order
+                                       PUSH __arg0
+                                       // *** string
+                                       CALL string__int
+                                       // Remove args
+                                       POP __void
+                                       RESPONSE __retval
+                                       PUSH __retval
+                                 // LHS
+                                    // Variable Declaration
+                                       ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2 0
+                                 POP __rhs
+                                 ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2 __rhs
+                                 PUSH __rhs
+                              // Assignment
+                                 // RHS
+                                    // Function Call - concat(char[], char[]) -> char[]
+                                       // Arguments
+                                          // Identifier - res
+                                             PUSH __main__Matrix__toString__block__11__res
+                                          // Identifier - temp2
+                                             PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2
+                                          POP __arg1
+                                          POP __arg0
+                                       // Pushing args in reverse order
+                                       PUSH __arg1
+                                       PUSH __arg0
+                                       // *** concat
+                                       CALL __main____concat__char__1__char__1
+                                       // Remove args
+                                       POP __void
+                                       POP __void
+                                       RESPONSE __retval
+                                       PUSH __retval
+                                 // LHS
+                                    // Variable Declaration
+                                       ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp 0
+                                 POP __rhs
+                                 ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp __rhs
+                                 PUSH __rhs
+                              // Free Operator
+                                 // RHS
+                                    // Identifier - temp2
+                                       PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2
+                                 // Free array
+                                 POP __array
+                                 FREE __array
+                              // Free Operator
+                                 // RHS
+                                    // Identifier - res
+                                       PUSH __main__Matrix__toString__block__11__res
+                                 // Free array
+                                 POP __array
+                                 FREE __array
+                              // Assignment
+                                 // RHS
+                                    // Identifier - temp
+                                       PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp
+                                 POP __rhs
+                                 ASSIGN __main__Matrix__toString__block__11__res __rhs
+                                 PUSH __rhs
+                              // Assignment
+                                 // RHS
+                                    // Function Call - concat(char[], char[]) -> char[]
+                                       // Arguments
+                                          // Identifier - res
+                                             PUSH __main__Matrix__toString__block__11__res
+                                          // Identifier - space
+                                             PUSH __main__Matrix__toString__block__11__space
+                                          POP __arg1
+                                          POP __arg0
+                                       // Pushing args in reverse order
+                                       PUSH __arg1
+                                       PUSH __arg0
+                                       // *** concat
+                                       CALL __main____concat__char__1__char__1
+                                       // Remove args
+                                       POP __void
+                                       POP __void
+                                       RESPONSE __retval
+                                       PUSH __retval
+                                 POP __rhs
+                                 ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp __rhs
+                                 PUSH __rhs
+                              // Free Operator
+                                 // RHS
+                                    // Identifier - res
+                                       PUSH __main__Matrix__toString__block__11__res
+                                 // Free array
+                                 POP __array
+                                 FREE __array
+                              // Assignment
+                                 // RHS
+                                    // Identifier - temp
+                                       PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp
+                                 POP __rhs
+                                 ASSIGN __main__Matrix__toString__block__11__res __rhs
+                                 PUSH __rhs
+                           //---------------------------------------------
+                        // Repeat
+                        JUMP __for__14
+                        // End of For
+                        __endfor__14:
+                     //---------------------------------------------------
+                     // Assignment
+                        // RHS
+                           // Function Call - concat(char[], char[]) -> char[]
+                              // Arguments
+                                 // Identifier - res
+                                    PUSH __main__Matrix__toString__block__11__res
+                                 // Identifier - newline
+                                    PUSH __main__Matrix__toString__block__11__newline
+                                 POP __arg1
+                                 POP __arg0
+                              // Pushing args in reverse order
+                              PUSH __arg1
+                              PUSH __arg0
+                              // *** concat
+                              CALL __main____concat__char__1__char__1
+                              // Remove args
+                              POP __void
+                              POP __void
+                              RESPONSE __retval
+                              PUSH __retval
+                        // LHS
+                           // Variable Declaration
+                              ASSIGN __main__Matrix__toString__block__11__for__12__block__13__temp 0
+                        POP __rhs
+                        ASSIGN __main__Matrix__toString__block__11__for__12__block__13__temp __rhs
+                        PUSH __rhs
+                     // Free Operator
+                        // RHS
+                           // Identifier - res
+                              PUSH __main__Matrix__toString__block__11__res
+                        // Free array
+                        POP __array
+                        FREE __array
+                     // Assignment
+                        // RHS
+                           // Identifier - temp
+                              PUSH __main__Matrix__toString__block__11__for__12__block__13__temp
+                        POP __rhs
+                        ASSIGN __main__Matrix__toString__block__11__res __rhs
+                        PUSH __rhs
+                  //------------------------------------------------------
+               // Repeat
+               JUMP __for__12
+               // End of For
+               __endfor__12:
+            //------------------------------------------------------------
+            // Free Operator
+               // RHS
+                  // Identifier - newline
+                     PUSH __main__Matrix__toString__block__11__newline
+               // Free array
+               POP __array
+               FREE __array
+            // Free Operator
+               // RHS
+                  // Identifier - space
+                     PUSH __main__Matrix__toString__block__11__space
+               // Free array
+               POP __array
+               FREE __array
+            // Return
+               // Identifier - res
+                  PUSH __main__Matrix__toString__block__11__res
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__Matrix____toString:
+   // End Method Declaration - __method____main__Matrix____toString
+   //---------------------------------------------------------------------
+
+__endclass____main__Matrix:
+// End Class Declaration - __main__Matrix
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - Matrix::Matrix(int[][]) -> Matrix
+         // Arguments
+            // Array Constructor
+               // Elements
+               // Array Constructor
+                  // Elements
+                  // Int Literal
+                     PUSH 0
+                  // Int Literal
+                     PUSH 1
+                  // Int Literal
+                     PUSH 2
+                  POP __elem2
+                  POP __elem1
+                  POP __elem0
+                  MALLOC __list 3
+                  ASSIGN __list[0] __elem0
+                  ASSIGN __list[1] __elem1
+                  ASSIGN __list[2] __elem2
+                  PUSH __list
+               // Array Constructor
+                  // Elements
+                  // Int Literal
+                     PUSH 3
+                  // Int Literal
+                     PUSH 4
+                  // Int Literal
+                     PUSH 5
+                  POP __elem2
+                  POP __elem1
+                  POP __elem0
+                  MALLOC __list 3
+                  ASSIGN __list[0] __elem0
+                  ASSIGN __list[1] __elem1
+                  ASSIGN __list[2] __elem2
+                  PUSH __list
+               // Array Constructor
+                  // Elements
+                  // Int Literal
+                     PUSH 6
+                  // Int Literal
+                     PUSH 7
+                  // Int Literal
+                     PUSH 8
+                  POP __elem2
+                  POP __elem1
+                  POP __elem0
+                  MALLOC __list 3
+                  ASSIGN __list[0] __elem0
+                  ASSIGN __list[1] __elem1
+                  ASSIGN __list[2] __elem2
+                  PUSH __list
+               POP __elem2
+               POP __elem1
+               POP __elem0
+               MALLOC __list 3
+               ASSIGN __list[0] __elem0
+               ASSIGN __list[1] __elem1
+               ASSIGN __list[2] __elem2
+               PUSH __list
             POP __arg0
          // Pushing args in reverse order
          PUSH __arg0
-         // *** string
-         CALL string__int
+         CALL __ctor____main__Matrix____Matrix__int__2
          // Remove args
          POP __void
          RESPONSE __retval
          PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__a 0
+   POP __rhs
+   ASSIGN __main__a __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Constructor Call - Matrix::Matrix(int[][]) -> Matrix
+         // Arguments
+            // Array Constructor
+               // Elements
+               // Array Constructor
+                  // Elements
+                  // Int Literal
+                     PUSH 1
+                  // Int Literal
+                     PUSH 1
+                  // Int Literal
+                     PUSH 1
+                  POP __elem2
+                  POP __elem1
+                  POP __elem0
+                  MALLOC __list 3
+                  ASSIGN __list[0] __elem0
+                  ASSIGN __list[1] __elem1
+                  ASSIGN __list[2] __elem2
+                  PUSH __list
+               // Array Constructor
+                  // Elements
+                  // Int Literal
+                     PUSH 1
+                  // Int Literal
+                     PUSH 1
+                  // Int Literal
+                     PUSH 1
+                  POP __elem2
+                  POP __elem1
+                  POP __elem0
+                  MALLOC __list 3
+                  ASSIGN __list[0] __elem0
+                  ASSIGN __list[1] __elem1
+                  ASSIGN __list[2] __elem2
+                  PUSH __list
+               // Array Constructor
+                  // Elements
+                  // Int Literal
+                     PUSH 1
+                  // Int Literal
+                     PUSH 1
+                  // Int Literal
+                     PUSH 1
+                  POP __elem2
+                  POP __elem1
+                  POP __elem0
+                  MALLOC __list 3
+                  ASSIGN __list[0] __elem0
+                  ASSIGN __list[1] __elem1
+                  ASSIGN __list[2] __elem2
+                  PUSH __list
+               POP __elem2
+               POP __elem1
+               POP __elem0
+               MALLOC __list 3
+               ASSIGN __list[0] __elem0
+               ASSIGN __list[1] __elem1
+               ASSIGN __list[2] __elem2
+               PUSH __list
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL __ctor____main__Matrix____Matrix__int__2
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__b 0
+   POP __rhs
+   ASSIGN __main__b __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Method Call - Matrix::toString() -> char[]
+         // LHS
+            // Method Call - Matrix::add(Matrix) -> Matrix
+               // LHS
+                  // Identifier - a
+                     PUSH __main__a
+               // RHS
+               // Arguments
+                  // Identifier - b
+                     PUSH __main__b
+                  POP __arg0
+               POP __obj
+               // Pushing args in reverse order
+               PUSH __arg0
+               PUSH __obj
+               CALL __method____main__Matrix____add__Matrix
+               POP __void
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         // RHS
+         // Arguments
+         POP __obj
+         // Pushing args in reverse order
+         PUSH __obj
+         CALL __method____main__Matrix____toString
+         POP __void
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__temp 0
+   POP __rhs
+   ASSIGN __main__temp __rhs
+   PUSH __rhs
+// Function Call - print(char[]) -> void
+   // Arguments
+      // Identifier - temp
+         PUSH __main__temp
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
-   // *** println
-   CALL println__char__1
+   // *** print
+   CALL print__char__1
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Free Operator
+   // RHS
+      // Identifier - temp
+         PUSH __main__temp
+   // Free array
+   POP __array
+   FREE __array
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

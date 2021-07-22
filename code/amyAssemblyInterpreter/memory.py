@@ -16,7 +16,7 @@ class BlockHeader:
 
 class Heap:
     def __init__(self):
-        initialSize = 12
+        initialSize = 100
         self.memory = [0 for _ in range(initialSize)]
         # set up first free block
         # mem[0] is reserved for NULLPTR

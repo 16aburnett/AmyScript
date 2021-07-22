@@ -1,0 +1,78 @@
+// Solution to Kattis, PieceOfCake!
+// Author: Amy Burnett
+//========================================================================
+
+// returns a list of strings from the given string that are delimited by delim
+function char[][] split (char[] str, char delim)
+{   
+    // buffer initially set to sizeof str 
+    // extra space will be removed later 
+    // this prevents the need to reallocate more space 
+    char[][] buffer = new char[sizeof (str)][];
+
+    int i = 0; 
+    int j = 0; 
+    while (i < sizeof (str))
+    {
+        // at the start of a new split 
+        if (str[i] != delim)
+        {
+            // determine split size 
+            int count = 0;
+            int k = i;
+            while (k < sizeof (str)) 
+                if (str[k++] != delim)
+                    ++count; 
+                else 
+                    break;
+
+            // allocate space for the split
+            buffer[j] = new char[count];
+
+            // add characters until delim is reached 
+            for (int k = 0; k < sizeof (buffer[j]); ++k)
+            {
+                buffer[j][k] = str[i++];
+            }
+            
+            // move to next split buffer
+            ++j; 
+        }
+        // skip over delimiters
+
+        ++i; 
+    }
+
+    // remove extra buffer space
+    char[][] result = new char[j][];
+    for (int i = 0; i < j; ++i)
+    {
+        result[i] = buffer[i];
+    }
+
+    // free buffer
+    free (buffer);
+
+    return result; 
+
+}
+
+//========================================================================
+
+function int max (int a, int b)
+{
+    if (a >= b)
+        return a;
+    return b;
+}
+
+//========================================================================
+
+
+char[][] in = split (input (), ' ');
+
+int n = stringToInt (in[0]);
+int h = stringToInt (in[1]);
+int v = stringToInt (in[2]);
+
+println (max (n-h, h) * max (n-v, v) * 4);

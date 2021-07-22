@@ -1,0 +1,111 @@
+
+
+char START_MARKER = 'S';
+char GOAL_MARKER  = 'G';
+char WALL_MARKER  = '#';
+
+
+function int min (int a, int b)
+{
+    if (a <= b)
+        return a;
+    return b;
+}
+
+function void print(char[][] board)
+{
+    for (int i = 0; i < sizeof (board); ++i)
+        println (board[i]);
+}
+
+
+// finds the number of moves it takes to reach the goal with a given limit of moves, 
+// otherwise -1
+function int dfs (char[][] board, int i, int j, int previ, int prevj, int nMoves, int limit)
+{
+    if (board[i][j] == GOAL_MARKER)
+    {
+        return nMoves;
+    }
+
+    if (board[i][j] == WALL_MARKER)
+    {
+        return -1; 
+    }
+
+    if (nMoves >= limit)
+    {
+        return -1; 
+    }
+
+    int minMoves = limit; 
+    // NORTH
+    if (i-1 >= 0 && i-1 != previ)
+    {
+        int res = dfs (board, i-1, j, i, j, nMoves+1, limit);
+        if (res != -1)
+            minMoves = min (minMoves, res);
+    } 
+    // EAST 
+    if (j+1 < sizeof (board[0]) && j+1 != prevj)
+    {
+        int res = dfs (board, i, j+1, i, j, nMoves+1, limit);
+        if (res != -1)
+            minMoves = min (minMoves, res);
+    }
+    // SOUTH 
+    if (i+1 < sizeof (board) && i+1 != previ)
+    {
+        int res = dfs (board, i+1, j, i, j, nMoves+1, limit);
+        if (res != -1)
+            minMoves = min (minMoves, res);
+    }
+    // WEST 
+    if (j-1 >= 0 && j-1 != prevj)
+    {
+        int res = dfs (board, i, j-1, i, j, nMoves+1, limit);
+        if (res != -1)
+            minMoves = min (minMoves, res);
+    }
+
+    return minMoves;
+}
+
+
+char[][] board = [
+    "..........",
+    ".....G#...",
+    ".#######..",
+    ".....#....",
+    ".#####.##.",
+    ".#.S...#..",
+    ".#.#####.#",
+    ".........#"
+];
+
+
+print (board);
+
+// find start position 
+int starti = int startj = 0; 
+for (int i = 0; i < sizeof(board); ++i)
+    for (int j = 0; j < sizeof(board[i]); ++j)
+        if (board[i][j] == START_MARKER)
+        {
+            starti = i; 
+            startj = j; 
+        }
+
+// Iterative Deepening Search 
+int minMoves = 0; 
+for (int i = 1; i < 20; ++i)
+{
+    int res = dfs (board, starti, startj, -1, -1, 0, 20);
+    if (res != -1)
+    {
+        minMoves = res;
+        break;
+    }
+}
+
+println (minMoves);
