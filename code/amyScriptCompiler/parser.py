@@ -1176,6 +1176,43 @@ class Parser:
             self.match ("factor", "RPAREN")
             lhs = SizeofExpressionNode (type, rhs, line, column)
 
+        # <factor> -> FREE ( <expression> ) 
+        elif self.tokens[self.currentToken].type == "FREE":
+            line = self.tokens[self.currentToken].line
+            column = self.tokens[self.currentToken].column
+            self.match ("factor", "FREE")
+            self.match ("factor", "LPAREN")
+            type = TypeSpecifierNode (Type.VOID, "void", None)
+            # ensure there is an expression
+            if self.tokens[self.currentToken].type == "RPAREN":
+                print (f"Parsing Error: Free requires an expression")
+                print (f"   Located on line {line}: column {column}")
+                print (f"   line:")
+                print (f"      {self.lines[line-1][:-1]}")
+                print (f"      ",end="")
+                for i in range(column-1):
+                    print (" ", end="")
+                print ("^")
+                print ()
+                exit(1)
+            # assignexpr instead of expression because expressions could be tuples 
+            # tuples are not yet supported 
+            rhs = self.assignexpr ()
+            # ensure user didn't try to provide more than one expression
+            if self.tokens[self.currentToken].type == "COMMA":
+                print (f"Parsing Error: Free only takes one array parameter")
+                print (f"   Located on line {line}: column {column}")
+                print (f"   line:")
+                print (f"      {self.lines[line-1][:-1]}")
+                print (f"      ",end="")
+                for i in range(column-1):
+                    print (" ", end="")
+                print ("^")
+                print ()
+                exit(1)
+            self.match ("factor", "RPAREN")
+            lhs = FreeExpressionNode (type, rhs, line, column)
+
         else:
             lhs = self.literal ()
 

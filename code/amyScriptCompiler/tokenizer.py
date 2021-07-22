@@ -25,8 +25,9 @@ token_specification = [
 # literals 
     ('FLOAT',    r'\d*\.\d+'), 
     ('INT',      r'\d+(\.\d*)?'), 
-    ('CHAR',     r'\'.\''),   
-    ('STRING',   r'"[^"\\]*(\\.[^"\\]*)*"'),   
+    ('CHAR',     r'\'(\\n|\\t|\\r|\\b|\\f|.)\''),   
+    # ('STRING',   r'"[^"\\]*(\\.[^"\\]*)*"'),   
+    ('STRING',   r'"([^"]|\\")*"'),   
 # Keywords - handled after identifiers are matched
     # ('IF',       r'if'),  
     # ('ELIF',     r'elif'),  
@@ -44,6 +45,7 @@ token_specification = [
     # ('METHOD',   r'method'),  
     # ('CONSTRUCTOR',r'constructor'),  
     # ('NEW',      r'new'),  
+    # ('FREE',      r'free'),  
     # ('THIS',     r'this'),  
     # ('SIZEOF',   r'sizeof'),  
     # ('NULL',     r'null'),  
@@ -113,6 +115,8 @@ def tokenize(code):
             value = int(value)
         elif kind == 'FLOAT':
             value = float(value)
+        elif kind == 'CHAR':
+            value = value[1:-1]
         elif kind == 'COMMENT':
             line_num += 1
             continue 
@@ -158,6 +162,8 @@ def tokenize(code):
                 kind = "CONSTRUCTOR"
             elif (lexeme == "new"):
                 kind = "NEW"
+            elif (lexeme == "free"):
+                kind = "FREE"
             elif (lexeme == "this"):
                 kind = "THIS"
             elif (lexeme == "sizeof"):

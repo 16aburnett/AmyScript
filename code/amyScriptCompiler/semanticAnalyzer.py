@@ -364,8 +364,9 @@ class SymbolTableVisitor (ASTVisitor):
     def visitLogicalOrExpressionNode (self, node):
         node.lhs.accept (self)
         node.rhs.accept (self)
-
-        node.type = node.lhs.type
+        
+        # results in true/false which is an int 
+        node.type = TypeSpecifierNode (Type.INT, "int", None)
 
         # ensure types work
         isLHSArray = node.lhs.type.arrayDimensions > 0
@@ -392,7 +393,8 @@ class SymbolTableVisitor (ASTVisitor):
         node.lhs.accept (self)
         node.rhs.accept (self)
         
-        node.type = node.lhs.type
+        # results in true/false which is an int 
+        node.type = TypeSpecifierNode (Type.INT, "int", None)
 
         # ensure types work
         isLHSArray = node.lhs.type.arrayDimensions > 0
@@ -419,7 +421,8 @@ class SymbolTableVisitor (ASTVisitor):
         node.lhs.accept (self)
         node.rhs.accept (self)
         
-        node.type = node.lhs.type
+        # results in true/false which is an int 
+        node.type = TypeSpecifierNode (Type.INT, "int", None)
 
         # ensure types work 
         isArrayNullOp = node.lhs.type.arrayDimensions > 0 and node.rhs.type.type == Type.NULL
@@ -442,7 +445,8 @@ class SymbolTableVisitor (ASTVisitor):
         node.lhs.accept (self)
         node.rhs.accept (self)
         
-        node.type = node.lhs.type
+        # results in true/false which is an int 
+        node.type = TypeSpecifierNode (Type.INT, "int", None)
 
         # ensure types work 
         if (node.lhs.type.type != node.rhs.type.type
@@ -466,6 +470,7 @@ class SymbolTableVisitor (ASTVisitor):
         node.lhs.accept (self)
         node.rhs.accept (self)
         
+        # **this might need to be changed if we allow char[] + int or int + char[]
         node.type = node.lhs.type
 
         # ensure types work for add/sub
@@ -950,6 +955,24 @@ class SymbolTableVisitor (ASTVisitor):
         if node.rhs.type.arrayDimensions == 0:
             print (f"Semantic Error: Sizeof requires an array")
             print (f"   Expected: <type>[]")
+            print (f"   But got:  {node.rhs.type}")
+            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   line:")
+            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      ",end="")
+            for i in range(node.columnNumber-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
+            return 
+    
+    def visitFreeExpressionNode (self, node):
+        node.rhs.accept (self)
+        # ensure RHS is an array
+        if node.rhs.type.arrayDimensions == 0 and node.rhs.type.type != Type.USERTYPE:
+            print (f"Semantic Error: Free requires an array or object")
+            print (f"   Expected: <type>[] or <userType>")
             print (f"   But got:  {node.rhs.type}")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   line:")

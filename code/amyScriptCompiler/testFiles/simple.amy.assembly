@@ -133,6 +133,54 @@ exit:
     halt
 
 //========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
 
 __endOfLibrary:
     //push prompt
@@ -149,7 +197,7 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Function Declaration - int add(int, int)
+// Function Declaration - add(int, int) -> int
 JUMP __end____main____add__int__int
 __main____add__int__int:
    // Parameters
@@ -183,7 +231,7 @@ __end____main____add__int__int:
 // Assignment
    // RHS
       // Array Allocator
-         // Literal
+         // Int Literal
             PUSH 5
          POP __size
          MALLOC __ptr __size
@@ -197,7 +245,7 @@ __end____main____add__int__int:
 // Assignment
    // RHS
       // Array Allocator
-         // Literal
+         // Int Literal
             PUSH 1
          POP __size
          MALLOC __ptr __size
@@ -210,7 +258,7 @@ __end____main____add__int__int:
    PUSH __rhs
 // Assignment
    // RHS
-      // Literal
+      // Char Literal
          PUSH ' '
    // LHS
       // Subscript assignment
@@ -218,7 +266,7 @@ __end____main____add__int__int:
             // Identifier - nl
                PUSH __main__nl
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 0
          POP __offset
          POP __pointer
@@ -227,7 +275,7 @@ __end____main____add__int__int:
    PUSH __rhs
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 28
    // LHS
       // Variable Declaration
@@ -244,14 +292,14 @@ __end____main____add__int__int:
                   // Identifier - a
                      PUSH __main__a
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 7
                POP __rhs
                POP __lhs
                SUBTRACT __res __lhs __rhs
                PUSH __res
          // RHS
-            // Literal
+            // Int Literal
                PUSH 3
          POP __rhs
          POP __lhs
@@ -263,7 +311,7 @@ __end____main____add__int__int:
             // Identifier - nums
                PUSH __main__nums
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 0
          POP __offset
          POP __pointer
@@ -277,7 +325,7 @@ __end____main____add__int__int:
             // Identifier - nums
                PUSH __main__nums
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 0
          POP __offset
          POP __pointer
@@ -306,7 +354,7 @@ __end____main____add__int__int:
    PUSH __retval
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 10
    // LHS
       // Variable Declaration
@@ -316,7 +364,7 @@ __end____main____add__int__int:
    PUSH __rhs
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 7
    // LHS
       // Variable Declaration
@@ -330,9 +378,9 @@ __end____main____add__int__int:
          // RHS
             // Function Call - add(int, int) -> int
                // Arguments
-                  // Literal
+                  // Int Literal
                      PUSH 21
-                  // Literal
+                  // Int Literal
                      PUSH 7
                   POP __arg1
                   POP __arg0
@@ -358,7 +406,7 @@ __end____main____add__int__int:
             // Identifier - nums
                PUSH __main__nums
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 1
          POP __offset
          POP __pointer
@@ -400,7 +448,7 @@ __end____main____add__int__int:
                   // Identifier - nums
                      PUSH __main__nums
                // OFFSET
-                  // Literal
+                  // Int Literal
                      PUSH 1
                POP __offset
                POP __pointer
@@ -412,7 +460,7 @@ __end____main____add__int__int:
                   // Identifier - nums
                      PUSH __main__nums
                // OFFSET
-                  // Literal
+                  // Int Literal
                      PUSH 1
                POP __offset
                POP __pointer
@@ -450,7 +498,7 @@ __end____main____add__int__int:
                   // Identifier - nums
                      PUSH __main__nums
                // OFFSET
-                  // Literal
+                  // Int Literal
                      PUSH 0
                POP __offset
                POP __pointer
@@ -617,7 +665,7 @@ __end____main____add__int__int:
                   // Identifier - x
                      PUSH __main__x
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 12
                POP __rhs
                POP __lhs
@@ -631,7 +679,7 @@ __end____main____add__int__int:
                         // Identifier - nums
                            PUSH __main__nums
                      // OFFSET
-                        // Literal
+                        // Int Literal
                            PUSH 0
                      POP __offset
                      POP __pointer
@@ -644,7 +692,7 @@ __end____main____add__int__int:
                               // Identifier - nums
                                  PUSH __main__nums
                            // OFFSET
-                              // Literal
+                              // Int Literal
                                  PUSH 0
                            POP __offset
                            POP __pointer
@@ -667,7 +715,7 @@ __end____main____add__int__int:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 25
                   ASSIGN __str[0] 'C'
                   ASSIGN __str[1] 'a'

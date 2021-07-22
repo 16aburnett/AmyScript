@@ -1,0 +1,73 @@
+// AmyScript Standard Library
+// Author: Amy Burnett
+//========================================================================
+
+// returns a new string (char[]) on the range of begin to end of str 
+function char[] substring (char[] str, int begin, int end)
+{
+    char[] result = new char[end-begin];
+    for (int i = begin; i < end; ++i)
+    {
+        result[i-begin] = str[i];
+    }
+    return result; 
+}
+
+//========================================================================
+
+// returns a list of strings from the given string that are delimited by delim
+function char[][] split (char[] str, char delim)
+{   
+    // buffer initially set to sizeof str 
+    // extra space will be removed later 
+    // this prevents the need to reallocate more space 
+    char[][] buffer = new char[sizeof (str)][];
+
+    int i = 0; 
+    int j = 0; 
+    while (i < sizeof (str))
+    {
+        // at the start of a new split 
+        if (str[i] != delim)
+        {
+            // determine split size 
+            int count = 0;
+            int k = i;
+            while (k < sizeof (str)) 
+                if (str[k++] != delim)
+                    ++count; 
+                else 
+                    break;
+
+            // allocate space for the split
+            buffer[j] = new char[count];
+
+            // add characters until delim is reached 
+            for (int k = 0; k < sizeof (buffer[j]); ++k)
+            {
+                buffer[j][k] = str[i++];
+            }
+            
+            // move to next split buffer
+            ++j; 
+        }
+        // skip over delimiters
+
+        ++i; 
+    }
+
+    // remove extra buffer space
+    char[][] result = new char[j][];
+    for (int i = 0; i < j; ++i)
+    {
+        result[i] = buffer[i];
+    }
+
+    // free buffer
+    free (buffer);
+
+    return result; 
+
+}
+
+//========================================================================

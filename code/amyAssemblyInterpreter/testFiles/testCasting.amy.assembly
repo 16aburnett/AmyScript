@@ -1,0 +1,20 @@
+// Testing FTOI, ITOF, STRING, STOF, STOI 
+// Author: Amy Burnett
+//========================================================================
+
+
+    assign y 2131.13451
+    ftoi x y
+    println x
+    itof x x
+    println x
+    string s y
+    sizeof size s 
+    println size
+    println s[4]
+    stof z s
+    println z
+    ftoi x y
+    string s x
+    stoi z s 
+    println z

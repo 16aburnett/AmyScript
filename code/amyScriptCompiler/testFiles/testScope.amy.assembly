@@ -133,6 +133,54 @@ exit:
     halt
 
 //========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
 
 __endOfLibrary:
     //push prompt
@@ -165,7 +213,7 @@ __endOfLibrary:
 // skip over class methods
 JUMP __endclass____main__Person
    //---------------------------------------------------------------------
-   // Constructor Declaration - Person Person::Person(char[], int)
+   // Constructor Declaration - Person::Person(char[], int) -> Person
    JUMP __end__ctor____main__Person____Person__char__1__int
    __ctor____main__Person____Person__char__1__int:
       // Creating Class Instance
@@ -217,7 +265,7 @@ JUMP __endclass____main__Person
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration - int Person::getAge()
+   // Method Declaration - Person::getAge() -> int
    JUMP __end__method____main__Person____getAge
    __method____main__Person____getAge:
       // Class Instance
@@ -262,13 +310,13 @@ __endclass____main__Person:
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 3
                ASSIGN __str[0] 'A'
                ASSIGN __str[1] 'm'
                ASSIGN __str[2] 'y'
                PUSH __str
-            // Literal
+            // Int Literal
                PUSH 22
             POP __arg1
             POP __arg0
@@ -289,7 +337,7 @@ __endclass____main__Person:
    PUSH __rhs
 // Assignment
    // RHS
-      // Literal
+      // String Literal
          MALLOC __str 6
          ASSIGN __str[0] 'A'
          ASSIGN __str[1] 'u'
@@ -345,7 +393,7 @@ __endclass____main__Person:
    PUSH __retval
 // Function Call - print(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 1
          ASSIGN __str[0] ' '
          PUSH __str
@@ -385,7 +433,7 @@ __endclass____main__Person:
    PUSH __retval
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 0
          PUSH __str
       POP __arg0
@@ -398,7 +446,7 @@ __endclass____main__Person:
    RESPONSE __retval
    PUSH __retval
 //========================================================================
-// Function Declaration - int max(int, int)
+// Function Declaration - max(int, int) -> int
 JUMP __end____main____max__int__int
 __main____max__int__int:
    // Parameters
@@ -451,7 +499,7 @@ __end____main____max__int__int:
    // RHS
       // Negative
          // RHS
-            // Literal
+            // Int Literal
                PUSH 47
          POP __rhs
          SUBTRACT __res 0 __rhs
@@ -464,7 +512,7 @@ __end____main____max__int__int:
    PUSH __rhs
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 12
          ASSIGN __str[0] 'C'
          ASSIGN __str[1] 'o'
@@ -493,7 +541,7 @@ __end____main____max__int__int:
 // Init
    // Assignment
       // RHS
-         // Literal
+         // Int Literal
             PUSH 0
       // LHS
          // Variable Declaration
@@ -519,7 +567,7 @@ __for__4:
             // Identifier - i
                PUSH __main__for__4__i
          // RHS
-            // Literal
+            // Int Literal
                PUSH 10
          POP __rhs
          POP __lhs
@@ -546,7 +594,7 @@ __for__4:
             PUSH __retval
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 0
                   PUSH __str
                POP __arg0
@@ -566,7 +614,7 @@ __for__4:
                      // Identifier - i
                         PUSH __main__for__4__i
                   // RHS
-                     // Literal
+                     // Int Literal
                         PUSH 3
                   POP __rhs
                   POP __lhs
@@ -580,7 +628,7 @@ __for__4:
                // Code Block
                   // Function Call - println(char[]) -> void
                      // Arguments
-                        // Literal
+                        // String Literal
                            MALLOC __str 40
                            ASSIGN __str[0] 'd'
                            ASSIGN __str[1] 'e'
@@ -634,7 +682,7 @@ __for__4:
                      PUSH __retval
                   // Assignment
                      // RHS
-                        // Literal
+                        // Int Literal
                            PUSH 22
                      // LHS
                         // Variable Declaration
@@ -657,7 +705,7 @@ __for__4:
                      PUSH __retval
                   // Function Call - println(char[]) -> void
                      // Arguments
-                        // Literal
+                        // String Literal
                            MALLOC __str 0
                            PUSH __str
                         POP __arg0
@@ -682,7 +730,7 @@ __for__4:
 //------------------------------------------------------------------------
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 0
          PUSH __str
       POP __arg0
@@ -696,7 +744,7 @@ __for__4:
    PUSH __retval
 // Function Call - print(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 22
          ASSIGN __str[0] 'o'
          ASSIGN __str[1] 'r'
@@ -745,7 +793,7 @@ __for__4:
    PUSH __retval
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 0
          PUSH __str
       POP __arg0
@@ -759,7 +807,7 @@ __for__4:
    PUSH __retval
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 12
    // LHS
       // Variable Declaration

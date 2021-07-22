@@ -778,6 +778,20 @@ class SizeofExpressionNode (ExpressionNode):
         visitor.visitSizeofExpressionNode (self)
 
 # ========================================================================
+
+class FreeExpressionNode (ExpressionNode):
+
+    def __init__(self, type, rhs, line, column):
+        self.type = type
+        self.rhs = rhs
+
+        self.lineNumber = line
+        self.columnNumber = column
+
+    def accept (self, visitor):
+        visitor.visitFreeExpressionNode (self)
+
+# ========================================================================
 # value - int
 
 class IntLiteralExpressionNode (ExpressionNode):

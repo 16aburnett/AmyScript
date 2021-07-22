@@ -171,6 +171,10 @@ class ASTVisitor (ABC):
         pass
 
     @abstractmethod
+    def visitFreeExpressionNode (self, node):
+        pass
+
+    @abstractmethod
     def visitIntLiteralExpressionNode (self, node):
         pass
 
@@ -799,9 +803,20 @@ class PrintVisitor (ASTVisitor):
             a.accept (self)
         self.level -= 2
     
-    def visitSizeofExpressionNode(self, node):
+    def visitSizeofExpressionNode (self, node):
         self.printSpaces (self.level)
         self.outputstrings += [f"Sizeof Operator: {node.type}"]
+        self.level += 1
+        self.printSpaces (self.level)
+        self.outputstrings += ["RHS:"]
+        self.level += 1
+        node.rhs.accept (self)
+        self.level -= 1
+        self.level -= 1
+    
+    def visitFreeExpressionNode (self, node):
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Free Operator: {node.type}"]
         self.level += 1
         self.printSpaces (self.level)
         self.outputstrings += ["RHS:"]

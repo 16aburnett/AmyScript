@@ -216,6 +216,100 @@ class AmyScriptCompiler:
         exitFunc.signature = "exit()"
         symbolTableVisitor.table.insert (exitFunc)
 
+        #  float intToFloat (int val);
+        param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "val", None)
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.FLOAT, "float", None), "intToFloat", None, [param0], None)
+        builtinFunction.scopeName = "intToFloat__int"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction)
+
+        #  float stringToFloat (char[]);
+        param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
+        param0.type.arrayDimensions = 1
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.FLOAT, "float", None), "stringToFloat", None, [param0], None)
+        builtinFunction.scopeName = "stringToFloat__char__1"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction)
+
+        #  int floatToInt (float);
+        param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.INT, "int", None), "floatToInt", None, [param0], None)
+        builtinFunction.scopeName = "floatToInt__float"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction)
+
+        #  int stringToInt (char[]);
+        param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
+        param0.type.arrayDimensions = 1
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.INT, "int", None), "stringToInt", None, [param0], None)
+        builtinFunction.scopeName = "stringToInt__char__1"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction)
+
+        #  char[] string (int);
+        param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "val", None)
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None), "string", None, [param0], None)
+        builtinFunction.type.arrayDimensions = 1
+        builtinFunction.scopeName = "string__int"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction)
+
+        #  char[] string (float);
+        param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None), "string", None, [param0], None)
+        builtinFunction.type.arrayDimensions = 1
+        builtinFunction.scopeName = "string__float"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction)
+
         # Check AST
         # checks for 
         # - undeclared vars 

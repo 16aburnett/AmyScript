@@ -133,6 +133,54 @@ exit:
     halt
 
 //========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
 
 __endOfLibrary:
     //push prompt
@@ -153,7 +201,7 @@ __endOfLibrary:
 // Init
    // Assignment
       // RHS
-         // Literal
+         // Int Literal
             PUSH 0
       // LHS
          // Variable Declaration
@@ -179,7 +227,7 @@ __for__0:
             // Identifier - i
                PUSH __main__for__0__i
          // RHS
-            // Literal
+            // Int Literal
                PUSH 16
          POP __rhs
          POP __lhs
@@ -206,7 +254,7 @@ __for__0:
             PUSH __retval
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 0
                   PUSH __str
                POP __arg0
@@ -226,7 +274,7 @@ __for__0:
 //------------------------------------------------------------------------
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 10
    // LHS
       // Variable Declaration
@@ -236,7 +284,7 @@ __for__0:
    PUSH __rhs
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 10
    // LHS
       // Variable Declaration
@@ -253,7 +301,7 @@ __while__2:
             // Identifier - i
                PUSH __main__i
          // RHS
-            // Literal
+            // Int Literal
                PUSH 0
          POP __rhs
          POP __lhs
@@ -282,7 +330,7 @@ __while__2:
             PUSH __retval
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 0
                   PUSH __str
                POP __arg0
@@ -304,7 +352,7 @@ __while__2:
 // Init
    // Assignment
       // RHS
-         // Literal
+         // Int Literal
             PUSH 0
       // LHS
          // Variable Declaration
@@ -326,7 +374,7 @@ __for__4:
             // Identifier - i
                PUSH __main__for__4__i
          // RHS
-            // Literal
+            // Int Literal
                PUSH 5
          POP __rhs
          POP __lhs
@@ -343,7 +391,7 @@ __for__4:
          // Init
             // Assignment
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 0
                // LHS
                   // Variable Declaration
@@ -369,7 +417,7 @@ __for__4:
                      // Identifier - j
                         PUSH __main__for__4__block__5__for__6__j
                   // RHS
-                     // Literal
+                     // Int Literal
                         PUSH 5
                   POP __rhs
                   POP __lhs
@@ -395,7 +443,7 @@ __for__4:
                                                 // Identifier - i
                                                    PUSH __main__for__4__i
                                              // RHS
-                                                // Literal
+                                                // Int Literal
                                                    PUSH 2
                                              POP __rhs
                                              POP __lhs
@@ -407,7 +455,7 @@ __for__4:
                                                 // Identifier - j
                                                    PUSH __main__for__4__block__5__for__6__j
                                              // RHS
-                                                // Literal
+                                                // Int Literal
                                                    PUSH 2
                                              POP __rhs
                                              POP __lhs
@@ -418,14 +466,14 @@ __for__4:
                                        ADD __res __lhs __rhs
                                        PUSH __res
                                  // RHS
-                                    // Literal
+                                    // Int Literal
                                        PUSH 2
                                  POP __rhs
                                  POP __lhs
                                  MOD __res __lhs __rhs
                                  PUSH __res
                            // RHS
-                              // Literal
+                              // Int Literal
                                  PUSH 0
                            POP __rhs
                            POP __lhs
@@ -437,7 +485,7 @@ __for__4:
                      // Body
                         // Function Call - print(char[]) -> void
                            // Arguments
-                              // Literal
+                              // String Literal
                                  MALLOC __str 1
                                  ASSIGN __str[0] 'x'
                                  PUSH __str
@@ -456,7 +504,7 @@ __for__4:
                      __else__8:
                      // Function Call - print(char[]) -> void
                         // Arguments
-                           // Literal
+                           // String Literal
                               MALLOC __str 1
                               ASSIGN __str[0] '.'
                               PUSH __str
@@ -481,7 +529,7 @@ __for__4:
          //---------------------------------------------------------------
          // Assignment
             // RHS
-               // Literal
+               // Int Literal
                   PUSH 7
             // LHS
                // Variable Declaration
@@ -491,7 +539,7 @@ __for__4:
             PUSH __rhs
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 0
                   PUSH __str
                POP __arg0
@@ -524,7 +572,7 @@ __for__4:
    PUSH __retval
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 0
          PUSH __str
       POP __arg0
@@ -538,7 +586,7 @@ __for__4:
    PUSH __retval
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 14
          ASSIGN __str[0] 'x'
          ASSIGN __str[1] ' '
@@ -566,7 +614,7 @@ __for__4:
    PUSH __retval
 // Function Call - print(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 4
          ASSIGN __str[0] 'x'
          ASSIGN __str[1] ' '
@@ -597,7 +645,7 @@ __for__4:
    PUSH __retval
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 0
          PUSH __str
       POP __arg0
@@ -617,7 +665,7 @@ __for__4:
             // Identifier - x
                PUSH __main__x
          // RHS
-            // Literal
+            // Int Literal
                PUSH 10
          POP __rhs
          POP __lhs
@@ -629,7 +677,7 @@ __for__4:
    // Body
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 21
                ASSIGN __str[0] 'A'
                ASSIGN __str[1] 'n'
@@ -668,7 +716,7 @@ __for__4:
 //------------------------------------------------------------------------
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 10
    // LHS
       // Variable Declaration
@@ -678,7 +726,7 @@ __for__4:
    PUSH __rhs
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 7
    // LHS
       // Variable Declaration
@@ -695,7 +743,7 @@ __while__10:
             // Identifier - w
                PUSH __main__w
          // RHS
-            // Literal
+            // Int Literal
                PUSH 0
          POP __rhs
          POP __lhs
@@ -759,7 +807,7 @@ __while__10:
    PUSH __retval
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 0
          PUSH __str
       POP __arg0
@@ -776,7 +824,7 @@ __while__10:
 // Init
    // Assignment
       // RHS
-         // Literal
+         // Int Literal
             PUSH 0
       // LHS
          // Variable Declaration
@@ -794,7 +842,7 @@ __for__13:
                   // Identifier - i
                      PUSH __main__for__13__i
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 1
                POP __rhs
                POP __lhs
@@ -810,7 +858,7 @@ __for__13:
             // Identifier - i
                PUSH __main__for__13__i
          // RHS
-            // Literal
+            // Int Literal
                PUSH 10
          POP __rhs
          POP __lhs
@@ -830,7 +878,7 @@ __for__13:
                      // Identifier - i
                         PUSH __main__for__13__i
                   // RHS
-                     // Literal
+                     // Int Literal
                         PUSH 17
                   POP __rhs
                   POP __lhs
@@ -859,7 +907,7 @@ __for__13:
    // Code Block
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 39
                ASSIGN __str[0] 'T'
                ASSIGN __str[1] 'h'
@@ -917,7 +965,7 @@ __for__13:
 //------------------------------------------------------------------------
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 14
          ASSIGN __str[0] 'L'
          ASSIGN __str[1] 'o'

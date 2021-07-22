@@ -57,6 +57,11 @@ OPCODE_SIZEOF      = 32
 OPCODE_PUSH        = 33
 OPCODE_POP         = 34
 OPCODE_STACKGET    = 35
+OPCODE_FtoI        = 36 # float to int
+OPCODE_ItoF        = 37 # int to float
+OPCODE_STRING      = 38 # int/float to string
+OPCODE_StoF        = 39 # string to float
+OPCODE_StoI        = 40 # string to int 
 toOpCode = {
     "assign"      : OPCODE_ASSIGN,
     "malloc"      : OPCODE_MALLOC,
@@ -93,7 +98,12 @@ toOpCode = {
     "not"         : OPCODE_NOT,
     "push"        : OPCODE_PUSH,
     "pop"         : OPCODE_POP,
-    "stackget"    : OPCODE_STACKGET
+    "stackget"    : OPCODE_STACKGET,
+    "ftoi"        : OPCODE_FtoI,
+    "itof"        : OPCODE_ItoF,
+    "string"      : OPCODE_STRING,
+    "stof"        : OPCODE_StoF,
+    "stoi"        : OPCODE_StoI
 }
 
 # PARAM MODES
@@ -279,6 +289,8 @@ class AmyAssemblyInterpreter:
             while bptr != -1:
                 # found variable in bptr's scope
                 if var in stack[bptr]:
+                    if isinstance(stack[bptr][var], str) and stack[bptr][var][0] == '\\':
+                        return stack[bptr][var].replace ("\\n", "\n").replace ("\\t", "\t").replace ("\\r", "\r").replace ("\\b", "\b")
                     return stack[bptr][var]
                 bptr = stack[bptr-1]
             
@@ -357,6 +369,9 @@ class AmyAssemblyInterpreter:
             
             # Case 3: Immediate Variable
             elif params[i] == MODE_IMMEDIATE and MODE_IMMEDIATE not in reject:
+                # convert special characters for output
+                if isinstance(params[i+1], str) and params[i+1][0] == '\\':
+                    return params[i+1].replace ("\\n", "\n").replace ("\\t", "\t").replace ("\\r", "\r").replace ("\\b", "\b"), i+2
                 return params[i+1], i+2
 
             # Case 5: Unknown mode
@@ -931,6 +946,156 @@ class AmyAssemblyInterpreter:
                 else:
                     print(f"Dest should be memory or stack")
                     exit(1)
+            elif cmd == OPCODE_FtoI:
+                # FTOI dest src 
+                # Case1 : dest variable
+                if params[0] == MODE_STACK:
+                    src, i = getNextValue(heap, stack, params, 2)
+                    # ensure src is float
+                    if not isinstance (src, float):
+                        print (f"Error FTOI - src should be of type float")
+                        exit (1)
+                    stack[base_pointer][params[1]] = int(src)
+                # Case2 : dest memory
+                elif params[0] == MODE_MEMORY:
+                    pmode, pointer, omode, offset = params[1:5]
+                    address = getMemAddress(stack, pmode, pointer, omode, offset)
+                    src, i = getNextValue(heap, stack, params, 5)
+                    # ensure src is float
+                    if not isinstance (src, float):
+                        print (f"Error FTOI - src should be of type float")
+                        exit (1)
+                    heap.memory[address] = int(src)
+                # Case 3: Invalid param type
+                else:
+                    print(f"dest should be memory or stack")
+                    exit(1)
+            elif cmd == OPCODE_ItoF:
+                # ITOF dest src 
+                # Case1 : dest variable
+                if params[0] == MODE_STACK:
+                    src, i = getNextValue(heap, stack, params, 2)
+                    # ensure src is int
+                    if not isinstance (src, int):
+                        print (f"Error ITOF - src should be of type int")
+                        exit (1)
+                    stack[base_pointer][params[1]] = float(src)
+                # Case2 : dest memory
+                elif params[0] == MODE_MEMORY:
+                    pmode, pointer, omode, offset = params[1:5]
+                    address = getMemAddress(stack, pmode, pointer, omode, offset)
+                    src, i = getNextValue(heap, stack, params, 5)
+                    # ensure src is int
+                    if not isinstance (src, int):
+                        print (f"Error ITOF - src should be of type int")
+                        exit (1)
+                    heap.memory[address] = float(src)
+                # Case 3: Invalid param type
+                else:
+                    print(f"dest should be memory or stack")
+                    exit(1)
+            elif cmd == OPCODE_STRING:
+                # STRING dest src 
+                # Case1 : dest variable
+                if params[0] == MODE_STACK:
+                    src, i = getNextValue(heap, stack, params, 2)
+                    s = str(src)
+                    # create string on heap
+                    ptr = heap.malloc (len(s))
+                    # add characters to heap block
+                    for i in range(len(s)):
+                        heap.memory[ptr+i] = s[i]
+                    # give user the ptr to the string 
+                    stack[base_pointer][params[1]] = ptr
+                # Case2 : dest memory
+                elif params[0] == MODE_MEMORY:
+                    pmode, pointer, omode, offset = params[1:5]
+                    address = getMemAddress(stack, pmode, pointer, omode, offset)
+                    src, i = getNextValue(heap, stack, params, 5)
+                    s = str(src)
+                    # create string on heap
+                    ptr = heap.malloc (len(s))
+                    # add characters to heap block
+                    for i in range(len(s)):
+                        heap.memory[ptr+i] = s[i]
+                    # give user the ptr to the string 
+                    heap.memory[address] = ptr
+                # Case 3: Invalid param type
+                else:
+                    print(f"dest should be memory or stack")
+                    exit(1)
+            elif cmd == OPCODE_StoF:
+                # STOF dest src 
+                # Case1 : dest variable
+                if params[0] == MODE_STACK:
+                    src, i = getNextValue(heap, stack, params, 2)
+                    # ensure src is address (int)
+                    if not isinstance (src, int):
+                        print (f"Error STOF - src should be a memory address (int)")
+                        exit (1)
+                    # accumulate characters 
+                    s = []
+                    size = heap.sizeof (src)
+                    for i in range(size):
+                        s += [heap.memory[src+i]]
+                    s = "".join(s)
+                    stack[base_pointer][params[1]] = float (s)
+                # Case2 : dest memory
+                elif params[0] == MODE_MEMORY:
+                    pmode, pointer, omode, offset = params[1:5]
+                    address = getMemAddress(stack, pmode, pointer, omode, offset)
+                    src, i = getNextValue(heap, stack, params, 5)
+                    # ensure src is address (int)
+                    if not isinstance (src, int):
+                        print (f"Error STOF - src should be a memory address (int)")
+                        exit (1)
+                    # accumulate characters 
+                    s = []
+                    size = heap.sizeof (src)
+                    for i in range(size):
+                        s += [heap.memory[src+i]]
+                    s = "".join(s)
+                    heap.memory[address] = float (s)
+                # Case 3: Invalid param type
+                else:
+                    print(f"dest should be memory or stack")
+                    exit(1)
+            elif cmd == OPCODE_StoI:
+                # STOI dest src 
+                # Case1 : dest variable
+                if params[0] == MODE_STACK:
+                    src, i = getNextValue(heap, stack, params, 2)
+                    # ensure src is address (int)
+                    if not isinstance (src, int):
+                        print (f"Error STOI - src should be a memory address (int)")
+                        exit (1)
+                    # accumulate characters 
+                    s = []
+                    size = heap.sizeof (src)
+                    for i in range(size):
+                        s += [heap.memory[src+i]]
+                    s = "".join(s)
+                    stack[base_pointer][params[1]] = int (s)
+                # Case2 : dest memory
+                elif params[0] == MODE_MEMORY:
+                    pmode, pointer, omode, offset = params[1:5]
+                    address = getMemAddress(stack, pmode, pointer, omode, offset)
+                    src, i = getNextValue(heap, stack, params, 5)
+                    # ensure src is address (int)
+                    if not isinstance (src, int):
+                        print (f"Error STOI - src should be a memory address (int)")
+                        exit (1)
+                    # accumulate characters 
+                    s = []
+                    size = heap.sizeof (src)
+                    for i in range(size):
+                        s += [heap.memory[src+i]]
+                    s = "".join(s)
+                    heap.memory[address] = int (s)
+                # Case 3: Invalid param type
+                else:
+                    print(f"dest should be memory or stack")
+                    exit(1)
             elif cmd == OPCODE_HALT:
                 break
             #  jump point line
@@ -943,6 +1108,7 @@ class AmyAssemblyInterpreter:
             instruction_pointer += 1
 
 
+        # print ("=======================================")
         # printheap(heap)
 
         # print("*** End of program ***")

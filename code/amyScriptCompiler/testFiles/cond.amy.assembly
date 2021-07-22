@@ -133,6 +133,54 @@ exit:
     halt
 
 //========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
 
 __endOfLibrary:
     //push prompt
@@ -150,7 +198,7 @@ __endOfLibrary:
 
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 10
    // LHS
       // Variable Declaration
@@ -160,7 +208,7 @@ __endOfLibrary:
    PUSH __rhs
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 7
    // LHS
       // Variable Declaration
@@ -170,7 +218,7 @@ __endOfLibrary:
    PUSH __rhs
 // Assignment
    // RHS
-      // Literal
+      // Int Literal
          PUSH 7
    // LHS
       // Variable Declaration
@@ -186,7 +234,7 @@ __endOfLibrary:
             // Identifier - x
                PUSH __main__x
          // RHS
-            // Literal
+            // Int Literal
                PUSH 0
          POP __rhs
          POP __lhs
@@ -201,7 +249,7 @@ __endOfLibrary:
          //---------------------------------------------------------------
          // If-Statement
             // Condition
-               // Literal
+               // Int Literal
                   PUSH 1
                POP __cond
                CMP __cond 0
@@ -280,7 +328,7 @@ __endOfLibrary:
                   // Identifier - y
                      PUSH __main__y
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 3
                POP __rhs
                POP __lhs
@@ -298,7 +346,7 @@ __endOfLibrary:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 7
                   ASSIGN __str[0] 'W'
                   ASSIGN __str[1] 'o'
@@ -327,7 +375,7 @@ __endOfLibrary:
    // Code Block
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 5
                ASSIGN __str[0] 'N'
                ASSIGN __str[1] 'o'
@@ -391,7 +439,7 @@ __endOfLibrary:
                         // Identifier - z
                            PUSH __main__z
                      // RHS
-                        // Literal
+                        // Int Literal
                            PUSH 3
                      POP __rhs
                      POP __lhs
@@ -416,7 +464,7 @@ __endOfLibrary:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 8
                   ASSIGN __str[0] 'i'
                   ASSIGN __str[1] 't'
@@ -443,7 +491,7 @@ __endOfLibrary:
 //------------------------------------------------------------------------
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 14
          ASSIGN __str[0] 'I'
          ASSIGN __str[1] 'n'

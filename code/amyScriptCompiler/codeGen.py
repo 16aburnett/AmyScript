@@ -19,7 +19,7 @@ else:
 DIVIDER_LENGTH = 75 
 TAB_LENGTH = 3
 
-LIB_FILENAME = os.path.dirname(__file__) + "/AmyScriptLib.amy.assembly"
+LIB_FILENAME = os.path.dirname(__file__) + "/AmyScriptBuiltinLib.amy.assembly"
 
 # ========================================================================
 
@@ -1635,32 +1635,66 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("PUSH __size")
 
         self.indentation -= 1
+    
+    def visitFreeExpressionNode (self, node):
+        self.printComment ("Free Operator")
+        self.indentation += 1
+
+        # calc rhs
+        self.printComment ("RHS")
+        self.indentation += 1
+        node.rhs.accept (self)
+        self.indentation -= 1
+
+        self.printComment ("Free array")
+        self.printCode ("POP __array")
+        self.printCode ("FREE __array")
+
+        self.indentation -= 1
 
     def visitIntLiteralExpressionNode (self, node):
-        self.printComment ("Literal")
+        self.printComment ("Int Literal")
         self.indentation += 1
         self.printCode (f"PUSH {node.value}")
         self.indentation -= 1
 
     def visitFloatLiteralExpressionNode (self, node):
-        self.printComment ("Literal")
+        self.printComment ("Float Literal")
         self.indentation += 1
         self.printCode (f"PUSH {node.value}")
         self.indentation -= 1
 
     def visitCharLiteralExpressionNode (self, node):
-        self.printComment ("Literal")
+        self.printComment ("Char Literal")
         self.indentation += 1
-        self.printCode (f"PUSH {node.value}")
+        self.printCode (f"PUSH '{(node.value)}'")
         self.indentation -= 1
 
     def visitStringLiteralExpressionNode (self, node):
-        self.printComment ("Literal")
+        self.printComment ("String Literal")
         self.indentation += 1
         # create string on heap as char[]
-        self.printCode (f"MALLOC __str {len(node.value)-2}")
-        for i in range(1, len(node.value)-1):
-            self.printCode (f"ASSIGN __str[{i-1}] '{node.value[i]}'")
+        node.value = (node.value.replace(f'\n', f'\\n').replace ('\t', '\\t')).replace ("\r", "\\r").replace ("\b", "\\b")
+        # node.value = node.value.replace ("\\n", "\n").replace ("\\t", "\t").replace ("\\r", "\r").replace ("\\b", "\b")
+        chars = [node.value[i] for i in range(1, len(node.value)-1)]
+        for i in range(len(chars)-1):
+            if i >= len(chars)-1:
+                break
+            if chars[i] == "\\" and \
+                (chars[i+1] == 'n'  \
+                or chars[i+1] == 't'\
+                or chars[i+1] == 'r'\
+                or chars[i+1] == 'b'):
+                chars[i] = "\\" + chars[i+1]
+                del chars[i+1]
+        node.value = chars
+        backSlashes = 0
+        # for c in node.value:
+        #     if c == '\\':
+        #         backSlashes += 1
+        self.printCode (f"MALLOC __str {len(node.value)-backSlashes}")
+        for i in range(len(node.value)-backSlashes):
+            self.printCode (f"ASSIGN __str[{i}] '{(node.value[i])}'")
         self.printCode ("PUSH __str")
         self.indentation -= 1
 

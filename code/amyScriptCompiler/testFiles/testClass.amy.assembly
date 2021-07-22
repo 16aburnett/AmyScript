@@ -133,6 +133,54 @@ exit:
     halt
 
 //========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
 
 __endOfLibrary:
     //push prompt
@@ -169,7 +217,7 @@ __endOfLibrary:
 // skip over class methods
 JUMP __endclass____main__Person
    //---------------------------------------------------------------------
-   // Constructor Declaration - Person Person::Person(char[], int)
+   // Constructor Declaration - Person::Person(char[], int) -> Person
    JUMP __end__ctor____main__Person____Person__char__1__int
    __ctor____main__Person____Person__char__1__int:
       // Creating Class Instance
@@ -217,7 +265,7 @@ JUMP __endclass____main__Person
             // Assignment
                // RHS
                   // Array Allocator
-                     // Literal
+                     // Int Literal
                         PUSH 5
                      POP __size
                      MALLOC __ptr __size
@@ -236,7 +284,7 @@ JUMP __endclass____main__Person
                PUSH __rhs
             // Assignment
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 0
                // LHS
                   // Member Accessor Assignment
@@ -257,7 +305,7 @@ JUMP __endclass____main__Person
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration - int Person::getAge()
+   // Method Declaration - Person::getAge() -> int
    JUMP __end__method____main__Person____getAge
    __method____main__Person____getAge:
       // Class Instance
@@ -285,7 +333,7 @@ JUMP __endclass____main__Person
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration - char[] Person::getName()
+   // Method Declaration - Person::getName() -> char[]
    JUMP __end__method____main__Person____getName
    __method____main__Person____getName:
       // Class Instance
@@ -313,7 +361,7 @@ JUMP __endclass____main__Person
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration - void Person::addFriend(Person)
+   // Method Declaration - Person::addFriend(Person) -> void
    JUMP __end__method____main__Person____addFriend__Person
    __method____main__Person____addFriend__Person:
       // Class Instance
@@ -373,13 +421,13 @@ __endclass____main__Person:
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 3
                ASSIGN __str[0] 'A'
                ASSIGN __str[1] 'm'
                ASSIGN __str[2] 'y'
                PUSH __str
-            // Literal
+            // Int Literal
                PUSH 22
             POP __arg1
             POP __arg0
@@ -445,7 +493,7 @@ __endclass____main__Person:
    PUSH __retval
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 0
          PUSH __str
       POP __arg0
@@ -459,7 +507,7 @@ __endclass____main__Person:
    PUSH __retval
 // Function Call - print(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 23
          ASSIGN __str[0] 'p'
          ASSIGN __str[1] 'e'
@@ -513,7 +561,7 @@ __endclass____main__Person:
                RESPONSE __retval
                PUSH __retval
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 0
          POP __offset
          POP __pointer
@@ -529,7 +577,7 @@ __endclass____main__Person:
    PUSH __retval
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 0
          PUSH __str
       POP __arg0
@@ -544,7 +592,7 @@ __endclass____main__Person:
 // Assignment
    // RHS
       // Array Allocator
-         // Literal
+         // Int Literal
             PUSH 5
          POP __size
          MALLOC __ptr __size
@@ -565,7 +613,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 0
          POP __offset
          POP __pointer
@@ -576,7 +624,7 @@ __endclass____main__Person:
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 6
                ASSIGN __str[0] 'A'
                ASSIGN __str[1] 'u'
@@ -585,7 +633,7 @@ __endclass____main__Person:
                ASSIGN __str[4] 'e'
                ASSIGN __str[5] 'y'
                PUSH __str
-            // Literal
+            // Int Literal
                PUSH 21
             POP __arg1
             POP __arg0
@@ -604,7 +652,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 1
          POP __offset
          POP __pointer
@@ -615,7 +663,7 @@ __endclass____main__Person:
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 5
                ASSIGN __str[0] 'T'
                ASSIGN __str[1] 'e'
@@ -623,7 +671,7 @@ __endclass____main__Person:
                ASSIGN __str[3] 's'
                ASSIGN __str[4] 'a'
                PUSH __str
-            // Literal
+            // Int Literal
                PUSH 31
             POP __arg1
             POP __arg0
@@ -642,7 +690,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 2
          POP __offset
          POP __pointer
@@ -653,7 +701,7 @@ __endclass____main__Person:
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 6
                ASSIGN __str[0] 'H'
                ASSIGN __str[1] 'a'
@@ -662,7 +710,7 @@ __endclass____main__Person:
                ASSIGN __str[4] 'e'
                ASSIGN __str[5] 'y'
                PUSH __str
-            // Literal
+            // Int Literal
                PUSH 26
             POP __arg1
             POP __arg0
@@ -681,7 +729,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 3
          POP __offset
          POP __pointer
@@ -692,7 +740,7 @@ __endclass____main__Person:
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 6
                ASSIGN __str[0] 'S'
                ASSIGN __str[1] 'i'
@@ -701,7 +749,7 @@ __endclass____main__Person:
                ASSIGN __str[4] 'i'
                ASSIGN __str[5] 'd'
                PUSH __str
-            // Literal
+            // Int Literal
                PUSH 24
             POP __arg1
             POP __arg0
@@ -720,7 +768,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 4
          POP __offset
          POP __pointer
@@ -734,7 +782,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 0
          POP __offset
          POP __pointer
@@ -746,7 +794,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 1
          POP __offset
          POP __pointer
@@ -769,7 +817,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 0
          POP __offset
          POP __pointer
@@ -781,7 +829,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 3
          POP __offset
          POP __pointer
@@ -804,7 +852,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 1
          POP __offset
          POP __pointer
@@ -816,7 +864,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 0
          POP __offset
          POP __pointer
@@ -839,7 +887,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 2
          POP __offset
          POP __pointer
@@ -851,7 +899,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 3
          POP __offset
          POP __pointer
@@ -874,7 +922,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 2
          POP __offset
          POP __pointer
@@ -886,7 +934,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 4
          POP __offset
          POP __pointer
@@ -909,7 +957,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 3
          POP __offset
          POP __pointer
@@ -921,7 +969,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 2
          POP __offset
          POP __pointer
@@ -944,7 +992,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 3
          POP __offset
          POP __pointer
@@ -956,7 +1004,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 0
          POP __offset
          POP __pointer
@@ -979,7 +1027,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 4
          POP __offset
          POP __pointer
@@ -991,7 +1039,7 @@ __endclass____main__Person:
             // Identifier - people
                PUSH __main__people
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 2
          POP __offset
          POP __pointer
@@ -1012,7 +1060,7 @@ __endclass____main__Person:
 // Init
    // Assignment
       // RHS
-         // Literal
+         // Int Literal
             PUSH 0
       // LHS
          // Variable Declaration
@@ -1038,7 +1086,7 @@ __for__4:
             // Identifier - i
                PUSH __main__for__4__i
          // RHS
-            // Literal
+            // Int Literal
                PUSH 5
          POP __rhs
          POP __lhs
@@ -1080,7 +1128,7 @@ __for__4:
             PUSH __retval
          // Function Call - print(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 1
                   ASSIGN __str[0] ' '
                   PUSH __str
@@ -1123,7 +1171,7 @@ __for__4:
             PUSH __retval
          // Function Call - print(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 10
                   ASSIGN __str[0] ' '
                   ASSIGN __str[1] 'F'
@@ -1150,7 +1198,7 @@ __for__4:
          // Init
             // Assignment
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 0
                // LHS
                   // Variable Declaration
@@ -1248,7 +1296,7 @@ __for__4:
                      PUSH __retval
                   // Function Call - print(char[]) -> void
                      // Arguments
-                        // Literal
+                        // String Literal
                            MALLOC __str 1
                            ASSIGN __str[0] ' '
                            PUSH __str
@@ -1269,7 +1317,7 @@ __for__4:
          //---------------------------------------------------------------
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 0
                   PUSH __str
                POP __arg0
@@ -1289,7 +1337,7 @@ __for__4:
 //------------------------------------------------------------------------
 // Assignment
    // RHS
-      // Literal
+      // String Literal
          MALLOC __str 5
          ASSIGN __str[0] 'A'
          ASSIGN __str[1] 'm'
@@ -1305,7 +1353,7 @@ __for__4:
                   // Identifier - people
                      PUSH __main__people
                // OFFSET
-                  // Literal
+                  // Int Literal
                      PUSH 0
                POP __offset
                POP __pointer
@@ -1326,7 +1374,7 @@ __for__4:
                   // Identifier - people
                      PUSH __main__people
                // OFFSET
-                  // Literal
+                  // Int Literal
                      PUSH 0
                POP __offset
                POP __pointer
@@ -1382,7 +1430,7 @@ __for__4:
 // skip over class methods
 JUMP __endclass____main__IntArray
    //---------------------------------------------------------------------
-   // Constructor Declaration - IntArray IntArray::IntArray()
+   // Constructor Declaration - IntArray::IntArray() -> IntArray
    JUMP __end__ctor____main__IntArray____IntArray
    __ctor____main__IntArray____IntArray:
       // Creating Class Instance
@@ -1393,7 +1441,7 @@ JUMP __endclass____main__IntArray
          // Code Block
             // Assignment
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 10
                // LHS
                   // Member Accessor Assignment
@@ -1436,7 +1484,7 @@ JUMP __endclass____main__IntArray
                PUSH __rhs
             // Assignment
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 0
                // LHS
                   // Member Accessor Assignment
@@ -1457,7 +1505,7 @@ JUMP __endclass____main__IntArray
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration - void IntArray::pushBack(int)
+   // Method Declaration - IntArray::pushBack(int) -> void
    JUMP __end__method____main__IntArray____pushBack__int
    __method____main__IntArray____pushBack__int:
       // Class Instance
@@ -1485,7 +1533,7 @@ JUMP __endclass____main__IntArray
                                  POP __parent
                                  PUSH __parent[__child]
                            // RHS
-                              // Literal
+                              // Int Literal
                                  PUSH 1
                            POP __rhs
                            POP __lhs
@@ -1525,7 +1573,7 @@ JUMP __endclass____main__IntArray
                                     POP __parent
                                     PUSH __parent[__child]
                               // RHS
-                                 // Literal
+                                 // Int Literal
                                     PUSH 2
                               POP __rhs
                               POP __lhs
@@ -1569,7 +1617,7 @@ JUMP __endclass____main__IntArray
                      // Init
                         // Assignment
                            // RHS
-                              // Literal
+                              // Int Literal
                                  PUSH 0
                            // LHS
                               // Variable Declaration
@@ -1724,7 +1772,7 @@ JUMP __endclass____main__IntArray
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration - int IntArray::popBack()
+   // Method Declaration - IntArray::popBack() -> int
    JUMP __end__method____main__IntArray____popBack
    __method____main__IntArray____popBack:
       // Class Instance
@@ -1782,7 +1830,7 @@ JUMP __endclass____main__IntArray
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
-   // Method Declaration - int IntArray::get(int)
+   // Method Declaration - IntArray::get(int) -> int
    JUMP __end__method____main__IntArray____get__int
    __method____main__IntArray____get__int:
       // Class Instance
@@ -1844,7 +1892,7 @@ __endclass____main__IntArray:
          PUSH __main__myArray
    // RHS
    // Arguments
-      // Literal
+      // Int Literal
          PUSH 42
       POP __arg0
    POP __obj
@@ -1863,7 +1911,7 @@ __endclass____main__IntArray:
          PUSH __main__myArray
    // RHS
    // Arguments
-      // Literal
+      // Int Literal
          PUSH 7
       POP __arg0
    POP __obj
@@ -1896,7 +1944,7 @@ __endclass____main__IntArray:
          PUSH __main__myArray
    // RHS
    // Arguments
-      // Literal
+      // Int Literal
          PUSH 19
       POP __arg0
    POP __obj
@@ -1915,7 +1963,7 @@ __endclass____main__IntArray:
          PUSH __main__myArray
    // RHS
    // Arguments
-      // Literal
+      // Int Literal
          PUSH 25
       POP __arg0
    POP __obj
@@ -1947,7 +1995,7 @@ __endclass____main__IntArray:
 // Init
    // Assignment
       // RHS
-         // Literal
+         // Int Literal
             PUSH 0
       // LHS
          // Variable Declaration
@@ -2024,7 +2072,7 @@ __for__16:
             PUSH __retval
          // Function Call - print(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 1
                   ASSIGN __str[0] ' '
                   PUSH __str
@@ -2045,7 +2093,7 @@ __for__16:
 //------------------------------------------------------------------------
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 0
          PUSH __str
       POP __arg0
@@ -2060,7 +2108,7 @@ __for__16:
 // Assignment
    // RHS
       // Array Allocator
-         // Literal
+         // Int Literal
             PUSH 5
          POP __size
          MALLOC __ptr __size
@@ -2076,7 +2124,7 @@ __for__16:
 // Init
    // Assignment
       // RHS
-         // Literal
+         // Int Literal
             PUSH 0
       // LHS
          // Variable Declaration
@@ -2102,7 +2150,7 @@ __for__18:
             // Identifier - i
                PUSH __main__for__18__i
          // RHS
-            // Literal
+            // Int Literal
                PUSH 5
          POP __rhs
          POP __lhs
@@ -2117,7 +2165,7 @@ __for__18:
          // Assignment
             // RHS
                // Array Allocator
-                  // Literal
+                  // Int Literal
                      PUSH 5
                   POP __size
                   MALLOC __ptr __size
@@ -2140,7 +2188,7 @@ __for__18:
          // Init
             // Assignment
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 0
                // LHS
                   // Variable Declaration
@@ -2166,7 +2214,7 @@ __for__18:
                      // Identifier - j
                         PUSH __main__for__18__block__19__for__20__j
                   // RHS
-                     // Literal
+                     // Int Literal
                         PUSH 5
                   POP __rhs
                   POP __lhs
@@ -2209,7 +2257,7 @@ __for__18:
                      PUSH __retval
                   // Function Call - print(char[]) -> void
                      // Arguments
-                        // Literal
+                        // String Literal
                            MALLOC __str 1
                            ASSIGN __str[0] ' '
                            PUSH __str
@@ -2230,7 +2278,7 @@ __for__18:
          //---------------------------------------------------------------
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 0
                   PUSH __str
                POP __arg0

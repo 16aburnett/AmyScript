@@ -133,6 +133,54 @@ exit:
     halt
 
 //========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
 
 __endOfLibrary:
     //push prompt
@@ -224,7 +272,7 @@ JUMP __endclass____main__Person
                // RHS
                   // Constructor Call - Name::Name(char[]) -> Name
                      // Arguments
-                        // Literal
+                        // String Literal
                            MALLOC __str 0
                            PUSH __str
                         POP __arg0
@@ -249,7 +297,7 @@ JUMP __endclass____main__Person
                PUSH __rhs
             // Assignment
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 0
                // LHS
                   // Member Accessor Assignment
@@ -265,7 +313,7 @@ JUMP __endclass____main__Person
                PUSH __rhs
             // Assignment
                // RHS
-                  // Literal
+                  // Float Literal
                      PUSH 0.0
                // LHS
                   // Member Accessor Assignment
@@ -531,7 +579,7 @@ JUMP __endclass____main__Person
                            PUSH __rhs
                         // Assignment
                            // RHS
-                              // Literal
+                              // Int Literal
                                  PUSH 0
                            // LHS
                               // Member Accessor Assignment
@@ -547,7 +595,7 @@ JUMP __endclass____main__Person
                            PUSH __rhs
                         // Assignment
                            // RHS
-                              // Literal
+                              // Float Literal
                                  PUSH 0.0
                            // LHS
                               // Member Accessor Assignment
@@ -684,7 +732,7 @@ __main____sum__int__1:
       // Code Block
          // Assignment
             // RHS
-               // Literal
+               // Int Literal
                   PUSH 0
             // LHS
                // Variable Declaration
@@ -697,7 +745,7 @@ __main____sum__int__1:
          // Init
             // Assignment
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 0
                // LHS
                   // Variable Declaration
@@ -794,7 +842,7 @@ __main____sum__float__1:
       // Code Block
          // Assignment
             // RHS
-               // Literal
+               // Float Literal
                   PUSH 0.0
             // LHS
                // Variable Declaration
@@ -807,7 +855,7 @@ __main____sum__float__1:
          // Init
             // Assignment
                // RHS
-                  // Literal
+                  // Int Literal
                      PUSH 0
                // LHS
                   // Variable Declaration
@@ -917,9 +965,9 @@ __end____main____sum__float:
    // Arguments
       // Function Call - add(int, int) -> int
          // Arguments
-            // Literal
+            // Int Literal
                PUSH 4
-            // Literal
+            // Int Literal
                PUSH 6
             POP __arg1
             POP __arg0
@@ -946,9 +994,9 @@ __end____main____sum__float:
    // Arguments
       // Function Call - add(float, float) -> float
          // Arguments
-            // Literal
+            // Float Literal
                PUSH 3.14
-            // Literal
+            // Float Literal
                PUSH 6.1
             POP __arg1
             POP __arg0
@@ -973,7 +1021,7 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - print(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 6
          ASSIGN __str[0] 's'
          ASSIGN __str[1] 'u'
@@ -997,17 +1045,17 @@ __end____main____sum__float:
          // Arguments
             // Array Constructor
                // Elements
-               // Literal
+               // Int Literal
                   PUSH 1
-               // Literal
+               // Int Literal
                   PUSH 2
-               // Literal
+               // Int Literal
                   PUSH 3
-               // Literal
+               // Int Literal
                   PUSH 4
-               // Literal
+               // Int Literal
                   PUSH 5
-               // Literal
+               // Int Literal
                   PUSH 6
                POP __elem5
                POP __elem4
@@ -1043,7 +1091,7 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - print(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 6
          ASSIGN __str[0] 's'
          ASSIGN __str[1] 'u'
@@ -1067,17 +1115,17 @@ __end____main____sum__float:
          // Arguments
             // Array Constructor
                // Elements
-               // Literal
+               // Float Literal
                   PUSH 1.0
-               // Literal
+               // Float Literal
                   PUSH 2.0
-               // Literal
+               // Float Literal
                   PUSH 3.0
-               // Literal
+               // Float Literal
                   PUSH 4.0
-               // Literal
+               // Float Literal
                   PUSH 5.0
-               // Literal
+               // Float Literal
                   PUSH 6.0
                POP __elem5
                POP __elem4
@@ -1113,7 +1161,7 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 25
          ASSIGN __str[0] '='
          ASSIGN __str[1] '='
@@ -1157,9 +1205,9 @@ __end____main____sum__float:
             // Null Literal
                ASSIGN __null 0
                PUSH __null
-            // Literal
+            // Int Literal
                PUSH 22
-            // Literal
+            // Float Literal
                PUSH 3.69
             POP __arg2
             POP __arg1
@@ -1185,7 +1233,7 @@ __end____main____sum__float:
    // RHS
       // Constructor Call - Name::Name(char[]) -> Name
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 3
                ASSIGN __str[0] 'A'
                ASSIGN __str[1] 'm'
@@ -1240,7 +1288,7 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - print(char) -> void
    // Arguments
-      // Literal
+      // Char Literal
          PUSH ' '
       POP __arg0
    // Pushing args in reverse order
@@ -1273,7 +1321,7 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - print(char) -> void
    // Arguments
-      // Literal
+      // Char Literal
          PUSH ' '
       POP __arg0
    // Pushing args in reverse order
@@ -1292,9 +1340,9 @@ __end____main____sum__float:
                PUSH __main__p
          // RHS
          // Arguments
-            // Literal
+            // Int Literal
                PUSH 1
-            // Literal
+            // Int Literal
                PUSH 2
             POP __arg1
             POP __arg0
@@ -1321,7 +1369,7 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - print(char) -> void
    // Arguments
-      // Literal
+      // Char Literal
          PUSH ' '
       POP __arg0
    // Pushing args in reverse order
@@ -1340,9 +1388,9 @@ __end____main____sum__float:
                PUSH __main__p
          // RHS
          // Arguments
-            // Literal
+            // Float Literal
                PUSH 1.0
-            // Literal
+            // Float Literal
                PUSH 2.0
             POP __arg1
             POP __arg0
@@ -1369,7 +1417,7 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - println(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 25
          ASSIGN __str[0] '='
          ASSIGN __str[1] '='
@@ -1447,7 +1495,7 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - print(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 1
          ASSIGN __str[0] ' '
          PUSH __str
@@ -1482,7 +1530,7 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - print(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 1
          ASSIGN __str[0] ' '
          PUSH __str
@@ -1503,9 +1551,9 @@ __end____main____sum__float:
                PUSH __main__p
          // RHS
          // Arguments
-            // Literal
+            // Int Literal
                PUSH 1
-            // Literal
+            // Int Literal
                PUSH 2
             POP __arg1
             POP __arg0
@@ -1532,7 +1580,7 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - print(char[]) -> void
    // Arguments
-      // Literal
+      // String Literal
          MALLOC __str 1
          ASSIGN __str[0] ' '
          PUSH __str
@@ -1553,9 +1601,9 @@ __end____main____sum__float:
                PUSH __main__p
          // RHS
          // Arguments
-            // Literal
+            // Float Literal
                PUSH 1.0
-            // Literal
+            // Float Literal
                PUSH 2.0
             POP __arg1
             POP __arg0
@@ -1590,7 +1638,7 @@ __end____main____sum__float:
                      PUSH __main__p
                // RHS
                // Arguments
-                  // Literal
+                  // String Literal
                      MALLOC __str 5
                      ASSIGN __str[0] 'H'
                      ASSIGN __str[1] 'i'
@@ -1625,13 +1673,81 @@ __end____main____sum__float:
    PUSH __retval
 // Function Call - println(char) -> void
    // Arguments
-      // Literal
+      // Char Literal
          PUSH 'W'
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
    CALL println__char
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call - print(char) -> void
+   // Arguments
+      // Char Literal
+         PUSH '\n'
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** print
+   CALL print__char
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call - print(char) -> void
+   // Arguments
+      // Char Literal
+         PUSH '\t'
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** print
+   CALL print__char
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call - print(char[]) -> void
+   // Arguments
+      // String Literal
+         MALLOC __str 7
+         ASSIGN __str[0] 'h'
+         ASSIGN __str[1] 'e'
+         ASSIGN __str[2] 'l'
+         ASSIGN __str[3] 'l'
+         ASSIGN __str[4] 'o'
+         ASSIGN __str[5] ' '
+         ASSIGN __str[6] '\n'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** print
+   CALL print__char__1
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call - print(char[]) -> void
+   // Arguments
+      // String Literal
+         MALLOC __str 7
+         ASSIGN __str[0] 'h'
+         ASSIGN __str[1] 'e'
+         ASSIGN __str[2] 'n'
+         ASSIGN __str[3] 'l'
+         ASSIGN __str[4] 'o'
+         ASSIGN __str[5] '\t'
+         ASSIGN __str[6] '\n'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** print
+   CALL print__char__1
    // Remove args
    POP __void
    RESPONSE __retval

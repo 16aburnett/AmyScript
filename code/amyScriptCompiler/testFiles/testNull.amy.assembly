@@ -133,6 +133,54 @@ exit:
     halt
 
 //========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
 
 __endOfLibrary:
     //push prompt
@@ -157,7 +205,7 @@ __endOfLibrary:
 // skip over class methods
 JUMP __endclass____main__Person
    //---------------------------------------------------------------------
-   // Constructor Declaration - Person Person::Person()
+   // Constructor Declaration - Person::Person() -> Person
    JUMP __end__ctor____main__Person____Person
    __ctor____main__Person____Person:
       // Creating Class Instance
@@ -224,7 +272,7 @@ __endclass____main__Person:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 33
                   ASSIGN __str[0] 'p'
                   ASSIGN __str[1] 'e'
@@ -295,7 +343,7 @@ __endclass____main__Person:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 20
                   ASSIGN __str[0] 'p'
                   ASSIGN __str[1] 'e'
@@ -344,7 +392,7 @@ __endclass____main__Person:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 20
                   ASSIGN __str[0] 'p'
                   ASSIGN __str[1] 'e'
@@ -386,7 +434,7 @@ __endclass____main__Person:
    // Code Block
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 28
                ASSIGN __str[0] 'p'
                ASSIGN __str[1] 'e'
@@ -451,7 +499,7 @@ __endclass____main__Person:
    // Body
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 18
                ASSIGN __str[0] 'p'
                ASSIGN __str[1] 'e'
@@ -503,7 +551,7 @@ __endclass____main__Person:
       // Body
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 18
                ASSIGN __str[0] 'p'
                ASSIGN __str[1] 'e'
@@ -541,7 +589,7 @@ __endclass____main__Person:
 // Assignment
    // RHS
       // Array Allocator
-         // Literal
+         // Int Literal
             PUSH 4
          POP __size
          MALLOC __ptr __size
@@ -585,7 +633,7 @@ __endclass____main__Person:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 21
                   ASSIGN __str[0] 'a'
                   ASSIGN __str[1] ' '
@@ -644,7 +692,7 @@ __endclass____main__Person:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 14
                   ASSIGN __str[0] 'a'
                   ASSIGN __str[1] ' '
@@ -687,7 +735,7 @@ __endclass____main__Person:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 14
                   ASSIGN __str[0] 'b'
                   ASSIGN __str[1] ' '
@@ -723,7 +771,7 @@ __endclass____main__Person:
    // Code Block
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 16
                ASSIGN __str[0] 'a'
                ASSIGN __str[1] ' '
@@ -776,7 +824,7 @@ __endclass____main__Person:
    // Body
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 6
                ASSIGN __str[0] 'a'
                ASSIGN __str[1] ' '
@@ -816,7 +864,7 @@ __endclass____main__Person:
       // Body
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 6
                ASSIGN __str[0] 'a'
                ASSIGN __str[1] ' '
@@ -842,7 +890,7 @@ __endclass____main__Person:
 // Assignment
    // RHS
       // Array Allocator
-         // Literal
+         // Int Literal
             PUSH 5
          POP __size
          MALLOC __ptr __size
@@ -886,7 +934,7 @@ __endclass____main__Person:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 33
                   ASSIGN __str[0] 'p'
                   ASSIGN __str[1] 'e'
@@ -957,7 +1005,7 @@ __endclass____main__Person:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 20
                   ASSIGN __str[0] 'p'
                   ASSIGN __str[1] 'e'
@@ -1006,7 +1054,7 @@ __endclass____main__Person:
       // Code Block
          // Function Call - println(char[]) -> void
             // Arguments
-               // Literal
+               // String Literal
                   MALLOC __str 20
                   ASSIGN __str[0] 'p'
                   ASSIGN __str[1] 'e'
@@ -1048,7 +1096,7 @@ __endclass____main__Person:
    // Code Block
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 28
                ASSIGN __str[0] 'p'
                ASSIGN __str[1] 'e'
@@ -1113,7 +1161,7 @@ __endclass____main__Person:
    // Body
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 18
                ASSIGN __str[0] 'p'
                ASSIGN __str[1] 'e'
@@ -1165,7 +1213,7 @@ __endclass____main__Person:
       // Body
       // Function Call - println(char[]) -> void
          // Arguments
-            // Literal
+            // String Literal
                MALLOC __str 18
                ASSIGN __str[0] 'p'
                ASSIGN __str[1] 'e'
@@ -1215,7 +1263,7 @@ __endclass____main__Person:
             // Identifier - people1
                PUSH __main__people1
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 0
          POP __offset
          POP __pointer
@@ -1237,7 +1285,7 @@ __endclass____main__Person:
             // Identifier - people1
                PUSH __main__people1
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 1
          POP __offset
          POP __pointer
@@ -1255,7 +1303,7 @@ __endclass____main__Person:
             // Identifier - people1
                PUSH __main__people1
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 2
          POP __offset
          POP __pointer
@@ -1277,7 +1325,7 @@ __endclass____main__Person:
             // Identifier - people1
                PUSH __main__people1
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 3
          POP __offset
          POP __pointer
@@ -1295,7 +1343,7 @@ __endclass____main__Person:
             // Identifier - people1
                PUSH __main__people1
          // OFFSET
-            // Literal
+            // Int Literal
                PUSH 4
          POP __offset
          POP __pointer
@@ -1307,7 +1355,7 @@ __endclass____main__Person:
 // Init
    // Assignment
       // RHS
-         // Literal
+         // Int Literal
             PUSH 0
       // LHS
          // Variable Declaration
@@ -1370,7 +1418,7 @@ __for__19:
             // Body
                // Function Call - println(char[]) -> void
                   // Arguments
-                     // Literal
+                     // String Literal
                         MALLOC __str 9
                         ASSIGN __str[0] 'a'
                         ASSIGN __str[1] 'l'
@@ -1397,7 +1445,7 @@ __for__19:
             __else__21:
             // Function Call - println(char[]) -> void
                // Arguments
-                  // Literal
+                  // String Literal
                      MALLOC __str 4
                      ASSIGN __str[0] 'n'
                      ASSIGN __str[1] 'u'
