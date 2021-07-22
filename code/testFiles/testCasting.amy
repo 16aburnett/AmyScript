@@ -1,5 +1,16 @@
 
 
+class Person
+{
+    public field char[] name; 
+    public field int age; 
+    constructor (char[] name, int age)
+    {
+        this.name = name;
+        this.age = age; 
+    }
+}
+
 
 function char[] substring (char[] str, int begin, int end)
 {
@@ -67,6 +78,7 @@ function char[][] split (char[] str, char delim)
 }
 
 
+println ("Enter a list of numbers separated by spaces");
 char[][] elems = split (input (), ' ');
 int[] nums = new int[sizeof(elems)];
 
@@ -89,3 +101,19 @@ println (floatToInt (3.14));
 
 println (string (floatToInt (intToFloat (13) * 3.5))[0]);
 
+
+println ("==============================");
+Person person = new Person ("Amy", 22);
+
+println (person.name);
+println (person.age);
+
+free (person);
+
+println (person.name);
+
+Person person2 = new Person ("Cameron", 21);
+
+// if the free works, person2 should replace the block of person
+// but person still has that address so you can access person2 with person
+println (person.name);
