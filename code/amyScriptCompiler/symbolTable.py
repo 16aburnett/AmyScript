@@ -47,6 +47,15 @@ class SymbolTable:
                     else:
                         return False 
                 # reaches here if no overloads match 
+            # ensure field is not inherited from parent 
+            elif isinstance (self.table[-1][name], FieldDeclarationNode) and isinstance (decl, FieldDeclarationNode) and self.table[-1][name].isInherited:
+                # override if it is inherited and being overridden
+                # this shadows/hides overridden parent fields 
+                self.table[-1][name] = decl 
+            # forward declaration 
+            elif isinstance (self.table[-1][name], ClassDeclarationNode) and self.table[-1][name].isForwardDeclaration:
+                # replace the forward declaration 
+                self.table[-1][name] = decl
             else:
                 return False
         # add function to overload list in table
@@ -61,32 +70,95 @@ class SymbolTable:
         self.table[-1][name] = decl
         return True
 
-    def lookup (self, name, paramTypes=[]):
+    def lookup (self, name, params=[]):
         for i in range(len(self.table)-1, -1, -1):
             # check scope for var 
             if (name in self.table[i]):
-                # for matching functions 
+                # for matching function overloads
                 if (isinstance (self.table[i][name], list)):
-                    # check each overload 
+                    # check each overload and determine initial candidates 
+                    candidates = []
                     for overload in self.table[i][name]:
                         # check the number of parameters 
-                        if (len(paramTypes) != len(overload.params)):
+                        if (len(params) != len(overload.params)):
                             continue
                         # check parameter types 
-                        for j in range(len(paramTypes)):
+                        # steps is the number of steps up from the derived class arguments to the overload's parameters 
+                        # For example:
+                        # C inherits B, B inherits A 
+                        #   functioncall func(C, C);
+                        # with:
+                        #   declaration func(A, A); // 2 steps, 2 steps -> 4 total steps (C->B->A, C->B->A)
+                        #   declaration func(B, B); // 1 step , 1 step  -> 2 total steps (C->B, C->B)
+                        steps = 0
+                        for j in range(len(params)):
                             # check if param type does not match
-                            if paramTypes[j] != overload.params[j].type.__str__():
+                            # print (params[j].type, overload.params[j].type)
+                            if params[j].type.__str__() != overload.params[j].type.__str__():
                                 # make sure types are not related 
                                 isObject = overload.params[j].type.type == Type.USERTYPE
                                 isArray = overload.params[j].type.arrayDimensions > 0
-                                if paramTypes[j] == "null" and (isObject or isArray):
+                                if params[j].type.id == "null" and (isObject or isArray):
                                     continue
+                                # ensure array dim match
+                                if params[j].type.arrayDimensions != overload.params[j].type.arrayDimensions:
+                                    break 
+                                # ensure rhs is object for checking subtypes 
+                                if overload.params[j].type.type != Type.USERTYPE:
+                                    break 
+                                # make sure lhs is not a subtype of rhs 
+                                # get class declaration
+                                parent = params[j].type.decl.pDecl 
+                                match = False 
+                                steps += 1
+                                while parent != None:
+                                    # print (" ", parent.type, overload.params[j].type)
+                                    if parent.type.__str__() == overload.params[j].type.__str__():
+                                        match = True
+                                        break
+                                    parent = parent.pDecl 
+                                    steps += 1
+                                # found matching parent class
+                                # params[j] is of the same type as overload.params[j]
+                                if match:
+                                    continue 
                                 break
-                        # all param types match - found desired function decl overload
+                        # all param types match - found a viable function decl overload
                         else: 
-                            return overload
-                        # reaches here if overload's params dont match
+                            candidates += [(overload, steps)]
                         # check next overload 
+                    # check if viable overloads were found 
+                    if len(candidates) == 0:
+                        # no viable overloads found 
+                        return None 
+                    # found viable overloads 
+                    # check for best viable overload 
+                    # best viable overload is the one with the least number of steps 
+                    # throws an ambiguity error if there are multiple 
+                    maxVal = float("inf")
+                    maxI = [0]
+                    for j in range(len(candidates)):
+                        if candidates[j][1] < maxVal:
+                            maxVal = candidates[j][1]
+                            maxI = [j]
+                        # same steps 
+                        elif candidates[j][1] == maxVal:
+                            maxI += [j]
+                    # check for ambiguity 
+                    if len(maxI) > 1:
+                        print (f"Semantic Error: Ambiguity in function lookup")
+                        print (f"   Desired:    {name}(", end="")
+                        if len(params) > 0:
+                            print (f"{params[0].type}", end="")
+                        for j in range(1, len(params)):
+                            print (f", {params[j].type}",end="")
+                        print (f")")
+                        for j in maxI:
+                            print (f"   Candidate:  {candidates[j][0].signature}")
+                            print (f"      Steps: {candidates[j][1]}")
+                        return None
+                    # no ambiguity -> found viable candidate
+                    return candidates[maxI[0]][0]
                     # reaches here if no overloads match 
                 # for matching variables 
                 else:

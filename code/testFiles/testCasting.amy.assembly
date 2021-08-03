@@ -197,14 +197,14 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Person
+// Class Declaration - __main__Person inherits __main__Object
    //---------------------------------------------------------------------
    // Field - char[] Person::name
-   ASSIGN __field____main__Person__name 0
+   ASSIGN __field____main__Person__name 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Person::age
-   ASSIGN __field____main__Person__age 1
+   ASSIGN __field____main__Person__age 2
    //---------------------------------------------------------------------
 // skip over class methods
 JUMP __endclass____main__Person
@@ -213,7 +213,12 @@ JUMP __endclass____main__Person
    JUMP __end__ctor____main__Person____Person__char__1__int
    __ctor____main__Person____Person__char__1__int:
       // Creating Class Instance
-         MALLOC __this 2
+         MALLOC __this 3
+         // Creating Dispatch Table
+            MALLOC __dtable 0
+            // Populate Dispatch Table
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
       // Parameters
          // Param: name
          STACKGET __main__Person__Person__name 0

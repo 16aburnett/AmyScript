@@ -424,18 +424,18 @@ __end____main____concat__char__1__char__1:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Matrix
+// Class Declaration - __main__Matrix inherits __main__Object
    //---------------------------------------------------------------------
    // Field - int[][] Matrix::data
-   ASSIGN __field____main__Matrix__data 0
+   ASSIGN __field____main__Matrix__data 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Matrix::rows
-   ASSIGN __field____main__Matrix__rows 1
+   ASSIGN __field____main__Matrix__rows 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Matrix::cols
-   ASSIGN __field____main__Matrix__cols 2
+   ASSIGN __field____main__Matrix__cols 3
    //---------------------------------------------------------------------
 // skip over class methods
 JUMP __endclass____main__Matrix
@@ -444,7 +444,14 @@ JUMP __endclass____main__Matrix
    JUMP __end__ctor____main__Matrix____Matrix
    __ctor____main__Matrix____Matrix:
       // Creating Class Instance
-         MALLOC __this 3
+         MALLOC __this 4
+         // Creating Dispatch Table
+            MALLOC __dtable 2
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Matrix____add__Matrix
+            ASSIGN __dtable[1] __method____main__Matrix____toString
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -509,7 +516,14 @@ JUMP __endclass____main__Matrix
    JUMP __end__ctor____main__Matrix____Matrix__int__int
    __ctor____main__Matrix____Matrix__int__int:
       // Creating Class Instance
-         MALLOC __this 3
+         MALLOC __this 4
+         // Creating Dispatch Table
+            MALLOC __dtable 2
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Matrix____add__Matrix
+            ASSIGN __dtable[1] __method____main__Matrix____toString
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
       // Parameters
          // Param: rows
          STACKGET __main__Matrix__Matrix__rows 0
@@ -655,7 +669,14 @@ JUMP __endclass____main__Matrix
    JUMP __end__ctor____main__Matrix____Matrix__int__2
    __ctor____main__Matrix____Matrix__int__2:
       // Creating Class Instance
-         MALLOC __this 3
+         MALLOC __this 4
+         // Creating Dispatch Table
+            MALLOC __dtable 2
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Matrix____add__Matrix
+            ASSIGN __dtable[1] __method____main__Matrix____toString
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
       // Parameters
          // Param: data
          STACKGET __main__Matrix__Matrix__data 0

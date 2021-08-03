@@ -11,6 +11,7 @@ if __name__ == "__main__":
     from ast import *
     from visitor import *
     from semanticAnalyzer import SymbolTableVisitor
+    from dispatch import *
     from codeGen import CodeGenVisitor
 else:
     from .tokenizer import tokenize
@@ -18,6 +19,7 @@ else:
     from .ast import *
     from .visitor import *
     from .semanticAnalyzer import SymbolTableVisitor
+    from .dispatch import *
     from .codeGen import CodeGenVisitor
 
 
@@ -310,6 +312,12 @@ class AmyScriptCompiler:
         builtinFunction.signature = signature
         symbolTableVisitor.table.insert (builtinFunction)
 
+
+        # create default object type 
+        objClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Object", None), "Object", None, [], [], [], [], [])
+        objClass.scopeName = "__main__Object"
+        symbolTableVisitor.typesTable.insert (objClass, "Object")
+
         # Check AST
         # checks for 
         # - undeclared vars 
@@ -334,6 +342,9 @@ class AmyScriptCompiler:
 
         # file = open(astFilename, "w")
         # file.write (astOutput)
+
+        #=== DISPATCH TABLE GEN ==================================================
+
 
         #=== CODE GENERATION =====================================================
 

@@ -1,0 +1,1788 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+
+jump __endOfLibrary
+
+//========================================================================
+// Global Variables
+
+    assign __null 0
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+exit:
+    halt
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+// Assignment
+   // RHS
+      // Char Literal
+         PUSH 'S'
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__START_MARKER 0
+   POP __rhs
+   ASSIGN __main__START_MARKER __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Char Literal
+         PUSH 'G'
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__GOAL_MARKER 0
+   POP __rhs
+   ASSIGN __main__GOAL_MARKER __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Char Literal
+         PUSH '#'
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__WALL_MARKER 0
+   POP __rhs
+   ASSIGN __main__WALL_MARKER __rhs
+   PUSH __rhs
+//========================================================================
+// Function Declaration - min(int, int) -> int
+JUMP __end____main____min__int__int
+__main____min__int__int:
+   // Parameters
+      // Param: a
+      STACKGET __main__min__a 0
+      // Param: b
+      STACKGET __main__min__b 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Less Than or Equal to
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__min__a
+                  // RHS
+                     // Identifier - b
+                        PUSH __main__min__b
+                  POP __rhs
+                  POP __lhs
+                  LE __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__1
+            // Body
+               // Return
+                  // Identifier - a
+                     PUSH __main__min__a
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif__1
+            // End of if
+            __endif__1:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - b
+               PUSH __main__min__b
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____min__int__int:
+// End Function Declaration - __main____min__int__int
+//========================================================================
+
+//========================================================================
+// Function Declaration - print(char[][]) -> void
+JUMP __end____main____print__char__2
+__main____print__char__2:
+   // Parameters
+      // Param: board
+      STACKGET __main__print__board 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__print__block__2__for__3__i 0
+               POP __rhs
+               ASSIGN __main__print__block__2__for__3__i __rhs
+               PUSH __rhs
+         JUMP __forcond__3
+         __for__3:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - i
+                        PUSH __main__print__block__2__for__3__i
+                  POP __rhs
+                  ADD __main__print__block__2__for__3__i __main__print__block__2__for__3__i 1
+                  ASSIGN __res __main__print__block__2__for__3__i
+                  PUSH __res
+            __forcond__3:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - i
+                        PUSH __main__print__block__2__for__3__i
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier - board
+                              PUSH __main__print__board
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__3
+            // Body
+               // Function Call - println(char[]) -> void
+                  // Arguments
+                     // Subscript
+                        // LHS
+                           // Identifier - board
+                              PUSH __main__print__board
+                        // OFFSET
+                           // Identifier - i
+                              PUSH __main__print__block__2__for__3__i
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg0
+                  // *** println
+                  CALL println__char__1
+                  // Remove args
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+            // Repeat
+            JUMP __for__3
+            // End of For
+            __endfor__3:
+         //---------------------------------------------------------------
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____print__char__2:
+// End Function Declaration - __main____print__char__2
+//========================================================================
+
+//========================================================================
+// Function Declaration - dfs(char[][], int, int, int, int, int, int) -> int
+JUMP __end____main____dfs__char__2__int__int__int__int__int__int
+__main____dfs__char__2__int__int__int__int__int__int:
+   // Parameters
+      // Param: board
+      STACKGET __main__dfs__board 0
+      // Param: i
+      STACKGET __main__dfs__i 1
+      // Param: j
+      STACKGET __main__dfs__j 2
+      // Param: previ
+      STACKGET __main__dfs__previ 3
+      // Param: prevj
+      STACKGET __main__dfs__prevj 4
+      // Param: nMoves
+      STACKGET __main__dfs__nMoves 5
+      // Param: limit
+      STACKGET __main__dfs__limit 6
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Equal
+                  // LHS
+                     // Subscript
+                        // LHS
+                           // Subscript
+                              // LHS
+                                 // Identifier - board
+                                    PUSH __main__dfs__board
+                              // OFFSET
+                                 // Identifier - i
+                                    PUSH __main__dfs__i
+                              POP __offset
+                              POP __pointer
+                              PUSH __pointer[__offset]
+                        // OFFSET
+                           // Identifier - j
+                              PUSH __main__dfs__j
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // RHS
+                     // Identifier - GOAL_MARKER
+                        PUSH __main__GOAL_MARKER
+                  POP __rhs
+                  POP __lhs
+                  EQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__5
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Return
+                     // Identifier - nMoves
+                        PUSH __main__dfs__nMoves
+                     POP __rVal
+                     RETURN __rVal
+               //---------------------------------------------------------
+            JUMP __endif__5
+            // End of if
+            __endif__5:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Equal
+                  // LHS
+                     // Subscript
+                        // LHS
+                           // Subscript
+                              // LHS
+                                 // Identifier - board
+                                    PUSH __main__dfs__board
+                              // OFFSET
+                                 // Identifier - i
+                                    PUSH __main__dfs__i
+                              POP __offset
+                              POP __pointer
+                              PUSH __pointer[__offset]
+                        // OFFSET
+                           // Identifier - j
+                              PUSH __main__dfs__j
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // RHS
+                     // Identifier - WALL_MARKER
+                        PUSH __main__WALL_MARKER
+                  POP __rhs
+                  POP __lhs
+                  EQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__7
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Return
+                     // Negative
+                        // RHS
+                           // Int Literal
+                              PUSH 1
+                        POP __rhs
+                        SUBTRACT __res 0 __rhs
+                        PUSH __res
+                     POP __rVal
+                     RETURN __rVal
+               //---------------------------------------------------------
+            JUMP __endif__7
+            // End of if
+            __endif__7:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Greater Than or Equal to
+                  // LHS
+                     // Identifier - nMoves
+                        PUSH __main__dfs__nMoves
+                  // RHS
+                     // Identifier - limit
+                        PUSH __main__dfs__limit
+                  POP __rhs
+                  POP __lhs
+                  GE __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__9
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Return
+                     // Negative
+                        // RHS
+                           // Int Literal
+                              PUSH 1
+                        POP __rhs
+                        SUBTRACT __res 0 __rhs
+                        PUSH __res
+                     POP __rVal
+                     RETURN __rVal
+               //---------------------------------------------------------
+            JUMP __endif__9
+            // End of if
+            __endif__9:
+         //---------------------------------------------------------------
+         // Assignment
+            // RHS
+               // Identifier - limit
+                  PUSH __main__dfs__limit
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__dfs__block__4__minMoves 0
+            POP __rhs
+            ASSIGN __main__dfs__block__4__minMoves __rhs
+            PUSH __rhs
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // AND
+                  // LHS
+                     // Greater Than or Equal to
+                        // LHS
+                           // Subtraction
+                              // LHS
+                                 // Identifier - i
+                                    PUSH __main__dfs__i
+                              // RHS
+                                 // Int Literal
+                                    PUSH 1
+                              POP __rhs
+                              POP __lhs
+                              SUBTRACT __res __lhs __rhs
+                              PUSH __res
+                        // RHS
+                           // Int Literal
+                              PUSH 0
+                        POP __rhs
+                        POP __lhs
+                        GE __res __lhs __rhs
+                        PUSH __res
+                  // RHS
+                     // Not Equal
+                        // LHS
+                           // Subtraction
+                              // LHS
+                                 // Identifier - i
+                                    PUSH __main__dfs__i
+                              // RHS
+                                 // Int Literal
+                                    PUSH 1
+                              POP __rhs
+                              POP __lhs
+                              SUBTRACT __res __lhs __rhs
+                              PUSH __res
+                        // RHS
+                           // Identifier - previ
+                              PUSH __main__dfs__previ
+                        POP __rhs
+                        POP __lhs
+                        NEQUAL __res __lhs __rhs
+                        PUSH __res
+                  POP __rhs
+                  POP __lhs
+                  AND __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__11
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment
+                     // RHS
+                        // Function Call - dfs(char[][], int, int, int, int, int, int) -> int
+                           // Arguments
+                              // Identifier - board
+                                 PUSH __main__dfs__board
+                              // Subtraction
+                                 // LHS
+                                    // Identifier - i
+                                       PUSH __main__dfs__i
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 SUBTRACT __res __lhs __rhs
+                                 PUSH __res
+                              // Identifier - j
+                                 PUSH __main__dfs__j
+                              // Identifier - i
+                                 PUSH __main__dfs__i
+                              // Identifier - j
+                                 PUSH __main__dfs__j
+                              // Addition
+                                 // LHS
+                                    // Identifier - nMoves
+                                       PUSH __main__dfs__nMoves
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                              // Identifier - limit
+                                 PUSH __main__dfs__limit
+                              POP __arg6
+                              POP __arg5
+                              POP __arg4
+                              POP __arg3
+                              POP __arg2
+                              POP __arg1
+                              POP __arg0
+                           // Pushing args in reverse order
+                           PUSH __arg6
+                           PUSH __arg5
+                           PUSH __arg4
+                           PUSH __arg3
+                           PUSH __arg2
+                           PUSH __arg1
+                           PUSH __arg0
+                           // *** dfs
+                           CALL __main____dfs__char__2__int__int__int__int__int__int
+                           // Remove args
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           RESPONSE __retval
+                           PUSH __retval
+                     // LHS
+                        // Variable Declaration
+                           ASSIGN __main__dfs__block__4__if__11__block__12__res 0
+                     POP __rhs
+                     ASSIGN __main__dfs__block__4__if__11__block__12__res __rhs
+                     PUSH __rhs
+                  //------------------------------------------------------
+                  // If-Statement
+                     // Condition
+                        // Not Equal
+                           // LHS
+                              // Identifier - res
+                                 PUSH __main__dfs__block__4__if__11__block__12__res
+                           // RHS
+                              // Negative
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 SUBTRACT __res 0 __rhs
+                                 PUSH __res
+                           POP __rhs
+                           POP __lhs
+                           NEQUAL __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endif__13
+                     // Body
+                        // Assignment
+                           // RHS
+                              // Function Call - min(int, int) -> int
+                                 // Arguments
+                                    // Identifier - minMoves
+                                       PUSH __main__dfs__block__4__minMoves
+                                    // Identifier - res
+                                       PUSH __main__dfs__block__4__if__11__block__12__res
+                                    POP __arg1
+                                    POP __arg0
+                                 // Pushing args in reverse order
+                                 PUSH __arg1
+                                 PUSH __arg0
+                                 // *** min
+                                 CALL __main____min__int__int
+                                 // Remove args
+                                 POP __void
+                                 POP __void
+                                 RESPONSE __retval
+                                 PUSH __retval
+                           POP __rhs
+                           ASSIGN __main__dfs__block__4__minMoves __rhs
+                           PUSH __rhs
+                     JUMP __endif__13
+                     // End of if
+                     __endif__13:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            JUMP __endif__11
+            // End of if
+            __endif__11:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // AND
+                  // LHS
+                     // Less Than
+                        // LHS
+                           // Addition
+                              // LHS
+                                 // Identifier - j
+                                    PUSH __main__dfs__j
+                              // RHS
+                                 // Int Literal
+                                    PUSH 1
+                              POP __rhs
+                              POP __lhs
+                              ADD __res __lhs __rhs
+                              PUSH __res
+                        // RHS
+                           // Sizeof Operator
+                              // RHS
+                                 // Subscript
+                                    // LHS
+                                       // Identifier - board
+                                          PUSH __main__dfs__board
+                                    // OFFSET
+                                       // Int Literal
+                                          PUSH 0
+                                    POP __offset
+                                    POP __pointer
+                                    PUSH __pointer[__offset]
+                              // Calculate array size
+                              POP __array
+                              SIZEOF __size __array
+                              PUSH __size
+                        POP __rhs
+                        POP __lhs
+                        LT __res __lhs __rhs
+                        PUSH __res
+                  // RHS
+                     // Not Equal
+                        // LHS
+                           // Addition
+                              // LHS
+                                 // Identifier - j
+                                    PUSH __main__dfs__j
+                              // RHS
+                                 // Int Literal
+                                    PUSH 1
+                              POP __rhs
+                              POP __lhs
+                              ADD __res __lhs __rhs
+                              PUSH __res
+                        // RHS
+                           // Identifier - prevj
+                              PUSH __main__dfs__prevj
+                        POP __rhs
+                        POP __lhs
+                        NEQUAL __res __lhs __rhs
+                        PUSH __res
+                  POP __rhs
+                  POP __lhs
+                  AND __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__14
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment
+                     // RHS
+                        // Function Call - dfs(char[][], int, int, int, int, int, int) -> int
+                           // Arguments
+                              // Identifier - board
+                                 PUSH __main__dfs__board
+                              // Identifier - i
+                                 PUSH __main__dfs__i
+                              // Addition
+                                 // LHS
+                                    // Identifier - j
+                                       PUSH __main__dfs__j
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                              // Identifier - i
+                                 PUSH __main__dfs__i
+                              // Identifier - j
+                                 PUSH __main__dfs__j
+                              // Addition
+                                 // LHS
+                                    // Identifier - nMoves
+                                       PUSH __main__dfs__nMoves
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                              // Identifier - limit
+                                 PUSH __main__dfs__limit
+                              POP __arg6
+                              POP __arg5
+                              POP __arg4
+                              POP __arg3
+                              POP __arg2
+                              POP __arg1
+                              POP __arg0
+                           // Pushing args in reverse order
+                           PUSH __arg6
+                           PUSH __arg5
+                           PUSH __arg4
+                           PUSH __arg3
+                           PUSH __arg2
+                           PUSH __arg1
+                           PUSH __arg0
+                           // *** dfs
+                           CALL __main____dfs__char__2__int__int__int__int__int__int
+                           // Remove args
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           RESPONSE __retval
+                           PUSH __retval
+                     // LHS
+                        // Variable Declaration
+                           ASSIGN __main__dfs__block__4__if__14__block__15__res 0
+                     POP __rhs
+                     ASSIGN __main__dfs__block__4__if__14__block__15__res __rhs
+                     PUSH __rhs
+                  //------------------------------------------------------
+                  // If-Statement
+                     // Condition
+                        // Not Equal
+                           // LHS
+                              // Identifier - res
+                                 PUSH __main__dfs__block__4__if__14__block__15__res
+                           // RHS
+                              // Negative
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 SUBTRACT __res 0 __rhs
+                                 PUSH __res
+                           POP __rhs
+                           POP __lhs
+                           NEQUAL __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endif__16
+                     // Body
+                        // Assignment
+                           // RHS
+                              // Function Call - min(int, int) -> int
+                                 // Arguments
+                                    // Identifier - minMoves
+                                       PUSH __main__dfs__block__4__minMoves
+                                    // Identifier - res
+                                       PUSH __main__dfs__block__4__if__14__block__15__res
+                                    POP __arg1
+                                    POP __arg0
+                                 // Pushing args in reverse order
+                                 PUSH __arg1
+                                 PUSH __arg0
+                                 // *** min
+                                 CALL __main____min__int__int
+                                 // Remove args
+                                 POP __void
+                                 POP __void
+                                 RESPONSE __retval
+                                 PUSH __retval
+                           POP __rhs
+                           ASSIGN __main__dfs__block__4__minMoves __rhs
+                           PUSH __rhs
+                     JUMP __endif__16
+                     // End of if
+                     __endif__16:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            JUMP __endif__14
+            // End of if
+            __endif__14:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // AND
+                  // LHS
+                     // Less Than
+                        // LHS
+                           // Addition
+                              // LHS
+                                 // Identifier - i
+                                    PUSH __main__dfs__i
+                              // RHS
+                                 // Int Literal
+                                    PUSH 1
+                              POP __rhs
+                              POP __lhs
+                              ADD __res __lhs __rhs
+                              PUSH __res
+                        // RHS
+                           // Sizeof Operator
+                              // RHS
+                                 // Identifier - board
+                                    PUSH __main__dfs__board
+                              // Calculate array size
+                              POP __array
+                              SIZEOF __size __array
+                              PUSH __size
+                        POP __rhs
+                        POP __lhs
+                        LT __res __lhs __rhs
+                        PUSH __res
+                  // RHS
+                     // Not Equal
+                        // LHS
+                           // Addition
+                              // LHS
+                                 // Identifier - i
+                                    PUSH __main__dfs__i
+                              // RHS
+                                 // Int Literal
+                                    PUSH 1
+                              POP __rhs
+                              POP __lhs
+                              ADD __res __lhs __rhs
+                              PUSH __res
+                        // RHS
+                           // Identifier - previ
+                              PUSH __main__dfs__previ
+                        POP __rhs
+                        POP __lhs
+                        NEQUAL __res __lhs __rhs
+                        PUSH __res
+                  POP __rhs
+                  POP __lhs
+                  AND __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__17
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment
+                     // RHS
+                        // Function Call - dfs(char[][], int, int, int, int, int, int) -> int
+                           // Arguments
+                              // Identifier - board
+                                 PUSH __main__dfs__board
+                              // Addition
+                                 // LHS
+                                    // Identifier - i
+                                       PUSH __main__dfs__i
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                              // Identifier - j
+                                 PUSH __main__dfs__j
+                              // Identifier - i
+                                 PUSH __main__dfs__i
+                              // Identifier - j
+                                 PUSH __main__dfs__j
+                              // Addition
+                                 // LHS
+                                    // Identifier - nMoves
+                                       PUSH __main__dfs__nMoves
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                              // Identifier - limit
+                                 PUSH __main__dfs__limit
+                              POP __arg6
+                              POP __arg5
+                              POP __arg4
+                              POP __arg3
+                              POP __arg2
+                              POP __arg1
+                              POP __arg0
+                           // Pushing args in reverse order
+                           PUSH __arg6
+                           PUSH __arg5
+                           PUSH __arg4
+                           PUSH __arg3
+                           PUSH __arg2
+                           PUSH __arg1
+                           PUSH __arg0
+                           // *** dfs
+                           CALL __main____dfs__char__2__int__int__int__int__int__int
+                           // Remove args
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           RESPONSE __retval
+                           PUSH __retval
+                     // LHS
+                        // Variable Declaration
+                           ASSIGN __main__dfs__block__4__if__17__block__18__res 0
+                     POP __rhs
+                     ASSIGN __main__dfs__block__4__if__17__block__18__res __rhs
+                     PUSH __rhs
+                  //------------------------------------------------------
+                  // If-Statement
+                     // Condition
+                        // Not Equal
+                           // LHS
+                              // Identifier - res
+                                 PUSH __main__dfs__block__4__if__17__block__18__res
+                           // RHS
+                              // Negative
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 SUBTRACT __res 0 __rhs
+                                 PUSH __res
+                           POP __rhs
+                           POP __lhs
+                           NEQUAL __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endif__19
+                     // Body
+                        // Assignment
+                           // RHS
+                              // Function Call - min(int, int) -> int
+                                 // Arguments
+                                    // Identifier - minMoves
+                                       PUSH __main__dfs__block__4__minMoves
+                                    // Identifier - res
+                                       PUSH __main__dfs__block__4__if__17__block__18__res
+                                    POP __arg1
+                                    POP __arg0
+                                 // Pushing args in reverse order
+                                 PUSH __arg1
+                                 PUSH __arg0
+                                 // *** min
+                                 CALL __main____min__int__int
+                                 // Remove args
+                                 POP __void
+                                 POP __void
+                                 RESPONSE __retval
+                                 PUSH __retval
+                           POP __rhs
+                           ASSIGN __main__dfs__block__4__minMoves __rhs
+                           PUSH __rhs
+                     JUMP __endif__19
+                     // End of if
+                     __endif__19:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            JUMP __endif__17
+            // End of if
+            __endif__17:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // AND
+                  // LHS
+                     // Greater Than or Equal to
+                        // LHS
+                           // Subtraction
+                              // LHS
+                                 // Identifier - j
+                                    PUSH __main__dfs__j
+                              // RHS
+                                 // Int Literal
+                                    PUSH 1
+                              POP __rhs
+                              POP __lhs
+                              SUBTRACT __res __lhs __rhs
+                              PUSH __res
+                        // RHS
+                           // Int Literal
+                              PUSH 0
+                        POP __rhs
+                        POP __lhs
+                        GE __res __lhs __rhs
+                        PUSH __res
+                  // RHS
+                     // Not Equal
+                        // LHS
+                           // Subtraction
+                              // LHS
+                                 // Identifier - j
+                                    PUSH __main__dfs__j
+                              // RHS
+                                 // Int Literal
+                                    PUSH 1
+                              POP __rhs
+                              POP __lhs
+                              SUBTRACT __res __lhs __rhs
+                              PUSH __res
+                        // RHS
+                           // Identifier - prevj
+                              PUSH __main__dfs__prevj
+                        POP __rhs
+                        POP __lhs
+                        NEQUAL __res __lhs __rhs
+                        PUSH __res
+                  POP __rhs
+                  POP __lhs
+                  AND __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__20
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment
+                     // RHS
+                        // Function Call - dfs(char[][], int, int, int, int, int, int) -> int
+                           // Arguments
+                              // Identifier - board
+                                 PUSH __main__dfs__board
+                              // Identifier - i
+                                 PUSH __main__dfs__i
+                              // Subtraction
+                                 // LHS
+                                    // Identifier - j
+                                       PUSH __main__dfs__j
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 SUBTRACT __res __lhs __rhs
+                                 PUSH __res
+                              // Identifier - i
+                                 PUSH __main__dfs__i
+                              // Identifier - j
+                                 PUSH __main__dfs__j
+                              // Addition
+                                 // LHS
+                                    // Identifier - nMoves
+                                       PUSH __main__dfs__nMoves
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                              // Identifier - limit
+                                 PUSH __main__dfs__limit
+                              POP __arg6
+                              POP __arg5
+                              POP __arg4
+                              POP __arg3
+                              POP __arg2
+                              POP __arg1
+                              POP __arg0
+                           // Pushing args in reverse order
+                           PUSH __arg6
+                           PUSH __arg5
+                           PUSH __arg4
+                           PUSH __arg3
+                           PUSH __arg2
+                           PUSH __arg1
+                           PUSH __arg0
+                           // *** dfs
+                           CALL __main____dfs__char__2__int__int__int__int__int__int
+                           // Remove args
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           POP __void
+                           RESPONSE __retval
+                           PUSH __retval
+                     // LHS
+                        // Variable Declaration
+                           ASSIGN __main__dfs__block__4__if__20__block__21__res 0
+                     POP __rhs
+                     ASSIGN __main__dfs__block__4__if__20__block__21__res __rhs
+                     PUSH __rhs
+                  //------------------------------------------------------
+                  // If-Statement
+                     // Condition
+                        // Not Equal
+                           // LHS
+                              // Identifier - res
+                                 PUSH __main__dfs__block__4__if__20__block__21__res
+                           // RHS
+                              // Negative
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 SUBTRACT __res 0 __rhs
+                                 PUSH __res
+                           POP __rhs
+                           POP __lhs
+                           NEQUAL __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endif__22
+                     // Body
+                        // Assignment
+                           // RHS
+                              // Function Call - min(int, int) -> int
+                                 // Arguments
+                                    // Identifier - minMoves
+                                       PUSH __main__dfs__block__4__minMoves
+                                    // Identifier - res
+                                       PUSH __main__dfs__block__4__if__20__block__21__res
+                                    POP __arg1
+                                    POP __arg0
+                                 // Pushing args in reverse order
+                                 PUSH __arg1
+                                 PUSH __arg0
+                                 // *** min
+                                 CALL __main____min__int__int
+                                 // Remove args
+                                 POP __void
+                                 POP __void
+                                 RESPONSE __retval
+                                 PUSH __retval
+                           POP __rhs
+                           ASSIGN __main__dfs__block__4__minMoves __rhs
+                           PUSH __rhs
+                     JUMP __endif__22
+                     // End of if
+                     __endif__22:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            JUMP __endif__20
+            // End of if
+            __endif__20:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - minMoves
+               PUSH __main__dfs__block__4__minMoves
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____dfs__char__2__int__int__int__int__int__int:
+// End Function Declaration - __main____dfs__char__2__int__int__int__int__int__int
+//========================================================================
+
+// Assignment
+   // RHS
+      // Array Constructor
+         // Elements
+         // String Literal
+            MALLOC __str 10
+            ASSIGN __str[0] '.'
+            ASSIGN __str[1] '.'
+            ASSIGN __str[2] '.'
+            ASSIGN __str[3] '.'
+            ASSIGN __str[4] '.'
+            ASSIGN __str[5] '.'
+            ASSIGN __str[6] '.'
+            ASSIGN __str[7] '.'
+            ASSIGN __str[8] '.'
+            ASSIGN __str[9] '.'
+            PUSH __str
+         // String Literal
+            MALLOC __str 10
+            ASSIGN __str[0] '.'
+            ASSIGN __str[1] '.'
+            ASSIGN __str[2] '.'
+            ASSIGN __str[3] '.'
+            ASSIGN __str[4] '.'
+            ASSIGN __str[5] 'G'
+            ASSIGN __str[6] '#'
+            ASSIGN __str[7] '.'
+            ASSIGN __str[8] '.'
+            ASSIGN __str[9] '.'
+            PUSH __str
+         // String Literal
+            MALLOC __str 10
+            ASSIGN __str[0] '.'
+            ASSIGN __str[1] '#'
+            ASSIGN __str[2] '#'
+            ASSIGN __str[3] '#'
+            ASSIGN __str[4] '#'
+            ASSIGN __str[5] '#'
+            ASSIGN __str[6] '#'
+            ASSIGN __str[7] '#'
+            ASSIGN __str[8] '.'
+            ASSIGN __str[9] '.'
+            PUSH __str
+         // String Literal
+            MALLOC __str 10
+            ASSIGN __str[0] '.'
+            ASSIGN __str[1] '.'
+            ASSIGN __str[2] '.'
+            ASSIGN __str[3] '.'
+            ASSIGN __str[4] '.'
+            ASSIGN __str[5] '#'
+            ASSIGN __str[6] '.'
+            ASSIGN __str[7] '.'
+            ASSIGN __str[8] '.'
+            ASSIGN __str[9] '.'
+            PUSH __str
+         // String Literal
+            MALLOC __str 10
+            ASSIGN __str[0] '.'
+            ASSIGN __str[1] '#'
+            ASSIGN __str[2] '#'
+            ASSIGN __str[3] '#'
+            ASSIGN __str[4] '#'
+            ASSIGN __str[5] '#'
+            ASSIGN __str[6] '.'
+            ASSIGN __str[7] '#'
+            ASSIGN __str[8] '#'
+            ASSIGN __str[9] '.'
+            PUSH __str
+         // String Literal
+            MALLOC __str 10
+            ASSIGN __str[0] '.'
+            ASSIGN __str[1] '#'
+            ASSIGN __str[2] '.'
+            ASSIGN __str[3] 'S'
+            ASSIGN __str[4] '.'
+            ASSIGN __str[5] '.'
+            ASSIGN __str[6] '.'
+            ASSIGN __str[7] '#'
+            ASSIGN __str[8] '.'
+            ASSIGN __str[9] '.'
+            PUSH __str
+         // String Literal
+            MALLOC __str 10
+            ASSIGN __str[0] '.'
+            ASSIGN __str[1] '#'
+            ASSIGN __str[2] '.'
+            ASSIGN __str[3] '#'
+            ASSIGN __str[4] '#'
+            ASSIGN __str[5] '#'
+            ASSIGN __str[6] '#'
+            ASSIGN __str[7] '#'
+            ASSIGN __str[8] '.'
+            ASSIGN __str[9] '#'
+            PUSH __str
+         // String Literal
+            MALLOC __str 10
+            ASSIGN __str[0] '.'
+            ASSIGN __str[1] '.'
+            ASSIGN __str[2] '.'
+            ASSIGN __str[3] '.'
+            ASSIGN __str[4] '.'
+            ASSIGN __str[5] '.'
+            ASSIGN __str[6] '.'
+            ASSIGN __str[7] '.'
+            ASSIGN __str[8] '.'
+            ASSIGN __str[9] '#'
+            PUSH __str
+         POP __elem7
+         POP __elem6
+         POP __elem5
+         POP __elem4
+         POP __elem3
+         POP __elem2
+         POP __elem1
+         POP __elem0
+         MALLOC __list 8
+         ASSIGN __list[0] __elem0
+         ASSIGN __list[1] __elem1
+         ASSIGN __list[2] __elem2
+         ASSIGN __list[3] __elem3
+         ASSIGN __list[4] __elem4
+         ASSIGN __list[5] __elem5
+         ASSIGN __list[6] __elem6
+         ASSIGN __list[7] __elem7
+         PUSH __list
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__board 0
+   POP __rhs
+   ASSIGN __main__board __rhs
+   PUSH __rhs
+// Function Call - print(char[][]) -> void
+   // Arguments
+      // Identifier - board
+         PUSH __main__board
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** print
+   CALL __main____print__char__2
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Assignment
+   // RHS
+      // Assignment
+         // RHS
+            // Int Literal
+               PUSH 0
+         // LHS
+            // Variable Declaration
+               ASSIGN __main__startj 0
+         POP __rhs
+         ASSIGN __main__startj __rhs
+         PUSH __rhs
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__starti 0
+   POP __rhs
+   ASSIGN __main__starti __rhs
+   PUSH __rhs
+//------------------------------------------------------------------------
+// For-Loop
+// Init
+   // Assignment
+      // RHS
+         // Int Literal
+            PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__23__i 0
+      POP __rhs
+      ASSIGN __main__for__23__i __rhs
+      PUSH __rhs
+JUMP __forcond__23
+__for__23:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier - i
+               PUSH __main__for__23__i
+         POP __rhs
+         ADD __main__for__23__i __main__for__23__i 1
+         ASSIGN __res __main__for__23__i
+         PUSH __res
+   __forcond__23:
+   // Condition
+      // Less Than
+         // LHS
+            // Identifier - i
+               PUSH __main__for__23__i
+         // RHS
+            // Sizeof Operator
+               // RHS
+                  // Identifier - board
+                     PUSH __main__board
+               // Calculate array size
+               POP __array
+               SIZEOF __size __array
+               PUSH __size
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor__23
+   // Body
+      //------------------------------------------------------------------
+      // For-Loop
+      // Init
+         // Assignment
+            // RHS
+               // Int Literal
+                  PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__23__for__24__j 0
+            POP __rhs
+            ASSIGN __main__for__23__for__24__j __rhs
+            PUSH __rhs
+      JUMP __forcond__24
+      __for__24:
+         // Update
+            // Pre-Increment
+               // RHS
+                  // Identifier - j
+                     PUSH __main__for__23__for__24__j
+               POP __rhs
+               ADD __main__for__23__for__24__j __main__for__23__for__24__j 1
+               ASSIGN __res __main__for__23__for__24__j
+               PUSH __res
+         __forcond__24:
+         // Condition
+            // Less Than
+               // LHS
+                  // Identifier - j
+                     PUSH __main__for__23__for__24__j
+               // RHS
+                  // Sizeof Operator
+                     // RHS
+                        // Subscript
+                           // LHS
+                              // Identifier - board
+                                 PUSH __main__board
+                           // OFFSET
+                              // Identifier - i
+                                 PUSH __main__for__23__i
+                           POP __offset
+                           POP __pointer
+                           PUSH __pointer[__offset]
+                     // Calculate array size
+                     POP __array
+                     SIZEOF __size __array
+                     PUSH __size
+               POP __rhs
+               POP __lhs
+               LT __res __lhs __rhs
+               PUSH __res
+            POP __cond
+            CMP __cond 0
+            JEQ __endfor__24
+         // Body
+            //------------------------------------------------------------
+            // If-Statement
+               // Condition
+                  // Equal
+                     // LHS
+                        // Subscript
+                           // LHS
+                              // Subscript
+                                 // LHS
+                                    // Identifier - board
+                                       PUSH __main__board
+                                 // OFFSET
+                                    // Identifier - i
+                                       PUSH __main__for__23__i
+                                 POP __offset
+                                 POP __pointer
+                                 PUSH __pointer[__offset]
+                           // OFFSET
+                              // Identifier - j
+                                 PUSH __main__for__23__for__24__j
+                           POP __offset
+                           POP __pointer
+                           PUSH __pointer[__offset]
+                     // RHS
+                        // Identifier - START_MARKER
+                           PUSH __main__START_MARKER
+                     POP __rhs
+                     POP __lhs
+                     EQUAL __res __lhs __rhs
+                     PUSH __res
+                  POP __cond
+                  CMP __cond 0
+                  JEQ __endif__25
+               // Body
+                  //------------------------------------------------------
+                  // Code Block
+                     // Assignment
+                        // RHS
+                           // Identifier - i
+                              PUSH __main__for__23__i
+                        POP __rhs
+                        ASSIGN __main__starti __rhs
+                        PUSH __rhs
+                     // Assignment
+                        // RHS
+                           // Identifier - j
+                              PUSH __main__for__23__for__24__j
+                        POP __rhs
+                        ASSIGN __main__startj __rhs
+                        PUSH __rhs
+                  //------------------------------------------------------
+               JUMP __endif__25
+               // End of if
+               __endif__25:
+            //------------------------------------------------------------
+         // Repeat
+         JUMP __for__24
+         // End of For
+         __endfor__24:
+      //------------------------------------------------------------------
+   // Repeat
+   JUMP __for__23
+   // End of For
+   __endfor__23:
+//------------------------------------------------------------------------
+// Assignment
+   // RHS
+      // Int Literal
+         PUSH 0
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__minMoves 0
+   POP __rhs
+   ASSIGN __main__minMoves __rhs
+   PUSH __rhs
+//------------------------------------------------------------------------
+// For-Loop
+// Init
+   // Assignment
+      // RHS
+         // Int Literal
+            PUSH 1
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__27__i 0
+      POP __rhs
+      ASSIGN __main__for__27__i __rhs
+      PUSH __rhs
+JUMP __forcond__27
+__for__27:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier - i
+               PUSH __main__for__27__i
+         POP __rhs
+         ADD __main__for__27__i __main__for__27__i 1
+         ASSIGN __res __main__for__27__i
+         PUSH __res
+   __forcond__27:
+   // Condition
+      // Less Than
+         // LHS
+            // Identifier - i
+               PUSH __main__for__27__i
+         // RHS
+            // Int Literal
+               PUSH 20
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor__27
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Assignment
+            // RHS
+               // Function Call - dfs(char[][], int, int, int, int, int, int) -> int
+                  // Arguments
+                     // Identifier - board
+                        PUSH __main__board
+                     // Identifier - starti
+                        PUSH __main__starti
+                     // Identifier - startj
+                        PUSH __main__startj
+                     // Negative
+                        // RHS
+                           // Int Literal
+                              PUSH 1
+                        POP __rhs
+                        SUBTRACT __res 0 __rhs
+                        PUSH __res
+                     // Negative
+                        // RHS
+                           // Int Literal
+                              PUSH 1
+                        POP __rhs
+                        SUBTRACT __res 0 __rhs
+                        PUSH __res
+                     // Int Literal
+                        PUSH 0
+                     // Int Literal
+                        PUSH 20
+                     POP __arg6
+                     POP __arg5
+                     POP __arg4
+                     POP __arg3
+                     POP __arg2
+                     POP __arg1
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg6
+                  PUSH __arg5
+                  PUSH __arg4
+                  PUSH __arg3
+                  PUSH __arg2
+                  PUSH __arg1
+                  PUSH __arg0
+                  // *** dfs
+                  CALL __main____dfs__char__2__int__int__int__int__int__int
+                  // Remove args
+                  POP __void
+                  POP __void
+                  POP __void
+                  POP __void
+                  POP __void
+                  POP __void
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__27__block__28__res 0
+            POP __rhs
+            ASSIGN __main__for__27__block__28__res __rhs
+            PUSH __rhs
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Not Equal
+                  // LHS
+                     // Identifier - res
+                        PUSH __main__for__27__block__28__res
+                  // RHS
+                     // Negative
+                        // RHS
+                           // Int Literal
+                              PUSH 1
+                        POP __rhs
+                        SUBTRACT __res 0 __rhs
+                        PUSH __res
+                  POP __rhs
+                  POP __lhs
+                  NEQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__29
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment
+                     // RHS
+                        // Identifier - res
+                           PUSH __main__for__27__block__28__res
+                     POP __rhs
+                     ASSIGN __main__minMoves __rhs
+                     PUSH __rhs
+                  // Break out of __for__27
+                  JUMP __endfor__27
+               //---------------------------------------------------------
+            JUMP __endif__29
+            // End of if
+            __endif__29:
+         //---------------------------------------------------------------
+      //------------------------------------------------------------------
+   // Repeat
+   JUMP __for__27
+   // End of For
+   __endfor__27:
+//------------------------------------------------------------------------
+// Function Call - println(int) -> void
+   // Arguments
+      // Identifier - minMoves
+         PUSH __main__minMoves
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__int
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

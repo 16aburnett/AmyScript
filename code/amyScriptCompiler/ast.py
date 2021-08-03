@@ -48,6 +48,8 @@ class TypeSpecifierNode (Node):
         self.token = token
         self.arrayDimensions = 0
 
+        self.decl = None
+
         self.lineNumber = 0
         self.columnNumber = 0
 
@@ -140,7 +142,7 @@ class FunctionNode (CodeUnitNode):
         self.id = id
         self.token = token
         self.params = params
-        self.body = body 
+        self.body = body
 
         self.signature = ""
 
@@ -158,15 +160,25 @@ class FunctionNode (CodeUnitNode):
 
 class ClassDeclarationNode (CodeUnitNode):
     
-    def __init__(self, type, id, token, constructors, fields, methods):
+    def __init__(self, type, id, token, parent, constructors, fields, virtualMethods, methods):
         self.type = type
+        self.type.decl = self 
         self.id = id
         self.token = token
+        self.parent = parent 
+        self.pDecl = None 
         self.constructors = constructors
         self.fields = fields 
         self.methods = methods 
 
+        self.children = []
+
+        self.virtualMethods = [] 
+        self.functionPointerList = [] 
+
         self.scopeName = ""
+
+        self.isForwardDeclaration = False 
 
         self.lineNumber = 0
         self.columnNumber = 0
@@ -185,6 +197,8 @@ class FieldDeclarationNode (DeclarationNode):
         self.parentClass = None
         self.index = 0
 
+        self.isInherited = False 
+
         self.lineNumber = 0
         self.columnNumber = 0
 
@@ -196,12 +210,22 @@ class FieldDeclarationNode (DeclarationNode):
 
 class MethodDeclarationNode (DeclarationNode):
     
-    def __init__(self, security, type, id, token, params, body):
+    def __init__(self, security, type, id, token, params, body, isVirtual=False):
         self.security = security
         super().__init__(type, id, token)
         self.params = params
         self.body = body 
         self.parentClass = None
+
+        self.scopeName = ""
+
+        self.signature = ""
+        self.signatureNoScope = ""
+
+        self.isVirtual = isVirtual
+        self.isInherited = False 
+        self.inheritedMethod = None
+        self.isOverride = False 
 
         self.lineNumber = 0
         self.columnNumber = 0
@@ -220,6 +244,8 @@ class ConstructorDeclarationNode (DeclarationNode):
         self.params = params
         self.body = body 
         self.parentClass = None
+
+        self.scopeName = ""
 
         self.lineNumber = 0
         self.columnNumber = 0

@@ -1,0 +1,10 @@
+// Vector Library for AmyScript
+// Author: Amy Burnett
+//========================================================================
+
+
+template <T>
+class Vector
+{
+    
+}

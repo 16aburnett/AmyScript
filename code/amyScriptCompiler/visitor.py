@@ -39,6 +39,18 @@ class ASTVisitor (ABC):
         pass
 
     @abstractmethod
+    def visitFieldDeclarationNode (self, node):
+        pass
+
+    @abstractmethod
+    def visitMethodDeclarationNode (self, node):
+        pass
+
+    @abstractmethod
+    def visitConstructorDeclarationNode (self, node):
+        pass
+
+    @abstractmethod
     def visitStatementNode (self, node):
         pass
 

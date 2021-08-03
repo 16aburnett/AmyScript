@@ -1,0 +1,44 @@
+// Testing Virtual Methods
+// Author: Amy Burnett
+//========================================================================
+
+class A { public virtual void X() { println ("A::X()"); } }
+class B inherits A { }
+class D inherits B { virtual void X() { println ("D::X()"); } }
+class E inherits D { virtual void Y() { println ("E::Y()"); } }
+class C inherits B { virtual void X() { println ("C::X()"); } }
+class F inherits D { virtual void Z() { println ("F::Z()"); } }
+class G inherits A { virtual void X() { println ("G::X()"); } virtual void Y() { println ("G::Y()"); } }
+class H inherits G { virtual void Y() { println ("H::Y()"); } }
+class I inherits A { virtual void Y() { println ("I::Y()"); } virtual void Z() { println ("I::Z()"); } }
+
+//========================================================================
+
+function void fun1 (A a)
+{
+    println ("fun1");
+    // virtual method call 
+    a.X ();
+}
+
+function void fun2 (G g)
+{
+    println ("fun2");
+    // virtual method call 
+    g.X ();
+    g.Y ();
+}
+
+B b = new B();
+D d = new D();
+H h = new H();
+I i = new I();
+
+fun1 (i);
+fun1 (b);
+
+fun2 (h);
+
+//========================================================================
+
+

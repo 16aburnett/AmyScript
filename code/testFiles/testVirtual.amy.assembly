@@ -1,0 +1,1108 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+
+jump __endOfLibrary
+
+//========================================================================
+// Global Variables
+
+    assign __null 0
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+exit:
+    halt
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__A inherits __main__Object
+// skip over class methods
+JUMP __endclass____main__A
+   //---------------------------------------------------------------------
+   // Constructor Declaration - A::A() -> A
+   JUMP __end__ctor____main__A____A
+   __ctor____main__A____A:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__A____X
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__A____A:
+   // End Constructor Declaration - __ctor____main__A____A
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - A::X() -> void
+   JUMP __end__method____main__A____X
+   __method____main__A____X:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'A'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'X'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__A____X:
+   // End Method Declaration - __method____main__A____X
+   //---------------------------------------------------------------------
+
+__endclass____main__A:
+// End Class Declaration - __main__A
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__B inherits __main__A
+// skip over class methods
+JUMP __endclass____main__B
+   //---------------------------------------------------------------------
+   // Constructor Declaration - B::B() -> B
+   JUMP __end__ctor____main__B____B
+   __ctor____main__B____B:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__A____X
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__B____B:
+   // End Constructor Declaration - __ctor____main__B____B
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - B::X() -> void
+   // Inherited from A
+   JUMP __end__method____main__B____X
+   __method____main__B____X:
+      // Jump to A's version
+      JUMP __method____main__A____X
+   __end__method____main__B____X:
+   // End Method Declaration - __method____main__B____X
+   //---------------------------------------------------------------------
+
+__endclass____main__B:
+// End Class Declaration - __main__B
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__D inherits __main__B
+// skip over class methods
+JUMP __endclass____main__D
+   //---------------------------------------------------------------------
+   // Constructor Declaration - D::D() -> D
+   JUMP __end__ctor____main__D____D
+   __ctor____main__D____D:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__D____X
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__D____D:
+   // End Constructor Declaration - __ctor____main__D____D
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - D::X() -> void
+   JUMP __end__method____main__D____X
+   __method____main__D____X:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'D'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'X'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__D____X:
+   // End Method Declaration - __method____main__D____X
+   //---------------------------------------------------------------------
+
+__endclass____main__D:
+// End Class Declaration - __main__D
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__E inherits __main__D
+// skip over class methods
+JUMP __endclass____main__E
+   //---------------------------------------------------------------------
+   // Constructor Declaration - E::E() -> E
+   JUMP __end__ctor____main__E____E
+   __ctor____main__E____E:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 2
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__D____X
+            ASSIGN __dtable[1] __method____main__E____Y
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__E____E:
+   // End Constructor Declaration - __ctor____main__E____E
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - E::X() -> void
+   // Inherited from D
+   JUMP __end__method____main__E____X
+   __method____main__E____X:
+      // Jump to D's version
+      JUMP __method____main__D____X
+   __end__method____main__E____X:
+   // End Method Declaration - __method____main__E____X
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - E::Y() -> void
+   JUMP __end__method____main__E____Y
+   __method____main__E____Y:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'E'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'Y'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__E____Y:
+   // End Method Declaration - __method____main__E____Y
+   //---------------------------------------------------------------------
+
+__endclass____main__E:
+// End Class Declaration - __main__E
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__C inherits __main__B
+// skip over class methods
+JUMP __endclass____main__C
+   //---------------------------------------------------------------------
+   // Constructor Declaration - C::C() -> C
+   JUMP __end__ctor____main__C____C
+   __ctor____main__C____C:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__C____X
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__C____C:
+   // End Constructor Declaration - __ctor____main__C____C
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - C::X() -> void
+   JUMP __end__method____main__C____X
+   __method____main__C____X:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'C'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'X'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__C____X:
+   // End Method Declaration - __method____main__C____X
+   //---------------------------------------------------------------------
+
+__endclass____main__C:
+// End Class Declaration - __main__C
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__F inherits __main__D
+// skip over class methods
+JUMP __endclass____main__F
+   //---------------------------------------------------------------------
+   // Constructor Declaration - F::F() -> F
+   JUMP __end__ctor____main__F____F
+   __ctor____main__F____F:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 2
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__D____X
+            ASSIGN __dtable[1] __method____main__F____Z
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__F____F:
+   // End Constructor Declaration - __ctor____main__F____F
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - F::X() -> void
+   // Inherited from D
+   JUMP __end__method____main__F____X
+   __method____main__F____X:
+      // Jump to D's version
+      JUMP __method____main__D____X
+   __end__method____main__F____X:
+   // End Method Declaration - __method____main__F____X
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - F::Z() -> void
+   JUMP __end__method____main__F____Z
+   __method____main__F____Z:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'F'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'Z'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__F____Z:
+   // End Method Declaration - __method____main__F____Z
+   //---------------------------------------------------------------------
+
+__endclass____main__F:
+// End Class Declaration - __main__F
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__G inherits __main__A
+// skip over class methods
+JUMP __endclass____main__G
+   //---------------------------------------------------------------------
+   // Constructor Declaration - G::G() -> G
+   JUMP __end__ctor____main__G____G
+   __ctor____main__G____G:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 2
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__G____X
+            ASSIGN __dtable[1] __method____main__G____Y
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__G____G:
+   // End Constructor Declaration - __ctor____main__G____G
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - G::X() -> void
+   JUMP __end__method____main__G____X
+   __method____main__G____X:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'G'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'X'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__G____X:
+   // End Method Declaration - __method____main__G____X
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - G::Y() -> void
+   JUMP __end__method____main__G____Y
+   __method____main__G____Y:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'G'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'Y'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__G____Y:
+   // End Method Declaration - __method____main__G____Y
+   //---------------------------------------------------------------------
+
+__endclass____main__G:
+// End Class Declaration - __main__G
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__H inherits __main__G
+// skip over class methods
+JUMP __endclass____main__H
+   //---------------------------------------------------------------------
+   // Constructor Declaration - H::H() -> H
+   JUMP __end__ctor____main__H____H
+   __ctor____main__H____H:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 2
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__G____X
+            ASSIGN __dtable[1] __method____main__H____Y
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__H____H:
+   // End Constructor Declaration - __ctor____main__H____H
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - H::X() -> void
+   // Inherited from G
+   JUMP __end__method____main__H____X
+   __method____main__H____X:
+      // Jump to G's version
+      JUMP __method____main__G____X
+   __end__method____main__H____X:
+   // End Method Declaration - __method____main__H____X
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - H::Y() -> void
+   JUMP __end__method____main__H____Y
+   __method____main__H____Y:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'H'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'Y'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__H____Y:
+   // End Method Declaration - __method____main__H____Y
+   //---------------------------------------------------------------------
+
+__endclass____main__H:
+// End Class Declaration - __main__H
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__I inherits __main__A
+// skip over class methods
+JUMP __endclass____main__I
+   //---------------------------------------------------------------------
+   // Constructor Declaration - I::I() -> I
+   JUMP __end__ctor____main__I____I
+   __ctor____main__I____I:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 3
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__A____X
+            ASSIGN __dtable[1] __method____main__I____Y
+            ASSIGN __dtable[2] __method____main__I____Z
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__I____I:
+   // End Constructor Declaration - __ctor____main__I____I
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - I::X() -> void
+   // Inherited from A
+   JUMP __end__method____main__I____X
+   __method____main__I____X:
+      // Jump to A's version
+      JUMP __method____main__A____X
+   __end__method____main__I____X:
+   // End Method Declaration - __method____main__I____X
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - I::Y() -> void
+   JUMP __end__method____main__I____Y
+   __method____main__I____Y:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'I'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'Y'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__I____Y:
+   // End Method Declaration - __method____main__I____Y
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - I::Z() -> void
+   JUMP __end__method____main__I____Z
+   __method____main__I____Z:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'I'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'Z'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__I____Z:
+   // End Method Declaration - __method____main__I____Z
+   //---------------------------------------------------------------------
+
+__endclass____main__I:
+// End Class Declaration - __main__I
+//========================================================================
+
+//========================================================================
+// Function Declaration - fun1(A) -> void
+JUMP __end____main____fun1__A
+__main____fun1__A:
+   // Parameters
+      // Param: a
+      STACKGET __main__fun1__a 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // String Literal
+                  MALLOC __str 4
+                  ASSIGN __str[0] 'f'
+                  ASSIGN __str[1] 'u'
+                  ASSIGN __str[2] 'n'
+                  ASSIGN __str[3] '1'
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Virtual Method Call - X() -> void
+            // LHS
+               // Identifier - a
+                  PUSH __main__fun1__a
+            // RHS
+            // Arguments
+            POP __obj
+            // Pushing args in reverse order
+            PUSH __obj
+            // Virtual Function Dispatch
+            ASSIGN __dtable __obj[0]
+            CALL __dtable[0]
+            POP __void
+            // Remove args
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____fun1__A:
+// End Function Declaration - __main____fun1__A
+//========================================================================
+
+//========================================================================
+// Function Declaration - fun2(G) -> void
+JUMP __end____main____fun2__G
+__main____fun2__G:
+   // Parameters
+      // Param: g
+      STACKGET __main__fun2__g 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // String Literal
+                  MALLOC __str 4
+                  ASSIGN __str[0] 'f'
+                  ASSIGN __str[1] 'u'
+                  ASSIGN __str[2] 'n'
+                  ASSIGN __str[3] '2'
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Virtual Method Call - X() -> void
+            // LHS
+               // Identifier - g
+                  PUSH __main__fun2__g
+            // RHS
+            // Arguments
+            POP __obj
+            // Pushing args in reverse order
+            PUSH __obj
+            // Virtual Function Dispatch
+            ASSIGN __dtable __obj[0]
+            CALL __dtable[0]
+            POP __void
+            // Remove args
+            RESPONSE __retval
+            PUSH __retval
+         // Virtual Method Call - Y() -> void
+            // LHS
+               // Identifier - g
+                  PUSH __main__fun2__g
+            // RHS
+            // Arguments
+            POP __obj
+            // Pushing args in reverse order
+            PUSH __obj
+            // Virtual Function Dispatch
+            ASSIGN __dtable __obj[0]
+            CALL __dtable[1]
+            POP __void
+            // Remove args
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____fun2__G:
+// End Function Declaration - __main____fun2__G
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - B::B() -> B
+         // Arguments
+         // Pushing args in reverse order
+         CALL __ctor____main__B____B
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__b 0
+   POP __rhs
+   ASSIGN __main__b __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Constructor Call - D::D() -> D
+         // Arguments
+         // Pushing args in reverse order
+         CALL __ctor____main__D____D
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__d 0
+   POP __rhs
+   ASSIGN __main__d __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Constructor Call - H::H() -> H
+         // Arguments
+         // Pushing args in reverse order
+         CALL __ctor____main__H____H
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__h 0
+   POP __rhs
+   ASSIGN __main__h __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Constructor Call - I::I() -> I
+         // Arguments
+         // Pushing args in reverse order
+         CALL __ctor____main__I____I
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__i 0
+   POP __rhs
+   ASSIGN __main__i __rhs
+   PUSH __rhs
+// Function Call - fun1(A) -> void
+   // Arguments
+      // Identifier - i
+         PUSH __main__i
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** fun1
+   CALL __main____fun1__A
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call - fun1(A) -> void
+   // Arguments
+      // Identifier - b
+         PUSH __main__b
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** fun1
+   CALL __main____fun1__A
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Function Call - fun2(G) -> void
+   // Arguments
+      // Identifier - h
+         PUSH __main__h
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** fun2
+   CALL __main____fun2__G
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

@@ -197,10 +197,10 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Name
+// Class Declaration - __main__Name inherits __main__Object
    //---------------------------------------------------------------------
    // Field - char[] Name::name
-   ASSIGN __field____main__Name__name 0
+   ASSIGN __field____main__Name__name 1
    //---------------------------------------------------------------------
 // skip over class methods
 JUMP __endclass____main__Name
@@ -209,7 +209,12 @@ JUMP __endclass____main__Name
    JUMP __end__ctor____main__Name____Name__char__1
    __ctor____main__Name____Name__char__1:
       // Creating Class Instance
-         MALLOC __this 1
+         MALLOC __this 2
+         // Creating Dispatch Table
+            MALLOC __dtable 0
+            // Populate Dispatch Table
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
       // Parameters
          // Param: name
          STACKGET __main__Name__Name__name 0
@@ -243,18 +248,18 @@ __endclass____main__Name:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Person
+// Class Declaration - __main__Person inherits __main__Object
    //---------------------------------------------------------------------
    // Field - Name Person::name
-   ASSIGN __field____main__Person__name 0
+   ASSIGN __field____main__Person__name 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Person::age
-   ASSIGN __field____main__Person__age 1
+   ASSIGN __field____main__Person__age 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - float Person::gpa
-   ASSIGN __field____main__Person__gpa 2
+   ASSIGN __field____main__Person__gpa 3
    //---------------------------------------------------------------------
 // skip over class methods
 JUMP __endclass____main__Person
@@ -263,7 +268,15 @@ JUMP __endclass____main__Person
    JUMP __end__ctor____main__Person____Person
    __ctor____main__Person____Person:
       // Creating Class Instance
-         MALLOC __this 3
+         MALLOC __this 4
+         // Creating Dispatch Table
+            MALLOC __dtable 3
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Person____add__int__int
+            ASSIGN __dtable[1] __method____main__Person____add__float__float
+            ASSIGN __dtable[2] __method____main__Person____doThing__char__1
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -338,7 +351,15 @@ JUMP __endclass____main__Person
    JUMP __end__ctor____main__Person____Person__char__1__int__float
    __ctor____main__Person____Person__char__1__int__float:
       // Creating Class Instance
-         MALLOC __this 3
+         MALLOC __this 4
+         // Creating Dispatch Table
+            MALLOC __dtable 3
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Person____add__int__int
+            ASSIGN __dtable[1] __method____main__Person____add__float__float
+            ASSIGN __dtable[2] __method____main__Person____doThing__char__1
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
       // Parameters
          // Param: name
          STACKGET __main__Person__Person__name 0
@@ -526,18 +547,18 @@ JUMP __endclass____main__Person
          //---------------------------------------------------------------
          // Code Block
             //============================================================
-            // Class Declaration - __main__Person__doThing__block__5__Thing
+            // Class Declaration - __main__Person__doThing__block__5__Thing inherits __main__Object
                //---------------------------------------------------------
                // Field - Name Thing::name
-               ASSIGN __field____main__Person__doThing__block__5__Thing__name 0
+               ASSIGN __field____main__Person__doThing__block__5__Thing__name 1
                //---------------------------------------------------------
                //---------------------------------------------------------
                // Field - int Thing::age
-               ASSIGN __field____main__Person__doThing__block__5__Thing__age 1
+               ASSIGN __field____main__Person__doThing__block__5__Thing__age 2
                //---------------------------------------------------------
                //---------------------------------------------------------
                // Field - float Thing::gpa
-               ASSIGN __field____main__Person__doThing__block__5__Thing__gpa 2
+               ASSIGN __field____main__Person__doThing__block__5__Thing__gpa 3
                //---------------------------------------------------------
             // skip over class methods
             JUMP __endclass____main__Person__doThing__block__5__Thing
@@ -546,7 +567,12 @@ JUMP __endclass____main__Person
                JUMP __end__ctor____main__Person__doThing__block__5__Thing____Thing
                __ctor____main__Person__doThing__block__5__Thing____Thing:
                   // Creating Class Instance
-                     MALLOC __this 3
+                     MALLOC __this 4
+                     // Creating Dispatch Table
+                        MALLOC __dtable 0
+                        // Populate Dispatch Table
+                        // Add Dispatch Table
+                        ASSIGN __this[0] __dtable
                   // Parameters
                   // Body
                      //---------------------------------------------------

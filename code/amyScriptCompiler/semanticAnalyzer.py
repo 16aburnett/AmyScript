@@ -35,9 +35,10 @@ class SymbolTableVisitor (ASTVisitor):
         # if type spec is not primitive
         if (node.type == Type.USERTYPE):
             # make sure type exists 
-            decl = self.typesTable.lookup (node.id)
+            # and save with the type spec for later lookup 
+            node.decl = self.typesTable.lookup (node.id)
             # variable has no declaration
-            if (decl == None):
+            if (node.decl == None):
                 print (f"Semantic Error: '{node.id}' does not name a type")
                 print (f"   Located on line {node.token.line}: column {node.token.column}")
                 print (f"   line:")
@@ -82,10 +83,10 @@ class SymbolTableVisitor (ASTVisitor):
         node.type.accept (self)
 
         # grab params so that the body can use them
-        paramTypes = []
         for p in node.params:
+            # visit type to ensure valid type 
+            p.type.accept (self)
             self.parameters += [p]
-            paramTypes += [p.type.__str__()]
 
         # create signature for node
         signature = [f"{node.id}("]
@@ -100,8 +101,8 @@ class SymbolTableVisitor (ASTVisitor):
         wasSuccessful = self.table.insert (node)
 
         if (not wasSuccessful):
-            originalDec = self.table.lookup (node.id, paramTypes)
-            print (f"Semantic Error: Redeclaration of function '{node.id}'")
+            originalDec = self.table.lookup (node.id, node.params)
+            print (f"Semantic Error: Redeclaration of function '{node.signature}'")
             print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
             print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
             print ()
@@ -120,11 +121,82 @@ class SymbolTableVisitor (ASTVisitor):
             varname = node.id 
             originalDec = self.typesTable.lookup (varname)
             print (f"Semantic Error: Redeclaration of class '{varname}'")
-            print (f"   Originally on line {node.token.line}: column {node.token.column}")
+            print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
             print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
             print ()
             self.wasSuccessful = False
 
+        # Check for parent 
+        if node.parent != "":
+            # print (node.id, "inherits", node.parent)
+            pDecl = self.typesTable.lookup (node.parent)
+            if pDecl == None:
+                print (f"Semantic Error: '{node.parent}' does not name a type")
+                print (f"   On line {node.token.line}: column {node.token.column}")
+                print ()
+                self.wasSuccessful = False
+            # save parent decl 
+            node.pDecl = pDecl 
+            # save self as a child to parent 
+            pDecl.children += [node]
+
+            # add parent fields to this fields
+            fields = []
+            for field in pDecl.fields:
+                fields += [FieldDeclarationNode (field.security, field.type, field.id, field.token)]
+                fields[-1].isInherited = True
+            # add current fields
+            for field in node.fields:
+                fields += [field]
+            node.fields = fields
+
+            # print (f"{node.id} inherits {node.parent}")
+
+            # add non-overridden parent methods 
+            methods = []
+            for pMethod in pDecl.methods:
+                # ensure method is not overridden
+                # a method is overridden if the name and parameter types match 
+                # otherwise, they are two separate functions 
+                for method in node.methods:
+                    # name matches 
+                    if pMethod.id == method.id:
+                        # ensure same num params  
+                        if len(pMethod.params) == len(method.params):
+                            # check each parameter 
+                            for i in range (len(method.params)):
+                                # check if param type is different 
+                                if pMethod.params[i].type.__str__() != method.params[i].type.__str__():
+                                    # non-matching param => non-matching signatures 
+                                    break
+                            # all params match => signatures match 
+                            else:
+                                # stop checking these methods because we know parent method is overridden 
+                                # mark method as an override 
+                                method.isOverride = True 
+                                break 
+                        # otherwise, params dont match, move on 
+                    # name doesnt match, move on
+
+                # method is not overridden 
+                else: 
+                    # create reference method to parent method
+                    params = []
+                    for p in pMethod.params:
+                        params += [p]
+                    m = MethodDeclarationNode (pMethod.security, pMethod.type, pMethod.id, pMethod.token, params, None, pMethod.isVirtual)
+                    # mark method as inherited 
+                    m.isInherited = True
+                    # save parent method 
+                    m.inheritedMethod = pMethod 
+                    methods += [m]
+            
+            # add these methods 
+            for method in node.methods:
+                methods += [method]
+            # save methods 
+            node.methods = methods
+        
         # class will have its own scope 
         # class does not have a scope atm
         # self.table.enterScope ()
@@ -145,6 +217,49 @@ class SymbolTableVisitor (ASTVisitor):
 
         # self.table.exitScope ()
         # self.typesTable.exitScope ()
+
+        # Generating Dispatch table entries and their order 
+
+        # any function in this class who's signature matches a function in parentVirtual 
+        # print ("  Overridden Virtual Functions:")
+        overriddenVirtual = [method for method in node.methods if method.isOverride]
+        # for method in overriddenVirtual: print (f"    {method.signatureNoScope} -> {method.signature}")
+
+
+        # print ("  New Virtual Functions:")
+        newVirtual = [method for method in node.methods if not method.isOverride and not method.isInherited]
+        # for method in newVirtual: print (f"    {method.signatureNoScope}")
+
+
+        totalVirtual = []
+
+        # save parent's order for virtual methods 
+        node.virtualMethods = [m for m in pDecl.virtualMethods]
+        node.functionPointerList = [m for m in pDecl.functionPointerList]
+        # override parent's function pointers for this class 
+        for method in overriddenVirtual:
+            for i in range(len(node.virtualMethods)):
+                if method.signatureNoScope == node.virtualMethods[i].signatureNoScope:
+                    # override parent's method 
+                    node.functionPointerList[i] = method 
+                    # stop checking, found override 
+                    break 
+        
+        # add new virtual methods and their corresponding methods
+        for method in newVirtual:
+            node.virtualMethods += [method]
+            node.functionPointerList += [method]
+
+        # print ("  Total Virtual Functions:")
+        # for method in node.virtualMethods: print (f"    {method.signatureNoScope}")
+
+        # print ("  Total Function Pointers:")
+        # for method in node.functionPointerList: print (f"    {method.signature}")
+        
+
+        # print ()
+        # print ()
+
 
         # remove current containing class (going out of scope)
         self.containingClass.pop ()
@@ -169,15 +284,27 @@ class SymbolTableVisitor (ASTVisitor):
     def visitMethodDeclarationNode (self, node):
         node.type.accept (self)
 
+        # grab params so that the body can use them
+        for p in node.params:
+            # visit type to ensure valid type 
+            p.type.accept (self)
+            self.parameters += [p]
+
         # create signature for node
-        paramTypes = []
+        signature = [f"{node.id}("]
+        if len(node.params) > 0:
+            signature += [node.params[0].type.__str__()]
+        for i in range(1, len(node.params)):
+            signature += [f", {node.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        node.signatureNoScope = signature
+
         signature = [f"{node.parentClass.id}::{node.id}("]
         if len(node.params) > 0:
             signature += [node.params[0].type.__str__()]
-            paramTypes += [node.params[0].type.__str__()]
         for i in range(1, len(node.params)):
             signature += [f", {node.params[i].type.__str__()}"]
-            paramTypes += [node.params[i].type.__str__()]
         signature += [")"]
         signature = "".join(signature)
         node.signature = signature
@@ -185,30 +312,30 @@ class SymbolTableVisitor (ASTVisitor):
         wasSuccessful = self.table.insert (node, f"{node.parentClass.id}::{node.id}")
 
         if (not wasSuccessful):
-            originalDec = self.table.lookup (f"{node.parentClass.id}::{node.id}", paramTypes)
+            originalDec = self.table.lookup (f"{node.parentClass.id}::{node.id}", node.params)
             print (f"Semantic Error: Redeclaration of Method '{node.signature}'")
             print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
             print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
             print ()
             self.wasSuccessful = False
 
-        # grab params so that the body can use them
-        for p in node.params:
-            self.parameters += [p]
-
-        node.body.accept (self)
+        if not node.isInherited:
+            node.body.accept (self)
 
     def visitConstructorDeclarationNode (self, node):
 
+        # grab params so that the body can use them
+        for p in node.params:
+            # visit type to ensure valid type 
+            p.type.accept (self)
+            self.parameters += [p]
+
         # create signature for node
-        paramTypes = []
         signature = [f"{node.parentClass.id}::{node.parentClass.id}("]
         if len(node.params) > 0:
             signature += [node.params[0].type.__str__()]
-            paramTypes += [node.params[0].type.__str__()]
         for i in range(1, len(node.params)):
             signature += [f", {node.params[i].type.__str__()}"]
-            paramTypes += [node.params[i].type.__str__()]
         signature += [")"]
         signature = "".join(signature)
         node.signature = signature
@@ -216,16 +343,12 @@ class SymbolTableVisitor (ASTVisitor):
         wasSuccessful = self.table.insert (node, f"{node.parentClass.id}::{node.parentClass.id}")
 
         if (not wasSuccessful):
-            originalDec = self.table.lookup (f"{node.parentClass.id}::{node.parentClass.id}", paramTypes)
+            originalDec = self.table.lookup (f"{node.parentClass.id}::{node.parentClass.id}", node.params)
             print (f"Semantic Error: Redeclaration of ctor, '{node.signature}'")
             print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
             print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
             print ()
             self.wasSuccessful = False
-
-        # grab params so that the body can use them
-        for p in node.params:
-            self.parameters += [p]
 
         node.body.accept (self)
         
@@ -344,10 +467,31 @@ class SymbolTableVisitor (ASTVisitor):
         node.type = node.lhs.type
 
         # ensure types work 
-        isDiffType = node.lhs.type.type != node.rhs.type.type
-        isDiffDimensions = node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions
+        isDiffType = node.lhs.type.type.__str__() != node.rhs.type.type.__str__()
+        isDiffDimensions = node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions 
         isArrayNullOp = node.lhs.type.arrayDimensions > 0 and node.rhs.type.type == Type.NULL
         isObjectNullOp = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and node.rhs.type.type == Type.NULL
+        # lhs is object 
+        isSubtype = False 
+        if node.lhs.type.type == Type.USERTYPE and node.rhs.type.type == Type.USERTYPE:
+            parent = node.rhs.type.decl
+            # print (parent.type.id, node.lhs.type.id)
+            if parent.type.id == node.lhs.type.id:
+                # print ("match!")
+                isSubtype = True
+                parent = None
+            else:
+                parent = parent.pDecl 
+            while parent != None:
+                # print (parent.type.id, node.lhs.type.id)
+                if parent.type.id == node.lhs.type.id:
+                    # print ("match!")
+                    isSubtype = True
+                    break 
+                parent = parent.pDecl
+            if not isSubtype:
+                # print ("not a subtype")
+                isDiffType = True
         if (not isArrayNullOp and not isObjectNullOp and (isDiffType or isDiffDimensions)):
             print (f"Semantic Error: mismatching types in assign")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
@@ -602,10 +746,8 @@ class SymbolTableVisitor (ASTVisitor):
 
     def visitFunctionCallExpressionNode (self, node):
         # eval arguments to get types 
-        argTypes = []
         for arg in node.args:
             arg.accept (self)
-            argTypes += [arg.type.__str__()]
 
         # search for function
         # create signature for node
@@ -617,7 +759,7 @@ class SymbolTableVisitor (ASTVisitor):
         signature += [")"]
         signature = "".join(signature)
 
-        decl = self.table.lookup (node.function.id, argTypes)
+        decl = self.table.lookup (node.function.id, node.args)
 
         # save declaration with function call
         node.decl = decl 
@@ -819,10 +961,8 @@ class SymbolTableVisitor (ASTVisitor):
         self.checkDeclaration = True
 
         # eval arguments to get types 
-        argTypes = []
         for arg in node.args:
             arg.accept (self)
-            argTypes += [arg.type.__str__()]
 
         # search for function
         # create signature for node
@@ -835,7 +975,7 @@ class SymbolTableVisitor (ASTVisitor):
         signature = "".join(signature)
 
         # decl = self.table.lookup (signature)
-        decl = self.table.lookup (f"{lhsdecl.type.id}::{node.rhs.id}", argTypes)
+        decl = self.table.lookup (f"{lhsdecl.type.id}::{node.rhs.id}", node.args)
 
         # save declaration with function call
         node.decl = decl 
@@ -912,11 +1052,8 @@ class SymbolTableVisitor (ASTVisitor):
         # take the first constructor declaration
         node.decl = self.typesTable.lookup (node.id).constructors[0]
 
-        argTypes = []
         for a in node.args:
-            # ensure arguments match 
             a.accept (self)
-            argTypes += [a.type.__str__()]
 
         # search for function
         # create signature for node
@@ -928,7 +1065,7 @@ class SymbolTableVisitor (ASTVisitor):
         signature += [")"]
         signature = "".join(signature)
 
-        decl = self.table.lookup (f"{node.id}::{node.id}", argTypes)
+        decl = self.table.lookup (f"{node.id}::{node.id}", node.args)
 
         # save declaration with function call
         node.decl = decl 

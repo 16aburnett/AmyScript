@@ -1,0 +1,3084 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+
+jump __endOfLibrary
+
+//========================================================================
+// Global Variables
+
+    assign __null 0
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+exit:
+    halt
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//========================================================================
+// Function Declaration - concat(char[], char[]) -> char[]
+JUMP __end____main____concat__char__1__char__1
+__main____concat__char__1__char__1:
+   // Parameters
+      // Param: a
+      STACKGET __main__concat__a 0
+      // Param: b
+      STACKGET __main__concat__b 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Assignment
+            // RHS
+               // Array Allocator
+                  // Addition
+                     // LHS
+                        // Sizeof Operator
+                           // RHS
+                              // Identifier - a
+                                 PUSH __main__concat__a
+                           // Calculate array size
+                           POP __array
+                           SIZEOF __size __array
+                           PUSH __size
+                     // RHS
+                        // Sizeof Operator
+                           // RHS
+                              // Identifier - b
+                                 PUSH __main__concat__b
+                           // Calculate array size
+                           POP __array
+                           SIZEOF __size __array
+                           PUSH __size
+                     POP __rhs
+                     POP __lhs
+                     ADD __res __lhs __rhs
+                     PUSH __res
+                  POP __size
+                  MALLOC __ptr __size
+                  PUSH __ptr
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__concat__block__0__c 0
+            POP __rhs
+            ASSIGN __main__concat__block__0__c __rhs
+            PUSH __rhs
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__concat__block__0__for__1__i 0
+               POP __rhs
+               ASSIGN __main__concat__block__0__for__1__i __rhs
+               PUSH __rhs
+         JUMP __forcond__1
+         __for__1:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - i
+                        PUSH __main__concat__block__0__for__1__i
+                  POP __rhs
+                  ADD __main__concat__block__0__for__1__i __main__concat__block__0__for__1__i 1
+                  ASSIGN __res __main__concat__block__0__for__1__i
+                  PUSH __res
+            __forcond__1:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - i
+                        PUSH __main__concat__block__0__for__1__i
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier - a
+                              PUSH __main__concat__a
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__1
+            // Body
+               // Assignment
+                  // RHS
+                     // Subscript
+                        // LHS
+                           // Identifier - a
+                              PUSH __main__concat__a
+                        // OFFSET
+                           // Identifier - i
+                              PUSH __main__concat__block__0__for__1__i
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // LHS
+                     // Subscript assignment
+                        // LHS
+                           // Identifier - c
+                              PUSH __main__concat__block__0__c
+                        // OFFSET
+                           // Identifier - i
+                              PUSH __main__concat__block__0__for__1__i
+                        POP __offset
+                        POP __pointer
+                  POP __rhs
+                  ASSIGN __pointer[__offset] __rhs
+                  PUSH __rhs
+            // Repeat
+            JUMP __for__1
+            // End of For
+            __endfor__1:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__concat__block__0__for__2__i 0
+               POP __rhs
+               ASSIGN __main__concat__block__0__for__2__i __rhs
+               PUSH __rhs
+         JUMP __forcond__2
+         __for__2:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - i
+                        PUSH __main__concat__block__0__for__2__i
+                  POP __rhs
+                  ADD __main__concat__block__0__for__2__i __main__concat__block__0__for__2__i 1
+                  ASSIGN __res __main__concat__block__0__for__2__i
+                  PUSH __res
+            __forcond__2:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - i
+                        PUSH __main__concat__block__0__for__2__i
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier - b
+                              PUSH __main__concat__b
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__2
+            // Body
+               // Assignment
+                  // RHS
+                     // Subscript
+                        // LHS
+                           // Identifier - b
+                              PUSH __main__concat__b
+                        // OFFSET
+                           // Identifier - i
+                              PUSH __main__concat__block__0__for__2__i
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // LHS
+                     // Subscript assignment
+                        // LHS
+                           // Identifier - c
+                              PUSH __main__concat__block__0__c
+                        // OFFSET
+                           // Addition
+                              // LHS
+                                 // Sizeof Operator
+                                    // RHS
+                                       // Identifier - a
+                                          PUSH __main__concat__a
+                                    // Calculate array size
+                                    POP __array
+                                    SIZEOF __size __array
+                                    PUSH __size
+                              // RHS
+                                 // Identifier - i
+                                    PUSH __main__concat__block__0__for__2__i
+                              POP __rhs
+                              POP __lhs
+                              ADD __res __lhs __rhs
+                              PUSH __res
+                        POP __offset
+                        POP __pointer
+                  POP __rhs
+                  ASSIGN __pointer[__offset] __rhs
+                  PUSH __rhs
+            // Repeat
+            JUMP __for__2
+            // End of For
+            __endfor__2:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - c
+               PUSH __main__concat__block__0__c
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____concat__char__1__char__1:
+// End Function Declaration - __main____concat__char__1__char__1
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__Department inherits __main__Object
+   //---------------------------------------------------------------------
+   // Field - char[] Department::name
+   ASSIGN __field____main__Department__name 1
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__Department
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Department::Department(char[]) -> Department
+   JUMP __end__ctor____main__Department____Department__char__1
+   __ctor____main__Department____Department__char__1:
+      // Creating Class Instance
+         MALLOC __this 2
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Department____toString
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+         // Param: name
+         STACKGET __main__Department__Department__name 0
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Identifier - name
+                     PUSH __main__Department__Department__name
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Department__name
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Department____Department__char__1:
+   // End Constructor Declaration - __ctor____main__Department____Department__char__1
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - Department::toString() -> char[]
+   JUMP __end__method____main__Department____toString
+   __method____main__Department____toString:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field____main__Department__name
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__Department____toString:
+   // End Method Declaration - __method____main__Department____toString
+   //---------------------------------------------------------------------
+
+__endclass____main__Department:
+// End Class Declaration - __main__Department
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__Course inherits __main__Object
+   //---------------------------------------------------------------------
+   // Field - char[] Course::name
+   ASSIGN __field____main__Course__name 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - Department Course::department
+   ASSIGN __field____main__Course__department 2
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int Course::id
+   ASSIGN __field____main__Course__id 3
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - char[] Course::times
+   ASSIGN __field____main__Course__times 4
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__Course
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Course::Course() -> Course
+   JUMP __end__ctor____main__Course____Course
+   __ctor____main__Course____Course:
+      // Creating Class Instance
+         MALLOC __this 5
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Course____toString
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Course____Course:
+   // End Constructor Declaration - __ctor____main__Course____Course
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - Course::toString() -> char[]
+   JUMP __end__method____main__Course____toString
+   __method____main__Course____toString:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Function Call - concat(char[], char[]) -> char[]
+                  // Arguments
+                     // Function Call - concat(char[], char[]) -> char[]
+                        // Arguments
+                           // Function Call - concat(char[], char[]) -> char[]
+                              // Arguments
+                                 // Method Call - Department::toString() -> char[]
+                                    // LHS
+                                       // Member Accessor
+                                          // LHS
+                                             // This keyword
+                                                PUSH __this
+                                          // RHS
+                                             PUSH __field____main__Course__department
+                                          POP __child
+                                          POP __parent
+                                          PUSH __parent[__child]
+                                    // RHS
+                                    // Arguments
+                                    POP __obj
+                                    // Pushing args in reverse order
+                                    PUSH __obj
+                                    CALL __method____main__Department____toString
+                                    POP __void
+                                    // Remove args
+                                    RESPONSE __retval
+                                    PUSH __retval
+                                 // Function Call - string(int) -> char[]
+                                    // Arguments
+                                       // Member Accessor
+                                          // LHS
+                                             // This keyword
+                                                PUSH __this
+                                          // RHS
+                                             PUSH __field____main__Course__id
+                                          POP __child
+                                          POP __parent
+                                          PUSH __parent[__child]
+                                       POP __arg0
+                                    // Pushing args in reverse order
+                                    PUSH __arg0
+                                    // *** string
+                                    CALL string__int
+                                    // Remove args
+                                    POP __void
+                                    RESPONSE __retval
+                                    PUSH __retval
+                                 POP __arg1
+                                 POP __arg0
+                              // Pushing args in reverse order
+                              PUSH __arg1
+                              PUSH __arg0
+                              // *** concat
+                              CALL __main____concat__char__1__char__1
+                              // Remove args
+                              POP __void
+                              POP __void
+                              RESPONSE __retval
+                              PUSH __retval
+                           // String Literal
+                              MALLOC __str 1
+                              ASSIGN __str[0] ' '
+                              PUSH __str
+                           POP __arg1
+                           POP __arg0
+                        // Pushing args in reverse order
+                        PUSH __arg1
+                        PUSH __arg0
+                        // *** concat
+                        CALL __main____concat__char__1__char__1
+                        // Remove args
+                        POP __void
+                        POP __void
+                        RESPONSE __retval
+                        PUSH __retval
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field____main__Course__name
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                     POP __arg1
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg1
+                  PUSH __arg0
+                  // *** concat
+                  CALL __main____concat__char__1__char__1
+                  // Remove args
+                  POP __void
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__Course____toString:
+   // End Method Declaration - __method____main__Course____toString
+   //---------------------------------------------------------------------
+
+__endclass____main__Course:
+// End Class Declaration - __main__Course
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - Department::Department(char[]) -> Department
+         // Arguments
+            // String Literal
+               MALLOC __str 4
+               ASSIGN __str[0] 'C'
+               ASSIGN __str[1] 'S'
+               ASSIGN __str[2] 'C'
+               ASSIGN __str[3] 'I'
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL __ctor____main__Department____Department__char__1
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__d 0
+   POP __rhs
+   ASSIGN __main__d __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Constructor Call - Course::Course() -> Course
+         // Arguments
+         // Pushing args in reverse order
+         CALL __ctor____main__Course____Course
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__course 0
+   POP __rhs
+   ASSIGN __main__course __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Identifier - d
+         PUSH __main__d
+   // LHS
+      // Member Accessor Assignment
+         // LHS
+            // Identifier - course
+               PUSH __main__course
+         // RHS
+            PUSH __field____main__Course__department
+         POP __child
+         POP __parent
+         POP __rhs
+         ASSIGN __parent[__child] __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // String Literal
+         MALLOC __str 21
+         ASSIGN __str[0] 'C'
+         ASSIGN __str[1] 'o'
+         ASSIGN __str[2] 'm'
+         ASSIGN __str[3] 'p'
+         ASSIGN __str[4] 'i'
+         ASSIGN __str[5] 'l'
+         ASSIGN __str[6] 'e'
+         ASSIGN __str[7] 'r'
+         ASSIGN __str[8] ' '
+         ASSIGN __str[9] 'C'
+         ASSIGN __str[10] 'o'
+         ASSIGN __str[11] 'n'
+         ASSIGN __str[12] 's'
+         ASSIGN __str[13] 't'
+         ASSIGN __str[14] 'r'
+         ASSIGN __str[15] 'u'
+         ASSIGN __str[16] 'c'
+         ASSIGN __str[17] 't'
+         ASSIGN __str[18] 'i'
+         ASSIGN __str[19] 'o'
+         ASSIGN __str[20] 'n'
+         PUSH __str
+   // LHS
+      // Member Accessor Assignment
+         // LHS
+            // Identifier - course
+               PUSH __main__course
+         // RHS
+            PUSH __field____main__Course__name
+         POP __child
+         POP __parent
+         POP __rhs
+         ASSIGN __parent[__child] __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Int Literal
+         PUSH 435
+   // LHS
+      // Member Accessor Assignment
+         // LHS
+            // Identifier - course
+               PUSH __main__course
+         // RHS
+            PUSH __field____main__Course__id
+         POP __child
+         POP __parent
+         POP __rhs
+         ASSIGN __parent[__child] __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // String Literal
+         MALLOC __str 15
+         ASSIGN __str[0] '1'
+         ASSIGN __str[1] '2'
+         ASSIGN __str[2] ':'
+         ASSIGN __str[3] '0'
+         ASSIGN __str[4] '0'
+         ASSIGN __str[5] 'p'
+         ASSIGN __str[6] 'm'
+         ASSIGN __str[7] '-'
+         ASSIGN __str[8] '0'
+         ASSIGN __str[9] '1'
+         ASSIGN __str[10] ':'
+         ASSIGN __str[11] '0'
+         ASSIGN __str[12] '0'
+         ASSIGN __str[13] 'p'
+         ASSIGN __str[14] 'm'
+         PUSH __str
+   // LHS
+      // Member Accessor Assignment
+         // LHS
+            // Identifier - course
+               PUSH __main__course
+         // RHS
+            PUSH __field____main__Course__times
+         POP __child
+         POP __parent
+         POP __rhs
+         ASSIGN __parent[__child] __rhs
+   PUSH __rhs
+// Function Call - println(char[]) -> void
+   // Arguments
+      // Method Call - Course::toString() -> char[]
+         // LHS
+            // Identifier - course
+               PUSH __main__course
+         // RHS
+         // Arguments
+         POP __obj
+         // Pushing args in reverse order
+         PUSH __obj
+         CALL __method____main__Course____toString
+         POP __void
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__char__1
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+// Class Declaration - __main__Person inherits __main__Object
+   //---------------------------------------------------------------------
+   // Field - char[] Person::name
+   ASSIGN __field____main__Person__name 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int Person::age
+   ASSIGN __field____main__Person__age 2
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - float[] Person::nums
+   ASSIGN __field____main__Person__nums 3
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__Person
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Person::Person() -> Person
+   JUMP __end__ctor____main__Person____Person
+   __ctor____main__Person____Person:
+      // Creating Class Instance
+         MALLOC __this 4
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Person____toString
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Person____Person:
+   // End Constructor Declaration - __ctor____main__Person____Person
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - Person::toString() -> char[]
+   JUMP __end__method____main__Person____toString
+   __method____main__Person____toString:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - print(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 23
+                     ASSIGN __str[0] 'P'
+                     ASSIGN __str[1] 'e'
+                     ASSIGN __str[2] 'r'
+                     ASSIGN __str[3] 's'
+                     ASSIGN __str[4] 'o'
+                     ASSIGN __str[5] 'n'
+                     ASSIGN __str[6] ':'
+                     ASSIGN __str[7] ':'
+                     ASSIGN __str[8] 't'
+                     ASSIGN __str[9] 'o'
+                     ASSIGN __str[10] 'S'
+                     ASSIGN __str[11] 't'
+                     ASSIGN __str[12] 'r'
+                     ASSIGN __str[13] 'i'
+                     ASSIGN __str[14] 'n'
+                     ASSIGN __str[15] 'g'
+                     ASSIGN __str[16] ' '
+                     ASSIGN __str[17] '('
+                     ASSIGN __str[18] ')'
+                     ASSIGN __str[19] ' '
+                     ASSIGN __str[20] '-'
+                     ASSIGN __str[21] '>'
+                     ASSIGN __str[22] ' '
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** print
+               CALL print__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Return
+               // Function Call - concat(char[], char[]) -> char[]
+                  // Arguments
+                     // Function Call - concat(char[], char[]) -> char[]
+                        // Arguments
+                           // Member Accessor
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main__Person__name
+                              POP __child
+                              POP __parent
+                              PUSH __parent[__child]
+                           // String Literal
+                              MALLOC __str 1
+                              ASSIGN __str[0] ' '
+                              PUSH __str
+                           POP __arg1
+                           POP __arg0
+                        // Pushing args in reverse order
+                        PUSH __arg1
+                        PUSH __arg0
+                        // *** concat
+                        CALL __main____concat__char__1__char__1
+                        // Remove args
+                        POP __void
+                        POP __void
+                        RESPONSE __retval
+                        PUSH __retval
+                     // Function Call - string(int) -> char[]
+                        // Arguments
+                           // Member Accessor
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main__Person__age
+                              POP __child
+                              POP __parent
+                              PUSH __parent[__child]
+                           POP __arg0
+                        // Pushing args in reverse order
+                        PUSH __arg0
+                        // *** string
+                        CALL string__int
+                        // Remove args
+                        POP __void
+                        RESPONSE __retval
+                        PUSH __retval
+                     POP __arg1
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg1
+                  PUSH __arg0
+                  // *** concat
+                  CALL __main____concat__char__1__char__1
+                  // Remove args
+                  POP __void
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__Person____toString:
+   // End Method Declaration - __method____main__Person____toString
+   //---------------------------------------------------------------------
+
+__endclass____main__Person:
+// End Class Declaration - __main__Person
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__Professor inherits __main__Person
+   //---------------------------------------------------------------------
+   // Field - char[] Professor::name
+   // Inherited from Person
+   ASSIGN __field____main__Professor__name 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int Professor::age
+   // Inherited from Person
+   ASSIGN __field____main__Professor__age 2
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - float[] Professor::nums
+   // Inherited from Person
+   ASSIGN __field____main__Professor__nums 3
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int Professor::id
+   ASSIGN __field____main__Professor__id 4
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - Department Professor::department
+   ASSIGN __field____main__Professor__department 5
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - Course[] Professor::courses
+   ASSIGN __field____main__Professor__courses 6
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int Professor::officeNumber
+   ASSIGN __field____main__Professor__officeNumber 7
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__Professor
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Professor::Professor(char[], int, int) -> Professor
+   JUMP __end__ctor____main__Professor____Professor__char__1__int__int
+   __ctor____main__Professor____Professor__char__1__int__int:
+      // Creating Class Instance
+         MALLOC __this 8
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Professor____toString
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+         // Param: name
+         STACKGET __main__Professor__Professor__name 0
+         // Param: age
+         STACKGET __main__Professor__Professor__age 1
+         // Param: id
+         STACKGET __main__Professor__Professor__id 2
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Identifier - name
+                     PUSH __main__Professor__Professor__name
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Professor__name
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - age
+                     PUSH __main__Professor__Professor__age
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Professor__age
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - id
+                     PUSH __main__Professor__Professor__id
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Professor__id
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Professor____Professor__char__1__int__int:
+   // End Constructor Declaration - __ctor____main__Professor____Professor__char__1__int__int
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - Professor::toString() -> char[]
+   JUMP __end__method____main__Professor____toString
+   __method____main__Professor____toString:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - print(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 26
+                     ASSIGN __str[0] 'P'
+                     ASSIGN __str[1] 'r'
+                     ASSIGN __str[2] 'o'
+                     ASSIGN __str[3] 'f'
+                     ASSIGN __str[4] 'e'
+                     ASSIGN __str[5] 's'
+                     ASSIGN __str[6] 's'
+                     ASSIGN __str[7] 'o'
+                     ASSIGN __str[8] 'r'
+                     ASSIGN __str[9] ':'
+                     ASSIGN __str[10] ':'
+                     ASSIGN __str[11] 't'
+                     ASSIGN __str[12] 'o'
+                     ASSIGN __str[13] 'S'
+                     ASSIGN __str[14] 't'
+                     ASSIGN __str[15] 'r'
+                     ASSIGN __str[16] 'i'
+                     ASSIGN __str[17] 'n'
+                     ASSIGN __str[18] 'g'
+                     ASSIGN __str[19] ' '
+                     ASSIGN __str[20] '('
+                     ASSIGN __str[21] ')'
+                     ASSIGN __str[22] ' '
+                     ASSIGN __str[23] '-'
+                     ASSIGN __str[24] '>'
+                     ASSIGN __str[25] ' '
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** print
+               CALL print__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Return
+               // Function Call - concat(char[], char[]) -> char[]
+                  // Arguments
+                     // Function Call - concat(char[], char[]) -> char[]
+                        // Arguments
+                           // Function Call - concat(char[], char[]) -> char[]
+                              // Arguments
+                                 // Function Call - concat(char[], char[]) -> char[]
+                                    // Arguments
+                                       // Member Accessor
+                                          // LHS
+                                             // This keyword
+                                                PUSH __this
+                                          // RHS
+                                             PUSH __field____main__Professor__name
+                                          POP __child
+                                          POP __parent
+                                          PUSH __parent[__child]
+                                       // String Literal
+                                          MALLOC __str 1
+                                          ASSIGN __str[0] ' '
+                                          PUSH __str
+                                       POP __arg1
+                                       POP __arg0
+                                    // Pushing args in reverse order
+                                    PUSH __arg1
+                                    PUSH __arg0
+                                    // *** concat
+                                    CALL __main____concat__char__1__char__1
+                                    // Remove args
+                                    POP __void
+                                    POP __void
+                                    RESPONSE __retval
+                                    PUSH __retval
+                                 // Function Call - string(int) -> char[]
+                                    // Arguments
+                                       // Member Accessor
+                                          // LHS
+                                             // This keyword
+                                                PUSH __this
+                                          // RHS
+                                             PUSH __field____main__Professor__age
+                                          POP __child
+                                          POP __parent
+                                          PUSH __parent[__child]
+                                       POP __arg0
+                                    // Pushing args in reverse order
+                                    PUSH __arg0
+                                    // *** string
+                                    CALL string__int
+                                    // Remove args
+                                    POP __void
+                                    RESPONSE __retval
+                                    PUSH __retval
+                                 POP __arg1
+                                 POP __arg0
+                              // Pushing args in reverse order
+                              PUSH __arg1
+                              PUSH __arg0
+                              // *** concat
+                              CALL __main____concat__char__1__char__1
+                              // Remove args
+                              POP __void
+                              POP __void
+                              RESPONSE __retval
+                              PUSH __retval
+                           // String Literal
+                              MALLOC __str 1
+                              ASSIGN __str[0] ' '
+                              PUSH __str
+                           POP __arg1
+                           POP __arg0
+                        // Pushing args in reverse order
+                        PUSH __arg1
+                        PUSH __arg0
+                        // *** concat
+                        CALL __main____concat__char__1__char__1
+                        // Remove args
+                        POP __void
+                        POP __void
+                        RESPONSE __retval
+                        PUSH __retval
+                     // Method Call - Department::toString() -> char[]
+                        // LHS
+                           // Member Accessor
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main__Professor__department
+                              POP __child
+                              POP __parent
+                              PUSH __parent[__child]
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__Department____toString
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                     POP __arg1
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg1
+                  PUSH __arg0
+                  // *** concat
+                  CALL __main____concat__char__1__char__1
+                  // Remove args
+                  POP __void
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__Professor____toString:
+   // End Method Declaration - __method____main__Professor____toString
+   //---------------------------------------------------------------------
+
+__endclass____main__Professor:
+// End Class Declaration - __main__Professor
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - Professor::Professor(char[], int, int) -> Professor
+         // Arguments
+            // String Literal
+               MALLOC __str 5
+               ASSIGN __str[0] 'S'
+               ASSIGN __str[1] 'n'
+               ASSIGN __str[2] 'a'
+               ASSIGN __str[3] 'p'
+               ASSIGN __str[4] 'e'
+               PUSH __str
+            // Int Literal
+               PUSH 42
+            // Int Literal
+               PUSH 12345
+            POP __arg2
+            POP __arg1
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg2
+         PUSH __arg1
+         PUSH __arg0
+         CALL __ctor____main__Professor____Professor__char__1__int__int
+         // Remove args
+         POP __void
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__p 0
+   POP __rhs
+   ASSIGN __main__p __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Constructor Call - Department::Department(char[]) -> Department
+         // Arguments
+            // String Literal
+               MALLOC __str 9
+               ASSIGN __str[0] 'S'
+               ASSIGN __str[1] 'l'
+               ASSIGN __str[2] 'i'
+               ASSIGN __str[3] 't'
+               ASSIGN __str[4] 'h'
+               ASSIGN __str[5] 'e'
+               ASSIGN __str[6] 'r'
+               ASSIGN __str[7] 'i'
+               ASSIGN __str[8] 'n'
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL __ctor____main__Department____Department__char__1
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Member Accessor Assignment
+         // LHS
+            // Identifier - p
+               PUSH __main__p
+         // RHS
+            PUSH __field____main__Professor__department
+         POP __child
+         POP __parent
+         POP __rhs
+         ASSIGN __parent[__child] __rhs
+   PUSH __rhs
+// Function Call - println(char[]) -> void
+   // Arguments
+      // Method Call - Professor::toString() -> char[]
+         // LHS
+            // Identifier - p
+               PUSH __main__p
+         // RHS
+         // Arguments
+         POP __obj
+         // Pushing args in reverse order
+         PUSH __obj
+         CALL __method____main__Professor____toString
+         POP __void
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__char__1
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+// Class Declaration - __main__Student inherits __main__Person
+   //---------------------------------------------------------------------
+   // Field - char[] Student::name
+   // Inherited from Person
+   ASSIGN __field____main__Student__name 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int Student::age
+   // Inherited from Person
+   ASSIGN __field____main__Student__age 2
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - float[] Student::nums
+   // Inherited from Person
+   ASSIGN __field____main__Student__nums 3
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int Student::id
+   ASSIGN __field____main__Student__id 4
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - Course[] Student::courses
+   ASSIGN __field____main__Student__courses 5
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int[] Student::nums
+   ASSIGN __field____main__Student__nums 6
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__Student
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Student::Student(char[], int, int) -> Student
+   JUMP __end__ctor____main__Student____Student__char__1__int__int
+   __ctor____main__Student____Student__char__1__int__int:
+      // Creating Class Instance
+         MALLOC __this 7
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Person____toString
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+         // Param: name
+         STACKGET __main__Student__Student__name 0
+         // Param: age
+         STACKGET __main__Student__Student__age 1
+         // Param: id
+         STACKGET __main__Student__Student__id 2
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Identifier - name
+                     PUSH __main__Student__Student__name
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Student__name
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - age
+                     PUSH __main__Student__Student__age
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Student__age
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - id
+                     PUSH __main__Student__Student__id
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__Student__id
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Student____Student__char__1__int__int:
+   // End Constructor Declaration - __ctor____main__Student____Student__char__1__int__int
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - Student::toString() -> char[]
+   // Inherited from Person
+   JUMP __end__method____main__Student____toString
+   __method____main__Student____toString:
+      // Jump to Person's version
+      JUMP __method____main__Person____toString
+   __end__method____main__Student____toString:
+   // End Method Declaration - __method____main__Student____toString
+   //---------------------------------------------------------------------
+
+__endclass____main__Student:
+// End Class Declaration - __main__Student
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - Student::Student(char[], int, int) -> Student
+         // Arguments
+            // String Literal
+               MALLOC __str 3
+               ASSIGN __str[0] 'A'
+               ASSIGN __str[1] 'm'
+               ASSIGN __str[2] 'y'
+               PUSH __str
+            // Int Literal
+               PUSH 22
+            // Int Literal
+               PUSH 123456789
+            POP __arg2
+            POP __arg1
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg2
+         PUSH __arg1
+         PUSH __arg0
+         CALL __ctor____main__Student____Student__char__1__int__int
+         // Remove args
+         POP __void
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__s 0
+   POP __rhs
+   ASSIGN __main__s __rhs
+   PUSH __rhs
+// Function Call - println(char[]) -> void
+   // Arguments
+      // Method Call - Student::toString() -> char[]
+         // LHS
+            // Identifier - s
+               PUSH __main__s
+         // RHS
+         // Arguments
+         POP __obj
+         // Pushing args in reverse order
+         PUSH __obj
+         CALL __method____main__Student____toString
+         POP __void
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__char__1
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+// Function Declaration - print(Person[]) -> void
+JUMP __end____main____print__Person__1
+__main____print__Person__1:
+   // Parameters
+      // Param: p
+      STACKGET __main__print__p 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__print__block__12__for__13__i 0
+               POP __rhs
+               ASSIGN __main__print__block__12__for__13__i __rhs
+               PUSH __rhs
+         JUMP __forcond__13
+         __for__13:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - i
+                        PUSH __main__print__block__12__for__13__i
+                  POP __rhs
+                  ADD __main__print__block__12__for__13__i __main__print__block__12__for__13__i 1
+                  ASSIGN __res __main__print__block__12__for__13__i
+                  PUSH __res
+            __forcond__13:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - i
+                        PUSH __main__print__block__12__for__13__i
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier - p
+                              PUSH __main__print__p
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__13
+            // Body
+               // Function Call - println(char[]) -> void
+                  // Arguments
+                     // Method Call - Person::toString() -> char[]
+                        // LHS
+                           // Subscript
+                              // LHS
+                                 // Identifier - p
+                                    PUSH __main__print__p
+                              // OFFSET
+                                 // Identifier - i
+                                    PUSH __main__print__block__12__for__13__i
+                              POP __offset
+                              POP __pointer
+                              PUSH __pointer[__offset]
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__Person____toString
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg0
+                  // *** println
+                  CALL println__char__1
+                  // Remove args
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+            // Repeat
+            JUMP __for__13
+            // End of For
+            __endfor__13:
+         //---------------------------------------------------------------
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____print__Person__1:
+// End Function Declaration - __main____print__Person__1
+//========================================================================
+
+// Assignment
+   // RHS
+      // Array Allocator
+         // Int Literal
+            PUSH 2
+         POP __size
+         MALLOC __ptr __size
+         PUSH __ptr
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__people 0
+   POP __rhs
+   ASSIGN __main__people __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Identifier - p
+         PUSH __main__p
+   // LHS
+      // Subscript assignment
+         // LHS
+            // Identifier - people
+               PUSH __main__people
+         // OFFSET
+            // Int Literal
+               PUSH 0
+         POP __offset
+         POP __pointer
+   POP __rhs
+   ASSIGN __pointer[__offset] __rhs
+   PUSH __rhs
+// Assignment
+   // RHS
+      // Identifier - s
+         PUSH __main__s
+   // LHS
+      // Subscript assignment
+         // LHS
+            // Identifier - people
+               PUSH __main__people
+         // OFFSET
+            // Int Literal
+               PUSH 1
+         POP __offset
+         POP __pointer
+   POP __rhs
+   ASSIGN __pointer[__offset] __rhs
+   PUSH __rhs
+// Function Call - print(Person[]) -> void
+   // Arguments
+      // Identifier - people
+         PUSH __main__people
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** print
+   CALL __main____print__Person__1
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+// Class Declaration - __main__A inherits __main__Object
+   //---------------------------------------------------------------------
+   // Field - int A::x
+   ASSIGN __field____main__A__x 1
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__A
+   //---------------------------------------------------------------------
+   // Constructor Declaration - A::A(int) -> A
+   JUMP __end__ctor____main__A____A__int
+   __ctor____main__A____A__int:
+      // Creating Class Instance
+         MALLOC __this 2
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__A____sum
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+         // Param: x
+         STACKGET __main__A__A__x 0
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Identifier - x
+                     PUSH __main__A__A__x
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__A__x
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__A____A__int:
+   // End Constructor Declaration - __ctor____main__A____A__int
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - A::sum() -> int
+   JUMP __end__method____main__A____sum
+   __method____main__A____sum:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Member Accessor
+                  // LHS
+                     // This keyword
+                        PUSH __this
+                  // RHS
+                     PUSH __field____main__A__x
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__A____sum:
+   // End Method Declaration - __method____main__A____sum
+   //---------------------------------------------------------------------
+
+__endclass____main__A:
+// End Class Declaration - __main__A
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__B inherits __main__A
+   //---------------------------------------------------------------------
+   // Field - int B::x
+   // Inherited from A
+   ASSIGN __field____main__B__x 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int B::y
+   ASSIGN __field____main__B__y 2
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__B
+   //---------------------------------------------------------------------
+   // Constructor Declaration - B::B(int, int) -> B
+   JUMP __end__ctor____main__B____B__int__int
+   __ctor____main__B____B__int__int:
+      // Creating Class Instance
+         MALLOC __this 3
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__B____sum
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+         // Param: x
+         STACKGET __main__B__B__x 0
+         // Param: y
+         STACKGET __main__B__B__y 1
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Identifier - x
+                     PUSH __main__B__B__x
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__B__x
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - y
+                     PUSH __main__B__B__y
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__B__y
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__B____B__int__int:
+   // End Constructor Declaration - __ctor____main__B____B__int__int
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - B::sum() -> int
+   JUMP __end__method____main__B____sum
+   __method____main__B____sum:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Addition
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field____main__B__x
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // RHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field____main__B__y
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  POP __rhs
+                  POP __lhs
+                  ADD __res __lhs __rhs
+                  PUSH __res
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__B____sum:
+   // End Method Declaration - __method____main__B____sum
+   //---------------------------------------------------------------------
+
+__endclass____main__B:
+// End Class Declaration - __main__B
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__C inherits __main__B
+   //---------------------------------------------------------------------
+   // Field - int C::x
+   // Inherited from B
+   ASSIGN __field____main__C__x 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int C::y
+   // Inherited from B
+   ASSIGN __field____main__C__y 2
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int C::z
+   ASSIGN __field____main__C__z 3
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__C
+   //---------------------------------------------------------------------
+   // Constructor Declaration - C::C(int, int, int) -> C
+   JUMP __end__ctor____main__C____C__int__int__int
+   __ctor____main__C____C__int__int__int:
+      // Creating Class Instance
+         MALLOC __this 4
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__C____sum
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+         // Param: x
+         STACKGET __main__C__C__x 0
+         // Param: y
+         STACKGET __main__C__C__y 1
+         // Param: z
+         STACKGET __main__C__C__z 2
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Identifier - x
+                     PUSH __main__C__C__x
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__C__x
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - y
+                     PUSH __main__C__C__y
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__C__y
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - z
+                     PUSH __main__C__C__z
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__C__z
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__C____C__int__int__int:
+   // End Constructor Declaration - __ctor____main__C____C__int__int__int
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - C::sum() -> int
+   JUMP __end__method____main__C____sum
+   __method____main__C____sum:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Addition
+                  // LHS
+                     // Addition
+                        // LHS
+                           // Member Accessor
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main__C__x
+                              POP __child
+                              POP __parent
+                              PUSH __parent[__child]
+                        // RHS
+                           // Member Accessor
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main__C__y
+                              POP __child
+                              POP __parent
+                              PUSH __parent[__child]
+                        POP __rhs
+                        POP __lhs
+                        ADD __res __lhs __rhs
+                        PUSH __res
+                  // RHS
+                     // Member Accessor
+                        // LHS
+                           // This keyword
+                              PUSH __this
+                        // RHS
+                           PUSH __field____main__C__z
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  POP __rhs
+                  POP __lhs
+                  ADD __res __lhs __rhs
+                  PUSH __res
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__C____sum:
+   // End Method Declaration - __method____main__C____sum
+   //---------------------------------------------------------------------
+
+__endclass____main__C:
+// End Class Declaration - __main__C
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - C::C(int, int, int) -> C
+         // Arguments
+            // Int Literal
+               PUSH 7
+            // Int Literal
+               PUSH 3
+            // Int Literal
+               PUSH 21
+            POP __arg2
+            POP __arg1
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg2
+         PUSH __arg1
+         PUSH __arg0
+         CALL __ctor____main__C____C__int__int__int
+         // Remove args
+         POP __void
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__c 0
+   POP __rhs
+   ASSIGN __main__c __rhs
+   PUSH __rhs
+//========================================================================
+// Function Declaration - print(A, A) -> void
+JUMP __end____main____print__A__A
+__main____print__A__A:
+   // Parameters
+      // Param: x
+      STACKGET __main__print__x 0
+      // Param: y
+      STACKGET __main__print__y 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // String Literal
+                  MALLOC __str 11
+                  ASSIGN __str[0] 'p'
+                  ASSIGN __str[1] 'r'
+                  ASSIGN __str[2] 'i'
+                  ASSIGN __str[3] 'n'
+                  ASSIGN __str[4] 't'
+                  ASSIGN __str[5] '('
+                  ASSIGN __str[6] 'A'
+                  ASSIGN __str[7] ','
+                  ASSIGN __str[8] ' '
+                  ASSIGN __str[9] 'A'
+                  ASSIGN __str[10] ')'
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Function Call - println(int) -> void
+            // Arguments
+               // Addition
+                  // LHS
+                     // Method Call - A::sum() -> int
+                        // LHS
+                           // Identifier - x
+                              PUSH __main__print__x
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__A____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  // RHS
+                     // Method Call - A::sum() -> int
+                        // LHS
+                           // Identifier - y
+                              PUSH __main__print__y
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__A____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  POP __rhs
+                  POP __lhs
+                  ADD __res __lhs __rhs
+                  PUSH __res
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__int
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____print__A__A:
+// End Function Declaration - __main____print__A__A
+//========================================================================
+
+//========================================================================
+// Function Declaration - print(B, C) -> void
+JUMP __end____main____print__B__C
+__main____print__B__C:
+   // Parameters
+      // Param: x
+      STACKGET __main__print__x 0
+      // Param: y
+      STACKGET __main__print__y 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // String Literal
+                  MALLOC __str 11
+                  ASSIGN __str[0] 'p'
+                  ASSIGN __str[1] 'r'
+                  ASSIGN __str[2] 'i'
+                  ASSIGN __str[3] 'n'
+                  ASSIGN __str[4] 't'
+                  ASSIGN __str[5] '('
+                  ASSIGN __str[6] 'B'
+                  ASSIGN __str[7] ','
+                  ASSIGN __str[8] ' '
+                  ASSIGN __str[9] 'C'
+                  ASSIGN __str[10] ')'
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Function Call - println(int) -> void
+            // Arguments
+               // Addition
+                  // LHS
+                     // Method Call - B::sum() -> int
+                        // LHS
+                           // Identifier - x
+                              PUSH __main__print__x
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__B____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  // RHS
+                     // Method Call - C::sum() -> int
+                        // LHS
+                           // Identifier - y
+                              PUSH __main__print__y
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__C____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  POP __rhs
+                  POP __lhs
+                  ADD __res __lhs __rhs
+                  PUSH __res
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__int
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____print__B__C:
+// End Function Declaration - __main____print__B__C
+//========================================================================
+
+//========================================================================
+// Function Declaration - print(A, C) -> void
+JUMP __end____main____print__A__C
+__main____print__A__C:
+   // Parameters
+      // Param: x
+      STACKGET __main__print__x 0
+      // Param: y
+      STACKGET __main__print__y 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // String Literal
+                  MALLOC __str 11
+                  ASSIGN __str[0] 'p'
+                  ASSIGN __str[1] 'r'
+                  ASSIGN __str[2] 'i'
+                  ASSIGN __str[3] 'n'
+                  ASSIGN __str[4] 't'
+                  ASSIGN __str[5] '('
+                  ASSIGN __str[6] 'A'
+                  ASSIGN __str[7] ','
+                  ASSIGN __str[8] ' '
+                  ASSIGN __str[9] 'C'
+                  ASSIGN __str[10] ')'
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Function Call - println(int) -> void
+            // Arguments
+               // Addition
+                  // LHS
+                     // Method Call - A::sum() -> int
+                        // LHS
+                           // Identifier - x
+                              PUSH __main__print__x
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__A____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  // RHS
+                     // Method Call - C::sum() -> int
+                        // LHS
+                           // Identifier - y
+                              PUSH __main__print__y
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__C____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  POP __rhs
+                  POP __lhs
+                  ADD __res __lhs __rhs
+                  PUSH __res
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__int
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____print__A__C:
+// End Function Declaration - __main____print__A__C
+//========================================================================
+
+// Function Call - print(B, C) -> void
+   // Arguments
+      // Identifier - c
+         PUSH __main__c
+      // Identifier - c
+         PUSH __main__c
+      POP __arg1
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg1
+   PUSH __arg0
+   // *** print
+   CALL __main____print__B__C
+   // Remove args
+   POP __void
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+// Class Declaration - __main__D inherits __main__B
+   //---------------------------------------------------------------------
+   // Field - int D::x
+   // Inherited from B
+   ASSIGN __field____main__D__x 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int D::y
+   // Inherited from B
+   ASSIGN __field____main__D__y 2
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__D
+   //---------------------------------------------------------------------
+   // Constructor Declaration - D::D(A, A) -> D
+   JUMP __end__ctor____main__D____D__A__A
+   __ctor____main__D____D__A__A:
+      // Creating Class Instance
+         MALLOC __this 3
+         // Creating Dispatch Table
+            MALLOC __dtable 4
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__B____sum
+            ASSIGN __dtable[1] __method____main__D____sum__A__A
+            ASSIGN __dtable[2] __method____main__D____sum__C__B
+            ASSIGN __dtable[3] __method____main__D____sum__A__C
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+         // Param: x
+         STACKGET __main__D__D__x 0
+         // Param: y
+         STACKGET __main__D__D__y 1
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 10
+                     ASSIGN __str[0] 'D'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'D'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] 'A'
+                     ASSIGN __str[6] ','
+                     ASSIGN __str[7] ' '
+                     ASSIGN __str[8] 'A'
+                     ASSIGN __str[9] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__D____D__A__A:
+   // End Constructor Declaration - __ctor____main__D____D__A__A
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Constructor Declaration - D::D(B, A) -> D
+   JUMP __end__ctor____main__D____D__B__A
+   __ctor____main__D____D__B__A:
+      // Creating Class Instance
+         MALLOC __this 3
+         // Creating Dispatch Table
+            MALLOC __dtable 4
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__B____sum
+            ASSIGN __dtable[1] __method____main__D____sum__A__A
+            ASSIGN __dtable[2] __method____main__D____sum__C__B
+            ASSIGN __dtable[3] __method____main__D____sum__A__C
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+         // Param: x
+         STACKGET __main__D__D__x 0
+         // Param: y
+         STACKGET __main__D__D__y 1
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 10
+                     ASSIGN __str[0] 'D'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'D'
+                     ASSIGN __str[4] '('
+                     ASSIGN __str[5] 'B'
+                     ASSIGN __str[6] ','
+                     ASSIGN __str[7] ' '
+                     ASSIGN __str[8] 'A'
+                     ASSIGN __str[9] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__D____D__B__A:
+   // End Constructor Declaration - __ctor____main__D____D__B__A
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - D::sum() -> int
+   // Inherited from B
+   JUMP __end__method____main__D____sum
+   __method____main__D____sum:
+      // Jump to B's version
+      JUMP __method____main__B____sum
+   __end__method____main__D____sum:
+   // End Method Declaration - __method____main__D____sum
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - D::sum(A, A) -> int
+   JUMP __end__method____main__D____sum__A__A
+   __method____main__D____sum__A__A:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+         // Param: x
+         STACKGET __main__D__sum__x 1
+         // Param: y
+         STACKGET __main__D__sum__y 2
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 12
+                     ASSIGN __str[0] 'D'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 's'
+                     ASSIGN __str[4] 'u'
+                     ASSIGN __str[5] 'm'
+                     ASSIGN __str[6] '('
+                     ASSIGN __str[7] 'A'
+                     ASSIGN __str[8] ','
+                     ASSIGN __str[9] ' '
+                     ASSIGN __str[10] 'A'
+                     ASSIGN __str[11] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Return
+               // Addition
+                  // LHS
+                     // Method Call - A::sum() -> int
+                        // LHS
+                           // Identifier - x
+                              PUSH __main__D__sum__x
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__A____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  // RHS
+                     // Method Call - A::sum() -> int
+                        // LHS
+                           // Identifier - y
+                              PUSH __main__D__sum__y
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__A____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  POP __rhs
+                  POP __lhs
+                  ADD __res __lhs __rhs
+                  PUSH __res
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__D____sum__A__A:
+   // End Method Declaration - __method____main__D____sum__A__A
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - D::sum(C, B) -> int
+   JUMP __end__method____main__D____sum__C__B
+   __method____main__D____sum__C__B:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+         // Param: x
+         STACKGET __main__D__sum__x 1
+         // Param: y
+         STACKGET __main__D__sum__y 2
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 12
+                     ASSIGN __str[0] 'D'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 's'
+                     ASSIGN __str[4] 'u'
+                     ASSIGN __str[5] 'm'
+                     ASSIGN __str[6] '('
+                     ASSIGN __str[7] 'C'
+                     ASSIGN __str[8] ','
+                     ASSIGN __str[9] ' '
+                     ASSIGN __str[10] 'B'
+                     ASSIGN __str[11] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Return
+               // Addition
+                  // LHS
+                     // Method Call - C::sum() -> int
+                        // LHS
+                           // Identifier - x
+                              PUSH __main__D__sum__x
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__C____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  // RHS
+                     // Method Call - B::sum() -> int
+                        // LHS
+                           // Identifier - y
+                              PUSH __main__D__sum__y
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__B____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  POP __rhs
+                  POP __lhs
+                  ADD __res __lhs __rhs
+                  PUSH __res
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__D____sum__C__B:
+   // End Method Declaration - __method____main__D____sum__C__B
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - D::sum(A, C) -> int
+   JUMP __end__method____main__D____sum__A__C
+   __method____main__D____sum__A__C:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+         // Param: x
+         STACKGET __main__D__sum__x 1
+         // Param: y
+         STACKGET __main__D__sum__y 2
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 12
+                     ASSIGN __str[0] 'D'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 's'
+                     ASSIGN __str[4] 'u'
+                     ASSIGN __str[5] 'm'
+                     ASSIGN __str[6] '('
+                     ASSIGN __str[7] 'A'
+                     ASSIGN __str[8] ','
+                     ASSIGN __str[9] ' '
+                     ASSIGN __str[10] 'C'
+                     ASSIGN __str[11] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Return
+               // Addition
+                  // LHS
+                     // Method Call - A::sum() -> int
+                        // LHS
+                           // Identifier - x
+                              PUSH __main__D__sum__x
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__A____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  // RHS
+                     // Method Call - C::sum() -> int
+                        // LHS
+                           // Identifier - y
+                              PUSH __main__D__sum__y
+                        // RHS
+                        // Arguments
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __obj
+                        CALL __method____main__C____sum
+                        POP __void
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  POP __rhs
+                  POP __lhs
+                  ADD __res __lhs __rhs
+                  PUSH __res
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__D____sum__A__C:
+   // End Method Declaration - __method____main__D____sum__A__C
+   //---------------------------------------------------------------------
+
+__endclass____main__D:
+// End Class Declaration - __main__D
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - D::D(B, A) -> D
+         // Arguments
+            // Identifier - c
+               PUSH __main__c
+            // Identifier - c
+               PUSH __main__c
+            POP __arg1
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg1
+         PUSH __arg0
+         CALL __ctor____main__D____D__B__A
+         // Remove args
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__dee 0
+   POP __rhs
+   ASSIGN __main__dee __rhs
+   PUSH __rhs
+// Function Call - println(int) -> void
+   // Arguments
+      // Method Call - D::sum(C, B) -> int
+         // LHS
+            // Identifier - dee
+               PUSH __main__dee
+         // RHS
+         // Arguments
+            // Identifier - c
+               PUSH __main__c
+            // Identifier - c
+               PUSH __main__c
+            POP __arg1
+            POP __arg0
+         POP __obj
+         // Pushing args in reverse order
+         PUSH __arg1
+         PUSH __arg0
+         PUSH __obj
+         CALL __method____main__D____sum__C__B
+         POP __void
+         // Remove args
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__int
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+// Class Declaration - __main__X inherits __main__Object
+// skip over class methods
+JUMP __endclass____main__X
+   //---------------------------------------------------------------------
+   // Constructor Declaration - X::X() -> X
+   JUMP __end__ctor____main__X____X
+   __ctor____main__X____X:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__X____print
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__X____X:
+   // End Constructor Declaration - __ctor____main__X____X
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - X::print() -> void
+   JUMP __end__method____main__X____print
+   __method____main__X____print:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 10
+                     ASSIGN __str[0] 'X'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'p'
+                     ASSIGN __str[4] 'r'
+                     ASSIGN __str[5] 'i'
+                     ASSIGN __str[6] 'n'
+                     ASSIGN __str[7] 't'
+                     ASSIGN __str[8] '('
+                     ASSIGN __str[9] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__X____print:
+   // End Method Declaration - __method____main__X____print
+   //---------------------------------------------------------------------
+
+__endclass____main__X:
+// End Class Declaration - __main__X
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__Y inherits __main__X
+// skip over class methods
+JUMP __endclass____main__Y
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Y::Y() -> Y
+   JUMP __end__ctor____main__Y____Y
+   __ctor____main__Y____Y:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Y____print
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Y____Y:
+   // End Constructor Declaration - __ctor____main__Y____Y
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - Y::print() -> void
+   JUMP __end__method____main__Y____print
+   __method____main__Y____print:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 10
+                     ASSIGN __str[0] 'Y'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'p'
+                     ASSIGN __str[4] 'r'
+                     ASSIGN __str[5] 'i'
+                     ASSIGN __str[6] 'n'
+                     ASSIGN __str[7] 't'
+                     ASSIGN __str[8] '('
+                     ASSIGN __str[9] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__Y____print:
+   // End Method Declaration - __method____main__Y____print
+   //---------------------------------------------------------------------
+
+__endclass____main__Y:
+// End Class Declaration - __main__Y
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main__Z inherits __main__X
+// skip over class methods
+JUMP __endclass____main__Z
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Z::Z() -> Z
+   JUMP __end__ctor____main__Z____Z
+   __ctor____main__Z____Z:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Creating Dispatch Table
+            MALLOC __dtable 1
+            // Populate Dispatch Table
+            ASSIGN __dtable[0] __method____main__Z____print
+            // Add Dispatch Table
+            ASSIGN __this[0] __dtable
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Z____Z:
+   // End Constructor Declaration - __ctor____main__Z____Z
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - Z::print() -> void
+   JUMP __end__method____main__Z____print
+   __method____main__Z____print:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 10
+                     ASSIGN __str[0] 'Z'
+                     ASSIGN __str[1] ':'
+                     ASSIGN __str[2] ':'
+                     ASSIGN __str[3] 'p'
+                     ASSIGN __str[4] 'r'
+                     ASSIGN __str[5] 'i'
+                     ASSIGN __str[6] 'n'
+                     ASSIGN __str[7] 't'
+                     ASSIGN __str[8] '('
+                     ASSIGN __str[9] ')'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__Z____print:
+   // End Method Declaration - __method____main__Z____print
+   //---------------------------------------------------------------------
+
+__endclass____main__Z:
+// End Class Declaration - __main__Z
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - Z::Z() -> Z
+         // Arguments
+         // Pushing args in reverse order
+         CALL __ctor____main__Z____Z
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__x 0
+   POP __rhs
+   ASSIGN __main__x __rhs
+   PUSH __rhs
+// Virtual Method Call - print() -> void
+   // LHS
+      // Identifier - x
+         PUSH __main__x
+   // RHS
+   // Arguments
+   POP __obj
+   // Pushing args in reverse order
+   PUSH __obj
+   // Virtual Function Dispatch
+   ASSIGN __dtable __obj[0]
+   CALL __dtable[0]
+   POP __void
+   // Remove args
+   RESPONSE __retval
+   PUSH __retval
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

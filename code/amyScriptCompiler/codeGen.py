@@ -237,11 +237,21 @@ class CodeGenVisitor (ASTVisitor):
         self.scopeNames += [f"__{node.id}"]
 
         self.printDivider ()
-        self.printComment (f"Class Declaration - {node.scopeName}")
+        if node.pDecl != None:
+            self.printComment (f"Class Declaration - {node.scopeName} inherits {node.pDecl.scopeName}")
+        else: 
+            self.printComment (f"Class Declaration - {node.scopeName}")
 
         self.indentation += 1
 
-        i = 0
+        # create scope names for fields 
+        for field in node.fields:
+            # variable names are modified by its scope 
+            fieldScopeName = "__field__" + "".join (self.scopeNames) + "__" + field.id
+            field.scopeName = fieldScopeName
+
+        # dispatch table pointer is at i = 0 
+        i = 1
         for field in node.fields:
             field.parentClass = node
             field.index = i 
@@ -254,10 +264,43 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode (f"JUMP __endclass__{node.scopeName}")
         self.indentation += 1
 
+        # create scope names for methods
+        for method in node.methods:
+            # variable names are modified by its scope 
+            scopeName = ["__method__", "".join (self.scopeNames), "____", method.id]
+            # add signature to scopeName for overloaded functions
+            if len(method.params) > 0:
+                scopeName += [f"__{method.params[0].type.id}"]
+                # add array dimensions
+                if method.params[0].type.arrayDimensions > 0:
+                    scopeName += [f"__{method.params[0].type.arrayDimensions}"]
+            for i in range(1, len(method.params)):
+                scopeName += [f"__{method.params[i].type.id}"]
+                # add array dimensions
+                if method.params[i].type.arrayDimensions > 0:
+                    scopeName += [f"__{method.params[i].type.arrayDimensions}"]
+            method.scopeName = "".join(scopeName)
+        # create scope names for ctors 
+        for ctor in node.constructors:
+            # variable names are modified by its scope 
+            scopeName = ["__ctor__", "".join (self.scopeNames), "____", ctor.parentClass.id]
+            # add signature to scopeName for overloaded functions
+            if len(ctor.params) > 0:
+                scopeName += [f"__{ctor.params[0].type.id}"]
+                # add array dimensions
+                if ctor.params[0].type.arrayDimensions > 0:
+                    scopeName += [f"__{ctor.params[0].type.arrayDimensions}"]
+            for i in range(1, len(ctor.params)):
+                scopeName += [f"__{ctor.params[i].type.id}"]
+                # add array dimensions
+                if ctor.params[i].type.arrayDimensions > 0:
+                    scopeName += [f"__{ctor.params[i].type.arrayDimensions}"]
+            ctor.scopeName = "".join(scopeName)
+
         for ctor in node.constructors:
             ctor.parentClass = node
             ctor.accept (self)
-        
+
         for method in node.methods:
             method.parentClass = node
             method.accept (self)
@@ -274,11 +317,10 @@ class CodeGenVisitor (ASTVisitor):
         self.scopeNames.pop ()
 
     def visitFieldDeclarationNode (self, node):
-        # variable names are modified by its scope 
-        fieldScopeName = "__field__" + "".join (self.scopeNames) + "__" + node.id
-        node.scopeName = fieldScopeName
         self.printSubDivider ()
         self.printComment (f"Field - {node.type} {node.signature}")
+        if node.isInherited:
+            self.printComment (f"Inherited from {node.parentClass.pDecl.id}")
 
         # fieldIndexVarname = f"__field__{node.id}__{field.id}"
         self.printCode (f"ASSIGN {node.scopeName} {node.index}")
@@ -287,26 +329,13 @@ class CodeGenVisitor (ASTVisitor):
 
     def visitMethodDeclarationNode (self, node):
 
-        # variable names are modified by its scope 
-        scopeName = ["__method__", "".join (self.scopeNames), "____", node.id]
-        # add signature to scopeName for overloaded functions
-        if len(node.params) > 0:
-            scopeName += [f"__{node.params[0].type.id}"]
-            # add array dimensions
-            if node.params[0].type.arrayDimensions > 0:
-                scopeName += [f"__{node.params[0].type.arrayDimensions}"]
-        for i in range(1, len(node.params)):
-            scopeName += [f"__{node.params[i].type.id}"]
-            # add array dimensions
-            if node.params[i].type.arrayDimensions > 0:
-                scopeName += [f"__{node.params[i].type.arrayDimensions}"]
-        node.scopeName = "".join(scopeName)
-
         # create new scope level 
         self.scopeNames += [f"__{node.id}"]
 
         self.printSubDivider ()
         self.printComment (f"Method Declaration - {node.signature} -> {node.type}")
+        if node.isInherited:
+            self.printComment (f"Inherited from {node.parentClass.pDecl.id}")
 
         endLabel = f"__end{node.scopeName}"
         methodLabel = node.scopeName
@@ -319,30 +348,36 @@ class CodeGenVisitor (ASTVisitor):
 
         self.indentation += 1
 
-        # load class instance 
-        # first thing on the stack
-        self.printComment ("Class Instance")
-        self.indentation += 1
-        self.printCode ("STACKGET __this 0")
-        self.indentation -= 1 
+        # inherited methods
+        if node.isInherited:
+            self.printComment (f"Jump to {node.inheritedMethod.parentClass.id}'s version")
+            self.printCode (f"JUMP {node.inheritedMethod.scopeName}")
+        else:
 
-        # load parameters 
-        self.printComment ("Parameters")
-        self.indentation += 1
-        for i in range(1, len(node.params)+1):
-            self.printComment (f"Param: {node.params[i-1].id}")
-            node.params[i-1].accept (self)
-            # keep the same parameter name 
-            self.printCode (f"STACKGET {node.params[i-1].scopeName} {i}")
-        self.indentation -= 1        
+            # load class instance 
+            # first thing on the stack
+            self.printComment ("Class Instance")
+            self.indentation += 1
+            self.printCode ("STACKGET __this 0")
+            self.indentation -= 1 
 
-        self.printComment ("Body")
-        self.indentation += 1
-        node.body.accept (self)
-        self.indentation -= 1
+            # load parameters 
+            self.printComment ("Parameters")
+            self.indentation += 1
+            for i in range(1, len(node.params)+1):
+                self.printComment (f"Param: {node.params[i-1].id}")
+                node.params[i-1].accept (self)
+                # keep the same parameter name 
+                self.printCode (f"STACKGET {node.params[i-1].scopeName} {i}")
+            self.indentation -= 1        
 
-        # extra return statement for if return is not provided 
-        self.printCode ("RETURN 0")
+            self.printComment ("Body")
+            self.indentation += 1
+            node.body.accept (self)
+            self.indentation -= 1
+
+            # extra return statement for if return is not provided 
+            self.printCode ("RETURN 0")
 
         self.indentation -= 1
 
@@ -356,21 +391,6 @@ class CodeGenVisitor (ASTVisitor):
         self.scopeNames.pop ()
 
     def visitConstructorDeclarationNode (self, node):
-
-        # variable names are modified by its scope 
-        scopeName = ["__ctor__", "".join (self.scopeNames), "____", node.parentClass.id]
-        # add signature to scopeName for overloaded functions
-        if len(node.params) > 0:
-            scopeName += [f"__{node.params[0].type.id}"]
-            # add array dimensions
-            if node.params[0].type.arrayDimensions > 0:
-                scopeName += [f"__{node.params[0].type.arrayDimensions}"]
-        for i in range(1, len(node.params)):
-            scopeName += [f"__{node.params[i].type.id}"]
-            # add array dimensions
-            if node.params[i].type.arrayDimensions > 0:
-                scopeName += [f"__{node.params[i].type.arrayDimensions}"]
-        node.scopeName = "".join(scopeName)
 
         # create new scope level 
         self.scopeNames += [f"__{node.parentClass.id}"]
@@ -392,9 +412,22 @@ class CodeGenVisitor (ASTVisitor):
         # create class instance 
         self.printComment ("Creating Class Instance")
         self.indentation += 1
-        self.printCode (f"MALLOC __this {len(node.parentClass.fields)}")
+        # +1 because all classes start with a dispatch table 
+        self.printCode (f"MALLOC __this {len(node.parentClass.fields)+1}")
+        # create dispatch table 
+        self.printComment ("Creating Dispatch Table")
+        self.indentation += 1
+        self.printCode (f"MALLOC __dtable {len(node.parentClass.virtualMethods)}")
+        # populate dispatch table
+        self.printComment ("Populate Dispatch Table")
+        for i in range(len(node.parentClass.functionPointerList)):
+            self.printCode (f"ASSIGN __dtable[{i}] {node.parentClass.functionPointerList[i].scopeName}")
+        # add dispatch table to instance
+        self.printComment ("Add Dispatch Table")
+        self.printCode (f"ASSIGN __this[0] __dtable")
+
         # ** maybe initialize entries? or that might be inefficient
-        self.indentation -= 1 
+        self.indentation -= 2
 
         # load parameters 
         self.printComment ("Parameters")
@@ -1487,7 +1520,10 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitMethodAccessorExpressionNode (self, node):
-        self.printComment (f"Method Call - {node.decl.signature} -> {node.decl.type}")
+        if node.decl.isVirtual:
+            self.printComment (f"Virtual Method Call - {node.decl.signatureNoScope} -> {node.decl.type}")
+        else:
+            self.printComment (f"Method Call - {node.decl.signature} -> {node.decl.type}")
 
         self.indentation += 1
 
@@ -1533,8 +1569,27 @@ class CodeGenVisitor (ASTVisitor):
         # push parent object instance last
         self.printCode (f"PUSH __obj")
 
-        # call function
-        self.printCode (f"CALL {node.decl.scopeName}")
+        # if virtual function
+        if node.decl.isVirtual:
+            # call the appropriate function 
+            self.printComment (f"Virtual Function Dispatch")
+            # find dispatch table index 
+            # by locating the matching virtual function 
+            index = 0 
+            for i in range(len(node.decl.parentClass.virtualMethods)):
+                if node.decl.signatureNoScope == node.decl.parentClass.virtualMethods[i].signatureNoScope:
+                    # found index 
+                    index = i 
+                    break 
+            else:
+                print (f"Error: Dispatch Function not found")
+            # call proper dispatch function 
+            self.printCode (f"ASSIGN __dtable __obj[0]")
+            self.printCode (f"CALL __dtable[{i}]")
+
+        # otherwise, call function normally
+        else:
+            self.printCode (f"CALL {node.decl.scopeName}")
 
         # remove parent object instance
         self.printCode (f"POP __void")

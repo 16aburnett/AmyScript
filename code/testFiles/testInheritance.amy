@@ -1,0 +1,303 @@
+// Testing Class Inheritance in AmyScript
+// Author: Amy Burnett
+//========================================================================
+
+function char[] concat (char[] a, char[] b)
+{
+    char[] c = new char[sizeof (a) + sizeof (b)];
+    for (int i = 0; i < sizeof (a); ++i)
+        c[i] = a[i];
+    for (int i = 0; i < sizeof (b); ++i)
+        c[sizeof (a) + i] = b[i];
+    return c;
+}
+
+
+//========================================================================
+
+class Department 
+{
+    public field char[] name;
+
+    constructor (char[] name)
+    {
+        this.name = name; 
+    }
+
+    public method char[] toString ()
+    {
+        return this.name; 
+    }
+}
+
+//========================================================================
+
+class Course 
+{
+    public field char[] name;
+    public field Department department; // composition relationship 
+    public field int id; 
+    public field char[] times;
+
+    public method char[] toString ()
+    {
+        return concat (concat (concat (this.department.toString (), string (this.id)), " "), this.name);
+    }
+}
+
+//========================================================================
+
+
+Department d = new Department ("CSCI");
+Course course = new Course (); 
+course.department = d;
+course.name = "Compiler Construction";
+course.id = 435; 
+course.times = "12:00pm-01:00pm";
+
+println (course.toString());
+
+//========================================================================
+
+class Person 
+{
+    public field char[] name;
+    public field int age;
+    public field float[] nums; 
+    
+    public method char[] toString ()
+    {
+        print ("Person::toString () -> ");
+        return concat (concat (this.name, " "), string (this.age)); 
+    }
+}
+
+//========================================================================
+
+// inheritance relationship 
+class Professor inherits Person
+{
+    public field int id;
+    public field Department department;
+    public field Course[] courses; 
+    // circular composition 
+    // doesnt work because class Student hasn't been reached 
+    //public field Student[] students; 
+    public field int officeNumber; 
+    constructor (char[] name, int age, int id)
+    {
+        this.name = name;
+        this.age = age;
+        this.id = id; 
+    }
+    
+    public method char[] toString ()
+    {
+        print ("Professor::toString () -> ");
+        return concat (concat (concat (concat (this.name, " "), string (this.age)), " "), this.department.toString ()) ;
+    }
+}
+
+Professor p = new Professor ("Snape", 42, 012345);
+p.department = new Department ("Slitherin");
+
+println (p.toString ());
+
+
+//========================================================================
+
+class Student inherits Person
+{
+    public field int id; 
+    // circular composition 
+    //public field Professor[] professors;
+    public field Course[] courses; 
+    public field int[] nums; 
+    constructor (char[] name, int age, int id)
+    {
+        this.name = name;
+        this.age = age;
+        this.id = id; 
+    }
+}
+
+//========================================================================
+
+
+Student s = new Student ("Amy", 22, 123456789);
+
+println (s.toString());
+
+//isa (s, Student); // true 
+//isa (s, Person); // true
+//isa (s, Professor); // false 
+//isa (s, Object); // true 
+//isa (s, Course); // false
+
+
+function void print (Person[] p)
+{
+    for (int i = 0; i < sizeof (p); ++i)
+        println (p[i].toString ());
+}
+
+Person[] people = new Person[2];
+// this is called upcasting 
+// p and s are derived from Person 
+// and this assignment casts them to Person 
+people[0] = p; 
+people[1] = s; 
+print (people);
+
+
+
+
+//========================================================================
+
+class A 
+{
+    public field int x;
+    constructor (int x)
+    {
+        this.x = x;
+    }
+
+    public method int sum ()
+    {
+        return this.x; 
+    }
+}
+
+//========================================================================
+
+class B inherits A
+{
+    public field int y;
+    constructor (int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    public method int sum ()
+    {
+        return this.x + this.y; 
+    }
+}
+
+//========================================================================
+
+class C inherits B
+{
+    public field int z; 
+    constructor (int x, int y, int z)
+    {
+        this.x = x;
+        this.y = y; 
+        this.z = z;
+    }
+
+    public method int sum ()
+    {
+        return this.x + this.y + this.z; 
+    }
+}
+
+
+//========================================================================
+
+
+
+C c = new C(7, 3, 21);
+
+
+
+function void print (A x, A y)
+{
+    println ("print(A, A)");
+    println (x.sum () + y.sum ());
+}
+
+function void print (B x, C y)
+{
+    println ("print(B, C)");
+    println (x.sum () + y.sum ());
+}
+
+function void print (A x, C y)
+{
+    println ("print(A, C)");
+    println (x.sum () + y.sum ());
+}
+
+print (c, c);
+
+//========================================================================
+
+
+class D inherits B
+{
+    constructor (A x, A y)
+    {
+        println ("D::D(A, A)");
+    }
+    constructor (B x, A y)
+    {
+        println ("D::D(B, A)");
+    }
+    public method int sum (A x, A y)
+    {
+        println ("D::sum(A, A)");
+        return x.sum() + y.sum ();
+    }
+
+    public method int sum (C x, B y)
+    {
+        println ("D::sum(C, B)");
+        return x.sum() + y.sum ();
+    }
+
+    public method int sum (A x, C y)
+    {
+        println ("D::sum(A, C)");
+        return x.sum() + y.sum ();
+    }
+}
+
+D dee = new D(c, c);
+
+println (dee.sum (c, c));
+
+//========================================================================
+
+
+
+class X 
+{
+    public virtual void print ()
+    {
+        println ("X::print()");
+    }
+}
+
+class Y inherits X
+{
+    public virtual void print ()
+    {
+        println ("Y::print()");
+    }
+}
+
+class Z inherits X
+{
+    public virtual void print ()
+    {
+        println ("Z::print()");
+    }
+}
+
+
+X x = new Z();
+
+// should call Z::print()
+x.print ();

@@ -128,7 +128,8 @@ class Parser:
 
     # ====================================================================
     # class declaration
-    # <class> -> CLASS IDENTIFIER LBRACE { ( <fieldDeclaration> | <methodDeclaration> ) } RBRACE
+    # <class> -> CLASS IDENTIFIER [ INHERITS <inheritanceList> ] LBRACE { ( <fieldDeclaration> | <methodDeclaration> ) } RBRACE
+    # <classForwardDeclaration> -> CLASS IDENTIFIER [ INHERITS <inheritanceList> ] SEMI
     
     def classDeclaration (self):
         self.enter ("classDeclaration")
@@ -139,6 +140,26 @@ class Parser:
         token = self.tokens[self.currentToken]
         type = TypeSpecifierNode (Type.USERTYPE, id, token)
         self.match ("classDeclaration", "IDENTIFIER")
+
+        # inheritance 
+        # if no inheritance specified, 
+        # then it inherits Object by default 
+        parent = "Object"
+        if self.tokens[self.currentToken].type == "INHERITS":
+            self.match ("classDeclaration", "INHERITS")
+            parent = self.inheritanceList ()[0]
+
+        # print (id, parent)
+
+        # check if it is a forward declaration 
+        if self.tokens[self.currentToken].type == "SEMI":
+            self.match ("classDeclaration", "SEMI")
+
+            self.leave ("classDeclaration")
+
+            decl = ClassDeclarationNode (type, id, token, parent, [], [], [], [])
+            decl.isForwardDeclaration = True
+            return decl
         
         self.match ("classDeclaration", "LBRACE")
 
@@ -148,12 +169,15 @@ class Parser:
         while (self.tokens[self.currentToken].type == "PUBLIC"\
             or self.tokens[self.currentToken].type == "PRIVATE"\
             or self.tokens[self.currentToken].type == "FIELD"\
+            or self.tokens[self.currentToken].type == "VIRTUAL"\
             or self.tokens[self.currentToken].type == "METHOD"\
             or self.tokens[self.currentToken].type == "CONSTRUCTOR"):
             if (self.tokens[self.currentToken].type == "PUBLIC"
                 or self.tokens[self.currentToken].type == "PRIVATE"):
                 if (self.tokens[self.currentToken+1].type == "FIELD"):
                     fields += [self.fieldDeclaration ()]
+                elif (self.tokens[self.currentToken+1].type == "VIRTUAL"):
+                    methods += [self.virtualMethodDeclaration ()]
                 elif (self.tokens[self.currentToken+1].type == "METHOD"):
                     methods += [self.methodDeclaration ()]
                 else: 
@@ -161,22 +185,55 @@ class Parser:
             else:
                 if (self.tokens[self.currentToken].type == "FIELD"):
                     fields += [self.fieldDeclaration ()]
+                elif (self.tokens[self.currentToken].type == "VIRTUAL"):
+                    methods += [self.virtualMethodDeclaration ()]
                 elif (self.tokens[self.currentToken].type == "METHOD"):
                     methods += [self.methodDeclaration ()]
                 elif (self.tokens[self.currentToken].type == "CONSTRUCTOR"):
                     constructors += [self.constructorDeclaration ()]
                 else: 
-                    self.error ("classDeclaration", "FIELD", "Expected a field or method in class body")
+                    self.error ("classDeclaration", "FIELD", "Expected a field, virtual method, or method in class body")
             
         self.match ("classDeclaration", "RBRACE")
 
+        # if there are no constructors, 
+        # add an empty default constructor
+        if len(constructors) == 0:
+            constructors += [ConstructorDeclarationNode (None, [], CodeBlockNode ([]))]
+
         self.leave ("classDeclaration")
 
-        return ClassDeclarationNode (type, id, token, constructors, fields, methods)
+        return ClassDeclarationNode (type, id, token, parent, constructors, fields, [], methods)
+
+    # ====================================================================
+    # inheritance list 
+    # <inheritanceList> -> IDENTIFIER { COMMA IDENTIFIER }
+    # **currently only single inheritance is supported 
+    # <inheritanceList> -> IDENTIFIER
+    
+    def inheritanceList (self):
+        self.enter ("inheritanceList")
+
+        parents = [] 
+
+        if (self.tokens[self.currentToken].type == "IDENTIFIER"):
+            parents += [self.tokens[self.currentToken].lexeme]
+            self.match ("inheritanceList", "IDENTIFIER")
+        else:
+            self.error ("inheritanceList", "IDENTIFIER", "Inherits clause requires a classname")
+        
+        # while (self.tokens[self.currentToken].type == "COMMA"):
+        #     self.match ("inheritanceList", "COMMA")
+        #     parents += [self.tokens[self.currentToken].lexeme]
+        #     self.match ("inheritanceList", "IDENTIFIER")
+
+        self.leave ("inheritanceList")
+
+        return parents
 
     # ====================================================================
     # field declaration
-    # <fieldDeclaration> -> [ SECURITY ] FIELD <typeSpecifier> IDENTIFIER SEMI
+    # <fieldDeclaration> -> [ VISIBILITY ] FIELD <typeSpecifier> IDENTIFIER SEMI
     
     def fieldDeclaration (self):
         self.enter ("fieldDeclaration")
@@ -203,6 +260,38 @@ class Parser:
         self.leave ("fieldDeclaration")
 
         return FieldDeclarationNode (security, type, id, token)
+
+    # ====================================================================
+    # virtual method declaration
+    # <virtualMethodDeclaration> -> [ SECURITY ] VIRTUAL <typeSpecifier> IDENTIFIER <paramlist> <codeblock>
+    
+    def virtualMethodDeclaration (self):
+        self.enter ("virtualMethodDeclaration")
+
+        # private by default 
+        security = Security.PRIVATE
+        if (self.tokens[self.currentToken].type == "PUBLIC"):
+            security = Security.PUBLIC
+            self.match ("virtualMethodDeclaration", "PUBLIC")
+        elif (self.tokens[self.currentToken].type == "PRIVATE"):
+            security = Security.PRIVATE
+            self.match ("virtualMethodDeclaration", "PRIVATE")
+
+        self.match ("virtualMethodDeclaration", "VIRTUAL")
+
+        type = self.typeSpecifier ()
+
+        id = self.tokens[self.currentToken].lexeme
+        token = self.tokens[self.currentToken]
+        self.match ("virtualMethodDeclaration", "IDENTIFIER")
+        
+        params = self.paramlist()
+
+        body = self.codeblock()
+
+        self.leave ("virtualMethodDeclaration")
+
+        return MethodDeclarationNode (security, type, id, token, params, body, True)
 
     # ====================================================================
     # method declaration
@@ -234,7 +323,7 @@ class Parser:
 
         self.leave ("methodDeclaration")
 
-        return MethodDeclarationNode (security, type, id, token, params, body)
+        return MethodDeclarationNode (security, type, id, token, params, body, False)
 
     # ====================================================================
     # constructor declaration
@@ -256,7 +345,7 @@ class Parser:
 
     # ====================================================================
     # parameter list for a function declaration
-    # <paramlist> -> '(' [ <typeSpecifier> IDENTIFIER [ , <typeSpecifier> IDENTIFIER ] ] ')'
+    # <paramlist> -> '(' [ <typeSpecifier> IDENTIFIER { COMMA <typeSpecifier> IDENTIFIER } ] ')'
 
     def paramlist (self): 
         self.enter ("paramlist")

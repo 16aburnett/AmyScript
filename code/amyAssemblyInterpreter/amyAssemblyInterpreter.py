@@ -121,6 +121,12 @@ class AmyAssemblyInterpreter:
 
     def execute (self, inputCode):
 
+        def padzeros(i, maxdigits):
+            stri = str(i)
+            while len(stri) < maxdigits:
+                stri = "".join(["0",stri])
+            return stri
+
         # read code from file 
         # file_name = sys.argv[1]
         lines = inputCode.splitlines ()
@@ -144,21 +150,37 @@ class AmyAssemblyInterpreter:
         # Variable name to Int mapping
         # This does not care about scope 
         wordToInt = {}
+        # this holds the reverse mapping 
+        # for outputting the variable's string name in error messages 
+        intToWord = {}
         wordId = 0
         # stores all the jump points (label, instruction)
+        # this populates the initial stack frame 
+        # and treats the labels as variables that store their instruction pointer
         jumpPoints = {}
         code = []
+        lineNo = -1
         for line in lines:
+            # advance lineNo
+            lineNo += 1
+
+            # tokenize line
             lexer = Lexer(line)
             code_line = []
 
             type, value = lexer.getToken()
-            # jump points
+            # save jump points before executing code 
+            # allows for jumps to labels that weren't executed yet 
             if type == JUMPPOINT:
                 # var DNE
                 if value not in wordToInt:
                     wordToInt[value] = wordId
+                    intToWord[wordId] = value 
                     wordId += 1
+                # jump point already exists 
+                elif wordToInt[value] in jumpPoints:
+                    print (f"Error: Duplicate jump point '{value}'")
+                    exit (1)
                 jumpPoints[wordToInt[value]] = len(code)
                 code += [[MODE_JUMPPOINT, wordToInt[value], len(code)]]
                 continue
@@ -187,6 +209,7 @@ class AmyAssemblyInterpreter:
                     # var DNE
                     if values[0] not in wordToInt:
                         wordToInt[values[0]] = wordId
+                        intToWord[wordId] = values[0]
                         wordId += 1
                     code_line += [MODE_STACK, wordToInt[values[0]]]
                 # memory 
@@ -202,6 +225,7 @@ class AmyAssemblyInterpreter:
                             # var DNE
                             if values[3] not in wordToInt:
                                 wordToInt[values[3]] = wordId
+                                intToWord[wordId] = values[3]
                                 wordId += 1
                             code_line += [MODE_STACK, wordToInt[values[3]]]
                     # pointer is a var
@@ -209,6 +233,7 @@ class AmyAssemblyInterpreter:
                         # var DNE
                         if values[1] not in wordToInt:
                             wordToInt[values[1]] = wordId
+                            intToWord[wordId] = values[1]
                             wordId += 1
                         code_line += [MODE_STACK, wordToInt[values[1]]]
                         # offset is immediate
@@ -218,6 +243,7 @@ class AmyAssemblyInterpreter:
                             # var DNE
                             if values[3] not in wordToInt:
                                 wordToInt[values[3]] = wordId
+                                intToWord[wordId] = values[3]
                                 wordId += 1
                             code_line += [MODE_STACK, wordToInt[values[3]]]
             # add line to code list
@@ -230,12 +256,6 @@ class AmyAssemblyInterpreter:
         #     print(f"[{i}] {code[i]} {lines[i]}")
 
         ### Save IntCode #########################################################
-
-        def padzeros(i, maxdigits):
-            stri = str(i)
-            while len(stri) < maxdigits:
-                stri = "".join(["0",stri])
-            return stri
 
         # with open(file_name+"c", "w") as outfile:
         #     maxdigits = len(str(len(code)))
@@ -270,7 +290,9 @@ class AmyAssemblyInterpreter:
                 heap.memory[ptr+i] = arg[i]
             # put ptr on stack 
             stack += [ptr]
-        stack += [len(sys.argv), -1, -1, {}]
+        # add the first stack frame 
+        #   populated with the jumpPoints 
+        stack += [len(sys.argv), -1, -1, jumpPoints]
         instruction_pointer = 0
         base_pointer = len(stack)-1
         return_value = 0
@@ -294,7 +316,7 @@ class AmyAssemblyInterpreter:
                     return stack[bptr][var]
                 bptr = stack[bptr-1]
             
-            print(f"variable referenced before assignment - '{var}'")
+            print(f"Error: variable referenced before assignment - '{intToWord[var]}'")
             exit(1)
 
         def getMemAddress(stack, pmode, pointer, omode, offset) -> int:
@@ -303,7 +325,7 @@ class AmyAssemblyInterpreter:
             """
             # Ensure pointer mode is stack variable
             if pmode != MODE_STACK:
-                print("pmode must be stack variable")
+                print("Error: ptr mode must be stack variable")
                 exit(1)
 
             # grab pointer value
@@ -357,7 +379,7 @@ class AmyAssemblyInterpreter:
                     return heap.memory[address+offset], i+5
                 # float is invalid
                 if isinstance(address, float):
-                    print("float is not subscriptable")
+                    print("Error: float is not an address")
                     exit(1)
                 # strings and lists
                 else:
@@ -375,7 +397,7 @@ class AmyAssemblyInterpreter:
                 return params[i+1], i+2
 
             # Case 5: Unknown mode
-            print("Bad Parameter Mode")
+            print("Error: Bad Parameter Mode")
             exit(1)
 
         # evaluate lines
@@ -403,7 +425,7 @@ class AmyAssemblyInterpreter:
                     stack[base_pointer][params[1]], i = getNextValue(heap, stack, params, 2)
                 # Case 3: Dest is Invalid param type
                 else:
-                    print(f"Can only assign a value to a stack variable or memory address")
+                    print(f"Error: Can only assign a value to a stack variable or memory address")
                     exit(1)
             elif cmd == OPCODE_ADD:
                 # ADD dest src1 src2
@@ -422,7 +444,7 @@ class AmyAssemblyInterpreter:
                     stack[base_pointer][params[1]] = src1 + src2
                 # Case 3: Dest is Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_SUBTRACT:
                 # SUBTRACT dest src1 src2
@@ -441,7 +463,7 @@ class AmyAssemblyInterpreter:
                     stack[base_pointer][params[1]] = src1 - src2
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_MULTIPLY:
                 # MULTIPLY dest src1 src2
@@ -460,7 +482,7 @@ class AmyAssemblyInterpreter:
                     stack[base_pointer][params[1]] = src1 * src2
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_DIVIDE:
                 # DIVIDE dest src1 src2
@@ -487,7 +509,7 @@ class AmyAssemblyInterpreter:
                         stack[base_pointer][params[1]] = src1 / src2
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_MOD:
                 # MOD dest src1 src2
@@ -506,7 +528,7 @@ class AmyAssemblyInterpreter:
                     stack[base_pointer][params[1]] = src1 % src2
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_PRINT:
                 # Only One Parameter
@@ -541,21 +563,13 @@ class AmyAssemblyInterpreter:
                     stack[base_pointer][params[1]] = lineAddress
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             # calling functions
             elif cmd == OPCODE_CALL:
+                # CALL funcPtr
 
-                if params[0] != MODE_STACK:
-                    print(f"function name must be a stack variable")
-                    exit(1)
-
-                fname = params[1]
-
-                # Ensure function exists 
-                if fname not in jumpPoints:
-                    print(f"jump point '{fname}' is not defined")  
-                    exit(1)
+                funcPtr, _ = getNextValue (heap, stack, params, 0)
 
                 # push return address 
                 stack.append(instruction_pointer)
@@ -570,7 +584,7 @@ class AmyAssemblyInterpreter:
                 stack.append({})
 
                 # jump to function start
-                instruction_pointer = jumpPoints[fname]
+                instruction_pointer = funcPtr
 
             # returning from functions
             elif cmd == OPCODE_RETURN:
@@ -600,7 +614,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = return_value
                 # Case 3 : Bad token
                 else:
-                    print(f"RESPONSE requires a stack variable or a memory address")
+                    print(f"Error: RESPONSE requires a stack variable or a memory address")
                     exit(1)
             # allocating data on heap
             elif cmd == OPCODE_MALLOC:
@@ -618,7 +632,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = heap.malloc(size)
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
                 # printheap(heap)
             # deallocating data on heap
@@ -642,7 +656,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = heap.sizeof(pointer)
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_COMPARE:
                 # COMPARE src1 src2
@@ -656,72 +670,38 @@ class AmyAssemblyInterpreter:
             elif cmd == OPCODE_JUMP:
                 # JUMP dest
                 # unconditional jump 
-                # ensure it is a var 
-                if params[0] != MODE_STACK:
-                    print("can only jump to a jump point")
-                    exit(1)
                 # move to jump point
-                instruction_pointer = jumpPoints[params[1]]
+                instruction_pointer, _ = getNextValue (heap, stack, params, 0)
             elif cmd == OPCODE_JUMPLT:
                 # JUMPLT dest
-                # jump if less than flag is true 
-                # ensure it is a var 
-                if params[0] != MODE_STACK:
-                    print("can only jump to a jump point")
-                    exit(1)
-                # move to jump point
+                # jump if less than flag is true
                 if lessThanFlag == 1:
-                    instruction_pointer = jumpPoints[params[1]]
+                    instruction_pointer, _ = getNextValue (heap, stack, params, 0)
             elif cmd == OPCODE_JUMPLE:
                 # JUMPLE dest
                 # jump if less than or equal to flags are true 
-                # ensure it is a var
-                if params[0] != MODE_STACK:
-                    print("can only jump to a jump point")
-                    exit(1)
-                # move to jump point
                 if lessThanFlag == 1 or equalFlag == 1:
-                    instruction_pointer = jumpPoints[params[1]]
+                    instruction_pointer, _ = getNextValue (heap, stack, params, 0)
             elif cmd == OPCODE_JUMPEQ:
                 # JUMPEQ dest
                 # jump if equal to flag is true 
-                # ensure it is a var
-                if params[0] != MODE_STACK:
-                    print("can only jump to a jump point")
-                    exit(1)
-                # move to jump point
                 if equalFlag == 1:
-                    instruction_pointer = jumpPoints[params[1]]
+                    instruction_pointer, _ = getNextValue (heap, stack, params, 0)
             elif cmd == OPCODE_JUMPNEQ:
                 # JUMPNEQ dest
                 # jump if equal to flag is false 
-                # ensure it is a var
-                if params[0] != MODE_STACK:
-                    print("can only jump to a jump point")
-                    exit(1)
-                # move to jump point
                 if equalFlag == 0:
-                    instruction_pointer = jumpPoints[params[1]]
+                    instruction_pointer, _ = getNextValue (heap, stack, params, 0)
             elif cmd == OPCODE_JUMPGE:
                 # JUMPGE dest
-                # jump if greater than or equal to flags are true 
-                # ensure it is a var
-                if params[0] != MODE_STACK:
-                    print("can only jump to a jump point")
-                    exit(1)
-                # move to jump point
+                # jump if greater than or equal to flags are true
                 if equalFlag == 1 or greaterThanFlag == 1:
-                    instruction_pointer = jumpPoints[params[1]]
+                    instruction_pointer, _ = getNextValue (heap, stack, params, 0)
             elif cmd == OPCODE_JUMPGT:
                 # JUMPGT dest
                 # jump if greater than flag is true 
-                # ensure it is a var
-                if params[0] != MODE_STACK:
-                    print("can only jump to a jump point")
-                    exit(1)
-                # move to jump point
                 if greaterThanFlag == 1:
-                    instruction_pointer = jumpPoints[params[1]]
+                    instruction_pointer, _ = getNextValue (heap, stack, params, 0)
             elif cmd == OPCODE_EQUAL:
                 # EQUAL dest src1 src2 
                 # dest = src1 == src2
@@ -740,7 +720,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = 1 if src1 == src2 else 0
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_NEQUAL:
                 # NEQUAL dest src1 src2 
@@ -760,7 +740,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = 1 if src1 != src2 else 0
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_LT:
                 # LT dest src1 src2 
@@ -780,7 +760,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = 1 if src1 < src2 else 0
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_LE:
                 # LE dest src1 src2 
@@ -800,7 +780,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = 1 if src1 <= src2 else 0
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_GT:
                 # GT dest src1 src2 
@@ -820,7 +800,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = 1 if src1 > src2 else 0
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_GE:
                 # GE dest src1 src2 
@@ -840,7 +820,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = 1 if src1 >= src2 else 0
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_AND:
                 # AND dest src1 src2 
@@ -860,7 +840,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = 1 if src1 != 0 and src2 != 0 else 0
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_OR:
                 # OR dest src1 src2 
@@ -880,7 +860,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = 1 if src1 != 0 or src2 != 0 else 0
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_NOT:
                 # NOT dest src
@@ -898,7 +878,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = 1 if src == 0 else 0
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_PUSH:
                 # PUSH src 
@@ -918,7 +898,7 @@ class AmyAssemblyInterpreter:
                     stack.pop()
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_STACKGET:
                 # STACKGET dest offset 
@@ -944,7 +924,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = stack[base_pointer-3-offset]
                 # Case 3: Invalid param type
                 else:
-                    print(f"Dest should be memory or stack")
+                    print(f"Error: Dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_FtoI:
                 # FTOI dest src 
@@ -968,7 +948,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = int(src)
                 # Case 3: Invalid param type
                 else:
-                    print(f"dest should be memory or stack")
+                    print(f"Error: dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_ItoF:
                 # ITOF dest src 
@@ -992,7 +972,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = float(src)
                 # Case 3: Invalid param type
                 else:
-                    print(f"dest should be memory or stack")
+                    print(f"Error: dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_STRING:
                 # STRING dest src 
@@ -1022,7 +1002,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = ptr
                 # Case 3: Invalid param type
                 else:
-                    print(f"dest should be memory or stack")
+                    print(f"Error: dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_StoF:
                 # STOF dest src 
@@ -1058,7 +1038,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = float (s)
                 # Case 3: Invalid param type
                 else:
-                    print(f"dest should be memory or stack")
+                    print(f"Error: dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_StoI:
                 # STOI dest src 
@@ -1094,7 +1074,7 @@ class AmyAssemblyInterpreter:
                     heap.memory[address] = int (s)
                 # Case 3: Invalid param type
                 else:
-                    print(f"dest should be memory or stack")
+                    print(f"Error: dest should be memory or stack")
                     exit(1)
             elif cmd == OPCODE_HALT:
                 break
@@ -1102,7 +1082,7 @@ class AmyAssemblyInterpreter:
             elif cmd == MODE_JUMPPOINT:
                 pass
             else:
-                print(f"UNKNOWN command! Yikes there bud! {cmd}")
+                print(f"Error: '{lines[instruction_pointer][0]}' is not a valid command")
                 exit(1)
 
             instruction_pointer += 1

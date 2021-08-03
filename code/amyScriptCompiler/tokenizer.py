@@ -39,6 +39,7 @@ token_specification = [
     # ('CONTINUE', r'continue'),  
     # ('FUNCTION', r'function'),  
     # ('CLASS',    r'class'),  
+    # ('INHERITS', r'inherits'),  
     # ('PUBLIC',   r'public'),  
     # ('PRIVATE',  r'private'),  
     # ('FIELD',    r'field'),  
@@ -118,6 +119,7 @@ def tokenize(code):
         elif kind == 'CHAR':
             value = value[1:-1]
         elif kind == 'COMMENT':
+            line_start = mo.end()
             line_num += 1
             continue 
         elif kind == 'NEWLINE':
@@ -150,12 +152,16 @@ def tokenize(code):
                 kind = "FUNCTION"
             elif (lexeme == "class"):
                 kind = "CLASS"
+            elif (lexeme == "inherits"):
+                kind = "INHERITS"
             elif (lexeme == "public"):
                 kind = "PUBLIC"
             elif (lexeme == "private"):
                 kind = "PRIVATE"
             elif (lexeme == "field"):
                 kind = "FIELD"
+            elif (lexeme == "virtual"):
+                kind = "VIRTUAL"
             elif (lexeme == "method"):
                 kind = "METHOD"
             elif (lexeme == "constructor"):
