@@ -177,6 +177,7 @@ class ClassDeclarationNode (CodeUnitNode):
         self.functionPointerList = [] 
 
         self.scopeName = ""
+        self.dtableScopeName = ""
 
         self.isForwardDeclaration = False 
 
@@ -375,7 +376,8 @@ class ExpressionStatementNode (StatementNode):
 
 class ReturnStatementNode (StatementNode):
     
-    def __init__(self, expr):
+    def __init__(self, token, expr):
+        self.token = token
         self.expr = expr 
 
         self.lineNumber = 0
@@ -388,7 +390,8 @@ class ReturnStatementNode (StatementNode):
 
 class ContinueStatementNode (StatementNode):
     
-    def __init__(self):
+    def __init__(self, token):
+        self.token = token
 
         self.lineNumber = 0
         self.columnNumber = 0
@@ -400,7 +403,8 @@ class ContinueStatementNode (StatementNode):
 
 class BreakStatementNode (StatementNode):
     
-    def __init__(self):
+    def __init__(self, token):
+        self.token = token
 
         self.lineNumber = 0
         self.columnNumber = 0

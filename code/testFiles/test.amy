@@ -102,3 +102,38 @@ Matrix b = new Matrix ([
 char[] temp = a.add(b).toString();
 print (temp);
 free (temp);
+
+// testing calling methods within constructors 
+class A
+{
+    public field int x;
+    public field int y; 
+
+    constructor ()
+    {
+        this.setValues (0, 0);
+    }
+
+    constructor (int x, int y)
+    {
+        this.setValues (x, y);
+    }
+
+    public method void setValues (int x, int y)
+    {
+        this.x = x; 
+        this.y = y; 
+    }
+
+}
+
+A ay = new A(7, 5);
+
+function void print (A a)
+{
+    print (a.x);
+    print (' ');
+    println (a.y);
+}
+
+print (ay);

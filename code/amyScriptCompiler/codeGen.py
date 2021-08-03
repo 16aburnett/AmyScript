@@ -244,26 +244,6 @@ class CodeGenVisitor (ASTVisitor):
 
         self.indentation += 1
 
-        # create scope names for fields 
-        for field in node.fields:
-            # variable names are modified by its scope 
-            fieldScopeName = "__field__" + "".join (self.scopeNames) + "__" + field.id
-            field.scopeName = fieldScopeName
-
-        # dispatch table pointer is at i = 0 
-        i = 1
-        for field in node.fields:
-            field.parentClass = node
-            field.index = i 
-            field.accept (self)
-            i += 1
-
-        # add jump to skip over class dec  
-        self.indentation -= 1
-        self.printComment ("skip over class methods")
-        self.printCode (f"JUMP __endclass__{node.scopeName}")
-        self.indentation += 1
-
         # create scope names for methods
         for method in node.methods:
             # variable names are modified by its scope 
@@ -296,6 +276,37 @@ class CodeGenVisitor (ASTVisitor):
                 if ctor.params[i].type.arrayDimensions > 0:
                     scopeName += [f"__{ctor.params[i].type.arrayDimensions}"]
             ctor.scopeName = "".join(scopeName)
+
+        # create dispatch table 
+        self.printComment ("Creating Dispatch Table")
+        node.dtableScopeName = "__dtable__" + "".join (self.scopeNames)
+        self.indentation += 1
+        self.printCode (f"MALLOC {node.dtableScopeName} {len(node.virtualMethods)}")
+        # populate dispatch table
+        self.printComment ("Populate Dispatch Table")
+        for i in range(len(node.functionPointerList)):
+            self.printCode (f"ASSIGN {node.dtableScopeName}[{i}] {node.functionPointerList[i].scopeName}")
+        self.indentation -= 1
+
+        # create scope names for fields 
+        for field in node.fields:
+            # variable names are modified by its scope 
+            fieldScopeName = "__field__" + "".join (self.scopeNames) + "__" + field.id
+            field.scopeName = fieldScopeName
+
+        # dispatch table pointer is at i = 0 
+        i = 1
+        for field in node.fields:
+            field.parentClass = node
+            field.index = i 
+            field.accept (self)
+            i += 1
+
+        # add jump to skip over class dec  
+        self.indentation -= 1
+        self.printComment ("skip over class methods")
+        self.printCode (f"JUMP __endclass__{node.scopeName}")
+        self.indentation += 1
 
         for ctor in node.constructors:
             ctor.parentClass = node
@@ -414,20 +425,13 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation += 1
         # +1 because all classes start with a dispatch table 
         self.printCode (f"MALLOC __this {len(node.parentClass.fields)+1}")
-        # create dispatch table 
-        self.printComment ("Creating Dispatch Table")
-        self.indentation += 1
-        self.printCode (f"MALLOC __dtable {len(node.parentClass.virtualMethods)}")
-        # populate dispatch table
-        self.printComment ("Populate Dispatch Table")
-        for i in range(len(node.parentClass.functionPointerList)):
-            self.printCode (f"ASSIGN __dtable[{i}] {node.parentClass.functionPointerList[i].scopeName}")
+
         # add dispatch table to instance
         self.printComment ("Add Dispatch Table")
-        self.printCode (f"ASSIGN __this[0] __dtable")
+        self.printCode (f"ASSIGN __this[0] {node.parentClass.dtableScopeName}")
 
         # ** maybe initialize entries? or that might be inefficient
-        self.indentation -= 2
+        self.indentation -= 1
 
         # load parameters 
         self.printComment ("Parameters")

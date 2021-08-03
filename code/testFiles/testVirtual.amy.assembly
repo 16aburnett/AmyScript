@@ -198,6 +198,10 @@ __endOfLibrary:
 
 //========================================================================
 // Class Declaration - __main__A inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__A 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__A[0] __method____main__A____X
 // skip over class methods
 JUMP __endclass____main__A
    //---------------------------------------------------------------------
@@ -206,12 +210,8 @@ JUMP __endclass____main__A
    __ctor____main__A____A:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__A____X
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__A
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -264,6 +264,10 @@ __endclass____main__A:
 
 //========================================================================
 // Class Declaration - __main__B inherits __main__A
+   // Creating Dispatch Table
+      MALLOC __dtable____main__B 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__B[0] __method____main__A____X
 // skip over class methods
 JUMP __endclass____main__B
    //---------------------------------------------------------------------
@@ -272,12 +276,8 @@ JUMP __endclass____main__B
    __ctor____main__B____B:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__A____X
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__B
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -305,6 +305,10 @@ __endclass____main__B:
 
 //========================================================================
 // Class Declaration - __main__D inherits __main__B
+   // Creating Dispatch Table
+      MALLOC __dtable____main__D 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__D[0] __method____main__D____X
 // skip over class methods
 JUMP __endclass____main__D
    //---------------------------------------------------------------------
@@ -313,12 +317,8 @@ JUMP __endclass____main__D
    __ctor____main__D____D:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__D____X
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__D
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -371,6 +371,11 @@ __endclass____main__D:
 
 //========================================================================
 // Class Declaration - __main__E inherits __main__D
+   // Creating Dispatch Table
+      MALLOC __dtable____main__E 2
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__E[0] __method____main__D____X
+      ASSIGN __dtable____main__E[1] __method____main__E____Y
 // skip over class methods
 JUMP __endclass____main__E
    //---------------------------------------------------------------------
@@ -379,13 +384,8 @@ JUMP __endclass____main__E
    __ctor____main__E____E:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 2
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__D____X
-            ASSIGN __dtable[1] __method____main__E____Y
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__E
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -449,6 +449,10 @@ __endclass____main__E:
 
 //========================================================================
 // Class Declaration - __main__C inherits __main__B
+   // Creating Dispatch Table
+      MALLOC __dtable____main__C 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__C[0] __method____main__C____X
 // skip over class methods
 JUMP __endclass____main__C
    //---------------------------------------------------------------------
@@ -457,12 +461,8 @@ JUMP __endclass____main__C
    __ctor____main__C____C:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__C____X
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__C
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -515,6 +515,11 @@ __endclass____main__C:
 
 //========================================================================
 // Class Declaration - __main__F inherits __main__D
+   // Creating Dispatch Table
+      MALLOC __dtable____main__F 2
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__F[0] __method____main__D____X
+      ASSIGN __dtable____main__F[1] __method____main__F____Z
 // skip over class methods
 JUMP __endclass____main__F
    //---------------------------------------------------------------------
@@ -523,13 +528,8 @@ JUMP __endclass____main__F
    __ctor____main__F____F:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 2
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__D____X
-            ASSIGN __dtable[1] __method____main__F____Z
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__F
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -593,6 +593,11 @@ __endclass____main__F:
 
 //========================================================================
 // Class Declaration - __main__G inherits __main__A
+   // Creating Dispatch Table
+      MALLOC __dtable____main__G 2
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__G[0] __method____main__G____X
+      ASSIGN __dtable____main__G[1] __method____main__G____Y
 // skip over class methods
 JUMP __endclass____main__G
    //---------------------------------------------------------------------
@@ -601,13 +606,8 @@ JUMP __endclass____main__G
    __ctor____main__G____G:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 2
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__G____X
-            ASSIGN __dtable[1] __method____main__G____Y
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__G
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -696,6 +696,11 @@ __endclass____main__G:
 
 //========================================================================
 // Class Declaration - __main__H inherits __main__G
+   // Creating Dispatch Table
+      MALLOC __dtable____main__H 2
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__H[0] __method____main__G____X
+      ASSIGN __dtable____main__H[1] __method____main__H____Y
 // skip over class methods
 JUMP __endclass____main__H
    //---------------------------------------------------------------------
@@ -704,13 +709,8 @@ JUMP __endclass____main__H
    __ctor____main__H____H:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 2
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__G____X
-            ASSIGN __dtable[1] __method____main__H____Y
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__H
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -774,6 +774,12 @@ __endclass____main__H:
 
 //========================================================================
 // Class Declaration - __main__I inherits __main__A
+   // Creating Dispatch Table
+      MALLOC __dtable____main__I 3
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__I[0] __method____main__A____X
+      ASSIGN __dtable____main__I[1] __method____main__I____Y
+      ASSIGN __dtable____main__I[2] __method____main__I____Z
 // skip over class methods
 JUMP __endclass____main__I
    //---------------------------------------------------------------------
@@ -782,14 +788,8 @@ JUMP __endclass____main__I
    __ctor____main__I____I:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 3
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__A____X
-            ASSIGN __dtable[1] __method____main__I____Y
-            ASSIGN __dtable[2] __method____main__I____Z
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__I
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -1102,6 +1102,478 @@ __end____main____fun2__G:
    POP __void
    RESPONSE __retval
    PUSH __retval
+//========================================================================
+// Function Declaration - fun3(G[]) -> A[]
+JUMP __end____main____fun3__G__1
+__main____fun3__G__1:
+   // Parameters
+      // Param: g
+      STACKGET __main__fun3__g 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Return
+            // Identifier - g
+               PUSH __main__fun3__g
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____fun3__G__1:
+// End Function Declaration - __main____fun3__G__1
+//========================================================================
+
+// Assignment
+   // RHS
+      // Array Allocator
+         // Int Literal
+            PUSH 3
+         POP __size
+         MALLOC __ptr __size
+         PUSH __ptr
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__hs 0
+   POP __rhs
+   ASSIGN __main__hs __rhs
+   PUSH __rhs
+//------------------------------------------------------------------------
+// For-Loop
+// Init
+   // Assignment
+      // RHS
+         // Int Literal
+            PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__22__i 0
+      POP __rhs
+      ASSIGN __main__for__22__i __rhs
+      PUSH __rhs
+JUMP __forcond__22
+__for__22:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier - i
+               PUSH __main__for__22__i
+         POP __rhs
+         ADD __main__for__22__i __main__for__22__i 1
+         ASSIGN __res __main__for__22__i
+         PUSH __res
+   __forcond__22:
+   // Condition
+      // Less Than
+         // LHS
+            // Identifier - i
+               PUSH __main__for__22__i
+         // RHS
+            // Sizeof Operator
+               // RHS
+                  // Identifier - hs
+                     PUSH __main__hs
+               // Calculate array size
+               POP __array
+               SIZEOF __size __array
+               PUSH __size
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor__22
+   // Body
+      // Assignment
+         // RHS
+            // Constructor Call - H::H() -> H
+               // Arguments
+               // Pushing args in reverse order
+               CALL __ctor____main__H____H
+               // Remove args
+               RESPONSE __retval
+               PUSH __retval
+         // LHS
+            // Subscript assignment
+               // LHS
+                  // Identifier - hs
+                     PUSH __main__hs
+               // OFFSET
+                  // Identifier - i
+                     PUSH __main__for__22__i
+               POP __offset
+               POP __pointer
+         POP __rhs
+         ASSIGN __pointer[__offset] __rhs
+         PUSH __rhs
+   // Repeat
+   JUMP __for__22
+   // End of For
+   __endfor__22:
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+// For-Loop
+// Init
+   // Assignment
+      // RHS
+         // Int Literal
+            PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__23__i 0
+      POP __rhs
+      ASSIGN __main__for__23__i __rhs
+      PUSH __rhs
+JUMP __forcond__23
+__for__23:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier - i
+               PUSH __main__for__23__i
+         POP __rhs
+         ADD __main__for__23__i __main__for__23__i 1
+         ASSIGN __res __main__for__23__i
+         PUSH __res
+   __forcond__23:
+   // Condition
+      // Less Than
+         // LHS
+            // Identifier - i
+               PUSH __main__for__23__i
+         // RHS
+            // Sizeof Operator
+               // RHS
+                  // Identifier - hs
+                     PUSH __main__hs
+               // Calculate array size
+               POP __array
+               SIZEOF __size __array
+               PUSH __size
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor__23
+   // Body
+      // Function Call - fun1(A) -> void
+         // Arguments
+            // Subscript
+               // LHS
+                  // Function Call - fun3(G[]) -> A[]
+                     // Arguments
+                        // Identifier - hs
+                           PUSH __main__hs
+                        POP __arg0
+                     // Pushing args in reverse order
+                     PUSH __arg0
+                     // *** fun3
+                     CALL __main____fun3__G__1
+                     // Remove args
+                     POP __void
+                     RESPONSE __retval
+                     PUSH __retval
+               // OFFSET
+                  // Identifier - i
+                     PUSH __main__for__23__i
+               POP __offset
+               POP __pointer
+               PUSH __pointer[__offset]
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         // *** fun1
+         CALL __main____fun1__A
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // Repeat
+   JUMP __for__23
+   // End of For
+   __endfor__23:
+//------------------------------------------------------------------------
+//========================================================================
+// Class Declaration - __main__Pizza inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Pizza 0
+      // Populate Dispatch Table
+// skip over class methods
+JUMP __endclass____main__Pizza
+   //---------------------------------------------------------------------
+   // Constructor Declaration - Pizza::Pizza() -> Pizza
+   JUMP __end__ctor____main__Pizza____Pizza
+   __ctor____main__Pizza____Pizza:
+      // Creating Class Instance
+         MALLOC __this 1
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Pizza
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__Pizza__Pizza__block__24__x 0
+               POP __rhs
+               ASSIGN __main__Pizza__Pizza__block__24__x __rhs
+               PUSH __rhs
+            // Return
+               RETURN 0
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__Pizza____Pizza:
+   // End Constructor Declaration - __ctor____main__Pizza____Pizza
+   //---------------------------------------------------------------------
+
+__endclass____main__Pizza:
+// End Class Declaration - __main__Pizza
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - Pizza::Pizza() -> Pizza
+         // Arguments
+         // Pushing args in reverse order
+         CALL __ctor____main__Pizza____Pizza
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__pizza 0
+   POP __rhs
+   ASSIGN __main__pizza __rhs
+   PUSH __rhs
+//------------------------------------------------------------------------
+// For-Loop
+// Init
+   // Assignment
+      // RHS
+         // Int Literal
+            PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__25__i 0
+      POP __rhs
+      ASSIGN __main__for__25__i __rhs
+      PUSH __rhs
+JUMP __forcond__25
+__for__25:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier - i
+               PUSH __main__for__25__i
+         POP __rhs
+         ADD __main__for__25__i __main__for__25__i 1
+         ASSIGN __res __main__for__25__i
+         PUSH __res
+   __forcond__25:
+   // Condition
+      // Less Than
+         // LHS
+            // Identifier - i
+               PUSH __main__for__25__i
+         // RHS
+            // Int Literal
+               PUSH 5
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor__25
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //===============================================================
+         // Function Declaration - print() -> void
+         JUMP __end____main__for__25__block__26____print
+         __main__for__25__block__26____print:
+            // Parameters
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // For-Loop
+                  // Init
+                     // Assignment
+                        // RHS
+                           // Int Literal
+                              PUSH 0
+                        // LHS
+                           // Variable Declaration
+                              ASSIGN __main__for__25__block__26__print__block__27__for__28__i 0
+                        POP __rhs
+                        ASSIGN __main__for__25__block__26__print__block__27__for__28__i __rhs
+                        PUSH __rhs
+                  JUMP __forcond__28
+                  __for__28:
+                     // Update
+                        // Pre-Increment
+                           // RHS
+                              // Identifier - i
+                                 PUSH __main__for__25__block__26__print__block__27__for__28__i
+                           POP __rhs
+                           ADD __main__for__25__block__26__print__block__27__for__28__i __main__for__25__block__26__print__block__27__for__28__i 1
+                           ASSIGN __res __main__for__25__block__26__print__block__27__for__28__i
+                           PUSH __res
+                     __forcond__28:
+                     // Condition
+                        // Less Than
+                           // LHS
+                              // Identifier - i
+                                 PUSH __main__for__25__block__26__print__block__27__for__28__i
+                           // RHS
+                              // Int Literal
+                                 PUSH 20
+                           POP __rhs
+                           POP __lhs
+                           LT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endfor__28
+                     // Body
+                        //------------------------------------------------
+                        // Code Block
+                           // Function Call - println(int) -> void
+                              // Arguments
+                                 // Identifier - i
+                                    PUSH __main__for__25__block__26__print__block__27__for__28__i
+                                 POP __arg0
+                              // Pushing args in reverse order
+                              PUSH __arg0
+                              // *** println
+                              CALL println__int
+                              // Remove args
+                              POP __void
+                              RESPONSE __retval
+                              PUSH __retval
+                           // Break out of __for__28
+                           JUMP __endfor__28
+                        //------------------------------------------------
+                     // Repeat
+                     JUMP __for__28
+                     // End of For
+                     __endfor__28:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            RETURN 0
+         __end____main__for__25__block__26____print:
+         // End Function Declaration - __main__for__25__block__26____print
+         //===============================================================
+
+         // Function Call - print() -> void
+            // Arguments
+            // Pushing args in reverse order
+            // *** print
+            CALL __main__for__25__block__26____print
+            // Remove args
+            RESPONSE __retval
+            PUSH __retval
+         //===============================================================
+         // Class Declaration - __main__for__25__block__26__Apple inherits __main__Object
+            // Creating Dispatch Table
+               MALLOC __dtable____main__for__25__block__26__Apple 1
+               // Populate Dispatch Table
+               ASSIGN __dtable____main__for__25__block__26__Apple[0] __method____main__for__25__block__26__Apple____print
+         // skip over class methods
+         JUMP __endclass____main__for__25__block__26__Apple
+            //------------------------------------------------------------
+            // Constructor Declaration - Apple::Apple() -> Apple
+            JUMP __end__ctor____main__for__25__block__26__Apple____Apple
+            __ctor____main__for__25__block__26__Apple____Apple:
+               // Creating Class Instance
+                  MALLOC __this 1
+                  // Add Dispatch Table
+                  ASSIGN __this[0] __dtable____main__for__25__block__26__Apple
+               // Parameters
+               // Body
+                  //------------------------------------------------------
+                  // Code Block
+                  //------------------------------------------------------
+               RETURN __this
+            __end__ctor____main__for__25__block__26__Apple____Apple:
+            // End Constructor Declaration - __ctor____main__for__25__block__26__Apple____Apple
+            //------------------------------------------------------------
+
+            //------------------------------------------------------------
+            // Method Declaration - Apple::print() -> void
+            JUMP __end__method____main__for__25__block__26__Apple____print
+            __method____main__for__25__block__26__Apple____print:
+               // Class Instance
+                  STACKGET __this 0
+               // Parameters
+               // Body
+                  //------------------------------------------------------
+                  // Code Block
+                     // Function Call - println(int) -> void
+                        // Arguments
+                           // Identifier - i
+                              PUSH __main__for__25__i
+                           POP __arg0
+                        // Pushing args in reverse order
+                        PUSH __arg0
+                        // *** println
+                        CALL println__int
+                        // Remove args
+                        POP __void
+                        RESPONSE __retval
+                        PUSH __retval
+                  //------------------------------------------------------
+               RETURN 0
+            __end__method____main__for__25__block__26__Apple____print:
+            // End Method Declaration - __method____main__for__25__block__26__Apple____print
+            //------------------------------------------------------------
+
+         __endclass____main__for__25__block__26__Apple:
+         // End Class Declaration - __main__for__25__block__26__Apple
+         //===============================================================
+
+         // Assignment
+            // RHS
+               // Constructor Call - Apple::Apple() -> Apple
+                  // Arguments
+                  // Pushing args in reverse order
+                  CALL __ctor____main__for__25__block__26__Apple____Apple
+                  // Remove args
+                  RESPONSE __retval
+                  PUSH __retval
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__25__block__26__apple 0
+            POP __rhs
+            ASSIGN __main__for__25__block__26__apple __rhs
+            PUSH __rhs
+         // Method Call - Apple::print() -> void
+            // LHS
+               // Identifier - apple
+                  PUSH __main__for__25__block__26__apple
+            // RHS
+            // Arguments
+            POP __obj
+            // Pushing args in reverse order
+            PUSH __obj
+            CALL __method____main__for__25__block__26__Apple____print
+            POP __void
+            // Remove args
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   // Repeat
+   JUMP __for__25
+   // End of For
+   __endfor__25:
+//------------------------------------------------------------------------
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

@@ -71,6 +71,7 @@ class SymbolTable:
         return True
 
     def lookup (self, name, params=[]):
+        # print (f"**lookup {name}**")
         for i in range(len(self.table)-1, -1, -1):
             # check scope for var 
             if (name in self.table[i]):
@@ -103,8 +104,8 @@ class SymbolTable:
                                 # ensure array dim match
                                 if params[j].type.arrayDimensions != overload.params[j].type.arrayDimensions:
                                     break 
-                                # ensure rhs is object for checking subtypes 
-                                if overload.params[j].type.type != Type.USERTYPE:
+                                # ensure types are objects; for checking subtypes 
+                                if overload.params[j].type.type != Type.USERTYPE or params[j].type.type != Type.USERTYPE:
                                     break 
                                 # make sure lhs is not a subtype of rhs 
                                 # get class declaration
@@ -113,7 +114,8 @@ class SymbolTable:
                                 steps += 1
                                 while parent != None:
                                     # print (" ", parent.type, overload.params[j].type)
-                                    if parent.type.__str__() == overload.params[j].type.__str__():
+                                    # check ids instead of __str__ because overload could be array but the parent type wouldn't be 
+                                    if parent.type.id == overload.params[j].type.id:
                                         match = True
                                         break
                                     parent = parent.pDecl 

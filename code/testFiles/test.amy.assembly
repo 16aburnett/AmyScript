@@ -425,6 +425,11 @@ __end____main____concat__char__1__char__1:
 
 //========================================================================
 // Class Declaration - __main__Matrix inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Matrix 2
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__Matrix[0] __method____main__Matrix____add__Matrix
+      ASSIGN __dtable____main__Matrix[1] __method____main__Matrix____toString
    //---------------------------------------------------------------------
    // Field - int[][] Matrix::data
    ASSIGN __field____main__Matrix__data 1
@@ -445,13 +450,8 @@ JUMP __endclass____main__Matrix
    __ctor____main__Matrix____Matrix:
       // Creating Class Instance
          MALLOC __this 4
-         // Creating Dispatch Table
-            MALLOC __dtable 2
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Matrix____add__Matrix
-            ASSIGN __dtable[1] __method____main__Matrix____toString
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Matrix
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -517,13 +517,8 @@ JUMP __endclass____main__Matrix
    __ctor____main__Matrix____Matrix__int__int:
       // Creating Class Instance
          MALLOC __this 4
-         // Creating Dispatch Table
-            MALLOC __dtable 2
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Matrix____add__Matrix
-            ASSIGN __dtable[1] __method____main__Matrix____toString
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Matrix
       // Parameters
          // Param: rows
          STACKGET __main__Matrix__Matrix__rows 0
@@ -670,13 +665,8 @@ JUMP __endclass____main__Matrix
    __ctor____main__Matrix____Matrix__int__2:
       // Creating Class Instance
          MALLOC __this 4
-         // Creating Dispatch Table
-            MALLOC __dtable 2
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Matrix____add__Matrix
-            ASSIGN __dtable[1] __method____main__Matrix____toString
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Matrix
       // Parameters
          // Param: data
          STACKGET __main__Matrix__Matrix__data 0
@@ -1661,6 +1651,273 @@ __endclass____main__Matrix:
    // Free array
    POP __array
    FREE __array
+//========================================================================
+// Class Declaration - __main__A inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__A 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__A[0] __method____main__A____setValues__int__int
+   //---------------------------------------------------------------------
+   // Field - int A::x
+   ASSIGN __field____main__A__x 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - int A::y
+   ASSIGN __field____main__A__y 2
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main__A
+   //---------------------------------------------------------------------
+   // Constructor Declaration - A::A() -> A
+   JUMP __end__ctor____main__A____A
+   __ctor____main__A____A:
+      // Creating Class Instance
+         MALLOC __this 3
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__A
+      // Parameters
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Method Call - A::setValues(int, int) -> void
+               // LHS
+                  // This keyword
+                     PUSH __this
+               // RHS
+               // Arguments
+                  // Int Literal
+                     PUSH 0
+                  // Int Literal
+                     PUSH 0
+                  POP __arg1
+                  POP __arg0
+               POP __obj
+               // Pushing args in reverse order
+               PUSH __arg1
+               PUSH __arg0
+               PUSH __obj
+               CALL __method____main__A____setValues__int__int
+               POP __void
+               // Remove args
+               POP __void
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__A____A:
+   // End Constructor Declaration - __ctor____main__A____A
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Constructor Declaration - A::A(int, int) -> A
+   JUMP __end__ctor____main__A____A__int__int
+   __ctor____main__A____A__int__int:
+      // Creating Class Instance
+         MALLOC __this 3
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__A
+      // Parameters
+         // Param: x
+         STACKGET __main__A__A__x 0
+         // Param: y
+         STACKGET __main__A__A__y 1
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Method Call - A::setValues(int, int) -> void
+               // LHS
+                  // This keyword
+                     PUSH __this
+               // RHS
+               // Arguments
+                  // Identifier - x
+                     PUSH __main__A__A__x
+                  // Identifier - y
+                     PUSH __main__A__A__y
+                  POP __arg1
+                  POP __arg0
+               POP __obj
+               // Pushing args in reverse order
+               PUSH __arg1
+               PUSH __arg0
+               PUSH __obj
+               CALL __method____main__A____setValues__int__int
+               POP __void
+               // Remove args
+               POP __void
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main__A____A__int__int:
+   // End Constructor Declaration - __ctor____main__A____A__int__int
+   //---------------------------------------------------------------------
+
+   //---------------------------------------------------------------------
+   // Method Declaration - A::setValues(int, int) -> void
+   JUMP __end__method____main__A____setValues__int__int
+   __method____main__A____setValues__int__int:
+      // Class Instance
+         STACKGET __this 0
+      // Parameters
+         // Param: x
+         STACKGET __main__A__setValues__x 1
+         // Param: y
+         STACKGET __main__A__setValues__y 2
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment
+               // RHS
+                  // Identifier - x
+                     PUSH __main__A__setValues__x
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__A__x
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Assignment
+               // RHS
+                  // Identifier - y
+                     PUSH __main__A__setValues__y
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main__A__y
+                     POP __child
+                     POP __parent
+                     POP __rhs
+                     ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+         //---------------------------------------------------------------
+      RETURN 0
+   __end__method____main__A____setValues__int__int:
+   // End Method Declaration - __method____main__A____setValues__int__int
+   //---------------------------------------------------------------------
+
+__endclass____main__A:
+// End Class Declaration - __main__A
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - A::A(int, int) -> A
+         // Arguments
+            // Int Literal
+               PUSH 7
+            // Int Literal
+               PUSH 5
+            POP __arg1
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg1
+         PUSH __arg0
+         CALL __ctor____main__A____A__int__int
+         // Remove args
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__ay 0
+   POP __rhs
+   ASSIGN __main__ay __rhs
+   PUSH __rhs
+//========================================================================
+// Function Declaration - print(A) -> void
+JUMP __end____main____print__A
+__main____print__A:
+   // Parameters
+      // Param: a
+      STACKGET __main__print__a 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - print(int) -> void
+            // Arguments
+               // Member Accessor
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__print__a
+                  // RHS
+                     PUSH __field____main__A__x
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print__int
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Function Call - print(char) -> void
+            // Arguments
+               // Char Literal
+                  PUSH ' '
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print__char
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Function Call - println(int) -> void
+            // Arguments
+               // Member Accessor
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__print__a
+                  // RHS
+                     PUSH __field____main__A__y
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__int
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____print__A:
+// End Function Declaration - __main____print__A
+//========================================================================
+
+// Function Call - print(A) -> void
+   // Arguments
+      // Identifier - ay
+         PUSH __main__ay
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** print
+   CALL __main____print__A
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

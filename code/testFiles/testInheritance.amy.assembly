@@ -425,6 +425,10 @@ __end____main____concat__char__1__char__1:
 
 //========================================================================
 // Class Declaration - __main__Department inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Department 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__Department[0] __method____main__Department____toString
    //---------------------------------------------------------------------
    // Field - char[] Department::name
    ASSIGN __field____main__Department__name 1
@@ -437,12 +441,8 @@ JUMP __endclass____main__Department
    __ctor____main__Department____Department__char__1:
       // Creating Class Instance
          MALLOC __this 2
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Department____toString
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Department
       // Parameters
          // Param: name
          STACKGET __main__Department__Department__name 0
@@ -505,6 +505,10 @@ __endclass____main__Department:
 
 //========================================================================
 // Class Declaration - __main__Course inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Course 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__Course[0] __method____main__Course____toString
    //---------------------------------------------------------------------
    // Field - char[] Course::name
    ASSIGN __field____main__Course__name 1
@@ -529,12 +533,8 @@ JUMP __endclass____main__Course
    __ctor____main__Course____Course:
       // Creating Class Instance
          MALLOC __this 5
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Course____toString
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Course
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -833,6 +833,10 @@ __endclass____main__Course:
    PUSH __retval
 //========================================================================
 // Class Declaration - __main__Person inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Person 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__Person[0] __method____main__Person____toString
    //---------------------------------------------------------------------
    // Field - char[] Person::name
    ASSIGN __field____main__Person__name 1
@@ -853,12 +857,8 @@ JUMP __endclass____main__Person
    __ctor____main__Person____Person:
       // Creating Class Instance
          MALLOC __this 4
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Person____toString
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Person
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -992,6 +992,10 @@ __endclass____main__Person:
 
 //========================================================================
 // Class Declaration - __main__Professor inherits __main__Person
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Professor 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__Professor[0] __method____main__Professor____toString
    //---------------------------------------------------------------------
    // Field - char[] Professor::name
    // Inherited from Person
@@ -1031,12 +1035,8 @@ JUMP __endclass____main__Professor
    __ctor____main__Professor____Professor__char__1__int__int:
       // Creating Class Instance
          MALLOC __this 8
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Professor____toString
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Professor
       // Parameters
          // Param: name
          STACKGET __main__Professor__Professor__name 0
@@ -1377,6 +1377,10 @@ __endclass____main__Professor:
    PUSH __retval
 //========================================================================
 // Class Declaration - __main__Student inherits __main__Person
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Student 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__Student[0] __method____main__Person____toString
    //---------------------------------------------------------------------
    // Field - char[] Student::name
    // Inherited from Person
@@ -1412,12 +1416,8 @@ JUMP __endclass____main__Student
    __ctor____main__Student____Student__char__1__int__int:
       // Creating Class Instance
          MALLOC __this 7
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Person____toString
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Student
       // Parameters
          // Param: name
          STACKGET __main__Student__Student__name 0
@@ -1720,6 +1720,10 @@ __end____main____print__Person__1:
    PUSH __retval
 //========================================================================
 // Class Declaration - __main__A inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__A 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__A[0] __method____main__A____sum
    //---------------------------------------------------------------------
    // Field - int A::x
    ASSIGN __field____main__A__x 1
@@ -1732,12 +1736,8 @@ JUMP __endclass____main__A
    __ctor____main__A____A__int:
       // Creating Class Instance
          MALLOC __this 2
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__A____sum
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__A
       // Parameters
          // Param: x
          STACKGET __main__A__A__x 0
@@ -1800,6 +1800,10 @@ __endclass____main__A:
 
 //========================================================================
 // Class Declaration - __main__B inherits __main__A
+   // Creating Dispatch Table
+      MALLOC __dtable____main__B 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__B[0] __method____main__B____sum
    //---------------------------------------------------------------------
    // Field - int B::x
    // Inherited from A
@@ -1817,12 +1821,8 @@ JUMP __endclass____main__B
    __ctor____main__B____B__int__int:
       // Creating Class Instance
          MALLOC __this 3
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__B____sum
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__B
       // Parameters
          // Param: x
          STACKGET __main__B__B__x 0
@@ -1919,6 +1919,10 @@ __endclass____main__B:
 
 //========================================================================
 // Class Declaration - __main__C inherits __main__B
+   // Creating Dispatch Table
+      MALLOC __dtable____main__C 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__C[0] __method____main__C____sum
    //---------------------------------------------------------------------
    // Field - int C::x
    // Inherited from B
@@ -1941,12 +1945,8 @@ JUMP __endclass____main__C
    __ctor____main__C____C__int__int__int:
       // Creating Class Instance
          MALLOC __this 4
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__C____sum
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__C
       // Parameters
          // Param: x
          STACKGET __main__C__C__x 0
@@ -2392,6 +2392,13 @@ __end____main____print__A__C:
    PUSH __retval
 //========================================================================
 // Class Declaration - __main__D inherits __main__B
+   // Creating Dispatch Table
+      MALLOC __dtable____main__D 4
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__D[0] __method____main__B____sum
+      ASSIGN __dtable____main__D[1] __method____main__D____sum__A__A
+      ASSIGN __dtable____main__D[2] __method____main__D____sum__C__B
+      ASSIGN __dtable____main__D[3] __method____main__D____sum__A__C
    //---------------------------------------------------------------------
    // Field - int D::x
    // Inherited from B
@@ -2410,15 +2417,8 @@ JUMP __endclass____main__D
    __ctor____main__D____D__A__A:
       // Creating Class Instance
          MALLOC __this 3
-         // Creating Dispatch Table
-            MALLOC __dtable 4
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__B____sum
-            ASSIGN __dtable[1] __method____main__D____sum__A__A
-            ASSIGN __dtable[2] __method____main__D____sum__C__B
-            ASSIGN __dtable[3] __method____main__D____sum__A__C
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__D
       // Parameters
          // Param: x
          STACKGET __main__D__D__x 0
@@ -2463,15 +2463,8 @@ JUMP __endclass____main__D
    __ctor____main__D____D__B__A:
       // Creating Class Instance
          MALLOC __this 3
-         // Creating Dispatch Table
-            MALLOC __dtable 4
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__B____sum
-            ASSIGN __dtable[1] __method____main__D____sum__A__A
-            ASSIGN __dtable[2] __method____main__D____sum__C__B
-            ASSIGN __dtable[3] __method____main__D____sum__A__C
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__D
       // Parameters
          // Param: x
          STACKGET __main__D__D__x 0
@@ -2839,6 +2832,10 @@ __endclass____main__D:
    PUSH __retval
 //========================================================================
 // Class Declaration - __main__X inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__X 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__X[0] __method____main__X____print
 // skip over class methods
 JUMP __endclass____main__X
    //---------------------------------------------------------------------
@@ -2847,12 +2844,8 @@ JUMP __endclass____main__X
    __ctor____main__X____X:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__X____print
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__X
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -2909,6 +2902,10 @@ __endclass____main__X:
 
 //========================================================================
 // Class Declaration - __main__Y inherits __main__X
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Y 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__Y[0] __method____main__Y____print
 // skip over class methods
 JUMP __endclass____main__Y
    //---------------------------------------------------------------------
@@ -2917,12 +2914,8 @@ JUMP __endclass____main__Y
    __ctor____main__Y____Y:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Y____print
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Y
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -2979,6 +2972,10 @@ __endclass____main__Y:
 
 //========================================================================
 // Class Declaration - __main__Z inherits __main__X
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Z 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__Z[0] __method____main__Z____print
 // skip over class methods
 JUMP __endclass____main__Z
    //---------------------------------------------------------------------
@@ -2987,12 +2984,8 @@ JUMP __endclass____main__Z
    __ctor____main__Z____Z:
       // Creating Class Instance
          MALLOC __this 1
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Z____print
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Z
       // Parameters
       // Body
          //---------------------------------------------------------------

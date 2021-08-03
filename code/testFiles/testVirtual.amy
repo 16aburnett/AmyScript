@@ -41,4 +41,54 @@ fun2 (h);
 
 //========================================================================
 
+function A[] fun3 (G[] g)
+{
+    return g; 
+}
 
+H[] hs = new H[3];
+
+for (int i = 0; i < sizeof (hs); ++i)
+    hs[i] = new H();
+
+for (int i = 0; i < sizeof (hs); ++i)
+    // fun3 converts hs from H[] to A[]
+    // and the subscript operator works correctly
+    // and fun1 accepts an A
+    fun1 (fun3 (hs)[i]);
+
+
+class Pizza
+{
+    constructor ()
+    {
+        int x = 0;
+        return;
+    }
+}
+
+Pizza pizza = new Pizza();
+
+
+for (int i = 0; i < 5; ++i)
+{
+    function void print ()
+    {
+        for (int i = 0; i < 20; ++i)
+        {
+            println(i);
+            break; 
+        }
+    } 
+    print();
+    class Apple 
+    {
+        public method void print ()
+        {
+            println (i);
+            // break; // causes an error because break has a class inbetween the outer loop 
+        }
+    }
+    Apple apple = new Apple();
+    apple.print ();
+}

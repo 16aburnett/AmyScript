@@ -198,6 +198,9 @@ __endOfLibrary:
 
 //========================================================================
 // Class Declaration - __main__Person inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Person 0
+      // Populate Dispatch Table
    //---------------------------------------------------------------------
    // Field - char[] Person::name
    ASSIGN __field____main__Person__name 1
@@ -214,11 +217,8 @@ JUMP __endclass____main__Person
    __ctor____main__Person____Person__char__1__int:
       // Creating Class Instance
          MALLOC __this 3
-         // Creating Dispatch Table
-            MALLOC __dtable 0
-            // Populate Dispatch Table
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Person
       // Parameters
          // Param: name
          STACKGET __main__Person__Person__name 0

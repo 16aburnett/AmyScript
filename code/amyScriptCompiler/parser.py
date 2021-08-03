@@ -649,6 +649,7 @@ class Parser:
     def returnStatement (self):
         self.enter ("returnStatement")
 
+        token = self.tokens[self.currentToken]
         self.match ("returnStatement", "RETURN")
 
         # optionally an expression
@@ -662,7 +663,7 @@ class Parser:
 
         self.leave ("returnStatement")
 
-        return ReturnStatementNode (expr)
+        return ReturnStatementNode (token, expr)
 
     # ====================================================================
     # break statement
@@ -671,6 +672,7 @@ class Parser:
     def breakStatement (self):
         self.enter ("breakStatement")
 
+        token = self.tokens[self.currentToken]
         self.match ("breakStatement", "BREAK")
 
         # could give error message here saying
@@ -679,7 +681,7 @@ class Parser:
 
         self.leave ("breakStatement")
 
-        return BreakStatementNode ()
+        return BreakStatementNode (token)
 
     # ====================================================================
     # continue statement
@@ -688,6 +690,7 @@ class Parser:
     def continueStatement (self):
         self.enter ("continueStatement")
 
+        token = self.tokens[self.currentToken]
         self.match ("continueStatement", "CONTINUE")
 
         # could give error message here saying
@@ -696,7 +699,7 @@ class Parser:
 
         self.leave ("continueStatement")
 
-        return ContinueStatementNode ()
+        return ContinueStatementNode (token)
 
     # ====================================================================
     # expression

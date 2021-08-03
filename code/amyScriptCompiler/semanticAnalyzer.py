@@ -25,6 +25,8 @@ class SymbolTableVisitor (ASTVisitor):
         self.checkDeclaration = True
         # works as a stack for nested class declarations
         self.containingClass = []
+        self.containingFunction = [] 
+        self.containingLoop = []
 
     def visitProgramNode (self, node):
         for codeunit in node.codeunits:
@@ -108,14 +110,35 @@ class SymbolTableVisitor (ASTVisitor):
             print ()
             self.wasSuccessful = False
 
+        # containing function keeps track of what function 
+        # we're currently in 
+        # this is helpful for ensuring RETURN is in a function
+        # and for ensuring the value being returned matches the function's return type 
+        self.containingFunction += [node]
+        # since we are now in a function, 
+        # we want outer loops to be ignored 
+        # so clear the containing loop state and restore it after the function
+        containingLoop = self.containingLoop
+        self.containingLoop = []
+
         node.body.accept (self)
+
+        self.containingFunction.pop ()
+        # restore containing loop state
+        self.containingLoop = containingLoop
 
 
     def visitClassDeclarationNode(self, node):
+
         wasSuccessful = self.typesTable.insert (node)
 
         # save the current containing class
         self.containingClass += [node]
+        # since we are now in a class, 
+        # we want outer loops to be ignored 
+        # so clear the containing loop state and restore it after the class
+        containingLoop = self.containingLoop
+        self.containingLoop = []
 
         if (not wasSuccessful):
             varname = node.id 
@@ -218,6 +241,27 @@ class SymbolTableVisitor (ASTVisitor):
         # self.table.exitScope ()
         # self.typesTable.exitScope ()
 
+        # visit method bodies
+        for method in node.methods:
+            if not method.isInherited:
+                for p in method.params:
+                    self.parameters += [p]
+                # containing function keeps track of what function 
+                # we're currently in 
+                # this is helpful for ensuring RETURN is in a function
+                # and for ensuring the value being returned matches the function's return type 
+                self.containingFunction += [method]
+                method.body.accept (self)
+                self.containingFunction.pop ()
+
+        # visit ctor bodies
+        for ctor in node.constructors:
+            for p in ctor.params:
+                self.parameters += [p]
+            self.containingFunction += [ctor]
+            ctor.body.accept (self)
+            self.containingFunction.pop ()
+
         # Generating Dispatch table entries and their order 
 
         # any function in this class who's signature matches a function in parentVirtual 
@@ -263,6 +307,8 @@ class SymbolTableVisitor (ASTVisitor):
 
         # remove current containing class (going out of scope)
         self.containingClass.pop ()
+        # restore containing loop state
+        self.containingLoop = containingLoop
 
     def visitFieldDeclarationNode (self, node):
         node.type.accept (self)
@@ -288,7 +334,6 @@ class SymbolTableVisitor (ASTVisitor):
         for p in node.params:
             # visit type to ensure valid type 
             p.type.accept (self)
-            self.parameters += [p]
 
         # create signature for node
         signature = [f"{node.id}("]
@@ -319,8 +364,7 @@ class SymbolTableVisitor (ASTVisitor):
             print ()
             self.wasSuccessful = False
 
-        if not node.isInherited:
-            node.body.accept (self)
+        # body is explored in class dec 
 
     def visitConstructorDeclarationNode (self, node):
 
@@ -328,7 +372,6 @@ class SymbolTableVisitor (ASTVisitor):
         for p in node.params:
             # visit type to ensure valid type 
             p.type.accept (self)
-            self.parameters += [p]
 
         # create signature for node
         signature = [f"{node.parentClass.id}::{node.parentClass.id}("]
@@ -350,7 +393,7 @@ class SymbolTableVisitor (ASTVisitor):
             print ()
             self.wasSuccessful = False
 
-        node.body.accept (self)
+        # body is explored in class dec
         
 
     def visitStatementNode (self, node):
@@ -398,7 +441,12 @@ class SymbolTableVisitor (ASTVisitor):
         node.init.accept (self)
         node.cond.accept (self)
         node.update.accept (self)
+
+        # containing loop keeps track of what loop we're currently in 
+        # this is helpful for ensuring CONTINUE and BREAK are in a loop
+        self.containingLoop += [node]
         node.body.accept (self)
+        self.containingLoop.pop ()
 
         if node.elseStmt:
             node.elseStmt.accept (self)
@@ -412,7 +460,12 @@ class SymbolTableVisitor (ASTVisitor):
         self.typesTable.enterScope ()
 
         node.cond.accept (self)
+
+        # containing loop keeps track of what loop we're currently in 
+        # this is helpful for ensuring CONTINUE and BREAK are in a loop
+        self.containingLoop += [node]
         node.body.accept (self)
+        self.containingLoop.pop ()
 
         self.typesTable.exitScope ()
         self.table.exitScope ()
@@ -424,17 +477,104 @@ class SymbolTableVisitor (ASTVisitor):
     def visitReturnStatementNode (self, node):
         if node.expr != None:
             node.expr.accept (self)
-        # *** make sure the type is that same as a function
-        # *** make sure it is in a function
+        # ensure return statement is in a function
+        if len(self.containingFunction) == 0:
+            print (f"Semantic Error: Return statement must be in a function or method")
+            print (f"   Located on line {node.token.line}: column {node.token.column}")
+            print (f"   line:")
+            print (f"      {self.lines[node.token.line-1][:]}")
+            print (f"      ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False 
+            return 
+        # ensure there is no return value if in a constructor 
+        if isinstance (self.containingFunction[-1], ConstructorDeclarationNode) and node.expr != None:
+            print (f"Semantic Error: Cannot return a value in a constructor")
+            print (f"   Located on line {node.token.line}: column {node.token.column}")
+            print (f"   line:")
+            print (f"      {self.lines[node.token.line-1][:]}")
+            print (f"      ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False 
+            return 
+        # ensure return value matches the return type of the function 
+        # this also checks for array/object vs null
+        # and inheritance subtypes 
+        if node.expr != None:
+            # ensure types work 
+            isDiffType = self.containingFunction[-1].type.__str__() != node.expr.type.__str__()
+            isDiffDimensions = self.containingFunction[-1].type.arrayDimensions != node.expr.type.arrayDimensions 
+            isArrayNullOp = self.containingFunction[-1].type.arrayDimensions > 0 and node.expr.type.type == Type.NULL
+            isObjectNullOp = self.containingFunction[-1].type.type == Type.USERTYPE and self.containingFunction[-1].type.arrayDimensions == 0 and node.expr.type.type == Type.NULL
+            # lhs is object 
+            isSubtype = False 
+            if self.containingFunction[-1].type.type == Type.USERTYPE and node.expr.type.type == Type.USERTYPE:
+                parent = node.expr.type.decl
+                # print (parent.type.id, self.containingFunction[-1].type.id)
+                if parent.type.id == self.containingFunction[-1].type.id:
+                    # print ("match!")
+                    isSubtype = True
+                    parent = None
+                else:
+                    parent = parent.pDecl 
+                while parent != None:
+                    # print (parent.type.id, self.containingFunction[-1].type.id)
+                    if parent.type.id == self.containingFunction[-1].type.id:
+                        # print ("match!")
+                        isSubtype = True
+                        break 
+                    parent = parent.pDecl
+                isDiffType = not isSubtype
+            if (not isArrayNullOp and not isObjectNullOp and (isDiffType or isDiffDimensions)):
+                print (f"Semantic Error: Return value does not match function's return type")
+                print (f"   Located on line {node.token.line}: column {node.token.column}")
+                print (f"   line:")
+                print (f"      {self.lines[node.token.line-1][:]}")
+                print (f"      ",end="")
+                for i in range(node.token.column-1):
+                    print (" ", end="")
+                print ("^")
+                print (f"   Expected: {self.containingFunction[-1].type}")
+                print (f"   Actual:   {node.expr.type}")
+                print ()
+                self.wasSuccessful = False 
+                return 
 
     def visitContinueStatementNode (self, node):
-        # *** make sure it is in a loop
-        # *** save loop's jump point in loop node ***
-        pass
+        # ensure continue is in a loop
+        if len(self.containingLoop) == 0:
+            print (f"Semantic Error: Continue statement must be in a loop body")
+            print (f"   Located on line {node.token.line}: column {node.token.column}")
+            print (f"   line:")
+            print (f"      {self.lines[node.token.line-1][:]}")
+            print (f"      ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False 
+            return 
 
     def visitBreakStatementNode (self, node):
-        # *** make sure it is in a loop
-        pass
+        # ensure break is in a loop
+        if len(self.containingLoop) == 0:
+            print (f"Semantic Error: Break statement must be in a loop body")
+            print (f"   Located on line {node.token.line}: column {node.token.column}")
+            print (f"   line:")
+            print (f"      {self.lines[node.token.line-1][:]}")
+            print (f"      ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False 
+            return 
 
     def visitCodeBlockNode (self, node):
         self.table.enterScope ()
@@ -467,7 +607,7 @@ class SymbolTableVisitor (ASTVisitor):
         node.type = node.lhs.type
 
         # ensure types work 
-        isDiffType = node.lhs.type.type.__str__() != node.rhs.type.type.__str__()
+        isDiffType = node.lhs.type.__str__() != node.rhs.type.__str__()
         isDiffDimensions = node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions 
         isArrayNullOp = node.lhs.type.arrayDimensions > 0 and node.rhs.type.type == Type.NULL
         isObjectNullOp = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and node.rhs.type.type == Type.NULL
@@ -489,9 +629,7 @@ class SymbolTableVisitor (ASTVisitor):
                     isSubtype = True
                     break 
                 parent = parent.pDecl
-            if not isSubtype:
-                # print ("not a subtype")
-                isDiffType = True
+            isDiffType = not isSubtype
         if (not isArrayNullOp and not isObjectNullOp and (isDiffType or isDiffDimensions)):
             print (f"Semantic Error: mismatching types in assign")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
@@ -720,6 +858,7 @@ class SymbolTableVisitor (ASTVisitor):
             self.wasSuccessful = False
 
     def visitSubscriptExpressionNode (self, node):
+
         if self.checkDeclaration:
             node.lhs.accept (self)
 
@@ -741,6 +880,8 @@ class SymbolTableVisitor (ASTVisitor):
         node.type = TypeSpecifierNode (node.lhs.type.type, node.lhs.type.id, None)
 
         node.type.arrayDimensions = node.lhs.type.arrayDimensions - 1
+
+        node.type.accept (self)
 
         node.offset.accept (self)
 
