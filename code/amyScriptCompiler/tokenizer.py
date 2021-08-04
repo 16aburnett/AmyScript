@@ -166,6 +166,8 @@ def tokenize(code):
                 kind = "METHOD"
             elif (lexeme == "constructor"):
                 kind = "CONSTRUCTOR"
+            elif (lexeme == "enum"):
+                kind = "ENUM"
             elif (lexeme == "new"):
                 kind = "NEW"
             elif (lexeme == "free"):

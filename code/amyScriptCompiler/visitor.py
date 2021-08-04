@@ -51,6 +51,10 @@ class ASTVisitor (ABC):
         pass
 
     @abstractmethod
+    def visitEnumDeclarationNode (self, node):
+        pass
+
+    @abstractmethod
     def visitStatementNode (self, node):
         pass
 
@@ -405,6 +409,20 @@ class PrintVisitor (ASTVisitor):
             node.body.accept (self)
 
         self.level -= 2
+
+    def visitEnumDeclarationNode (self, node):
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Enum: {node.id}\n"]
+
+        self.level += 1
+
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Fields:\n"]
+        for field in node.fields:
+            self.printSpaces (self.level)
+            self.outputstrings += [f"{field.id}\n"]
+
+        self.level -= 1
 
     def visitStatementNode (self, node):
         pass

@@ -394,7 +394,30 @@ class SymbolTableVisitor (ASTVisitor):
             self.wasSuccessful = False
 
         # body is explored in class dec
+
+    def visitEnumDeclarationNode (self, node):
+
+        wasSuccessful = self.typesTable.insert (node)
+
+        if (not wasSuccessful):
+            varname = node.id 
+            originalDec = self.typesTable.lookup (varname)
+            print (f"Semantic Error: Redeclaration of enum '{varname}'")
+            print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
+            print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+            print ()
+            self.wasSuccessful = False
+
+        pDecl = self.typesTable.lookup (node.parent)
+        if pDecl == None:
+            print (f"Semantic Error: '{node.parent}' does not name a type")
+            print (f"   On line {node.token.line}: column {node.token.column}")
+            print ()
+            self.wasSuccessful = False
+        # save parent decl 
+        node.pDecl = pDecl 
         
+        # *** ensure each enum value is unique 
 
     def visitStatementNode (self, node):
         pass
@@ -613,7 +636,8 @@ class SymbolTableVisitor (ASTVisitor):
         isObjectNullOp = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and node.rhs.type.type == Type.NULL
         # lhs is object 
         isSubtype = False 
-        if node.lhs.type.type == Type.USERTYPE and node.rhs.type.type == Type.USERTYPE:
+        # ensure both are objects and that rhs isn't Object
+        if node.lhs.type.type == Type.USERTYPE and node.rhs.type.type == Type.USERTYPE and node.rhs.type.decl != None:
             parent = node.rhs.type.decl
             # print (parent.type.id, node.lhs.type.id)
             if parent.type.id == node.lhs.type.id:
@@ -691,7 +715,7 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   {node.lhs.type} != {node.rhs.type}")
             print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      {self.lines[node.lineNumber-1][:]}")
             print (f"      ",end="")
             for i in range(node.columnNumber-1):
                 print (" ", end="")
@@ -710,12 +734,13 @@ class SymbolTableVisitor (ASTVisitor):
         isArrayNullOp = node.lhs.type.arrayDimensions > 0 and node.rhs.type.type == Type.NULL
         isObjectNullOp = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and node.rhs.type.type == Type.NULL
         if (not isArrayNullOp and not isObjectNullOp and (node.lhs.type.type != node.rhs.type.type
-                or node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions)):
+                or node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions
+                or node.lhs.type.id != node.rhs.type.id)):
             print (f"Semantic Error: mismatching types in equality")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   {node.lhs.type} != {node.rhs.type}")
             print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      {self.lines[node.lineNumber-1][:]}")
             print (f"      ",end="")
             for i in range(node.columnNumber-1):
                 print (" ", end="")
@@ -740,7 +765,7 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   {node.lhs.type} != {node.rhs.type}")
             print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      {self.lines[node.lineNumber-1][:]}")
             print (f"      ",end="")
             for i in range(node.columnNumber-1):
                 print (" ", end="")
@@ -765,7 +790,7 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   {node.lhs.type} != {node.rhs.type}")
             print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      {self.lines[node.lineNumber-1][:]}")
             print (f"      ",end="")
             for i in range(node.columnNumber-1):
                 print (" ", end="")
@@ -868,7 +893,7 @@ class SymbolTableVisitor (ASTVisitor):
                 print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
                 print (f"   type: {node.lhs.type}")
                 print (f"   line:")
-                print (f"      {self.lines[node.lineNumber-1][:-1]}")
+                print (f"      {self.lines[node.lineNumber-1][:]}")
                 print (f"      ",end="")
                 for i in range(node.columnNumber-1):
                     print (" ", end="")
@@ -884,6 +909,24 @@ class SymbolTableVisitor (ASTVisitor):
         node.type.accept (self)
 
         node.offset.accept (self)
+
+        # ensure offset is type int or enum 
+        isInt = node.offset.type.type == Type.INT and node.offset.type.arrayDimensions == 0
+        isEnum = False
+        typedecl = self.typesTable.lookup(node.offset.type.id)
+        isEnum = typedecl and isinstance (typedecl, EnumDeclarationNode)
+        if not (isInt or isEnum):
+            print (f"Semantic Error: Offset of subscript operator must be an integer or enum")
+            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   type: {node.offset.type}")
+            print (f"   line:")
+            print (f"      {self.lines[node.lineNumber-1][:]}")
+            print (f"      ",end="")
+            for i in range(node.columnNumber-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
 
     def visitFunctionCallExpressionNode (self, node):
         # eval arguments to get types 
@@ -924,6 +967,61 @@ class SymbolTableVisitor (ASTVisitor):
 
     # not evaluated at this stage 
     def visitMemberAccessorExpressionNode (self, node):
+
+        # check if lhs is a typename 
+        if isinstance (node.lhs, IdentifierExpressionNode):
+            typedecl = self.typesTable.lookup (node.lhs.id)
+            # lhs is not a variable - its a type 
+            if typedecl:
+                # mark this as a static access
+                node.isstatic = True 
+                # print ("LHS IS A TYPENAME")
+                # enums 
+                if isinstance (typedecl, EnumDeclarationNode):
+                    # the result of the enum member access is the enum
+                    node.type = typedecl.type 
+                    # ensure rhs is an identifier
+                    if not isinstance (node.rhs, IdentifierExpressionNode):
+                        print (f"Semantic Error: RHS of dot operator must be an indentifier")
+                        print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+                        print (f"   line:")
+                        print (f"      {self.lines[node.lineNumber-1][:]}")
+                        print (f"      ",end="")
+                        for i in range(node.columnNumber-1):
+                            print (" ", end="")
+                        print ("^")
+                        print ()
+                        self.wasSuccessful = False
+                        return
+                    # ensure rhs is a valid member of the enum 
+                    for field in typedecl.fields:
+                        # found matching member
+                        if field.id == node.rhs.id:
+                            # print (f"{node.rhs.id} is a valid member of {node.lhs.id}")
+                            # save member declaration 
+                            node.decl = field 
+                            break
+                    # did not find member
+                    else:
+                        print (f"Semantic Error: '{node.rhs.id}' is not a member of '{node.lhs.id}'")
+                        print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+                        print (f"   line:")
+                        print (f"      {self.lines[node.lineNumber-1][:]}")
+                        print (f"      ",end="")
+                        for i in range(node.columnNumber-1):
+                            print (" ", end="")
+                        print ("^")
+                        print ()
+                        self.wasSuccessful = False
+                        return
+                    return 
+                elif isinstance (typedecl, ClassDeclarationNode):
+                    print (f"ERROR: STATIC CLASS MEMBER ACCESS NOT IMPLEMENTED YET")
+                    self.wasSuccessful = False
+                    return 
+
+        # non-static access
+
         node.lhs.accept (self)
         lhsdecl = self.typesTable.lookup (node.lhs.type.id)
         # make sure lhs is a class dec
@@ -932,7 +1030,7 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"   LHS Type: {node.lhs.type}")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      {self.lines[node.lineNumber-1][:]}")
             print (f"      ",end="")
             for i in range(node.columnNumber-1):
                 print (" ", end="")
@@ -971,7 +1069,7 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"Semantic Error: '{rhsid}' is not a member of '{lhsdecl.id}'")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
+            print (f"      {self.lines[node.lineNumber-1][:]}")
             print (f"      ",end="")
             for i in range(node.columnNumber-1):
                 print (" ", end="")

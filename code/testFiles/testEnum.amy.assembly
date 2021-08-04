@@ -1,0 +1,642 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+
+jump __endOfLibrary
+
+//========================================================================
+// Global Variables
+
+    assign __null 0
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+exit:
+    halt
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//------------------------------------------------------------------------
+// Enum Declaration - 
+   ASSIGN __enum____main____Color____red 0
+   ASSIGN __enum____main____Color____green 1
+   ASSIGN __enum____main____Color____blue 2
+// End Enum Declaration - 
+//------------------------------------------------------------------------
+
+// Assignment
+   // RHS
+      // Array Constructor
+         // Elements
+         // String Literal
+            MALLOC __str 3
+            ASSIGN __str[0] 'r'
+            ASSIGN __str[1] 'e'
+            ASSIGN __str[2] 'd'
+            PUSH __str
+         // String Literal
+            MALLOC __str 5
+            ASSIGN __str[0] 'g'
+            ASSIGN __str[1] 'r'
+            ASSIGN __str[2] 'e'
+            ASSIGN __str[3] 'e'
+            ASSIGN __str[4] 'n'
+            PUSH __str
+         // String Literal
+            MALLOC __str 4
+            ASSIGN __str[0] 'b'
+            ASSIGN __str[1] 'l'
+            ASSIGN __str[2] 'u'
+            ASSIGN __str[3] 'e'
+            PUSH __str
+         POP __elem2
+         POP __elem1
+         POP __elem0
+         MALLOC __list 3
+         ASSIGN __list[0] __elem0
+         ASSIGN __list[1] __elem1
+         ASSIGN __list[2] __elem2
+         PUSH __list
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__colorStrings 0
+   POP __rhs
+   ASSIGN __main__colorStrings __rhs
+   PUSH __rhs
+//========================================================================
+// Function Declaration - print(Color) -> void
+JUMP __end____main____print__Color
+__main____print__Color:
+   // Parameters
+      // Param: c
+      STACKGET __main__print__c 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - print(char[]) -> void
+            // Arguments
+               // Subscript
+                  // LHS
+                     // Identifier - colorStrings
+                        PUSH __main__colorStrings
+                  // OFFSET
+                     // Identifier - c
+                        PUSH __main__print__c
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____print__Color:
+// End Function Declaration - __main____print__Color
+//========================================================================
+
+//========================================================================
+// Function Declaration - println(Color) -> void
+JUMP __end____main____println__Color
+__main____println__Color:
+   // Parameters
+      // Param: c
+      STACKGET __main__println__c 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // Subscript
+                  // LHS
+                     // Identifier - colorStrings
+                        PUSH __main__colorStrings
+                  // OFFSET
+                     // Identifier - c
+                        PUSH __main__println__c
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____println__Color:
+// End Function Declaration - __main____println__Color
+//========================================================================
+
+//------------------------------------------------------------------------
+// Enum Declaration - 
+   ASSIGN __enum____main____Type____INT 0
+   ASSIGN __enum____main____Type____FLOAT 1
+   ASSIGN __enum____main____Type____CHAR 2
+// End Enum Declaration - 
+//------------------------------------------------------------------------
+
+// Assignment
+   // RHS
+      // Array Constructor
+         // Elements
+         // String Literal
+            MALLOC __str 3
+            ASSIGN __str[0] 'I'
+            ASSIGN __str[1] 'N'
+            ASSIGN __str[2] 'T'
+            PUSH __str
+         // String Literal
+            MALLOC __str 5
+            ASSIGN __str[0] 'F'
+            ASSIGN __str[1] 'L'
+            ASSIGN __str[2] 'O'
+            ASSIGN __str[3] 'A'
+            ASSIGN __str[4] 'T'
+            PUSH __str
+         // String Literal
+            MALLOC __str 4
+            ASSIGN __str[0] 'C'
+            ASSIGN __str[1] 'H'
+            ASSIGN __str[2] 'A'
+            ASSIGN __str[3] 'R'
+            PUSH __str
+         POP __elem2
+         POP __elem1
+         POP __elem0
+         MALLOC __list 3
+         ASSIGN __list[0] __elem0
+         ASSIGN __list[1] __elem1
+         ASSIGN __list[2] __elem2
+         PUSH __list
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__typeStrings 0
+   POP __rhs
+   ASSIGN __main__typeStrings __rhs
+   PUSH __rhs
+//========================================================================
+// Function Declaration - print(Type) -> void
+JUMP __end____main____print__Type
+__main____print__Type:
+   // Parameters
+      // Param: c
+      STACKGET __main__print__c 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - print(char[]) -> void
+            // Arguments
+               // Subscript
+                  // LHS
+                     // Identifier - typeStrings
+                        PUSH __main__typeStrings
+                  // OFFSET
+                     // Identifier - c
+                        PUSH __main__print__c
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____print__Type:
+// End Function Declaration - __main____print__Type
+//========================================================================
+
+//========================================================================
+// Function Declaration - println(Type) -> void
+JUMP __end____main____println__Type
+__main____println__Type:
+   // Parameters
+      // Param: c
+      STACKGET __main__println__c 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // Subscript
+                  // LHS
+                     // Identifier - typeStrings
+                        PUSH __main__typeStrings
+                  // OFFSET
+                     // Identifier - c
+                        PUSH __main__println__c
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____println__Type:
+// End Function Declaration - __main____println__Type
+//========================================================================
+
+// Assignment
+   // RHS
+      // Enum Member Accessor - Color.green
+         PUSH __enum____main____Color____green
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__c 0
+   POP __rhs
+   ASSIGN __main__c __rhs
+   PUSH __rhs
+// Function Call - println(Color) -> void
+   // Arguments
+      // Identifier - c
+         PUSH __main__c
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL __main____println__Color
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Assignment
+   // RHS
+      // Enum Member Accessor - Type.CHAR
+         PUSH __enum____main____Type____CHAR
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__t 0
+   POP __rhs
+   ASSIGN __main__t __rhs
+   PUSH __rhs
+// Function Call - println(Type) -> void
+   // Arguments
+      // Identifier - t
+         PUSH __main__t
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL __main____println__Type
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+//------------------------------------------------------------------------
+// If-Statement
+   // Condition
+      // Equal
+         // LHS
+            // Identifier - c
+               PUSH __main__c
+         // RHS
+            // Enum Member Accessor - Color.red
+               PUSH __enum____main____Color____red
+         POP __rhs
+         POP __lhs
+         EQUAL __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __elif__4x0
+   // Body
+      // Function Call - println(char[]) -> void
+         // Arguments
+            // String Literal
+               MALLOC __str 9
+               ASSIGN __str[0] 'i'
+               ASSIGN __str[1] 't'
+               ASSIGN __str[2] ' '
+               ASSIGN __str[3] 'i'
+               ASSIGN __str[4] 's'
+               ASSIGN __str[5] ' '
+               ASSIGN __str[6] 'r'
+               ASSIGN __str[7] 'e'
+               ASSIGN __str[8] 'd'
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         // *** println
+         CALL println__char__1
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   JUMP __endif__4
+   //---------------------------------------------------------------------
+   // Elif-Statement
+   __elif__4x0:
+      // Condition
+      // Equal
+         // LHS
+            // Identifier - c
+               PUSH __main__c
+         // RHS
+            // Enum Member Accessor - Color.green
+               PUSH __enum____main____Color____green
+         POP __rhs
+         POP __lhs
+         EQUAL __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __elif__4x1
+      // Body
+      // Function Call - println(char[]) -> void
+         // Arguments
+            // String Literal
+               MALLOC __str 11
+               ASSIGN __str[0] 'i'
+               ASSIGN __str[1] 't'
+               ASSIGN __str[2] ' '
+               ASSIGN __str[3] 'i'
+               ASSIGN __str[4] 's'
+               ASSIGN __str[5] ' '
+               ASSIGN __str[6] 'g'
+               ASSIGN __str[7] 'r'
+               ASSIGN __str[8] 'e'
+               ASSIGN __str[9] 'e'
+               ASSIGN __str[10] 'n'
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         // *** println
+         CALL println__char__1
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      JUMP __endif__4
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Elif-Statement
+   __elif__4x1:
+      // Condition
+      // Equal
+         // LHS
+            // Identifier - c
+               PUSH __main__c
+         // RHS
+            // Enum Member Accessor - Color.blue
+               PUSH __enum____main____Color____blue
+         POP __rhs
+         POP __lhs
+         EQUAL __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endif__4
+      // Body
+      // Function Call - println(char[]) -> void
+         // Arguments
+            // String Literal
+               MALLOC __str 10
+               ASSIGN __str[0] 'i'
+               ASSIGN __str[1] 't'
+               ASSIGN __str[2] ' '
+               ASSIGN __str[3] 'i'
+               ASSIGN __str[4] 's'
+               ASSIGN __str[5] ' '
+               ASSIGN __str[6] 'b'
+               ASSIGN __str[7] 'l'
+               ASSIGN __str[8] 'u'
+               ASSIGN __str[9] 'e'
+               PUSH __str
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         // *** println
+         CALL println__char__1
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      JUMP __endif__4
+   //---------------------------------------------------------------------
+   // End of if
+   __endif__4:
+//------------------------------------------------------------------------
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

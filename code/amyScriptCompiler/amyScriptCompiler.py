@@ -136,6 +136,21 @@ class AmyScriptCompiler:
         printCharFunc.signature = signature
         symbolTableVisitor.table.insert (printCharFunc)
 
+        #  void print (Enum e);
+        param0 = ParameterNode(TypeSpecifierNode (Type.USERTYPE, "Enum", None), "e", None)
+        printEnumFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "print", None, [param0], None)
+        printEnumFunc.scopeName = "print__Enum"
+        # create signature for node
+        signature = [f"{printEnumFunc.id}("]
+        if len(printEnumFunc.params) > 0:
+            signature += [printEnumFunc.params[0].type.__str__()]
+        for i in range(1, len(printEnumFunc.params)):
+            signature += [f", {printEnumFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printEnumFunc.signature = signature
+        symbolTableVisitor.table.insert (printEnumFunc)
+
         #  void println (char[] str);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
         param0.type.arrayDimensions += 1
@@ -196,6 +211,21 @@ class AmyScriptCompiler:
         signature = "".join(signature)
         printCharFunc.signature = signature
         symbolTableVisitor.table.insert (printCharFunc)
+
+        #  void println (Enum e);
+        param0 = ParameterNode(TypeSpecifierNode (Type.USERTYPE, "Enum", None), "e", None)
+        printEnumFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [param0], None)
+        printEnumFunc.scopeName = "println__Enum"
+        # create signature for node
+        signature = [f"{printEnumFunc.id}("]
+        if len(printEnumFunc.params) > 0:
+            signature += [printEnumFunc.params[0].type.__str__()]
+        for i in range(1, len(printEnumFunc.params)):
+            signature += [f", {printEnumFunc.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        printEnumFunc.signature = signature
+        symbolTableVisitor.table.insert (printEnumFunc)
 
         #  void println ();
         printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [], None)
@@ -313,10 +343,18 @@ class AmyScriptCompiler:
         symbolTableVisitor.table.insert (builtinFunction)
 
 
+        # LIBRARY OBJECTS
+
         # create default object type 
         objClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Object", None), "Object", None, [], [], [], [], [])
         objClass.scopeName = "__main__Object"
         symbolTableVisitor.typesTable.insert (objClass, "Object")
+
+        # create default object type 
+        enumClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Enum", None), "Enum", None, ["Object"], [], [], [], [])
+        enumClass.scopeName = "__main__Enum"
+        symbolTableVisitor.typesTable.insert (enumClass, "Enum")
+
 
         # Check AST
         # checks for 

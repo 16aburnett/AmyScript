@@ -1,0 +1,92 @@
+// Testing Forward Declarations and 
+// Author: Amy Burnett
+//========================================================================
+
+// forward declarations 
+class Node;
+class Visitor; 
+
+//========================================================================
+
+//enum Type
+//{
+//    INT,
+//    FLOAT,
+//    CHAR
+//}
+
+//========================================================================
+
+class Node 
+{
+    virtual void accept (Visitor visitor)
+    {
+        visitor.visit (this);
+    }
+}
+
+//========================================================================
+
+class ProgramNode inherits Node
+{
+    public field Node[] codeunits;
+
+    constructor (Node[] codeunits)
+    {
+        this.codeunits = codeunits; 
+    }
+
+    virtual void accept (Visitor visitor)
+    {
+        visitor.visit (this);
+    }
+}
+
+//========================================================================
+
+class VariableDeclarationNode inherits Node
+{
+    //public field Type type; 
+    public field char[] id; 
+
+    constructor (char[] id)
+    {
+        //this.type = type; 
+        this.id = id; 
+    }
+
+    virtual void accept (Visitor visitor)
+    {
+        visitor.visit (this);
+    }
+}
+
+//========================================================================
+
+class Visitor 
+{
+    virtual void visit (Node node) {}
+    virtual void visit (ProgramNode node) {}
+    virtual void visit (VariableDeclarationNode node) {}
+}
+
+//========================================================================
+
+class PrintVisitor inherits Visitor  
+{
+    virtual void visit (Node node) {}
+
+    virtual void visit (ProgramNode node) 
+    {
+        println ("Program Node");
+        for (int i = 0; i < sizeof (node.codeunits); ++i)
+            node.codeunits[i].accept (this);
+    }
+
+    virtual void visit (VariableDeclarationNode node) 
+    {
+        println (node.id);
+    }
+}
+
+//========================================================================

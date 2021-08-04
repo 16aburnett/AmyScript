@@ -461,8 +461,28 @@ class CodeGenVisitor (ASTVisitor):
 
         # remove scope level 
         self.scopeNames.pop ()
-        
 
+    def visitEnumDeclarationNode (self, node):
+
+        self.printSubDivider ()
+        self.printComment (f"Enum Declaration - {node.scopeName}")
+
+        self.indentation += 1
+
+        i = 0
+        for field in node.fields:
+            # variable names are modified by its scope 
+            scopeName = ["__enum__", "".join (self.scopeNames), "____", node.id, "____", field.id]
+            field.scopeName = "".join(scopeName)
+            self.printCode (f"ASSIGN {field.scopeName} {i}")
+            i += 1
+
+        self.indentation -= 1
+
+        self.printComment (f"End Enum Declaration - {node.scopeName}")
+        self.printSubDivider ()
+        self.printNewline ()
+        
     def visitStatementNode (self, node):
         pass
 
@@ -1481,6 +1501,17 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitMemberAccessorExpressionNode (self, node):
+
+        # static calls 
+        # lhs is not an identifier 
+        if node.isstatic:
+            # enum 
+            self.printComment (f"Enum Member Accessor - {node.lhs.id}.{node.rhs.id}")
+            self.indentation += 1
+            self.printCode (f"PUSH {node.decl.scopeName}")
+            self.indentation -= 1
+            return 
+
         self.printComment ("Member Accessor")
 
         self.indentation += 1

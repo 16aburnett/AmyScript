@@ -256,6 +256,31 @@ class ConstructorDeclarationNode (DeclarationNode):
 
 # ========================================================================
 
+class EnumDeclarationNode (CodeUnitNode):
+    
+    def __init__(self, type, id, token, fields):
+        self.type = type
+        self.type.decl = self 
+        self.id = id
+        self.token = token
+        self.fields = fields 
+        
+        self.parent = "Enum"
+        self.pDecl = None 
+
+        self.scopeName = ""
+        self.dtableScopeName = ""
+
+        self.isForwardDeclaration = False 
+
+        self.lineNumber = 0
+        self.columnNumber = 0
+
+    def accept (self, visitor):
+        visitor.visitEnumDeclarationNode (self)
+
+# ========================================================================
+
 class StatementNode (CodeUnitNode):
     
     def __init__(self):
@@ -678,6 +703,8 @@ class MemberAccessorExpressionNode (ExpressionNode):
         # id is the assembly representation of the function 
         # for class method calls 
         self.id = ""
+
+        self.isstatic = False
 
         self.decl = None
 

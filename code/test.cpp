@@ -127,6 +127,25 @@ void func (B* a)
     a->print ();
 }
 
+class Pie; 
+
+class Cake
+{
+    public:
+    void print (Pie pie);
+};
+
+class Pie
+{
+    public:
+    int value;
+};
+
+void Cake::print (Pie pie)
+{
+    std::cout << pie.value << std::endl;
+}
+
 //========================================================================
 
 int 
@@ -141,6 +160,12 @@ main()
     std::cout << sum (c, c, c) << std::endl; 
 
     func ((B*)c);
+
+    Pie p;
+    p.value = 7;
+
+    Cake cake;
+    cake.print (p);
 
 }
 

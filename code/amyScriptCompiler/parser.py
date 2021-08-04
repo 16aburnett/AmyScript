@@ -82,6 +82,7 @@ class Parser:
     # Generic syntax start state 
     # <codeunit> -> <function>
     #            -> <class>
+    #            -> <enum>
     #            -> <namespace>
     #            -> <statement>
     def codeunit (self):
@@ -95,6 +96,9 @@ class Parser:
         # <codeunit> -> <class>
         elif (self.tokens[self.currentToken].type == "CLASS"):
             node = self.classDeclaration ()
+        # <codeunit> -> <enum>
+        elif (self.tokens[self.currentToken].type == "ENUM"):
+            node = self.enumDeclaration ()
         # <codeunit> -> <statement>
         else:
             node = self.statement ()
@@ -447,6 +451,50 @@ class Parser:
         self.leave ("typeSpecifier")
 
         return type
+
+    # ====================================================================
+    # enum class declaration
+    # <enum> -> ENUM IDENTIFIER LBRACE [ IDENTIFIER { COMMA IDENTIFIER } ] RBRACE
+    # <enumForwardDeclaration> -> ENUM IDENTIFIER SEMI
+    
+    def enumDeclaration (self):
+        self.enter ("enumDeclaration")
+
+        self.match ("enumDeclaration", "ENUM")
+
+        id = self.tokens[self.currentToken].lexeme
+        token = self.tokens[self.currentToken]
+        type = TypeSpecifierNode (Type.USERTYPE, id, token)
+        self.match ("enumDeclaration", "IDENTIFIER")
+
+        # check if it is a forward declaration 
+        if self.tokens[self.currentToken].type == "SEMI":
+            self.match ("enumDeclaration", "SEMI")
+            self.leave ("enumDeclaration")
+
+            decl = EnumDeclarationNode (type, id, token, [])
+            decl.isForwardDeclaration = True
+            return decl
+        
+        self.match ("enumDeclaration", "LBRACE")
+
+        fields = []
+
+        if self.tokens[self.currentToken].type == "IDENTIFIER":
+            fields += [FieldDeclarationNode (Security.PUBLIC, type, self.tokens[self.currentToken].lexeme, self.tokens[self.currentToken])]
+            self.match ("enumDeclaration", "IDENTIFIER")
+
+            # match zero or more COMMA IDENTIFIER
+            while self.tokens[self.currentToken].type == "COMMA":
+                self.match ("enumDeclaration", "COMMA")
+                fields += [FieldDeclarationNode (Security.PUBLIC, type, self.tokens[self.currentToken].lexeme, self.tokens[self.currentToken])]
+                self.match ("enumDeclaration", "IDENTIFIER")
+            
+        self.match ("enumDeclaration", "RBRACE")
+
+        self.leave ("enumDeclaration")
+
+        return EnumDeclarationNode (type, id, token, fields)
 
     # ====================================================================
     # statement 

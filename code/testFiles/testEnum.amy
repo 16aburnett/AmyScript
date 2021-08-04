@@ -1,0 +1,70 @@
+// Testing enum class
+// Author: Amy Burnett
+//========================================================================
+// Color enum 
+
+enum Color { 
+    red, 
+    green, 
+    blue 
+}
+
+char[][] colorStrings = [
+    "red", 
+    "green", 
+    "blue"
+];
+
+function void print (Color c)
+{
+    // subscript operator needs to make sure offset is an int or enum 
+    print (colorStrings[c]);
+}
+
+function void println (Color c)
+{
+    // subscript operator needs to make sure offset is an int or enum 
+    println (colorStrings[c]);
+}
+
+//========================================================================
+// Type enum 
+
+enum Type  { 
+    INT, 
+    FLOAT, 
+    CHAR 
+}
+
+char[][] typeStrings = [
+    "INT", 
+    "FLOAT", 
+    "CHAR"
+];
+
+function void print (Type c)
+{
+    // subscript operator needs to make sure offset is an int or enum 
+    print (typeStrings[c]);
+}
+
+function void println (Type c)
+{
+    // subscript operator needs to make sure offset is an int or enum 
+    println (typeStrings[c]);
+}
+
+//========================================================================
+
+Color c = Color.green; 
+println (c);
+
+Type t = Type.CHAR; 
+println (t);
+
+if (c == Color.red)
+    println ("it is red");
+elif (c == Color.green)
+    println ("it is green");
+elif (c == Color.blue)
+    println ("it is blue");
