@@ -65,6 +65,14 @@ print__char:
     return 0
 
 //========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
 // Prints a given string to the screen with a newline at the end
 // void println (char[] stringToPrint);
 println__char__1:
@@ -111,6 +119,14 @@ println__char:
     // grab string
     stackget __char 0
     println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
     return 0
 
 //========================================================================
@@ -198,6 +214,10 @@ __endOfLibrary:
 
 //========================================================================
 // Class Declaration - __main__Person inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Person 1
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__Person[0] __method____main__Person____getAge
    //---------------------------------------------------------------------
    // Field - char[] Person::name
    ASSIGN __field____main__Person__name 1
@@ -218,12 +238,8 @@ JUMP __endclass____main__Person
    __ctor____main__Person____Person__char__1__int:
       // Creating Class Instance
          MALLOC __this 4
-         // Creating Dispatch Table
-            MALLOC __dtable 1
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Person____getAge
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Person
       // Parameters
          // Param: name
          STACKGET __main__Person__Person__name 0
@@ -248,6 +264,8 @@ JUMP __endclass____main__Person
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - age
@@ -264,6 +282,8 @@ JUMP __endclass____main__Person
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__Person____Person__char__1__int:
@@ -297,6 +317,8 @@ JUMP __endclass____main__Person
                POP __rhs
                ASSIGN __main__Person__getAge__block__1__age __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Return
                // Identifier - age
                   PUSH __main__Person__getAge__block__1__age
@@ -341,6 +363,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __main__person __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // String Literal
@@ -364,6 +388,8 @@ __endclass____main__Person:
          POP __rhs
          ASSIGN __parent[__child] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Post-Decrement
    // LHS
       // Member Accessor Assignment
@@ -377,6 +403,8 @@ __endclass____main__Person:
          ASSIGN __res __parent[__child]
          SUBTRACT __parent[__child] __parent[__child] 1
    PUSH __res
+// Statement results can be ignored
+POP __void
 // Function Call - print(char[]) -> void
    // Arguments
       // Member Accessor
@@ -397,6 +425,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(char[]) -> void
    // Arguments
       // String Literal
@@ -412,6 +442,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Method Call - Person::getAge() -> int
@@ -437,6 +469,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -451,6 +485,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Function Declaration - max(int, int) -> int
 JUMP __end____main____max__int__int
@@ -516,6 +552,8 @@ __end____main____max__int__int:
    POP __rhs
    ASSIGN __main__i __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -542,6 +580,8 @@ __end____main____max__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -598,6 +638,8 @@ __for__4:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - println(char[]) -> void
             // Arguments
                // String Literal
@@ -612,6 +654,8 @@ __for__4:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          //---------------------------------------------------------------
          // If-Statement
             // Condition
@@ -686,6 +730,8 @@ __for__4:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                   // Assignment
                      // RHS
                         // Int Literal
@@ -696,6 +742,8 @@ __for__4:
                      POP __rhs
                      ASSIGN __main__for__4__block__5__if__6__block__7__i __rhs
                      PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
                   // Function Call - print(int) -> void
                      // Arguments
                         // Identifier - i
@@ -709,6 +757,8 @@ __for__4:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                   // Function Call - println(char[]) -> void
                      // Arguments
                         // String Literal
@@ -723,6 +773,8 @@ __for__4:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                //---------------------------------------------------------
             JUMP __endif__6
             // End of if
@@ -748,6 +800,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(char[]) -> void
    // Arguments
       // String Literal
@@ -784,6 +838,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Identifier - i
@@ -797,6 +853,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -811,6 +869,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Int Literal
@@ -821,6 +881,8 @@ __for__4:
    POP __rhs
    ASSIGN __main____main__i __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

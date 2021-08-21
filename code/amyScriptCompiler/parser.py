@@ -83,6 +83,7 @@ class Parser:
     # <codeunit> -> <function>
     #            -> <class>
     #            -> <enum>
+    #            -> <template>
     #            -> <namespace>
     #            -> <statement>
     def codeunit (self):
@@ -99,6 +100,9 @@ class Parser:
         # <codeunit> -> <enum>
         elif (self.tokens[self.currentToken].type == "ENUM"):
             node = self.enumDeclaration ()
+        # <codeunit> -> <template>
+        elif (self.tokens[self.currentToken].type == "TEMPLATE"):
+            node = self.templateDeclaration ()
         # <codeunit> -> <statement>
         else:
             node = self.statement ()
@@ -495,6 +499,43 @@ class Parser:
         self.leave ("enumDeclaration")
 
         return EnumDeclarationNode (type, id, token, fields)
+
+    # ====================================================================
+    # template declaration
+    # <template> -> TEMPLATE LTEMP <typeSpecifier { COMMA IDENTIFIER } RTEMP <functionDeclaration>
+    # Example:
+    #   template <:T:> function T add (T a, T b) { return a + b; }
+
+    def templateDeclaration (self):
+        self.enter ("templateDeclaration")
+
+        token = self.tokens[self.currentToken]
+        self.match ("templateDeclaration", "TEMPLATE")
+
+        self.match ("templateDeclaration", "LTEMP")
+
+        t = self.typeSpecifier ()
+        t.isGeneric = True
+        types = [GenericDeclarationNode (t, t.id, t.token)]
+
+        while self.tokens[self.currentToken].type == "COMMA":
+            self.match ("templateDeclaration", "COMMA")
+            t = self.typeSpecifier ()
+            t.isGeneric = True
+            types += [GenericDeclarationNode (t, t.id, t.token)]
+
+        self.match ("templateDeclaration", "RTEMP")
+
+        # function declaration
+        if self.tokens[self.currentToken].type == "FUNCTION":
+            func = self.function ()
+            node = FunctionTemplateDeclarationNode (func.type, func.id, token, types, func)
+        else:
+            self.error ("templateDeclaration", "FUNCTION", "Expected function or class declaration after template clause")
+
+        self.leave ("templateDeclaration")
+
+        return node
 
     # ====================================================================
     # statement 
@@ -1082,13 +1123,24 @@ class Parser:
 
         lhs = self.factor ()
 
-        while (self.tokens[self.currentToken].type == "LPAREN" \
+        while (self.tokens[self.currentToken].type == "LPAREN"  \
+            or self.tokens[self.currentToken].type == "LTEMP"   \
             or self.tokens[self.currentToken].type == "LBRACKET"\
             or self.tokens[self.currentToken].type == "DOT"):
 
             # function call 
-            # <arrayAccess> -> <factor> { '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' }
-            if self.tokens[self.currentToken].type == "LPAREN":
+            # <arrayAccess> -> <factor> [ LTEMP <typeSpec> { <typeSpec> } RTEMP ] { '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' }
+            if self.tokens[self.currentToken].type == "LPAREN" or self.tokens[self.currentToken].type == "LTEMP":
+                # grab any template parameters 
+                templateParams = []
+                if self.tokens[self.currentToken].type == "LTEMP":
+                    self.match ("arrayAccess", "LTEMP")
+                    templateParams += [self.typeSpecifier ()]
+                    while self.tokens[self.currentToken].type == "COMMA":
+                        self.match ("arrayAccess", "COMMA")
+                        templateParams += [self.typeSpecifier ()]
+                    self.match ("arrayAccess", "RTEMP")
+
                 line = self.tokens[self.currentToken].line
                 column = self.tokens[self.currentToken].column
                 self.match ("arrayAccess", "LPAREN")
@@ -1101,7 +1153,7 @@ class Parser:
                         self.match ("arrayAccess", "COMMA")
                         args += [self.assignexpr ()]
                 self.match ("arrayAccess", "RPAREN")
-                lhs = FunctionCallExpressionNode (lhs, args, line, column)
+                lhs = FunctionCallExpressionNode (lhs, args, templateParams, line, column)
             # subscript operator 
             # <arrayAccess> -> <factor> { '[' <expr> ']' }
             elif self.tokens[self.currentToken].type == "LBRACKET":

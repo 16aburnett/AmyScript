@@ -146,6 +146,23 @@ void Cake::print (Pie pie)
     std::cout << pie.value << std::endl;
 }
 
+int add (int a, int b)
+{
+    return a + b;
+}
+
+template <typename T>
+T add (T a, T b)
+{
+    return a + b;
+}
+
+template <typename T, typename K>
+T add (T a, T b)
+{
+    return a + b;
+}
+
 //========================================================================
 
 int 
@@ -161,11 +178,28 @@ main()
 
     func ((B*)c);
 
+
     Pie p;
     p.value = 7;
 
     Cake cake;
     cake.print (p);
+
+
+
+    std::cout << add<int> (7, 5) << std::endl;
+
+    std::cout << add<float> (3.14, 6.28) << std::endl;
+
+
+    // std::cout << add<C*> (c, c) << std::endl;
+
+    
+    std::cout << add (7, 5) << std::endl;
+
+    std::cout << add<int, int> (7, 5) << std::endl;
+
+    std::cout << add<int, float> (7, 5) << std::endl;
 
 }
 

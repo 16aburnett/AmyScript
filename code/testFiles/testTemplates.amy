@@ -1,0 +1,106 @@
+// Testing Class and Function templates 
+// Author: Amy Burnett
+//========================================================================
+
+class A 
+{
+    public field int x; 
+    constructor (int val) {this.x = val;}
+    public virtual int val () {return this.x;}
+}
+
+class B inherits A 
+{
+    public field int y;
+    constructor (int val) {this.y = val;}
+    public virtual int val () {return this.y;}
+}
+
+class C inherits B
+{
+    public field int z; 
+    constructor (int val) {this.z = val;}
+    public virtual int val () {return this.z;}
+}
+
+function int add (int a, int b)
+{
+    int c = a + b;
+    return c;
+}
+
+template <:T:>
+function T add (T a, T b)
+{
+    T c = a + b;
+    return c;
+}
+
+template <:T, K:>
+function T add (T a, T b)
+{
+    T c = a + b;
+    return c;
+}
+
+template <:T, K, V:>
+function T sum (T a, K b, V c)
+{
+    T d = a + b;
+    T e = d + floatToInt(c);
+    return e; 
+}
+
+template <:T:>
+function int addA (T a, T b)
+{
+    return a.val() + b.val(); 
+}
+
+
+template <:T, K:>
+function void printMsg (T msg)
+{
+    // above T will be shadowed by 
+    // the T for the below template
+    // K from above will overrite K in the below template
+    // as K is not shadowed 
+    template <:T:>
+    function T add (T a, K b)
+    {
+        return a + b;
+    }
+    print (add<:int:>(33, 36));
+    print (' ');
+    println (msg);
+}
+
+
+//========================================================================
+
+
+println (add(5, 7));
+
+println (add<:int:>(5, 7));
+
+println (add<:float:>(3.14, 6.28));
+
+//println (add<:A:>(new A(0), new A(0)));
+// only error check types in instantiation
+//test.cpp: In instantiation of ‘T add(T, T) [with T = A]’:
+//test.cpp:184:31:   required from here
+//test.cpp:153:14: error: invalid operands of types ‘A’ and ‘A’ to binary ‘operator+’
+//     return a + b;
+//            ~~^~~
+
+println (add<:int, int:>(5, 7));
+
+println (add<:int, float:>(5, 7));
+
+println (sum<:int, int, float:>(5, 7, 3.14));
+
+println (addA<:A:>(new B(3), new C(7)));
+
+printMsg<:char[], int:> ("I like pie!");
+
+//========================================================================

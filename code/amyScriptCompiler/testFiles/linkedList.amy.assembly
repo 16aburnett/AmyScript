@@ -65,6 +65,14 @@ print__char:
     return 0
 
 //========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
 // Prints a given string to the screen with a newline at the end
 // void println (char[] stringToPrint);
 println__char__1:
@@ -111,6 +119,14 @@ println__char:
     // grab string
     stackget __char 0
     println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
     return 0
 
 //========================================================================
@@ -198,6 +214,9 @@ __endOfLibrary:
 
 //========================================================================
 // Class Declaration - __main__Node inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Node 0
+      // Populate Dispatch Table
    //---------------------------------------------------------------------
    // Field - int Node::data
    ASSIGN __field____main__Node__data 1
@@ -218,11 +237,8 @@ JUMP __endclass____main__Node
    __ctor____main__Node____Node__int__Node__Node:
       // Creating Class Instance
          MALLOC __this 4
-         // Creating Dispatch Table
-            MALLOC __dtable 0
-            // Populate Dispatch Table
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Node
       // Parameters
          // Param: data
          STACKGET __main__Node__Node__data 0
@@ -249,6 +265,8 @@ JUMP __endclass____main__Node
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - next
@@ -265,6 +283,8 @@ JUMP __endclass____main__Node
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - prev
@@ -281,6 +301,8 @@ JUMP __endclass____main__Node
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__Node____Node__int__Node__Node:
@@ -293,6 +315,17 @@ __endclass____main__Node:
 
 //========================================================================
 // Class Declaration - __main__LinkedList inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__LinkedList 8
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__LinkedList[0] __method____main__LinkedList____pushBack__int
+      ASSIGN __dtable____main__LinkedList[1] __method____main__LinkedList____pushFront__int
+      ASSIGN __dtable____main__LinkedList[2] __method____main__LinkedList____popBack
+      ASSIGN __dtable____main__LinkedList[3] __method____main__LinkedList____popFront
+      ASSIGN __dtable____main__LinkedList[4] __method____main__LinkedList____begin
+      ASSIGN __dtable____main__LinkedList[5] __method____main__LinkedList____end
+      ASSIGN __dtable____main__LinkedList[6] __method____main__LinkedList____rbegin
+      ASSIGN __dtable____main__LinkedList[7] __method____main__LinkedList____rend
    //---------------------------------------------------------------------
    // Field - Node LinkedList::header
    ASSIGN __field____main__LinkedList__header 1
@@ -309,19 +342,8 @@ JUMP __endclass____main__LinkedList
    __ctor____main__LinkedList____LinkedList:
       // Creating Class Instance
          MALLOC __this 3
-         // Creating Dispatch Table
-            MALLOC __dtable 8
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__LinkedList____pushBack__int
-            ASSIGN __dtable[1] __method____main__LinkedList____pushFront__int
-            ASSIGN __dtable[2] __method____main__LinkedList____popBack
-            ASSIGN __dtable[3] __method____main__LinkedList____popFront
-            ASSIGN __dtable[4] __method____main__LinkedList____begin
-            ASSIGN __dtable[5] __method____main__LinkedList____end
-            ASSIGN __dtable[6] __method____main__LinkedList____rbegin
-            ASSIGN __dtable[7] __method____main__LinkedList____rend
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__LinkedList
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -364,6 +386,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Member Accessor
@@ -394,6 +418,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Member Accessor
@@ -424,6 +450,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Int Literal
@@ -440,6 +468,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__LinkedList____LinkedList:
@@ -482,6 +512,8 @@ JUMP __endclass____main__LinkedList
                POP __rhs
                ASSIGN __main__LinkedList__pushBack__block__2__tail __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Constructor Call - Node::Node(int, Node, Node) -> Node
@@ -519,6 +551,8 @@ JUMP __endclass____main__LinkedList
                POP __rhs
                ASSIGN __main__LinkedList__pushBack__block__2__node __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - node
@@ -535,6 +569,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - node
@@ -558,6 +594,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Pre-Increment
                // RHS
                   // Member Accessor
@@ -582,6 +620,8 @@ JUMP __endclass____main__LinkedList
                      ADD __parent[__child] __parent[__child] 1
                      ASSIGN __res __parent[__child]
                PUSH __res
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__LinkedList____pushBack__int:
@@ -624,6 +664,8 @@ JUMP __endclass____main__LinkedList
                POP __rhs
                ASSIGN __main__LinkedList__pushFront__block__3__head __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Constructor Call - Node::Node(int, Node, Node) -> Node
@@ -661,6 +703,8 @@ JUMP __endclass____main__LinkedList
                POP __rhs
                ASSIGN __main__LinkedList__pushFront__block__3__node __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - node
@@ -677,6 +721,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - node
@@ -700,6 +746,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Pre-Increment
                // RHS
                   // Member Accessor
@@ -724,6 +772,8 @@ JUMP __endclass____main__LinkedList
                      ADD __parent[__child] __parent[__child] 1
                      ASSIGN __res __parent[__child]
                PUSH __res
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__LinkedList____pushFront__int:
@@ -798,6 +848,8 @@ JUMP __endclass____main__LinkedList
                POP __rhs
                ASSIGN __main__LinkedList__popBack__block__4__tail __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Member Accessor
@@ -828,6 +880,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Member Accessor
@@ -858,6 +912,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Pre-Decrement
                // RHS
                   // Member Accessor
@@ -882,6 +938,8 @@ JUMP __endclass____main__LinkedList
                      SUBTRACT __parent[__child] __parent[__child] 1
                      ASSIGN __res __parent[__child]
                PUSH __res
+            // Statement results can be ignored
+            POP __void
             // Return
                // Member Accessor
                   // LHS
@@ -968,6 +1026,8 @@ JUMP __endclass____main__LinkedList
                POP __rhs
                ASSIGN __main__LinkedList__popFront__block__6__head __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Member Accessor
@@ -998,6 +1058,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Member Accessor
@@ -1028,6 +1090,8 @@ JUMP __endclass____main__LinkedList
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Pre-Decrement
                // RHS
                   // Member Accessor
@@ -1052,6 +1116,8 @@ JUMP __endclass____main__LinkedList
                      SUBTRACT __parent[__child] __parent[__child] 1
                      ASSIGN __res __parent[__child]
                PUSH __res
+            // Statement results can be ignored
+            POP __void
             // Return
                // Member Accessor
                   // LHS
@@ -1237,6 +1303,8 @@ __main____printForwards__LinkedList:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          //---------------------------------------------------------------
          // For-Loop
          // Init
@@ -1330,6 +1398,8 @@ __main____printForwards__LinkedList:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                   // Function Call - print(char[]) -> void
                      // Arguments
                         // String Literal
@@ -1348,6 +1418,8 @@ __main____printForwards__LinkedList:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                //---------------------------------------------------------
             // Repeat
             JUMP __for__13
@@ -1368,6 +1440,8 @@ __main____printForwards__LinkedList:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____printForwards__LinkedList:
@@ -1412,6 +1486,8 @@ __main____printBackwards__LinkedList:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          //---------------------------------------------------------------
          // For-Loop
          // Init
@@ -1505,6 +1581,8 @@ __main____printBackwards__LinkedList:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                   // Function Call - print(char[]) -> void
                      // Arguments
                         // String Literal
@@ -1523,6 +1601,8 @@ __main____printBackwards__LinkedList:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                //---------------------------------------------------------
             // Repeat
             JUMP __for__16
@@ -1543,6 +1623,8 @@ __main____printBackwards__LinkedList:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____printBackwards__LinkedList:
@@ -1605,6 +1687,8 @@ __main____printRecursive__Node__Node:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - print(char[]) -> void
             // Arguments
                // String Literal
@@ -1623,6 +1707,8 @@ __main____printRecursive__Node__Node:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - printRecursive(Node, Node) -> void
             // Arguments
                // Member Accessor
@@ -1648,6 +1734,8 @@ __main____printRecursive__Node__Node:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____printRecursive__Node__Node:
@@ -1669,6 +1757,8 @@ __end____main____printRecursive__Node__Node:
    POP __rhs
    ASSIGN __main__list __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::pushBack(int) -> void
    // LHS
       // Identifier - list
@@ -1688,6 +1778,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::pushBack(int) -> void
    // LHS
       // Identifier - list
@@ -1707,6 +1799,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::pushBack(int) -> void
    // LHS
       // Identifier - list
@@ -1726,6 +1820,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::pushBack(int) -> void
    // LHS
       // Identifier - list
@@ -1745,6 +1841,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::pushFront(int) -> void
    // LHS
       // Identifier - list
@@ -1764,6 +1862,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::pushFront(int) -> void
    // LHS
       // Identifier - list
@@ -1783,6 +1883,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::popBack() -> int
    // LHS
       // Identifier - list
@@ -1797,6 +1899,8 @@ __end____main____printRecursive__Node__Node:
    // Remove args
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::popFront() -> int
    // LHS
       // Identifier - list
@@ -1811,6 +1915,8 @@ __end____main____printRecursive__Node__Node:
    // Remove args
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printForwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -1824,6 +1930,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printBackwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -1837,6 +1945,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -1860,6 +1970,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::popFront() -> int
    // LHS
       // Identifier - list
@@ -1874,6 +1986,8 @@ __end____main____printRecursive__Node__Node:
    // Remove args
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printForwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -1887,6 +2001,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printBackwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -1900,6 +2016,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -1922,6 +2040,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::popBack() -> int
    // LHS
       // Identifier - list
@@ -1936,6 +2056,8 @@ __end____main____printRecursive__Node__Node:
    // Remove args
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printForwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -1949,6 +2071,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printBackwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -1962,6 +2086,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -1985,6 +2111,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::popFront() -> int
    // LHS
       // Identifier - list
@@ -1999,6 +2127,8 @@ __end____main____printRecursive__Node__Node:
    // Remove args
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printForwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2012,6 +2142,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printBackwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2025,6 +2157,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -2048,6 +2182,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::popFront() -> int
    // LHS
       // Identifier - list
@@ -2062,6 +2198,8 @@ __end____main____printRecursive__Node__Node:
    // Remove args
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printForwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2075,6 +2213,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printBackwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2088,6 +2228,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -2111,6 +2253,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::popFront() -> int
    // LHS
       // Identifier - list
@@ -2125,6 +2269,8 @@ __end____main____printRecursive__Node__Node:
    // Remove args
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printForwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2138,6 +2284,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printBackwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2151,6 +2299,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -2178,6 +2328,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::pushFront(int) -> void
    // LHS
       // Identifier - list
@@ -2197,6 +2349,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printForwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2210,6 +2364,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printBackwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2223,6 +2379,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -2248,6 +2406,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::pushBack(int) -> void
    // LHS
       // Identifier - list
@@ -2267,6 +2427,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printForwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2280,6 +2442,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printBackwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2293,6 +2457,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -2320,6 +2486,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - LinkedList::pushFront(int) -> void
    // LHS
       // Identifier - list
@@ -2339,6 +2507,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printForwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2352,6 +2522,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printBackwards(LinkedList) -> void
    // Arguments
       // Identifier - list
@@ -2365,6 +2537,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(char[]) -> void
    // Arguments
       // String Literal
@@ -2399,6 +2573,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - printRecursive(Node, Node) -> void
    // Arguments
       // Method Call - LinkedList::begin() -> Node
@@ -2441,6 +2617,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -2455,6 +2633,8 @@ __end____main____printRecursive__Node__Node:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

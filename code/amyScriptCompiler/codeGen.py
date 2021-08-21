@@ -172,6 +172,19 @@ class CodeGenVisitor (ASTVisitor):
 
         # variable names are modified by its scope 
         scopeName = ["".join (self.scopeNames), "____", node.id]
+        # add template parameters if there are any 
+        if len(node.templateParams) > 0:
+            scopeName += [f"__{node.templateParams[0].id}"]
+            # add array dimensions
+            if node.templateParams[0].arrayDimensions > 0:
+                scopeName += [f"__{node.templateParams[0].arrayDimensions}"]
+            # add rest of template params 
+            for i in range(1, len(node.templateParams)):
+                scopeName += [f"__{node.templateParams[i].id}"]
+                # add array dimensions
+                if node.templateParams[i].arrayDimensions > 0:
+                    scopeName += [f"__{node.templateParams[i].arrayDimensions}"]
+            scopeName += ["__"]
         # add signature to scopeName for overloaded functions
         if len(node.params) > 0:
             scopeName += [f"__{node.params[0].type.id}"]
@@ -481,6 +494,24 @@ class CodeGenVisitor (ASTVisitor):
 
         self.printComment (f"End Enum Declaration - {node.scopeName}")
         self.printSubDivider ()
+        self.printNewline ()
+
+    def visitFunctionTemplateNode (self, node):
+        self.printDivider ()
+        self.printComment (f"Function Template - {node.scopeName}")
+
+        self.indentation += 1
+
+        self.printComment (f"Instances:")
+        self.indentation += 1
+        for instance in node.instantiations:
+            node.instantiations[instance].accept (self)
+
+        self.indentation -= 1
+        self.indentation -= 1
+
+        self.printComment (f"End Function Template - {node.scopeName}")
+        self.printDivider ()
         self.printNewline ()
         
     def visitStatementNode (self, node):
@@ -795,6 +826,10 @@ class CodeGenVisitor (ASTVisitor):
     def visitExpressionStatementNode (self, node):
         if node.expr != None:
             node.expr.accept (self)
+            # don't need stack value from statement
+            # in some cases, this extra value on the stack can break things
+            self.printComment ("Statement results can be ignored")
+            self.printCode ("POP __void")
 
     def visitReturnStatementNode (self, node):
         self.printComment ("Return")

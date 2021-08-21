@@ -65,6 +65,14 @@ print__char:
     return 0
 
 //========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
 // Prints a given string to the screen with a newline at the end
 // void println (char[] stringToPrint);
 println__char__1:
@@ -111,6 +119,14 @@ println__char:
     // grab string
     stackget __char 0
     println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
     return 0
 
 //========================================================================
@@ -243,6 +259,8 @@ __main____concat__char__1__char__1:
             POP __rhs
             ASSIGN __main__concat__block__0__c __rhs
             PUSH __rhs
+         // Statement results can be ignored
+         POP __void
          //---------------------------------------------------------------
          // For-Loop
          // Init
@@ -315,6 +333,8 @@ __main____concat__char__1__char__1:
                   POP __rhs
                   ASSIGN __pointer[__offset] __rhs
                   PUSH __rhs
+               // Statement results can be ignored
+               POP __void
             // Repeat
             JUMP __for__1
             // End of For
@@ -407,6 +427,8 @@ __main____concat__char__1__char__1:
                   POP __rhs
                   ASSIGN __pointer[__offset] __rhs
                   PUSH __rhs
+               // Statement results can be ignored
+               POP __void
             // Repeat
             JUMP __for__2
             // End of For
@@ -472,6 +494,8 @@ JUMP __endclass____main__Matrix
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Int Literal
@@ -488,6 +512,8 @@ JUMP __endclass____main__Matrix
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Null Literal
@@ -505,6 +531,8 @@ JUMP __endclass____main__Matrix
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__Matrix____Matrix:
@@ -543,6 +571,8 @@ JUMP __endclass____main__Matrix
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - cols
@@ -559,6 +589,8 @@ JUMP __endclass____main__Matrix
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Array Allocator
@@ -579,6 +611,8 @@ JUMP __endclass____main__Matrix
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             //------------------------------------------------------------
             // For-Loop
             // Init
@@ -648,6 +682,8 @@ JUMP __endclass____main__Matrix
                      POP __rhs
                      ASSIGN __pointer[__offset] __rhs
                      PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
                // Repeat
                JUMP __for__5
                // End of For
@@ -695,6 +731,8 @@ JUMP __endclass____main__Matrix
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Sizeof Operator
@@ -725,6 +763,8 @@ JUMP __endclass____main__Matrix
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - data
@@ -741,6 +781,8 @@ JUMP __endclass____main__Matrix
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__Matrix____Matrix__int__2:
@@ -872,6 +914,8 @@ JUMP __endclass____main__Matrix
                POP __rhs
                ASSIGN __main__Matrix__add__block__7__res __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             //------------------------------------------------------------
             // For-Loop
             // Init
@@ -1055,6 +1099,8 @@ JUMP __endclass____main__Matrix
                            POP __rhs
                            ASSIGN __pointer[__offset] __rhs
                            PUSH __rhs
+                        // Statement results can be ignored
+                        POP __void
                      // Repeat
                      JUMP __for__10
                      // End of For
@@ -1097,6 +1143,8 @@ JUMP __endclass____main__Matrix
                POP __rhs
                ASSIGN __main__Matrix__toString__block__11__res __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // String Literal
@@ -1109,6 +1157,8 @@ JUMP __endclass____main__Matrix
                POP __rhs
                ASSIGN __main__Matrix__toString__block__11__space __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // String Literal
@@ -1121,6 +1171,8 @@ JUMP __endclass____main__Matrix
                POP __rhs
                ASSIGN __main__Matrix__toString__block__11__newline __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Int Literal
@@ -1131,6 +1183,8 @@ JUMP __endclass____main__Matrix
                POP __rhs
                ASSIGN __main__Matrix__toString__block__11__k __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             //------------------------------------------------------------
             // For-Loop
             // Init
@@ -1275,6 +1329,8 @@ JUMP __endclass____main__Matrix
                                  POP __rhs
                                  ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2 __rhs
                                  PUSH __rhs
+                              // Statement results can be ignored
+                              POP __void
                               // Assignment
                                  // RHS
                                     // Function Call - concat(char[], char[]) -> char[]
@@ -1301,6 +1357,8 @@ JUMP __endclass____main__Matrix
                                  POP __rhs
                                  ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp __rhs
                                  PUSH __rhs
+                              // Statement results can be ignored
+                              POP __void
                               // Free Operator
                                  // RHS
                                     // Identifier - temp2
@@ -1308,6 +1366,8 @@ JUMP __endclass____main__Matrix
                                  // Free array
                                  POP __array
                                  FREE __array
+                              // Statement results can be ignored
+                              POP __void
                               // Free Operator
                                  // RHS
                                     // Identifier - res
@@ -1315,6 +1375,8 @@ JUMP __endclass____main__Matrix
                                  // Free array
                                  POP __array
                                  FREE __array
+                              // Statement results can be ignored
+                              POP __void
                               // Assignment
                                  // RHS
                                     // Identifier - temp
@@ -1322,6 +1384,8 @@ JUMP __endclass____main__Matrix
                                  POP __rhs
                                  ASSIGN __main__Matrix__toString__block__11__res __rhs
                                  PUSH __rhs
+                              // Statement results can be ignored
+                              POP __void
                               // Assignment
                                  // RHS
                                     // Function Call - concat(char[], char[]) -> char[]
@@ -1345,6 +1409,8 @@ JUMP __endclass____main__Matrix
                                  POP __rhs
                                  ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp __rhs
                                  PUSH __rhs
+                              // Statement results can be ignored
+                              POP __void
                               // Free Operator
                                  // RHS
                                     // Identifier - res
@@ -1352,6 +1418,8 @@ JUMP __endclass____main__Matrix
                                  // Free array
                                  POP __array
                                  FREE __array
+                              // Statement results can be ignored
+                              POP __void
                               // Assignment
                                  // RHS
                                     // Identifier - temp
@@ -1359,6 +1427,8 @@ JUMP __endclass____main__Matrix
                                  POP __rhs
                                  ASSIGN __main__Matrix__toString__block__11__res __rhs
                                  PUSH __rhs
+                              // Statement results can be ignored
+                              POP __void
                            //---------------------------------------------
                         // Repeat
                         JUMP __for__14
@@ -1391,6 +1461,8 @@ JUMP __endclass____main__Matrix
                         POP __rhs
                         ASSIGN __main__Matrix__toString__block__11__for__12__block__13__temp __rhs
                         PUSH __rhs
+                     // Statement results can be ignored
+                     POP __void
                      // Free Operator
                         // RHS
                            // Identifier - res
@@ -1398,6 +1470,8 @@ JUMP __endclass____main__Matrix
                         // Free array
                         POP __array
                         FREE __array
+                     // Statement results can be ignored
+                     POP __void
                      // Assignment
                         // RHS
                            // Identifier - temp
@@ -1405,6 +1479,8 @@ JUMP __endclass____main__Matrix
                         POP __rhs
                         ASSIGN __main__Matrix__toString__block__11__res __rhs
                         PUSH __rhs
+                     // Statement results can be ignored
+                     POP __void
                   //------------------------------------------------------
                // Repeat
                JUMP __for__12
@@ -1418,6 +1494,8 @@ JUMP __endclass____main__Matrix
                // Free array
                POP __array
                FREE __array
+            // Statement results can be ignored
+            POP __void
             // Free Operator
                // RHS
                   // Identifier - space
@@ -1425,6 +1503,8 @@ JUMP __endclass____main__Matrix
                // Free array
                POP __array
                FREE __array
+            // Statement results can be ignored
+            POP __void
             // Return
                // Identifier - res
                   PUSH __main__Matrix__toString__block__11__res
@@ -1516,6 +1596,8 @@ __endclass____main__Matrix:
    POP __rhs
    ASSIGN __main__a __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Matrix::Matrix(int[][]) -> Matrix
@@ -1592,6 +1674,8 @@ __endclass____main__Matrix:
    POP __rhs
    ASSIGN __main__b __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Method Call - Matrix::toString() -> char[]
@@ -1631,6 +1715,8 @@ __endclass____main__Matrix:
    POP __rhs
    ASSIGN __main__temp __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - print(char[]) -> void
    // Arguments
       // Identifier - temp
@@ -1644,6 +1730,8 @@ __endclass____main__Matrix:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Free Operator
    // RHS
       // Identifier - temp
@@ -1651,6 +1739,8 @@ __endclass____main__Matrix:
    // Free array
    POP __array
    FREE __array
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Class Declaration - __main__A inherits __main__Object
    // Creating Dispatch Table
@@ -1703,6 +1793,8 @@ JUMP __endclass____main__A
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__A____A:
@@ -1749,6 +1841,8 @@ JUMP __endclass____main__A
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__A____A__int__int:
@@ -1785,6 +1879,8 @@ JUMP __endclass____main__A
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - y
@@ -1801,6 +1897,8 @@ JUMP __endclass____main__A
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__A____setValues__int__int:
@@ -1836,6 +1934,8 @@ __endclass____main__A:
    POP __rhs
    ASSIGN __main__ay __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Function Declaration - print(A) -> void
 JUMP __end____main____print__A
@@ -1866,6 +1966,8 @@ __main____print__A:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - print(char) -> void
             // Arguments
                // Char Literal
@@ -1879,6 +1981,8 @@ __main____print__A:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - println(int) -> void
             // Arguments
                // Member Accessor
@@ -1899,6 +2003,8 @@ __main____print__A:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____print__A:
@@ -1918,6 +2024,8 @@ __end____main____print__A:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

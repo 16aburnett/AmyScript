@@ -417,11 +417,11 @@ class AmyAssemblyInterpreter:
                     # next 4 nums make up the pointer and offset
                     pmode, pointer, omode, offset = params[1:5]
                     address = getMemAddress(stack, pmode, pointer, omode, offset)
-                    # Assign src to dest 
+                    # Assign dest to src
                     heap.memory[address], i = getNextValue(heap, stack, params, 5)
                 # Case 2: Dest is Stack variable
                 elif params[0] == MODE_STACK:
-                    # Assign src to dest
+                    # Assign dest to src 
                     stack[base_pointer][params[1]], i = getNextValue(heap, stack, params, 2)
                 # Case 3: Dest is Invalid param type
                 else:

@@ -268,6 +268,8 @@ JUMP __endclass____main__A
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__A____X:
@@ -375,6 +377,8 @@ JUMP __endclass____main__D
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__D____X:
@@ -453,6 +457,8 @@ JUMP __endclass____main__E
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__E____Y:
@@ -519,6 +525,8 @@ JUMP __endclass____main__C
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__C____X:
@@ -597,6 +605,8 @@ JUMP __endclass____main__F
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__F____Z:
@@ -664,6 +674,8 @@ JUMP __endclass____main__G
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__G____X:
@@ -700,6 +712,8 @@ JUMP __endclass____main__G
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__G____Y:
@@ -778,6 +792,8 @@ JUMP __endclass____main__H
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__H____Y:
@@ -857,6 +873,8 @@ JUMP __endclass____main__I
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__I____Y:
@@ -893,6 +911,8 @@ JUMP __endclass____main__I
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__I____Z:
@@ -931,6 +951,8 @@ __main____fun1__A:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Virtual Method Call - X() -> void
             // LHS
                // Identifier - a
@@ -947,6 +969,8 @@ __main____fun1__A:
             // Remove args
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____fun1__A:
@@ -981,6 +1005,8 @@ __main____fun2__G:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Virtual Method Call - X() -> void
             // LHS
                // Identifier - g
@@ -997,6 +1023,8 @@ __main____fun2__G:
             // Remove args
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Virtual Method Call - Y() -> void
             // LHS
                // Identifier - g
@@ -1013,6 +1041,8 @@ __main____fun2__G:
             // Remove args
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____fun2__G:
@@ -1034,6 +1064,8 @@ __end____main____fun2__G:
    POP __rhs
    ASSIGN __main__b __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - D::D() -> D
@@ -1049,6 +1081,8 @@ __end____main____fun2__G:
    POP __rhs
    ASSIGN __main__d __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - H::H() -> H
@@ -1064,6 +1098,8 @@ __end____main____fun2__G:
    POP __rhs
    ASSIGN __main__h __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - I::I() -> I
@@ -1079,6 +1115,8 @@ __end____main____fun2__G:
    POP __rhs
    ASSIGN __main__i __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - fun1(A) -> void
    // Arguments
       // Identifier - i
@@ -1092,6 +1130,8 @@ __end____main____fun2__G:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - fun1(A) -> void
    // Arguments
       // Identifier - b
@@ -1105,6 +1145,8 @@ __end____main____fun2__G:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - fun2(G) -> void
    // Arguments
       // Identifier - h
@@ -1118,6 +1160,8 @@ __end____main____fun2__G:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Function Declaration - fun3(G[]) -> A[]
 JUMP __end____main____fun3__G__1
@@ -1153,6 +1197,8 @@ __end____main____fun3__G__1:
    POP __rhs
    ASSIGN __main__hs __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -1222,6 +1268,8 @@ __for__22:
          POP __rhs
          ASSIGN __pointer[__offset] __rhs
          PUSH __rhs
+      // Statement results can be ignored
+      POP __void
    // Repeat
    JUMP __for__22
    // End of For
@@ -1306,6 +1354,8 @@ __for__23:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
    // Repeat
    JUMP __for__23
    // End of For
@@ -1340,6 +1390,8 @@ JUMP __endclass____main__Pizza
                POP __rhs
                ASSIGN __main__Pizza__Pizza__block__24__x __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Return
                RETURN 0
          //---------------------------------------------------------------
@@ -1367,6 +1419,8 @@ __endclass____main__Pizza:
    POP __rhs
    ASSIGN __main__pizza __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -1474,6 +1528,8 @@ __for__25:
                               POP __void
                               RESPONSE __retval
                               PUSH __retval
+                           // Statement results can be ignored
+                           POP __void
                            // Break out of __for__28
                            JUMP __endfor__28
                         //------------------------------------------------
@@ -1496,6 +1552,8 @@ __for__25:
             // Remove args
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          //===============================================================
          // Class Declaration - __main__for__25__block__26__Apple inherits __main__Object
             // Creating Dispatch Table
@@ -1545,6 +1603,8 @@ __for__25:
                         POP __void
                         RESPONSE __retval
                         PUSH __retval
+                     // Statement results can be ignored
+                     POP __void
                   //------------------------------------------------------
                RETURN 0
             __end__method____main__for__25__block__26__Apple____print:
@@ -1570,6 +1630,8 @@ __for__25:
             POP __rhs
             ASSIGN __main__for__25__block__26__apple __rhs
             PUSH __rhs
+         // Statement results can be ignored
+         POP __void
          // Method Call - Apple::print() -> void
             // LHS
                // Identifier - apple
@@ -1584,6 +1646,8 @@ __for__25:
             // Remove args
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    // Repeat
    JUMP __for__25

@@ -36,6 +36,11 @@ class Node (ABC):
     def accept (self, visitor):
         pass
 
+    @abstractmethod
+    def copy (self):
+        pass
+
+
 # ========================================================================
 # type - Type
 # id - string
@@ -50,6 +55,8 @@ class TypeSpecifierNode (Node):
 
         self.decl = None
 
+        self.isGeneric = False
+
         self.lineNumber = 0
         self.columnNumber = 0
 
@@ -61,6 +68,13 @@ class TypeSpecifierNode (Node):
 
     def accept (self, visitor):
         visitor.visitTypeSpecifierNode (self)
+
+    def copy (self):
+        node = TypeSpecifierNode (self.type, self.id, self.token)
+        node.arrayDimensions = self.arrayDimensions
+        node.decl = self.decl
+        node.isGeneric = self.isGeneric
+        return node
 
 # ========================================================================
 # codeunits - List(CodeUnitNode)
@@ -75,6 +89,12 @@ class ProgramNode (Node):
 
     def accept (self, visitor):
         visitor.visitProgramNode (self)
+
+    def copy (self):
+        node = ProgramNode (None)
+        for codeunit in self.codeunits:
+            node.codeunits += [codeunit.copy ()]
+        return node
 
 # ========================================================================
 
@@ -93,6 +113,11 @@ class DeclarationNode (Node):
     def accept (self, visitor):
         visitor.visitDeclarationNode (self)
 
+    def copy (self):
+        node = DeclarationNode (self.type.copy(), self.id, self.token)
+        node.scopeName = self.scopeName
+        return node
+
 # ========================================================================
 
 class VariableDeclarationNode (DeclarationNode):
@@ -106,8 +131,11 @@ class VariableDeclarationNode (DeclarationNode):
     def accept (self, visitor):
         visitor.visitVariableDeclarationNode (self)
 
+    def copy (self):
+        node = VariableDeclarationNode (self.type.copy(), self.id, self.token)
+        return node
+
 # ========================================================================
-# id - string
 
 class ParameterNode (DeclarationNode):
 
@@ -120,6 +148,27 @@ class ParameterNode (DeclarationNode):
     def accept (self, visitor):
         visitor.visitParameterNode (self)
 
+    def copy (self):
+        node = ParameterNode (self.type.copy(), self.id, self.token)
+        return node
+
+# ========================================================================
+
+class GenericDeclarationNode (DeclarationNode):
+
+    def __init__(self, type:TypeSpecifierNode, id, token):
+        super().__init__(type, id, token)
+
+        self.lineNumber = 0
+        self.columnNumber = 0
+
+    def accept (self, visitor):
+        visitor.visitGenericDeclarationNode (self)
+
+    def copy (self):
+        node = GenericDeclarationNode (self.type.copy(), self.id, self.token)
+        return node
+
 # ========================================================================
 
 class CodeUnitNode (Node):
@@ -129,6 +178,10 @@ class CodeUnitNode (Node):
 
     def accept (self, visitor):
         visitor.visitCodeUnitNode (self)
+
+    def copy (self):
+        node = CodeUnitNode ()
+        return node
 
 # ========================================================================
 # id - string
@@ -148,11 +201,19 @@ class FunctionNode (CodeUnitNode):
 
         self.scopeName = ""
 
+        self.templateParams = []
+
         self.lineNumber = 0
         self.columnNumber = 0
 
     def accept (self, visitor):
         visitor.visitFunctionNode (self)
+
+    def copy (self):
+        node = FunctionNode (self.type.copy(), self.id, self.token, [param.copy() for param in self.params], self.body.copy())
+        node.signature = self.signature
+        node.scopeName = self.scopeName
+        return node
 
 # ========================================================================
 # id - string
@@ -187,6 +248,15 @@ class ClassDeclarationNode (CodeUnitNode):
     def accept (self, visitor):
         visitor.visitClassDeclarationNode (self)
 
+    def copy (self):
+        node = ClassDeclarationNode (self.type.copy(), self.id, self.token, self.parent, [c.copy() for c in self.constructors], [f.copy() for f in self.fields], [v.copy() for v in self.virtualMethods], [m.copy() for m in self.methods])
+        node.children = [child.copy () for child in self.children]
+        node.functionPointerList = [fptr.copy() for fptr in self.functionPointerList]
+        node.scopeName = self.scopeName
+        node.dtableScopeName = self.dtableScopeName
+        node.isForwardDeclaration = self.isForwardDeclaration
+        return node
+
 # ========================================================================
 # id - string
 
@@ -205,6 +275,13 @@ class FieldDeclarationNode (DeclarationNode):
 
     def accept (self, visitor):
         visitor.visitFieldDeclarationNode (self)
+
+    def copy (self):
+        node = FieldDeclarationNode (self.security, self.type.copy(), self.id, self.token)
+        node.parentClass = self.parentClass.copy ()
+        node.index = self.index 
+        node.isInherited = self.isInherited
+        return node
 
 # ========================================================================
 # id - string
@@ -234,6 +311,22 @@ class MethodDeclarationNode (DeclarationNode):
     def accept (self, visitor):
         visitor.visitMethodDeclarationNode (self)
 
+    def copy (self):
+        node = MethodDeclarationNode (self.security, self.type.copy(), self.id, self.token, [p.copy() for p in self.params], self.body.copy (), self.isVirtual)
+        
+        node.parentClass = self.parentClass.copy ()
+
+        node.scopeName = self.scopeName
+
+        node.signature = self.signature
+        node.signatureNoScope = self.signatureNoScope
+
+        node.isVirtual = self.isVirtual
+        node.isInherited = self.isInherited 
+        node.inheritedMethod = self.inheritedMethod.copy()
+        node.isOverride = self.isOverride 
+        return node
+
 # ========================================================================
 # id - string
 
@@ -253,6 +346,15 @@ class ConstructorDeclarationNode (DeclarationNode):
 
     def accept (self, visitor):
         visitor.visitConstructorDeclarationNode (self)
+
+    def copy (self):
+        node = ConstructorDeclarationNode (self.token, [p.copy() for p in self.params], self.body.copy ())
+        
+        node.parentClass = self.parentClass.copy ()
+
+        node.scopeName = self.scopeName
+
+        return node
 
 # ========================================================================
 
@@ -279,6 +381,43 @@ class EnumDeclarationNode (CodeUnitNode):
     def accept (self, visitor):
         visitor.visitEnumDeclarationNode (self)
 
+    def copy (self):
+        node = EnumDeclarationNode (self.type.copy(), self.id, self.token, [field.copy() for field in self.fields])
+        return node
+
+# ========================================================================
+
+class FunctionTemplateDeclarationNode (CodeUnitNode):
+    
+    def __init__(self, type, id, token, types, function):
+        self.type = type
+        self.id = id
+        self.token = token
+
+        # template parameter names 
+        self.types = types 
+
+        # function declaration for the template 
+        self.function = function
+
+        # map of (string(templateParams), functionDeclaration)
+        self.instantiations = {}
+
+        self.scopeName = ""
+        self.dtableScopeName = ""
+
+        self.isForwardDeclaration = False 
+
+        self.lineNumber = 0
+        self.columnNumber = 0
+
+    def accept (self, visitor):
+        visitor.visitFunctionTemplateNode (self)
+
+    def copy (self):
+        node = FunctionTemplateDeclarationNode (self.type.copy(), self.id, self.token, [type for type in self.types], self.function.copy())
+        return node
+
 # ========================================================================
 
 class StatementNode (CodeUnitNode):
@@ -288,6 +427,9 @@ class StatementNode (CodeUnitNode):
 
     def accept (self, visitor):
         visitor.visitStatementNode (self)
+
+    def copy (self):
+        return StatementNode ()
 
 # ========================================================================
 # cond - ExpressionNode
@@ -309,6 +451,9 @@ class IfStatementNode (StatementNode):
     def accept (self, visitor):
         visitor.visitIfStatementNode (self)
 
+    def copy (self):
+        return IfStatementNode (self.cond.copy(), self.body.copy(), [e.copy() for e in self.elifs], None if self.elseStmt == None else self.elseStmt.copy())
+
 # ========================================================================
 # cond - ExpressionNode
 # body - StatementNode
@@ -325,6 +470,9 @@ class ElifStatementNode (StatementNode):
     def accept (self, visitor):
         visitor.visitElifStatementNode (self)
 
+    def copy (self):
+        return ElifStatementNode (self.cond.copy(), self.body.copy())
+
 # ========================================================================
 # body - StatementNode
 
@@ -338,6 +486,9 @@ class ElseStatementNode (StatementNode):
 
     def accept (self, visitor):
         visitor.visitElseStatementNode (self)
+
+    def copy (self):
+        return ElseStatementNode (self.body.copy())
 
 # ========================================================================
 # init - ExpressionNode
@@ -363,6 +514,9 @@ class ForStatementNode (StatementNode):
     def accept (self, visitor):
         visitor.visitForStatementNode (self)
 
+    def copy (self):
+        return ForStatementNode (self.init.copy(), self.cond.copy(), self.update.copy(), self.body.copy(), self.elseStmt.copy())
+
 # ========================================================================
 # cond - ExpressionNode
 # body - CodeUnitNode
@@ -382,6 +536,9 @@ class WhileStatementNode (StatementNode):
     def accept (self, visitor):
         visitor.visitWhileStatementNode (self)
 
+    def copy (self):
+        return WhileStatementNode (self.cond.copy(), self.body.copy())
+
 # ========================================================================
 # expr - ExpressionNode
 
@@ -395,6 +552,9 @@ class ExpressionStatementNode (StatementNode):
 
     def accept (self, visitor):
         visitor.visitExpressionStatementNode (self)
+
+    def copy (self):
+        return ExpressionStatementNode (self.expr.copy() if self.expr != None else None)
 
 # ========================================================================
 # expr - ExpressionNode
@@ -411,6 +571,9 @@ class ReturnStatementNode (StatementNode):
     def accept (self, visitor):
         visitor.visitReturnStatementNode (self)
 
+    def copy (self):
+        return ReturnStatementNode (self.token, self.expr.copy() if self.expr != None else None)
+
 # ========================================================================
 
 class ContinueStatementNode (StatementNode):
@@ -424,6 +587,9 @@ class ContinueStatementNode (StatementNode):
     def accept (self, visitor):
         visitor.visitContinueStatementNode (self)
 
+    def copy (self):
+        return ContinueStatementNode (self.token)
+
 # ========================================================================
 
 class BreakStatementNode (StatementNode):
@@ -436,6 +602,9 @@ class BreakStatementNode (StatementNode):
 
     def accept (self, visitor):
         visitor.visitBreakStatementNode (self)
+
+    def copy (self):
+        return BreakStatementNode (self.token)
 
 # ========================================================================
 # codeunits - List(CodeUnitNode)
@@ -451,6 +620,9 @@ class CodeBlockNode (StatementNode):
     def accept (self, visitor):
         visitor.visitCodeBlockNode (self)
 
+    def copy (self):
+        return CodeBlockNode ([codeunit.copy() for codeunit in self.codeunits])
+
 # ========================================================================
 
 class ExpressionNode (Node):
@@ -460,6 +632,9 @@ class ExpressionNode (Node):
 
     def accept (self, visitor):
         visitor.visitExpressionNode (self)
+
+    def copy (self):
+        return ExpressionNode()
 
 # ========================================================================
 # lhs - ExpressionNode 
@@ -477,6 +652,9 @@ class TupleExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitTupleExpressionNode (self)
+
+    def copy (self):
+        return TupleExpressionNode(self.lhs.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode
@@ -497,6 +675,9 @@ class AssignExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitAssignExpressionNode (self)
 
+    def copy (self):
+        return AssignExpressionNode(self.lhs.copy(), self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
+
 # ========================================================================
 # lhs - ExpressionNode
 # rhs - ExpressionNode
@@ -514,6 +695,9 @@ class LogicalOrExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitLogicalOrExpressionNode (self)
 
+    def copy (self):
+        return LogicalOrExpressionNode(self.lhs.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
+
 # ========================================================================
 # lhs - ExpressionNode
 # rhs - ExpressionNode
@@ -530,6 +714,9 @@ class LogicalAndExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitLogicalAndExpressionNode (self)
+
+    def copy (self):
+        return LogicalAndExpressionNode(self.lhs.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode
@@ -550,6 +737,9 @@ class EqualityExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitEqualityExpressionNode (self)
 
+    def copy (self):
+        return EqualityExpressionNode(self.lhs.copy(), self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
+
 # ========================================================================
 # lhs - ExpressionNode
 # op  - inequality op  
@@ -568,6 +758,9 @@ class InequalityExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitInequalityExpressionNode (self)
+
+    def copy (self):
+        return InequalityExpressionNode(self.lhs.copy(), self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode
@@ -588,6 +781,9 @@ class AdditiveExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitAdditiveExpressionNode (self)
 
+    def copy (self):
+        return AdditiveExpressionNode(self.lhs.copy(), self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
+
 # ========================================================================
 # lhs - ExpressionNode
 # op  - multiplicative op  
@@ -607,6 +803,9 @@ class MultiplicativeExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitMultiplicativeExpressionNode (self)
 
+    def copy (self):
+        return MultiplicativeExpressionNode(self.lhs.copy(), self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
+
 # ========================================================================
 # op  - unaryleft op  
 # rhs - ExpressionNode
@@ -624,6 +823,9 @@ class UnaryLeftExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitUnaryLeftExpressionNode (self)
 
+    def copy (self):
+        return UnaryLeftExpressionNode(self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
+
 # ========================================================================
 # lhs - ExpressionNode
 
@@ -639,6 +841,9 @@ class PostIncrementExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitPostIncrementExpressionNode (self)
 
+    def copy (self):
+        return PostIncrementExpressionNode(self.lhs.copy(), self.lineNumber, self.columnNumber)
+
 # ========================================================================
 # lhs - ExpressionNode
 
@@ -653,6 +858,9 @@ class PostDecrementExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitPostDecrementExpressionNode (self)
+
+    def copy (self):
+        return PostDecrementExpressionNode(self.lhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode
@@ -671,16 +879,21 @@ class SubscriptExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitSubscriptExpressionNode (self)
 
+    def copy (self):
+        return SubscriptExpressionNode(self.lhs.copy(), self.offset.copy(), self.lineNumber, self.columnNumber)
+
 # ========================================================================
 # function - ExpressionNode
 # args - list[ExpressionNode]
 
 class FunctionCallExpressionNode (ExpressionNode):
 
-    def __init__(self, function, args, line, column):
+    def __init__(self, function, args, templateParams, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.function = function
         self.args = args 
+
+        self.templateParams = templateParams 
 
         self.decl = None
 
@@ -689,6 +902,9 @@ class FunctionCallExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitFunctionCallExpressionNode (self)
+
+    def copy (self):
+        return FunctionCallExpressionNode(self.function.copy(), [arg.copy() for arg in self.args], [tempParam.copy() for tempParam in self.templateParams], self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode - must be class type 
@@ -714,6 +930,9 @@ class MemberAccessorExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitMemberAccessorExpressionNode (self)
 
+    def copy (self):
+        return MemberAccessorExpressionNode(self.lhs.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
+
 # ========================================================================
 # lhs - ExpressionNode - must be class type 
 # rhs - ExpressionNode  - must be a valid member  
@@ -732,6 +951,9 @@ class FieldAccessorExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitFieldAccessorExpressionNode (self)
+
+    def copy (self):
+        return FieldAccessorExpressionNode(self.lhs.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode - must be class type 
@@ -753,6 +975,9 @@ class MethodAccessorExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitMethodAccessorExpressionNode (self)
 
+    def copy (self):
+        return MethodAccessorExpressionNode(self.lhs.copy(), self.rhs.copy(), [arg.copy() for arg in self.args], self.lineNumber, self.columnNumber)
+
 # ========================================================================
 
 class ThisExpressionNode (ExpressionNode):
@@ -768,6 +993,9 @@ class ThisExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitThisExpressionNode (self)
+
+    def copy (self):
+        return ThisExpressionNode(self.token, self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # id - string
@@ -787,6 +1015,9 @@ class IdentifierExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitIdentifierExpressionNode (self)
 
+    def copy (self):
+        return IdentifierExpressionNode(self.id, self.token, self.lineNumber, self.columnNumber)
+
 # ========================================================================
 
 class ArrayAllocatorExpressionNode (ExpressionNode):
@@ -802,6 +1033,9 @@ class ArrayAllocatorExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitArrayAllocatorExpressionNode (self)
+
+    def copy (self):
+        return ArrayAllocatorExpressionNode(self.type.copy(), [d.copy() for d in self.dimensions], self.lineNumber, self.columnNumber)
 
 # ========================================================================
 
@@ -820,6 +1054,9 @@ class ConstructorCallExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitConstructorCallExpressionNode (self)
 
+    def copy (self):
+        return ConstructorCallExpressionNode(self.type.copy(), self.id, [a.copy() for a in self.args], self.lineNumber, self.columnNumber)
+
 # ========================================================================
 
 class SizeofExpressionNode (ExpressionNode):
@@ -834,6 +1071,9 @@ class SizeofExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitSizeofExpressionNode (self)
 
+    def copy (self):
+        return SizeofExpressionNode(self.type.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
+
 # ========================================================================
 
 class FreeExpressionNode (ExpressionNode):
@@ -847,6 +1087,9 @@ class FreeExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitFreeExpressionNode (self)
+
+    def copy (self):
+        return FreeExpressionNode(self.type.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # value - int
@@ -863,6 +1106,9 @@ class IntLiteralExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitIntLiteralExpressionNode (self)
 
+    def copy (self):
+        return IntLiteralExpressionNode(self.value)
+
 # ========================================================================
 # value - float
 
@@ -878,6 +1124,9 @@ class FloatLiteralExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitFloatLiteralExpressionNode (self)
 
+    def copy (self):
+        return FloatLiteralExpressionNode(self.value)
+
 # ========================================================================
 # value - char
 
@@ -892,6 +1141,9 @@ class CharLiteralExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitCharLiteralExpressionNode (self)
+
+    def copy (self):
+        return CharLiteralExpressionNode(self.value)
 
 # ========================================================================
 # value - string
@@ -910,6 +1162,9 @@ class StringLiteralExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitStringLiteralExpressionNode (self)
 
+    def copy (self):
+        return StringLiteralExpressionNode(self.value)
+
 # ========================================================================
 # elems - list[ExpressionNode]
 
@@ -925,6 +1180,9 @@ class ListConstructorExpressionNode (ExpressionNode):
     def accept (self, visitor):
         visitor.visitListConstructorExpressionNode (self)
 
+    def copy (self):
+        return ListConstructorExpressionNode([e.copy() for e in self.elems], self.lineNumber, self.columnNumber)
+
 # ========================================================================
 
 class NullExpressionNode (ExpressionNode):
@@ -938,5 +1196,8 @@ class NullExpressionNode (ExpressionNode):
 
     def accept (self, visitor):
         visitor.visitNullExpressionNode (self)
+
+    def copy (self):
+        return NullExpressionNode(self.lineNumber, self.columnNumber)
 
 # ========================================================================

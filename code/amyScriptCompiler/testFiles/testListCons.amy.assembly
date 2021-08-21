@@ -65,6 +65,14 @@ print__char:
     return 0
 
 //========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
 // Prints a given string to the screen with a newline at the end
 // void println (char[] stringToPrint);
 println__char__1:
@@ -111,6 +119,14 @@ println__char:
     // grab string
     stackget __char 0
     println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
     return 0
 
 //========================================================================
@@ -262,6 +278,8 @@ __endOfLibrary:
    POP __rhs
    ASSIGN __main__nums __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -397,6 +415,8 @@ __for__0:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                   // Function Call - print(char[]) -> void
                      // Arguments
                         // String Literal
@@ -412,6 +432,8 @@ __for__0:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                //---------------------------------------------------------
             // Repeat
             JUMP __for__2
@@ -432,6 +454,8 @@ __for__0:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    // Repeat
    JUMP __for__0

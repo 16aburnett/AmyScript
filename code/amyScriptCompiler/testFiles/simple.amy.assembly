@@ -65,6 +65,14 @@ print__char:
     return 0
 
 //========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
 // Prints a given string to the screen with a newline at the end
 // void println (char[] stringToPrint);
 println__char__1:
@@ -111,6 +119,14 @@ println__char:
     // grab string
     stackget __char 0
     println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
     return 0
 
 //========================================================================
@@ -242,6 +258,8 @@ __end____main____add__int__int:
    POP __rhs
    ASSIGN __main__nums __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Array Allocator
@@ -256,6 +274,8 @@ __end____main____add__int__int:
    POP __rhs
    ASSIGN __main__nl __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Char Literal
@@ -273,6 +293,8 @@ __end____main____add__int__int:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Int Literal
@@ -283,6 +305,8 @@ __end____main____add__int__int:
    POP __rhs
    ASSIGN __main__a __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Division
@@ -318,6 +342,8 @@ __end____main____add__int__int:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Subscript
@@ -339,6 +365,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Identifier - nl
@@ -352,6 +380,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Int Literal
@@ -362,6 +392,8 @@ __end____main____add__int__int:
    POP __rhs
    ASSIGN __main__x __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Int Literal
@@ -372,6 +404,8 @@ __end____main____add__int__int:
    POP __rhs
    ASSIGN __main__y __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Assignment
@@ -413,6 +447,8 @@ __end____main____add__int__int:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Identifier - z
@@ -426,6 +462,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Identifier - nl
@@ -439,6 +477,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Pre-Increment
@@ -476,6 +516,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Identifier - nl
@@ -489,6 +531,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Post-Decrement
@@ -514,6 +558,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Identifier - nl
@@ -527,6 +573,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Pre-Increment
@@ -546,6 +594,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Identifier - nl
@@ -559,6 +609,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Pre-Increment
@@ -578,6 +630,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Identifier - nl
@@ -591,6 +645,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Pre-Increment
@@ -610,6 +666,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Identifier - nl
@@ -623,6 +681,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Pre-Increment
@@ -642,6 +702,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Identifier - nl
@@ -655,6 +717,8 @@ __end____main____add__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // If-Statement
    // Condition
@@ -752,6 +816,8 @@ __end____main____add__int__int:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    JUMP __endif__1
    // End of if

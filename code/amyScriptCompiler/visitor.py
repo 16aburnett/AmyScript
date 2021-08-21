@@ -424,6 +424,23 @@ class PrintVisitor (ASTVisitor):
 
         self.level -= 1
 
+    def visitFunctionTemplateNode (self, node):
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Function Template: {node.id}\n"]
+
+        self.level += 1
+
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Template:\n"]
+        node.function.accept (self)
+
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Instances:\n"]
+        for instance in node.instantiations:
+            node.instantiations[instance].accept (self)
+
+        self.level -= 1
+
     def visitStatementNode (self, node):
         pass
 

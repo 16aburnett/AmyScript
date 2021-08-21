@@ -65,6 +65,14 @@ print__char:
     return 0
 
 //========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
 // Prints a given string to the screen with a newline at the end
 // void println (char[] stringToPrint);
 println__char__1:
@@ -111,6 +119,14 @@ println__char:
     // grab string
     stackget __char 0
     println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
     return 0
 
 //========================================================================
@@ -198,6 +214,12 @@ __endOfLibrary:
 
 //========================================================================
 // Class Declaration - __main__Person inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Person 3
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__Person[0] __method____main__Person____getAge
+      ASSIGN __dtable____main__Person[1] __method____main__Person____getName
+      ASSIGN __dtable____main__Person[2] __method____main__Person____addFriend__Person
    //---------------------------------------------------------------------
    // Field - char[] Person::name
    ASSIGN __field____main__Person__name 1
@@ -222,14 +244,8 @@ JUMP __endclass____main__Person
    __ctor____main__Person____Person__char__1__int:
       // Creating Class Instance
          MALLOC __this 5
-         // Creating Dispatch Table
-            MALLOC __dtable 3
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__Person____getAge
-            ASSIGN __dtable[1] __method____main__Person____getName
-            ASSIGN __dtable[2] __method____main__Person____addFriend__Person
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Person
       // Parameters
          // Param: name
          STACKGET __main__Person__Person__name 0
@@ -254,6 +270,8 @@ JUMP __endclass____main__Person
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - age
@@ -270,6 +288,8 @@ JUMP __endclass____main__Person
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Array Allocator
@@ -290,6 +310,8 @@ JUMP __endclass____main__Person
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Int Literal
@@ -306,6 +328,8 @@ JUMP __endclass____main__Person
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__Person____Person__char__1__int:
@@ -415,6 +439,8 @@ JUMP __endclass____main__Person
                POP __rhs
                ASSIGN __pointer[__offset] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__Person____addFriend__Person:
@@ -454,6 +480,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __main__person __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Member Accessor
@@ -474,6 +502,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Method Call - Person::getAge() -> int
@@ -499,6 +529,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -513,6 +545,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(char[]) -> void
    // Arguments
       // String Literal
@@ -550,6 +584,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(char) -> void
    // Arguments
       // Subscript
@@ -583,6 +619,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -597,6 +635,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Array Allocator
@@ -611,6 +651,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __main__people __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Identifier - person
@@ -628,6 +670,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
@@ -667,6 +711,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
@@ -705,6 +751,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
@@ -744,6 +792,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
@@ -783,6 +833,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
@@ -818,6 +870,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
@@ -853,6 +907,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
@@ -888,6 +944,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
@@ -923,6 +981,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
@@ -958,6 +1018,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
@@ -993,6 +1055,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
@@ -1028,6 +1092,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - Person::addFriend(Person) -> void
    // LHS
       // Subscript
@@ -1063,6 +1129,8 @@ __endclass____main__Person:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -1134,6 +1202,8 @@ __for__4:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - print(char[]) -> void
             // Arguments
                // String Literal
@@ -1149,6 +1219,8 @@ __for__4:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - print(int) -> void
             // Arguments
                // Member Accessor
@@ -1177,6 +1249,8 @@ __for__4:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - print(char[]) -> void
             // Arguments
                // String Literal
@@ -1201,6 +1275,8 @@ __for__4:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          //---------------------------------------------------------------
          // For-Loop
          // Init
@@ -1302,6 +1378,8 @@ __for__4:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                   // Function Call - print(char[]) -> void
                      // Arguments
                         // String Literal
@@ -1317,6 +1395,8 @@ __for__4:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                //---------------------------------------------------------
             // Repeat
             JUMP __for__6
@@ -1337,6 +1417,8 @@ __for__4:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    // Repeat
    JUMP __for__4
@@ -1373,6 +1455,8 @@ __for__4:
          POP __rhs
          ASSIGN __parent[__child] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Member Accessor
@@ -1401,6 +1485,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Member Accessor
@@ -1421,8 +1507,16 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Class Declaration - __main__IntArray inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__IntArray 3
+      // Populate Dispatch Table
+      ASSIGN __dtable____main__IntArray[0] __method____main__IntArray____pushBack__int
+      ASSIGN __dtable____main__IntArray[1] __method____main__IntArray____popBack
+      ASSIGN __dtable____main__IntArray[2] __method____main__IntArray____get__int
    //---------------------------------------------------------------------
    // Field - int[] IntArray::data
    ASSIGN __field____main__IntArray__data 1
@@ -1443,14 +1537,8 @@ JUMP __endclass____main__IntArray
    __ctor____main__IntArray____IntArray:
       // Creating Class Instance
          MALLOC __this 4
-         // Creating Dispatch Table
-            MALLOC __dtable 3
-            // Populate Dispatch Table
-            ASSIGN __dtable[0] __method____main__IntArray____pushBack__int
-            ASSIGN __dtable[1] __method____main__IntArray____popBack
-            ASSIGN __dtable[2] __method____main__IntArray____get__int
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__IntArray
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -1471,6 +1559,8 @@ JUMP __endclass____main__IntArray
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Array Allocator
@@ -1498,6 +1588,8 @@ JUMP __endclass____main__IntArray
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Int Literal
@@ -1514,6 +1606,8 @@ JUMP __endclass____main__IntArray
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__IntArray____IntArray:
@@ -1607,6 +1701,8 @@ JUMP __endclass____main__IntArray
                               POP __rhs
                               ASSIGN __parent[__child] __rhs
                         PUSH __rhs
+                     // Statement results can be ignored
+                     POP __void
                      // Assignment
                         // RHS
                            // Array Allocator
@@ -1628,6 +1724,8 @@ JUMP __endclass____main__IntArray
                         POP __rhs
                         ASSIGN __main__IntArray__pushBack__block__9__if__10__block__11__nData __rhs
                         PUSH __rhs
+                     // Statement results can be ignored
+                     POP __void
                      //---------------------------------------------------
                      // For-Loop
                      // Init
@@ -1710,6 +1808,8 @@ JUMP __endclass____main__IntArray
                                  POP __rhs
                                  ASSIGN __pointer[__offset] __rhs
                                  PUSH __rhs
+                              // Statement results can be ignored
+                              POP __void
                            //---------------------------------------------
                         // Repeat
                         JUMP __for__12
@@ -1732,6 +1832,8 @@ JUMP __endclass____main__IntArray
                               POP __rhs
                               ASSIGN __parent[__child] __rhs
                         PUSH __rhs
+                     // Statement results can be ignored
+                     POP __void
                   //------------------------------------------------------
                JUMP __endif__10
                // End of if
@@ -1768,6 +1870,8 @@ JUMP __endclass____main__IntArray
                POP __rhs
                ASSIGN __pointer[__offset] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Post-Increment
                // LHS
                   // Member Accessor Assignment
@@ -1781,6 +1885,8 @@ JUMP __endclass____main__IntArray
                      ASSIGN __res __parent[__child]
                      ADD __parent[__child] __parent[__child] 1
                PUSH __res
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__IntArray____pushBack__int:
@@ -1902,6 +2008,8 @@ __endclass____main__IntArray:
    POP __rhs
    ASSIGN __main__myArray __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Method Call - IntArray::pushBack(int) -> void
    // LHS
       // Identifier - myArray
@@ -1921,6 +2029,8 @@ __endclass____main__IntArray:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - IntArray::pushBack(int) -> void
    // LHS
       // Identifier - myArray
@@ -1940,6 +2050,8 @@ __endclass____main__IntArray:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - IntArray::popBack() -> int
    // LHS
       // Identifier - myArray
@@ -1954,6 +2066,8 @@ __endclass____main__IntArray:
    // Remove args
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - IntArray::pushBack(int) -> void
    // LHS
       // Identifier - myArray
@@ -1973,6 +2087,8 @@ __endclass____main__IntArray:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - IntArray::pushBack(int) -> void
    // LHS
       // Identifier - myArray
@@ -1992,6 +2108,8 @@ __endclass____main__IntArray:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Method Call - IntArray::popBack() -> int
    // LHS
       // Identifier - myArray
@@ -2006,6 +2124,8 @@ __endclass____main__IntArray:
    // Remove args
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -2086,6 +2206,8 @@ __for__16:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - print(char[]) -> void
             // Arguments
                // String Literal
@@ -2101,6 +2223,8 @@ __for__16:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    // Repeat
    JUMP __for__16
@@ -2121,6 +2245,8 @@ __for__16:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Array Allocator
@@ -2135,6 +2261,8 @@ __for__16:
    POP __rhs
    ASSIGN __main__multi __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -2199,6 +2327,8 @@ __for__18:
             POP __rhs
             ASSIGN __pointer[__offset] __rhs
             PUSH __rhs
+         // Statement results can be ignored
+         POP __void
          //---------------------------------------------------------------
          // For-Loop
          // Init
@@ -2271,6 +2401,8 @@ __for__18:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                   // Function Call - print(char[]) -> void
                      // Arguments
                         // String Literal
@@ -2286,6 +2418,8 @@ __for__18:
                      POP __void
                      RESPONSE __retval
                      PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
                //---------------------------------------------------------
             // Repeat
             JUMP __for__20
@@ -2306,6 +2440,8 @@ __for__18:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    // Repeat
    JUMP __for__18

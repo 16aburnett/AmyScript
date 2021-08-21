@@ -1,19 +1,25 @@
-// Testing Forward Declarations and 
+// Testing Forward Declarations  
 // Author: Amy Burnett
 //========================================================================
 
 // forward declarations 
+// compiler throws error if this is never completed
 class Node;
 class Visitor; 
 
+// forward dec for a member function 
+// adds Visitor::visit to the symbol table
+// compiler throws error if this is never completed
+//virtual void Visitor::visit (Node node);
+
 //========================================================================
 
-//enum Type
-//{
-//    INT,
-//    FLOAT,
-//    CHAR
-//}
+enum Type
+{
+    INT,
+    FLOAT,
+    CHAR
+}
 
 //========================================================================
 
@@ -46,12 +52,12 @@ class ProgramNode inherits Node
 
 class VariableDeclarationNode inherits Node
 {
-    //public field Type type; 
+    public field Type type; 
     public field char[] id; 
 
-    constructor (char[] id)
+    constructor (Type type, char[] id)
     {
-        //this.type = type; 
+        this.type = type; 
         this.id = id; 
     }
 

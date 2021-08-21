@@ -3,7 +3,7 @@
 # April 11 2021
 # ========================================================================
 
-if __name__ == "semanticAnalyzer":
+if __name__ == "semanticAnalyzerStage2":
     from ast import *
     from visitor import ASTVisitor
     from symbolTable import SymbolTable
@@ -14,12 +14,11 @@ else:
 
 # ========================================================================
 
-class SymbolTableVisitor (ASTVisitor):
+class SymbolTableVisitor2 (ASTVisitor):
 
     def __init__(self, lines):
         self.table = SymbolTable ()
         self.typesTable = SymbolTable ()
-        
         self.parameters = []
         self.lines = lines 
         self.wasSuccessful = True
@@ -28,8 +27,6 @@ class SymbolTableVisitor (ASTVisitor):
         self.containingClass = []
         self.containingFunction = [] 
         self.containingLoop = []
-
-        self.insertFunc = True 
 
     def visitProgramNode (self, node):
         for codeunit in node.codeunits:
@@ -54,7 +51,6 @@ class SymbolTableVisitor (ASTVisitor):
                 print ("^")
                 print ()
                 self.wasSuccessful = False
-                node.type = Type.UNKNOWN
 
     def visitParameterNode (self, node):
         node.type.accept (self)
@@ -95,15 +91,7 @@ class SymbolTableVisitor (ASTVisitor):
             self.parameters += [p]
 
         # create signature for node
-        signature = [f"{node.id}"]
-        # add template params 
-        if len(node.templateParams) > 0:
-            signature += [f"<:"]
-            signature += [f"{node.templateParams[0].__str__()}"]
-            for i in range(1, len(node.templateParams)):
-                signature += [f", {node.templateParams[i]}"]
-            signature += [f":>"]
-        signature += [f"("]
+        signature = [f"{node.id}("]
         if len(node.params) > 0:
             signature += [node.params[0].type.__str__()]
         for i in range(1, len(node.params)):
@@ -112,19 +100,15 @@ class SymbolTableVisitor (ASTVisitor):
         signature = "".join(signature)
         node.signature = signature
 
-        # this is for checking template instances 
-        if self.insertFunc:
-            wasSuccessful = self.table.insert (node)
+        wasSuccessful = self.table.insert (node)
 
-            if (not wasSuccessful):
-                originalDec = self.table.lookup (node.id, node.params)
-                print (f"Semantic Error: Redeclaration of function '{node.signature}'")
-                print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
-                print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
-                print ()
-                self.wasSuccessful = False
-        else:
-            self.insertFunc = True
+        if (not wasSuccessful):
+            originalDec = self.table.lookup (node.id, node.params)
+            print (f"Semantic Error: Redeclaration of function '{node.signature}'")
+            print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
+            print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+            print ()
+            self.wasSuccessful = False
 
         # containing function keeps track of what function 
         # we're currently in 
@@ -437,10 +421,7 @@ class SymbolTableVisitor (ASTVisitor):
 
     def visitFunctionTemplateNode (self, node):
 
-        # add template function to scope 
-        self.table.insert (node)
-
-        # **ensure template types are unique 
+        # ensure template types are unique 
 
         # add template typenames to scope 
         self.table.enterScope ()
@@ -450,7 +431,7 @@ class SymbolTableVisitor (ASTVisitor):
             self.typesTable.insert (t)
 
         # check the function 
-        # node.function.accept (self)
+        node.function.accept (self)
 
         # exit scope 
         self.table.exitScope ()
@@ -823,11 +804,9 @@ class SymbolTableVisitor (ASTVisitor):
                 and node.lhs.type.type != Type.FLOAT)
                 or node.lhs.type.arrayDimensions > 0
                 or node.rhs.type.arrayDimensions > 0):
-            print (f"Semantic Error: invalid/mismatching types for addition/subtraction")
-            print (f"   LHS: {node.lhs.type}")
-            print (f"   RHS: {node.rhs.type}")
-            print (f"   Valid types include int and float")
+            print (f"Semantic Error: mismatching types in additive")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   {node.lhs.type} != {node.rhs.type}")
             print (f"   line:")
             print (f"      {self.lines[node.lineNumber-1][:]}")
             print (f"      ",end="")
@@ -849,11 +828,9 @@ class SymbolTableVisitor (ASTVisitor):
                 and node.lhs.type.type != Type.FLOAT)
                 or node.lhs.type.arrayDimensions > 0
                 or node.rhs.type.arrayDimensions > 0):
-            print (f"Semantic Error: invalid/mismatching types for mult/div/mod")
-            print (f"   LHS: {node.lhs.type}")
-            print (f"   RHS: {node.rhs.type}")
-            print (f"   Valid types include int and float")
+            print (f"Semantic Error: mismatching types in multiplicative")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
+            print (f"   {node.lhs.type} != {node.rhs.type}")
             print (f"   line:")
             print (f"      {self.lines[node.lineNumber-1][:-1]}")
             print (f"      ",end="")
@@ -973,21 +950,10 @@ class SymbolTableVisitor (ASTVisitor):
         # eval arguments to get types 
         for arg in node.args:
             arg.accept (self)
-        
-        # ensure any template parameters are valid types 
-        for tparam in node.templateParams:
-            tparam.accept (self)
 
         # search for function
         # create signature for node
-        signature = [f"{node.function.id}"]
-        # add template parameters
-        if len(node.templateParams) > 0:
-            signature += [f"<:{node.templateParams[0].__str__()}"]
-            for i in range(1, len(node.templateParams)):
-                signature += [f", {node.templateParams[i].__str__()}"]
-            signature += [":>"]
-        signature += ["("]
+        signature = [f"{node.function.id}("]
         if len(node.args) > 0:
             signature += [node.args[0].type.__str__()]
         for i in range(1, len(node.args)):
@@ -995,7 +961,7 @@ class SymbolTableVisitor (ASTVisitor):
         signature += [")"]
         signature = "".join(signature)
 
-        decl = self.table.lookup (node.function.id, node.args, node.templateParams, self)
+        decl = self.table.lookup (node.function.id, node.args)
 
         # save declaration with function call
         node.decl = decl 

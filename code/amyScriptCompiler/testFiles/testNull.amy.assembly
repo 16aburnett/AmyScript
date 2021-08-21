@@ -65,6 +65,14 @@ print__char:
     return 0
 
 //========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
 // Prints a given string to the screen with a newline at the end
 // void println (char[] stringToPrint);
 println__char__1:
@@ -111,6 +119,14 @@ println__char:
     // grab string
     stackget __char 0
     println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
     return 0
 
 //========================================================================
@@ -198,6 +214,9 @@ __endOfLibrary:
 
 //========================================================================
 // Class Declaration - __main__Person inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main__Person 0
+      // Populate Dispatch Table
    //---------------------------------------------------------------------
    // Field - char[] Person::name
    ASSIGN __field____main__Person__name 1
@@ -210,11 +229,8 @@ JUMP __endclass____main__Person
    __ctor____main__Person____Person:
       // Creating Class Instance
          MALLOC __this 2
-         // Creating Dispatch Table
-            MALLOC __dtable 0
-            // Populate Dispatch Table
-            // Add Dispatch Table
-            ASSIGN __this[0] __dtable
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main__Person
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -244,6 +260,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __main__person1 __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Null Literal
@@ -255,6 +273,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __main__person2 __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // If-Statement
    // Condition
@@ -322,6 +342,8 @@ __endclass____main__Person:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    JUMP __endif__1
    //---------------------------------------------------------------------
@@ -380,6 +402,8 @@ __endclass____main__Person:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
       JUMP __endif__1
    //---------------------------------------------------------------------
@@ -429,6 +453,8 @@ __endclass____main__Person:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
       JUMP __endif__1
    //---------------------------------------------------------------------
@@ -479,6 +505,8 @@ __endclass____main__Person:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // End of if
@@ -534,6 +562,8 @@ __endclass____main__Person:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
    JUMP __endif__6
    //---------------------------------------------------------------------
    // Elif-Statement
@@ -586,6 +616,8 @@ __endclass____main__Person:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
       JUMP __endif__6
    //---------------------------------------------------------------------
    // End of if
@@ -605,6 +637,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __main__a __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Null Literal
@@ -616,6 +650,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __main__b __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // If-Statement
    // Condition
@@ -671,6 +707,8 @@ __endclass____main__Person:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    JUMP __endif__7
    //---------------------------------------------------------------------
@@ -723,6 +761,8 @@ __endclass____main__Person:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
       JUMP __endif__7
    //---------------------------------------------------------------------
@@ -766,6 +806,8 @@ __endclass____main__Person:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
       JUMP __endif__7
    //---------------------------------------------------------------------
@@ -804,6 +846,8 @@ __endclass____main__Person:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // End of if
@@ -847,6 +891,8 @@ __endclass____main__Person:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
    JUMP __endif__12
    //---------------------------------------------------------------------
    // Elif-Statement
@@ -887,6 +933,8 @@ __endclass____main__Person:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
       JUMP __endif__12
    //---------------------------------------------------------------------
    // End of if
@@ -906,6 +954,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __main__people1 __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Null Literal
@@ -917,6 +967,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __main__people2 __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // If-Statement
    // Condition
@@ -984,6 +1036,8 @@ __endclass____main__Person:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    JUMP __endif__13
    //---------------------------------------------------------------------
@@ -1042,6 +1096,8 @@ __endclass____main__Person:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
       JUMP __endif__13
    //---------------------------------------------------------------------
@@ -1091,6 +1147,8 @@ __endclass____main__Person:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
       JUMP __endif__13
    //---------------------------------------------------------------------
@@ -1141,6 +1199,8 @@ __endclass____main__Person:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // End of if
@@ -1196,6 +1256,8 @@ __endclass____main__Person:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
    JUMP __endif__18
    //---------------------------------------------------------------------
    // Elif-Statement
@@ -1248,6 +1310,8 @@ __endclass____main__Person:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
       JUMP __endif__18
    //---------------------------------------------------------------------
    // End of if
@@ -1275,6 +1339,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Person::Person() -> Person
@@ -1297,6 +1363,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Null Literal
@@ -1315,6 +1383,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Person::Person() -> Person
@@ -1337,6 +1407,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Null Literal
@@ -1355,6 +1427,8 @@ __endclass____main__Person:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -1444,6 +1518,8 @@ __for__19:
                   POP __void
                   RESPONSE __retval
                   PUSH __retval
+               // Statement results can be ignored
+               POP __void
             JUMP __endif__21
             //------------------------------------------------------------
             // Else-Statement
@@ -1466,6 +1542,8 @@ __for__19:
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
             //------------------------------------------------------------
             // End of if
             __endif__21:

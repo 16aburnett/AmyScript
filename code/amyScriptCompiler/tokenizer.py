@@ -59,6 +59,8 @@ token_specification = [
 # Identifier
     ('IDENTIFIER',r'[A-Za-z_][A-Za-z_0-9]*'),    # Identifiers
 # Operators
+    ('LTEMP',    r'\<\:'),
+    ('RTEMP',    r'\:\>'),
     ('INCR',     r'\+\+'),
     ('DECR',     r'\-\-'),
     ('PLUS',     r'\+'),
@@ -168,6 +170,8 @@ def tokenize(code):
                 kind = "CONSTRUCTOR"
             elif (lexeme == "enum"):
                 kind = "ENUM"
+            elif (lexeme == "template"):
+                kind = "TEMPLATE"
             elif (lexeme == "new"):
                 kind = "NEW"
             elif (lexeme == "free"):

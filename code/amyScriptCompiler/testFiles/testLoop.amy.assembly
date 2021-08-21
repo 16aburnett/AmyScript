@@ -65,6 +65,14 @@ print__char:
     return 0
 
 //========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
 // Prints a given string to the screen with a newline at the end
 // void println (char[] stringToPrint);
 println__char__1:
@@ -111,6 +119,14 @@ println__char:
     // grab string
     stackget __char 0
     println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
     return 0
 
 //========================================================================
@@ -252,6 +268,8 @@ __for__0:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - println(char[]) -> void
             // Arguments
                // String Literal
@@ -266,6 +284,8 @@ __for__0:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    // Repeat
    JUMP __for__0
@@ -282,6 +302,8 @@ __for__0:
    POP __rhs
    ASSIGN __main__i __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Int Literal
@@ -292,6 +314,8 @@ __for__0:
    POP __rhs
    ASSIGN __main__x __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // While-Loop
 __while__2:
@@ -328,6 +352,8 @@ __while__2:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - println(char[]) -> void
             // Arguments
                // String Literal
@@ -342,6 +368,8 @@ __while__2:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    JUMP __while__2
    // End of While
@@ -498,6 +526,8 @@ __for__4:
                            POP __void
                            RESPONSE __retval
                            PUSH __retval
+                        // Statement results can be ignored
+                        POP __void
                      JUMP __endif__8
                      //---------------------------------------------------
                      // Else-Statement
@@ -517,6 +547,8 @@ __for__4:
                         POP __void
                         RESPONSE __retval
                         PUSH __retval
+                     // Statement results can be ignored
+                     POP __void
                      //---------------------------------------------------
                      // End of if
                      __endif__8:
@@ -537,6 +569,8 @@ __for__4:
             POP __rhs
             ASSIGN __main__for__4__block__5__x __rhs
             PUSH __rhs
+         // Statement results can be ignored
+         POP __void
          // Function Call - println(char[]) -> void
             // Arguments
                // String Literal
@@ -551,6 +585,8 @@ __for__4:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    // Repeat
    JUMP __for__4
@@ -570,6 +606,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -584,6 +622,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -612,6 +652,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(char[]) -> void
    // Arguments
       // String Literal
@@ -630,6 +672,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
       // Identifier - x
@@ -643,6 +687,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -657,6 +703,8 @@ __for__4:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // If-Statement
    // Condition
@@ -710,6 +758,8 @@ __for__4:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
    JUMP __endif__9
    // End of if
    __endif__9:
@@ -724,6 +774,8 @@ __for__4:
    POP __rhs
    ASSIGN __main__w __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Int Literal
@@ -734,6 +786,8 @@ __for__4:
    POP __rhs
    ASSIGN __main__y __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // While-Loop
 __while__10:
@@ -787,6 +841,8 @@ __while__10:
             SUBTRACT __main__w __main__w 1
             ASSIGN __res __main__w
             PUSH __res
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    JUMP __while__10
    // End of While
@@ -805,6 +861,8 @@ __while__10:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -819,6 +877,8 @@ __while__10:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -958,6 +1018,8 @@ __for__13:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // End of For
@@ -991,6 +1053,8 @@ __for__13:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

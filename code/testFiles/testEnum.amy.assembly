@@ -259,6 +259,8 @@ __endOfLibrary:
    POP __rhs
    ASSIGN __main__colorStrings __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Function Declaration - print(Color) -> void
 JUMP __end____main____print__Color
@@ -290,6 +292,8 @@ __main____print__Color:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____print__Color:
@@ -327,6 +331,8 @@ __main____println__Color:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____println__Color:
@@ -380,6 +386,8 @@ __end____main____println__Color:
    POP __rhs
    ASSIGN __main__typeStrings __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Function Declaration - print(Type) -> void
 JUMP __end____main____print__Type
@@ -411,6 +419,8 @@ __main____print__Type:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____print__Type:
@@ -448,6 +458,8 @@ __main____println__Type:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____println__Type:
@@ -464,6 +476,8 @@ __end____main____println__Type:
    POP __rhs
    ASSIGN __main__c __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - println(Color) -> void
    // Arguments
       // Identifier - c
@@ -477,6 +491,8 @@ __end____main____println__Type:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Enum Member Accessor - Type.CHAR
@@ -487,6 +503,8 @@ __end____main____println__Type:
    POP __rhs
    ASSIGN __main__t __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - println(Type) -> void
    // Arguments
       // Identifier - t
@@ -500,6 +518,8 @@ __end____main____println__Type:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // If-Statement
    // Condition
@@ -541,6 +561,8 @@ __end____main____println__Type:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
    JUMP __endif__4
    //---------------------------------------------------------------------
    // Elif-Statement
@@ -586,6 +608,8 @@ __end____main____println__Type:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
       JUMP __endif__4
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
@@ -631,6 +655,8 @@ __end____main____println__Type:
          POP __void
          RESPONSE __retval
          PUSH __retval
+      // Statement results can be ignored
+      POP __void
       JUMP __endif__4
    //---------------------------------------------------------------------
    // End of if

@@ -259,6 +259,7 @@ JUMP __endclass____main__Person
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            POP __void
             // Assignment
                // RHS
                   // Identifier - age
@@ -275,6 +276,7 @@ JUMP __endclass____main__Person
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__Person____Person__char__1__int:
@@ -322,6 +324,7 @@ __main____substring__char__1__int__int:
             POP __rhs
             ASSIGN __main__substring__block__1__result __rhs
             PUSH __rhs
+         POP __void
          //---------------------------------------------------------------
          // For-Loop
          // Init
@@ -399,6 +402,7 @@ __main____substring__char__1__int__int:
                      POP __rhs
                      ASSIGN __pointer[__offset] __rhs
                      PUSH __rhs
+                  POP __void
                //---------------------------------------------------------
             // Repeat
             JUMP __for__2
@@ -448,6 +452,7 @@ __main____split__char__1__char:
             POP __rhs
             ASSIGN __main__split__block__4__buffer __rhs
             PUSH __rhs
+         POP __void
          // Assignment
             // RHS
                // Int Literal
@@ -458,6 +463,7 @@ __main____split__char__1__char:
             POP __rhs
             ASSIGN __main__split__block__4__i __rhs
             PUSH __rhs
+         POP __void
          // Assignment
             // RHS
                // Int Literal
@@ -468,6 +474,7 @@ __main____split__char__1__char:
             POP __rhs
             ASSIGN __main__split__block__4__j __rhs
             PUSH __rhs
+         POP __void
          //---------------------------------------------------------------
          // While-Loop
          __while__5:
@@ -533,6 +540,7 @@ __main____split__char__1__char:
                               POP __rhs
                               ASSIGN __main__split__block__4__while__5__block__6__if__7__block__8__count __rhs
                               PUSH __rhs
+                           POP __void
                            // Assignment
                               // RHS
                                  // Identifier - i
@@ -543,6 +551,7 @@ __main____split__char__1__char:
                               POP __rhs
                               ASSIGN __main__split__block__4__while__5__block__6__if__7__block__8__k __rhs
                               PUSH __rhs
+                           POP __void
                            //---------------------------------------------
                            // While-Loop
                            __while__9:
@@ -604,6 +613,7 @@ __main____split__char__1__char:
                                           ADD __main__split__block__4__while__5__block__6__if__7__block__8__count __main__split__block__4__while__5__block__6__if__7__block__8__count 1
                                           ASSIGN __res __main__split__block__4__while__5__block__6__if__7__block__8__count
                                           PUSH __res
+                                       POP __void
                                     JUMP __endif__10
                                     //------------------------------------
                                     // Else-Statement
@@ -639,6 +649,7 @@ __main____split__char__1__char:
                               POP __rhs
                               ASSIGN __pointer[__offset] __rhs
                               PUSH __rhs
+                           POP __void
                            //---------------------------------------------
                            // For-Loop
                            // Init
@@ -731,6 +742,7 @@ __main____split__char__1__char:
                                        POP __rhs
                                        ASSIGN __pointer[__offset] __rhs
                                        PUSH __rhs
+                                    POP __void
                                  //---------------------------------------
                               // Repeat
                               JUMP __for__11
@@ -745,6 +757,7 @@ __main____split__char__1__char:
                               ADD __main__split__block__4__j __main__split__block__4__j 1
                               ASSIGN __res __main__split__block__4__j
                               PUSH __res
+                           POP __void
                         //------------------------------------------------
                      JUMP __endif__7
                      // End of if
@@ -758,6 +771,7 @@ __main____split__char__1__char:
                      ADD __main__split__block__4__i __main__split__block__4__i 1
                      ASSIGN __res __main__split__block__4__i
                      PUSH __res
+                  POP __void
                //---------------------------------------------------------
             JUMP __while__5
             // End of While
@@ -777,6 +791,7 @@ __main____split__char__1__char:
             POP __rhs
             ASSIGN __main__split__block__4__result __rhs
             PUSH __rhs
+         POP __void
          //---------------------------------------------------------------
          // For-Loop
          // Init
@@ -845,6 +860,7 @@ __main____split__char__1__char:
                      POP __rhs
                      ASSIGN __pointer[__offset] __rhs
                      PUSH __rhs
+                  POP __void
                //---------------------------------------------------------
             // Repeat
             JUMP __for__13
@@ -858,6 +874,7 @@ __main____split__char__1__char:
             // Free array
             POP __array
             FREE __array
+         POP __void
          // Return
             // Identifier - result
                PUSH __main__split__block__4__result
@@ -926,6 +943,7 @@ __end____main____split__char__1__char:
    POP __void
    RESPONSE __retval
    PUSH __retval
+POP __void
 // Assignment
    // RHS
       // Function Call - split(char[], char) -> char[][]
@@ -958,6 +976,7 @@ __end____main____split__char__1__char:
    POP __rhs
    ASSIGN __main__elems __rhs
    PUSH __rhs
+POP __void
 // Assignment
    // RHS
       // Array Allocator
@@ -978,6 +997,7 @@ __end____main____split__char__1__char:
    POP __rhs
    ASSIGN __main__nums __rhs
    PUSH __rhs
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -1072,6 +1092,7 @@ __for__15:
             POP __rhs
             ASSIGN __pointer[__offset] __rhs
             PUSH __rhs
+         POP __void
       //------------------------------------------------------------------
    // Repeat
    JUMP __for__15
@@ -1085,6 +1106,7 @@ __for__15:
    // Free array
    POP __array
    FREE __array
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -1155,6 +1177,7 @@ __for__17:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         POP __void
       //------------------------------------------------------------------
    // Repeat
    JUMP __for__17
@@ -1205,6 +1228,7 @@ __for__17:
    POP __void
    RESPONSE __retval
    PUSH __retval
+POP __void
 // Function Call - println(float) -> void
    // Arguments
       // Function Call - intToFloat(int) -> float
@@ -1229,6 +1253,7 @@ __for__17:
    POP __void
    RESPONSE __retval
    PUSH __retval
+POP __void
 // Function Call - println(int) -> void
    // Arguments
       // Function Call - floatToInt(float) -> int
@@ -1253,6 +1278,7 @@ __for__17:
    POP __void
    RESPONSE __retval
    PUSH __retval
+POP __void
 // Function Call - println(char) -> void
    // Arguments
       // Subscript
@@ -1316,6 +1342,7 @@ __for__17:
    POP __void
    RESPONSE __retval
    PUSH __retval
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // String Literal
@@ -1360,6 +1387,7 @@ __for__17:
    POP __void
    RESPONSE __retval
    PUSH __retval
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
@@ -1389,6 +1417,7 @@ __for__17:
    POP __rhs
    ASSIGN __main__person __rhs
    PUSH __rhs
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Member Accessor
@@ -1409,6 +1438,7 @@ __for__17:
    POP __void
    RESPONSE __retval
    PUSH __retval
+POP __void
 // Function Call - println(int) -> void
    // Arguments
       // Member Accessor
@@ -1429,6 +1459,7 @@ __for__17:
    POP __void
    RESPONSE __retval
    PUSH __retval
+POP __void
 // Free Operator
    // RHS
       // Identifier - person
@@ -1436,6 +1467,7 @@ __for__17:
    // Free array
    POP __array
    FREE __array
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Member Accessor
@@ -1456,6 +1488,7 @@ __for__17:
    POP __void
    RESPONSE __retval
    PUSH __retval
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Person::Person(char[], int) -> Person
@@ -1489,6 +1522,7 @@ __for__17:
    POP __rhs
    ASSIGN __main__person2 __rhs
    PUSH __rhs
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Member Accessor
@@ -1509,6 +1543,7 @@ __for__17:
    POP __void
    RESPONSE __retval
    PUSH __retval
+POP __void
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

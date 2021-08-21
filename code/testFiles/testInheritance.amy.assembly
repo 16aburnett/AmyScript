@@ -259,6 +259,8 @@ __main____concat__char__1__char__1:
             POP __rhs
             ASSIGN __main__concat__block__0__c __rhs
             PUSH __rhs
+         // Statement results can be ignored
+         POP __void
          //---------------------------------------------------------------
          // For-Loop
          // Init
@@ -331,6 +333,8 @@ __main____concat__char__1__char__1:
                   POP __rhs
                   ASSIGN __pointer[__offset] __rhs
                   PUSH __rhs
+               // Statement results can be ignored
+               POP __void
             // Repeat
             JUMP __for__1
             // End of For
@@ -423,6 +427,8 @@ __main____concat__char__1__char__1:
                   POP __rhs
                   ASSIGN __pointer[__offset] __rhs
                   PUSH __rhs
+               // Statement results can be ignored
+               POP __void
             // Repeat
             JUMP __for__2
             // End of For
@@ -481,6 +487,8 @@ JUMP __endclass____main__Department
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__Department____Department__char__1:
@@ -705,6 +713,8 @@ __endclass____main__Course:
    POP __rhs
    ASSIGN __main__d __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Course::Course() -> Course
@@ -720,6 +730,8 @@ __endclass____main__Course:
    POP __rhs
    ASSIGN __main__course __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Identifier - d
@@ -736,6 +748,8 @@ __endclass____main__Course:
          POP __rhs
          ASSIGN __parent[__child] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // String Literal
@@ -774,6 +788,8 @@ __endclass____main__Course:
          POP __rhs
          ASSIGN __parent[__child] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Int Literal
@@ -790,6 +806,8 @@ __endclass____main__Course:
          POP __rhs
          ASSIGN __parent[__child] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // String Literal
@@ -822,6 +840,8 @@ __endclass____main__Course:
          POP __rhs
          ASSIGN __parent[__child] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Method Call - Course::toString() -> char[]
@@ -847,6 +867,8 @@ __endclass____main__Course:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Class Declaration - __main__Person inherits __main__Object
    // Creating Dispatch Table
@@ -932,6 +954,8 @@ JUMP __endclass____main__Person
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
             // Return
                // Function Call - concat(char[], char[]) -> char[]
                   // Arguments
@@ -1079,6 +1103,8 @@ JUMP __endclass____main__Professor
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - age
@@ -1095,6 +1121,8 @@ JUMP __endclass____main__Professor
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - id
@@ -1111,6 +1139,8 @@ JUMP __endclass____main__Professor
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__Professor____Professor__char__1__int__int:
@@ -1167,6 +1197,8 @@ JUMP __endclass____main__Professor
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
             // Return
                // Function Call - concat(char[], char[]) -> char[]
                   // Arguments
@@ -1330,6 +1362,8 @@ __endclass____main__Professor:
    POP __rhs
    ASSIGN __main__p __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Constructor Call - Department::Department(char[]) -> Department
@@ -1366,6 +1400,8 @@ __endclass____main__Professor:
          POP __rhs
          ASSIGN __parent[__child] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Method Call - Professor::toString() -> char[]
@@ -1391,6 +1427,8 @@ __endclass____main__Professor:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Class Declaration - __main__Student inherits __main__Person
    // Creating Dispatch Table
@@ -1460,6 +1498,8 @@ JUMP __endclass____main__Student
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - age
@@ -1476,6 +1516,8 @@ JUMP __endclass____main__Student
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - id
@@ -1492,6 +1534,8 @@ JUMP __endclass____main__Student
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__Student____Student__char__1__int__int:
@@ -1547,6 +1591,8 @@ __endclass____main__Student:
    POP __rhs
    ASSIGN __main__s __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - println(char[]) -> void
    // Arguments
       // Method Call - Student::toString() -> char[]
@@ -1572,6 +1618,8 @@ __endclass____main__Student:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Function Declaration - print(Person[]) -> void
 JUMP __end____main____print__Person__1
@@ -1662,6 +1710,8 @@ __main____print__Person__1:
                   POP __void
                   RESPONSE __retval
                   PUSH __retval
+               // Statement results can be ignored
+               POP __void
             // Repeat
             JUMP __for__13
             // End of For
@@ -1687,6 +1737,8 @@ __end____main____print__Person__1:
    POP __rhs
    ASSIGN __main__people __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Identifier - p
@@ -1704,6 +1756,8 @@ __end____main____print__Person__1:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Identifier - s
@@ -1721,6 +1775,8 @@ __end____main____print__Person__1:
    POP __rhs
    ASSIGN __pointer[__offset] __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - print(Person[]) -> void
    // Arguments
       // Identifier - people
@@ -1734,6 +1790,8 @@ __end____main____print__Person__1:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Class Declaration - __main__A inherits __main__Object
    // Creating Dispatch Table
@@ -1776,6 +1834,8 @@ JUMP __endclass____main__A
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__A____A__int:
@@ -1863,6 +1923,8 @@ JUMP __endclass____main__B
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - y
@@ -1879,6 +1941,8 @@ JUMP __endclass____main__B
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__B____B__int__int:
@@ -1989,6 +2053,8 @@ JUMP __endclass____main__C
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - y
@@ -2005,6 +2071,8 @@ JUMP __endclass____main__C
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
             // Assignment
                // RHS
                   // Identifier - z
@@ -2021,6 +2089,8 @@ JUMP __endclass____main__C
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__C____C__int__int__int:
@@ -2121,6 +2191,8 @@ __endclass____main__C:
    POP __rhs
    ASSIGN __main__c __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Function Declaration - print(A, A) -> void
 JUMP __end____main____print__A__A
@@ -2158,6 +2230,8 @@ __main____print__A__A:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - println(int) -> void
             // Arguments
                // Addition
@@ -2204,6 +2278,8 @@ __main____print__A__A:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____print__A__A:
@@ -2247,6 +2323,8 @@ __main____print__B__C:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - println(int) -> void
             // Arguments
                // Addition
@@ -2293,6 +2371,8 @@ __main____print__B__C:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____print__B__C:
@@ -2336,6 +2416,8 @@ __main____print__A__C:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
          // Function Call - println(int) -> void
             // Arguments
                // Addition
@@ -2382,6 +2464,8 @@ __main____print__A__C:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
+         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____print__A__C:
@@ -2406,6 +2490,8 @@ __end____main____print__A__C:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Class Declaration - __main__D inherits __main__B
    // Creating Dispatch Table
@@ -2467,6 +2553,8 @@ JUMP __endclass____main__D
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__D____D__A__A:
@@ -2513,6 +2601,8 @@ JUMP __endclass____main__D
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN __this
    __end__ctor____main__D____D__B__A:
@@ -2570,6 +2660,8 @@ JUMP __endclass____main__D
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
             // Return
                // Addition
                   // LHS
@@ -2654,6 +2746,8 @@ JUMP __endclass____main__D
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
             // Return
                // Addition
                   // LHS
@@ -2738,6 +2832,8 @@ JUMP __endclass____main__D
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
             // Return
                // Addition
                   // LHS
@@ -2811,6 +2907,8 @@ __endclass____main__D:
    POP __rhs
    ASSIGN __main__dee __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - println(int) -> void
    // Arguments
       // Method Call - D::sum(C, B) -> int
@@ -2846,6 +2944,8 @@ __endclass____main__D:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Class Declaration - __main__X inherits __main__Object
    // Creating Dispatch Table
@@ -2906,6 +3006,8 @@ JUMP __endclass____main__X
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__X____print:
@@ -2976,6 +3078,8 @@ JUMP __endclass____main__Y
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__Y____print:
@@ -3046,6 +3150,8 @@ JUMP __endclass____main__Z
                POP __void
                RESPONSE __retval
                PUSH __retval
+            // Statement results can be ignored
+            POP __void
          //---------------------------------------------------------------
       RETURN 0
    __end__method____main__Z____print:
@@ -3071,6 +3177,8 @@ __endclass____main__Z:
    POP __rhs
    ASSIGN __main__x __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Virtual Method Call - print() -> void
    // LHS
       // Identifier - x
@@ -3087,6 +3195,8 @@ __endclass____main__Z:
    // Remove args
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================
