@@ -1,0 +1,237 @@
+// AmyScript Vector implementation + testing 
+// Author: Amy Burnett
+//========================================================================
+
+int INITIAL_CAPACITY = 10; 
+
+//========================================================================
+
+template <:data_type:>
+class vector
+{
+
+    public field data_type[] data; 
+    public field int size; 
+    public field int capacity; 
+
+    //--------------------------------------------------------------------
+
+    constructor ()
+    {
+        this.capacity = INITIAL_CAPACITY;
+        this.size = 0; 
+        this.data = new data_type[this.capacity];
+    }
+
+    //--------------------------------------------------------------------
+
+    // gets the value at a given index 
+    public method data_type get (int index)
+    {
+        return this.data[index]; 
+    }
+
+    //--------------------------------------------------------------------
+
+    // sets the value at a given index
+    public method void set (int index, data_type value)
+    {
+        this.data[index] = value; 
+    }
+
+    //--------------------------------------------------------------------
+
+    // gets the size of the vector
+    public method int size ()
+    {
+        return this.size; 
+    }
+
+    //--------------------------------------------------------------------
+
+    // returns true if this vector is empty, false otherwise 
+    public method int is_empty ()
+    {
+        return this.size == 0; 
+    }
+
+    //--------------------------------------------------------------------
+
+    // pushes a given value to the end of the vector
+    // this is a constant operation if an increase in capacity is unneeded
+    public method void push_back (data_type value)
+    {
+        // ensure capacity
+        if (this.size == this.capacity)
+        {
+            // increase capacity
+            this.capacity = this.capacity * 2; 
+            // reallocate data with the larger capacity
+            data_type[] new_data = new data_type[this.capacity];
+            // copy values over
+            for (int i = 0; i < this.size; ++i)
+                new_data[i] = this.data[i];
+            // free original array
+            free (this.data);
+            // save new array
+            this.data = new_data; 
+        }
+        // insert new value
+        this.data[this.size] = value;
+        // increase size
+        ++this.size; 
+    }
+
+    //--------------------------------------------------------------------
+
+    // removes the last value in the vector
+    // this is always constant time 
+    public method void pop_back ()
+    {
+        // ensure there are values to pop 
+        if (this.size == 0)
+            return; 
+        // decrease size
+        --this.size; 
+    }
+
+    //--------------------------------------------------------------------
+
+
+}
+
+
+//========================================================================
+
+function void println (vector<:int:> arr)
+{
+    print ('[');
+    if (arr.size() > 0)
+        print (arr.get (0));
+    for (int i = 1; i < arr.size(); ++i)
+    {
+        print (',');
+        print (' ');
+        print (arr.get (i));
+    }
+    println (']');
+}
+
+function void println (vector<:float:> arr)
+{
+    print ('[');
+    if (arr.size() > 0)
+        print (arr.get (0));
+    for (int i = 1; i < arr.size(); ++i)
+    {
+        print (',');
+        print (' ');
+        print (arr.get (i));
+    }
+    println (']');
+}
+
+function void print_board (vector<:vector<:int:>:> board)
+{
+    for (int i = 0; i < board.size(); ++i)
+        println (board.get(i));
+}
+
+function int min (int a, int b)
+{
+    if (a <= b)
+        return a;
+    return b;
+}
+
+//========================================================================
+
+vector<:int:> a = new vector<:int:>();
+
+for (int i = 0; i < 20; ++i)
+    a.push_back (i);
+
+println (a);
+
+vector<:int:> b = new vector<:int:>();
+
+for (int i = 0; i < 10; ++i)
+    b.push_back (i*2);
+
+println (b);
+
+vector<:int:> c = new vector<:int:>();
+
+for (int i = 0; i < min(a.size(), b.size()); ++i)
+{
+    c.push_back (a.get(i) + b.get(i));
+}
+
+println (c);
+
+// this should give an error 
+// vector<:float:> d = new vector<:int:>();
+vector<:float:> d = new vector<:float:>();
+
+d.push_back (5.25);
+d.push_back (3.1415);
+d.push_back (47.0);
+d.push_back (0.00234);
+d.pop_back ();
+
+println (d); 
+println ();
+
+//========================================================================
+// NESTED VECTORS!!
+
+vector<:vector<:int:>:> board = new vector<:vector<:int:>:>();
+int rows = int cols = 3;
+
+int k = 0;
+for (int i = 0; i < rows; ++i)
+{
+    board.push_back (new vector<:int:>());
+    for (int j = 0; j < cols; ++j)
+    {
+        board.get(i).push_back(k++);
+    }
+}
+
+print_board (board);
+println ();
+
+vector<:vector<:int:>:> board2 = new vector<:vector<:int:>:>();
+
+k = rows * cols;
+for (int i = 0; i < rows; ++i)
+{
+    board2.push_back (new vector<:int:>());
+    for (int j = 0; j < cols; ++j)
+    {
+        board2.get(i).push_back(--k);
+    }
+}
+
+print_board (board2);
+println ();
+
+function vector<:vector<:int:>:> sum_boards (vector<:vector<:int:>:> a, vector<:vector<:int:>:> b)
+{
+    vector<:vector<:int:>:> c = new vector<:vector<:int:>:>();
+    for (int i = 0; i < rows; ++i)
+    {
+        c.push_back (new vector<:int:>());
+        for (int j = 0; j < cols; ++j)
+        {
+            c.get(i).push_back(a.get(i).get(j)+b.get(i).get(j));
+        }
+    }
+    return c;
+}
+
+print_board (sum_boards (board, board2));
+println ();
+
+
+//========================================================================

@@ -47,11 +47,13 @@ class Node (ABC):
 
 class TypeSpecifierNode (Node):
     
-    def __init__(self, type:Type, id, token):
+    def __init__(self, type:Type, id, token, templateParams=[]):
         self.type = type 
         self.id = id
         self.token = token
         self.arrayDimensions = 0
+
+        self.templateParams = templateParams
 
         self.decl = None
 
@@ -62,6 +64,11 @@ class TypeSpecifierNode (Node):
 
     def __str__(self):
         s = [self.id]
+        if len(self.templateParams) > 0:
+            s += ["<:", self.templateParams[0].__str__()]
+            for i in range(1, len(self.templateParams)):
+                s += [f", {self.templateParams[i].__str__()}"]
+            s += [":>"]
         for i in range(self.arrayDimensions):
             s += ["[]"]
         return "".join(s)
@@ -74,6 +81,7 @@ class TypeSpecifierNode (Node):
         node.arrayDimensions = self.arrayDimensions
         node.decl = self.decl
         node.isGeneric = self.isGeneric
+        node.templateParams = [t.copy() for t in self.templateParams]
         return node
 
 # ========================================================================
@@ -232,6 +240,8 @@ class ClassDeclarationNode (CodeUnitNode):
         self.fields = fields 
         self.methods = methods 
 
+        self.templateParams = []
+
         self.children = []
 
         self.virtualMethods = [] 
@@ -239,6 +249,9 @@ class ClassDeclarationNode (CodeUnitNode):
 
         self.scopeName = ""
         self.dtableScopeName = ""
+
+        self.signature = ""
+        self.signatureNoScope = ""
 
         self.isForwardDeclaration = False 
 
@@ -268,6 +281,10 @@ class FieldDeclarationNode (DeclarationNode):
         self.parentClass = None
         self.index = 0
 
+        self.scopeName = ""
+        self.signature = ""
+        self.signatureNoScope = ""
+
         self.isInherited = False 
 
         self.lineNumber = 0
@@ -278,7 +295,8 @@ class FieldDeclarationNode (DeclarationNode):
 
     def copy (self):
         node = FieldDeclarationNode (self.security, self.type.copy(), self.id, self.token)
-        node.parentClass = self.parentClass.copy ()
+        if self.parentClass != None:
+            node.parentClass = self.parentClass.copy ()
         node.index = self.index 
         node.isInherited = self.isInherited
         return node
@@ -314,7 +332,8 @@ class MethodDeclarationNode (DeclarationNode):
     def copy (self):
         node = MethodDeclarationNode (self.security, self.type.copy(), self.id, self.token, [p.copy() for p in self.params], self.body.copy (), self.isVirtual)
         
-        node.parentClass = self.parentClass.copy ()
+        if self.parentClass != None:
+            node.parentClass = self.parentClass.copy ()
 
         node.scopeName = self.scopeName
 
@@ -323,7 +342,8 @@ class MethodDeclarationNode (DeclarationNode):
 
         node.isVirtual = self.isVirtual
         node.isInherited = self.isInherited 
-        node.inheritedMethod = self.inheritedMethod.copy()
+        if self.inheritedMethod != None:
+            node.inheritedMethod = self.inheritedMethod.copy()
         node.isOverride = self.isOverride 
         return node
 
@@ -333,6 +353,7 @@ class MethodDeclarationNode (DeclarationNode):
 class ConstructorDeclarationNode (DeclarationNode):
     
     def __init__(self, token, params, body):
+        self.type = None
         self.id = ""
         self.token = token
         self.params = params
@@ -350,7 +371,8 @@ class ConstructorDeclarationNode (DeclarationNode):
     def copy (self):
         node = ConstructorDeclarationNode (self.token, [p.copy() for p in self.params], self.body.copy ())
         
-        node.parentClass = self.parentClass.copy ()
+        if self.parentClass != None:
+            node.parentClass = self.parentClass.copy ()
 
         node.scopeName = self.scopeName
 
@@ -417,6 +439,38 @@ class FunctionTemplateDeclarationNode (CodeUnitNode):
     def copy (self):
         node = FunctionTemplateDeclarationNode (self.type.copy(), self.id, self.token, [type for type in self.types], self.function.copy())
         return node
+
+# ========================================================================
+
+class ClassTemplateDeclarationNode (CodeUnitNode):
+    
+    def __init__(self, type, id, token, templateParams, _class):
+        self.type = type
+        self.id = id
+        self.token = token
+
+        # template parameter names 
+        self.templateParams = templateParams 
+
+        # class declaration for the template 
+        self._class = _class
+
+        # map of (string(templateParams), classDeclarationNodes)
+        self.instantiations = {}
+
+        self.scopeName = ""
+        self.dtableScopeName = ""
+
+        self.isForwardDeclaration = False 
+
+        self.lineNumber = 0
+        self.columnNumber = 0
+
+    def accept (self, visitor):
+        visitor.visitClassTemplateDeclarationNode (self)
+
+    def copy (self):
+        return ClassTemplateDeclarationNode (self.type.copy(), self.id, self.token, [type for type in self.templateParams], self._class.copy())
 
 # ========================================================================
 
@@ -515,7 +569,7 @@ class ForStatementNode (StatementNode):
         visitor.visitForStatementNode (self)
 
     def copy (self):
-        return ForStatementNode (self.init.copy(), self.cond.copy(), self.update.copy(), self.body.copy(), self.elseStmt.copy())
+        return ForStatementNode (self.init.copy(), self.cond.copy(), self.update.copy(), self.body.copy(), self.elseStmt.copy() if self.elseStmt else None)
 
 # ========================================================================
 # cond - ExpressionNode
@@ -1022,9 +1076,11 @@ class IdentifierExpressionNode (ExpressionNode):
 
 class ArrayAllocatorExpressionNode (ExpressionNode):
 
-    def __init__(self, type, dimensions, line, column):
+    def __init__(self, type, dimensions, templateParams, line, column):
         self.type = type
         self.dimensions = dimensions
+
+        self.templateParams = templateParams
 
         self.decl = None
 
@@ -1035,16 +1091,18 @@ class ArrayAllocatorExpressionNode (ExpressionNode):
         visitor.visitArrayAllocatorExpressionNode (self)
 
     def copy (self):
-        return ArrayAllocatorExpressionNode(self.type.copy(), [d.copy() for d in self.dimensions], self.lineNumber, self.columnNumber)
+        return ArrayAllocatorExpressionNode(self.type.copy(), [d.copy() for d in self.dimensions], [t.copy() for t in self.templateParams], self.lineNumber, self.columnNumber)
 
 # ========================================================================
 
 class ConstructorCallExpressionNode (ExpressionNode):
 
-    def __init__(self, type, id, args, line, column):
+    def __init__(self, type, id, args, templateParams, line, column):
         self.type = type
         self.id = id
         self.args = args
+
+        self.templateParams = templateParams
 
         self.decl = None
 
@@ -1055,7 +1113,7 @@ class ConstructorCallExpressionNode (ExpressionNode):
         visitor.visitConstructorCallExpressionNode (self)
 
     def copy (self):
-        return ConstructorCallExpressionNode(self.type.copy(), self.id, [a.copy() for a in self.args], self.lineNumber, self.columnNumber)
+        return ConstructorCallExpressionNode(self.type.copy(), self.id, [a.copy() for a in self.args], [t.copy() for t in self.templateParams], self.lineNumber, self.columnNumber)
 
 # ========================================================================
 

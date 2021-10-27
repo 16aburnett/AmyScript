@@ -163,6 +163,33 @@ T add (T a, T b)
     return a + b;
 }
 
+int wumbo (int a) {return a;}
+
+
+// template <typename A>
+// A getdefault ()
+// {
+//     return A();
+// }
+
+template <class A>
+A getdefault ()
+{
+    return A();
+}
+
+
+class tomato
+{
+public:
+    int val = 0;
+    tomato ()
+    {
+        val = 10;
+    }
+};
+
+
 //========================================================================
 
 int 
@@ -201,6 +228,29 @@ main()
 
     std::cout << add<int, float> (7, 5) << std::endl;
 
+
+    int wumbo = 7; 
+
+    // std::cout << wumbo (wumbo) << std::endl;
+
+
+    std::cout << "default int = " << getdefault<int>() << std::endl;
+    std::cout << "default float = " << getdefault<float>() << std::endl;
+    std::cout << "default std::string = \"" << getdefault<std::string>() << "\"" << std::endl;
+
+    std::cout << "default tomato = \"" << getdefault<tomato>().val << "\"" << std::endl;
+
+    class tomato
+    {
+    public:
+        int val = 0;
+        tomato ()
+        {
+            val = 47;
+        }
+    };
+
+    std::cout << "default tomato (declared in main) = \"" << getdefault<tomato>().val << "\"" << std::endl;
 }
 
 

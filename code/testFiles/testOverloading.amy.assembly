@@ -8,13 +8,14 @@
 // AmyScript Built-in library
 // Author: Amy Burnett
 //========================================================================
-
-jump __endOfLibrary
-
-//========================================================================
-// Global Variables
+// Global Builtin Variables
 
     assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
 
 //========================================================================
 // Prints a given string to the screen
@@ -149,6 +150,12 @@ exit:
     halt
 
 //========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
 // converts int to float
 // float intToFloat (int);
 intToFloat__int:
@@ -163,6 +170,12 @@ stringToFloat__char__1:
     stackget val 0
     stof res val
     return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
 
 //========================================================================
 // converts float to int
@@ -198,6 +211,13 @@ string__float:
 
 //========================================================================
 
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
+
+//========================================================================
+
 __endOfLibrary:
     //push prompt
     //call print
@@ -213,41 +233,41 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Name inherits __main__Object
+// Class Declaration - __main____Name inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__Name 0
+      MALLOC __dtable____main____Name 0
       // Populate Dispatch Table
    //---------------------------------------------------------------------
    // Field - char[] Name::name
-   ASSIGN __field____main__Name__name 1
+   ASSIGN __field____main____Name____name 1
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__Name
+JUMP __endclass____main____Name
    //---------------------------------------------------------------------
    // Constructor Declaration - Name::Name(char[]) -> Name
-   JUMP __end__ctor____main__Name____Name__char__1
-   __ctor____main__Name____Name__char__1:
+   JUMP __end__ctor____main____Name____Name__char__1
+   __ctor____main____Name____Name__char__1:
       // Creating Class Instance
          MALLOC __this 2
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Name
+         ASSIGN __this[0] __dtable____main____Name
       // Parameters
          // Param: name
-         STACKGET __main__Name__Name__name 0
+         STACKGET __main____Name__Name__name 0
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - name
-                     PUSH __main__Name__Name__name
+                     PUSH __main____Name__Name__name
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Name__name
+                        PUSH __field____main____Name____name
                      POP __child
                      POP __parent
                      POP __rhs
@@ -257,44 +277,44 @@ JUMP __endclass____main__Name
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Name____Name__char__1:
-   // End Constructor Declaration - __ctor____main__Name____Name__char__1
+   __end__ctor____main____Name____Name__char__1:
+   // End Constructor Declaration - __ctor____main____Name____Name__char__1
    //---------------------------------------------------------------------
 
-__endclass____main__Name:
-// End Class Declaration - __main__Name
+__endclass____main____Name:
+// End Class Declaration - __main____Name
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Person inherits __main__Object
+// Class Declaration - __main____Person inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__Person 3
+      MALLOC __dtable____main____Person 3
       // Populate Dispatch Table
-      ASSIGN __dtable____main__Person[0] __method____main__Person____add__int__int
-      ASSIGN __dtable____main__Person[1] __method____main__Person____add__float__float
-      ASSIGN __dtable____main__Person[2] __method____main__Person____doThing__char__1
+      ASSIGN __dtable____main____Person[0] __method____main____Person____add__int__int
+      ASSIGN __dtable____main____Person[1] __method____main____Person____add__float__float
+      ASSIGN __dtable____main____Person[2] __method____main____Person____doThing__char__1
    //---------------------------------------------------------------------
    // Field - Name Person::name
-   ASSIGN __field____main__Person__name 1
+   ASSIGN __field____main____Person____name 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Person::age
-   ASSIGN __field____main__Person__age 2
+   ASSIGN __field____main____Person____age 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - float Person::gpa
-   ASSIGN __field____main__Person__gpa 3
+   ASSIGN __field____main____Person____gpa 3
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__Person
+JUMP __endclass____main____Person
    //---------------------------------------------------------------------
    // Constructor Declaration - Person::Person() -> Person
-   JUMP __end__ctor____main__Person____Person
-   __ctor____main__Person____Person:
+   JUMP __end__ctor____main____Person____Person
+   __ctor____main____Person____Person:
       // Creating Class Instance
          MALLOC __this 4
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Person
+         ASSIGN __this[0] __dtable____main____Person
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -309,7 +329,7 @@ JUMP __endclass____main__Person
                         POP __arg0
                      // Pushing args in reverse order
                      PUSH __arg0
-                     CALL __ctor____main__Name____Name__char__1
+                     CALL __ctor____main____Name____Name__char__1
                      // Remove args
                      POP __void
                      RESPONSE __retval
@@ -320,7 +340,7 @@ JUMP __endclass____main__Person
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Person__name
+                        PUSH __field____main____Person____name
                      POP __child
                      POP __parent
                      POP __rhs
@@ -338,7 +358,7 @@ JUMP __endclass____main__Person
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Person__age
+                        PUSH __field____main____Person____age
                      POP __child
                      POP __parent
                      POP __rhs
@@ -356,7 +376,7 @@ JUMP __endclass____main__Person
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Person__gpa
+                        PUSH __field____main____Person____gpa
                      POP __child
                      POP __parent
                      POP __rhs
@@ -366,25 +386,25 @@ JUMP __endclass____main__Person
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Person____Person:
-   // End Constructor Declaration - __ctor____main__Person____Person
+   __end__ctor____main____Person____Person:
+   // End Constructor Declaration - __ctor____main____Person____Person
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Constructor Declaration - Person::Person(char[], int, float) -> Person
-   JUMP __end__ctor____main__Person____Person__char__1__int__float
-   __ctor____main__Person____Person__char__1__int__float:
+   JUMP __end__ctor____main____Person____Person__char__1__int__float
+   __ctor____main____Person____Person__char__1__int__float:
       // Creating Class Instance
          MALLOC __this 4
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Person
+         ASSIGN __this[0] __dtable____main____Person
       // Parameters
          // Param: name
-         STACKGET __main__Person__Person__name 0
+         STACKGET __main____Person__Person__name 0
          // Param: age
-         STACKGET __main__Person__Person__age 1
+         STACKGET __main____Person__Person__age 1
          // Param: gpa
-         STACKGET __main__Person__Person__gpa 2
+         STACKGET __main____Person__Person__gpa 2
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -393,11 +413,11 @@ JUMP __endclass____main__Person
                   // Constructor Call - Name::Name(char[]) -> Name
                      // Arguments
                         // Identifier - name
-                           PUSH __main__Person__Person__name
+                           PUSH __main____Person__Person__name
                         POP __arg0
                      // Pushing args in reverse order
                      PUSH __arg0
-                     CALL __ctor____main__Name____Name__char__1
+                     CALL __ctor____main____Name____Name__char__1
                      // Remove args
                      POP __void
                      RESPONSE __retval
@@ -408,7 +428,7 @@ JUMP __endclass____main__Person
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Person__name
+                        PUSH __field____main____Person____name
                      POP __child
                      POP __parent
                      POP __rhs
@@ -419,14 +439,14 @@ JUMP __endclass____main__Person
             // Assignment
                // RHS
                   // Identifier - age
-                     PUSH __main__Person__Person__age
+                     PUSH __main____Person__Person__age
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Person__age
+                        PUSH __field____main____Person____age
                      POP __child
                      POP __parent
                      POP __rhs
@@ -437,14 +457,14 @@ JUMP __endclass____main__Person
             // Assignment
                // RHS
                   // Identifier - gpa
-                     PUSH __main__Person__Person__gpa
+                     PUSH __main____Person__Person__gpa
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Person__gpa
+                        PUSH __field____main____Person____gpa
                      POP __child
                      POP __parent
                      POP __rhs
@@ -454,21 +474,21 @@ JUMP __endclass____main__Person
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Person____Person__char__1__int__float:
-   // End Constructor Declaration - __ctor____main__Person____Person__char__1__int__float
+   __end__ctor____main____Person____Person__char__1__int__float:
+   // End Constructor Declaration - __ctor____main____Person____Person__char__1__int__float
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Person::add(int, int) -> int
-   JUMP __end__method____main__Person____add__int__int
-   __method____main__Person____add__int__int:
+   JUMP __end__method____main____Person____add__int__int
+   __method____main____Person____add__int__int:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: a
-         STACKGET __main__Person__add__a 1
+         STACKGET __main____Person__add__a 1
          // Param: b
-         STACKGET __main__Person__add__b 2
+         STACKGET __main____Person__add__b 2
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -482,20 +502,20 @@ JUMP __endclass____main__Person
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main__Person__age
+                                 PUSH __field____main____Person____age
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
                         // RHS
                            // Identifier - a
-                              PUSH __main__Person__add__a
+                              PUSH __main____Person__add__a
                         POP __rhs
                         POP __lhs
                         ADD __res __lhs __rhs
                         PUSH __res
                   // RHS
                      // Identifier - b
-                        PUSH __main__Person__add__b
+                        PUSH __main____Person__add__b
                   POP __rhs
                   POP __lhs
                   ADD __res __lhs __rhs
@@ -504,21 +524,21 @@ JUMP __endclass____main__Person
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Person____add__int__int:
-   // End Method Declaration - __method____main__Person____add__int__int
+   __end__method____main____Person____add__int__int:
+   // End Method Declaration - __method____main____Person____add__int__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Person::add(float, float) -> float
-   JUMP __end__method____main__Person____add__float__float
-   __method____main__Person____add__float__float:
+   JUMP __end__method____main____Person____add__float__float
+   __method____main____Person____add__float__float:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: a
-         STACKGET __main__Person__add__a 1
+         STACKGET __main____Person__add__a 1
          // Param: b
-         STACKGET __main__Person__add__b 2
+         STACKGET __main____Person__add__b 2
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -532,20 +552,20 @@ JUMP __endclass____main__Person
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main__Person__gpa
+                                 PUSH __field____main____Person____gpa
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
                         // RHS
                            // Identifier - a
-                              PUSH __main__Person__add__a
+                              PUSH __main____Person__add__a
                         POP __rhs
                         POP __lhs
                         ADD __res __lhs __rhs
                         PUSH __res
                   // RHS
                      // Identifier - b
-                        PUSH __main__Person__add__b
+                        PUSH __main____Person__add__b
                   POP __rhs
                   POP __lhs
                   ADD __res __lhs __rhs
@@ -554,49 +574,49 @@ JUMP __endclass____main__Person
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Person____add__float__float:
-   // End Method Declaration - __method____main__Person____add__float__float
+   __end__method____main____Person____add__float__float:
+   // End Method Declaration - __method____main____Person____add__float__float
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Person::doThing(char[]) -> Name
-   JUMP __end__method____main__Person____doThing__char__1
-   __method____main__Person____doThing__char__1:
+   JUMP __end__method____main____Person____doThing__char__1
+   __method____main____Person____doThing__char__1:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: name
-         STACKGET __main__Person__doThing__name 1
+         STACKGET __main____Person__doThing__name 1
       // Body
          //---------------------------------------------------------------
          // Code Block
             //============================================================
-            // Class Declaration - __main__Person__doThing__block__5__Thing inherits __main__Object
+            // Class Declaration - __main____Person__doThing__block__5____Thing inherits __main__Object
                // Creating Dispatch Table
-                  MALLOC __dtable____main__Person__doThing__block__5__Thing 0
+                  MALLOC __dtable____main____Person__doThing__block__5____Thing 0
                   // Populate Dispatch Table
                //---------------------------------------------------------
                // Field - Name Thing::name
-               ASSIGN __field____main__Person__doThing__block__5__Thing__name 1
+               ASSIGN __field____main____Person__doThing__block__5____Thing____name 1
                //---------------------------------------------------------
                //---------------------------------------------------------
                // Field - int Thing::age
-               ASSIGN __field____main__Person__doThing__block__5__Thing__age 2
+               ASSIGN __field____main____Person__doThing__block__5____Thing____age 2
                //---------------------------------------------------------
                //---------------------------------------------------------
                // Field - float Thing::gpa
-               ASSIGN __field____main__Person__doThing__block__5__Thing__gpa 3
+               ASSIGN __field____main____Person__doThing__block__5____Thing____gpa 3
                //---------------------------------------------------------
             // skip over class methods
-            JUMP __endclass____main__Person__doThing__block__5__Thing
+            JUMP __endclass____main____Person__doThing__block__5____Thing
                //---------------------------------------------------------
                // Constructor Declaration - Thing::Thing() -> Thing
-               JUMP __end__ctor____main__Person__doThing__block__5__Thing____Thing
-               __ctor____main__Person__doThing__block__5__Thing____Thing:
+               JUMP __end__ctor____main____Person__doThing__block__5____Thing____Thing
+               __ctor____main____Person__doThing__block__5____Thing____Thing:
                   // Creating Class Instance
                      MALLOC __this 4
                      // Add Dispatch Table
-                     ASSIGN __this[0] __dtable____main__Person__doThing__block__5__Thing
+                     ASSIGN __this[0] __dtable____main____Person__doThing__block__5____Thing
                   // Parameters
                   // Body
                      //---------------------------------------------------
@@ -606,11 +626,11 @@ JUMP __endclass____main__Person
                               // Constructor Call - Name::Name(char[]) -> Name
                                  // Arguments
                                     // Identifier - name
-                                       PUSH __main__Person__doThing__name
+                                       PUSH __main____Person__doThing__name
                                     POP __arg0
                                  // Pushing args in reverse order
                                  PUSH __arg0
-                                 CALL __ctor____main__Name____Name__char__1
+                                 CALL __ctor____main____Name____Name__char__1
                                  // Remove args
                                  POP __void
                                  RESPONSE __retval
@@ -621,7 +641,7 @@ JUMP __endclass____main__Person
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main__Person__doThing__block__5__Thing__name
+                                    PUSH __field____main____Person__doThing__block__5____Thing____name
                                  POP __child
                                  POP __parent
                                  POP __rhs
@@ -639,7 +659,7 @@ JUMP __endclass____main__Person
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main__Person__doThing__block__5__Thing__age
+                                    PUSH __field____main____Person__doThing__block__5____Thing____age
                                  POP __child
                                  POP __parent
                                  POP __rhs
@@ -657,7 +677,7 @@ JUMP __endclass____main__Person
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main__Person__doThing__block__5__Thing__gpa
+                                    PUSH __field____main____Person__doThing__block__5____Thing____gpa
                                  POP __child
                                  POP __parent
                                  POP __rhs
@@ -667,12 +687,12 @@ JUMP __endclass____main__Person
                         POP __void
                      //---------------------------------------------------
                   RETURN __this
-               __end__ctor____main__Person__doThing__block__5__Thing____Thing:
-               // End Constructor Declaration - __ctor____main__Person__doThing__block__5__Thing____Thing
+               __end__ctor____main____Person__doThing__block__5____Thing____Thing:
+               // End Constructor Declaration - __ctor____main____Person__doThing__block__5____Thing____Thing
                //---------------------------------------------------------
 
-            __endclass____main__Person__doThing__block__5__Thing:
-            // End Class Declaration - __main__Person__doThing__block__5__Thing
+            __endclass____main____Person__doThing__block__5____Thing:
+            // End Class Declaration - __main____Person__doThing__block__5____Thing
             //============================================================
 
             // Assignment
@@ -680,15 +700,15 @@ JUMP __endclass____main__Person
                   // Constructor Call - Thing::Thing() -> Thing
                      // Arguments
                      // Pushing args in reverse order
-                     CALL __ctor____main__Person__doThing__block__5__Thing____Thing
+                     CALL __ctor____main____Person__doThing__block__5____Thing____Thing
                      // Remove args
                      RESPONSE __retval
                      PUSH __retval
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__Person__doThing__block__5__t 0
+                     ASSIGN __main____Person__doThing__block__5__t 0
                POP __rhs
-               ASSIGN __main__Person__doThing__block__5__t __rhs
+               ASSIGN __main____Person__doThing__block__5__t __rhs
                PUSH __rhs
             // Statement results can be ignored
             POP __void
@@ -696,9 +716,9 @@ JUMP __endclass____main__Person
                // Member Accessor
                   // LHS
                      // Identifier - t
-                        PUSH __main__Person__doThing__block__5__t
+                        PUSH __main____Person__doThing__block__5__t
                   // RHS
-                     PUSH __field____main__Person__doThing__block__5__Thing__name
+                     PUSH __field____main____Person__doThing__block__5____Thing____name
                   POP __child
                   POP __parent
                   PUSH __parent[__child]
@@ -706,12 +726,12 @@ JUMP __endclass____main__Person
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Person____doThing__char__1:
-   // End Method Declaration - __method____main__Person____doThing__char__1
+   __end__method____main____Person____doThing__char__1:
+   // End Method Declaration - __method____main____Person____doThing__char__1
    //---------------------------------------------------------------------
 
-__endclass____main__Person:
-// End Class Declaration - __main__Person
+__endclass____main____Person:
+// End Class Declaration - __main____Person
 //========================================================================
 
 //========================================================================
@@ -1296,7 +1316,7 @@ POP __void
          PUSH __arg2
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__Person____Person__char__1__int__float
+         CALL __ctor____main____Person____Person__char__1__int__float
          // Remove args
          POP __void
          POP __void
@@ -1324,7 +1344,7 @@ POP __void
             POP __arg0
          // Pushing args in reverse order
          PUSH __arg0
-         CALL __ctor____main__Name____Name__char__1
+         CALL __ctor____main____Name____Name__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -1335,7 +1355,7 @@ POP __void
             // Identifier - p
                PUSH __main__p
          // RHS
-            PUSH __field____main__Person__name
+            PUSH __field____main____Person____name
          POP __child
          POP __parent
          POP __rhs
@@ -1352,12 +1372,12 @@ POP __void
                   // Identifier - p
                      PUSH __main__p
                // RHS
-                  PUSH __field____main__Person__name
+                  PUSH __field____main____Person____name
                POP __child
                POP __parent
                PUSH __parent[__child]
          // RHS
-            PUSH __field____main__Name__name
+            PUSH __field____main____Name____name
          POP __child
          POP __parent
          PUSH __parent[__child]
@@ -1394,7 +1414,7 @@ POP __void
             // Identifier - p
                PUSH __main__p
          // RHS
-            PUSH __field____main__Person__age
+            PUSH __field____main____Person____age
          POP __child
          POP __parent
          PUSH __parent[__child]
@@ -1443,7 +1463,7 @@ POP __void
          PUSH __arg1
          PUSH __arg0
          PUSH __obj
-         CALL __method____main__Person____add__int__int
+         CALL __method____main____Person____add__int__int
          POP __void
          // Remove args
          POP __void
@@ -1495,7 +1515,7 @@ POP __void
          PUSH __arg1
          PUSH __arg0
          PUSH __obj
-         CALL __method____main__Person____add__float__float
+         CALL __method____main____Person____add__float__float
          POP __void
          // Remove args
          POP __void
@@ -1559,7 +1579,7 @@ POP __void
       // Constructor Call - Person::Person() -> Person
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__Person____Person
+         CALL __ctor____main____Person____Person
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -1577,12 +1597,12 @@ POP __void
                   // Identifier - p
                      PUSH __main__p
                // RHS
-                  PUSH __field____main__Person__name
+                  PUSH __field____main____Person____name
                POP __child
                POP __parent
                PUSH __parent[__child]
          // RHS
-            PUSH __field____main__Name__name
+            PUSH __field____main____Name____name
          POP __child
          POP __parent
          PUSH __parent[__child]
@@ -1621,7 +1641,7 @@ POP __void
             // Identifier - p
                PUSH __main__p
          // RHS
-            PUSH __field____main__Person__age
+            PUSH __field____main____Person____age
          POP __child
          POP __parent
          PUSH __parent[__child]
@@ -1672,7 +1692,7 @@ POP __void
          PUSH __arg1
          PUSH __arg0
          PUSH __obj
-         CALL __method____main__Person____add__int__int
+         CALL __method____main____Person____add__int__int
          POP __void
          // Remove args
          POP __void
@@ -1726,7 +1746,7 @@ POP __void
          PUSH __arg1
          PUSH __arg0
          PUSH __obj
-         CALL __method____main__Person____add__float__float
+         CALL __method____main____Person____add__float__float
          POP __void
          // Remove args
          POP __void
@@ -1767,14 +1787,14 @@ POP __void
                // Pushing args in reverse order
                PUSH __arg0
                PUSH __obj
-               CALL __method____main__Person____doThing__char__1
+               CALL __method____main____Person____doThing__char__1
                POP __void
                // Remove args
                POP __void
                RESPONSE __retval
                PUSH __retval
          // RHS
-            PUSH __field____main__Name__name
+            PUSH __field____main____Name____name
          POP __child
          POP __parent
          PUSH __parent[__child]

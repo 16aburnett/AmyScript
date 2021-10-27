@@ -8,13 +8,14 @@
 // AmyScript Built-in library
 // Author: Amy Burnett
 //========================================================================
-
-jump __endOfLibrary
-
-//========================================================================
-// Global Variables
+// Global Builtin Variables
 
     assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
 
 //========================================================================
 // Prints a given string to the screen
@@ -149,6 +150,12 @@ exit:
     halt
 
 //========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
 // converts int to float
 // float intToFloat (int);
 intToFloat__int:
@@ -163,6 +170,12 @@ stringToFloat__char__1:
     stackget val 0
     stof res val
     return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
 
 //========================================================================
 // converts float to int
@@ -198,6 +211,13 @@ string__float:
 
 //========================================================================
 
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
+
+//========================================================================
+
 __endOfLibrary:
     //push prompt
     //call print
@@ -213,42 +233,42 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__A inherits __main__Object
+// Class Declaration - __main____A inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__A 1
+      MALLOC __dtable____main____A 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__A[0] __method____main__A____val
+      ASSIGN __dtable____main____A[0] __method____main____A____val
    //---------------------------------------------------------------------
    // Field - int A::x
-   ASSIGN __field____main__A__x 1
+   ASSIGN __field____main____A____x 1
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__A
+JUMP __endclass____main____A
    //---------------------------------------------------------------------
    // Constructor Declaration - A::A(int) -> A
-   JUMP __end__ctor____main__A____A__int
-   __ctor____main__A____A__int:
+   JUMP __end__ctor____main____A____A__int
+   __ctor____main____A____A__int:
       // Creating Class Instance
          MALLOC __this 2
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__A
+         ASSIGN __this[0] __dtable____main____A
       // Parameters
          // Param: val
-         STACKGET __main__A__A__val 0
+         STACKGET __main____A__A__val 0
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - val
-                     PUSH __main__A__A__val
+                     PUSH __main____A__A__val
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__A__x
+                        PUSH __field____main____A____x
                      POP __child
                      POP __parent
                      POP __rhs
@@ -258,14 +278,14 @@ JUMP __endclass____main__A
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__A____A__int:
-   // End Constructor Declaration - __ctor____main__A____A__int
+   __end__ctor____main____A____A__int:
+   // End Constructor Declaration - __ctor____main____A____A__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - A::val() -> int
-   JUMP __end__method____main__A____val
-   __method____main__A____val:
+   JUMP __end__method____main____A____val
+   __method____main____A____val:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -278,7 +298,7 @@ JUMP __endclass____main__A
                      // This keyword
                         PUSH __this
                   // RHS
-                     PUSH __field____main__A__x
+                     PUSH __field____main____A____x
                   POP __child
                   POP __parent
                   PUSH __parent[__child]
@@ -286,56 +306,56 @@ JUMP __endclass____main__A
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__A____val:
-   // End Method Declaration - __method____main__A____val
+   __end__method____main____A____val:
+   // End Method Declaration - __method____main____A____val
    //---------------------------------------------------------------------
 
-__endclass____main__A:
-// End Class Declaration - __main__A
+__endclass____main____A:
+// End Class Declaration - __main____A
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__B inherits __main__A
+// Class Declaration - __main____B inherits __main____A
    // Creating Dispatch Table
-      MALLOC __dtable____main__B 1
+      MALLOC __dtable____main____B 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__B[0] __method____main__B____val
+      ASSIGN __dtable____main____B[0] __method____main____B____val
    //---------------------------------------------------------------------
    // Field - int B::x
    // Inherited from A
-   ASSIGN __field____main__B__x 1
+   ASSIGN __field____main____B____x 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int B::y
-   ASSIGN __field____main__B__y 2
+   ASSIGN __field____main____B____y 2
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__B
+JUMP __endclass____main____B
    //---------------------------------------------------------------------
    // Constructor Declaration - B::B(int) -> B
-   JUMP __end__ctor____main__B____B__int
-   __ctor____main__B____B__int:
+   JUMP __end__ctor____main____B____B__int
+   __ctor____main____B____B__int:
       // Creating Class Instance
          MALLOC __this 3
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__B
+         ASSIGN __this[0] __dtable____main____B
       // Parameters
          // Param: val
-         STACKGET __main__B__B__val 0
+         STACKGET __main____B__B__val 0
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - val
-                     PUSH __main__B__B__val
+                     PUSH __main____B__B__val
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__B__y
+                        PUSH __field____main____B____y
                      POP __child
                      POP __parent
                      POP __rhs
@@ -345,14 +365,14 @@ JUMP __endclass____main__B
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__B____B__int:
-   // End Constructor Declaration - __ctor____main__B____B__int
+   __end__ctor____main____B____B__int:
+   // End Constructor Declaration - __ctor____main____B____B__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - B::val() -> int
-   JUMP __end__method____main__B____val
-   __method____main__B____val:
+   JUMP __end__method____main____B____val
+   __method____main____B____val:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -365,7 +385,7 @@ JUMP __endclass____main__B
                      // This keyword
                         PUSH __this
                   // RHS
-                     PUSH __field____main__B__y
+                     PUSH __field____main____B____y
                   POP __child
                   POP __parent
                   PUSH __parent[__child]
@@ -373,61 +393,61 @@ JUMP __endclass____main__B
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__B____val:
-   // End Method Declaration - __method____main__B____val
+   __end__method____main____B____val:
+   // End Method Declaration - __method____main____B____val
    //---------------------------------------------------------------------
 
-__endclass____main__B:
-// End Class Declaration - __main__B
+__endclass____main____B:
+// End Class Declaration - __main____B
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__C inherits __main__B
+// Class Declaration - __main____C inherits __main____B
    // Creating Dispatch Table
-      MALLOC __dtable____main__C 1
+      MALLOC __dtable____main____C 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__C[0] __method____main__C____val
+      ASSIGN __dtable____main____C[0] __method____main____C____val
    //---------------------------------------------------------------------
    // Field - int C::x
    // Inherited from B
-   ASSIGN __field____main__C__x 1
+   ASSIGN __field____main____C____x 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int C::y
    // Inherited from B
-   ASSIGN __field____main__C__y 2
+   ASSIGN __field____main____C____y 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int C::z
-   ASSIGN __field____main__C__z 3
+   ASSIGN __field____main____C____z 3
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__C
+JUMP __endclass____main____C
    //---------------------------------------------------------------------
    // Constructor Declaration - C::C(int) -> C
-   JUMP __end__ctor____main__C____C__int
-   __ctor____main__C____C__int:
+   JUMP __end__ctor____main____C____C__int
+   __ctor____main____C____C__int:
       // Creating Class Instance
          MALLOC __this 4
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__C
+         ASSIGN __this[0] __dtable____main____C
       // Parameters
          // Param: val
-         STACKGET __main__C__C__val 0
+         STACKGET __main____C__C__val 0
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - val
-                     PUSH __main__C__C__val
+                     PUSH __main____C__C__val
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__C__z
+                        PUSH __field____main____C____z
                      POP __child
                      POP __parent
                      POP __rhs
@@ -437,14 +457,14 @@ JUMP __endclass____main__C
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__C____C__int:
-   // End Constructor Declaration - __ctor____main__C____C__int
+   __end__ctor____main____C____C__int:
+   // End Constructor Declaration - __ctor____main____C____C__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - C::val() -> int
-   JUMP __end__method____main__C____val
-   __method____main__C____val:
+   JUMP __end__method____main____C____val
+   __method____main____C____val:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -457,7 +477,7 @@ JUMP __endclass____main__C
                      // This keyword
                         PUSH __this
                   // RHS
-                     PUSH __field____main__C__z
+                     PUSH __field____main____C____z
                   POP __child
                   POP __parent
                   PUSH __parent[__child]
@@ -465,12 +485,12 @@ JUMP __endclass____main__C
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__C____val:
-   // End Method Declaration - __method____main__C____val
+   __end__method____main____C____val:
+   // End Method Declaration - __method____main____C____val
    //---------------------------------------------------------------------
 
-__endclass____main__C:
-// End Class Declaration - __main__C
+__endclass____main____C:
+// End Class Declaration - __main____C
 //========================================================================
 
 //========================================================================
@@ -976,6 +996,213 @@ __end____main____add__int__int:
 // End Function Template - 
 //========================================================================
 
+//========================================================================
+// Function Template - 
+   // Instances:
+      //==================================================================
+      // Function Declaration - doubleSum<:int[]:>(int[]) -> int
+      JUMP __end____main____doubleSum__int__1____int__1
+      __main____doubleSum__int__1____int__1:
+         // Parameters
+            // Param: nums
+            STACKGET __main__doubleSum__nums 0
+         // Body
+            //------------------------------------------------------------
+            // Code Block
+               // Assignment
+                  // RHS
+                     // Array Allocator
+                        // Int Literal
+                           PUSH 2
+                        POP __size
+                        MALLOC __ptr __size
+                        PUSH __ptr
+                  // LHS
+                     // Variable Declaration
+                        ASSIGN __main__doubleSum__block__15__lists 0
+                  POP __rhs
+                  ASSIGN __main__doubleSum__block__15__lists __rhs
+                  PUSH __rhs
+               // Statement results can be ignored
+               POP __void
+               // Assignment
+                  // RHS
+                     // Identifier - nums
+                        PUSH __main__doubleSum__nums
+                  // LHS
+                     // Subscript assignment
+                        // LHS
+                           // Identifier - lists
+                              PUSH __main__doubleSum__block__15__lists
+                        // OFFSET
+                           // Int Literal
+                              PUSH 0
+                        POP __offset
+                        POP __pointer
+                  POP __rhs
+                  ASSIGN __pointer[__offset] __rhs
+                  PUSH __rhs
+               // Statement results can be ignored
+               POP __void
+               // Assignment
+                  // RHS
+                     // Identifier - nums
+                        PUSH __main__doubleSum__nums
+                  // LHS
+                     // Subscript assignment
+                        // LHS
+                           // Identifier - lists
+                              PUSH __main__doubleSum__block__15__lists
+                        // OFFSET
+                           // Int Literal
+                              PUSH 1
+                        POP __offset
+                        POP __pointer
+                  POP __rhs
+                  ASSIGN __pointer[__offset] __rhs
+                  PUSH __rhs
+               // Statement results can be ignored
+               POP __void
+               // Assignment
+                  // RHS
+                     // Int Literal
+                        PUSH 0
+                  // LHS
+                     // Variable Declaration
+                        ASSIGN __main__doubleSum__block__15__sum 0
+                  POP __rhs
+                  ASSIGN __main__doubleSum__block__15__sum __rhs
+                  PUSH __rhs
+               // Statement results can be ignored
+               POP __void
+               //---------------------------------------------------------
+               // For-Loop
+               // Init
+                  // Assignment
+                     // RHS
+                        // Int Literal
+                           PUSH 0
+                     // LHS
+                        // Variable Declaration
+                           ASSIGN __main__doubleSum__block__15__for__16__i 0
+                     POP __rhs
+                     ASSIGN __main__doubleSum__block__15__for__16__i __rhs
+                     PUSH __rhs
+               JUMP __forcond__16
+               __for__16:
+                  // Update
+                     // Pre-Increment
+                        // RHS
+                           // Identifier - i
+                              PUSH __main__doubleSum__block__15__for__16__i
+                        POP __rhs
+                        ADD __main__doubleSum__block__15__for__16__i __main__doubleSum__block__15__for__16__i 1
+                        ASSIGN __res __main__doubleSum__block__15__for__16__i
+                        PUSH __res
+                  __forcond__16:
+                  // Condition
+                     // Less Than
+                        // LHS
+                           // Identifier - i
+                              PUSH __main__doubleSum__block__15__for__16__i
+                        // RHS
+                           // Sizeof Operator
+                              // RHS
+                                 // Identifier - nums
+                                    PUSH __main__doubleSum__nums
+                              // Calculate array size
+                              POP __array
+                              SIZEOF __size __array
+                              PUSH __size
+                        POP __rhs
+                        POP __lhs
+                        LT __res __lhs __rhs
+                        PUSH __res
+                     POP __cond
+                     CMP __cond 0
+                     JEQ __endfor__16
+                  // Body
+                     //---------------------------------------------------
+                     // Code Block
+                        // Assignment
+                           // RHS
+                              // Addition
+                                 // LHS
+                                    // Addition
+                                       // LHS
+                                          // Identifier - sum
+                                             PUSH __main__doubleSum__block__15__sum
+                                       // RHS
+                                          // Subscript
+                                             // LHS
+                                                // Subscript
+                                                   // LHS
+                                                      // Identifier - lists
+                                                         PUSH __main__doubleSum__block__15__lists
+                                                   // OFFSET
+                                                      // Int Literal
+                                                         PUSH 0
+                                                   POP __offset
+                                                   POP __pointer
+                                                   PUSH __pointer[__offset]
+                                             // OFFSET
+                                                // Identifier - i
+                                                   PUSH __main__doubleSum__block__15__for__16__i
+                                             POP __offset
+                                             POP __pointer
+                                             PUSH __pointer[__offset]
+                                       POP __rhs
+                                       POP __lhs
+                                       ADD __res __lhs __rhs
+                                       PUSH __res
+                                 // RHS
+                                    // Subscript
+                                       // LHS
+                                          // Subscript
+                                             // LHS
+                                                // Identifier - lists
+                                                   PUSH __main__doubleSum__block__15__lists
+                                             // OFFSET
+                                                // Int Literal
+                                                   PUSH 1
+                                             POP __offset
+                                             POP __pointer
+                                             PUSH __pointer[__offset]
+                                       // OFFSET
+                                          // Identifier - i
+                                             PUSH __main__doubleSum__block__15__for__16__i
+                                       POP __offset
+                                       POP __pointer
+                                       PUSH __pointer[__offset]
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                           POP __rhs
+                           ASSIGN __main__doubleSum__block__15__sum __rhs
+                           PUSH __rhs
+                        // Statement results can be ignored
+                        POP __void
+                     //---------------------------------------------------
+                  // Repeat
+                  JUMP __for__16
+                  // End of For
+                  __endfor__16:
+               //---------------------------------------------------------
+               // Return
+                  // Identifier - sum
+                     PUSH __main__doubleSum__block__15__sum
+                  POP __rVal
+                  RETURN __rVal
+            //------------------------------------------------------------
+         RETURN 0
+      __end____main____doubleSum__int__1____int__1:
+      // End Function Declaration - __main____doubleSum__int__1____int__1
+      //==================================================================
+
+// End Function Template - 
+//========================================================================
+
 // Function Call - println(int) -> void
    // Arguments
       // Function Call - add(int, int) -> int
@@ -1178,7 +1405,7 @@ POP __void
                   POP __arg0
                // Pushing args in reverse order
                PUSH __arg0
-               CALL __ctor____main__B____B__int
+               CALL __ctor____main____B____B__int
                // Remove args
                POP __void
                RESPONSE __retval
@@ -1190,7 +1417,7 @@ POP __void
                   POP __arg0
                // Pushing args in reverse order
                PUSH __arg0
-               CALL __ctor____main__C____C__int
+               CALL __ctor____main____C____C__int
                // Remove args
                POP __void
                RESPONSE __retval
@@ -1239,6 +1466,97 @@ POP __void
    PUSH __arg0
    // *** printMsg
    CALL __main____printMsg__char__1__int____char__1
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+// Function Call - println(int) -> void
+   // Arguments
+      // Function Call - doubleSum<:int[]:>(int[]) -> int
+         // Arguments
+            // Array Constructor
+               // Elements
+               // Int Literal
+                  PUSH 1
+               // Int Literal
+                  PUSH 2
+               // Int Literal
+                  PUSH 3
+               // Int Literal
+                  PUSH 4
+               // Int Literal
+                  PUSH 5
+               POP __elem4
+               POP __elem3
+               POP __elem2
+               POP __elem1
+               POP __elem0
+               MALLOC __list 5
+               ASSIGN __list[0] __elem0
+               ASSIGN __list[1] __elem1
+               ASSIGN __list[2] __elem2
+               ASSIGN __list[3] __elem3
+               ASSIGN __list[4] __elem4
+               PUSH __list
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         // *** doubleSum
+         CALL __main____doubleSum__int__1____int__1
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__int
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+// Assignment
+   // RHS
+      // Int Literal
+         PUSH 10
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__add 0
+   POP __rhs
+   ASSIGN __main__add __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Function Call - println(int) -> void
+   // Arguments
+      // Function Call - add(int, int) -> int
+         // Arguments
+            // Identifier - add
+               PUSH __main__add
+            // Identifier - add
+               PUSH __main__add
+            POP __arg1
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg1
+         PUSH __arg0
+         // *** add
+         CALL __main____add__int__int
+         // Remove args
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__int
    // Remove args
    POP __void
    RESPONSE __retval

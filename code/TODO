@@ -1,0 +1,14 @@
+
+
+
+
+template<class T, int N>
+class Y {
+    int T;                 // error: template parameter redeclared
+    void f()
+    {
+        char T;            // error: template parameter redeclared
+    }
+};
+ 
+template<class X> class X; // error: template parameter redeclared

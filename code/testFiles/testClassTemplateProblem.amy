@@ -1,0 +1,81 @@
+
+function int strcmp (char[] a, char[] b)
+{
+    if (sizeof(a) != sizeof(b))
+        return 0;
+    for (int i = 0; i < sizeof(a); ++i)
+        if (a[i] != b[i])
+            return 0;
+    return 1;
+}
+
+template <:key_t, value_t:>
+class map
+{
+    public field key_t[] keys;
+    public field value_t[] values;
+    public field int size; 
+    constructor ()
+    {
+        this.keys = new key_t[10];
+        this.values = new value_t[10];
+        this.size = 0; 
+    }
+    public method void insert (key_t key, value_t value)
+    {
+        if (this.size+1 > 10)
+            return; 
+        this.keys[this.size] = key;
+        this.values[this.size] = value; 
+        this.size++;
+    }
+    public method value_t get (key_t key)
+    {
+        for (int i = 0; i < this.size; ++i)
+            if (strcmp(this.keys[i], key))
+                return this.values[i];
+    }
+    public method void set (key_t key, value_t value)
+    {
+        for (int i = 0; i < this.size; ++i)
+        {
+            if (strcmp(this.keys[i], key))
+                this.values[i] = value;
+        }
+    }
+    public method int contains (key_t key)
+    {
+        for (int i = 0; i < this.size; ++i)
+        {
+            if (strcmp(this.keys[i], key))
+                return 1;
+        }
+        return 0; 
+    }
+}
+
+map<:char[], int:> occ = new map<:char[], int:>();
+
+char[][] words = ["pizza", "watermelon", "pizza"];
+
+for (int i = 0; i < sizeof(words); ++i)
+{
+    // DNE
+    if (!occ.contains(words[i]))
+    {
+        occ.insert (words[i], 1);
+    }
+    else
+    {
+        //int x = occ.get(words[i])+1;
+        //occ.set (words[i], x);
+        occ.set (words[i], occ.get(words[i])+1);
+    }
+}   
+
+for (int i = 0; i < occ.size; ++i)
+{
+    print (occ.keys[i]);
+    print (' ');
+    println (occ.values[i]);
+}

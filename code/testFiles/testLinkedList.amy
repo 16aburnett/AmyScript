@@ -1,0 +1,486 @@
+// AmyScript Linked List implementation
+// Author: Amy Burnett
+//========================================================================
+
+
+
+//========================================================================
+
+template <:data_type:>
+class Node
+{
+    public field data_type data;
+    public field Node<:data_type:> prev; 
+    public field Node<:data_type:> next; 
+
+    constructor (data_type data, Node<:data_type:> prev, Node<:data_type:> next)
+    {
+        this.data = data;
+        this.prev = prev; 
+        this.next = next; 
+    }
+}
+
+//========================================================================
+
+template <:data_type:>
+class LinkedList 
+{
+    public field Node<:data_type:> header;
+    public field int  size; 
+
+    constructor () 
+    {
+        this.header = new Node<:data_type:> (data_type(), null, null);
+        this.header.next = this.header;
+        this.header.prev = this.header; 
+        
+        this.size = 0;
+    }
+
+    public method void pushBack (data_type val)
+    {
+        Node<:data_type:> tail = this.header.prev;
+        Node<:data_type:> node = new Node<:data_type:> (val, tail, this.header);
+        tail.next = node; 
+        this.header.prev = node; 
+
+        ++this.size;
+    }
+
+    public method void pushFront (data_type val)
+    {
+        Node<:data_type:> head = this.header.next;
+        Node<:data_type:> node = new Node<:data_type:> (val, this.header, head);
+        head.prev = node; 
+        this.header.next = node; 
+
+        ++this.size;
+    }
+
+    public method data_type popBack ()
+    {
+        if (this.size <= 0)
+            return data_type();
+        
+        Node<:data_type:> tail = this.header.prev;
+        tail.prev.next = this.header;
+        this.header.prev = tail.prev; 
+
+        --this.size; 
+
+        return tail.data; 
+
+    }
+
+    public method data_type popFront ()
+    {
+        if (this.size <= 0)
+            return data_type();
+
+        Node<:data_type:> head = this.header.next;
+        head.next.prev = this.header;
+        this.header.next = head.next; 
+
+        --this.size; 
+
+        return head.data; 
+    }
+
+    public method Node<:data_type:> begin ()
+    {
+        return this.header.next;
+    }
+
+    public method Node<:data_type:> end ()
+    {
+        return this.header;
+    }
+
+    public method Node<:data_type:> rbegin ()
+    {
+        return this.header.prev;
+    }
+
+    public method Node<:data_type:> rend ()
+    {
+        return this.header;
+    }
+
+}
+
+
+//========================================================================
+
+template <:T:>
+function void printForwards (LinkedList<:T:> list)
+{
+    print ("   Forwards: ");
+    for (Node<:T:> iter = list.begin (); iter != list.end (); iter = iter.next)
+    {
+        print (iter.data);
+        print (" -> ");
+    }
+    println ("");
+}
+
+//========================================================================
+
+template <:T:>
+function void printBackwards (LinkedList<:T:> list)
+{
+    print ("   Backwards: ");
+    for (Node<:T:> iter = list.rbegin (); iter != list.rend (); iter = iter.prev)
+    {
+        print (iter.data);
+        print (" <- ");
+    }
+    println ("");
+}
+
+//========================================================================
+
+println ("=== Testing LinkedList<:int:> ==================================");
+
+LinkedList<:int:> list = new LinkedList<:int:> ();
+
+list.pushBack (7);
+list.pushBack (42);
+list.pushBack (16);
+list.pushBack (3);
+list.pushFront (17);
+list.pushFront (8);
+list.popBack ();
+list.popFront ();
+
+printForwards<:int:> (list);
+printBackwards<:int:> (list);
+
+// pop front 
+println ("Pop Front");
+list.popFront ();
+
+printForwards<:int:> (list);
+printBackwards<:int:> (list);
+
+// pop back 
+println ("Pop Back");
+list.popBack ();
+
+printForwards<:int:> (list);
+printBackwards<:int:> (list);
+
+// pop front 
+println ("Pop Front");
+list.popFront ();
+
+printForwards<:int:> (list);
+printBackwards<:int:> (list);
+
+// pop front 
+println ("Pop Front");
+list.popFront ();
+
+printForwards<:int:> (list);
+printBackwards<:int:> (list);
+
+// pop front 
+println ("Pop Front");
+list.popFront ();
+
+printForwards<:int:> (list);
+printBackwards<:int:> (list);
+
+// push front 
+println ("Push Front 15");
+list.pushFront (15);
+
+printForwards<:int:> (list);
+printBackwards<:int:> (list);
+
+// push back  
+println ("Push Back 6");
+list.pushBack (6);
+
+printForwards<:int:> (list);
+printBackwards<:int:> (list);
+
+// push front
+println ("Push Front 47");
+list.pushFront (47);
+
+printForwards<:int:> (list);
+printBackwards<:int:> (list);
+
+//========================================================================
+
+println ("=== Testing LinkedList<:float:> ================================");
+
+LinkedList<:float:> list2 = new LinkedList<:float:> ();
+
+list2.pushBack (7.12);
+list2.pushBack (42.1443);
+list2.pushBack (16.542);
+list2.pushBack (3.14);
+list2.pushFront (17.52);
+list2.pushFront (8.23);
+list2.popBack ();
+list2.popFront ();
+
+printForwards<:float:> (list2);
+printBackwards<:float:> (list2);
+
+// pop front 
+println ("Pop Front");
+list2.popFront ();
+
+printForwards<:float:> (list2);
+printBackwards<:float:> (list2);
+
+// pop back 
+println ("Pop Back");
+list2.popBack ();
+
+printForwards<:float:> (list2);
+printBackwards<:float:> (list2);
+
+// pop front 
+println ("Pop Front");
+list2.popFront ();
+
+printForwards<:float:> (list2);
+printBackwards<:float:> (list2);
+
+// pop front 
+println ("Pop Front");
+list2.popFront ();
+
+printForwards<:float:> (list2);
+printBackwards<:float:> (list2);
+
+// pop front 
+println ("Pop Front");
+list2.popFront ();
+
+printForwards<:float:> (list2);
+printBackwards<:float:> (list2);
+
+// push front 
+println ("Push Front 15.99");
+list2.pushFront (15.99);
+
+printForwards<:float:> (list2);
+printBackwards<:float:> (list2);
+
+// push back  
+println ("Push Back 6.7");
+list2.pushBack (6.7);
+
+printForwards<:float:> (list2);
+printBackwards<:float:> (list2);
+
+// push front
+println ("Push Front 47.0");
+list2.pushFront (47.0);
+
+printForwards<:float:> (list2);
+printBackwards<:float:> (list2);
+
+
+//========================================================================
+
+println ("=== Testing LinkedList<:char[]:> ===============================");
+
+LinkedList<:char[]:> list3 = new LinkedList<:char[]:> ();
+
+list3.pushBack ("apple");
+list3.pushBack ("pizza");
+list3.pushBack ("tomato");
+list3.pushBack ("lizard?");
+list3.pushFront ("kevin bacon");
+list3.pushFront ("french fries");
+list3.popBack ();
+list3.popFront ();
+
+printForwards<:char[]:> (list3);
+printBackwards<:char[]:> (list3);
+
+// pop front 
+println ("Pop Front");
+list3.popFront ();
+
+printForwards<:char[]:> (list3);
+printBackwards<:char[]:> (list3);
+
+// pop back 
+println ("Pop Back");
+list3.popBack ();
+
+printForwards<:char[]:> (list3);
+printBackwards<:char[]:> (list3);
+
+// pop front 
+println ("Pop Front");
+list3.popFront ();
+
+printForwards<:char[]:> (list3);
+printBackwards<:char[]:> (list3);
+
+// pop front 
+println ("Pop Front");
+list3.popFront ();
+
+printForwards<:char[]:> (list3);
+printBackwards<:char[]:> (list3);
+
+// pop front 
+println ("Pop Front");
+list3.popFront ();
+
+printForwards<:char[]:> (list3);
+printBackwards<:char[]:> (list3);
+
+// push front 
+println ("Push Front pasta");
+list3.pushFront ("pasta");
+
+printForwards<:char[]:> (list3);
+printBackwards<:char[]:> (list3);
+
+// push back  
+println ("Push Back bread");
+list3.pushBack ("bread");
+
+printForwards<:char[]:> (list3);
+printBackwards<:char[]:> (list3);
+
+// push front
+println ("Push Front watermelon");
+list3.pushFront ("watermelon");
+
+printForwards<:char[]:> (list3);
+printBackwards<:char[]:> (list3);
+
+
+//========================================================================
+class String 
+{
+    public field char[] str; 
+    public field int size; 
+
+    constructor ()
+    {
+        this.str = ""; 
+        this.size = 0; 
+    }
+    constructor (char[] str)
+    {
+        this.str = str; 
+        this.size = sizeof(this.str); 
+    }
+}
+
+function void print (String str)
+{
+    print (str.str);
+}
+function void println (String str)
+{
+    println (str.str);
+}
+println ("=== Testing LinkedList<:String:> ===============================");
+
+LinkedList<:String:> list4 = new LinkedList<:String:> ();
+
+list4.pushBack (new String("apple"));
+list4.pushBack (new String("pizza"));
+list4.pushBack (new String("tomato"));
+list4.pushBack (new String("lizard?"));
+list4.pushFront (new String("kevin bacon"));
+list4.pushFront (new String("french fries"));
+list4.popBack ();
+list4.popFront ();
+
+printForwards<:String:> (list4);
+printBackwards<:String:> (list4);
+
+// pop front 
+println ("Pop Front");
+list4.popFront ();
+
+printForwards<:String:> (list4);
+printBackwards<:String:> (list4);
+
+// pop back 
+println ("Pop Back");
+list4.popBack ();
+
+printForwards<:String:> (list4);
+printBackwards<:String:> (list4);
+
+// pop front 
+println ("Pop Front");
+list4.popFront ();
+
+printForwards<:String:> (list4);
+printBackwards<:String:> (list4);
+
+// pop front 
+println ("Pop Front");
+list4.popFront ();
+
+printForwards<:String:> (list4);
+printBackwards<:String:> (list4);
+
+// pop front 
+println ("Pop Front");
+list4.popFront ();
+
+printForwards<:String:> (list4);
+printBackwards<:String:> (list4);
+
+// push front 
+println ("Push Front pasta");
+list4.pushFront (new String("pasta"));
+
+printForwards<:String:> (list4);
+printBackwards<:String:> (list4);
+
+// push back  
+println ("Push Back bread");
+list4.pushBack (new String("bread"));
+
+printForwards<:String:> (list4);
+printBackwards<:String:> (list4);
+
+// push front
+println ("Push Front watermelon");
+list4.pushFront (new String("watermelon"));
+
+printForwards<:String:> (list4);
+printBackwards<:String:> (list4);
+
+//==================================================
+
+function void testScope()
+{
+    class String
+    {
+        public field char[] str; 
+        public field int size; 
+
+        constructor ()
+        {
+            this.str = "I are default string"; 
+            this.size = sizeof(this.str); 
+        }
+    }
+
+    // ** this currently doesnt work as how you would expect 
+    LinkedList<:String:> l = new LinkedList<:String:>();
+    println (l.header.data.str);
+    println ("Sadly shadowing a class for a template param does not create a new template instance... yet");
+
+}
+
+testScope();

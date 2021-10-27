@@ -34,6 +34,14 @@ class TemplateVisitor (ASTVisitor):
                 codeunit.accept (self)
 
     def visitTypeSpecifierNode (self, node):
+        # print (f"[template] {node} ",end="")
+        # visit templateParams
+        # for case of 
+        #   public field Node<:T:> header;
+        # where T is the template param to overwrite 
+        # and Node<:T:> is the type specifier we are currently at 
+        for tparam in node.templateParams:
+            tparam.accept (self)
         # is a template alias 
         if node.id in self.templateParameters:
             # assign type 
@@ -41,9 +49,19 @@ class TemplateVisitor (ASTVisitor):
             node.type =            self.templateParameters[id].type
             node.id =              self.templateParameters[id].id
             node.token =           self.templateParameters[id].token
-            node.arrayDimensions = self.templateParameters[id].arrayDimensions
+            # replaced type should keep its array dimensions 
+            # example: T[] (where T is replaced with int) should be int[]
+            # example: T[] (where T is replaced with float[]) should be float[][]
+            #   NOTE: the first [] refers to the T[] and the second comes from the float[] 
+            node.arrayDimensions = self.templateParameters[id].arrayDimensions + node.arrayDimensions
             node.decl =            self.templateParameters[id].decl
             node.isGeneric =       self.templateParameters[id].isGeneric
+
+            # # copy over template params 
+            for tparam in self.templateParameters[id].templateParams:
+                node.templateParams += [tparam.copy ()]
+        # print (f"-> {node}")
+
 
     def visitParameterNode (self, node):
         node.type.accept (self)
@@ -115,6 +133,28 @@ class TemplateVisitor (ASTVisitor):
         # add shadowed aliases back 
         for shadowedAlias in shadowedAliases:
             self.templateParameters[shadowedAlias] = shadowedAliases[shadowedAlias]
+
+    def visitClassTemplateDeclarationNode (self, node):
+        pass
+        # # shadow any overridden template parameters 
+        # # check for same template param alias
+        # shadowedAliases = {}
+        # for alias in self.templateParameters:
+        #     for other in node.types:
+        #         # overrides alias
+        #         if alias == other.id:
+        #             # shadow alias 
+        #             shadowedAliases[alias] = self.templateParameters[alias]
+        # # remove shadowed aliases 
+        # for alias in shadowedAliases:
+        #     self.templateParameters.pop (alias)
+
+        # # check function template without shadowed aliases 
+        # node.function.accept (self)
+
+        # # add shadowed aliases back 
+        # for shadowedAlias in shadowedAliases:
+        #     self.templateParameters[shadowedAlias] = shadowedAliases[shadowedAlias]
 
     def visitStatementNode (self, node):
         pass
@@ -234,7 +274,7 @@ class TemplateVisitor (ASTVisitor):
         node.lhs.accept (self)
 
         # the type for this is lhs - 1 dimension
-        node.type = TypeSpecifierNode (node.lhs.type.type, node.lhs.type.id, None)
+        node.type = node.lhs.type.copy()
 
         node.type.arrayDimensions = node.lhs.type.arrayDimensions - 1
 
@@ -242,6 +282,29 @@ class TemplateVisitor (ASTVisitor):
         node.offset.accept (self)
 
     def visitFunctionCallExpressionNode (self, node):
+        # default construct template type 
+        if isinstance(node.function, IdentifierExpressionNode) and node.function.id in self.templateParameters:
+            # print (f"default constructor for template parameter '{node.function.id}'")
+
+            templateParam = self.templateParameters[node.function.id]
+
+            # ARRAY -> null
+            if templateParam.arrayDimensions > 0:
+                # print (f"array default constructor,     {templateParam}")
+                node.function.id = "null"
+
+            # OBJECT TYPE -> ctor for object
+            elif templateParam.type == Type.USERTYPE:
+                # print (f"object default constructor,    {templateParam}")
+                # node = ConstructorCallExpressionNode (templateParam, templateParam.id, node.args, node.templateParams, node.lineNumber, node.columnNumber)
+                node.function.id = f"{templateParam}::{templateParam.id}"
+
+            # PRIMITIVE TYPE
+            else:
+                # print (f"primitive default constructor, {templateParam}")
+                node.function.id = templateParam.id
+
+
         # eval arguments to get types 
         for arg in node.args:
             arg.accept (self)
@@ -270,7 +333,7 @@ class TemplateVisitor (ASTVisitor):
         node.rhs.accept (self)
 
     def visitThisExpressionNode (self, node):
-        pass
+        node.type.accept (self)
 
     def visitIdentifierExpressionNode (self, node):
         pass
@@ -282,6 +345,9 @@ class TemplateVisitor (ASTVisitor):
 
     def visitConstructorCallExpressionNode (self, node):
         node.type.accept (self)
+        # eval arguments
+        for arg in node.args:
+            arg.accept (self)
     
     def visitSizeofExpressionNode(self, node):
         node.rhs.accept (self)

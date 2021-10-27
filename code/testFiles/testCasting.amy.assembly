@@ -8,13 +8,14 @@
 // AmyScript Built-in library
 // Author: Amy Burnett
 //========================================================================
-
-jump __endOfLibrary
-
-//========================================================================
-// Global Variables
+// Global Builtin Variables
 
     assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
 
 //========================================================================
 // Prints a given string to the screen
@@ -149,6 +150,12 @@ exit:
     halt
 
 //========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
 // converts int to float
 // float intToFloat (int);
 intToFloat__int:
@@ -163,6 +170,12 @@ stringToFloat__char__1:
     stackget val 0
     stof res val
     return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
 
 //========================================================================
 // converts float to int
@@ -198,6 +211,13 @@ string__float:
 
 //========================================================================
 
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
+
+//========================================================================
+
 __endOfLibrary:
     //push prompt
     //call print
@@ -213,78 +233,80 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Person inherits __main__Object
+// Class Declaration - __main____Person inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__Person 0
+      MALLOC __dtable____main____Person 0
       // Populate Dispatch Table
    //---------------------------------------------------------------------
    // Field - char[] Person::name
-   ASSIGN __field____main__Person__name 1
+   ASSIGN __field____main____Person____name 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Person::age
-   ASSIGN __field____main__Person__age 2
+   ASSIGN __field____main____Person____age 2
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__Person
+JUMP __endclass____main____Person
    //---------------------------------------------------------------------
    // Constructor Declaration - Person::Person(char[], int) -> Person
-   JUMP __end__ctor____main__Person____Person__char__1__int
-   __ctor____main__Person____Person__char__1__int:
+   JUMP __end__ctor____main____Person____Person__char__1__int
+   __ctor____main____Person____Person__char__1__int:
       // Creating Class Instance
          MALLOC __this 3
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Person
+         ASSIGN __this[0] __dtable____main____Person
       // Parameters
          // Param: name
-         STACKGET __main__Person__Person__name 0
+         STACKGET __main____Person__Person__name 0
          // Param: age
-         STACKGET __main__Person__Person__age 1
+         STACKGET __main____Person__Person__age 1
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - name
-                     PUSH __main__Person__Person__name
+                     PUSH __main____Person__Person__name
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Person__name
+                        PUSH __field____main____Person____name
                      POP __child
                      POP __parent
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
             POP __void
             // Assignment
                // RHS
                   // Identifier - age
-                     PUSH __main__Person__Person__age
+                     PUSH __main____Person__Person__age
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Person__age
+                        PUSH __field____main____Person____age
                      POP __child
                      POP __parent
                      POP __rhs
                      ASSIGN __parent[__child] __rhs
                PUSH __rhs
+            // Statement results can be ignored
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Person____Person__char__1__int:
-   // End Constructor Declaration - __ctor____main__Person____Person__char__1__int
+   __end__ctor____main____Person____Person__char__1__int:
+   // End Constructor Declaration - __ctor____main____Person____Person__char__1__int
    //---------------------------------------------------------------------
 
-__endclass____main__Person:
-// End Class Declaration - __main__Person
+__endclass____main____Person:
+// End Class Declaration - __main____Person
 //========================================================================
 
 //========================================================================
@@ -324,6 +346,7 @@ __main____substring__char__1__int__int:
             POP __rhs
             ASSIGN __main__substring__block__1__result __rhs
             PUSH __rhs
+         // Statement results can be ignored
          POP __void
          //---------------------------------------------------------------
          // For-Loop
@@ -402,6 +425,7 @@ __main____substring__char__1__int__int:
                      POP __rhs
                      ASSIGN __pointer[__offset] __rhs
                      PUSH __rhs
+                  // Statement results can be ignored
                   POP __void
                //---------------------------------------------------------
             // Repeat
@@ -452,6 +476,7 @@ __main____split__char__1__char:
             POP __rhs
             ASSIGN __main__split__block__4__buffer __rhs
             PUSH __rhs
+         // Statement results can be ignored
          POP __void
          // Assignment
             // RHS
@@ -463,6 +488,7 @@ __main____split__char__1__char:
             POP __rhs
             ASSIGN __main__split__block__4__i __rhs
             PUSH __rhs
+         // Statement results can be ignored
          POP __void
          // Assignment
             // RHS
@@ -474,6 +500,7 @@ __main____split__char__1__char:
             POP __rhs
             ASSIGN __main__split__block__4__j __rhs
             PUSH __rhs
+         // Statement results can be ignored
          POP __void
          //---------------------------------------------------------------
          // While-Loop
@@ -540,6 +567,7 @@ __main____split__char__1__char:
                               POP __rhs
                               ASSIGN __main__split__block__4__while__5__block__6__if__7__block__8__count __rhs
                               PUSH __rhs
+                           // Statement results can be ignored
                            POP __void
                            // Assignment
                               // RHS
@@ -551,6 +579,7 @@ __main____split__char__1__char:
                               POP __rhs
                               ASSIGN __main__split__block__4__while__5__block__6__if__7__block__8__k __rhs
                               PUSH __rhs
+                           // Statement results can be ignored
                            POP __void
                            //---------------------------------------------
                            // While-Loop
@@ -613,6 +642,7 @@ __main____split__char__1__char:
                                           ADD __main__split__block__4__while__5__block__6__if__7__block__8__count __main__split__block__4__while__5__block__6__if__7__block__8__count 1
                                           ASSIGN __res __main__split__block__4__while__5__block__6__if__7__block__8__count
                                           PUSH __res
+                                       // Statement results can be ignored
                                        POP __void
                                     JUMP __endif__10
                                     //------------------------------------
@@ -649,6 +679,7 @@ __main____split__char__1__char:
                               POP __rhs
                               ASSIGN __pointer[__offset] __rhs
                               PUSH __rhs
+                           // Statement results can be ignored
                            POP __void
                            //---------------------------------------------
                            // For-Loop
@@ -742,6 +773,7 @@ __main____split__char__1__char:
                                        POP __rhs
                                        ASSIGN __pointer[__offset] __rhs
                                        PUSH __rhs
+                                    // Statement results can be ignored
                                     POP __void
                                  //---------------------------------------
                               // Repeat
@@ -757,6 +789,7 @@ __main____split__char__1__char:
                               ADD __main__split__block__4__j __main__split__block__4__j 1
                               ASSIGN __res __main__split__block__4__j
                               PUSH __res
+                           // Statement results can be ignored
                            POP __void
                         //------------------------------------------------
                      JUMP __endif__7
@@ -771,6 +804,7 @@ __main____split__char__1__char:
                      ADD __main__split__block__4__i __main__split__block__4__i 1
                      ASSIGN __res __main__split__block__4__i
                      PUSH __res
+                  // Statement results can be ignored
                   POP __void
                //---------------------------------------------------------
             JUMP __while__5
@@ -791,6 +825,7 @@ __main____split__char__1__char:
             POP __rhs
             ASSIGN __main__split__block__4__result __rhs
             PUSH __rhs
+         // Statement results can be ignored
          POP __void
          //---------------------------------------------------------------
          // For-Loop
@@ -860,6 +895,7 @@ __main____split__char__1__char:
                      POP __rhs
                      ASSIGN __pointer[__offset] __rhs
                      PUSH __rhs
+                  // Statement results can be ignored
                   POP __void
                //---------------------------------------------------------
             // Repeat
@@ -874,6 +910,8 @@ __main____split__char__1__char:
             // Free array
             POP __array
             FREE __array
+            PUSH __array
+         // Statement results can be ignored
          POP __void
          // Return
             // Identifier - result
@@ -943,6 +981,7 @@ __end____main____split__char__1__char:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
 POP __void
 // Assignment
    // RHS
@@ -976,6 +1015,7 @@ POP __void
    POP __rhs
    ASSIGN __main__elems __rhs
    PUSH __rhs
+// Statement results can be ignored
 POP __void
 // Assignment
    // RHS
@@ -997,6 +1037,7 @@ POP __void
    POP __rhs
    ASSIGN __main__nums __rhs
    PUSH __rhs
+// Statement results can be ignored
 POP __void
 //------------------------------------------------------------------------
 // For-Loop
@@ -1092,6 +1133,7 @@ __for__15:
             POP __rhs
             ASSIGN __pointer[__offset] __rhs
             PUSH __rhs
+         // Statement results can be ignored
          POP __void
       //------------------------------------------------------------------
    // Repeat
@@ -1106,6 +1148,8 @@ __for__15:
    // Free array
    POP __array
    FREE __array
+   PUSH __array
+// Statement results can be ignored
 POP __void
 //------------------------------------------------------------------------
 // For-Loop
@@ -1177,6 +1221,7 @@ __for__17:
             POP __void
             RESPONSE __retval
             PUSH __retval
+         // Statement results can be ignored
          POP __void
       //------------------------------------------------------------------
    // Repeat
@@ -1228,6 +1273,7 @@ __for__17:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
 POP __void
 // Function Call - println(float) -> void
    // Arguments
@@ -1253,6 +1299,7 @@ POP __void
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
 POP __void
 // Function Call - println(int) -> void
    // Arguments
@@ -1278,6 +1325,7 @@ POP __void
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
 POP __void
 // Function Call - println(char) -> void
    // Arguments
@@ -1342,6 +1390,7 @@ POP __void
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
 POP __void
 // Function Call - println(char[]) -> void
    // Arguments
@@ -1387,6 +1436,7 @@ POP __void
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
 POP __void
 // Assignment
    // RHS
@@ -1405,7 +1455,7 @@ POP __void
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__Person____Person__char__1__int
+         CALL __ctor____main____Person____Person__char__1__int
          // Remove args
          POP __void
          POP __void
@@ -1417,6 +1467,7 @@ POP __void
    POP __rhs
    ASSIGN __main__person __rhs
    PUSH __rhs
+// Statement results can be ignored
 POP __void
 // Function Call - println(char[]) -> void
    // Arguments
@@ -1425,7 +1476,7 @@ POP __void
             // Identifier - person
                PUSH __main__person
          // RHS
-            PUSH __field____main__Person__name
+            PUSH __field____main____Person____name
          POP __child
          POP __parent
          PUSH __parent[__child]
@@ -1438,6 +1489,7 @@ POP __void
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
 POP __void
 // Function Call - println(int) -> void
    // Arguments
@@ -1446,7 +1498,7 @@ POP __void
             // Identifier - person
                PUSH __main__person
          // RHS
-            PUSH __field____main__Person__age
+            PUSH __field____main____Person____age
          POP __child
          POP __parent
          PUSH __parent[__child]
@@ -1459,6 +1511,7 @@ POP __void
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
 POP __void
 // Free Operator
    // RHS
@@ -1467,6 +1520,8 @@ POP __void
    // Free array
    POP __array
    FREE __array
+   PUSH __array
+// Statement results can be ignored
 POP __void
 // Function Call - println(char[]) -> void
    // Arguments
@@ -1475,7 +1530,7 @@ POP __void
             // Identifier - person
                PUSH __main__person
          // RHS
-            PUSH __field____main__Person__name
+            PUSH __field____main____Person____name
          POP __child
          POP __parent
          PUSH __parent[__child]
@@ -1488,6 +1543,7 @@ POP __void
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
 POP __void
 // Assignment
    // RHS
@@ -1510,7 +1566,7 @@ POP __void
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__Person____Person__char__1__int
+         CALL __ctor____main____Person____Person__char__1__int
          // Remove args
          POP __void
          POP __void
@@ -1522,6 +1578,7 @@ POP __void
    POP __rhs
    ASSIGN __main__person2 __rhs
    PUSH __rhs
+// Statement results can be ignored
 POP __void
 // Function Call - println(char[]) -> void
    // Arguments
@@ -1530,7 +1587,7 @@ POP __void
             // Identifier - person
                PUSH __main__person
          // RHS
-            PUSH __field____main__Person__name
+            PUSH __field____main____Person____name
          POP __child
          POP __parent
          PUSH __parent[__child]
@@ -1543,6 +1600,7 @@ POP __void
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
 POP __void
 //========================================================================
 //### END OF CODE ########################################################

@@ -188,15 +188,31 @@ class CodeGenVisitor (ASTVisitor):
         # add signature to scopeName for overloaded functions
         if len(node.params) > 0:
             scopeName += [f"__{node.params[0].type.id}"]
+            # param template types
+            if len(node.params[0].type.templateParams) > 0:
+                 scopeName += [f"__tparam{0}__{node.params[0].type.templateParams[0].id}"]
+            for i in range(1, len(node.params[0].type.templateParams)):
+                 scopeName += [f"__tparam{i}__{node.params[0].type.templateParams[i].id}"]
             # add array dimensions
             if node.params[0].type.arrayDimensions > 0:
                 scopeName += [f"__{node.params[0].type.arrayDimensions}"]
-        for i in range(1, len(node.params)):
-            scopeName += [f"__{node.params[i].type.id}"]
-            # add array dimensions
-            if node.params[i].type.arrayDimensions > 0:
-                scopeName += [f"__{node.params[i].type.arrayDimensions}"]
+            for i in range(1, len(node.params)):
+                scopeName += [f"__{node.params[i].type.id}"]
+                # param template types
+                if len(node.params[i].type.templateParams) > 0:
+                    scopeName += [f"__tparam{0}__{node.params[i].type.templateParams[0].id}"]
+                for j in range(1, len(node.params[i].type.templateParams)):
+                    scopeName += [f"__tparam{j}__{node.params[i].type.templateParams[j].id}"]
+                # add array dimensions
+                if node.params[i].type.arrayDimensions > 0:
+                    scopeName += [f"__{node.params[i].type.arrayDimensions}"]
         node.scopeName = "".join(scopeName)
+
+        # AD HOC CENTRAL!!
+        # fill in prereferences with scopename 
+        for i in range(len(self.code)):
+            if f"${node.signature}" in self.code[i]:
+                self.code[i] = self.code[i].replace(f"${node.signature}", node.scopeName)
 
         # create new scope level 
         self.scopeNames += [f"__{node.id}"]
@@ -243,11 +259,25 @@ class CodeGenVisitor (ASTVisitor):
     def visitClassDeclarationNode(self, node):
 
         # variable names are modified by its scope 
-        scopeName = "".join (self.scopeNames) + "__" + node.id
-        node.scopeName = scopeName
+        scopeName = ["__", node.id]
+        # add template parameters if there are any 
+        if len(node.templateParams) > 0:
+            scopeName += [f"__{node.templateParams[0].id}"]
+            # add array dimensions
+            if node.templateParams[0].arrayDimensions > 0:
+                scopeName += [f"__{node.templateParams[0].arrayDimensions}"]
+            # add rest of template params 
+            for i in range(1, len(node.templateParams)):
+                scopeName += [f"__{node.templateParams[i].id}"]
+                # add array dimensions
+                if node.templateParams[i].arrayDimensions > 0:
+                    scopeName += [f"__{node.templateParams[i].arrayDimensions}"]
+        node.scopeName = "".join(scopeName)
 
         # create new scope level 
-        self.scopeNames += [f"__{node.id}"]
+        self.scopeNames += [f"__{node.scopeName}"]
+
+        node.scopeName = "".join(self.scopeNames)
 
         self.printDivider ()
         if node.pDecl != None:
@@ -304,7 +334,7 @@ class CodeGenVisitor (ASTVisitor):
         # create scope names for fields 
         for field in node.fields:
             # variable names are modified by its scope 
-            fieldScopeName = "__field__" + "".join (self.scopeNames) + "__" + field.id
+            fieldScopeName = "__field__" + "".join (self.scopeNames) + "____" + field.id
             field.scopeName = fieldScopeName
 
         # dispatch table pointer is at i = 0 
@@ -425,6 +455,12 @@ class CodeGenVisitor (ASTVisitor):
         endLabel = f"__end{node.scopeName}"
         ctorLabel = f"{node.scopeName}"
 
+        # AD HOC CENTRAL!!
+        # fill in prereferences with scopename 
+        for i in range(len(self.code)):
+            if f"${node.signature}" in self.code[i]:
+                self.code[i] = self.code[i].replace(f"${node.signature}", node.scopeName)
+
         # add jump to skip over function 
         self.printCode (f"JUMP {endLabel}")
 
@@ -513,7 +549,25 @@ class CodeGenVisitor (ASTVisitor):
         self.printComment (f"End Function Template - {node.scopeName}")
         self.printDivider ()
         self.printNewline ()
-        
+
+    def visitClassTemplateDeclarationNode (self, node):
+        self.printDivider ()
+        self.printComment (f"Class Template - {node.scopeName}")
+
+        self.indentation += 1
+
+        self.printComment (f"Instances:")
+        self.indentation += 1
+        for instance in node.instantiations:
+            node.instantiations[instance].accept (self)
+
+        self.indentation -= 1
+        self.indentation -= 1
+
+        self.printComment (f"End Class Template - {node.scopeName}")
+        self.printDivider ()
+        self.printNewline ()
+
     def visitStatementNode (self, node):
         pass
 
@@ -1522,7 +1576,16 @@ class CodeGenVisitor (ASTVisitor):
 
         # call function
         self.printComment (f"*** {node.function.id}")
-        self.printCode (f"CALL {node.decl.scopeName}")
+        if node.decl.scopeName == "":
+            # x = sum([1 if '\n' in s else 0 for s in self.code])
+            # print (f"[code-gen] Error: no scope name for {node.function.id} {[t.type.__str__() for t in node.args]} {node.lineNumber} {x}")
+            # print (f"   this could have happened due to a template using a class that was defined after the template")
+            # print (f"   temporary fix: move the class declaration to above the template class that uses it")
+            # solution! extremely ad hoc 
+            self.printCode (f"CALL ${node.decl.signature}")
+            # exit (1)
+        else:
+            self.printCode (f"CALL {node.decl.scopeName}")
 
         # remove arguments from stack
         self.printComment ("Remove args")
@@ -1774,6 +1837,12 @@ class CodeGenVisitor (ASTVisitor):
         self.printComment ("Free array")
         self.printCode ("POP __array")
         self.printCode ("FREE __array")
+        # put the array back on the stack 
+        # this will get popped off the stack for the case:
+        #    free(arr);
+        # but the value can still be used 
+        #    freedBAsWell = free(a) == b;
+        self.printCode ("PUSH __array")
 
         self.indentation -= 1
 

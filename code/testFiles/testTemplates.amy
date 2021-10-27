@@ -75,6 +75,21 @@ function void printMsg (T msg)
     println (msg);
 }
 
+template <:T:>
+function int doubleSum (T nums)
+{
+    // testing creating an array with a template type that is an array
+    T[] lists = new T[2];
+    lists[0] = nums;
+    lists[1] = nums;
+    int sum = 0;
+    for (int i = 0; i < sizeof(nums); ++i)
+    {
+        sum = sum + lists[0][i] + lists[1][i];
+    }
+    return sum; 
+}
+
 
 //========================================================================
 
@@ -102,5 +117,11 @@ println (sum<:int, int, float:>(5, 7, 3.14));
 println (addA<:A:>(new B(3), new C(7)));
 
 printMsg<:char[], int:> ("I like pie!");
+
+println (doubleSum<:int[]:>([1,2,3,4,5]));
+
+int add = 10; 
+
+println (add (add, add));
 
 //========================================================================

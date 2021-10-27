@@ -1,0 +1,158 @@
+// Solution to Kattis : Birds on a Wire
+// Author: Amy Burnett
+// Date:   10-21-2021
+//========================================================================
+// helper functions
+
+// returns a list of strings from the given string that are delimited by delim
+function char[][] split (char[] str, char delim)
+{   
+    // buffer initially set to sizeof str 
+    // extra space will be removed later 
+    // this prevents the need to reallocate more space 
+    char[][] buffer = new char[sizeof (str)][];
+
+    int i = 0; 
+    int j = 0; 
+    while (i < sizeof (str))
+    {
+        // at the start of a new split 
+        if (str[i] != delim)
+        {
+            // determine split size 
+            int count = 0;
+            int k = i;
+            while (k < sizeof (str)) 
+                if (str[k++] != delim)
+                    ++count; 
+                else 
+                    break;
+
+            // allocate space for the split
+            buffer[j] = new char[count];
+
+            // add characters until delim is reached 
+            for (int k = 0; k < sizeof (buffer[j]); ++k)
+            {
+                buffer[j][k] = str[i++];
+            }
+            
+            // move to next split buffer
+            ++j; 
+        }
+        // skip over delimiters
+
+        ++i; 
+    }
+
+    // remove extra buffer space
+    char[][] result = new char[j][];
+    for (int i = 0; i < j; ++i)
+    {
+        result[i] = buffer[i];
+    }
+
+    // free buffer
+    free (buffer);
+
+    return result; 
+}
+
+function void println (int[] vals)
+{
+    print ('[');
+    if (sizeof (vals) > 0)
+        print (vals[0]);
+    for (int i = 1; i < sizeof (vals); ++i)
+    {
+        print (',');
+        print (' ');
+        print (vals[i]);
+    }
+    println (']');
+}
+
+function void merge(int[] array, int left, int mid, int right)
+{
+    int leftSize = mid - left + 1;
+    int rightSize = right - mid;
+  
+    int[] leftArray = new int[leftSize];
+    int[] rightArray = new int[rightSize];
+    for (int i = 0; i < leftSize; i++)
+        leftArray[i] = array[left + i];
+    for (int j = 0; j < rightSize; j++)
+        rightArray[j] = array[mid + 1 + j];
+  
+    int lefti = 0;
+    int righti = 0;
+    int maini = left;
+    
+    while (lefti < leftSize && righti < rightSize) {
+        if (leftArray[lefti] <= rightArray[righti]) {
+            array[maini] = leftArray[lefti];
+            lefti++;
+        }
+        else {
+            array[maini] = rightArray[righti];
+            righti++;
+        }
+        maini++;
+    }
+    // copy remaining left
+    while (lefti < leftSize) {
+        array[maini] = leftArray[lefti++];
+        maini++;
+    }
+    
+    // copy remaining right
+    while (righti < rightSize) {
+        array[maini] = rightArray[righti++];
+        maini++;
+    }
+
+    free(leftArray);
+    free(rightArray);
+}
+
+function void mergeSort (int[] vals, int low, int high)
+{
+    if (low >= high)
+        return; 
+    int mid = low + (high-low) / 2;
+    mergeSort (vals, low, mid);
+    mergeSort (vals, mid+1, high);
+    merge (vals, low, mid, high);
+}
+
+//========================================================================
+// main code
+
+char[][] in = split (input (), ' ');
+
+int l = stringToInt (in[0]);
+int d = stringToInt (in[1]);
+int n = stringToInt (in[2]);
+
+int[] birds = new int[n+2];
+
+birds[0] = 6-d;
+birds[n+1] = l-(6-d);
+
+for (int i = 0; i < n; ++i)
+{
+    int bird = stringToInt (input ());
+    birds[i+1] = bird;
+}
+
+mergeSort (birds, 0, n+1);
+
+int nNewBirds = 0;
+for (int i = 0; i < n+1; ++i)
+{
+    nNewBirds = nNewBirds + (birds[i+1]-birds[i]) / d - 1;
+}
+
+println (nNewBirds);
+
+

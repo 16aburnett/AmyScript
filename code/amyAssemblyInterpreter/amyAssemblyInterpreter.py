@@ -116,8 +116,11 @@ MODE_JUMPPOINT = -1
 
 class AmyAssemblyInterpreter:
 
-    def __init__(self):
-        pass
+    def __init__(self, file_name=""):
+        self.file_name = file_name
+        self.output_combined = False
+        self.output_intcode = False
+        self.debug = False
 
     def execute (self, inputCode):
 
@@ -255,22 +258,26 @@ class AmyAssemblyInterpreter:
         # for i in range(len(code)):
         #     print(f"[{i}] {code[i]} {lines[i]}")
 
+        ### Save Combined ########################################################
+
+        if self.output_combined:
+            with open(self.file_name+"c", "w") as outfile:
+                maxdigits = len(str(len(code)))
+                for i in range(len(code)):
+                    outfile.write(f"{padzeros(i, maxdigits)} {code[i]} {lines[i]}\n")
+
         ### Save IntCode #########################################################
 
-        # with open(file_name+"c", "w") as outfile:
-        #     maxdigits = len(str(len(code)))
-        #     for i in range(len(code)):
-        #         outfile.write(f"{padzeros(i, maxdigits)} {code[i]} {lines[i]}\n")
-
-        # with open(file_name+"i", "w") as outfile:
-        #     for i in range(len(code)):
-        #         outfile.write(f"{code[i][0]}")
-        #         for j in range(1, len(code[i])):
-        #             if isinstance(code[i][j], str):
-        #                 outfile.write(f", \"{code[i][j]}\"")
-        #             else:
-        #                 outfile.write(f", {code[i][j]}")
-        #         outfile.write("\n")
+        if self.output_intcode:
+            with open(self.file_name+"i", "w") as outfile:
+                for i in range(len(code)):
+                    outfile.write(f"{code[i][0]}")
+                    for j in range(1, len(code[i])):
+                        if isinstance(code[i][j], str):
+                            outfile.write(f", \"{code[i][j]}\"")
+                        else:
+                            outfile.write(f", {code[i][j]}")
+                    outfile.write("\n")
 
         ### Set up the stack and heap ############################################
 
@@ -302,6 +309,7 @@ class AmyAssemblyInterpreter:
         greaterThanFlag = 0
 
         ### Execute The Code #####################################################
+        ### Helper Functions #####################################################
 
         def getVariableValue(stack, var):
 
@@ -400,15 +408,25 @@ class AmyAssemblyInterpreter:
             print("Error: Bad Parameter Mode")
             exit(1)
 
+        ### Evaluate Lines #######################################################
+
         # evaluate lines
         while instruction_pointer < len(code):
 
             cmd, *params = code[instruction_pointer] 
-
-            # print (f"{code[instruction_pointer]} | {lines[instruction_pointer]}")
-            # print (heap.memory)
-            # print("\n\n")
-            # print (stack, end="\n\n\n")
+            
+            # print debug output 
+            if self.debug:
+                print ("====================================================")
+                # print ("[heap]", heap.memory, end="\n\n\n")
+                # printheap (heap)
+                print ("[stack]", stack, end="\n\n\n")
+                print (f"[base-pointer]", base_pointer)
+                # print (f"[less-than-flag]", lessThanFlag)
+                # print (f"[equal-to-flag]", equalFlag)
+                # print (f"[greater-than-flag]", greaterThanFlag)
+                print (f"[current-instruction] {instruction_pointer} {code[instruction_pointer]} | {lines[instruction_pointer]}")
+                print ("====================================================")
 
             if cmd == OPCODE_ASSIGN:
                 # ASSIGN dest src
@@ -546,7 +564,8 @@ class AmyAssemblyInterpreter:
                 # INPUT dest 
 
                 # Read in line 
-                line = input()
+                line = sys.stdin.readline()
+
                 # put in memory 
                 lineAddress = heap.malloc(len(line))
                 for i in range(len(line)):
@@ -568,6 +587,7 @@ class AmyAssemblyInterpreter:
             # calling functions
             elif cmd == OPCODE_CALL:
                 # CALL funcPtr
+                # print (f"[interpreter] Function call {lines[instruction_pointer]}")
 
                 funcPtr, _ = getNextValue (heap, stack, params, 0)
 
@@ -593,7 +613,12 @@ class AmyAssemblyInterpreter:
                 # restore instruction pointer
                 instruction_pointer = stack[base_pointer-2]
                 # pop off function's scope 
-                stack.pop()
+                # this does not work if there are extra values on the stack
+                # stack.pop()
+
+                # new pop off function's scope 
+                stack = stack[:base_pointer]
+
                 # restore base_pointer
                 base_pointer = stack[base_pointer-1]
                 # pop off base_pointer
@@ -886,6 +911,10 @@ class AmyAssemblyInterpreter:
                 stack.append(src)
             elif cmd == OPCODE_POP:
                 # POP dest 
+                # ensure base_pointer (scope) isnt getting popped
+                if base_pointer == len(stack)-1:
+                    print (f"[error] [pop] Nothing to pop off of stack")
+                    exit(1)
                 # Case1 : variable
                 if params[0] == MODE_STACK:
                     stack[base_pointer][params[1]] = stack[-1]
@@ -1108,6 +1137,7 @@ if __name__ == "__main__":
     with open(file_name, "r") as file:
         lines = file.readlines()
 
-    interpreter = AmyAssemblyInterpreter ()
+    interpreter = AmyAssemblyInterpreter (file_name)
 
     interpreter.execute ("".join (lines))
+    

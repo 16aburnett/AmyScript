@@ -6,11 +6,11 @@
 if __name__ == "semanticAnalyzer":
     from ast import *
     from visitor import ASTVisitor
-    from symbolTable import SymbolTable
+    from symbolTable import *
 else:
     from .ast import *
     from .visitor import ASTVisitor
-    from .symbolTable import SymbolTable
+    from .symbolTable import *
 
 # ========================================================================
 
@@ -18,8 +18,7 @@ class SymbolTableVisitor (ASTVisitor):
 
     def __init__(self, lines):
         self.table = SymbolTable ()
-        self.typesTable = SymbolTable ()
-        
+
         self.parameters = []
         self.lines = lines 
         self.wasSuccessful = True
@@ -37,32 +36,37 @@ class SymbolTableVisitor (ASTVisitor):
                 codeunit.accept (self)
 
     def visitTypeSpecifierNode (self, node):
+        # print (f"[typespec] {node}")
         # if type spec is not primitive
         if (node.type == Type.USERTYPE):
             # make sure type exists 
             # and save with the type spec for later lookup 
-            node.decl = self.typesTable.lookup (node.id)
+            node.decl = self.table.lookup (node.id, Kind.TYPE, [], node.templateParams, self)
             # variable has no declaration
             if (node.decl == None):
-                print (f"Semantic Error: '{node.id}' does not name a type")
-                print (f"   Located on line {node.token.line}: column {node.token.column}")
-                print (f"   line:")
-                print (f"      {self.lines[node.token.line-1][:-1]}")
-                print (f"      ",end="")
-                for i in range(node.token.column-1):
-                    print (" ", end="")
-                print ("^")
-                print ()
+                print (f"Semantic Error: '{node}' does not name a type")
+                if node.token != None:
+                    print (f"   Located on line {node.token.line}: column {node.token.column}")
+                    print (f"   line:")
+                    print (f"      {self.lines[node.token.line-1]}")
+                    print (f"      ",end="")
+                    for i in range(node.token.column-1):
+                        print (" ", end="")
+                    print ("^")
+                    print ()
                 self.wasSuccessful = False
                 node.type = Type.UNKNOWN
+            # check template parameter types 
+            # for tparam in node.templateParams:
+            #     tparam.accept (self)
 
     def visitParameterNode (self, node):
         node.type.accept (self)
-        wasSuccessful = self.table.insert (node)
+        wasSuccessful = self.table.insert (node, node.id, Kind.VAR)
 
         if (not wasSuccessful):
             varname = node.id 
-            originalDec = self.table.lookup (varname)
+            originalDec = self.table.lookup (varname, Kind.VAR)
             print (f"Semantic Error: Redeclaration of Param '{varname}'")
             print (f"   Originally on line {node.token.line}: column {node.token.column}")
             print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
@@ -73,12 +77,15 @@ class SymbolTableVisitor (ASTVisitor):
         pass
 
     def visitVariableDeclarationNode (self, node):
+        # print (f"checking type of {node.id} {node.type}")
         node.type.accept (self)
-        wasSuccessful = self.table.insert (node)
+        # print (f"finished checking type {node.id} {node.type}")
+
+        wasSuccessful = self.table.insert (node, node.id, Kind.VAR)
 
         if (not wasSuccessful):
             varname = node.id 
-            originalDec = self.table.lookup (varname)
+            originalDec = self.table.lookup (varname, Kind.VAR)
             print (f"Semantic Error: Redeclaration of '{varname}'")
             print (f"   Originally on line {node.token.line}: column {node.token.column}")
             print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
@@ -114,10 +121,10 @@ class SymbolTableVisitor (ASTVisitor):
 
         # this is for checking template instances 
         if self.insertFunc:
-            wasSuccessful = self.table.insert (node)
+            wasSuccessful = self.table.insert (node, node.id, Kind.FUNC)
 
             if (not wasSuccessful):
-                originalDec = self.table.lookup (node.id, node.params)
+                originalDec = self.table.lookup (node.id, Kind.FUNC, node.params)
                 print (f"Semantic Error: Redeclaration of function '{node.signature}'")
                 print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
                 print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
@@ -145,9 +152,6 @@ class SymbolTableVisitor (ASTVisitor):
 
 
     def visitClassDeclarationNode(self, node):
-
-        wasSuccessful = self.typesTable.insert (node)
-
         # save the current containing class
         self.containingClass += [node]
         # since we are now in a class, 
@@ -156,19 +160,24 @@ class SymbolTableVisitor (ASTVisitor):
         containingLoop = self.containingLoop
         self.containingLoop = []
 
-        if (not wasSuccessful):
-            varname = node.id 
-            originalDec = self.typesTable.lookup (varname)
-            print (f"Semantic Error: Redeclaration of class '{varname}'")
-            print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
-            print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
-            print ()
-            self.wasSuccessful = False
+        if self.insertFunc:
+            wasSuccessful = self.table.insert (node, node.id, Kind.TYPE)
+
+            if (not wasSuccessful):
+                varname = node.id 
+                originalDec = self.table.lookup (varname, Kind.TYPE)
+                print (f"Semantic Error: Redeclaration of class '{varname}'")
+                print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
+                print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+                print ()
+                self.wasSuccessful = False
+        else:
+            self.insertFunc = True
 
         # Check for parent 
         if node.parent != "":
             # print (node.id, "inherits", node.parent)
-            pDecl = self.typesTable.lookup (node.parent)
+            pDecl = self.table.lookup (node.parent, Kind.TYPE)
             if pDecl == None:
                 print (f"Semantic Error: '{node.parent}' does not name a type")
                 print (f"   On line {node.token.line}: column {node.token.column}")
@@ -181,7 +190,7 @@ class SymbolTableVisitor (ASTVisitor):
 
             # add parent fields to this fields
             fields = []
-            for field in pDecl.fields:
+            for field in pDecl.fields: 
                 fields += [FieldDeclarationNode (field.security, field.type, field.id, field.token)]
                 fields[-1].isInherited = True
             # add current fields
@@ -239,7 +248,6 @@ class SymbolTableVisitor (ASTVisitor):
         # class will have its own scope 
         # class does not have a scope atm
         # self.table.enterScope ()
-        # self.typesTable.enterScope ()
 
         # eval fields first to add to scope 
         for field in node.fields:
@@ -255,7 +263,6 @@ class SymbolTableVisitor (ASTVisitor):
             method.accept (self)
 
         # self.table.exitScope ()
-        # self.typesTable.exitScope ()
 
         # visit method bodies
         for method in node.methods:
@@ -330,13 +337,13 @@ class SymbolTableVisitor (ASTVisitor):
         node.type.accept (self)
 
         # create signature for node
-        node.signature = f"{node.parentClass.id}::{node.id}"
+        node.signature = f"{node.parentClass.type}::{node.id}"
 
-        wasSuccessful = self.table.insert (node, node.signature)
+        wasSuccessful = self.table.insert (node, node.signature, Kind.VAR)
 
         if (not wasSuccessful):
             varname = node.id 
-            originalDec = self.table.lookup (varname)
+            originalDec = self.table.lookup (node.signature, Kind.VAR)
             print (f"Semantic Error: Redeclaration of Field '{varname}'")
             print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
             print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
@@ -361,7 +368,7 @@ class SymbolTableVisitor (ASTVisitor):
         signature = "".join(signature)
         node.signatureNoScope = signature
 
-        signature = [f"{node.parentClass.id}::{node.id}("]
+        signature = [f"{node.parentClass.type}::{node.id}("]
         if len(node.params) > 0:
             signature += [node.params[0].type.__str__()]
         for i in range(1, len(node.params)):
@@ -370,10 +377,10 @@ class SymbolTableVisitor (ASTVisitor):
         signature = "".join(signature)
         node.signature = signature
 
-        wasSuccessful = self.table.insert (node, f"{node.parentClass.id}::{node.id}")
+        wasSuccessful = self.table.insert (node, f"{node.parentClass.type}::{node.id}", Kind.FUNC)
 
         if (not wasSuccessful):
-            originalDec = self.table.lookup (f"{node.parentClass.id}::{node.id}", node.params)
+            originalDec = self.table.lookup (f"{node.parentClass.type}::{node.id}", Kind.FUNC, node.params)
             print (f"Semantic Error: Redeclaration of Method '{node.signature}'")
             print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
             print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
@@ -383,6 +390,7 @@ class SymbolTableVisitor (ASTVisitor):
         # body is explored in class dec 
 
     def visitConstructorDeclarationNode (self, node):
+        node.type = node.parentClass.type
 
         # grab params so that the body can use them
         for p in node.params:
@@ -390,7 +398,7 @@ class SymbolTableVisitor (ASTVisitor):
             p.type.accept (self)
 
         # create signature for node
-        signature = [f"{node.parentClass.id}::{node.parentClass.id}("]
+        signature = [f"{node.parentClass.type}::{node.parentClass.id}("]
         if len(node.params) > 0:
             signature += [node.params[0].type.__str__()]
         for i in range(1, len(node.params)):
@@ -399,10 +407,11 @@ class SymbolTableVisitor (ASTVisitor):
         signature = "".join(signature)
         node.signature = signature
 
-        wasSuccessful = self.table.insert (node, f"{node.parentClass.id}::{node.parentClass.id}")
+        # print (f"adding {node.parentClass.type}::{node.parentClass.id} to the table ")
+        wasSuccessful = self.table.insert (node, f"{node.parentClass.type}::{node.parentClass.id}", Kind.FUNC)
 
         if (not wasSuccessful):
-            originalDec = self.table.lookup (f"{node.parentClass.id}::{node.parentClass.id}", node.params)
+            originalDec = self.table.lookup (f"{node.parentClass.type}::{node.parentClass.id}", Kind.FUNC, node.params)
             print (f"Semantic Error: Redeclaration of ctor, '{node.signature}'")
             print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
             print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
@@ -413,18 +422,18 @@ class SymbolTableVisitor (ASTVisitor):
 
     def visitEnumDeclarationNode (self, node):
 
-        wasSuccessful = self.typesTable.insert (node)
+        wasSuccessful = self.table.insert (node, node.id, Kind.TYPE)
 
         if (not wasSuccessful):
             varname = node.id 
-            originalDec = self.typesTable.lookup (varname)
+            originalDec = self.table.lookup (varname, Kind.TYPE)
             print (f"Semantic Error: Redeclaration of enum '{varname}'")
             print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
             print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
             print ()
             self.wasSuccessful = False
 
-        pDecl = self.typesTable.lookup (node.parent)
+        pDecl = self.table.lookup (node.parent, Kind.TYPE)
         if pDecl == None:
             print (f"Semantic Error: '{node.parent}' does not name a type")
             print (f"   On line {node.token.line}: column {node.token.column}")
@@ -438,23 +447,40 @@ class SymbolTableVisitor (ASTVisitor):
     def visitFunctionTemplateNode (self, node):
 
         # add template function to scope 
-        self.table.insert (node)
+        self.table.insert (node, node.id, Kind.FUNC)
 
         # **ensure template types are unique 
 
         # add template typenames to scope 
         self.table.enterScope ()
-        self.typesTable.enterScope ()
 
         for t in node.types:
-            self.typesTable.insert (t)
+            self.table.insert (t, t.id, Kind.TYPE)
 
         # check the function 
         # node.function.accept (self)
 
         # exit scope 
         self.table.exitScope ()
-        self.typesTable.exitScope ()
+
+    def visitClassTemplateDeclarationNode (self, node):
+
+        # add template class to scope 
+        self.table.insert (node, node.id, Kind.TYPE)
+
+        # **ensure template types are unique 
+
+        # add template typenames to scope 
+        self.table.enterScope ()
+
+        for t in node.templateParams:
+            self.table.insert (t, t.id, Kind.TYPE)
+
+        # check the function 
+        # node.function.accept (self)
+
+        # exit scope 
+        self.table.exitScope ()
 
     def visitStatementNode (self, node):
         pass
@@ -462,13 +488,11 @@ class SymbolTableVisitor (ASTVisitor):
     def visitIfStatementNode (self, node):
         # create scope to include variables in condition 
         self.table.enterScope ()
-        self.typesTable.enterScope ()
 
         node.cond.accept (self)
         node.body.accept (self)
         
         # exit scope before reaching elifs and else
-        self.typesTable.exitScope ()
         self.table.exitScope ()
 
         # print elifs 
@@ -481,13 +505,11 @@ class SymbolTableVisitor (ASTVisitor):
     def visitElifStatementNode (self, node):
         # create scope to include variables in condition 
         self.table.enterScope ()
-        self.typesTable.enterScope ()
 
         node.cond.accept (self)
         node.body.accept (self)
 
         # exit scope before reaching elifs and else
-        self.typesTable.exitScope ()
         self.table.exitScope ()
 
     def visitElseStatementNode (self, node):
@@ -496,7 +518,6 @@ class SymbolTableVisitor (ASTVisitor):
     def visitForStatementNode (self, node):
         # create scope to include variables in condition 
         self.table.enterScope ()
-        self.typesTable.enterScope ()
 
         node.init.accept (self)
         node.cond.accept (self)
@@ -511,13 +532,11 @@ class SymbolTableVisitor (ASTVisitor):
         if node.elseStmt:
             node.elseStmt.accept (self)
 
-        self.typesTable.exitScope ()
         self.table.exitScope ()
 
     def visitWhileStatementNode (self, node):
         # create scope to include variables in condition 
         self.table.enterScope ()
-        self.typesTable.enterScope ()
 
         node.cond.accept (self)
 
@@ -527,7 +546,6 @@ class SymbolTableVisitor (ASTVisitor):
         node.body.accept (self)
         self.containingLoop.pop ()
 
-        self.typesTable.exitScope ()
         self.table.exitScope ()
 
     def visitExpressionStatementNode (self, node):
@@ -638,7 +656,6 @@ class SymbolTableVisitor (ASTVisitor):
 
     def visitCodeBlockNode (self, node):
         self.table.enterScope ()
-        self.typesTable.enterScope ()
 
         # if this is a function body
         # then add the parameters to this scope
@@ -651,7 +668,6 @@ class SymbolTableVisitor (ASTVisitor):
             unit.accept (self)
 
         self.table.exitScope ()
-        self.typesTable.exitScope ()
 
     def visitExpressionNode (self, node):
         pass
@@ -943,7 +959,7 @@ class SymbolTableVisitor (ASTVisitor):
                 self.wasSuccessful = False
 
         # the type for this is lhs - 1 dimension
-        node.type = TypeSpecifierNode (node.lhs.type.type, node.lhs.type.id, None)
+        node.type = node.lhs.type.copy ()
 
         node.type.arrayDimensions = node.lhs.type.arrayDimensions - 1
 
@@ -954,7 +970,7 @@ class SymbolTableVisitor (ASTVisitor):
         # ensure offset is type int or enum 
         isInt = node.offset.type.type == Type.INT and node.offset.type.arrayDimensions == 0
         isEnum = False
-        typedecl = self.typesTable.lookup(node.offset.type.id)
+        typedecl = self.table.lookup(node.offset.type.id, Kind.TYPE)
         isEnum = typedecl and isinstance (typedecl, EnumDeclarationNode)
         if not (isInt or isEnum):
             print (f"Semantic Error: Offset of subscript operator must be an integer or enum")
@@ -995,13 +1011,13 @@ class SymbolTableVisitor (ASTVisitor):
         signature += [")"]
         signature = "".join(signature)
 
-        decl = self.table.lookup (node.function.id, node.args, node.templateParams, self)
+        decl = self.table.lookup (node.function.id, Kind.FUNC, node.args, node.templateParams, self)
 
         # save declaration with function call
         node.decl = decl 
 
-        # make sure the function declaration exists and its a function
-        if (decl == None or not isinstance (decl, FunctionNode)):
+        # make sure the function declaration exists and its a function or constructor 
+        if (decl == None or not isinstance (decl,(FunctionNode, ConstructorDeclarationNode))):
             print (f"Semantic Error: No function matching signature {signature}")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   line:")
@@ -1022,7 +1038,7 @@ class SymbolTableVisitor (ASTVisitor):
 
         # check if lhs is a typename 
         if isinstance (node.lhs, IdentifierExpressionNode):
-            typedecl = self.typesTable.lookup (node.lhs.id)
+            typedecl = self.table.lookup (node.lhs.id, Kind.TYPE)
             # lhs is not a variable - its a type 
             if typedecl:
                 # mark this as a static access
@@ -1075,11 +1091,12 @@ class SymbolTableVisitor (ASTVisitor):
         # non-static access
 
         node.lhs.accept (self)
-        lhsdecl = self.typesTable.lookup (node.lhs.type.id)
+        lhsdecl = self.table.lookup (node.lhs.type.id, Kind.TYPE, [], node.lhs.type.templateParams)
         # make sure lhs is a class dec
         if not isinstance (lhsdecl, ClassDeclarationNode):
             print (f"Semantic Error: LHS of dot operator must be of class type")
             print (f"   LHS Type: {node.lhs.type}")
+            print (f"   LHS Decl: {lhsdecl}")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   line:")
             print (f"      {self.lines[node.lineNumber-1][:]}")
@@ -1136,11 +1153,12 @@ class SymbolTableVisitor (ASTVisitor):
 
     def visitFieldAccessorExpressionNode (self, node):
         node.lhs.accept (self)
-        lhsdecl = self.typesTable.lookup (node.lhs.type.id)
+        lhsdecl = self.table.lookup (node.lhs.type.id, Kind.TYPE, [], node.lhs.type.templateParams)
         # make sure lhs is a class dec
         if not isinstance (lhsdecl, ClassDeclarationNode):
             print (f"Semantic Error: LHS of dot operator must be of class type")
             print (f"   LHS Type: {node.lhs.type}")
+            print (f"   LHS Decl: {lhsdecl}")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   line:")
             print (f"      {self.lines[node.lineNumber-1][:-1]}")
@@ -1194,11 +1212,12 @@ class SymbolTableVisitor (ASTVisitor):
 
     def visitMethodAccessorExpressionNode (self, node):
         node.lhs.accept (self)
-        lhsdecl = self.typesTable.lookup (node.lhs.type.id)
+        lhsdecl = self.table.lookup (node.lhs.type.id, Kind.TYPE, [], node.lhs.type.templateParams)
         # make sure lhs is a class dec
         if not isinstance (lhsdecl, ClassDeclarationNode):
             print (f"Semantic Error: LHS of dot operator must be of class type")
             print (f"   LHS Type: {node.lhs.type}")
+            print (f"   LHS Decl: {lhsdecl}")
             print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
             print (f"   line:")
             print (f"      {self.lines[node.lineNumber-1][:-1]}")
@@ -1219,12 +1238,6 @@ class SymbolTableVisitor (ASTVisitor):
             return
         # make sure rhs is a member of lhs
         isMember = False
-        for field in lhsdecl.fields:
-            if (field.id == rhsid):
-                isMember = True
-                node.type = field.type
-                node.rhs.type = node.type
-                break
         # check if it is a method
         if not isMember:
             for method in lhsdecl.methods:
@@ -1259,7 +1272,7 @@ class SymbolTableVisitor (ASTVisitor):
 
         # search for function
         # create signature for node
-        signature = [f"{lhsdecl.type.id}::{node.rhs.id}("]
+        signature = [f"{lhsdecl.type}::{node.rhs.id}("]
         if len(node.args) > 0:
             signature += [node.args[0].type.__str__()]
         for i in range(1, len(node.args)):
@@ -1268,7 +1281,7 @@ class SymbolTableVisitor (ASTVisitor):
         signature = "".join(signature)
 
         # decl = self.table.lookup (signature)
-        decl = self.table.lookup (f"{lhsdecl.type.id}::{node.rhs.id}", node.args)
+        decl = self.table.lookup (f"{lhsdecl.type}::{node.rhs.id}", Kind.FUNC, node.args)
 
         # save declaration with function call
         node.decl = decl 
@@ -1306,7 +1319,7 @@ class SymbolTableVisitor (ASTVisitor):
         
         # ** make sure this is in a constructor or method
 
-        decl = self.typesTable.lookup (self.containingClass[-1].id)
+        decl = self.table.lookup (self.containingClass[-1].id, Kind.TYPE, [], self.containingClass[-1].templateParams)
         # save declaration's type info
         node.type = decl.type
         # save declaration 
@@ -1314,7 +1327,7 @@ class SymbolTableVisitor (ASTVisitor):
 
     def visitIdentifierExpressionNode (self, node):
         if (self.checkDeclaration):
-            decl = self.table.lookup (node.id)
+            decl = self.table.lookup (node.id, Kind.VAR)
             # variable has no declaration
             if (decl == None):
                 print (f"Semantic Error: '{node.id}' was not declared in this scope")
@@ -1340,17 +1353,15 @@ class SymbolTableVisitor (ASTVisitor):
             d.accept (self)
 
     def visitConstructorCallExpressionNode (self, node):
+        # print (f"checking type of constructor call")
         node.type.accept (self)
-
-        # take the first constructor declaration
-        node.decl = self.typesTable.lookup (node.id).constructors[0]
 
         for a in node.args:
             a.accept (self)
 
         # search for function
         # create signature for node
-        signature = [f"{node.id}::{node.id}("]
+        signature = [f"{node.type}::{node.type.id}("]
         if len(node.args) > 0:
             signature += [node.args[0].type.__str__()]
         for i in range(1, len(node.args)):
@@ -1358,7 +1369,7 @@ class SymbolTableVisitor (ASTVisitor):
         signature += [")"]
         signature = "".join(signature)
 
-        decl = self.table.lookup (f"{node.id}::{node.id}", node.args)
+        decl = self.table.lookup (f"{node.type}::{node.type.id}", Kind.FUNC, node.args, [], self)
 
         # save declaration with function call
         node.decl = decl 

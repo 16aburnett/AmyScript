@@ -10,7 +10,7 @@ if __name__ == "__main__":
     from parser import Parser
     from ast import *
     from visitor import *
-    from semanticAnalyzer import SymbolTableVisitor
+    from semanticAnalyzer import *
     from dispatch import *
     from codeGen import CodeGenVisitor
 else:
@@ -18,7 +18,7 @@ else:
     from .parser import Parser
     from .ast import *
     from .visitor import *
-    from .semanticAnalyzer import SymbolTableVisitor
+    from .semanticAnalyzer import *
     from .dispatch import *
     from .codeGen import CodeGenVisitor
 
@@ -73,7 +73,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         inputFunc.signature = signature
-        symbolTableVisitor.table.insert (inputFunc)
+        symbolTableVisitor.table.insert (inputFunc, inputFunc.id, Kind.FUNC)
 
         #  void print (char[] str);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
@@ -89,7 +89,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printFunc.signature = signature
-        symbolTableVisitor.table.insert (printFunc)
+        symbolTableVisitor.table.insert (printFunc, printFunc.id, Kind.FUNC)
 
         #  void print (int intToPrint);
         param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "intToPrint", None)
@@ -104,7 +104,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printIntFunc.signature = signature
-        symbolTableVisitor.table.insert (printIntFunc)
+        symbolTableVisitor.table.insert (printIntFunc, printIntFunc.id, Kind.FUNC)
 
         #  void print (float floatToPrint);
         param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
@@ -119,7 +119,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printFloatFunc.signature = signature
-        symbolTableVisitor.table.insert (printFloatFunc)
+        symbolTableVisitor.table.insert (printFloatFunc, printFloatFunc.id, Kind.FUNC)
 
         #  void print (char c);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
@@ -134,7 +134,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printCharFunc.signature = signature
-        symbolTableVisitor.table.insert (printCharFunc)
+        symbolTableVisitor.table.insert (printCharFunc, printCharFunc.id, Kind.FUNC)
 
         #  void print (Enum e);
         param0 = ParameterNode(TypeSpecifierNode (Type.USERTYPE, "Enum", None), "e", None)
@@ -149,7 +149,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printEnumFunc.signature = signature
-        symbolTableVisitor.table.insert (printEnumFunc)
+        symbolTableVisitor.table.insert (printEnumFunc, printEnumFunc.id, Kind.FUNC)
 
         #  void println (char[] str);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
@@ -165,7 +165,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printlnFunc.signature = signature
-        symbolTableVisitor.table.insert (printlnFunc)
+        symbolTableVisitor.table.insert (printlnFunc, printlnFunc.id, Kind.FUNC)
 
         #  void println (int intToPrint);
         param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "intToPrint", None)
@@ -180,7 +180,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printIntFunc.signature = signature
-        symbolTableVisitor.table.insert (printIntFunc)
+        symbolTableVisitor.table.insert (printIntFunc, printIntFunc.id, Kind.FUNC)
 
         #  void println (float floatToPrint);
         param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
@@ -195,7 +195,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printFloatFunc.signature = signature
-        symbolTableVisitor.table.insert (printFloatFunc)
+        symbolTableVisitor.table.insert (printFloatFunc, printFloatFunc.id, Kind.FUNC)
 
         #  void println (char c);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
@@ -210,7 +210,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printCharFunc.signature = signature
-        symbolTableVisitor.table.insert (printCharFunc)
+        symbolTableVisitor.table.insert (printCharFunc, printCharFunc.id, Kind.FUNC)
 
         #  void println (Enum e);
         param0 = ParameterNode(TypeSpecifierNode (Type.USERTYPE, "Enum", None), "e", None)
@@ -225,7 +225,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printEnumFunc.signature = signature
-        symbolTableVisitor.table.insert (printEnumFunc)
+        symbolTableVisitor.table.insert (printEnumFunc, printEnumFunc.id, Kind.FUNC)
 
         #  void println ();
         printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [], None)
@@ -239,14 +239,28 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         printCharFunc.signature = signature
-        symbolTableVisitor.table.insert (printCharFunc)
+        symbolTableVisitor.table.insert (printCharFunc, printCharFunc.id, Kind.FUNC)
 
         #  void exit ();
         exitFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "exit", None, [], None)
         exitFunc.scopeName = "exit"
         # create signature for node
         exitFunc.signature = "exit()"
-        symbolTableVisitor.table.insert (exitFunc)
+        symbolTableVisitor.table.insert (exitFunc, exitFunc.id, Kind.FUNC)
+
+        #  float float ();
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.FLOAT, "float", None, []), "float", None, [], None)
+        builtinFunction.scopeName = "float"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
 
         #  float intToFloat (int val);
         param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "val", None)
@@ -261,7 +275,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         builtinFunction.signature = signature
-        symbolTableVisitor.table.insert (builtinFunction)
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
 
         #  float stringToFloat (char[]);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
@@ -277,7 +291,21 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         builtinFunction.signature = signature
-        symbolTableVisitor.table.insert (builtinFunction)
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
+
+        #  int int ();
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.INT, "int", None, []), "int", None, [], None)
+        builtinFunction.scopeName = "int"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
 
         #  int floatToInt (float);
         param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
@@ -292,7 +320,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         builtinFunction.signature = signature
-        symbolTableVisitor.table.insert (builtinFunction)
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
 
         #  int stringToInt (char[]);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
@@ -308,7 +336,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         builtinFunction.signature = signature
-        symbolTableVisitor.table.insert (builtinFunction)
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
 
         #  char[] string (int);
         param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "val", None)
@@ -324,7 +352,7 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         builtinFunction.signature = signature
-        symbolTableVisitor.table.insert (builtinFunction)
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
 
         #  char[] string (float);
         param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
@@ -340,7 +368,21 @@ class AmyScriptCompiler:
         signature += [")"]
         signature = "".join(signature)
         builtinFunction.signature = signature
-        symbolTableVisitor.table.insert (builtinFunction)
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
+
+        #  null null ();
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.NULL, "null", None, []), "null", None, [], None)
+        builtinFunction.scopeName = "null"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
 
 
         # LIBRARY OBJECTS
@@ -348,12 +390,12 @@ class AmyScriptCompiler:
         # create default object type 
         objClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Object", None), "Object", None, [], [], [], [], [])
         objClass.scopeName = "__main__Object"
-        symbolTableVisitor.typesTable.insert (objClass, "Object")
+        symbolTableVisitor.table.insert (objClass, "Object", Kind.TYPE)
 
         # create default object type 
         enumClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Enum", None), "Enum", None, ["Object"], [], [], [], [])
         enumClass.scopeName = "__main__Enum"
-        symbolTableVisitor.typesTable.insert (enumClass, "Enum")
+        symbolTableVisitor.table.insert (enumClass, "Enum", Kind.TYPE)
 
 
         # Check AST

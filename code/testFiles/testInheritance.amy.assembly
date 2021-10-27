@@ -8,13 +8,14 @@
 // AmyScript Built-in library
 // Author: Amy Burnett
 //========================================================================
-
-jump __endOfLibrary
-
-//========================================================================
-// Global Variables
+// Global Builtin Variables
 
     assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
 
 //========================================================================
 // Prints a given string to the screen
@@ -149,6 +150,12 @@ exit:
     halt
 
 //========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
 // converts int to float
 // float intToFloat (int);
 intToFloat__int:
@@ -163,6 +170,12 @@ stringToFloat__char__1:
     stackget val 0
     stof res val
     return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
 
 //========================================================================
 // converts float to int
@@ -195,6 +208,13 @@ string__float:
     stackget val 0
     string res val
     return res
+
+//========================================================================
+
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
 
 //========================================================================
 
@@ -446,42 +466,42 @@ __end____main____concat__char__1__char__1:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Department inherits __main__Object
+// Class Declaration - __main____Department inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__Department 1
+      MALLOC __dtable____main____Department 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__Department[0] __method____main__Department____toString
+      ASSIGN __dtable____main____Department[0] __method____main____Department____toString
    //---------------------------------------------------------------------
    // Field - char[] Department::name
-   ASSIGN __field____main__Department__name 1
+   ASSIGN __field____main____Department____name 1
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__Department
+JUMP __endclass____main____Department
    //---------------------------------------------------------------------
    // Constructor Declaration - Department::Department(char[]) -> Department
-   JUMP __end__ctor____main__Department____Department__char__1
-   __ctor____main__Department____Department__char__1:
+   JUMP __end__ctor____main____Department____Department__char__1
+   __ctor____main____Department____Department__char__1:
       // Creating Class Instance
          MALLOC __this 2
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Department
+         ASSIGN __this[0] __dtable____main____Department
       // Parameters
          // Param: name
-         STACKGET __main__Department__Department__name 0
+         STACKGET __main____Department__Department__name 0
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - name
-                     PUSH __main__Department__Department__name
+                     PUSH __main____Department__Department__name
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Department__name
+                        PUSH __field____main____Department____name
                      POP __child
                      POP __parent
                      POP __rhs
@@ -491,14 +511,14 @@ JUMP __endclass____main__Department
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Department____Department__char__1:
-   // End Constructor Declaration - __ctor____main__Department____Department__char__1
+   __end__ctor____main____Department____Department__char__1:
+   // End Constructor Declaration - __ctor____main____Department____Department__char__1
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Department::toString() -> char[]
-   JUMP __end__method____main__Department____toString
-   __method____main__Department____toString:
+   JUMP __end__method____main____Department____toString
+   __method____main____Department____toString:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -511,7 +531,7 @@ JUMP __endclass____main__Department
                      // This keyword
                         PUSH __this
                   // RHS
-                     PUSH __field____main__Department__name
+                     PUSH __field____main____Department____name
                   POP __child
                   POP __parent
                   PUSH __parent[__child]
@@ -519,60 +539,60 @@ JUMP __endclass____main__Department
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Department____toString:
-   // End Method Declaration - __method____main__Department____toString
+   __end__method____main____Department____toString:
+   // End Method Declaration - __method____main____Department____toString
    //---------------------------------------------------------------------
 
-__endclass____main__Department:
-// End Class Declaration - __main__Department
+__endclass____main____Department:
+// End Class Declaration - __main____Department
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Course inherits __main__Object
+// Class Declaration - __main____Course inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__Course 1
+      MALLOC __dtable____main____Course 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__Course[0] __method____main__Course____toString
+      ASSIGN __dtable____main____Course[0] __method____main____Course____toString
    //---------------------------------------------------------------------
    // Field - char[] Course::name
-   ASSIGN __field____main__Course__name 1
+   ASSIGN __field____main____Course____name 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - Department Course::department
-   ASSIGN __field____main__Course__department 2
+   ASSIGN __field____main____Course____department 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Course::id
-   ASSIGN __field____main__Course__id 3
+   ASSIGN __field____main____Course____id 3
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - char[] Course::times
-   ASSIGN __field____main__Course__times 4
+   ASSIGN __field____main____Course____times 4
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__Course
+JUMP __endclass____main____Course
    //---------------------------------------------------------------------
    // Constructor Declaration - Course::Course() -> Course
-   JUMP __end__ctor____main__Course____Course
-   __ctor____main__Course____Course:
+   JUMP __end__ctor____main____Course____Course
+   __ctor____main____Course____Course:
       // Creating Class Instance
          MALLOC __this 5
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Course
+         ASSIGN __this[0] __dtable____main____Course
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Course____Course:
-   // End Constructor Declaration - __ctor____main__Course____Course
+   __end__ctor____main____Course____Course:
+   // End Constructor Declaration - __ctor____main____Course____Course
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Course::toString() -> char[]
-   JUMP __end__method____main__Course____toString
-   __method____main__Course____toString:
+   JUMP __end__method____main____Course____toString
+   __method____main____Course____toString:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -593,7 +613,7 @@ JUMP __endclass____main__Course
                                              // This keyword
                                                 PUSH __this
                                           // RHS
-                                             PUSH __field____main__Course__department
+                                             PUSH __field____main____Course____department
                                           POP __child
                                           POP __parent
                                           PUSH __parent[__child]
@@ -602,7 +622,7 @@ JUMP __endclass____main__Course
                                     POP __obj
                                     // Pushing args in reverse order
                                     PUSH __obj
-                                    CALL __method____main__Department____toString
+                                    CALL __method____main____Department____toString
                                     POP __void
                                     // Remove args
                                     RESPONSE __retval
@@ -614,7 +634,7 @@ JUMP __endclass____main__Course
                                              // This keyword
                                                 PUSH __this
                                           // RHS
-                                             PUSH __field____main__Course__id
+                                             PUSH __field____main____Course____id
                                           POP __child
                                           POP __parent
                                           PUSH __parent[__child]
@@ -660,7 +680,7 @@ JUMP __endclass____main__Course
                            // This keyword
                               PUSH __this
                         // RHS
-                           PUSH __field____main__Course__name
+                           PUSH __field____main____Course____name
                         POP __child
                         POP __parent
                         PUSH __parent[__child]
@@ -680,12 +700,12 @@ JUMP __endclass____main__Course
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Course____toString:
-   // End Method Declaration - __method____main__Course____toString
+   __end__method____main____Course____toString:
+   // End Method Declaration - __method____main____Course____toString
    //---------------------------------------------------------------------
 
-__endclass____main__Course:
-// End Class Declaration - __main__Course
+__endclass____main____Course:
+// End Class Declaration - __main____Course
 //========================================================================
 
 // Assignment
@@ -702,7 +722,7 @@ __endclass____main__Course:
             POP __arg0
          // Pushing args in reverse order
          PUSH __arg0
-         CALL __ctor____main__Department____Department__char__1
+         CALL __ctor____main____Department____Department__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -720,7 +740,7 @@ POP __void
       // Constructor Call - Course::Course() -> Course
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__Course____Course
+         CALL __ctor____main____Course____Course
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -742,7 +762,7 @@ POP __void
             // Identifier - course
                PUSH __main__course
          // RHS
-            PUSH __field____main__Course__department
+            PUSH __field____main____Course____department
          POP __child
          POP __parent
          POP __rhs
@@ -782,7 +802,7 @@ POP __void
             // Identifier - course
                PUSH __main__course
          // RHS
-            PUSH __field____main__Course__name
+            PUSH __field____main____Course____name
          POP __child
          POP __parent
          POP __rhs
@@ -800,7 +820,7 @@ POP __void
             // Identifier - course
                PUSH __main__course
          // RHS
-            PUSH __field____main__Course__id
+            PUSH __field____main____Course____id
          POP __child
          POP __parent
          POP __rhs
@@ -834,7 +854,7 @@ POP __void
             // Identifier - course
                PUSH __main__course
          // RHS
-            PUSH __field____main__Course__times
+            PUSH __field____main____Course____times
          POP __child
          POP __parent
          POP __rhs
@@ -853,7 +873,7 @@ POP __void
          POP __obj
          // Pushing args in reverse order
          PUSH __obj
-         CALL __method____main__Course____toString
+         CALL __method____main____Course____toString
          POP __void
          // Remove args
          RESPONSE __retval
@@ -870,47 +890,47 @@ POP __void
 // Statement results can be ignored
 POP __void
 //========================================================================
-// Class Declaration - __main__Person inherits __main__Object
+// Class Declaration - __main____Person inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__Person 1
+      MALLOC __dtable____main____Person 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__Person[0] __method____main__Person____toString
+      ASSIGN __dtable____main____Person[0] __method____main____Person____toString
    //---------------------------------------------------------------------
    // Field - char[] Person::name
-   ASSIGN __field____main__Person__name 1
+   ASSIGN __field____main____Person____name 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Person::age
-   ASSIGN __field____main__Person__age 2
+   ASSIGN __field____main____Person____age 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - float[] Person::nums
-   ASSIGN __field____main__Person__nums 3
+   ASSIGN __field____main____Person____nums 3
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__Person
+JUMP __endclass____main____Person
    //---------------------------------------------------------------------
    // Constructor Declaration - Person::Person() -> Person
-   JUMP __end__ctor____main__Person____Person
-   __ctor____main__Person____Person:
+   JUMP __end__ctor____main____Person____Person
+   __ctor____main____Person____Person:
       // Creating Class Instance
          MALLOC __this 4
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Person
+         ASSIGN __this[0] __dtable____main____Person
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Person____Person:
-   // End Constructor Declaration - __ctor____main__Person____Person
+   __end__ctor____main____Person____Person:
+   // End Constructor Declaration - __ctor____main____Person____Person
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Person::toString() -> char[]
-   JUMP __end__method____main__Person____toString
-   __method____main__Person____toString:
+   JUMP __end__method____main____Person____toString
+   __method____main____Person____toString:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -966,7 +986,7 @@ JUMP __endclass____main__Person
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main__Person__name
+                                 PUSH __field____main____Person____name
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -993,7 +1013,7 @@ JUMP __endclass____main__Person
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main__Person__age
+                                 PUSH __field____main____Person____age
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -1022,82 +1042,82 @@ JUMP __endclass____main__Person
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Person____toString:
-   // End Method Declaration - __method____main__Person____toString
+   __end__method____main____Person____toString:
+   // End Method Declaration - __method____main____Person____toString
    //---------------------------------------------------------------------
 
-__endclass____main__Person:
-// End Class Declaration - __main__Person
+__endclass____main____Person:
+// End Class Declaration - __main____Person
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Professor inherits __main__Person
+// Class Declaration - __main____Professor inherits __main____Person
    // Creating Dispatch Table
-      MALLOC __dtable____main__Professor 1
+      MALLOC __dtable____main____Professor 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__Professor[0] __method____main__Professor____toString
+      ASSIGN __dtable____main____Professor[0] __method____main____Professor____toString
    //---------------------------------------------------------------------
    // Field - char[] Professor::name
    // Inherited from Person
-   ASSIGN __field____main__Professor__name 1
+   ASSIGN __field____main____Professor____name 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Professor::age
    // Inherited from Person
-   ASSIGN __field____main__Professor__age 2
+   ASSIGN __field____main____Professor____age 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - float[] Professor::nums
    // Inherited from Person
-   ASSIGN __field____main__Professor__nums 3
+   ASSIGN __field____main____Professor____nums 3
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Professor::id
-   ASSIGN __field____main__Professor__id 4
+   ASSIGN __field____main____Professor____id 4
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - Department Professor::department
-   ASSIGN __field____main__Professor__department 5
+   ASSIGN __field____main____Professor____department 5
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - Course[] Professor::courses
-   ASSIGN __field____main__Professor__courses 6
+   ASSIGN __field____main____Professor____courses 6
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Professor::officeNumber
-   ASSIGN __field____main__Professor__officeNumber 7
+   ASSIGN __field____main____Professor____officeNumber 7
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__Professor
+JUMP __endclass____main____Professor
    //---------------------------------------------------------------------
    // Constructor Declaration - Professor::Professor(char[], int, int) -> Professor
-   JUMP __end__ctor____main__Professor____Professor__char__1__int__int
-   __ctor____main__Professor____Professor__char__1__int__int:
+   JUMP __end__ctor____main____Professor____Professor__char__1__int__int
+   __ctor____main____Professor____Professor__char__1__int__int:
       // Creating Class Instance
          MALLOC __this 8
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Professor
+         ASSIGN __this[0] __dtable____main____Professor
       // Parameters
          // Param: name
-         STACKGET __main__Professor__Professor__name 0
+         STACKGET __main____Professor__Professor__name 0
          // Param: age
-         STACKGET __main__Professor__Professor__age 1
+         STACKGET __main____Professor__Professor__age 1
          // Param: id
-         STACKGET __main__Professor__Professor__id 2
+         STACKGET __main____Professor__Professor__id 2
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - name
-                     PUSH __main__Professor__Professor__name
+                     PUSH __main____Professor__Professor__name
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Professor__name
+                        PUSH __field____main____Professor____name
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1108,14 +1128,14 @@ JUMP __endclass____main__Professor
             // Assignment
                // RHS
                   // Identifier - age
-                     PUSH __main__Professor__Professor__age
+                     PUSH __main____Professor__Professor__age
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Professor__age
+                        PUSH __field____main____Professor____age
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1126,14 +1146,14 @@ JUMP __endclass____main__Professor
             // Assignment
                // RHS
                   // Identifier - id
-                     PUSH __main__Professor__Professor__id
+                     PUSH __main____Professor__Professor__id
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Professor__id
+                        PUSH __field____main____Professor____id
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1143,14 +1163,14 @@ JUMP __endclass____main__Professor
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Professor____Professor__char__1__int__int:
-   // End Constructor Declaration - __ctor____main__Professor____Professor__char__1__int__int
+   __end__ctor____main____Professor____Professor__char__1__int__int:
+   // End Constructor Declaration - __ctor____main____Professor____Professor__char__1__int__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Professor::toString() -> char[]
-   JUMP __end__method____main__Professor____toString
-   __method____main__Professor____toString:
+   JUMP __end__method____main____Professor____toString
+   __method____main____Professor____toString:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -1213,7 +1233,7 @@ JUMP __endclass____main__Professor
                                              // This keyword
                                                 PUSH __this
                                           // RHS
-                                             PUSH __field____main__Professor__name
+                                             PUSH __field____main____Professor____name
                                           POP __child
                                           POP __parent
                                           PUSH __parent[__child]
@@ -1240,7 +1260,7 @@ JUMP __endclass____main__Professor
                                              // This keyword
                                                 PUSH __this
                                           // RHS
-                                             PUSH __field____main__Professor__age
+                                             PUSH __field____main____Professor____age
                                           POP __child
                                           POP __parent
                                           PUSH __parent[__child]
@@ -1288,7 +1308,7 @@ JUMP __endclass____main__Professor
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main__Professor__department
+                                 PUSH __field____main____Professor____department
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -1297,7 +1317,7 @@ JUMP __endclass____main__Professor
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__Department____toString
+                        CALL __method____main____Department____toString
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -1318,12 +1338,12 @@ JUMP __endclass____main__Professor
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Professor____toString:
-   // End Method Declaration - __method____main__Professor____toString
+   __end__method____main____Professor____toString:
+   // End Method Declaration - __method____main____Professor____toString
    //---------------------------------------------------------------------
 
-__endclass____main__Professor:
-// End Class Declaration - __main__Professor
+__endclass____main____Professor:
+// End Class Declaration - __main____Professor
 //========================================================================
 
 // Assignment
@@ -1349,7 +1369,7 @@ __endclass____main__Professor:
          PUSH __arg2
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__Professor____Professor__char__1__int__int
+         CALL __ctor____main____Professor____Professor__char__1__int__int
          // Remove args
          POP __void
          POP __void
@@ -1383,7 +1403,7 @@ POP __void
             POP __arg0
          // Pushing args in reverse order
          PUSH __arg0
-         CALL __ctor____main__Department____Department__char__1
+         CALL __ctor____main____Department____Department__char__1
          // Remove args
          POP __void
          RESPONSE __retval
@@ -1394,7 +1414,7 @@ POP __void
             // Identifier - p
                PUSH __main__p
          // RHS
-            PUSH __field____main__Professor__department
+            PUSH __field____main____Professor____department
          POP __child
          POP __parent
          POP __rhs
@@ -1413,7 +1433,7 @@ POP __void
          POP __obj
          // Pushing args in reverse order
          PUSH __obj
-         CALL __method____main__Professor____toString
+         CALL __method____main____Professor____toString
          POP __void
          // Remove args
          RESPONSE __retval
@@ -1430,69 +1450,69 @@ POP __void
 // Statement results can be ignored
 POP __void
 //========================================================================
-// Class Declaration - __main__Student inherits __main__Person
+// Class Declaration - __main____Student inherits __main____Person
    // Creating Dispatch Table
-      MALLOC __dtable____main__Student 1
+      MALLOC __dtable____main____Student 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__Student[0] __method____main__Person____toString
+      ASSIGN __dtable____main____Student[0] __method____main____Person____toString
    //---------------------------------------------------------------------
    // Field - char[] Student::name
    // Inherited from Person
-   ASSIGN __field____main__Student__name 1
+   ASSIGN __field____main____Student____name 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Student::age
    // Inherited from Person
-   ASSIGN __field____main__Student__age 2
+   ASSIGN __field____main____Student____age 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - float[] Student::nums
    // Inherited from Person
-   ASSIGN __field____main__Student__nums 3
+   ASSIGN __field____main____Student____nums 3
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Student::id
-   ASSIGN __field____main__Student__id 4
+   ASSIGN __field____main____Student____id 4
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - Course[] Student::courses
-   ASSIGN __field____main__Student__courses 5
+   ASSIGN __field____main____Student____courses 5
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int[] Student::nums
-   ASSIGN __field____main__Student__nums 6
+   ASSIGN __field____main____Student____nums 6
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__Student
+JUMP __endclass____main____Student
    //---------------------------------------------------------------------
    // Constructor Declaration - Student::Student(char[], int, int) -> Student
-   JUMP __end__ctor____main__Student____Student__char__1__int__int
-   __ctor____main__Student____Student__char__1__int__int:
+   JUMP __end__ctor____main____Student____Student__char__1__int__int
+   __ctor____main____Student____Student__char__1__int__int:
       // Creating Class Instance
          MALLOC __this 7
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Student
+         ASSIGN __this[0] __dtable____main____Student
       // Parameters
          // Param: name
-         STACKGET __main__Student__Student__name 0
+         STACKGET __main____Student__Student__name 0
          // Param: age
-         STACKGET __main__Student__Student__age 1
+         STACKGET __main____Student__Student__age 1
          // Param: id
-         STACKGET __main__Student__Student__id 2
+         STACKGET __main____Student__Student__id 2
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - name
-                     PUSH __main__Student__Student__name
+                     PUSH __main____Student__Student__name
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Student__name
+                        PUSH __field____main____Student____name
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1503,14 +1523,14 @@ JUMP __endclass____main__Student
             // Assignment
                // RHS
                   // Identifier - age
-                     PUSH __main__Student__Student__age
+                     PUSH __main____Student__Student__age
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Student__age
+                        PUSH __field____main____Student____age
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1521,14 +1541,14 @@ JUMP __endclass____main__Student
             // Assignment
                // RHS
                   // Identifier - id
-                     PUSH __main__Student__Student__id
+                     PUSH __main____Student__Student__id
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Student__id
+                        PUSH __field____main____Student____id
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1538,23 +1558,23 @@ JUMP __endclass____main__Student
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Student____Student__char__1__int__int:
-   // End Constructor Declaration - __ctor____main__Student____Student__char__1__int__int
+   __end__ctor____main____Student____Student__char__1__int__int:
+   // End Constructor Declaration - __ctor____main____Student____Student__char__1__int__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Student::toString() -> char[]
    // Inherited from Person
-   JUMP __end__method____main__Student____toString
-   __method____main__Student____toString:
+   JUMP __end__method____main____Student____toString
+   __method____main____Student____toString:
       // Jump to Person's version
-      JUMP __method____main__Person____toString
-   __end__method____main__Student____toString:
-   // End Method Declaration - __method____main__Student____toString
+      JUMP __method____main____Person____toString
+   __end__method____main____Student____toString:
+   // End Method Declaration - __method____main____Student____toString
    //---------------------------------------------------------------------
 
-__endclass____main__Student:
-// End Class Declaration - __main__Student
+__endclass____main____Student:
+// End Class Declaration - __main____Student
 //========================================================================
 
 // Assignment
@@ -1578,7 +1598,7 @@ __endclass____main__Student:
          PUSH __arg2
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__Student____Student__char__1__int__int
+         CALL __ctor____main____Student____Student__char__1__int__int
          // Remove args
          POP __void
          POP __void
@@ -1604,7 +1624,7 @@ POP __void
          POP __obj
          // Pushing args in reverse order
          PUSH __obj
-         CALL __method____main__Student____toString
+         CALL __method____main____Student____toString
          POP __void
          // Remove args
          RESPONSE __retval
@@ -1696,7 +1716,7 @@ __main____print__Person__1:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__Person____toString
+                        CALL __method____main____Person____toString
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -1793,42 +1813,42 @@ POP __void
 // Statement results can be ignored
 POP __void
 //========================================================================
-// Class Declaration - __main__A inherits __main__Object
+// Class Declaration - __main____A inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__A 1
+      MALLOC __dtable____main____A 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__A[0] __method____main__A____sum
+      ASSIGN __dtable____main____A[0] __method____main____A____sum
    //---------------------------------------------------------------------
    // Field - int A::x
-   ASSIGN __field____main__A__x 1
+   ASSIGN __field____main____A____x 1
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__A
+JUMP __endclass____main____A
    //---------------------------------------------------------------------
    // Constructor Declaration - A::A(int) -> A
-   JUMP __end__ctor____main__A____A__int
-   __ctor____main__A____A__int:
+   JUMP __end__ctor____main____A____A__int
+   __ctor____main____A____A__int:
       // Creating Class Instance
          MALLOC __this 2
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__A
+         ASSIGN __this[0] __dtable____main____A
       // Parameters
          // Param: x
-         STACKGET __main__A__A__x 0
+         STACKGET __main____A__A__x 0
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - x
-                     PUSH __main__A__A__x
+                     PUSH __main____A__A__x
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__A__x
+                        PUSH __field____main____A____x
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1838,14 +1858,14 @@ JUMP __endclass____main__A
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__A____A__int:
-   // End Constructor Declaration - __ctor____main__A____A__int
+   __end__ctor____main____A____A__int:
+   // End Constructor Declaration - __ctor____main____A____A__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - A::sum() -> int
-   JUMP __end__method____main__A____sum
-   __method____main__A____sum:
+   JUMP __end__method____main____A____sum
+   __method____main____A____sum:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -1858,7 +1878,7 @@ JUMP __endclass____main__A
                      // This keyword
                         PUSH __this
                   // RHS
-                     PUSH __field____main__A__x
+                     PUSH __field____main____A____x
                   POP __child
                   POP __parent
                   PUSH __parent[__child]
@@ -1866,58 +1886,58 @@ JUMP __endclass____main__A
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__A____sum:
-   // End Method Declaration - __method____main__A____sum
+   __end__method____main____A____sum:
+   // End Method Declaration - __method____main____A____sum
    //---------------------------------------------------------------------
 
-__endclass____main__A:
-// End Class Declaration - __main__A
+__endclass____main____A:
+// End Class Declaration - __main____A
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__B inherits __main__A
+// Class Declaration - __main____B inherits __main____A
    // Creating Dispatch Table
-      MALLOC __dtable____main__B 1
+      MALLOC __dtable____main____B 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__B[0] __method____main__B____sum
+      ASSIGN __dtable____main____B[0] __method____main____B____sum
    //---------------------------------------------------------------------
    // Field - int B::x
    // Inherited from A
-   ASSIGN __field____main__B__x 1
+   ASSIGN __field____main____B____x 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int B::y
-   ASSIGN __field____main__B__y 2
+   ASSIGN __field____main____B____y 2
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__B
+JUMP __endclass____main____B
    //---------------------------------------------------------------------
    // Constructor Declaration - B::B(int, int) -> B
-   JUMP __end__ctor____main__B____B__int__int
-   __ctor____main__B____B__int__int:
+   JUMP __end__ctor____main____B____B__int__int
+   __ctor____main____B____B__int__int:
       // Creating Class Instance
          MALLOC __this 3
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__B
+         ASSIGN __this[0] __dtable____main____B
       // Parameters
          // Param: x
-         STACKGET __main__B__B__x 0
+         STACKGET __main____B__B__x 0
          // Param: y
-         STACKGET __main__B__B__y 1
+         STACKGET __main____B__B__y 1
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - x
-                     PUSH __main__B__B__x
+                     PUSH __main____B__B__x
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__B__x
+                        PUSH __field____main____B____x
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1928,14 +1948,14 @@ JUMP __endclass____main__B
             // Assignment
                // RHS
                   // Identifier - y
-                     PUSH __main__B__B__y
+                     PUSH __main____B__B__y
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__B__y
+                        PUSH __field____main____B____y
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1945,14 +1965,14 @@ JUMP __endclass____main__B
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__B____B__int__int:
-   // End Constructor Declaration - __ctor____main__B____B__int__int
+   __end__ctor____main____B____B__int__int:
+   // End Constructor Declaration - __ctor____main____B____B__int__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - B::sum() -> int
-   JUMP __end__method____main__B____sum
-   __method____main__B____sum:
+   JUMP __end__method____main____B____sum
+   __method____main____B____sum:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -1967,7 +1987,7 @@ JUMP __endclass____main__B
                            // This keyword
                               PUSH __this
                         // RHS
-                           PUSH __field____main__B__x
+                           PUSH __field____main____B____x
                         POP __child
                         POP __parent
                         PUSH __parent[__child]
@@ -1977,7 +1997,7 @@ JUMP __endclass____main__B
                            // This keyword
                               PUSH __this
                         // RHS
-                           PUSH __field____main__B__y
+                           PUSH __field____main____B____y
                         POP __child
                         POP __parent
                         PUSH __parent[__child]
@@ -1989,65 +2009,65 @@ JUMP __endclass____main__B
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__B____sum:
-   // End Method Declaration - __method____main__B____sum
+   __end__method____main____B____sum:
+   // End Method Declaration - __method____main____B____sum
    //---------------------------------------------------------------------
 
-__endclass____main__B:
-// End Class Declaration - __main__B
+__endclass____main____B:
+// End Class Declaration - __main____B
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__C inherits __main__B
+// Class Declaration - __main____C inherits __main____B
    // Creating Dispatch Table
-      MALLOC __dtable____main__C 1
+      MALLOC __dtable____main____C 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__C[0] __method____main__C____sum
+      ASSIGN __dtable____main____C[0] __method____main____C____sum
    //---------------------------------------------------------------------
    // Field - int C::x
    // Inherited from B
-   ASSIGN __field____main__C__x 1
+   ASSIGN __field____main____C____x 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int C::y
    // Inherited from B
-   ASSIGN __field____main__C__y 2
+   ASSIGN __field____main____C____y 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int C::z
-   ASSIGN __field____main__C__z 3
+   ASSIGN __field____main____C____z 3
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__C
+JUMP __endclass____main____C
    //---------------------------------------------------------------------
    // Constructor Declaration - C::C(int, int, int) -> C
-   JUMP __end__ctor____main__C____C__int__int__int
-   __ctor____main__C____C__int__int__int:
+   JUMP __end__ctor____main____C____C__int__int__int
+   __ctor____main____C____C__int__int__int:
       // Creating Class Instance
          MALLOC __this 4
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__C
+         ASSIGN __this[0] __dtable____main____C
       // Parameters
          // Param: x
-         STACKGET __main__C__C__x 0
+         STACKGET __main____C__C__x 0
          // Param: y
-         STACKGET __main__C__C__y 1
+         STACKGET __main____C__C__y 1
          // Param: z
-         STACKGET __main__C__C__z 2
+         STACKGET __main____C__C__z 2
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - x
-                     PUSH __main__C__C__x
+                     PUSH __main____C__C__x
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__C__x
+                        PUSH __field____main____C____x
                      POP __child
                      POP __parent
                      POP __rhs
@@ -2058,14 +2078,14 @@ JUMP __endclass____main__C
             // Assignment
                // RHS
                   // Identifier - y
-                     PUSH __main__C__C__y
+                     PUSH __main____C__C__y
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__C__y
+                        PUSH __field____main____C____y
                      POP __child
                      POP __parent
                      POP __rhs
@@ -2076,14 +2096,14 @@ JUMP __endclass____main__C
             // Assignment
                // RHS
                   // Identifier - z
-                     PUSH __main__C__C__z
+                     PUSH __main____C__C__z
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__C__z
+                        PUSH __field____main____C____z
                      POP __child
                      POP __parent
                      POP __rhs
@@ -2093,14 +2113,14 @@ JUMP __endclass____main__C
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__C____C__int__int__int:
-   // End Constructor Declaration - __ctor____main__C____C__int__int__int
+   __end__ctor____main____C____C__int__int__int:
+   // End Constructor Declaration - __ctor____main____C____C__int__int__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - C::sum() -> int
-   JUMP __end__method____main__C____sum
-   __method____main__C____sum:
+   JUMP __end__method____main____C____sum
+   __method____main____C____sum:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -2117,7 +2137,7 @@ JUMP __endclass____main__C
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main__C__x
+                                 PUSH __field____main____C____x
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -2127,7 +2147,7 @@ JUMP __endclass____main__C
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main__C__y
+                                 PUSH __field____main____C____y
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -2141,7 +2161,7 @@ JUMP __endclass____main__C
                            // This keyword
                               PUSH __this
                         // RHS
-                           PUSH __field____main__C__z
+                           PUSH __field____main____C____z
                         POP __child
                         POP __parent
                         PUSH __parent[__child]
@@ -2153,12 +2173,12 @@ JUMP __endclass____main__C
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__C____sum:
-   // End Method Declaration - __method____main__C____sum
+   __end__method____main____C____sum:
+   // End Method Declaration - __method____main____C____sum
    //---------------------------------------------------------------------
 
-__endclass____main__C:
-// End Class Declaration - __main__C
+__endclass____main____C:
+// End Class Declaration - __main____C
 //========================================================================
 
 // Assignment
@@ -2178,7 +2198,7 @@ __endclass____main__C:
          PUSH __arg2
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__C____C__int__int__int
+         CALL __ctor____main____C____C__int__int__int
          // Remove args
          POP __void
          POP __void
@@ -2245,7 +2265,7 @@ __main____print__A__A:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__A____sum
+                        CALL __method____main____A____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2260,7 +2280,7 @@ __main____print__A__A:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__A____sum
+                        CALL __method____main____A____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2338,7 +2358,7 @@ __main____print__B__C:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__B____sum
+                        CALL __method____main____B____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2353,7 +2373,7 @@ __main____print__B__C:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__C____sum
+                        CALL __method____main____C____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2431,7 +2451,7 @@ __main____print__A__C:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__A____sum
+                        CALL __method____main____A____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2446,7 +2466,7 @@ __main____print__A__C:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__C____sum
+                        CALL __method____main____C____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2493,39 +2513,39 @@ __end____main____print__A__C:
 // Statement results can be ignored
 POP __void
 //========================================================================
-// Class Declaration - __main__D inherits __main__B
+// Class Declaration - __main____D inherits __main____B
    // Creating Dispatch Table
-      MALLOC __dtable____main__D 4
+      MALLOC __dtable____main____D 4
       // Populate Dispatch Table
-      ASSIGN __dtable____main__D[0] __method____main__B____sum
-      ASSIGN __dtable____main__D[1] __method____main__D____sum__A__A
-      ASSIGN __dtable____main__D[2] __method____main__D____sum__C__B
-      ASSIGN __dtable____main__D[3] __method____main__D____sum__A__C
+      ASSIGN __dtable____main____D[0] __method____main____B____sum
+      ASSIGN __dtable____main____D[1] __method____main____D____sum__A__A
+      ASSIGN __dtable____main____D[2] __method____main____D____sum__C__B
+      ASSIGN __dtable____main____D[3] __method____main____D____sum__A__C
    //---------------------------------------------------------------------
    // Field - int D::x
    // Inherited from B
-   ASSIGN __field____main__D__x 1
+   ASSIGN __field____main____D____x 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int D::y
    // Inherited from B
-   ASSIGN __field____main__D__y 2
+   ASSIGN __field____main____D____y 2
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__D
+JUMP __endclass____main____D
    //---------------------------------------------------------------------
    // Constructor Declaration - D::D(A, A) -> D
-   JUMP __end__ctor____main__D____D__A__A
-   __ctor____main__D____D__A__A:
+   JUMP __end__ctor____main____D____D__A__A
+   __ctor____main____D____D__A__A:
       // Creating Class Instance
          MALLOC __this 3
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__D
+         ASSIGN __this[0] __dtable____main____D
       // Parameters
          // Param: x
-         STACKGET __main__D__D__x 0
+         STACKGET __main____D__D__x 0
          // Param: y
-         STACKGET __main__D__D__y 1
+         STACKGET __main____D__D__y 1
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -2557,23 +2577,23 @@ JUMP __endclass____main__D
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__D____D__A__A:
-   // End Constructor Declaration - __ctor____main__D____D__A__A
+   __end__ctor____main____D____D__A__A:
+   // End Constructor Declaration - __ctor____main____D____D__A__A
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Constructor Declaration - D::D(B, A) -> D
-   JUMP __end__ctor____main__D____D__B__A
-   __ctor____main__D____D__B__A:
+   JUMP __end__ctor____main____D____D__B__A
+   __ctor____main____D____D__B__A:
       // Creating Class Instance
          MALLOC __this 3
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__D
+         ASSIGN __this[0] __dtable____main____D
       // Parameters
          // Param: x
-         STACKGET __main__D__D__x 0
+         STACKGET __main____D__D__x 0
          // Param: y
-         STACKGET __main__D__D__y 1
+         STACKGET __main____D__D__y 1
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -2605,32 +2625,32 @@ JUMP __endclass____main__D
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__D____D__B__A:
-   // End Constructor Declaration - __ctor____main__D____D__B__A
+   __end__ctor____main____D____D__B__A:
+   // End Constructor Declaration - __ctor____main____D____D__B__A
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - D::sum() -> int
    // Inherited from B
-   JUMP __end__method____main__D____sum
-   __method____main__D____sum:
+   JUMP __end__method____main____D____sum
+   __method____main____D____sum:
       // Jump to B's version
-      JUMP __method____main__B____sum
-   __end__method____main__D____sum:
-   // End Method Declaration - __method____main__D____sum
+      JUMP __method____main____B____sum
+   __end__method____main____D____sum:
+   // End Method Declaration - __method____main____D____sum
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - D::sum(A, A) -> int
-   JUMP __end__method____main__D____sum__A__A
-   __method____main__D____sum__A__A:
+   JUMP __end__method____main____D____sum__A__A
+   __method____main____D____sum__A__A:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: x
-         STACKGET __main__D__sum__x 1
+         STACKGET __main____D__sum__x 1
          // Param: y
-         STACKGET __main__D__sum__y 2
+         STACKGET __main____D__sum__y 2
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -2668,13 +2688,13 @@ JUMP __endclass____main__D
                      // Method Call - A::sum() -> int
                         // LHS
                            // Identifier - x
-                              PUSH __main__D__sum__x
+                              PUSH __main____D__sum__x
                         // RHS
                         // Arguments
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__A____sum
+                        CALL __method____main____A____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2683,13 +2703,13 @@ JUMP __endclass____main__D
                      // Method Call - A::sum() -> int
                         // LHS
                            // Identifier - y
-                              PUSH __main__D__sum__y
+                              PUSH __main____D__sum__y
                         // RHS
                         // Arguments
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__A____sum
+                        CALL __method____main____A____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2702,21 +2722,21 @@ JUMP __endclass____main__D
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__D____sum__A__A:
-   // End Method Declaration - __method____main__D____sum__A__A
+   __end__method____main____D____sum__A__A:
+   // End Method Declaration - __method____main____D____sum__A__A
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - D::sum(C, B) -> int
-   JUMP __end__method____main__D____sum__C__B
-   __method____main__D____sum__C__B:
+   JUMP __end__method____main____D____sum__C__B
+   __method____main____D____sum__C__B:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: x
-         STACKGET __main__D__sum__x 1
+         STACKGET __main____D__sum__x 1
          // Param: y
-         STACKGET __main__D__sum__y 2
+         STACKGET __main____D__sum__y 2
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -2754,13 +2774,13 @@ JUMP __endclass____main__D
                      // Method Call - C::sum() -> int
                         // LHS
                            // Identifier - x
-                              PUSH __main__D__sum__x
+                              PUSH __main____D__sum__x
                         // RHS
                         // Arguments
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__C____sum
+                        CALL __method____main____C____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2769,13 +2789,13 @@ JUMP __endclass____main__D
                      // Method Call - B::sum() -> int
                         // LHS
                            // Identifier - y
-                              PUSH __main__D__sum__y
+                              PUSH __main____D__sum__y
                         // RHS
                         // Arguments
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__B____sum
+                        CALL __method____main____B____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2788,21 +2808,21 @@ JUMP __endclass____main__D
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__D____sum__C__B:
-   // End Method Declaration - __method____main__D____sum__C__B
+   __end__method____main____D____sum__C__B:
+   // End Method Declaration - __method____main____D____sum__C__B
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - D::sum(A, C) -> int
-   JUMP __end__method____main__D____sum__A__C
-   __method____main__D____sum__A__C:
+   JUMP __end__method____main____D____sum__A__C
+   __method____main____D____sum__A__C:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: x
-         STACKGET __main__D__sum__x 1
+         STACKGET __main____D__sum__x 1
          // Param: y
-         STACKGET __main__D__sum__y 2
+         STACKGET __main____D__sum__y 2
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -2840,13 +2860,13 @@ JUMP __endclass____main__D
                      // Method Call - A::sum() -> int
                         // LHS
                            // Identifier - x
-                              PUSH __main__D__sum__x
+                              PUSH __main____D__sum__x
                         // RHS
                         // Arguments
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__A____sum
+                        CALL __method____main____A____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2855,13 +2875,13 @@ JUMP __endclass____main__D
                      // Method Call - C::sum() -> int
                         // LHS
                            // Identifier - y
-                              PUSH __main__D__sum__y
+                              PUSH __main____D__sum__y
                         // RHS
                         // Arguments
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main__C____sum
+                        CALL __method____main____C____sum
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2874,12 +2894,12 @@ JUMP __endclass____main__D
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__D____sum__A__C:
-   // End Method Declaration - __method____main__D____sum__A__C
+   __end__method____main____D____sum__A__C:
+   // End Method Declaration - __method____main____D____sum__A__C
    //---------------------------------------------------------------------
 
-__endclass____main__D:
-// End Class Declaration - __main__D
+__endclass____main____D:
+// End Class Declaration - __main____D
 //========================================================================
 
 // Assignment
@@ -2895,7 +2915,7 @@ __endclass____main__D:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__D____D__B__A
+         CALL __ctor____main____D____D__B__A
          // Remove args
          POP __void
          POP __void
@@ -2928,7 +2948,7 @@ POP __void
          PUSH __arg1
          PUSH __arg0
          PUSH __obj
-         CALL __method____main__D____sum__C__B
+         CALL __method____main____D____sum__C__B
          POP __void
          // Remove args
          POP __void
@@ -2947,35 +2967,35 @@ POP __void
 // Statement results can be ignored
 POP __void
 //========================================================================
-// Class Declaration - __main__X inherits __main__Object
+// Class Declaration - __main____X inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__X 1
+      MALLOC __dtable____main____X 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__X[0] __method____main__X____print
+      ASSIGN __dtable____main____X[0] __method____main____X____print
 // skip over class methods
-JUMP __endclass____main__X
+JUMP __endclass____main____X
    //---------------------------------------------------------------------
    // Constructor Declaration - X::X() -> X
-   JUMP __end__ctor____main__X____X
-   __ctor____main__X____X:
+   JUMP __end__ctor____main____X____X
+   __ctor____main____X____X:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__X
+         ASSIGN __this[0] __dtable____main____X
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__X____X:
-   // End Constructor Declaration - __ctor____main__X____X
+   __end__ctor____main____X____X:
+   // End Constructor Declaration - __ctor____main____X____X
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - X::print() -> void
-   JUMP __end__method____main__X____print
-   __method____main__X____print:
+   JUMP __end__method____main____X____print
+   __method____main____X____print:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -3010,44 +3030,44 @@ JUMP __endclass____main__X
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__X____print:
-   // End Method Declaration - __method____main__X____print
+   __end__method____main____X____print:
+   // End Method Declaration - __method____main____X____print
    //---------------------------------------------------------------------
 
-__endclass____main__X:
-// End Class Declaration - __main__X
+__endclass____main____X:
+// End Class Declaration - __main____X
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Y inherits __main__X
+// Class Declaration - __main____Y inherits __main____X
    // Creating Dispatch Table
-      MALLOC __dtable____main__Y 1
+      MALLOC __dtable____main____Y 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__Y[0] __method____main__Y____print
+      ASSIGN __dtable____main____Y[0] __method____main____Y____print
 // skip over class methods
-JUMP __endclass____main__Y
+JUMP __endclass____main____Y
    //---------------------------------------------------------------------
    // Constructor Declaration - Y::Y() -> Y
-   JUMP __end__ctor____main__Y____Y
-   __ctor____main__Y____Y:
+   JUMP __end__ctor____main____Y____Y
+   __ctor____main____Y____Y:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Y
+         ASSIGN __this[0] __dtable____main____Y
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Y____Y:
-   // End Constructor Declaration - __ctor____main__Y____Y
+   __end__ctor____main____Y____Y:
+   // End Constructor Declaration - __ctor____main____Y____Y
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Y::print() -> void
-   JUMP __end__method____main__Y____print
-   __method____main__Y____print:
+   JUMP __end__method____main____Y____print
+   __method____main____Y____print:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -3082,44 +3102,44 @@ JUMP __endclass____main__Y
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Y____print:
-   // End Method Declaration - __method____main__Y____print
+   __end__method____main____Y____print:
+   // End Method Declaration - __method____main____Y____print
    //---------------------------------------------------------------------
 
-__endclass____main__Y:
-// End Class Declaration - __main__Y
+__endclass____main____Y:
+// End Class Declaration - __main____Y
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Z inherits __main__X
+// Class Declaration - __main____Z inherits __main____X
    // Creating Dispatch Table
-      MALLOC __dtable____main__Z 1
+      MALLOC __dtable____main____Z 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__Z[0] __method____main__Z____print
+      ASSIGN __dtable____main____Z[0] __method____main____Z____print
 // skip over class methods
-JUMP __endclass____main__Z
+JUMP __endclass____main____Z
    //---------------------------------------------------------------------
    // Constructor Declaration - Z::Z() -> Z
-   JUMP __end__ctor____main__Z____Z
-   __ctor____main__Z____Z:
+   JUMP __end__ctor____main____Z____Z
+   __ctor____main____Z____Z:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Z
+         ASSIGN __this[0] __dtable____main____Z
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Z____Z:
-   // End Constructor Declaration - __ctor____main__Z____Z
+   __end__ctor____main____Z____Z:
+   // End Constructor Declaration - __ctor____main____Z____Z
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Z::print() -> void
-   JUMP __end__method____main__Z____print
-   __method____main__Z____print:
+   JUMP __end__method____main____Z____print
+   __method____main____Z____print:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -3154,12 +3174,12 @@ JUMP __endclass____main__Z
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Z____print:
-   // End Method Declaration - __method____main__Z____print
+   __end__method____main____Z____print:
+   // End Method Declaration - __method____main____Z____print
    //---------------------------------------------------------------------
 
-__endclass____main__Z:
-// End Class Declaration - __main__Z
+__endclass____main____Z:
+// End Class Declaration - __main____Z
 //========================================================================
 
 // Assignment
@@ -3167,7 +3187,7 @@ __endclass____main__Z:
       // Constructor Call - Z::Z() -> Z
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__Z____Z
+         CALL __ctor____main____Z____Z
          // Remove args
          RESPONSE __retval
          PUSH __retval

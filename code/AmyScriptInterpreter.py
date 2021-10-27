@@ -31,7 +31,8 @@ with open(destFilename, "w") as file:
 
 # EXECUTE AmyAssembly
 
-interpreter = AmyAssemblyInterpreter ()
+interpreter = AmyAssemblyInterpreter (destFilename)
+interpreter.debug = False
 interpreter.execute (assemblyCode)
 
 #=========================================================================

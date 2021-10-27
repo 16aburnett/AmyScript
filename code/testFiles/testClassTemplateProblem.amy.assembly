@@ -1,0 +1,1465 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+// Global Builtin Variables
+
+    assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+exit:
+    halt
+
+//========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//========================================================================
+// Function Declaration - strcmp(char[], char[]) -> int
+JUMP __end____main____strcmp__char__1__char__1
+__main____strcmp__char__1__char__1:
+   // Parameters
+      // Param: a
+      STACKGET __main__strcmp__a 0
+      // Param: b
+      STACKGET __main__strcmp__b 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Not Equal
+                  // LHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier - a
+                              PUSH __main__strcmp__a
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier - b
+                              PUSH __main__strcmp__b
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  NEQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__1
+            // Body
+               // Return
+                  // Int Literal
+                     PUSH 0
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif__1
+            // End of if
+            __endif__1:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__strcmp__block__0__for__2__i 0
+               POP __rhs
+               ASSIGN __main__strcmp__block__0__for__2__i __rhs
+               PUSH __rhs
+         JUMP __forcond__2
+         __for__2:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - i
+                        PUSH __main__strcmp__block__0__for__2__i
+                  POP __rhs
+                  ADD __main__strcmp__block__0__for__2__i __main__strcmp__block__0__for__2__i 1
+                  ASSIGN __res __main__strcmp__block__0__for__2__i
+                  PUSH __res
+            __forcond__2:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - i
+                        PUSH __main__strcmp__block__0__for__2__i
+                  // RHS
+                     // Sizeof Operator
+                        // RHS
+                           // Identifier - a
+                              PUSH __main__strcmp__a
+                        // Calculate array size
+                        POP __array
+                        SIZEOF __size __array
+                        PUSH __size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__2
+            // Body
+               //---------------------------------------------------------
+               // If-Statement
+                  // Condition
+                     // Not Equal
+                        // LHS
+                           // Subscript
+                              // LHS
+                                 // Identifier - a
+                                    PUSH __main__strcmp__a
+                              // OFFSET
+                                 // Identifier - i
+                                    PUSH __main__strcmp__block__0__for__2__i
+                              POP __offset
+                              POP __pointer
+                              PUSH __pointer[__offset]
+                        // RHS
+                           // Subscript
+                              // LHS
+                                 // Identifier - b
+                                    PUSH __main__strcmp__b
+                              // OFFSET
+                                 // Identifier - i
+                                    PUSH __main__strcmp__block__0__for__2__i
+                              POP __offset
+                              POP __pointer
+                              PUSH __pointer[__offset]
+                        POP __rhs
+                        POP __lhs
+                        NEQUAL __res __lhs __rhs
+                        PUSH __res
+                     POP __cond
+                     CMP __cond 0
+                     JEQ __endif__3
+                  // Body
+                     // Return
+                        // Int Literal
+                           PUSH 0
+                        POP __rVal
+                        RETURN __rVal
+                  JUMP __endif__3
+                  // End of if
+                  __endif__3:
+               //---------------------------------------------------------
+            // Repeat
+            JUMP __for__2
+            // End of For
+            __endfor__2:
+         //---------------------------------------------------------------
+         // Return
+            // Int Literal
+               PUSH 1
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____strcmp__char__1__char__1:
+// End Function Declaration - __main____strcmp__char__1__char__1
+//========================================================================
+
+//========================================================================
+// Class Template - 
+   // Instances:
+      //==================================================================
+      // Class Declaration - __main____map__char__1__int inherits __main__Object
+         // Creating Dispatch Table
+            MALLOC __dtable____main____map__char__1__int 4
+            // Populate Dispatch Table
+            ASSIGN __dtable____main____map__char__1__int[0] __method____main____map__char__1__int____insert__char__1__int
+            ASSIGN __dtable____main____map__char__1__int[1] __method____main____map__char__1__int____get__char__1
+            ASSIGN __dtable____main____map__char__1__int[2] __method____main____map__char__1__int____set__char__1__int
+            ASSIGN __dtable____main____map__char__1__int[3] __method____main____map__char__1__int____contains__char__1
+         //---------------------------------------------------------------
+         // Field - char[][] map<:char[], int:>::keys
+         ASSIGN __field____main____map__char__1__int____keys 1
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // Field - int[] map<:char[], int:>::values
+         ASSIGN __field____main____map__char__1__int____values 2
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // Field - int map<:char[], int:>::size
+         ASSIGN __field____main____map__char__1__int____size 3
+         //---------------------------------------------------------------
+      // skip over class methods
+      JUMP __endclass____main____map__char__1__int
+         //---------------------------------------------------------------
+         // Constructor Declaration - map<:char[], int:>::map() -> map<:char[], int:>
+         JUMP __end__ctor____main____map__char__1__int____map
+         __ctor____main____map__char__1__int____map:
+            // Creating Class Instance
+               MALLOC __this 4
+               // Add Dispatch Table
+               ASSIGN __this[0] __dtable____main____map__char__1__int
+            // Parameters
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment
+                     // RHS
+                        // Array Allocator
+                           // Int Literal
+                              PUSH 10
+                           POP __size
+                           MALLOC __ptr __size
+                           PUSH __ptr
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____map__char__1__int____keys
+                           POP __child
+                           POP __parent
+                           POP __rhs
+                           ASSIGN __parent[__child] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+                  // Assignment
+                     // RHS
+                        // Array Allocator
+                           // Int Literal
+                              PUSH 10
+                           POP __size
+                           MALLOC __ptr __size
+                           PUSH __ptr
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____map__char__1__int____values
+                           POP __child
+                           POP __parent
+                           POP __rhs
+                           ASSIGN __parent[__child] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+                  // Assignment
+                     // RHS
+                        // Int Literal
+                           PUSH 0
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____map__char__1__int____size
+                           POP __child
+                           POP __parent
+                           POP __rhs
+                           ASSIGN __parent[__child] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+               //---------------------------------------------------------
+            RETURN __this
+         __end__ctor____main____map__char__1__int____map:
+         // End Constructor Declaration - __ctor____main____map__char__1__int____map
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Method Declaration - map<:char[], int:>::insert(char[], int) -> void
+         JUMP __end__method____main____map__char__1__int____insert__char__1__int
+         __method____main____map__char__1__int____insert__char__1__int:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+               // Param: key
+               STACKGET __main____map__char__1__int__insert__key 1
+               // Param: value
+               STACKGET __main____map__char__1__int__insert__value 2
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // If-Statement
+                     // Condition
+                        // Greater Than
+                           // LHS
+                              // Addition
+                                 // LHS
+                                    // Member Accessor
+                                       // LHS
+                                          // This keyword
+                                             PUSH __this
+                                       // RHS
+                                          PUSH __field____main____map__char__1__int____size
+                                       POP __child
+                                       POP __parent
+                                       PUSH __parent[__child]
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                           // RHS
+                              // Int Literal
+                                 PUSH 10
+                           POP __rhs
+                           POP __lhs
+                           GT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endif__6
+                     // Body
+                        // Return
+                           RETURN 0
+                     JUMP __endif__6
+                     // End of if
+                     __endif__6:
+                  //------------------------------------------------------
+                  // Assignment
+                     // RHS
+                        // Identifier - key
+                           PUSH __main____map__char__1__int__insert__key
+                     // LHS
+                        // Subscript assignment
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____map__char__1__int____keys
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // OFFSET
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____map__char__1__int____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           POP __offset
+                           POP __pointer
+                     POP __rhs
+                     ASSIGN __pointer[__offset] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+                  // Assignment
+                     // RHS
+                        // Identifier - value
+                           PUSH __main____map__char__1__int__insert__value
+                     // LHS
+                        // Subscript assignment
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____map__char__1__int____values
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // OFFSET
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____map__char__1__int____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           POP __offset
+                           POP __pointer
+                     POP __rhs
+                     ASSIGN __pointer[__offset] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+                  // Post-Increment
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____map__char__1__int____size
+                           POP __child
+                           POP __parent
+                           ASSIGN __res __parent[__child]
+                           ADD __parent[__child] __parent[__child] 1
+                     PUSH __res
+                  // Statement results can be ignored
+                  POP __void
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____map__char__1__int____insert__char__1__int:
+         // End Method Declaration - __method____main____map__char__1__int____insert__char__1__int
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Method Declaration - map<:char[], int:>::get(char[]) -> int
+         JUMP __end__method____main____map__char__1__int____get__char__1
+         __method____main____map__char__1__int____get__char__1:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+               // Param: key
+               STACKGET __main____map__char__1__int__get__key 1
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // For-Loop
+                  // Init
+                     // Assignment
+                        // RHS
+                           // Int Literal
+                              PUSH 0
+                        // LHS
+                           // Variable Declaration
+                              ASSIGN __main____map__char__1__int__get__block__7__for__8__i 0
+                        POP __rhs
+                        ASSIGN __main____map__char__1__int__get__block__7__for__8__i __rhs
+                        PUSH __rhs
+                  JUMP __forcond__8
+                  __for__8:
+                     // Update
+                        // Pre-Increment
+                           // RHS
+                              // Identifier - i
+                                 PUSH __main____map__char__1__int__get__block__7__for__8__i
+                           POP __rhs
+                           ADD __main____map__char__1__int__get__block__7__for__8__i __main____map__char__1__int__get__block__7__for__8__i 1
+                           ASSIGN __res __main____map__char__1__int__get__block__7__for__8__i
+                           PUSH __res
+                     __forcond__8:
+                     // Condition
+                        // Less Than
+                           // LHS
+                              // Identifier - i
+                                 PUSH __main____map__char__1__int__get__block__7__for__8__i
+                           // RHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____map__char__1__int____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           POP __rhs
+                           POP __lhs
+                           LT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endfor__8
+                     // Body
+                        //------------------------------------------------
+                        // If-Statement
+                           // Condition
+                              // Function Call - strcmp(char[], char[]) -> int
+                                 // Arguments
+                                    // Subscript
+                                       // LHS
+                                          // Member Accessor
+                                             // LHS
+                                                // This keyword
+                                                   PUSH __this
+                                             // RHS
+                                                PUSH __field____main____map__char__1__int____keys
+                                             POP __child
+                                             POP __parent
+                                             PUSH __parent[__child]
+                                       // OFFSET
+                                          // Identifier - i
+                                             PUSH __main____map__char__1__int__get__block__7__for__8__i
+                                       POP __offset
+                                       POP __pointer
+                                       PUSH __pointer[__offset]
+                                    // Identifier - key
+                                       PUSH __main____map__char__1__int__get__key
+                                    POP __arg1
+                                    POP __arg0
+                                 // Pushing args in reverse order
+                                 PUSH __arg1
+                                 PUSH __arg0
+                                 // *** strcmp
+                                 CALL __main____strcmp__char__1__char__1
+                                 // Remove args
+                                 POP __void
+                                 POP __void
+                                 RESPONSE __retval
+                                 PUSH __retval
+                              POP __cond
+                              CMP __cond 0
+                              JEQ __endif__9
+                           // Body
+                              // Return
+                                 // Subscript
+                                    // LHS
+                                       // Member Accessor
+                                          // LHS
+                                             // This keyword
+                                                PUSH __this
+                                          // RHS
+                                             PUSH __field____main____map__char__1__int____values
+                                          POP __child
+                                          POP __parent
+                                          PUSH __parent[__child]
+                                    // OFFSET
+                                       // Identifier - i
+                                          PUSH __main____map__char__1__int__get__block__7__for__8__i
+                                    POP __offset
+                                    POP __pointer
+                                    PUSH __pointer[__offset]
+                                 POP __rVal
+                                 RETURN __rVal
+                           JUMP __endif__9
+                           // End of if
+                           __endif__9:
+                        //------------------------------------------------
+                     // Repeat
+                     JUMP __for__8
+                     // End of For
+                     __endfor__8:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____map__char__1__int____get__char__1:
+         // End Method Declaration - __method____main____map__char__1__int____get__char__1
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Method Declaration - map<:char[], int:>::set(char[], int) -> void
+         JUMP __end__method____main____map__char__1__int____set__char__1__int
+         __method____main____map__char__1__int____set__char__1__int:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+               // Param: key
+               STACKGET __main____map__char__1__int__set__key 1
+               // Param: value
+               STACKGET __main____map__char__1__int__set__value 2
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // For-Loop
+                  // Init
+                     // Assignment
+                        // RHS
+                           // Int Literal
+                              PUSH 0
+                        // LHS
+                           // Variable Declaration
+                              ASSIGN __main____map__char__1__int__set__block__10__for__11__i 0
+                        POP __rhs
+                        ASSIGN __main____map__char__1__int__set__block__10__for__11__i __rhs
+                        PUSH __rhs
+                  JUMP __forcond__11
+                  __for__11:
+                     // Update
+                        // Pre-Increment
+                           // RHS
+                              // Identifier - i
+                                 PUSH __main____map__char__1__int__set__block__10__for__11__i
+                           POP __rhs
+                           ADD __main____map__char__1__int__set__block__10__for__11__i __main____map__char__1__int__set__block__10__for__11__i 1
+                           ASSIGN __res __main____map__char__1__int__set__block__10__for__11__i
+                           PUSH __res
+                     __forcond__11:
+                     // Condition
+                        // Less Than
+                           // LHS
+                              // Identifier - i
+                                 PUSH __main____map__char__1__int__set__block__10__for__11__i
+                           // RHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____map__char__1__int____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           POP __rhs
+                           POP __lhs
+                           LT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endfor__11
+                     // Body
+                        //------------------------------------------------
+                        // Code Block
+                           //---------------------------------------------
+                           // If-Statement
+                              // Condition
+                                 // Function Call - strcmp(char[], char[]) -> int
+                                    // Arguments
+                                       // Subscript
+                                          // LHS
+                                             // Member Accessor
+                                                // LHS
+                                                   // This keyword
+                                                      PUSH __this
+                                                // RHS
+                                                   PUSH __field____main____map__char__1__int____keys
+                                                POP __child
+                                                POP __parent
+                                                PUSH __parent[__child]
+                                          // OFFSET
+                                             // Identifier - i
+                                                PUSH __main____map__char__1__int__set__block__10__for__11__i
+                                          POP __offset
+                                          POP __pointer
+                                          PUSH __pointer[__offset]
+                                       // Identifier - key
+                                          PUSH __main____map__char__1__int__set__key
+                                       POP __arg1
+                                       POP __arg0
+                                    // Pushing args in reverse order
+                                    PUSH __arg1
+                                    PUSH __arg0
+                                    // *** strcmp
+                                    CALL __main____strcmp__char__1__char__1
+                                    // Remove args
+                                    POP __void
+                                    POP __void
+                                    RESPONSE __retval
+                                    PUSH __retval
+                                 POP __cond
+                                 CMP __cond 0
+                                 JEQ __endif__13
+                              // Body
+                                 // Assignment
+                                    // RHS
+                                       // Identifier - value
+                                          PUSH __main____map__char__1__int__set__value
+                                    // LHS
+                                       // Subscript assignment
+                                          // LHS
+                                             // Member Accessor
+                                                // LHS
+                                                   // This keyword
+                                                      PUSH __this
+                                                // RHS
+                                                   PUSH __field____main____map__char__1__int____values
+                                                POP __child
+                                                POP __parent
+                                                PUSH __parent[__child]
+                                          // OFFSET
+                                             // Identifier - i
+                                                PUSH __main____map__char__1__int__set__block__10__for__11__i
+                                          POP __offset
+                                          POP __pointer
+                                    POP __rhs
+                                    ASSIGN __pointer[__offset] __rhs
+                                    PUSH __rhs
+                                 // Statement results can be ignored
+                                 POP __void
+                              JUMP __endif__13
+                              // End of if
+                              __endif__13:
+                           //---------------------------------------------
+                        //------------------------------------------------
+                     // Repeat
+                     JUMP __for__11
+                     // End of For
+                     __endfor__11:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____map__char__1__int____set__char__1__int:
+         // End Method Declaration - __method____main____map__char__1__int____set__char__1__int
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Method Declaration - map<:char[], int:>::contains(char[]) -> int
+         JUMP __end__method____main____map__char__1__int____contains__char__1
+         __method____main____map__char__1__int____contains__char__1:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+               // Param: key
+               STACKGET __main____map__char__1__int__contains__key 1
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // For-Loop
+                  // Init
+                     // Assignment
+                        // RHS
+                           // Int Literal
+                              PUSH 0
+                        // LHS
+                           // Variable Declaration
+                              ASSIGN __main____map__char__1__int__contains__block__14__for__15__i 0
+                        POP __rhs
+                        ASSIGN __main____map__char__1__int__contains__block__14__for__15__i __rhs
+                        PUSH __rhs
+                  JUMP __forcond__15
+                  __for__15:
+                     // Update
+                        // Pre-Increment
+                           // RHS
+                              // Identifier - i
+                                 PUSH __main____map__char__1__int__contains__block__14__for__15__i
+                           POP __rhs
+                           ADD __main____map__char__1__int__contains__block__14__for__15__i __main____map__char__1__int__contains__block__14__for__15__i 1
+                           ASSIGN __res __main____map__char__1__int__contains__block__14__for__15__i
+                           PUSH __res
+                     __forcond__15:
+                     // Condition
+                        // Less Than
+                           // LHS
+                              // Identifier - i
+                                 PUSH __main____map__char__1__int__contains__block__14__for__15__i
+                           // RHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____map__char__1__int____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           POP __rhs
+                           POP __lhs
+                           LT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endfor__15
+                     // Body
+                        //------------------------------------------------
+                        // Code Block
+                           //---------------------------------------------
+                           // If-Statement
+                              // Condition
+                                 // Function Call - strcmp(char[], char[]) -> int
+                                    // Arguments
+                                       // Subscript
+                                          // LHS
+                                             // Member Accessor
+                                                // LHS
+                                                   // This keyword
+                                                      PUSH __this
+                                                // RHS
+                                                   PUSH __field____main____map__char__1__int____keys
+                                                POP __child
+                                                POP __parent
+                                                PUSH __parent[__child]
+                                          // OFFSET
+                                             // Identifier - i
+                                                PUSH __main____map__char__1__int__contains__block__14__for__15__i
+                                          POP __offset
+                                          POP __pointer
+                                          PUSH __pointer[__offset]
+                                       // Identifier - key
+                                          PUSH __main____map__char__1__int__contains__key
+                                       POP __arg1
+                                       POP __arg0
+                                    // Pushing args in reverse order
+                                    PUSH __arg1
+                                    PUSH __arg0
+                                    // *** strcmp
+                                    CALL __main____strcmp__char__1__char__1
+                                    // Remove args
+                                    POP __void
+                                    POP __void
+                                    RESPONSE __retval
+                                    PUSH __retval
+                                 POP __cond
+                                 CMP __cond 0
+                                 JEQ __endif__17
+                              // Body
+                                 // Return
+                                    // Int Literal
+                                       PUSH 1
+                                    POP __rVal
+                                    RETURN __rVal
+                              JUMP __endif__17
+                              // End of if
+                              __endif__17:
+                           //---------------------------------------------
+                        //------------------------------------------------
+                     // Repeat
+                     JUMP __for__15
+                     // End of For
+                     __endfor__15:
+                  //------------------------------------------------------
+                  // Return
+                     // Int Literal
+                        PUSH 0
+                     POP __rVal
+                     RETURN __rVal
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____map__char__1__int____contains__char__1:
+         // End Method Declaration - __method____main____map__char__1__int____contains__char__1
+         //---------------------------------------------------------------
+
+      __endclass____main____map__char__1__int:
+      // End Class Declaration - __main____map__char__1__int
+      //==================================================================
+
+// End Class Template - 
+//========================================================================
+
+// Assignment
+   // RHS
+      // Constructor Call - map<:char[], int:>::map() -> map<:char[], int:>
+         // Arguments
+         // Pushing args in reverse order
+         CALL __ctor____main____map__char__1__int____map
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__occ 0
+   POP __rhs
+   ASSIGN __main__occ __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Assignment
+   // RHS
+      // Array Constructor
+         // Elements
+         // String Literal
+            MALLOC __str 5
+            ASSIGN __str[0] 'p'
+            ASSIGN __str[1] 'i'
+            ASSIGN __str[2] 'z'
+            ASSIGN __str[3] 'z'
+            ASSIGN __str[4] 'a'
+            PUSH __str
+         // String Literal
+            MALLOC __str 10
+            ASSIGN __str[0] 'w'
+            ASSIGN __str[1] 'a'
+            ASSIGN __str[2] 't'
+            ASSIGN __str[3] 'e'
+            ASSIGN __str[4] 'r'
+            ASSIGN __str[5] 'm'
+            ASSIGN __str[6] 'e'
+            ASSIGN __str[7] 'l'
+            ASSIGN __str[8] 'o'
+            ASSIGN __str[9] 'n'
+            PUSH __str
+         // String Literal
+            MALLOC __str 5
+            ASSIGN __str[0] 'p'
+            ASSIGN __str[1] 'i'
+            ASSIGN __str[2] 'z'
+            ASSIGN __str[3] 'z'
+            ASSIGN __str[4] 'a'
+            PUSH __str
+         POP __elem2
+         POP __elem1
+         POP __elem0
+         MALLOC __list 3
+         ASSIGN __list[0] __elem0
+         ASSIGN __list[1] __elem1
+         ASSIGN __list[2] __elem2
+         PUSH __list
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__words 0
+   POP __rhs
+   ASSIGN __main__words __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+//------------------------------------------------------------------------
+// For-Loop
+// Init
+   // Assignment
+      // RHS
+         // Int Literal
+            PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__18__i 0
+      POP __rhs
+      ASSIGN __main__for__18__i __rhs
+      PUSH __rhs
+JUMP __forcond__18
+__for__18:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier - i
+               PUSH __main__for__18__i
+         POP __rhs
+         ADD __main__for__18__i __main__for__18__i 1
+         ASSIGN __res __main__for__18__i
+         PUSH __res
+   __forcond__18:
+   // Condition
+      // Less Than
+         // LHS
+            // Identifier - i
+               PUSH __main__for__18__i
+         // RHS
+            // Sizeof Operator
+               // RHS
+                  // Identifier - words
+                     PUSH __main__words
+               // Calculate array size
+               POP __array
+               SIZEOF __size __array
+               PUSH __size
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor__18
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Negate
+                  // RHS
+                     // Method Call - map<:char[], int:>::contains(char[]) -> int
+                        // LHS
+                           // Identifier - occ
+                              PUSH __main__occ
+                        // RHS
+                        // Arguments
+                           // Subscript
+                              // LHS
+                                 // Identifier - words
+                                    PUSH __main__words
+                              // OFFSET
+                                 // Identifier - i
+                                    PUSH __main__for__18__i
+                              POP __offset
+                              POP __pointer
+                              PUSH __pointer[__offset]
+                           POP __arg0
+                        POP __obj
+                        // Pushing args in reverse order
+                        PUSH __arg0
+                        PUSH __obj
+                        CALL __method____main____map__char__1__int____contains__char__1
+                        POP __void
+                        // Remove args
+                        POP __void
+                        RESPONSE __retval
+                        PUSH __retval
+                  POP __rhs
+                  NOT __res __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __else__20
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Method Call - map<:char[], int:>::insert(char[], int) -> void
+                     // LHS
+                        // Identifier - occ
+                           PUSH __main__occ
+                     // RHS
+                     // Arguments
+                        // Subscript
+                           // LHS
+                              // Identifier - words
+                                 PUSH __main__words
+                           // OFFSET
+                              // Identifier - i
+                                 PUSH __main__for__18__i
+                           POP __offset
+                           POP __pointer
+                           PUSH __pointer[__offset]
+                        // Int Literal
+                           PUSH 1
+                        POP __arg1
+                        POP __arg0
+                     POP __obj
+                     // Pushing args in reverse order
+                     PUSH __arg1
+                     PUSH __arg0
+                     PUSH __obj
+                     CALL __method____main____map__char__1__int____insert__char__1__int
+                     POP __void
+                     // Remove args
+                     POP __void
+                     POP __void
+                     RESPONSE __retval
+                     PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
+               //---------------------------------------------------------
+            JUMP __endif__20
+            //------------------------------------------------------------
+            // Else-Statement
+            __else__20:
+            //------------------------------------------------------------
+            // Code Block
+               // Method Call - map<:char[], int:>::set(char[], int) -> void
+                  // LHS
+                     // Identifier - occ
+                        PUSH __main__occ
+                  // RHS
+                  // Arguments
+                     // Subscript
+                        // LHS
+                           // Identifier - words
+                              PUSH __main__words
+                        // OFFSET
+                           // Identifier - i
+                              PUSH __main__for__18__i
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                     // Addition
+                        // LHS
+                           // Method Call - map<:char[], int:>::get(char[]) -> int
+                              // LHS
+                                 // Identifier - occ
+                                    PUSH __main__occ
+                              // RHS
+                              // Arguments
+                                 // Subscript
+                                    // LHS
+                                       // Identifier - words
+                                          PUSH __main__words
+                                    // OFFSET
+                                       // Identifier - i
+                                          PUSH __main__for__18__i
+                                    POP __offset
+                                    POP __pointer
+                                    PUSH __pointer[__offset]
+                                 POP __arg0
+                              POP __obj
+                              // Pushing args in reverse order
+                              PUSH __arg0
+                              PUSH __obj
+                              CALL __method____main____map__char__1__int____get__char__1
+                              POP __void
+                              // Remove args
+                              POP __void
+                              RESPONSE __retval
+                              PUSH __retval
+                        // RHS
+                           // Int Literal
+                              PUSH 1
+                        POP __rhs
+                        POP __lhs
+                        ADD __res __lhs __rhs
+                        PUSH __res
+                     POP __arg1
+                     POP __arg0
+                  POP __obj
+                  // Pushing args in reverse order
+                  PUSH __arg1
+                  PUSH __arg0
+                  PUSH __obj
+                  CALL __method____main____map__char__1__int____set__char__1__int
+                  POP __void
+                  // Remove args
+                  POP __void
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+               // Statement results can be ignored
+               POP __void
+            //------------------------------------------------------------
+            //------------------------------------------------------------
+            // End of if
+            __endif__20:
+         //---------------------------------------------------------------
+      //------------------------------------------------------------------
+   // Repeat
+   JUMP __for__18
+   // End of For
+   __endfor__18:
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+// For-Loop
+// Init
+   // Assignment
+      // RHS
+         // Int Literal
+            PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__23__i 0
+      POP __rhs
+      ASSIGN __main__for__23__i __rhs
+      PUSH __rhs
+JUMP __forcond__23
+__for__23:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier - i
+               PUSH __main__for__23__i
+         POP __rhs
+         ADD __main__for__23__i __main__for__23__i 1
+         ASSIGN __res __main__for__23__i
+         PUSH __res
+   __forcond__23:
+   // Condition
+      // Less Than
+         // LHS
+            // Identifier - i
+               PUSH __main__for__23__i
+         // RHS
+            // Member Accessor
+               // LHS
+                  // Identifier - occ
+                     PUSH __main__occ
+               // RHS
+                  PUSH __field____main____map__char__1__int____size
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor__23
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - print(char[]) -> void
+            // Arguments
+               // Subscript
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // Identifier - occ
+                              PUSH __main__occ
+                        // RHS
+                           PUSH __field____main____map__char__1__int____keys
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // OFFSET
+                     // Identifier - i
+                        PUSH __main__for__23__i
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         // Function Call - print(char) -> void
+            // Arguments
+               // Char Literal
+                  PUSH ' '
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print__char
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         // Function Call - println(int) -> void
+            // Arguments
+               // Subscript
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // Identifier - occ
+                              PUSH __main__occ
+                        // RHS
+                           PUSH __field____main____map__char__1__int____values
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // OFFSET
+                     // Identifier - i
+                        PUSH __main__for__23__i
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__int
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+      //------------------------------------------------------------------
+   // Repeat
+   JUMP __for__23
+   // End of For
+   __endfor__23:
+//------------------------------------------------------------------------
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

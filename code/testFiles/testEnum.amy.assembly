@@ -8,13 +8,14 @@
 // AmyScript Built-in library
 // Author: Amy Burnett
 //========================================================================
-
-jump __endOfLibrary
-
-//========================================================================
-// Global Variables
+// Global Builtin Variables
 
     assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
 
 //========================================================================
 // Prints a given string to the screen
@@ -149,6 +150,12 @@ exit:
     halt
 
 //========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
 // converts int to float
 // float intToFloat (int);
 intToFloat__int:
@@ -163,6 +170,12 @@ stringToFloat__char__1:
     stackget val 0
     stof res val
     return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
 
 //========================================================================
 // converts float to int
@@ -195,6 +208,13 @@ string__float:
     stackget val 0
     string res val
     return res
+
+//========================================================================
+
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
 
 //========================================================================
 

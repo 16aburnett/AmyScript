@@ -403,7 +403,7 @@ class Parser:
     #                  | CHARTYPE { '[' ']' }
     #                  | BOOLTYPE { '[' ']' }
     #                  | STRINGTYPE { '[' ']' }
-    #                  | IDENTIFIER { '[' ']' }
+    #                  | IDENTIFIER [ LTEMP <typeSpec> { COMMA <typeSpec> } RTEMP ] { '[' ']' }
     def typeSpecifier (self):
         self.enter ("typeSpecifier")
 
@@ -439,6 +439,19 @@ class Parser:
         elif (self.tokens[self.currentToken].type == 'IDENTIFIER'):
             type = TypeSpecifierNode (Type.USERTYPE, self.tokens[self.currentToken].lexeme, self.tokens[self.currentToken])
             self.match ("typeSpecifier", 'IDENTIFIER')
+
+            # match template params 
+            # LTEMP <typeSpec> { COMMA <typeSpec> } RTEMP
+            # <: T, K :>
+            templateParams = []
+            if self.tokens[self.currentToken].type == "LTEMP":
+                self.match ("factor", "LTEMP")
+                templateParams += [self.typeSpecifier()]
+                while self.tokens[self.currentToken].type == "COMMA":
+                    self.match ("factor", "COMMA")
+                    templateParams += [self.typeSpecifier()]
+                self.match ("factor", "RTEMP")
+            type.templateParams = templateParams
         
         # match array 
         if type != None:
@@ -502,7 +515,7 @@ class Parser:
 
     # ====================================================================
     # template declaration
-    # <template> -> TEMPLATE LTEMP <typeSpecifier { COMMA IDENTIFIER } RTEMP <functionDeclaration>
+    # <template> -> TEMPLATE LTEMP <typeSpecifier { COMMA IDENTIFIER } RTEMP ( <functionDeclaration> | <classDeclaration> )
     # Example:
     #   template <:T:> function T add (T a, T b) { return a + b; }
 
@@ -516,20 +529,24 @@ class Parser:
 
         t = self.typeSpecifier ()
         t.isGeneric = True
-        types = [GenericDeclarationNode (t, t.id, t.token)]
+        templateParams = [GenericDeclarationNode (t, t.id, t.token)]
 
         while self.tokens[self.currentToken].type == "COMMA":
             self.match ("templateDeclaration", "COMMA")
             t = self.typeSpecifier ()
             t.isGeneric = True
-            types += [GenericDeclarationNode (t, t.id, t.token)]
+            templateParams += [GenericDeclarationNode (t, t.id, t.token)]
 
         self.match ("templateDeclaration", "RTEMP")
 
         # function declaration
         if self.tokens[self.currentToken].type == "FUNCTION":
             func = self.function ()
-            node = FunctionTemplateDeclarationNode (func.type, func.id, token, types, func)
+            node = FunctionTemplateDeclarationNode (func.type, func.id, token, templateParams, func)
+        # class declaration
+        elif self.tokens[self.currentToken].type == "CLASS":
+            _class = self.classDeclaration ()
+            node = ClassTemplateDeclarationNode (_class.type, _class.id, token, templateParams, _class)
         else:
             self.error ("templateDeclaration", "FUNCTION", "Expected function or class declaration after template clause")
 
@@ -839,7 +856,7 @@ class Parser:
             # match type
             type = self.typeSpecifier ()
 
-            # assumption was wrongthis.name
+            # assumption was wrong
             # -> <logicalOR> 
             if (type == None or self.tokens[self.currentToken].type != "IDENTIFIER"):
                 # restore state
@@ -1291,13 +1308,26 @@ class Parser:
                     type.arrayDimensions += 1
                     self.match ("factor", "RBRACKET")
 
-                lhs = ArrayAllocatorExpressionNode (type, offsets, line, column)
+                lhs = ArrayAllocatorExpressionNode (type, offsets, [], line, column)
             
             # usertype array alloc or constructor call 
             else:
 
                 type = TypeSpecifierNode (Type.USERTYPE, self.tokens[self.currentToken].lexeme, self.tokens[self.currentToken])
                 self.match ("factor", "IDENTIFIER")
+
+                # match template params 
+                # LTEMP <typeSpec> { COMMA <typeSpec> } RTEMP
+                # <: T, K :>
+                templateParams = []
+                if self.tokens[self.currentToken].type == "LTEMP":
+                    self.match ("factor", "LTEMP")
+                    templateParams += [self.typeSpecifier()]
+                    while self.tokens[self.currentToken].type == "COMMA":
+                        self.match ("factor", "COMMA")
+                        templateParams += [self.typeSpecifier()]
+                    self.match ("factor", "RTEMP")
+                type.templateParams = templateParams
 
                 # usertype array
                 if (self.tokens[self.currentToken].type == "LBRACKET"):
@@ -1312,7 +1342,7 @@ class Parser:
                         type.arrayDimensions += 1
                         self.match ("factor", "RBRACKET")
 
-                    lhs = ArrayAllocatorExpressionNode (type, offsets, line, column)
+                    lhs = ArrayAllocatorExpressionNode (type, offsets, templateParams, line, column)
                 # constructor call 
                 elif (self.tokens[self.currentToken].type == "LPAREN"):
                     self.match ("factor", "LPAREN")
@@ -1326,7 +1356,7 @@ class Parser:
                             args += [self.assignexpr ()]
                     self.match ("factor", "RPAREN")
 
-                    lhs = ConstructorCallExpressionNode (type, type.id, args, line, column)
+                    lhs = ConstructorCallExpressionNode (type, type.id, args, templateParams, line, column)
 
                 else:
                     self.error ("factor", "LBRACKET", "Expecting an array allocator or class constructor call")

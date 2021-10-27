@@ -8,13 +8,14 @@
 // AmyScript Built-in library
 // Author: Amy Burnett
 //========================================================================
-
-jump __endOfLibrary
-
-//========================================================================
-// Global Variables
+// Global Builtin Variables
 
     assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
 
 //========================================================================
 // Prints a given string to the screen
@@ -62,6 +63,14 @@ print__char:
     // grab string
     stackget __char 0
     print __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
     return 0
 
 //========================================================================
@@ -114,6 +123,14 @@ println__char:
     return 0
 
 //========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
+    return 0
+
+//========================================================================
 // Prints a newline to the console
 // void println ();
 println:
@@ -133,6 +150,12 @@ exit:
     halt
 
 //========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
 // converts int to float
 // float intToFloat (int);
 intToFloat__int:
@@ -147,6 +170,12 @@ stringToFloat__char__1:
     stackget val 0
     stof res val
     return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
 
 //========================================================================
 // converts float to int
@@ -182,6 +211,13 @@ string__float:
 
 //========================================================================
 
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
+
+//========================================================================
+
 __endOfLibrary:
     //push prompt
     //call print
@@ -206,6 +242,8 @@ __endOfLibrary:
    POP __rhs
    ASSIGN __main__START_MARKER __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Char Literal
@@ -216,6 +254,8 @@ __endOfLibrary:
    POP __rhs
    ASSIGN __main__GOAL_MARKER __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Char Literal
@@ -226,6 +266,8 @@ __endOfLibrary:
    POP __rhs
    ASSIGN __main__WALL_MARKER __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //========================================================================
 // Function Declaration - min(int, int) -> int
 JUMP __end____main____min__int__int
@@ -354,6 +396,8 @@ __main____print__char__2:
                   POP __void
                   RESPONSE __retval
                   PUSH __retval
+               // Statement results can be ignored
+               POP __void
             // Repeat
             JUMP __for__3
             // End of For
@@ -529,6 +573,8 @@ __main____dfs__char__2__int__int__int__int__int__int:
             POP __rhs
             ASSIGN __main__dfs__block__4__minMoves __rhs
             PUSH __rhs
+         // Statement results can be ignored
+         POP __void
          //---------------------------------------------------------------
          // If-Statement
             // Condition
@@ -654,6 +700,8 @@ __main____dfs__char__2__int__int__int__int__int__int:
                      POP __rhs
                      ASSIGN __main__dfs__block__4__if__11__block__12__res __rhs
                      PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
                   //------------------------------------------------------
                   // If-Statement
                      // Condition
@@ -700,6 +748,8 @@ __main____dfs__char__2__int__int__int__int__int__int:
                            POP __rhs
                            ASSIGN __main__dfs__block__4__minMoves __rhs
                            PUSH __rhs
+                        // Statement results can be ignored
+                        POP __void
                      JUMP __endif__13
                      // End of if
                      __endif__13:
@@ -848,6 +898,8 @@ __main____dfs__char__2__int__int__int__int__int__int:
                      POP __rhs
                      ASSIGN __main__dfs__block__4__if__14__block__15__res __rhs
                      PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
                   //------------------------------------------------------
                   // If-Statement
                      // Condition
@@ -894,6 +946,8 @@ __main____dfs__char__2__int__int__int__int__int__int:
                            POP __rhs
                            ASSIGN __main__dfs__block__4__minMoves __rhs
                            PUSH __rhs
+                        // Statement results can be ignored
+                        POP __void
                      JUMP __endif__16
                      // End of if
                      __endif__16:
@@ -1034,6 +1088,8 @@ __main____dfs__char__2__int__int__int__int__int__int:
                      POP __rhs
                      ASSIGN __main__dfs__block__4__if__17__block__18__res __rhs
                      PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
                   //------------------------------------------------------
                   // If-Statement
                      // Condition
@@ -1080,6 +1136,8 @@ __main____dfs__char__2__int__int__int__int__int__int:
                            POP __rhs
                            ASSIGN __main__dfs__block__4__minMoves __rhs
                            PUSH __rhs
+                        // Statement results can be ignored
+                        POP __void
                      JUMP __endif__19
                      // End of if
                      __endif__19:
@@ -1214,6 +1272,8 @@ __main____dfs__char__2__int__int__int__int__int__int:
                      POP __rhs
                      ASSIGN __main__dfs__block__4__if__20__block__21__res __rhs
                      PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
                   //------------------------------------------------------
                   // If-Statement
                      // Condition
@@ -1260,6 +1320,8 @@ __main____dfs__char__2__int__int__int__int__int__int:
                            POP __rhs
                            ASSIGN __main__dfs__block__4__minMoves __rhs
                            PUSH __rhs
+                        // Statement results can be ignored
+                        POP __void
                      JUMP __endif__22
                      // End of if
                      __endif__22:
@@ -1412,6 +1474,8 @@ __end____main____dfs__char__2__int__int__int__int__int__int:
    POP __rhs
    ASSIGN __main__board __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - print(char[][]) -> void
    // Arguments
       // Identifier - board
@@ -1425,6 +1489,8 @@ __end____main____dfs__char__2__int__int__int__int__int__int:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 // Assignment
    // RHS
       // Assignment
@@ -1443,6 +1509,8 @@ __end____main____dfs__char__2__int__int__int__int__int__int:
    POP __rhs
    ASSIGN __main__starti __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -1588,6 +1656,8 @@ __for__23:
                         POP __rhs
                         ASSIGN __main__starti __rhs
                         PUSH __rhs
+                     // Statement results can be ignored
+                     POP __void
                      // Assignment
                         // RHS
                            // Identifier - j
@@ -1595,6 +1665,8 @@ __for__23:
                         POP __rhs
                         ASSIGN __main__startj __rhs
                         PUSH __rhs
+                     // Statement results can be ignored
+                     POP __void
                   //------------------------------------------------------
                JUMP __endif__25
                // End of if
@@ -1620,6 +1692,8 @@ __for__23:
    POP __rhs
    ASSIGN __main__minMoves __rhs
    PUSH __rhs
+// Statement results can be ignored
+POP __void
 //------------------------------------------------------------------------
 // For-Loop
 // Init
@@ -1724,6 +1798,8 @@ __for__27:
             POP __rhs
             ASSIGN __main__for__27__block__28__res __rhs
             PUSH __rhs
+         // Statement results can be ignored
+         POP __void
          //---------------------------------------------------------------
          // If-Statement
             // Condition
@@ -1756,6 +1832,8 @@ __for__27:
                      POP __rhs
                      ASSIGN __main__minMoves __rhs
                      PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
                   // Break out of __for__27
                   JUMP __endfor__27
                //---------------------------------------------------------
@@ -1782,6 +1860,8 @@ __for__27:
    POP __void
    RESPONSE __retval
    PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

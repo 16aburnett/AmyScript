@@ -12,6 +12,21 @@ else:
 
 # ========================================================================
 
+class Symbol:
+    def __init__(self):
+        self.id = ""
+        self.typeDec = {}
+        self.varDec = None 
+        self.funDec = {0:[]} 
+
+class Kind(Enum):
+    TYPE = 0
+    VAR  = 1
+    FUNC = 2
+
+
+# ========================================================================
+
 class SymbolTable:
 
     def __init__(self):
@@ -27,85 +42,234 @@ class SymbolTable:
         self.table.pop ()
         self.nestLevel -= 1
 
-    def insert (self, decl, name=""):
-        if name == "":
-            name = decl.id
-        # print (f"**insert {name}**")
-        # ensure variable wasnt already declared
-        if (name in self.table[-1]):
-            # functions of the same name can have multiple overloads
-            if isinstance (decl, (FunctionNode, MethodDeclarationNode, ConstructorDeclarationNode)) and isinstance (self.table[-1][name], dict):
-                # ensure that parameters dont match
-                for overload in self.table[-1][name][0]:
-                    # params dont match if nParams is different
-                    if len(overload.params) != len(decl.params):
-                        continue
-                    # check if param types match
-                    for i in range(len(overload.params)):
-                        # found nonmatching param
-                        if overload.params[i].type.__str__() != decl.params[i].type.__str__():
-                            # param types do not match
-                            break
-                    # param types match 
-                    else:
-                        return False 
-                # reaches here if no overloads match 
-            # functions can be overloaded by the number of template parameters
-            elif isinstance (decl, FunctionTemplateDeclarationNode):
-                # print (f"  {decl.types}")
-                # ensure there isnt already a template with the same amount of template params 
-                if len(decl.types) in self.table[-1][name]:
-                    print (f"Semantic Error: Redeclaration of template function '{decl.id}' with {len(decl.types)} num template parameters")
-                    print (f"   Original on line {self.table[-1][name][len(decl.types)].type.token.line} and column {self.table[-1][name][len(decl.types)].type.token.column}")
-                    print (f"   Redeclaration on line {decl.type.token.line} and column {decl.type.token.column}")
-                    return False
-            # ensure field is not inherited from parent 
-            elif isinstance (self.table[-1][name], FieldDeclarationNode) and isinstance (decl, FieldDeclarationNode) and self.table[-1][name].isInherited:
-                # override if it is inherited and being overridden
-                # this shadows/hides overridden parent fields 
-                self.table[-1][name] = decl 
-            # forward declaration 
-            elif isinstance (self.table[-1][name], ClassDeclarationNode) and self.table[-1][name].isForwardDeclaration:
-                # replace the forward declaration 
-                self.table[-1][name] = decl
-            else:
-                return False
-        # add function to overload list in table
-        if isinstance (decl, (FunctionNode, MethodDeclarationNode, ConstructorDeclarationNode)):
-            # create overload list if DNE
-            if name not in self.table[-1]:
-                # create template dict 
-                self.table[-1][name] = {}
-                # create overload dict 
-                self.table[-1][name][0] = []
-            # add to overload list 
-            self.table[-1][name][0].append (decl)
-            return True
-        # add template function to template overloads 
-        elif isinstance (decl, FunctionTemplateDeclarationNode):
-            # create overload if DNE
-            if name not in self.table[-1]:
-                # create template dict
-                self.table[-1][name] = {}
-            # add template function
-            self.table[-1][name][len(decl.types)] = decl 
-            return True
-        # add normal variable to table 
-        self.table[-1][name] = decl
-        return True
+    # table [
+    #   scope0 : {
+    #       add : Symbol {
+    #           typeDec : None,
+    #           varDec : None,
+    #           funDec : templates {
+    #              0 template params : overloads[]
+    #              1 template param  : TemplateFunction()
+    #                  instances[]
+    #              2 template params : TemplateFunction()
+    #                  instances[]
+    #           }
+    #       }   
+    #       vector : Symbol {
+    #           typeDec : templates {
+    #               0 template params : ClassDec
+    #               1 template param  : TemplateClass()
+    #                   instances[
+    #                       vector<int>
+    #                       vector<float>
+    #                   ]
+    #           }
+    #           varDec : None,
+    #           funDec : None
+    #       }
+    #       vector<int>::push_back : Symbol {
+    #           typeDec : None
+    #           varDec  : None,
+    #           funDec  : templates {
+    #               0 template params : overloads[]
+    #           }
+    #       }
+    # 
+    # ]
+    def insert (self, decl, name, kind):
+        # print (f"[SymbolTable] [insert] '{name}' as {kind}")
 
-    def lookup (self, name, params=[], templateParams=[], visitor=None):
-        # print (f"**lookup {name}**")
+        # TYPES (CLASS, CLASSTEMP, ENUM)
+        if kind == Kind.TYPE:
+            # ** ensure decl is a type 
+            # ensure type wasnt already declared in this scope
+            if (name in self.table[-1] and self.table[-1][name].typeDec != {}):
+
+                # CLASS TEMPLATES
+                if isinstance (decl, ClassTemplateDeclarationNode):
+                    # print (f"  {decl.types}")
+                    # ensure there isnt already a template with the same amount of template params 
+                    if len(decl.templateParams) in self.table[-1][name].typeDec:
+                        print (f"Semantic Error: Redeclaration of class template '{decl.id}' with {len(decl.types)} num template parameters")
+                        print (f"   Original on line {self.table[-1][name].typeDec[len(decl.types)].type.token.line} and column {self.table[-1][name].typeDec[len(decl.types)].type.token.column}")
+                        print (f"   Redeclaration on line {decl.type.token.line} and column {decl.type.token.column}")
+                        return False
+                # CLASS & ENUM
+                else:
+                    if 0 in self.table[-1][name].typeDec:
+                        print (f"Semantic Error: Redeclaration of class/enum '{decl.id}'")
+                        print (f"   Original on line {self.table[-1][name].typeDec[0].type.token.line} and column {self.table[-1][name].typeDec[0].type.token.column}")
+                        print (f"   Redeclaration on line {decl.type.token.line} and column {decl.type.token.column}")
+                        return False
+
+            # ensure symbol is in table 
+            if (name not in self.table[-1]):
+                self.table[-1][name] = Symbol ()
+
+            # CLASS TEMPLATE
+            if isinstance (decl, (ClassTemplateDeclarationNode)):
+                # insert new type
+                self.table[-1][name].typeDec[len(decl.templateParams)] = decl
+            # CLASS & ENUM
+            else:
+                # insert new type
+                self.table[-1][name].typeDec[0] = decl
+
+            return True
+        
+        # VARIABLES, FIELDS
+        elif kind == Kind.VAR:
+            # ** ensure decl is a VAR 
+            # ensure VAR wasnt already declared in this scope
+            if (name in self.table[-1] and self.table[-1][name].varDec != None):
+                # Ensure field is not shadowing an inherited field 
+                if isinstance(decl, FieldDeclarationNode) and isinstance(self.table[-1][name].varDec, FieldDeclarationNode) \
+                    and self.table[-1][name].varDec.isInherited:
+                    pass
+                # no inherited field shadowing 
+                else:
+                    return False
+
+            # ensure symbol is in table 
+            if (name not in self.table[-1]):
+                self.table[-1][name] = Symbol ()
+
+            # insert new VAR
+            self.table[-1][name].varDec = decl
+            return True
+
+        
+        # FUNCTIONS, METHODS, CONSTRUCTORS
+        elif kind == Kind.FUNC:
+            # ** ensure decl is a FUNC 
+            # ensure FUNC wasnt already declared in this scope
+            if (name in self.table[-1]):
+                # Ensure function overload doesnt already exist
+                if (isinstance (decl,(FunctionNode, MethodDeclarationNode, ConstructorDeclarationNode))):
+                    # ensure that parameters dont match
+                    for overload in self.table[-1][name].funDec[0]:
+                        # params dont match if nParams is different
+                        if len(overload.params) != len(decl.params):
+                            continue
+                        # check if param types match
+                        for i in range(len(overload.params)):
+                            # found nonmatching param
+                            if overload.params[i].type.__str__() != decl.params[i].type.__str__():
+                                # param types do not match
+                                break
+                        # param types match 
+                        else:
+                            return False 
+                    # reaches here if no overloads match
+                # functions can be overloaded by the number of template parameters
+                elif isinstance (decl, FunctionTemplateDeclarationNode):
+                    # print (f"  {decl.types}")
+                    # ensure there isnt already a template with the same amount of template params 
+                    if len(decl.types) in self.table[-1][name].funDec:
+                        print (f"Semantic Error: Redeclaration of template function '{decl.id}' with {len(decl.types)} num template parameters")
+                        print (f"   Original on line {self.table[-1][name].funDec[len(decl.types)].type.token.line} and column {self.table[-1][name].funDec[len(decl.types)].type.token.column}")
+                        print (f"   Redeclaration on line {decl.type.token.line} and column {decl.type.token.column}")
+                        return False
+            # reaches here if not a redeclaration 
+
+            # ensure symbol is in table 
+            if (name not in self.table[-1]):
+                self.table[-1][name] = Symbol ()
+
+            # add function to overload list in table
+            if isinstance (decl, (FunctionNode, MethodDeclarationNode, ConstructorDeclarationNode)):
+                # add to overload list 
+                self.table[-1][name].funDec[0].append (decl)
+                return True
+
+            # add function template to template overloads 
+            elif isinstance (decl, FunctionTemplateDeclarationNode):
+                # add template function
+                self.table[-1][name].funDec[len(decl.types)] = decl 
+                return True
+
+        return False
+
+    def lookup (self, name, kind, params=[], templateParams=[], visitor=None):
+
+        # print (f"[SymbolTable] [lookup] {name}",end="")
+        # if len(templateParams) > 0:
+        #     print (f"<:{templateParams[0]}",end="")
+        #     for i in range(1, len(templateParams)):
+        #         print (f", {templateParams[i]}",end="")
+        #     print(":>",end="")
+        # print ()
+
+
+        # for each scope
+        # march through the scopes 
+        # use closes suitable match 
         for i in range(len(self.table)-1, -1, -1):
-            # check scope for var 
-            if (name in self.table[i]):
-                # for matching templated functions 
-                if len(templateParams) > 0 and isinstance (self.table[i][name], dict):
-                    # ensure template has the correct number of template parameters 
-                    if len(templateParams) not in self.table[i][name]:
-                        # print ("template not found")
+            # ensure var is in this scope 
+            if (name not in self.table[i]):
+                continue
+
+            # TYPES (CLASS, CLASSTEMP, ENUM)
+            if (kind == Kind.TYPE):
+                # CLASS TEMP
+                if len(templateParams) > 0:
+                    # ensure template params match 
+                    if len(templateParams) not in self.table[i][name].typeDec:
+                        continue 
+
+                    # create template instance if DNE
+                    tempSignature = [f"<:{templateParams[0]}"]
+                    for j in range(1, len(templateParams)):
+                        tempSignature += [f", {templateParams[j]}"]
+                    tempSignature += [f":>"]
+                    tempSignature = "".join(tempSignature)
+                    if tempSignature not in self.table[i][name].typeDec[len(templateParams)].instantiations:
+                        # print ("creating template instance...")
+                        # print (name, tempSignature)
+                        # create instance
+                        _class = self.table[i][name].typeDec[len(templateParams)]._class.copy()
+                        self.table[i][name].typeDec[len(templateParams)].instantiations[tempSignature] = _class
+                        # overrite template aliases with their new types 
+                        _class.templateParams = templateParams
+                        _class.type.templateParams = templateParams
+                        templateVisitor = TemplateVisitor (self.table[i][name].typeDec[len(templateParams)].templateParams, templateParams)
+                        _class.accept (templateVisitor)
+                        # analyze new instance 
+                        visitor.insertFunc = False
+                        oldWasSuccessful = visitor.wasSuccessful
+                        visitor.wasSuccessful = True
+                        _class.accept (visitor)
+                        if not visitor.wasSuccessful:
+                            print (f"**From instantiation of class '{_class.id+tempSignature}'", end="\n\n")
+                            exit (1)
+                        # restore previous success
+                        visitor.wasSuccessful = visitor.wasSuccessful and oldWasSuccessful
+                        visitor.insertFunc = True
+                    return self.table[i][name].typeDec[len(templateParams)].instantiations[tempSignature]
+
+                # CLASS & ENUM
+                else:
+                    # ensure symbol is a variable
+                    if 0 not in self.table[i][name].typeDec:
                         continue
-                    # find matching instantiation 
+                    return self.table[i][name].typeDec[0]
+            
+            # VARIABLES, FIELDS
+            elif (kind == Kind.VAR):
+                # ensure symbol is a variable
+                if self.table[i][name].varDec == None:
+                    continue
+                return self.table[i][name].varDec
+                
+            # FUNCTIONS, METHODS, CONSTRUCTORS, FUNCTION TEMPLATE
+            elif (kind == Kind.FUNC):
+
+                # FUNCTION TEMPLATE
+                if len(templateParams) > 0 and isinstance (self.table[i][name].funDec, dict):
+                    # ensure num template params match 
+                    if len(templateParams) not in self.table[i][name].funDec:
+                        continue
+                    # find matching instance
                     # ** currently, overloading template functions with normal parameters is not supported 
                     tempSignature = [f"<:{templateParams[0].__str__()}"]
                     for j in range(1, len(templateParams)):
@@ -114,13 +278,13 @@ class SymbolTable:
                     tempSignature = "".join(tempSignature)
                     # print (tempSignature)
                     # create template instance if it DNE
-                    if tempSignature not in self.table[i][name][len(templateParams)].instantiations:
-                        # print ("creating template instance...")
+                    if tempSignature not in self.table[i][name].funDec[len(templateParams)].instantiations:
+                        # print ("creating function template instance...")
                         # create instance
-                        func = self.table[i][name][len(templateParams)].function.copy()
-                        self.table[i][name][len(templateParams)].instantiations[tempSignature] = func
+                        func = self.table[i][name].funDec[len(templateParams)].function.copy()
+                        self.table[i][name].funDec[len(templateParams)].instantiations[tempSignature] = func
                         # overrite template aliases with their new types 
-                        templateVisitor = TemplateVisitor (self.table[i][name][len(templateParams)].types, templateParams)
+                        templateVisitor = TemplateVisitor (self.table[i][name].funDec[len(templateParams)].types, templateParams)
                         func.accept (templateVisitor)
                         # analyze new instance 
                         visitor.insertFunc = False
@@ -129,11 +293,11 @@ class SymbolTable:
                         visitor.wasSuccessful = True
                         func.accept (visitor)
                         if not visitor.wasSuccessful:
-                            print (f"**From instantiation of '{func.signature}'", end="\n\n")
+                            print (f"**From instantiation of function '{func.signature}'", end="\n\n")
                         # restore previous success
                         visitor.wasSuccessful = visitor.wasSuccessful and oldWasSuccessful
                         visitor.insertFunc = True 
-                    func = self.table[i][name][len(templateParams)].instantiations[tempSignature]
+                    func = self.table[i][name].funDec[len(templateParams)].instantiations[tempSignature]
                     # ensure num params match 
                     if len(params) != len(func.params):
                         print (f"Semantic Error: Invalid number of parameters for template instance of '{func.id}'")
@@ -177,7 +341,7 @@ class SymbolTable:
                             break
                     # all parameters are satisfactory 
                     else: 
-                        return self.table[i][name][len(templateParams)].instantiations[tempSignature]
+                        return self.table[i][name].funDec[len(templateParams)].instantiations[tempSignature]
                     # reaches here if parameters dont match 
                     print (f"Semantic Error: Bad parameter types for template instance of '{func.id}'")
                     print (f"   Desired:    {func.signature}")
@@ -189,11 +353,11 @@ class SymbolTable:
                     print (f")")
                     return None
 
-                # for matching function overloads
-                elif (isinstance (self.table[i][name], dict)):
+                # FUNCTION, METHOD, CONSTRUCTOR 
+                elif (isinstance (self.table[i][name].funDec, dict)):
                     # check each overload and determine initial candidates 
                     candidates = []
-                    for overload in self.table[i][name][0]:
+                    for overload in self.table[i][name].funDec[0]:
                         # check the number of parameters 
                         if (len(params) != len(overload.params)):
                             continue
@@ -245,8 +409,10 @@ class SymbolTable:
                         # check next overload 
                     # check if viable overloads were found 
                     if len(candidates) == 0:
-                        # no viable overloads found 
-                        return None 
+                        # no viable overloads found at this scope
+                        print (f"no viable candidates")
+                        # return None 
+                        continue
                     # found viable overloads 
                     # check for best viable overload 
                     # best viable overload is the one with the least number of steps 
@@ -276,11 +442,8 @@ class SymbolTable:
                     # no ambiguity -> found viable candidate
                     return candidates[maxI[0]][0]
                     # reaches here if no overloads match 
-                # for matching variables 
-                else:
-                    return self.table[i][name]
                 
-        # reaches here if no matching variable declaration was found
+        # reaches here if no matching declaration was found
         return None
 
 # ========================================================================

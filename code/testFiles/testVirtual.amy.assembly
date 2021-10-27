@@ -8,13 +8,14 @@
 // AmyScript Built-in library
 // Author: Amy Burnett
 //========================================================================
-
-jump __endOfLibrary
-
-//========================================================================
-// Global Variables
+// Global Builtin Variables
 
     assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
 
 //========================================================================
 // Prints a given string to the screen
@@ -149,6 +150,12 @@ exit:
     halt
 
 //========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
 // converts int to float
 // float intToFloat (int);
 intToFloat__int:
@@ -163,6 +170,12 @@ stringToFloat__char__1:
     stackget val 0
     stof res val
     return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
 
 //========================================================================
 // converts float to int
@@ -198,6 +211,13 @@ string__float:
 
 //========================================================================
 
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
+
+//========================================================================
+
 __endOfLibrary:
     //push prompt
     //call print
@@ -213,35 +233,35 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__A inherits __main__Object
+// Class Declaration - __main____A inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__A 1
+      MALLOC __dtable____main____A 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__A[0] __method____main__A____X
+      ASSIGN __dtable____main____A[0] __method____main____A____X
 // skip over class methods
-JUMP __endclass____main__A
+JUMP __endclass____main____A
    //---------------------------------------------------------------------
    // Constructor Declaration - A::A() -> A
-   JUMP __end__ctor____main__A____A
-   __ctor____main__A____A:
+   JUMP __end__ctor____main____A____A
+   __ctor____main____A____A:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__A
+         ASSIGN __this[0] __dtable____main____A
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__A____A:
-   // End Constructor Declaration - __ctor____main__A____A
+   __end__ctor____main____A____A:
+   // End Constructor Declaration - __ctor____main____A____A
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - A::X() -> void
-   JUMP __end__method____main__A____X
-   __method____main__A____X:
+   JUMP __end__method____main____A____X
+   __method____main____A____X:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -272,85 +292,85 @@ JUMP __endclass____main__A
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__A____X:
-   // End Method Declaration - __method____main__A____X
+   __end__method____main____A____X:
+   // End Method Declaration - __method____main____A____X
    //---------------------------------------------------------------------
 
-__endclass____main__A:
-// End Class Declaration - __main__A
+__endclass____main____A:
+// End Class Declaration - __main____A
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__B inherits __main__A
+// Class Declaration - __main____B inherits __main____A
    // Creating Dispatch Table
-      MALLOC __dtable____main__B 1
+      MALLOC __dtable____main____B 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__B[0] __method____main__A____X
+      ASSIGN __dtable____main____B[0] __method____main____A____X
 // skip over class methods
-JUMP __endclass____main__B
+JUMP __endclass____main____B
    //---------------------------------------------------------------------
    // Constructor Declaration - B::B() -> B
-   JUMP __end__ctor____main__B____B
-   __ctor____main__B____B:
+   JUMP __end__ctor____main____B____B
+   __ctor____main____B____B:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__B
+         ASSIGN __this[0] __dtable____main____B
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__B____B:
-   // End Constructor Declaration - __ctor____main__B____B
+   __end__ctor____main____B____B:
+   // End Constructor Declaration - __ctor____main____B____B
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - B::X() -> void
    // Inherited from A
-   JUMP __end__method____main__B____X
-   __method____main__B____X:
+   JUMP __end__method____main____B____X
+   __method____main____B____X:
       // Jump to A's version
-      JUMP __method____main__A____X
-   __end__method____main__B____X:
-   // End Method Declaration - __method____main__B____X
+      JUMP __method____main____A____X
+   __end__method____main____B____X:
+   // End Method Declaration - __method____main____B____X
    //---------------------------------------------------------------------
 
-__endclass____main__B:
-// End Class Declaration - __main__B
+__endclass____main____B:
+// End Class Declaration - __main____B
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__D inherits __main__B
+// Class Declaration - __main____D inherits __main____B
    // Creating Dispatch Table
-      MALLOC __dtable____main__D 1
+      MALLOC __dtable____main____D 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__D[0] __method____main__D____X
+      ASSIGN __dtable____main____D[0] __method____main____D____X
 // skip over class methods
-JUMP __endclass____main__D
+JUMP __endclass____main____D
    //---------------------------------------------------------------------
    // Constructor Declaration - D::D() -> D
-   JUMP __end__ctor____main__D____D
-   __ctor____main__D____D:
+   JUMP __end__ctor____main____D____D
+   __ctor____main____D____D:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__D
+         ASSIGN __this[0] __dtable____main____D
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__D____D:
-   // End Constructor Declaration - __ctor____main__D____D
+   __end__ctor____main____D____D:
+   // End Constructor Declaration - __ctor____main____D____D
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - D::X() -> void
-   JUMP __end__method____main__D____X
-   __method____main__D____X:
+   JUMP __end__method____main____D____X
+   __method____main____D____X:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -381,56 +401,56 @@ JUMP __endclass____main__D
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__D____X:
-   // End Method Declaration - __method____main__D____X
+   __end__method____main____D____X:
+   // End Method Declaration - __method____main____D____X
    //---------------------------------------------------------------------
 
-__endclass____main__D:
-// End Class Declaration - __main__D
+__endclass____main____D:
+// End Class Declaration - __main____D
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__E inherits __main__D
+// Class Declaration - __main____E inherits __main____D
    // Creating Dispatch Table
-      MALLOC __dtable____main__E 2
+      MALLOC __dtable____main____E 2
       // Populate Dispatch Table
-      ASSIGN __dtable____main__E[0] __method____main__D____X
-      ASSIGN __dtable____main__E[1] __method____main__E____Y
+      ASSIGN __dtable____main____E[0] __method____main____D____X
+      ASSIGN __dtable____main____E[1] __method____main____E____Y
 // skip over class methods
-JUMP __endclass____main__E
+JUMP __endclass____main____E
    //---------------------------------------------------------------------
    // Constructor Declaration - E::E() -> E
-   JUMP __end__ctor____main__E____E
-   __ctor____main__E____E:
+   JUMP __end__ctor____main____E____E
+   __ctor____main____E____E:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__E
+         ASSIGN __this[0] __dtable____main____E
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__E____E:
-   // End Constructor Declaration - __ctor____main__E____E
+   __end__ctor____main____E____E:
+   // End Constructor Declaration - __ctor____main____E____E
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - E::X() -> void
    // Inherited from D
-   JUMP __end__method____main__E____X
-   __method____main__E____X:
+   JUMP __end__method____main____E____X
+   __method____main____E____X:
       // Jump to D's version
-      JUMP __method____main__D____X
-   __end__method____main__E____X:
-   // End Method Declaration - __method____main__E____X
+      JUMP __method____main____D____X
+   __end__method____main____E____X:
+   // End Method Declaration - __method____main____E____X
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - E::Y() -> void
-   JUMP __end__method____main__E____Y
-   __method____main__E____Y:
+   JUMP __end__method____main____E____Y
+   __method____main____E____Y:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -461,44 +481,44 @@ JUMP __endclass____main__E
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__E____Y:
-   // End Method Declaration - __method____main__E____Y
+   __end__method____main____E____Y:
+   // End Method Declaration - __method____main____E____Y
    //---------------------------------------------------------------------
 
-__endclass____main__E:
-// End Class Declaration - __main__E
+__endclass____main____E:
+// End Class Declaration - __main____E
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__C inherits __main__B
+// Class Declaration - __main____C inherits __main____B
    // Creating Dispatch Table
-      MALLOC __dtable____main__C 1
+      MALLOC __dtable____main____C 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__C[0] __method____main__C____X
+      ASSIGN __dtable____main____C[0] __method____main____C____X
 // skip over class methods
-JUMP __endclass____main__C
+JUMP __endclass____main____C
    //---------------------------------------------------------------------
    // Constructor Declaration - C::C() -> C
-   JUMP __end__ctor____main__C____C
-   __ctor____main__C____C:
+   JUMP __end__ctor____main____C____C
+   __ctor____main____C____C:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__C
+         ASSIGN __this[0] __dtable____main____C
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__C____C:
-   // End Constructor Declaration - __ctor____main__C____C
+   __end__ctor____main____C____C:
+   // End Constructor Declaration - __ctor____main____C____C
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - C::X() -> void
-   JUMP __end__method____main__C____X
-   __method____main__C____X:
+   JUMP __end__method____main____C____X
+   __method____main____C____X:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -529,56 +549,56 @@ JUMP __endclass____main__C
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__C____X:
-   // End Method Declaration - __method____main__C____X
+   __end__method____main____C____X:
+   // End Method Declaration - __method____main____C____X
    //---------------------------------------------------------------------
 
-__endclass____main__C:
-// End Class Declaration - __main__C
+__endclass____main____C:
+// End Class Declaration - __main____C
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__F inherits __main__D
+// Class Declaration - __main____F inherits __main____D
    // Creating Dispatch Table
-      MALLOC __dtable____main__F 2
+      MALLOC __dtable____main____F 2
       // Populate Dispatch Table
-      ASSIGN __dtable____main__F[0] __method____main__D____X
-      ASSIGN __dtable____main__F[1] __method____main__F____Z
+      ASSIGN __dtable____main____F[0] __method____main____D____X
+      ASSIGN __dtable____main____F[1] __method____main____F____Z
 // skip over class methods
-JUMP __endclass____main__F
+JUMP __endclass____main____F
    //---------------------------------------------------------------------
    // Constructor Declaration - F::F() -> F
-   JUMP __end__ctor____main__F____F
-   __ctor____main__F____F:
+   JUMP __end__ctor____main____F____F
+   __ctor____main____F____F:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__F
+         ASSIGN __this[0] __dtable____main____F
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__F____F:
-   // End Constructor Declaration - __ctor____main__F____F
+   __end__ctor____main____F____F:
+   // End Constructor Declaration - __ctor____main____F____F
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - F::X() -> void
    // Inherited from D
-   JUMP __end__method____main__F____X
-   __method____main__F____X:
+   JUMP __end__method____main____F____X
+   __method____main____F____X:
       // Jump to D's version
-      JUMP __method____main__D____X
-   __end__method____main__F____X:
-   // End Method Declaration - __method____main__F____X
+      JUMP __method____main____D____X
+   __end__method____main____F____X:
+   // End Method Declaration - __method____main____F____X
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - F::Z() -> void
-   JUMP __end__method____main__F____Z
-   __method____main__F____Z:
+   JUMP __end__method____main____F____Z
+   __method____main____F____Z:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -609,45 +629,45 @@ JUMP __endclass____main__F
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__F____Z:
-   // End Method Declaration - __method____main__F____Z
+   __end__method____main____F____Z:
+   // End Method Declaration - __method____main____F____Z
    //---------------------------------------------------------------------
 
-__endclass____main__F:
-// End Class Declaration - __main__F
+__endclass____main____F:
+// End Class Declaration - __main____F
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__G inherits __main__A
+// Class Declaration - __main____G inherits __main____A
    // Creating Dispatch Table
-      MALLOC __dtable____main__G 2
+      MALLOC __dtable____main____G 2
       // Populate Dispatch Table
-      ASSIGN __dtable____main__G[0] __method____main__G____X
-      ASSIGN __dtable____main__G[1] __method____main__G____Y
+      ASSIGN __dtable____main____G[0] __method____main____G____X
+      ASSIGN __dtable____main____G[1] __method____main____G____Y
 // skip over class methods
-JUMP __endclass____main__G
+JUMP __endclass____main____G
    //---------------------------------------------------------------------
    // Constructor Declaration - G::G() -> G
-   JUMP __end__ctor____main__G____G
-   __ctor____main__G____G:
+   JUMP __end__ctor____main____G____G
+   __ctor____main____G____G:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__G
+         ASSIGN __this[0] __dtable____main____G
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__G____G:
-   // End Constructor Declaration - __ctor____main__G____G
+   __end__ctor____main____G____G:
+   // End Constructor Declaration - __ctor____main____G____G
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - G::X() -> void
-   JUMP __end__method____main__G____X
-   __method____main__G____X:
+   JUMP __end__method____main____G____X
+   __method____main____G____X:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -678,14 +698,14 @@ JUMP __endclass____main__G
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__G____X:
-   // End Method Declaration - __method____main__G____X
+   __end__method____main____G____X:
+   // End Method Declaration - __method____main____G____X
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - G::Y() -> void
-   JUMP __end__method____main__G____Y
-   __method____main__G____Y:
+   JUMP __end__method____main____G____Y
+   __method____main____G____Y:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -716,56 +736,56 @@ JUMP __endclass____main__G
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__G____Y:
-   // End Method Declaration - __method____main__G____Y
+   __end__method____main____G____Y:
+   // End Method Declaration - __method____main____G____Y
    //---------------------------------------------------------------------
 
-__endclass____main__G:
-// End Class Declaration - __main__G
+__endclass____main____G:
+// End Class Declaration - __main____G
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__H inherits __main__G
+// Class Declaration - __main____H inherits __main____G
    // Creating Dispatch Table
-      MALLOC __dtable____main__H 2
+      MALLOC __dtable____main____H 2
       // Populate Dispatch Table
-      ASSIGN __dtable____main__H[0] __method____main__G____X
-      ASSIGN __dtable____main__H[1] __method____main__H____Y
+      ASSIGN __dtable____main____H[0] __method____main____G____X
+      ASSIGN __dtable____main____H[1] __method____main____H____Y
 // skip over class methods
-JUMP __endclass____main__H
+JUMP __endclass____main____H
    //---------------------------------------------------------------------
    // Constructor Declaration - H::H() -> H
-   JUMP __end__ctor____main__H____H
-   __ctor____main__H____H:
+   JUMP __end__ctor____main____H____H
+   __ctor____main____H____H:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__H
+         ASSIGN __this[0] __dtable____main____H
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__H____H:
-   // End Constructor Declaration - __ctor____main__H____H
+   __end__ctor____main____H____H:
+   // End Constructor Declaration - __ctor____main____H____H
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - H::X() -> void
    // Inherited from G
-   JUMP __end__method____main__H____X
-   __method____main__H____X:
+   JUMP __end__method____main____H____X
+   __method____main____H____X:
       // Jump to G's version
-      JUMP __method____main__G____X
-   __end__method____main__H____X:
-   // End Method Declaration - __method____main__H____X
+      JUMP __method____main____G____X
+   __end__method____main____H____X:
+   // End Method Declaration - __method____main____H____X
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - H::Y() -> void
-   JUMP __end__method____main__H____Y
-   __method____main__H____Y:
+   JUMP __end__method____main____H____Y
+   __method____main____H____Y:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -796,57 +816,57 @@ JUMP __endclass____main__H
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__H____Y:
-   // End Method Declaration - __method____main__H____Y
+   __end__method____main____H____Y:
+   // End Method Declaration - __method____main____H____Y
    //---------------------------------------------------------------------
 
-__endclass____main__H:
-// End Class Declaration - __main__H
+__endclass____main____H:
+// End Class Declaration - __main____H
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__I inherits __main__A
+// Class Declaration - __main____I inherits __main____A
    // Creating Dispatch Table
-      MALLOC __dtable____main__I 3
+      MALLOC __dtable____main____I 3
       // Populate Dispatch Table
-      ASSIGN __dtable____main__I[0] __method____main__A____X
-      ASSIGN __dtable____main__I[1] __method____main__I____Y
-      ASSIGN __dtable____main__I[2] __method____main__I____Z
+      ASSIGN __dtable____main____I[0] __method____main____A____X
+      ASSIGN __dtable____main____I[1] __method____main____I____Y
+      ASSIGN __dtable____main____I[2] __method____main____I____Z
 // skip over class methods
-JUMP __endclass____main__I
+JUMP __endclass____main____I
    //---------------------------------------------------------------------
    // Constructor Declaration - I::I() -> I
-   JUMP __end__ctor____main__I____I
-   __ctor____main__I____I:
+   JUMP __end__ctor____main____I____I
+   __ctor____main____I____I:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__I
+         ASSIGN __this[0] __dtable____main____I
       // Parameters
       // Body
          //---------------------------------------------------------------
          // Code Block
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__I____I:
-   // End Constructor Declaration - __ctor____main__I____I
+   __end__ctor____main____I____I:
+   // End Constructor Declaration - __ctor____main____I____I
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - I::X() -> void
    // Inherited from A
-   JUMP __end__method____main__I____X
-   __method____main__I____X:
+   JUMP __end__method____main____I____X
+   __method____main____I____X:
       // Jump to A's version
-      JUMP __method____main__A____X
-   __end__method____main__I____X:
-   // End Method Declaration - __method____main__I____X
+      JUMP __method____main____A____X
+   __end__method____main____I____X:
+   // End Method Declaration - __method____main____I____X
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - I::Y() -> void
-   JUMP __end__method____main__I____Y
-   __method____main__I____Y:
+   JUMP __end__method____main____I____Y
+   __method____main____I____Y:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -877,14 +897,14 @@ JUMP __endclass____main__I
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__I____Y:
-   // End Method Declaration - __method____main__I____Y
+   __end__method____main____I____Y:
+   // End Method Declaration - __method____main____I____Y
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - I::Z() -> void
-   JUMP __end__method____main__I____Z
-   __method____main__I____Z:
+   JUMP __end__method____main____I____Z
+   __method____main____I____Z:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -915,12 +935,12 @@ JUMP __endclass____main__I
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__I____Z:
-   // End Method Declaration - __method____main__I____Z
+   __end__method____main____I____Z:
+   // End Method Declaration - __method____main____I____Z
    //---------------------------------------------------------------------
 
-__endclass____main__I:
-// End Class Declaration - __main__I
+__endclass____main____I:
+// End Class Declaration - __main____I
 //========================================================================
 
 //========================================================================
@@ -1054,7 +1074,7 @@ __end____main____fun2__G:
       // Constructor Call - B::B() -> B
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__B____B
+         CALL __ctor____main____B____B
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -1071,7 +1091,7 @@ POP __void
       // Constructor Call - D::D() -> D
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__D____D
+         CALL __ctor____main____D____D
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -1088,7 +1108,7 @@ POP __void
       // Constructor Call - H::H() -> H
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__H____H
+         CALL __ctor____main____H____H
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -1105,7 +1125,7 @@ POP __void
       // Constructor Call - I::I() -> I
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__I____I
+         CALL __ctor____main____I____I
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -1251,7 +1271,7 @@ __for__22:
             // Constructor Call - H::H() -> H
                // Arguments
                // Pushing args in reverse order
-               CALL __ctor____main__H____H
+               CALL __ctor____main____H____H
                // Remove args
                RESPONSE __retval
                PUSH __retval
@@ -1362,20 +1382,20 @@ __for__23:
    __endfor__23:
 //------------------------------------------------------------------------
 //========================================================================
-// Class Declaration - __main__Pizza inherits __main__Object
+// Class Declaration - __main____Pizza inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__Pizza 0
+      MALLOC __dtable____main____Pizza 0
       // Populate Dispatch Table
 // skip over class methods
-JUMP __endclass____main__Pizza
+JUMP __endclass____main____Pizza
    //---------------------------------------------------------------------
    // Constructor Declaration - Pizza::Pizza() -> Pizza
-   JUMP __end__ctor____main__Pizza____Pizza
-   __ctor____main__Pizza____Pizza:
+   JUMP __end__ctor____main____Pizza____Pizza
+   __ctor____main____Pizza____Pizza:
       // Creating Class Instance
          MALLOC __this 1
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Pizza
+         ASSIGN __this[0] __dtable____main____Pizza
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -1386,9 +1406,9 @@ JUMP __endclass____main__Pizza
                      PUSH 0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__Pizza__Pizza__block__24__x 0
+                     ASSIGN __main____Pizza__Pizza__block__24__x 0
                POP __rhs
-               ASSIGN __main__Pizza__Pizza__block__24__x __rhs
+               ASSIGN __main____Pizza__Pizza__block__24__x __rhs
                PUSH __rhs
             // Statement results can be ignored
             POP __void
@@ -1396,12 +1416,12 @@ JUMP __endclass____main__Pizza
                RETURN 0
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Pizza____Pizza:
-   // End Constructor Declaration - __ctor____main__Pizza____Pizza
+   __end__ctor____main____Pizza____Pizza:
+   // End Constructor Declaration - __ctor____main____Pizza____Pizza
    //---------------------------------------------------------------------
 
-__endclass____main__Pizza:
-// End Class Declaration - __main__Pizza
+__endclass____main____Pizza:
+// End Class Declaration - __main____Pizza
 //========================================================================
 
 // Assignment
@@ -1409,7 +1429,7 @@ __endclass____main__Pizza:
       // Constructor Call - Pizza::Pizza() -> Pizza
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main__Pizza____Pizza
+         CALL __ctor____main____Pizza____Pizza
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -1555,35 +1575,35 @@ __for__25:
          // Statement results can be ignored
          POP __void
          //===============================================================
-         // Class Declaration - __main__for__25__block__26__Apple inherits __main__Object
+         // Class Declaration - __main__for__25__block__26____Apple inherits __main__Object
             // Creating Dispatch Table
-               MALLOC __dtable____main__for__25__block__26__Apple 1
+               MALLOC __dtable____main__for__25__block__26____Apple 1
                // Populate Dispatch Table
-               ASSIGN __dtable____main__for__25__block__26__Apple[0] __method____main__for__25__block__26__Apple____print
+               ASSIGN __dtable____main__for__25__block__26____Apple[0] __method____main__for__25__block__26____Apple____print
          // skip over class methods
-         JUMP __endclass____main__for__25__block__26__Apple
+         JUMP __endclass____main__for__25__block__26____Apple
             //------------------------------------------------------------
             // Constructor Declaration - Apple::Apple() -> Apple
-            JUMP __end__ctor____main__for__25__block__26__Apple____Apple
-            __ctor____main__for__25__block__26__Apple____Apple:
+            JUMP __end__ctor____main__for__25__block__26____Apple____Apple
+            __ctor____main__for__25__block__26____Apple____Apple:
                // Creating Class Instance
                   MALLOC __this 1
                   // Add Dispatch Table
-                  ASSIGN __this[0] __dtable____main__for__25__block__26__Apple
+                  ASSIGN __this[0] __dtable____main__for__25__block__26____Apple
                // Parameters
                // Body
                   //------------------------------------------------------
                   // Code Block
                   //------------------------------------------------------
                RETURN __this
-            __end__ctor____main__for__25__block__26__Apple____Apple:
-            // End Constructor Declaration - __ctor____main__for__25__block__26__Apple____Apple
+            __end__ctor____main__for__25__block__26____Apple____Apple:
+            // End Constructor Declaration - __ctor____main__for__25__block__26____Apple____Apple
             //------------------------------------------------------------
 
             //------------------------------------------------------------
             // Method Declaration - Apple::print() -> void
-            JUMP __end__method____main__for__25__block__26__Apple____print
-            __method____main__for__25__block__26__Apple____print:
+            JUMP __end__method____main__for__25__block__26____Apple____print
+            __method____main__for__25__block__26____Apple____print:
                // Class Instance
                   STACKGET __this 0
                // Parameters
@@ -1607,12 +1627,12 @@ __for__25:
                      POP __void
                   //------------------------------------------------------
                RETURN 0
-            __end__method____main__for__25__block__26__Apple____print:
-            // End Method Declaration - __method____main__for__25__block__26__Apple____print
+            __end__method____main__for__25__block__26____Apple____print:
+            // End Method Declaration - __method____main__for__25__block__26____Apple____print
             //------------------------------------------------------------
 
-         __endclass____main__for__25__block__26__Apple:
-         // End Class Declaration - __main__for__25__block__26__Apple
+         __endclass____main__for__25__block__26____Apple:
+         // End Class Declaration - __main__for__25__block__26____Apple
          //===============================================================
 
          // Assignment
@@ -1620,7 +1640,7 @@ __for__25:
                // Constructor Call - Apple::Apple() -> Apple
                   // Arguments
                   // Pushing args in reverse order
-                  CALL __ctor____main__for__25__block__26__Apple____Apple
+                  CALL __ctor____main__for__25__block__26____Apple____Apple
                   // Remove args
                   RESPONSE __retval
                   PUSH __retval
@@ -1641,7 +1661,7 @@ __for__25:
             POP __obj
             // Pushing args in reverse order
             PUSH __obj
-            CALL __method____main__for__25__block__26__Apple____print
+            CALL __method____main__for__25__block__26____Apple____print
             POP __void
             // Remove args
             RESPONSE __retval

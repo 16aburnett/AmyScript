@@ -1,0 +1,21 @@
+
+
+
+
+
+main:
+    input line
+    sizeof size line
+
+    // find indexes of spaces
+    assign space1 0
+    assign i 0
+loopcond:
+    equal res line[i] ' '
+    cmp res 0
+    jeq endloop
+loopupdate:
+    add i i 1
+endloop:
+    print i
+

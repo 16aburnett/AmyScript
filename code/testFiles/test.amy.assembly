@@ -8,13 +8,14 @@
 // AmyScript Built-in library
 // Author: Amy Burnett
 //========================================================================
-
-jump __endOfLibrary
-
-//========================================================================
-// Global Variables
+// Global Builtin Variables
 
     assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
 
 //========================================================================
 // Prints a given string to the screen
@@ -149,6 +150,12 @@ exit:
     halt
 
 //========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
 // converts int to float
 // float intToFloat (int);
 intToFloat__int:
@@ -163,6 +170,12 @@ stringToFloat__char__1:
     stackget val 0
     stof res val
     return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
 
 //========================================================================
 // converts float to int
@@ -195,6 +208,13 @@ string__float:
     stackget val 0
     string res val
     return res
+
+//========================================================================
+
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
 
 //========================================================================
 
@@ -446,34 +466,34 @@ __end____main____concat__char__1__char__1:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main__Matrix inherits __main__Object
+// Class Declaration - __main____Matrix inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__Matrix 2
+      MALLOC __dtable____main____Matrix 2
       // Populate Dispatch Table
-      ASSIGN __dtable____main__Matrix[0] __method____main__Matrix____add__Matrix
-      ASSIGN __dtable____main__Matrix[1] __method____main__Matrix____toString
+      ASSIGN __dtable____main____Matrix[0] __method____main____Matrix____add__Matrix
+      ASSIGN __dtable____main____Matrix[1] __method____main____Matrix____toString
    //---------------------------------------------------------------------
    // Field - int[][] Matrix::data
-   ASSIGN __field____main__Matrix__data 1
+   ASSIGN __field____main____Matrix____data 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Matrix::rows
-   ASSIGN __field____main__Matrix__rows 2
+   ASSIGN __field____main____Matrix____rows 2
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int Matrix::cols
-   ASSIGN __field____main__Matrix__cols 3
+   ASSIGN __field____main____Matrix____cols 3
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__Matrix
+JUMP __endclass____main____Matrix
    //---------------------------------------------------------------------
    // Constructor Declaration - Matrix::Matrix() -> Matrix
-   JUMP __end__ctor____main__Matrix____Matrix
-   __ctor____main__Matrix____Matrix:
+   JUMP __end__ctor____main____Matrix____Matrix
+   __ctor____main____Matrix____Matrix:
       // Creating Class Instance
          MALLOC __this 4
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Matrix
+         ASSIGN __this[0] __dtable____main____Matrix
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -488,7 +508,7 @@ JUMP __endclass____main__Matrix
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Matrix__rows
+                        PUSH __field____main____Matrix____rows
                      POP __child
                      POP __parent
                      POP __rhs
@@ -506,7 +526,7 @@ JUMP __endclass____main__Matrix
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Matrix__cols
+                        PUSH __field____main____Matrix____cols
                      POP __child
                      POP __parent
                      POP __rhs
@@ -525,7 +545,7 @@ JUMP __endclass____main__Matrix
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Matrix__data
+                        PUSH __field____main____Matrix____data
                      POP __child
                      POP __parent
                      POP __rhs
@@ -535,37 +555,37 @@ JUMP __endclass____main__Matrix
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Matrix____Matrix:
-   // End Constructor Declaration - __ctor____main__Matrix____Matrix
+   __end__ctor____main____Matrix____Matrix:
+   // End Constructor Declaration - __ctor____main____Matrix____Matrix
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Constructor Declaration - Matrix::Matrix(int, int) -> Matrix
-   JUMP __end__ctor____main__Matrix____Matrix__int__int
-   __ctor____main__Matrix____Matrix__int__int:
+   JUMP __end__ctor____main____Matrix____Matrix__int__int
+   __ctor____main____Matrix____Matrix__int__int:
       // Creating Class Instance
          MALLOC __this 4
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Matrix
+         ASSIGN __this[0] __dtable____main____Matrix
       // Parameters
          // Param: rows
-         STACKGET __main__Matrix__Matrix__rows 0
+         STACKGET __main____Matrix__Matrix__rows 0
          // Param: cols
-         STACKGET __main__Matrix__Matrix__cols 1
+         STACKGET __main____Matrix__Matrix__cols 1
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - rows
-                     PUSH __main__Matrix__Matrix__rows
+                     PUSH __main____Matrix__Matrix__rows
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Matrix__rows
+                        PUSH __field____main____Matrix____rows
                      POP __child
                      POP __parent
                      POP __rhs
@@ -576,14 +596,14 @@ JUMP __endclass____main__Matrix
             // Assignment
                // RHS
                   // Identifier - cols
-                     PUSH __main__Matrix__Matrix__cols
+                     PUSH __main____Matrix__Matrix__cols
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Matrix__cols
+                        PUSH __field____main____Matrix____cols
                      POP __child
                      POP __parent
                      POP __rhs
@@ -595,7 +615,7 @@ JUMP __endclass____main__Matrix
                // RHS
                   // Array Allocator
                      // Identifier - rows
-                        PUSH __main__Matrix__Matrix__rows
+                        PUSH __main____Matrix__Matrix__rows
                      POP __size
                      MALLOC __ptr __size
                      PUSH __ptr
@@ -605,7 +625,7 @@ JUMP __endclass____main__Matrix
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Matrix__data
+                        PUSH __field____main____Matrix____data
                      POP __child
                      POP __parent
                      POP __rhs
@@ -622,9 +642,9 @@ JUMP __endclass____main__Matrix
                         PUSH 0
                   // LHS
                      // Variable Declaration
-                        ASSIGN __main__Matrix__Matrix__block__4__for__5__i 0
+                        ASSIGN __main____Matrix__Matrix__block__4__for__5__i 0
                   POP __rhs
-                  ASSIGN __main__Matrix__Matrix__block__4__for__5__i __rhs
+                  ASSIGN __main____Matrix__Matrix__block__4__for__5__i __rhs
                   PUSH __rhs
             JUMP __forcond__5
             __for__5:
@@ -632,20 +652,20 @@ JUMP __endclass____main__Matrix
                   // Pre-Increment
                      // RHS
                         // Identifier - i
-                           PUSH __main__Matrix__Matrix__block__4__for__5__i
+                           PUSH __main____Matrix__Matrix__block__4__for__5__i
                      POP __rhs
-                     ADD __main__Matrix__Matrix__block__4__for__5__i __main__Matrix__Matrix__block__4__for__5__i 1
-                     ASSIGN __res __main__Matrix__Matrix__block__4__for__5__i
+                     ADD __main____Matrix__Matrix__block__4__for__5__i __main____Matrix__Matrix__block__4__for__5__i 1
+                     ASSIGN __res __main____Matrix__Matrix__block__4__for__5__i
                      PUSH __res
                __forcond__5:
                // Condition
                   // Less Than
                      // LHS
                         // Identifier - i
-                           PUSH __main__Matrix__Matrix__block__4__for__5__i
+                           PUSH __main____Matrix__Matrix__block__4__for__5__i
                      // RHS
                         // Identifier - rows
-                           PUSH __main__Matrix__Matrix__rows
+                           PUSH __main____Matrix__Matrix__rows
                      POP __rhs
                      POP __lhs
                      LT __res __lhs __rhs
@@ -658,7 +678,7 @@ JUMP __endclass____main__Matrix
                      // RHS
                         // Array Allocator
                            // Identifier - cols
-                              PUSH __main__Matrix__Matrix__cols
+                              PUSH __main____Matrix__Matrix__cols
                            POP __size
                            MALLOC __ptr __size
                            PUSH __ptr
@@ -670,13 +690,13 @@ JUMP __endclass____main__Matrix
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main__Matrix__data
+                                    PUSH __field____main____Matrix____data
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
                            // OFFSET
                               // Identifier - i
-                                 PUSH __main__Matrix__Matrix__block__4__for__5__i
+                                 PUSH __main____Matrix__Matrix__block__4__for__5__i
                            POP __offset
                            POP __pointer
                      POP __rhs
@@ -691,21 +711,21 @@ JUMP __endclass____main__Matrix
             //------------------------------------------------------------
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Matrix____Matrix__int__int:
-   // End Constructor Declaration - __ctor____main__Matrix____Matrix__int__int
+   __end__ctor____main____Matrix____Matrix__int__int:
+   // End Constructor Declaration - __ctor____main____Matrix____Matrix__int__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Constructor Declaration - Matrix::Matrix(int[][]) -> Matrix
-   JUMP __end__ctor____main__Matrix____Matrix__int__2
-   __ctor____main__Matrix____Matrix__int__2:
+   JUMP __end__ctor____main____Matrix____Matrix__int__2
+   __ctor____main____Matrix____Matrix__int__2:
       // Creating Class Instance
          MALLOC __this 4
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__Matrix
+         ASSIGN __this[0] __dtable____main____Matrix
       // Parameters
          // Param: data
-         STACKGET __main__Matrix__Matrix__data 0
+         STACKGET __main____Matrix__Matrix__data 0
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -714,7 +734,7 @@ JUMP __endclass____main__Matrix
                   // Sizeof Operator
                      // RHS
                         // Identifier - data
-                           PUSH __main__Matrix__Matrix__data
+                           PUSH __main____Matrix__Matrix__data
                      // Calculate array size
                      POP __array
                      SIZEOF __size __array
@@ -725,7 +745,7 @@ JUMP __endclass____main__Matrix
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Matrix__rows
+                        PUSH __field____main____Matrix____rows
                      POP __child
                      POP __parent
                      POP __rhs
@@ -740,7 +760,7 @@ JUMP __endclass____main__Matrix
                         // Subscript
                            // LHS
                               // Identifier - data
-                                 PUSH __main__Matrix__Matrix__data
+                                 PUSH __main____Matrix__Matrix__data
                            // OFFSET
                               // Int Literal
                                  PUSH 0
@@ -757,7 +777,7 @@ JUMP __endclass____main__Matrix
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Matrix__cols
+                        PUSH __field____main____Matrix____cols
                      POP __child
                      POP __parent
                      POP __rhs
@@ -768,14 +788,14 @@ JUMP __endclass____main__Matrix
             // Assignment
                // RHS
                   // Identifier - data
-                     PUSH __main__Matrix__Matrix__data
+                     PUSH __main____Matrix__Matrix__data
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__Matrix__data
+                        PUSH __field____main____Matrix____data
                      POP __child
                      POP __parent
                      POP __rhs
@@ -785,19 +805,19 @@ JUMP __endclass____main__Matrix
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__Matrix____Matrix__int__2:
-   // End Constructor Declaration - __ctor____main__Matrix____Matrix__int__2
+   __end__ctor____main____Matrix____Matrix__int__2:
+   // End Constructor Declaration - __ctor____main____Matrix____Matrix__int__2
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Matrix::add(Matrix) -> Matrix
-   JUMP __end__method____main__Matrix____add__Matrix
-   __method____main__Matrix____add__Matrix:
+   JUMP __end__method____main____Matrix____add__Matrix
+   __method____main____Matrix____add__Matrix:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: other
-         STACKGET __main__Matrix__add__other 1
+         STACKGET __main____Matrix__add__other 1
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -813,7 +833,7 @@ JUMP __endclass____main__Matrix
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main__Matrix__rows
+                                    PUSH __field____main____Matrix____rows
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -821,9 +841,9 @@ JUMP __endclass____main__Matrix
                               // Member Accessor
                                  // LHS
                                     // Identifier - other
-                                       PUSH __main__Matrix__add__other
+                                       PUSH __main____Matrix__add__other
                                  // RHS
-                                    PUSH __field____main__Matrix__rows
+                                    PUSH __field____main____Matrix____rows
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -839,7 +859,7 @@ JUMP __endclass____main__Matrix
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main__Matrix__cols
+                                    PUSH __field____main____Matrix____cols
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -847,9 +867,9 @@ JUMP __endclass____main__Matrix
                               // Member Accessor
                                  // LHS
                                     // Identifier - other
-                                       PUSH __main__Matrix__add__other
+                                       PUSH __main____Matrix__add__other
                                  // RHS
-                                    PUSH __field____main__Matrix__cols
+                                    PUSH __field____main____Matrix____cols
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -884,7 +904,7 @@ JUMP __endclass____main__Matrix
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main__Matrix__rows
+                              PUSH __field____main____Matrix____rows
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
@@ -893,7 +913,7 @@ JUMP __endclass____main__Matrix
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main__Matrix__cols
+                              PUSH __field____main____Matrix____cols
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
@@ -902,7 +922,7 @@ JUMP __endclass____main__Matrix
                      // Pushing args in reverse order
                      PUSH __arg1
                      PUSH __arg0
-                     CALL __ctor____main__Matrix____Matrix__int__int
+                     CALL __ctor____main____Matrix____Matrix__int__int
                      // Remove args
                      POP __void
                      POP __void
@@ -910,9 +930,9 @@ JUMP __endclass____main__Matrix
                      PUSH __retval
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__Matrix__add__block__7__res 0
+                     ASSIGN __main____Matrix__add__block__7__res 0
                POP __rhs
-               ASSIGN __main__Matrix__add__block__7__res __rhs
+               ASSIGN __main____Matrix__add__block__7__res __rhs
                PUSH __rhs
             // Statement results can be ignored
             POP __void
@@ -925,9 +945,9 @@ JUMP __endclass____main__Matrix
                         PUSH 0
                   // LHS
                      // Variable Declaration
-                        ASSIGN __main__Matrix__add__block__7__for__9__i 0
+                        ASSIGN __main____Matrix__add__block__7__for__9__i 0
                   POP __rhs
-                  ASSIGN __main__Matrix__add__block__7__for__9__i __rhs
+                  ASSIGN __main____Matrix__add__block__7__for__9__i __rhs
                   PUSH __rhs
             JUMP __forcond__9
             __for__9:
@@ -935,24 +955,24 @@ JUMP __endclass____main__Matrix
                   // Pre-Increment
                      // RHS
                         // Identifier - i
-                           PUSH __main__Matrix__add__block__7__for__9__i
+                           PUSH __main____Matrix__add__block__7__for__9__i
                      POP __rhs
-                     ADD __main__Matrix__add__block__7__for__9__i __main__Matrix__add__block__7__for__9__i 1
-                     ASSIGN __res __main__Matrix__add__block__7__for__9__i
+                     ADD __main____Matrix__add__block__7__for__9__i __main____Matrix__add__block__7__for__9__i 1
+                     ASSIGN __res __main____Matrix__add__block__7__for__9__i
                      PUSH __res
                __forcond__9:
                // Condition
                   // Less Than
                      // LHS
                         // Identifier - i
-                           PUSH __main__Matrix__add__block__7__for__9__i
+                           PUSH __main____Matrix__add__block__7__for__9__i
                      // RHS
                         // Member Accessor
                            // LHS
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main__Matrix__rows
+                              PUSH __field____main____Matrix____rows
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
@@ -973,9 +993,9 @@ JUMP __endclass____main__Matrix
                               PUSH 0
                         // LHS
                            // Variable Declaration
-                              ASSIGN __main__Matrix__add__block__7__for__9__for__10__j 0
+                              ASSIGN __main____Matrix__add__block__7__for__9__for__10__j 0
                         POP __rhs
-                        ASSIGN __main__Matrix__add__block__7__for__9__for__10__j __rhs
+                        ASSIGN __main____Matrix__add__block__7__for__9__for__10__j __rhs
                         PUSH __rhs
                   JUMP __forcond__10
                   __for__10:
@@ -983,24 +1003,24 @@ JUMP __endclass____main__Matrix
                         // Pre-Increment
                            // RHS
                               // Identifier - j
-                                 PUSH __main__Matrix__add__block__7__for__9__for__10__j
+                                 PUSH __main____Matrix__add__block__7__for__9__for__10__j
                            POP __rhs
-                           ADD __main__Matrix__add__block__7__for__9__for__10__j __main__Matrix__add__block__7__for__9__for__10__j 1
-                           ASSIGN __res __main__Matrix__add__block__7__for__9__for__10__j
+                           ADD __main____Matrix__add__block__7__for__9__for__10__j __main____Matrix__add__block__7__for__9__for__10__j 1
+                           ASSIGN __res __main____Matrix__add__block__7__for__9__for__10__j
                            PUSH __res
                      __forcond__10:
                      // Condition
                         // Less Than
                            // LHS
                               // Identifier - j
-                                 PUSH __main__Matrix__add__block__7__for__9__for__10__j
+                                 PUSH __main____Matrix__add__block__7__for__9__for__10__j
                            // RHS
                               // Member Accessor
                                  // LHS
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main__Matrix__cols
+                                    PUSH __field____main____Matrix____cols
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -1025,19 +1045,19 @@ JUMP __endclass____main__Matrix
                                                       // This keyword
                                                          PUSH __this
                                                    // RHS
-                                                      PUSH __field____main__Matrix__data
+                                                      PUSH __field____main____Matrix____data
                                                    POP __child
                                                    POP __parent
                                                    PUSH __parent[__child]
                                              // OFFSET
                                                 // Identifier - i
-                                                   PUSH __main__Matrix__add__block__7__for__9__i
+                                                   PUSH __main____Matrix__add__block__7__for__9__i
                                              POP __offset
                                              POP __pointer
                                              PUSH __pointer[__offset]
                                        // OFFSET
                                           // Identifier - j
-                                             PUSH __main__Matrix__add__block__7__for__9__for__10__j
+                                             PUSH __main____Matrix__add__block__7__for__9__for__10__j
                                        POP __offset
                                        POP __pointer
                                        PUSH __pointer[__offset]
@@ -1049,21 +1069,21 @@ JUMP __endclass____main__Matrix
                                                 // Member Accessor
                                                    // LHS
                                                       // Identifier - other
-                                                         PUSH __main__Matrix__add__other
+                                                         PUSH __main____Matrix__add__other
                                                    // RHS
-                                                      PUSH __field____main__Matrix__data
+                                                      PUSH __field____main____Matrix____data
                                                    POP __child
                                                    POP __parent
                                                    PUSH __parent[__child]
                                              // OFFSET
                                                 // Identifier - i
-                                                   PUSH __main__Matrix__add__block__7__for__9__i
+                                                   PUSH __main____Matrix__add__block__7__for__9__i
                                              POP __offset
                                              POP __pointer
                                              PUSH __pointer[__offset]
                                        // OFFSET
                                           // Identifier - j
-                                             PUSH __main__Matrix__add__block__7__for__9__for__10__j
+                                             PUSH __main____Matrix__add__block__7__for__9__for__10__j
                                        POP __offset
                                        POP __pointer
                                        PUSH __pointer[__offset]
@@ -1079,21 +1099,21 @@ JUMP __endclass____main__Matrix
                                           // Member Accessor
                                              // LHS
                                                 // Identifier - res
-                                                   PUSH __main__Matrix__add__block__7__res
+                                                   PUSH __main____Matrix__add__block__7__res
                                              // RHS
-                                                PUSH __field____main__Matrix__data
+                                                PUSH __field____main____Matrix____data
                                              POP __child
                                              POP __parent
                                              PUSH __parent[__child]
                                        // OFFSET
                                           // Identifier - i
-                                             PUSH __main__Matrix__add__block__7__for__9__i
+                                             PUSH __main____Matrix__add__block__7__for__9__i
                                        POP __offset
                                        POP __pointer
                                        PUSH __pointer[__offset]
                                  // OFFSET
                                     // Identifier - j
-                                       PUSH __main__Matrix__add__block__7__for__9__for__10__j
+                                       PUSH __main____Matrix__add__block__7__for__9__for__10__j
                                  POP __offset
                                  POP __pointer
                            POP __rhs
@@ -1113,19 +1133,19 @@ JUMP __endclass____main__Matrix
             //------------------------------------------------------------
             // Return
                // Identifier - res
-                  PUSH __main__Matrix__add__block__7__res
+                  PUSH __main____Matrix__add__block__7__res
                POP __rVal
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Matrix____add__Matrix:
-   // End Method Declaration - __method____main__Matrix____add__Matrix
+   __end__method____main____Matrix____add__Matrix:
+   // End Method Declaration - __method____main____Matrix____add__Matrix
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - Matrix::toString() -> char[]
-   JUMP __end__method____main__Matrix____toString
-   __method____main__Matrix____toString:
+   JUMP __end__method____main____Matrix____toString
+   __method____main____Matrix____toString:
       // Class Instance
          STACKGET __this 0
       // Parameters
@@ -1139,9 +1159,9 @@ JUMP __endclass____main__Matrix
                      PUSH __str
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__Matrix__toString__block__11__res 0
+                     ASSIGN __main____Matrix__toString__block__11__res 0
                POP __rhs
-               ASSIGN __main__Matrix__toString__block__11__res __rhs
+               ASSIGN __main____Matrix__toString__block__11__res __rhs
                PUSH __rhs
             // Statement results can be ignored
             POP __void
@@ -1153,9 +1173,9 @@ JUMP __endclass____main__Matrix
                      PUSH __str
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__Matrix__toString__block__11__space 0
+                     ASSIGN __main____Matrix__toString__block__11__space 0
                POP __rhs
-               ASSIGN __main__Matrix__toString__block__11__space __rhs
+               ASSIGN __main____Matrix__toString__block__11__space __rhs
                PUSH __rhs
             // Statement results can be ignored
             POP __void
@@ -1167,9 +1187,9 @@ JUMP __endclass____main__Matrix
                      PUSH __str
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__Matrix__toString__block__11__newline 0
+                     ASSIGN __main____Matrix__toString__block__11__newline 0
                POP __rhs
-               ASSIGN __main__Matrix__toString__block__11__newline __rhs
+               ASSIGN __main____Matrix__toString__block__11__newline __rhs
                PUSH __rhs
             // Statement results can be ignored
             POP __void
@@ -1179,9 +1199,9 @@ JUMP __endclass____main__Matrix
                      PUSH 0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__Matrix__toString__block__11__k 0
+                     ASSIGN __main____Matrix__toString__block__11__k 0
                POP __rhs
-               ASSIGN __main__Matrix__toString__block__11__k __rhs
+               ASSIGN __main____Matrix__toString__block__11__k __rhs
                PUSH __rhs
             // Statement results can be ignored
             POP __void
@@ -1194,9 +1214,9 @@ JUMP __endclass____main__Matrix
                         PUSH 0
                   // LHS
                      // Variable Declaration
-                        ASSIGN __main__Matrix__toString__block__11__for__12__i 0
+                        ASSIGN __main____Matrix__toString__block__11__for__12__i 0
                   POP __rhs
-                  ASSIGN __main__Matrix__toString__block__11__for__12__i __rhs
+                  ASSIGN __main____Matrix__toString__block__11__for__12__i __rhs
                   PUSH __rhs
             JUMP __forcond__12
             __for__12:
@@ -1204,24 +1224,24 @@ JUMP __endclass____main__Matrix
                   // Pre-Increment
                      // RHS
                         // Identifier - i
-                           PUSH __main__Matrix__toString__block__11__for__12__i
+                           PUSH __main____Matrix__toString__block__11__for__12__i
                      POP __rhs
-                     ADD __main__Matrix__toString__block__11__for__12__i __main__Matrix__toString__block__11__for__12__i 1
-                     ASSIGN __res __main__Matrix__toString__block__11__for__12__i
+                     ADD __main____Matrix__toString__block__11__for__12__i __main____Matrix__toString__block__11__for__12__i 1
+                     ASSIGN __res __main____Matrix__toString__block__11__for__12__i
                      PUSH __res
                __forcond__12:
                // Condition
                   // Less Than
                      // LHS
                         // Identifier - i
-                           PUSH __main__Matrix__toString__block__11__for__12__i
+                           PUSH __main____Matrix__toString__block__11__for__12__i
                      // RHS
                         // Member Accessor
                            // LHS
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main__Matrix__rows
+                              PUSH __field____main____Matrix____rows
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
@@ -1244,9 +1264,9 @@ JUMP __endclass____main__Matrix
                                  PUSH 0
                            // LHS
                               // Variable Declaration
-                                 ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__j 0
+                                 ASSIGN __main____Matrix__toString__block__11__for__12__block__13__for__14__j 0
                            POP __rhs
-                           ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__j __rhs
+                           ASSIGN __main____Matrix__toString__block__11__for__12__block__13__for__14__j __rhs
                            PUSH __rhs
                      JUMP __forcond__14
                      __for__14:
@@ -1254,24 +1274,24 @@ JUMP __endclass____main__Matrix
                            // Pre-Increment
                               // RHS
                                  // Identifier - j
-                                    PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__j
+                                    PUSH __main____Matrix__toString__block__11__for__12__block__13__for__14__j
                               POP __rhs
-                              ADD __main__Matrix__toString__block__11__for__12__block__13__for__14__j __main__Matrix__toString__block__11__for__12__block__13__for__14__j 1
-                              ASSIGN __res __main__Matrix__toString__block__11__for__12__block__13__for__14__j
+                              ADD __main____Matrix__toString__block__11__for__12__block__13__for__14__j __main____Matrix__toString__block__11__for__12__block__13__for__14__j 1
+                              ASSIGN __res __main____Matrix__toString__block__11__for__12__block__13__for__14__j
                               PUSH __res
                         __forcond__14:
                         // Condition
                            // Less Than
                               // LHS
                                  // Identifier - j
-                                    PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__j
+                                    PUSH __main____Matrix__toString__block__11__for__12__block__13__for__14__j
                               // RHS
                                  // Member Accessor
                                     // LHS
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field____main__Matrix__cols
+                                       PUSH __field____main____Matrix____cols
                                     POP __child
                                     POP __parent
                                     PUSH __parent[__child]
@@ -1298,19 +1318,19 @@ JUMP __endclass____main__Matrix
                                                             // This keyword
                                                                PUSH __this
                                                          // RHS
-                                                            PUSH __field____main__Matrix__data
+                                                            PUSH __field____main____Matrix____data
                                                          POP __child
                                                          POP __parent
                                                          PUSH __parent[__child]
                                                    // OFFSET
                                                       // Identifier - i
-                                                         PUSH __main__Matrix__toString__block__11__for__12__i
+                                                         PUSH __main____Matrix__toString__block__11__for__12__i
                                                    POP __offset
                                                    POP __pointer
                                                    PUSH __pointer[__offset]
                                              // OFFSET
                                                 // Identifier - j
-                                                   PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__j
+                                                   PUSH __main____Matrix__toString__block__11__for__12__block__13__for__14__j
                                              POP __offset
                                              POP __pointer
                                              PUSH __pointer[__offset]
@@ -1325,9 +1345,9 @@ JUMP __endclass____main__Matrix
                                        PUSH __retval
                                  // LHS
                                     // Variable Declaration
-                                       ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2 0
+                                       ASSIGN __main____Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2 0
                                  POP __rhs
-                                 ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2 __rhs
+                                 ASSIGN __main____Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2 __rhs
                                  PUSH __rhs
                               // Statement results can be ignored
                               POP __void
@@ -1336,9 +1356,9 @@ JUMP __endclass____main__Matrix
                                     // Function Call - concat(char[], char[]) -> char[]
                                        // Arguments
                                           // Identifier - res
-                                             PUSH __main__Matrix__toString__block__11__res
+                                             PUSH __main____Matrix__toString__block__11__res
                                           // Identifier - temp2
-                                             PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2
+                                             PUSH __main____Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2
                                           POP __arg1
                                           POP __arg0
                                        // Pushing args in reverse order
@@ -1353,36 +1373,38 @@ JUMP __endclass____main__Matrix
                                        PUSH __retval
                                  // LHS
                                     // Variable Declaration
-                                       ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp 0
+                                       ASSIGN __main____Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp 0
                                  POP __rhs
-                                 ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp __rhs
+                                 ASSIGN __main____Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp __rhs
                                  PUSH __rhs
                               // Statement results can be ignored
                               POP __void
                               // Free Operator
                                  // RHS
                                     // Identifier - temp2
-                                       PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2
+                                       PUSH __main____Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp2
                                  // Free array
                                  POP __array
                                  FREE __array
+                                 PUSH __array
                               // Statement results can be ignored
                               POP __void
                               // Free Operator
                                  // RHS
                                     // Identifier - res
-                                       PUSH __main__Matrix__toString__block__11__res
+                                       PUSH __main____Matrix__toString__block__11__res
                                  // Free array
                                  POP __array
                                  FREE __array
+                                 PUSH __array
                               // Statement results can be ignored
                               POP __void
                               // Assignment
                                  // RHS
                                     // Identifier - temp
-                                       PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp
+                                       PUSH __main____Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp
                                  POP __rhs
-                                 ASSIGN __main__Matrix__toString__block__11__res __rhs
+                                 ASSIGN __main____Matrix__toString__block__11__res __rhs
                                  PUSH __rhs
                               // Statement results can be ignored
                               POP __void
@@ -1391,9 +1413,9 @@ JUMP __endclass____main__Matrix
                                     // Function Call - concat(char[], char[]) -> char[]
                                        // Arguments
                                           // Identifier - res
-                                             PUSH __main__Matrix__toString__block__11__res
+                                             PUSH __main____Matrix__toString__block__11__res
                                           // Identifier - space
-                                             PUSH __main__Matrix__toString__block__11__space
+                                             PUSH __main____Matrix__toString__block__11__space
                                           POP __arg1
                                           POP __arg0
                                        // Pushing args in reverse order
@@ -1407,25 +1429,26 @@ JUMP __endclass____main__Matrix
                                        RESPONSE __retval
                                        PUSH __retval
                                  POP __rhs
-                                 ASSIGN __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp __rhs
+                                 ASSIGN __main____Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp __rhs
                                  PUSH __rhs
                               // Statement results can be ignored
                               POP __void
                               // Free Operator
                                  // RHS
                                     // Identifier - res
-                                       PUSH __main__Matrix__toString__block__11__res
+                                       PUSH __main____Matrix__toString__block__11__res
                                  // Free array
                                  POP __array
                                  FREE __array
+                                 PUSH __array
                               // Statement results can be ignored
                               POP __void
                               // Assignment
                                  // RHS
                                     // Identifier - temp
-                                       PUSH __main__Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp
+                                       PUSH __main____Matrix__toString__block__11__for__12__block__13__for__14__block__15__temp
                                  POP __rhs
-                                 ASSIGN __main__Matrix__toString__block__11__res __rhs
+                                 ASSIGN __main____Matrix__toString__block__11__res __rhs
                                  PUSH __rhs
                               // Statement results can be ignored
                               POP __void
@@ -1440,9 +1463,9 @@ JUMP __endclass____main__Matrix
                            // Function Call - concat(char[], char[]) -> char[]
                               // Arguments
                                  // Identifier - res
-                                    PUSH __main__Matrix__toString__block__11__res
+                                    PUSH __main____Matrix__toString__block__11__res
                                  // Identifier - newline
-                                    PUSH __main__Matrix__toString__block__11__newline
+                                    PUSH __main____Matrix__toString__block__11__newline
                                  POP __arg1
                                  POP __arg0
                               // Pushing args in reverse order
@@ -1457,27 +1480,28 @@ JUMP __endclass____main__Matrix
                               PUSH __retval
                         // LHS
                            // Variable Declaration
-                              ASSIGN __main__Matrix__toString__block__11__for__12__block__13__temp 0
+                              ASSIGN __main____Matrix__toString__block__11__for__12__block__13__temp 0
                         POP __rhs
-                        ASSIGN __main__Matrix__toString__block__11__for__12__block__13__temp __rhs
+                        ASSIGN __main____Matrix__toString__block__11__for__12__block__13__temp __rhs
                         PUSH __rhs
                      // Statement results can be ignored
                      POP __void
                      // Free Operator
                         // RHS
                            // Identifier - res
-                              PUSH __main__Matrix__toString__block__11__res
+                              PUSH __main____Matrix__toString__block__11__res
                         // Free array
                         POP __array
                         FREE __array
+                        PUSH __array
                      // Statement results can be ignored
                      POP __void
                      // Assignment
                         // RHS
                            // Identifier - temp
-                              PUSH __main__Matrix__toString__block__11__for__12__block__13__temp
+                              PUSH __main____Matrix__toString__block__11__for__12__block__13__temp
                         POP __rhs
-                        ASSIGN __main__Matrix__toString__block__11__res __rhs
+                        ASSIGN __main____Matrix__toString__block__11__res __rhs
                         PUSH __rhs
                      // Statement results can be ignored
                      POP __void
@@ -1490,34 +1514,36 @@ JUMP __endclass____main__Matrix
             // Free Operator
                // RHS
                   // Identifier - newline
-                     PUSH __main__Matrix__toString__block__11__newline
+                     PUSH __main____Matrix__toString__block__11__newline
                // Free array
                POP __array
                FREE __array
+               PUSH __array
             // Statement results can be ignored
             POP __void
             // Free Operator
                // RHS
                   // Identifier - space
-                     PUSH __main__Matrix__toString__block__11__space
+                     PUSH __main____Matrix__toString__block__11__space
                // Free array
                POP __array
                FREE __array
+               PUSH __array
             // Statement results can be ignored
             POP __void
             // Return
                // Identifier - res
-                  PUSH __main__Matrix__toString__block__11__res
+                  PUSH __main____Matrix__toString__block__11__res
                POP __rVal
                RETURN __rVal
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__Matrix____toString:
-   // End Method Declaration - __method____main__Matrix____toString
+   __end__method____main____Matrix____toString:
+   // End Method Declaration - __method____main____Matrix____toString
    //---------------------------------------------------------------------
 
-__endclass____main__Matrix:
-// End Class Declaration - __main__Matrix
+__endclass____main____Matrix:
+// End Class Declaration - __main____Matrix
 //========================================================================
 
 // Assignment
@@ -1585,7 +1611,7 @@ __endclass____main__Matrix:
             POP __arg0
          // Pushing args in reverse order
          PUSH __arg0
-         CALL __ctor____main__Matrix____Matrix__int__2
+         CALL __ctor____main____Matrix____Matrix__int__2
          // Remove args
          POP __void
          RESPONSE __retval
@@ -1663,7 +1689,7 @@ POP __void
             POP __arg0
          // Pushing args in reverse order
          PUSH __arg0
-         CALL __ctor____main__Matrix____Matrix__int__2
+         CALL __ctor____main____Matrix____Matrix__int__2
          // Remove args
          POP __void
          RESPONSE __retval
@@ -1693,7 +1719,7 @@ POP __void
                // Pushing args in reverse order
                PUSH __arg0
                PUSH __obj
-               CALL __method____main__Matrix____add__Matrix
+               CALL __method____main____Matrix____add__Matrix
                POP __void
                // Remove args
                POP __void
@@ -1704,7 +1730,7 @@ POP __void
          POP __obj
          // Pushing args in reverse order
          PUSH __obj
-         CALL __method____main__Matrix____toString
+         CALL __method____main____Matrix____toString
          POP __void
          // Remove args
          RESPONSE __retval
@@ -1739,32 +1765,33 @@ POP __void
    // Free array
    POP __array
    FREE __array
+   PUSH __array
 // Statement results can be ignored
 POP __void
 //========================================================================
-// Class Declaration - __main__A inherits __main__Object
+// Class Declaration - __main____A inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main__A 1
+      MALLOC __dtable____main____A 1
       // Populate Dispatch Table
-      ASSIGN __dtable____main__A[0] __method____main__A____setValues__int__int
+      ASSIGN __dtable____main____A[0] __method____main____A____setValues__int__int
    //---------------------------------------------------------------------
    // Field - int A::x
-   ASSIGN __field____main__A__x 1
+   ASSIGN __field____main____A____x 1
    //---------------------------------------------------------------------
    //---------------------------------------------------------------------
    // Field - int A::y
-   ASSIGN __field____main__A__y 2
+   ASSIGN __field____main____A____y 2
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main__A
+JUMP __endclass____main____A
    //---------------------------------------------------------------------
    // Constructor Declaration - A::A() -> A
-   JUMP __end__ctor____main__A____A
-   __ctor____main__A____A:
+   JUMP __end__ctor____main____A____A
+   __ctor____main____A____A:
       // Creating Class Instance
          MALLOC __this 3
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__A
+         ASSIGN __this[0] __dtable____main____A
       // Parameters
       // Body
          //---------------------------------------------------------------
@@ -1786,7 +1813,7 @@ JUMP __endclass____main__A
                PUSH __arg1
                PUSH __arg0
                PUSH __obj
-               CALL __method____main__A____setValues__int__int
+               CALL __method____main____A____setValues__int__int
                POP __void
                // Remove args
                POP __void
@@ -1797,23 +1824,23 @@ JUMP __endclass____main__A
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__A____A:
-   // End Constructor Declaration - __ctor____main__A____A
+   __end__ctor____main____A____A:
+   // End Constructor Declaration - __ctor____main____A____A
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Constructor Declaration - A::A(int, int) -> A
-   JUMP __end__ctor____main__A____A__int__int
-   __ctor____main__A____A__int__int:
+   JUMP __end__ctor____main____A____A__int__int
+   __ctor____main____A____A__int__int:
       // Creating Class Instance
          MALLOC __this 3
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main__A
+         ASSIGN __this[0] __dtable____main____A
       // Parameters
          // Param: x
-         STACKGET __main__A__A__x 0
+         STACKGET __main____A__A__x 0
          // Param: y
-         STACKGET __main__A__A__y 1
+         STACKGET __main____A__A__y 1
       // Body
          //---------------------------------------------------------------
          // Code Block
@@ -1824,9 +1851,9 @@ JUMP __endclass____main__A
                // RHS
                // Arguments
                   // Identifier - x
-                     PUSH __main__A__A__x
+                     PUSH __main____A__A__x
                   // Identifier - y
-                     PUSH __main__A__A__y
+                     PUSH __main____A__A__y
                   POP __arg1
                   POP __arg0
                POP __obj
@@ -1834,7 +1861,7 @@ JUMP __endclass____main__A
                PUSH __arg1
                PUSH __arg0
                PUSH __obj
-               CALL __method____main__A____setValues__int__int
+               CALL __method____main____A____setValues__int__int
                POP __void
                // Remove args
                POP __void
@@ -1845,35 +1872,35 @@ JUMP __endclass____main__A
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main__A____A__int__int:
-   // End Constructor Declaration - __ctor____main__A____A__int__int
+   __end__ctor____main____A____A__int__int:
+   // End Constructor Declaration - __ctor____main____A____A__int__int
    //---------------------------------------------------------------------
 
    //---------------------------------------------------------------------
    // Method Declaration - A::setValues(int, int) -> void
-   JUMP __end__method____main__A____setValues__int__int
-   __method____main__A____setValues__int__int:
+   JUMP __end__method____main____A____setValues__int__int
+   __method____main____A____setValues__int__int:
       // Class Instance
          STACKGET __this 0
       // Parameters
          // Param: x
-         STACKGET __main__A__setValues__x 1
+         STACKGET __main____A__setValues__x 1
          // Param: y
-         STACKGET __main__A__setValues__y 2
+         STACKGET __main____A__setValues__y 2
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment
                // RHS
                   // Identifier - x
-                     PUSH __main__A__setValues__x
+                     PUSH __main____A__setValues__x
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__A__x
+                        PUSH __field____main____A____x
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1884,14 +1911,14 @@ JUMP __endclass____main__A
             // Assignment
                // RHS
                   // Identifier - y
-                     PUSH __main__A__setValues__y
+                     PUSH __main____A__setValues__y
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main__A__y
+                        PUSH __field____main____A____y
                      POP __child
                      POP __parent
                      POP __rhs
@@ -1901,12 +1928,12 @@ JUMP __endclass____main__A
             POP __void
          //---------------------------------------------------------------
       RETURN 0
-   __end__method____main__A____setValues__int__int:
-   // End Method Declaration - __method____main__A____setValues__int__int
+   __end__method____main____A____setValues__int__int:
+   // End Method Declaration - __method____main____A____setValues__int__int
    //---------------------------------------------------------------------
 
-__endclass____main__A:
-// End Class Declaration - __main__A
+__endclass____main____A:
+// End Class Declaration - __main____A
 //========================================================================
 
 // Assignment
@@ -1922,7 +1949,7 @@ __endclass____main__A:
          // Pushing args in reverse order
          PUSH __arg1
          PUSH __arg0
-         CALL __ctor____main__A____A__int__int
+         CALL __ctor____main____A____A__int__int
          // Remove args
          POP __void
          POP __void
@@ -1953,7 +1980,7 @@ __main____print__A:
                      // Identifier - a
                         PUSH __main__print__a
                   // RHS
-                     PUSH __field____main__A__x
+                     PUSH __field____main____A____x
                   POP __child
                   POP __parent
                   PUSH __parent[__child]
@@ -1990,7 +2017,7 @@ __main____print__A:
                      // Identifier - a
                         PUSH __main__print__a
                   // RHS
-                     PUSH __field____main__A__y
+                     PUSH __field____main____A____y
                   POP __child
                   POP __parent
                   PUSH __parent[__child]
