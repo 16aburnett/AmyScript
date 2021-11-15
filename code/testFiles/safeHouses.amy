@@ -1,0 +1,100 @@
+// Kattis solution to safehouses implemented in AmyScript! 
+// Author: Amy Burnett
+//========================================================================
+// Library Code
+
+function int abs (int a)
+{
+    if (a < 0)
+        return -a; 
+    return a; 
+}
+
+function int max (int a, int b)
+{
+    if (a <= b) 
+        return b;
+    return a; 
+}
+
+function int min (int a, int b)
+{
+    if (a <= b) 
+        return a;
+    return b; 
+}
+
+//========================================================================
+
+char SPY = 'S';
+char SAFE_HOUSE = 'H';
+
+int n = stringToInt (input());
+int n2 = n*n;
+
+int nSpies = 0;
+int nHouses = 0; 
+int[][] spyLocations = new int[n2][2]; 
+int[][] safeHouseLocations = new int[n2][2]; 
+
+int k = 0; 
+int l = 0; 
+for (int i = 0; i < n; ++i)
+{
+    char[] line = input(); 
+    for (int j = 0; j < n; ++j)
+    {
+        if (line[j] == SPY)
+        {
+            spyLocations[k++] = [i, j];
+            nSpies++; 
+        }
+        elif (line[j] == SAFE_HOUSE)
+        {
+            safeHouseLocations[l++] = [i, j];
+            nHouses++; 
+        }
+    }
+}
+
+//for (int i = 0; i < nSpies; ++i)
+//{
+//    print ('(');
+//    print (spyLocations[i][0]);
+//    print (',');
+//    print (' ');
+//    print (spyLocations[i][1]);
+//    print (')');
+//    print (' ');
+//}
+//println ();
+//
+//for (int i = 0; i < nHouses; ++i)
+//{
+//    print ('(');
+//    print (safeHouseLocations[i][0]);
+//    print (',');
+//    print (' ');
+//    print (safeHouseLocations[i][1]);
+//    print (')');
+//    print (' ');
+//}
+//println ();
+
+
+//# find the largest manhattan distance that any spy must walk 
+int maxDistance = 0;
+for (int i = 0; i < nSpies; ++i)
+{
+    //# find nearest safehouse
+    int minDistance = n2;
+    for (int j = 0; j < nHouses; ++j)
+    {
+        int distance = abs(spyLocations[i][0] - safeHouseLocations[j][0]) + abs(spyLocations[i][1] - safeHouseLocations[j][1]);
+        minDistance = min(minDistance, distance);
+    }
+    maxDistance = max(maxDistance, minDistance);
+}
+
+println (maxDistance);
+

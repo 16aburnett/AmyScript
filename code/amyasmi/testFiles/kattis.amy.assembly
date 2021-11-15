@@ -1,0 +1,38 @@
+// AmyAssembly Solution to Echo Echo Echo on Kattis
+// Author: Amy Burnett
+//========================================================================
+
+    jump endPrintWord
+printWord:
+    stackget word 0
+    assign i 0
+    sizeof size word
+loop0:
+    // condition
+    cmp i size
+    jeq endloop0
+
+    // body
+    print word[i]
+
+    // update 
+    add i i 1
+
+    // repeat
+    jump loop0
+endloop0:
+    return 0
+endPrintWord:
+
+
+main:
+    input msg
+    push msg 
+    call printWord
+    print ' '
+    call printWord
+    print ' '
+    call printWord
+    pop void
+    println 
+    halt 

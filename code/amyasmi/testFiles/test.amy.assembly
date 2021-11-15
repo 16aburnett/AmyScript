@@ -1,0 +1,118 @@
+// reads in a number from the user and converts it to an int 
+// then outputs 1 to n 
+
+    jump main 
+
+//========================================================================
+// converts string to integer
+// param1 - string pointer
+// param2 - string size 
+stringToInt:
+    stackget string 0
+    stackget size 1
+    assign val 0
+    assign i 0 
+while01:
+    cmp i size
+    jge endwhile01
+
+    // shift nums
+    multiply val val 10
+
+    cmp string[i] '1'
+    jneq notOne
+    add val val 1 
+    jump continue
+notOne:
+    cmp string[i] '2'
+    jneq notTwo
+    add val val 2 
+    jump continue
+notTwo:
+    cmp string[i] '3'
+    jneq notThree
+    add val val 3 
+    jump continue
+notThree:
+    cmp string[i] '4'
+    jneq notFour
+    add val val 4 
+    jump continue
+notFour:
+    cmp string[i] '5'
+    jneq notFive
+    add val val 5 
+    jump continue
+notFive:
+    cmp string[i] '6'
+    jneq notSix
+    add val val 6 
+    jump continue
+notSix:
+    cmp string[i] '7'
+    jneq notSeven
+    add val val 7 
+    jump continue
+notSeven:
+    cmp string[i] '8'
+    jneq notEight
+    add val val 8 
+    jump continue
+notEight:
+    cmp string[i] '9'
+    jneq notNine
+    add val val 9 
+    jump continue
+notNine:
+    cmp string[i] '0'
+    jneq error
+    add val val 0 
+    jump continue
+error:
+    print 'e'
+    print 'r'
+    print 'r'
+    print 'o'
+    println 'r'
+    println string[i]
+    halt 
+continue:
+    add i i 1
+    jump while01
+endwhile01:
+    return val 
+
+//========================================================================
+// prints values 0 to N - not including N
+// param1 - number
+printRange:
+    stackget N 0
+    // init
+    assign i 0
+while02:
+    // condition
+    cmp i N 
+    jge endwhile02
+    // body 
+    println i
+    //update
+    add i i 1
+    // repeat
+    jump while02
+endwhile02:
+    return 0
+//========================================================================
+
+main:
+    input string 
+    sizeof size string
+    // pushed in reverse order 
+    push size 
+    push string 
+    call stringToInt
+    response val
+    println val
+    // print 1 to val
+    push val
+    call printRange
+    halt

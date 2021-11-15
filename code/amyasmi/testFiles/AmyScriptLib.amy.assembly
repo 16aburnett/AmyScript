@@ -1,0 +1,83 @@
+// AmyScript Built-in library
+//========================================================================
+
+jump main
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__loop:
+    // cond
+    cmp __i __size
+    jge __print__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__loop
+__print__endloop:
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__loop:
+    // cond
+    cmp __i __size
+    jge __println__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__loop
+__println__endloop:
+    println
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+
+
+main:
+    malloc prompt 9
+    assign prompt[0] 'N'
+    assign prompt[1] 'a'
+    assign prompt[2] 'm'
+    assign prompt[3] 'e'
+    assign prompt[4] ' '
+    assign prompt[5] '='
+    assign prompt[6] '='
+    assign prompt[7] '>'
+    assign prompt[8] ' '
+
+    push prompt
+    call print
+
+    call input
+    response name
+
+    push name
+    call println
+

@@ -1,0 +1,29 @@
+
+
+    jump main
+
+sum:
+    stackget param1 0
+    stackget param2 1 
+    print param1
+    print ' + '
+    print param2
+    println
+    add c param1 param2 
+    return c 
+
+
+main:
+    assign a 7
+    assign b 5
+    // push parameters in reverse 
+    push b
+    push a
+    call sum
+    response result
+    pop pop1
+    pop pop2
+
+    println result
+
+    halt

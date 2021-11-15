@@ -1580,28 +1580,6 @@ POP __void
    PUSH __rhs
 // Statement results can be ignored
 POP __void
-// Function Call - println(char[]) -> void
-   // Arguments
-      // Member Accessor
-         // LHS
-            // Identifier - person
-               PUSH __main__person
-         // RHS
-            PUSH __field____main____Person____name
-         POP __child
-         POP __parent
-         PUSH __parent[__child]
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   // *** println
-   CALL println__char__1
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

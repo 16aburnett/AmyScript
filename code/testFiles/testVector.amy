@@ -7,7 +7,7 @@ int INITIAL_CAPACITY = 10;
 //========================================================================
 
 template <:data_type:>
-class vector
+class Vector
 {
 
     public field data_type[] data; 
@@ -41,7 +41,7 @@ class vector
 
     //--------------------------------------------------------------------
 
-    // gets the size of the vector
+    // gets the size of the Vector
     public method int size ()
     {
         return this.size; 
@@ -49,7 +49,7 @@ class vector
 
     //--------------------------------------------------------------------
 
-    // returns true if this vector is empty, false otherwise 
+    // returns true if this Vector is empty, false otherwise 
     public method int is_empty ()
     {
         return this.size == 0; 
@@ -57,7 +57,7 @@ class vector
 
     //--------------------------------------------------------------------
 
-    // pushes a given value to the end of the vector
+    // pushes a given value to the end of the Vector
     // this is a constant operation if an increase in capacity is unneeded
     public method void push_back (data_type value)
     {
@@ -84,7 +84,7 @@ class vector
 
     //--------------------------------------------------------------------
 
-    // removes the last value in the vector
+    // removes the last value in the Vector
     // this is always constant time 
     public method void pop_back ()
     {
@@ -103,7 +103,7 @@ class vector
 
 //========================================================================
 
-function void println (vector<:int:> arr)
+function void println (Vector<:int:> arr)
 {
     print ('[');
     if (arr.size() > 0)
@@ -117,7 +117,7 @@ function void println (vector<:int:> arr)
     println (']');
 }
 
-function void println (vector<:float:> arr)
+function void println (Vector<:float:> arr)
 {
     print ('[');
     if (arr.size() > 0)
@@ -131,7 +131,7 @@ function void println (vector<:float:> arr)
     println (']');
 }
 
-function void print_board (vector<:vector<:int:>:> board)
+function void print_board (Vector<:Vector<:int:>:> board)
 {
     for (int i = 0; i < board.size(); ++i)
         println (board.get(i));
@@ -146,21 +146,21 @@ function int min (int a, int b)
 
 //========================================================================
 
-vector<:int:> a = new vector<:int:>();
+Vector<:int:> a = new Vector<:int:>();
 
 for (int i = 0; i < 20; ++i)
     a.push_back (i);
 
 println (a);
 
-vector<:int:> b = new vector<:int:>();
+Vector<:int:> b = new Vector<:int:>();
 
 for (int i = 0; i < 10; ++i)
     b.push_back (i*2);
 
 println (b);
 
-vector<:int:> c = new vector<:int:>();
+Vector<:int:> c = new Vector<:int:>();
 
 for (int i = 0; i < min(a.size(), b.size()); ++i)
 {
@@ -170,8 +170,8 @@ for (int i = 0; i < min(a.size(), b.size()); ++i)
 println (c);
 
 // this should give an error 
-// vector<:float:> d = new vector<:int:>();
-vector<:float:> d = new vector<:float:>();
+// Vector<:float:> d = new Vector<:int:>();
+Vector<:float:> d = new Vector<:float:>();
 
 d.push_back (5.25);
 d.push_back (3.1415);
@@ -183,15 +183,15 @@ println (d);
 println ();
 
 //========================================================================
-// NESTED VECTORS!!
+// NESTED VectorS!!
 
-vector<:vector<:int:>:> board = new vector<:vector<:int:>:>();
+Vector<:Vector<:int:>:> board = new Vector<:Vector<:int:>:>();
 int rows = int cols = 3;
 
 int k = 0;
 for (int i = 0; i < rows; ++i)
 {
-    board.push_back (new vector<:int:>());
+    board.push_back (new Vector<:int:>());
     for (int j = 0; j < cols; ++j)
     {
         board.get(i).push_back(k++);
@@ -201,12 +201,12 @@ for (int i = 0; i < rows; ++i)
 print_board (board);
 println ();
 
-vector<:vector<:int:>:> board2 = new vector<:vector<:int:>:>();
+Vector<:Vector<:int:>:> board2 = new Vector<:Vector<:int:>:>();
 
 k = rows * cols;
 for (int i = 0; i < rows; ++i)
 {
-    board2.push_back (new vector<:int:>());
+    board2.push_back (new Vector<:int:>());
     for (int j = 0; j < cols; ++j)
     {
         board2.get(i).push_back(--k);
@@ -216,12 +216,12 @@ for (int i = 0; i < rows; ++i)
 print_board (board2);
 println ();
 
-function vector<:vector<:int:>:> sum_boards (vector<:vector<:int:>:> a, vector<:vector<:int:>:> b)
+function Vector<:Vector<:int:>:> sum_boards (Vector<:Vector<:int:>:> a, Vector<:Vector<:int:>:> b)
 {
-    vector<:vector<:int:>:> c = new vector<:vector<:int:>:>();
+    Vector<:Vector<:int:>:> c = new Vector<:Vector<:int:>:>();
     for (int i = 0; i < rows; ++i)
     {
-        c.push_back (new vector<:int:>());
+        c.push_back (new Vector<:int:>());
         for (int j = 0; j < cols; ++j)
         {
             c.get(i).push_back(a.get(i).get(j)+b.get(i).get(j));

@@ -1,0 +1,666 @@
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+// Global Builtin Variables
+
+    assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+exit:
+    halt
+
+//========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+JUMP __end____main____abs__int
+__main____abs__int:
+STACKGET __main__abs__a 0
+PUSH __main__abs__a
+PUSH 0
+POP __rhs
+POP __lhs
+LT __res __lhs __rhs
+PUSH __res
+POP __cond
+CMP __cond 0
+JEQ __endif__1
+PUSH __main__abs__a
+POP __rhs
+SUBTRACT __res 0 __rhs
+PUSH __res
+POP __rVal
+RETURN __rVal
+JUMP __endif__1
+__endif__1:
+PUSH __main__abs__a
+POP __rVal
+RETURN __rVal
+RETURN 0
+__end____main____abs__int:
+JUMP __end____main____max__int__int
+__main____max__int__int:
+STACKGET __main__max__a 0
+STACKGET __main__max__b 1
+PUSH __main__max__a
+PUSH __main__max__b
+POP __rhs
+POP __lhs
+LE __res __lhs __rhs
+PUSH __res
+POP __cond
+CMP __cond 0
+JEQ __endif__3
+PUSH __main__max__b
+POP __rVal
+RETURN __rVal
+JUMP __endif__3
+__endif__3:
+PUSH __main__max__a
+POP __rVal
+RETURN __rVal
+RETURN 0
+__end____main____max__int__int:
+JUMP __end____main____min__int__int
+__main____min__int__int:
+STACKGET __main__min__a 0
+STACKGET __main__min__b 1
+PUSH __main__min__a
+PUSH __main__min__b
+POP __rhs
+POP __lhs
+LE __res __lhs __rhs
+PUSH __res
+POP __cond
+CMP __cond 0
+JEQ __endif__5
+PUSH __main__min__a
+POP __rVal
+RETURN __rVal
+JUMP __endif__5
+__endif__5:
+PUSH __main__min__b
+POP __rVal
+RETURN __rVal
+RETURN 0
+__end____main____min__int__int:
+PUSH 'S'
+ASSIGN __main__SPY 0
+POP __rhs
+ASSIGN __main__SPY __rhs
+PUSH __rhs
+POP __void
+PUSH 'H'
+ASSIGN __main__SAFE_HOUSE 0
+POP __rhs
+ASSIGN __main__SAFE_HOUSE __rhs
+PUSH __rhs
+POP __void
+CALL input
+RESPONSE __retval
+PUSH __retval
+POP __arg0
+PUSH __arg0
+CALL stringToInt__char__1
+POP __void
+RESPONSE __retval
+PUSH __retval
+ASSIGN __main__n 0
+POP __rhs
+ASSIGN __main__n __rhs
+PUSH __rhs
+POP __void
+PUSH __main__n
+PUSH __main__n
+POP __rhs
+POP __lhs
+MULTIPLY __res __lhs __rhs
+PUSH __res
+ASSIGN __main__n2 0
+POP __rhs
+ASSIGN __main__n2 __rhs
+PUSH __rhs
+POP __void
+PUSH 0
+ASSIGN __main__nSpies 0
+POP __rhs
+ASSIGN __main__nSpies __rhs
+PUSH __rhs
+POP __void
+PUSH 0
+ASSIGN __main__nHouses 0
+POP __rhs
+ASSIGN __main__nHouses __rhs
+PUSH __rhs
+POP __void
+PUSH __main__n2
+POP __size
+MALLOC __ptr __size
+PUSH __ptr
+ASSIGN __main__spyLocations 0
+POP __rhs
+ASSIGN __main__spyLocations __rhs
+PUSH __rhs
+POP __void
+PUSH __main__n2
+POP __size
+MALLOC __ptr __size
+PUSH __ptr
+ASSIGN __main__safeHouseLocations 0
+POP __rhs
+ASSIGN __main__safeHouseLocations __rhs
+PUSH __rhs
+POP __void
+PUSH 0
+ASSIGN __main__k 0
+POP __rhs
+ASSIGN __main__k __rhs
+PUSH __rhs
+POP __void
+PUSH 0
+ASSIGN __main__l 0
+POP __rhs
+ASSIGN __main__l __rhs
+PUSH __rhs
+POP __void
+PUSH 0
+ASSIGN __main__for__6__i 0
+POP __rhs
+ASSIGN __main__for__6__i __rhs
+PUSH __rhs
+JUMP __forcond__6
+__for__6:
+PUSH __main__for__6__i
+POP __rhs
+ADD __main__for__6__i __main__for__6__i 1
+ASSIGN __res __main__for__6__i
+PUSH __res
+__forcond__6:
+PUSH __main__for__6__i
+PUSH __main__n
+POP __rhs
+POP __lhs
+LT __res __lhs __rhs
+PUSH __res
+POP __cond
+CMP __cond 0
+JEQ __endfor__6
+CALL input
+RESPONSE __retval
+PUSH __retval
+ASSIGN __main__for__6__block__7__line 0
+POP __rhs
+ASSIGN __main__for__6__block__7__line __rhs
+PUSH __rhs
+POP __void
+PUSH 0
+ASSIGN __main__for__6__block__7__for__8__j 0
+POP __rhs
+ASSIGN __main__for__6__block__7__for__8__j __rhs
+PUSH __rhs
+JUMP __forcond__8
+__for__8:
+PUSH __main__for__6__block__7__for__8__j
+POP __rhs
+ADD __main__for__6__block__7__for__8__j __main__for__6__block__7__for__8__j 1
+ASSIGN __res __main__for__6__block__7__for__8__j
+PUSH __res
+__forcond__8:
+PUSH __main__for__6__block__7__for__8__j
+PUSH __main__n
+POP __rhs
+POP __lhs
+LT __res __lhs __rhs
+PUSH __res
+POP __cond
+CMP __cond 0
+JEQ __endfor__8
+PUSH __main__for__6__block__7__line
+PUSH __main__for__6__block__7__for__8__j
+POP __offset
+POP __pointer
+PUSH __pointer[__offset]
+PUSH __main__SPY
+POP __rhs
+POP __lhs
+EQUAL __res __lhs __rhs
+PUSH __res
+POP __cond
+CMP __cond 0
+JEQ __elif__10x0
+PUSH __main__for__6__i
+PUSH __main__for__6__block__7__for__8__j
+POP __elem1
+POP __elem0
+MALLOC __list 2
+ASSIGN __list[0] __elem0
+ASSIGN __list[1] __elem1
+PUSH __list
+PUSH __main__spyLocations
+ASSIGN __res __main__k
+ADD __main__k __main__k 1
+PUSH __res
+POP __offset
+POP __pointer
+POP __rhs
+ASSIGN __pointer[__offset] __rhs
+PUSH __rhs
+POP __void
+ASSIGN __res __main__nSpies
+ADD __main__nSpies __main__nSpies 1
+PUSH __res
+POP __void
+JUMP __endif__10
+__elif__10x0:
+PUSH __main__for__6__block__7__line
+PUSH __main__for__6__block__7__for__8__j
+POP __offset
+POP __pointer
+PUSH __pointer[__offset]
+PUSH __main__SAFE_HOUSE
+POP __rhs
+POP __lhs
+EQUAL __res __lhs __rhs
+PUSH __res
+POP __cond
+CMP __cond 0
+JEQ __endif__10
+PUSH __main__for__6__i
+PUSH __main__for__6__block__7__for__8__j
+POP __elem1
+POP __elem0
+MALLOC __list 2
+ASSIGN __list[0] __elem0
+ASSIGN __list[1] __elem1
+PUSH __list
+PUSH __main__safeHouseLocations
+ASSIGN __res __main__l
+ADD __main__l __main__l 1
+PUSH __res
+POP __offset
+POP __pointer
+POP __rhs
+ASSIGN __pointer[__offset] __rhs
+PUSH __rhs
+POP __void
+ASSIGN __res __main__nHouses
+ADD __main__nHouses __main__nHouses 1
+PUSH __res
+POP __void
+JUMP __endif__10
+__endif__10:
+JUMP __for__8
+__endfor__8:
+JUMP __for__6
+__endfor__6:
+PUSH 0
+ASSIGN __main__maxDistance 0
+POP __rhs
+ASSIGN __main__maxDistance __rhs
+PUSH __rhs
+POP __void
+PUSH 0
+ASSIGN __main__for__13__i 0
+POP __rhs
+ASSIGN __main__for__13__i __rhs
+PUSH __rhs
+JUMP __forcond__13
+__for__13:
+PUSH __main__for__13__i
+POP __rhs
+ADD __main__for__13__i __main__for__13__i 1
+ASSIGN __res __main__for__13__i
+PUSH __res
+__forcond__13:
+PUSH __main__for__13__i
+PUSH __main__nSpies
+POP __rhs
+POP __lhs
+LT __res __lhs __rhs
+PUSH __res
+POP __cond
+CMP __cond 0
+JEQ __endfor__13
+PUSH __main__n2
+ASSIGN __main__for__13__block__14__minDistance 0
+POP __rhs
+ASSIGN __main__for__13__block__14__minDistance __rhs
+PUSH __rhs
+POP __void
+PUSH 0
+ASSIGN __main__for__13__block__14__for__15__j 0
+POP __rhs
+ASSIGN __main__for__13__block__14__for__15__j __rhs
+PUSH __rhs
+JUMP __forcond__15
+__for__15:
+PUSH __main__for__13__block__14__for__15__j
+POP __rhs
+ADD __main__for__13__block__14__for__15__j __main__for__13__block__14__for__15__j 1
+ASSIGN __res __main__for__13__block__14__for__15__j
+PUSH __res
+__forcond__15:
+PUSH __main__for__13__block__14__for__15__j
+PUSH __main__nHouses
+POP __rhs
+POP __lhs
+LT __res __lhs __rhs
+PUSH __res
+POP __cond
+CMP __cond 0
+JEQ __endfor__15
+PUSH __main__spyLocations
+PUSH __main__for__13__i
+POP __offset
+POP __pointer
+PUSH __pointer[__offset]
+PUSH 0
+POP __offset
+POP __pointer
+PUSH __pointer[__offset]
+PUSH __main__safeHouseLocations
+PUSH __main__for__13__block__14__for__15__j
+POP __offset
+POP __pointer
+PUSH __pointer[__offset]
+PUSH 0
+POP __offset
+POP __pointer
+PUSH __pointer[__offset]
+POP __rhs
+POP __lhs
+SUBTRACT __res __lhs __rhs
+PUSH __res
+POP __arg0
+PUSH __arg0
+CALL __main____abs__int
+POP __void
+RESPONSE __retval
+PUSH __retval
+PUSH __main__spyLocations
+PUSH __main__for__13__i
+POP __offset
+POP __pointer
+PUSH __pointer[__offset]
+PUSH 1
+POP __offset
+POP __pointer
+PUSH __pointer[__offset]
+PUSH __main__safeHouseLocations
+PUSH __main__for__13__block__14__for__15__j
+POP __offset
+POP __pointer
+PUSH __pointer[__offset]
+PUSH 1
+POP __offset
+POP __pointer
+PUSH __pointer[__offset]
+POP __rhs
+POP __lhs
+SUBTRACT __res __lhs __rhs
+PUSH __res
+POP __arg0
+PUSH __arg0
+CALL __main____abs__int
+POP __void
+RESPONSE __retval
+PUSH __retval
+POP __rhs
+POP __lhs
+ADD __res __lhs __rhs
+PUSH __res
+ASSIGN __main__for__13__block__14__for__15__block__16__distance 0
+POP __rhs
+ASSIGN __main__for__13__block__14__for__15__block__16__distance __rhs
+PUSH __rhs
+POP __void
+PUSH __main__for__13__block__14__minDistance
+PUSH __main__for__13__block__14__for__15__block__16__distance
+POP __arg1
+POP __arg0
+PUSH __arg1
+PUSH __arg0
+CALL __main____min__int__int
+POP __void
+POP __void
+RESPONSE __retval
+PUSH __retval
+POP __rhs
+ASSIGN __main__for__13__block__14__minDistance __rhs
+PUSH __rhs
+POP __void
+JUMP __for__15
+__endfor__15:
+PUSH __main__maxDistance
+PUSH __main__for__13__block__14__minDistance
+POP __arg1
+POP __arg0
+PUSH __arg1
+PUSH __arg0
+CALL __main____max__int__int
+POP __void
+POP __void
+RESPONSE __retval
+PUSH __retval
+POP __rhs
+ASSIGN __main__maxDistance __rhs
+PUSH __rhs
+POP __void
+JUMP __for__13
+__endfor__13:
+PUSH __main__maxDistance
+POP __arg0
+PUSH __arg0
+CALL println__int
+POP __void
+RESPONSE __retval
+PUSH __retval
+POP __void

@@ -1,0 +1,50 @@
+
+// 'Simple' AmyAssembly hello world program 
+// By Amy Burnett
+//========================================================================
+
+// start at main
+    jump main
+
+//========================================================================
+// Returns a customary phrase stored on the heap
+getCustomaryPhraseFromHeap:
+    malloc phrase 13
+    assign phrase[0] 'H' 
+    assign phrase[1] 'e'
+    assign phrase[2] 'l'
+    assign phrase[3] 'l'
+    assign phrase[4] 'o'
+    assign phrase[5] ','
+    assign phrase[6] ' '
+    assign phrase[7] 'W'
+    assign phrase[8] 'o'
+    assign phrase[9] 'r'
+    assign phrase[10] 'l'
+    assign phrase[11] 'd'
+    assign phrase[12] '!'
+    return phrase
+
+//========================================================================
+
+main:
+    call getCustomaryPhraseFromHeap
+    // grab the return value of the previous call
+    response msg 
+    // loop through phrase and print out 
+    assign i 0
+while:
+    // condition
+    cmp i 13
+    jge endwhile
+    // body 
+    print msg[i]
+    // print __lhs[__off]
+    // update
+    add i i 1
+    // repeat
+    jump while
+endwhile:
+    println 
+    free msg 
+    halt

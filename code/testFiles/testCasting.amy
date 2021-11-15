@@ -113,7 +113,3 @@ free (person);
 println (person.name);
 
 Person person2 = new Person ("Cameron", 21);
-
-// if the free works, person2 should replace the block of person
-// but person still has that address so you can access person2 with person
-println (person.name);

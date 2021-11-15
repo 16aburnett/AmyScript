@@ -1248,11 +1248,14 @@ __main____strcmp__char__1__char__1:
                CMP __cond 0
                JEQ __endif__17
             // Body
-               // Return
-                  // Int Literal
-                     PUSH 0
-                  POP __rVal
-                  RETURN __rVal
+               //---------------------------------------------------------
+               // Code Block
+                  // Return
+                     // Int Literal
+                        PUSH 0
+                     POP __rVal
+                     RETURN __rVal
+               //---------------------------------------------------------
             JUMP __endif__17
             // End of if
             __endif__17:
@@ -1266,27 +1269,27 @@ __main____strcmp__char__1__char__1:
                      PUSH 0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__strcmp__block__16__for__18__i 0
+                     ASSIGN __main__strcmp__block__16__for__19__i 0
                POP __rhs
-               ASSIGN __main__strcmp__block__16__for__18__i __rhs
+               ASSIGN __main__strcmp__block__16__for__19__i __rhs
                PUSH __rhs
-         JUMP __forcond__18
-         __for__18:
+         JUMP __forcond__19
+         __for__19:
             // Update
                // Pre-Increment
                   // RHS
                      // Identifier - i
-                        PUSH __main__strcmp__block__16__for__18__i
+                        PUSH __main__strcmp__block__16__for__19__i
                   POP __rhs
-                  ADD __main__strcmp__block__16__for__18__i __main__strcmp__block__16__for__18__i 1
-                  ASSIGN __res __main__strcmp__block__16__for__18__i
+                  ADD __main__strcmp__block__16__for__19__i __main__strcmp__block__16__for__19__i 1
+                  ASSIGN __res __main__strcmp__block__16__for__19__i
                   PUSH __res
-            __forcond__18:
+            __forcond__19:
             // Condition
                // Less Than
                   // LHS
                      // Identifier - i
-                        PUSH __main__strcmp__block__16__for__18__i
+                        PUSH __main__strcmp__block__16__for__19__i
                   // RHS
                      // Sizeof Operator
                         // RHS
@@ -1302,7 +1305,7 @@ __main____strcmp__char__1__char__1:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor__18
+               JEQ __endfor__19
             // Body
                //---------------------------------------------------------
                // If-Statement
@@ -1315,7 +1318,7 @@ __main____strcmp__char__1__char__1:
                                     PUSH __main__strcmp__a
                               // OFFSET
                                  // Identifier - i
-                                    PUSH __main__strcmp__block__16__for__18__i
+                                    PUSH __main__strcmp__block__16__for__19__i
                               POP __offset
                               POP __pointer
                               PUSH __pointer[__offset]
@@ -1326,7 +1329,7 @@ __main____strcmp__char__1__char__1:
                                     PUSH __main__strcmp__b
                               // OFFSET
                                  // Identifier - i
-                                    PUSH __main__strcmp__block__16__for__18__i
+                                    PUSH __main__strcmp__block__16__for__19__i
                               POP __offset
                               POP __pointer
                               PUSH __pointer[__offset]
@@ -1336,21 +1339,24 @@ __main____strcmp__char__1__char__1:
                         PUSH __res
                      POP __cond
                      CMP __cond 0
-                     JEQ __endif__19
+                     JEQ __endif__20
                   // Body
-                     // Return
-                        // Int Literal
-                           PUSH 0
-                        POP __rVal
-                        RETURN __rVal
-                  JUMP __endif__19
+                     //---------------------------------------------------
+                     // Code Block
+                        // Return
+                           // Int Literal
+                              PUSH 0
+                           POP __rVal
+                           RETURN __rVal
+                     //---------------------------------------------------
+                  JUMP __endif__20
                   // End of if
-                  __endif__19:
+                  __endif__20:
                //---------------------------------------------------------
             // Repeat
-            JUMP __for__18
+            JUMP __for__19
             // End of For
-            __endfor__18:
+            __endfor__19:
          //---------------------------------------------------------------
          // Return
             // Int Literal
@@ -1515,13 +1521,13 @@ __end____main____strcmp__char__1__char__1:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif__22
+                        JEQ __endif__24
                      // Body
                         // Return
                            RETURN 0
-                     JUMP __endif__22
+                     JUMP __endif__24
                      // End of if
-                     __endif__22:
+                     __endif__24:
                   //------------------------------------------------------
                   // Assignment
                      // RHS
@@ -1631,27 +1637,27 @@ __end____main____strcmp__char__1__char__1:
                               PUSH 0
                         // LHS
                            // Variable Declaration
-                              ASSIGN __main____map__char__1__int__get__block__23__for__24__i 0
+                              ASSIGN __main____map__char__1__int__get__block__25__for__26__i 0
                         POP __rhs
-                        ASSIGN __main____map__char__1__int__get__block__23__for__24__i __rhs
+                        ASSIGN __main____map__char__1__int__get__block__25__for__26__i __rhs
                         PUSH __rhs
-                  JUMP __forcond__24
-                  __for__24:
+                  JUMP __forcond__26
+                  __for__26:
                      // Update
                         // Pre-Increment
                            // RHS
                               // Identifier - i
-                                 PUSH __main____map__char__1__int__get__block__23__for__24__i
+                                 PUSH __main____map__char__1__int__get__block__25__for__26__i
                            POP __rhs
-                           ADD __main____map__char__1__int__get__block__23__for__24__i __main____map__char__1__int__get__block__23__for__24__i 1
-                           ASSIGN __res __main____map__char__1__int__get__block__23__for__24__i
+                           ADD __main____map__char__1__int__get__block__25__for__26__i __main____map__char__1__int__get__block__25__for__26__i 1
+                           ASSIGN __res __main____map__char__1__int__get__block__25__for__26__i
                            PUSH __res
-                     __forcond__24:
+                     __forcond__26:
                      // Condition
                         // Less Than
                            // LHS
                               // Identifier - i
-                                 PUSH __main____map__char__1__int__get__block__23__for__24__i
+                                 PUSH __main____map__char__1__int__get__block__25__for__26__i
                            // RHS
                               // Member Accessor
                                  // LHS
@@ -1668,7 +1674,7 @@ __end____main____strcmp__char__1__char__1:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endfor__24
+                        JEQ __endfor__26
                      // Body
                         //------------------------------------------------
                         // If-Statement
@@ -1688,7 +1694,7 @@ __end____main____strcmp__char__1__char__1:
                                              PUSH __parent[__child]
                                        // OFFSET
                                           // Identifier - i
-                                             PUSH __main____map__char__1__int__get__block__23__for__24__i
+                                             PUSH __main____map__char__1__int__get__block__25__for__26__i
                                        POP __offset
                                        POP __pointer
                                        PUSH __pointer[__offset]
@@ -1708,7 +1714,7 @@ __end____main____strcmp__char__1__char__1:
                                  PUSH __retval
                               POP __cond
                               CMP __cond 0
-                              JEQ __endif__25
+                              JEQ __endif__27
                            // Body
                               // Return
                                  // Subscript
@@ -1724,20 +1730,20 @@ __end____main____strcmp__char__1__char__1:
                                           PUSH __parent[__child]
                                     // OFFSET
                                        // Identifier - i
-                                          PUSH __main____map__char__1__int__get__block__23__for__24__i
+                                          PUSH __main____map__char__1__int__get__block__25__for__26__i
                                     POP __offset
                                     POP __pointer
                                     PUSH __pointer[__offset]
                                  POP __rVal
                                  RETURN __rVal
-                           JUMP __endif__25
+                           JUMP __endif__27
                            // End of if
-                           __endif__25:
+                           __endif__27:
                         //------------------------------------------------
                      // Repeat
-                     JUMP __for__24
+                     JUMP __for__26
                      // End of For
-                     __endfor__24:
+                     __endfor__26:
                   //------------------------------------------------------
                //---------------------------------------------------------
             RETURN 0
@@ -1768,27 +1774,27 @@ __end____main____strcmp__char__1__char__1:
                               PUSH 0
                         // LHS
                            // Variable Declaration
-                              ASSIGN __main____map__char__1__int__set__block__26__for__27__i 0
+                              ASSIGN __main____map__char__1__int__set__block__28__for__29__i 0
                         POP __rhs
-                        ASSIGN __main____map__char__1__int__set__block__26__for__27__i __rhs
+                        ASSIGN __main____map__char__1__int__set__block__28__for__29__i __rhs
                         PUSH __rhs
-                  JUMP __forcond__27
-                  __for__27:
+                  JUMP __forcond__29
+                  __for__29:
                      // Update
                         // Pre-Increment
                            // RHS
                               // Identifier - i
-                                 PUSH __main____map__char__1__int__set__block__26__for__27__i
+                                 PUSH __main____map__char__1__int__set__block__28__for__29__i
                            POP __rhs
-                           ADD __main____map__char__1__int__set__block__26__for__27__i __main____map__char__1__int__set__block__26__for__27__i 1
-                           ASSIGN __res __main____map__char__1__int__set__block__26__for__27__i
+                           ADD __main____map__char__1__int__set__block__28__for__29__i __main____map__char__1__int__set__block__28__for__29__i 1
+                           ASSIGN __res __main____map__char__1__int__set__block__28__for__29__i
                            PUSH __res
-                     __forcond__27:
+                     __forcond__29:
                      // Condition
                         // Less Than
                            // LHS
                               // Identifier - i
-                                 PUSH __main____map__char__1__int__set__block__26__for__27__i
+                                 PUSH __main____map__char__1__int__set__block__28__for__29__i
                            // RHS
                               // Member Accessor
                                  // LHS
@@ -1805,7 +1811,7 @@ __end____main____strcmp__char__1__char__1:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endfor__27
+                        JEQ __endfor__29
                      // Body
                         //------------------------------------------------
                         // If-Statement
@@ -1825,7 +1831,7 @@ __end____main____strcmp__char__1__char__1:
                                              PUSH __parent[__child]
                                        // OFFSET
                                           // Identifier - i
-                                             PUSH __main____map__char__1__int__set__block__26__for__27__i
+                                             PUSH __main____map__char__1__int__set__block__28__for__29__i
                                        POP __offset
                                        POP __pointer
                                        PUSH __pointer[__offset]
@@ -1845,7 +1851,7 @@ __end____main____strcmp__char__1__char__1:
                                  PUSH __retval
                               POP __cond
                               CMP __cond 0
-                              JEQ __endif__28
+                              JEQ __endif__30
                            // Body
                               // Assignment
                                  // RHS
@@ -1865,7 +1871,7 @@ __end____main____strcmp__char__1__char__1:
                                              PUSH __parent[__child]
                                        // OFFSET
                                           // Identifier - i
-                                             PUSH __main____map__char__1__int__set__block__26__for__27__i
+                                             PUSH __main____map__char__1__int__set__block__28__for__29__i
                                        POP __offset
                                        POP __pointer
                                  POP __rhs
@@ -1873,14 +1879,14 @@ __end____main____strcmp__char__1__char__1:
                                  PUSH __rhs
                               // Statement results can be ignored
                               POP __void
-                           JUMP __endif__28
+                           JUMP __endif__30
                            // End of if
-                           __endif__28:
+                           __endif__30:
                         //------------------------------------------------
                      // Repeat
-                     JUMP __for__27
+                     JUMP __for__29
                      // End of For
-                     __endfor__27:
+                     __endfor__29:
                   //------------------------------------------------------
                //---------------------------------------------------------
             RETURN 0
@@ -1909,27 +1915,27 @@ __end____main____strcmp__char__1__char__1:
                               PUSH 0
                         // LHS
                            // Variable Declaration
-                              ASSIGN __main____map__char__1__int__contains__block__29__for__30__i 0
+                              ASSIGN __main____map__char__1__int__contains__block__31__for__32__i 0
                         POP __rhs
-                        ASSIGN __main____map__char__1__int__contains__block__29__for__30__i __rhs
+                        ASSIGN __main____map__char__1__int__contains__block__31__for__32__i __rhs
                         PUSH __rhs
-                  JUMP __forcond__30
-                  __for__30:
+                  JUMP __forcond__32
+                  __for__32:
                      // Update
                         // Pre-Increment
                            // RHS
                               // Identifier - i
-                                 PUSH __main____map__char__1__int__contains__block__29__for__30__i
+                                 PUSH __main____map__char__1__int__contains__block__31__for__32__i
                            POP __rhs
-                           ADD __main____map__char__1__int__contains__block__29__for__30__i __main____map__char__1__int__contains__block__29__for__30__i 1
-                           ASSIGN __res __main____map__char__1__int__contains__block__29__for__30__i
+                           ADD __main____map__char__1__int__contains__block__31__for__32__i __main____map__char__1__int__contains__block__31__for__32__i 1
+                           ASSIGN __res __main____map__char__1__int__contains__block__31__for__32__i
                            PUSH __res
-                     __forcond__30:
+                     __forcond__32:
                      // Condition
                         // Less Than
                            // LHS
                               // Identifier - i
-                                 PUSH __main____map__char__1__int__contains__block__29__for__30__i
+                                 PUSH __main____map__char__1__int__contains__block__31__for__32__i
                            // RHS
                               // Member Accessor
                                  // LHS
@@ -1946,7 +1952,7 @@ __end____main____strcmp__char__1__char__1:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endfor__30
+                        JEQ __endfor__32
                      // Body
                         //------------------------------------------------
                         // If-Statement
@@ -1966,7 +1972,7 @@ __end____main____strcmp__char__1__char__1:
                                              PUSH __parent[__child]
                                        // OFFSET
                                           // Identifier - i
-                                             PUSH __main____map__char__1__int__contains__block__29__for__30__i
+                                             PUSH __main____map__char__1__int__contains__block__31__for__32__i
                                        POP __offset
                                        POP __pointer
                                        PUSH __pointer[__offset]
@@ -1986,21 +1992,21 @@ __end____main____strcmp__char__1__char__1:
                                  PUSH __retval
                               POP __cond
                               CMP __cond 0
-                              JEQ __endif__31
+                              JEQ __endif__33
                            // Body
                               // Return
                                  // Int Literal
                                     PUSH 1
                                  POP __rVal
                                  RETURN __rVal
-                           JUMP __endif__31
+                           JUMP __endif__33
                            // End of if
-                           __endif__31:
+                           __endif__33:
                         //------------------------------------------------
                      // Repeat
-                     JUMP __for__30
+                     JUMP __for__32
                      // End of For
-                     __endfor__30:
+                     __endfor__32:
                   //------------------------------------------------------
                   // Return
                      // Int Literal
@@ -2145,27 +2151,27 @@ POP __void
             PUSH 0
       // LHS
          // Variable Declaration
-            ASSIGN __main__for__32__i 0
+            ASSIGN __main__for__34__i 0
       POP __rhs
-      ASSIGN __main__for__32__i __rhs
+      ASSIGN __main__for__34__i __rhs
       PUSH __rhs
-JUMP __forcond__32
-__for__32:
+JUMP __forcond__34
+__for__34:
    // Update
       // Pre-Increment
          // RHS
             // Identifier - i
-               PUSH __main__for__32__i
+               PUSH __main__for__34__i
          POP __rhs
-         ADD __main__for__32__i __main__for__32__i 1
-         ASSIGN __res __main__for__32__i
+         ADD __main__for__34__i __main__for__34__i 1
+         ASSIGN __res __main__for__34__i
          PUSH __res
-   __forcond__32:
+   __forcond__34:
    // Condition
       // Less Than
          // LHS
             // Identifier - i
-               PUSH __main__for__32__i
+               PUSH __main__for__34__i
          // RHS
             // Sizeof Operator
                // RHS
@@ -2181,7 +2187,7 @@ __for__32:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endfor__32
+      JEQ __endfor__34
    // Body
       //------------------------------------------------------------------
       // Code Block
@@ -2202,7 +2208,7 @@ __for__32:
                                     PUSH __main__words
                               // OFFSET
                                  // Identifier - i
-                                    PUSH __main__for__32__i
+                                    PUSH __main__for__34__i
                               POP __offset
                               POP __pointer
                               PUSH __pointer[__offset]
@@ -2222,7 +2228,7 @@ __for__32:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __else__34
+               JEQ __else__36
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -2238,7 +2244,7 @@ __for__32:
                                  PUSH __main__words
                            // OFFSET
                               // Identifier - i
-                                 PUSH __main__for__32__i
+                                 PUSH __main__for__34__i
                            POP __offset
                            POP __pointer
                            PUSH __pointer[__offset]
@@ -2261,10 +2267,10 @@ __for__32:
                   // Statement results can be ignored
                   POP __void
                //---------------------------------------------------------
-            JUMP __endif__34
+            JUMP __endif__36
             //------------------------------------------------------------
             // Else-Statement
-            __else__34:
+            __else__36:
             // Method Call - map<:char[], int:>::set(char[], int) -> void
                // LHS
                   // Identifier - occ
@@ -2277,7 +2283,7 @@ __for__32:
                            PUSH __main__words
                      // OFFSET
                         // Identifier - i
-                           PUSH __main__for__32__i
+                           PUSH __main__for__34__i
                      POP __offset
                      POP __pointer
                      PUSH __pointer[__offset]
@@ -2295,7 +2301,7 @@ __for__32:
                                        PUSH __main__words
                                  // OFFSET
                                     // Identifier - i
-                                       PUSH __main__for__32__i
+                                       PUSH __main__for__34__i
                                  POP __offset
                                  POP __pointer
                                  PUSH __pointer[__offset]
@@ -2335,13 +2341,13 @@ __for__32:
             POP __void
             //------------------------------------------------------------
             // End of if
-            __endif__34:
+            __endif__36:
          //---------------------------------------------------------------
       //------------------------------------------------------------------
    // Repeat
-   JUMP __for__32
+   JUMP __for__34
    // End of For
-   __endfor__32:
+   __endfor__34:
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
 // For-Loop
@@ -2352,27 +2358,27 @@ __for__32:
             PUSH 0
       // LHS
          // Variable Declaration
-            ASSIGN __main__for__36__i 0
+            ASSIGN __main__for__38__i 0
       POP __rhs
-      ASSIGN __main__for__36__i __rhs
+      ASSIGN __main__for__38__i __rhs
       PUSH __rhs
-JUMP __forcond__36
-__for__36:
+JUMP __forcond__38
+__for__38:
    // Update
       // Pre-Increment
          // RHS
             // Identifier - i
-               PUSH __main__for__36__i
+               PUSH __main__for__38__i
          POP __rhs
-         ADD __main__for__36__i __main__for__36__i 1
-         ASSIGN __res __main__for__36__i
+         ADD __main__for__38__i __main__for__38__i 1
+         ASSIGN __res __main__for__38__i
          PUSH __res
-   __forcond__36:
+   __forcond__38:
    // Condition
       // Less Than
          // LHS
             // Identifier - i
-               PUSH __main__for__36__i
+               PUSH __main__for__38__i
          // RHS
             // Member Accessor
                // LHS
@@ -2389,7 +2395,7 @@ __for__36:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endfor__36
+      JEQ __endfor__38
    // Body
       //------------------------------------------------------------------
       // Code Block
@@ -2408,7 +2414,7 @@ __for__36:
                         PUSH __parent[__child]
                   // OFFSET
                      // Identifier - i
-                        PUSH __main__for__36__i
+                        PUSH __main__for__38__i
                   POP __offset
                   POP __pointer
                   PUSH __pointer[__offset]
@@ -2453,7 +2459,7 @@ __for__36:
                         PUSH __parent[__child]
                   // OFFSET
                      // Identifier - i
-                        PUSH __main__for__36__i
+                        PUSH __main__for__38__i
                   POP __offset
                   POP __pointer
                   PUSH __pointer[__offset]
@@ -2470,9 +2476,9 @@ __for__36:
          POP __void
       //------------------------------------------------------------------
    // Repeat
-   JUMP __for__36
+   JUMP __for__38
    // End of For
-   __endfor__36:
+   __endfor__38:
 //------------------------------------------------------------------------
 //========================================================================
 //### END OF CODE ########################################################

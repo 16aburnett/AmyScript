@@ -68,10 +68,14 @@ println ();
 function int strcmp (char[] a, char[] b)
 {
     if (sizeof(a) != sizeof(b))
+    {
         return 0;
+    }
     for (int i = 0; i < sizeof(a); ++i)
         if (a[i] != b[i])
+        {
             return 0;
+        }
     return 1;
 }
 

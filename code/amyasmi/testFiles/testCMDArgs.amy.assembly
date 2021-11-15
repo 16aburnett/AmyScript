@@ -1,0 +1,120 @@
+
+    jump main
+
+//========================================================================
+// converts string to integer
+// param1 - string pointer
+stringToInt:
+    stackget string 0
+    sizeof size string
+    assign val 0
+    assign i 0 
+while01:
+    cmp i size
+    jge endwhile01
+
+    // shift nums
+    multiply val val 10
+
+    cmp string[i] '1'
+    jneq notOne
+    add val val 1 
+    jump continue
+notOne:
+    cmp string[i] '2'
+    jneq notTwo
+    add val val 2 
+    jump continue
+notTwo:
+    cmp string[i] '3'
+    jneq notThree
+    add val val 3 
+    jump continue
+notThree:
+    cmp string[i] '4'
+    jneq notFour
+    add val val 4 
+    jump continue
+notFour:
+    cmp string[i] '5'
+    jneq notFive
+    add val val 5 
+    jump continue
+notFive:
+    cmp string[i] '6'
+    jneq notSix
+    add val val 6 
+    jump continue
+notSix:
+    cmp string[i] '7'
+    jneq notSeven
+    add val val 7 
+    jump continue
+notSeven:
+    cmp string[i] '8'
+    jneq notEight
+    add val val 8 
+    jump continue
+notEight:
+    cmp string[i] '9'
+    jneq notNine
+    add val val 9 
+    jump continue
+notNine:
+    cmp string[i] '0'
+    jneq error
+    add val val 0 
+    jump continue
+error:
+    print 'e'
+    print 'r'
+    print 'r'
+    print 'o'
+    println 'r'
+    println string[i]
+    halt 
+continue:
+    add i i 1
+    jump while01
+endwhile01:
+    return val 
+
+//========================================================================
+// Prints a string 
+printString:
+    stackget string 0
+    assign i 0
+    sizeof size string
+loop:
+    cmp i size
+    jge endloop
+    print string[i]
+    add i i 1
+    jump loop
+endloop:
+    println
+    return 0
+
+//========================================================================
+
+main:
+    stackget argc 0
+
+    assign i 0
+while:
+    cmp i argc
+    jge endwhile
+
+    add offset i 1
+    stackget string offset
+    push string
+    call printString
+    pop null
+
+    add i i 1
+
+    jump while
+
+endwhile:
+
+    halt

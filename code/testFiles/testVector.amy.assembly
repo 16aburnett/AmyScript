@@ -248,38 +248,38 @@ POP __void
 // Class Template - 
    // Instances:
       //==================================================================
-      // Class Declaration - __main____vector__int inherits __main__Object
+      // Class Declaration - __main____Vector__int inherits __main__Object
          // Creating Dispatch Table
-            MALLOC __dtable____main____vector__int 6
+            MALLOC __dtable____main____Vector__int 6
             // Populate Dispatch Table
-            ASSIGN __dtable____main____vector__int[0] __method____main____vector__int____get__int
-            ASSIGN __dtable____main____vector__int[1] __method____main____vector__int____set__int__int
-            ASSIGN __dtable____main____vector__int[2] __method____main____vector__int____size
-            ASSIGN __dtable____main____vector__int[3] __method____main____vector__int____is_empty
-            ASSIGN __dtable____main____vector__int[4] __method____main____vector__int____push_back__int
-            ASSIGN __dtable____main____vector__int[5] __method____main____vector__int____pop_back
+            ASSIGN __dtable____main____Vector__int[0] __method____main____Vector__int____get__int
+            ASSIGN __dtable____main____Vector__int[1] __method____main____Vector__int____set__int__int
+            ASSIGN __dtable____main____Vector__int[2] __method____main____Vector__int____size
+            ASSIGN __dtable____main____Vector__int[3] __method____main____Vector__int____is_empty
+            ASSIGN __dtable____main____Vector__int[4] __method____main____Vector__int____push_back__int
+            ASSIGN __dtable____main____Vector__int[5] __method____main____Vector__int____pop_back
          //---------------------------------------------------------------
-         // Field - int[] vector<:int:>::data
-         ASSIGN __field____main____vector__int____data 1
-         //---------------------------------------------------------------
-         //---------------------------------------------------------------
-         // Field - int vector<:int:>::size
-         ASSIGN __field____main____vector__int____size 2
+         // Field - int[] Vector<:int:>::data
+         ASSIGN __field____main____Vector__int____data 1
          //---------------------------------------------------------------
          //---------------------------------------------------------------
-         // Field - int vector<:int:>::capacity
-         ASSIGN __field____main____vector__int____capacity 3
+         // Field - int Vector<:int:>::size
+         ASSIGN __field____main____Vector__int____size 2
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // Field - int Vector<:int:>::capacity
+         ASSIGN __field____main____Vector__int____capacity 3
          //---------------------------------------------------------------
       // skip over class methods
-      JUMP __endclass____main____vector__int
+      JUMP __endclass____main____Vector__int
          //---------------------------------------------------------------
-         // Constructor Declaration - vector<:int:>::vector() -> vector<:int:>
-         JUMP __end__ctor____main____vector__int____vector
-         __ctor____main____vector__int____vector:
+         // Constructor Declaration - Vector<:int:>::Vector() -> Vector<:int:>
+         JUMP __end__ctor____main____Vector__int____Vector
+         __ctor____main____Vector__int____Vector:
             // Creating Class Instance
                MALLOC __this 4
                // Add Dispatch Table
-               ASSIGN __this[0] __dtable____main____vector__int
+               ASSIGN __this[0] __dtable____main____Vector__int
             // Parameters
             // Body
                //---------------------------------------------------------
@@ -294,7 +294,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__int____capacity
+                              PUSH __field____main____Vector__int____capacity
                            POP __child
                            POP __parent
                            POP __rhs
@@ -312,7 +312,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__int____size
+                              PUSH __field____main____Vector__int____size
                            POP __child
                            POP __parent
                            POP __rhs
@@ -328,7 +328,7 @@ POP __void
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main____vector__int____capacity
+                                 PUSH __field____main____Vector__int____capacity
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -341,7 +341,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__int____data
+                              PUSH __field____main____Vector__int____data
                            POP __child
                            POP __parent
                            POP __rhs
@@ -351,19 +351,19 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN __this
-         __end__ctor____main____vector__int____vector:
-         // End Constructor Declaration - __ctor____main____vector__int____vector
+         __end__ctor____main____Vector__int____Vector:
+         // End Constructor Declaration - __ctor____main____Vector__int____Vector
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:int:>::get(int) -> int
-         JUMP __end__method____main____vector__int____get__int
-         __method____main____vector__int____get__int:
+         // Method Declaration - Vector<:int:>::get(int) -> int
+         JUMP __end__method____main____Vector__int____get__int
+         __method____main____Vector__int____get__int:
             // Class Instance
                STACKGET __this 0
             // Parameters
                // Param: index
-               STACKGET __main____vector__int__get__index 1
+               STACKGET __main____Vector__int__get__index 1
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -375,13 +375,13 @@ POP __void
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main____vector__int____data
+                                 PUSH __field____main____Vector__int____data
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
                         // OFFSET
                            // Identifier - index
-                              PUSH __main____vector__int__get__index
+                              PUSH __main____Vector__int__get__index
                         POP __offset
                         POP __pointer
                         PUSH __pointer[__offset]
@@ -389,28 +389,28 @@ POP __void
                      RETURN __rVal
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__int____get__int:
-         // End Method Declaration - __method____main____vector__int____get__int
+         __end__method____main____Vector__int____get__int:
+         // End Method Declaration - __method____main____Vector__int____get__int
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:int:>::set(int, int) -> void
-         JUMP __end__method____main____vector__int____set__int__int
-         __method____main____vector__int____set__int__int:
+         // Method Declaration - Vector<:int:>::set(int, int) -> void
+         JUMP __end__method____main____Vector__int____set__int__int
+         __method____main____Vector__int____set__int__int:
             // Class Instance
                STACKGET __this 0
             // Parameters
                // Param: index
-               STACKGET __main____vector__int__set__index 1
+               STACKGET __main____Vector__int__set__index 1
                // Param: value
-               STACKGET __main____vector__int__set__value 2
+               STACKGET __main____Vector__int__set__value 2
             // Body
                //---------------------------------------------------------
                // Code Block
                   // Assignment
                      // RHS
                         // Identifier - value
-                           PUSH __main____vector__int__set__value
+                           PUSH __main____Vector__int__set__value
                      // LHS
                         // Subscript assignment
                            // LHS
@@ -419,13 +419,13 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__int____data
+                                    PUSH __field____main____Vector__int____data
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
                            // OFFSET
                               // Identifier - index
-                                 PUSH __main____vector__int__set__index
+                                 PUSH __main____Vector__int__set__index
                            POP __offset
                            POP __pointer
                      POP __rhs
@@ -435,14 +435,14 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__int____set__int__int:
-         // End Method Declaration - __method____main____vector__int____set__int__int
+         __end__method____main____Vector__int____set__int__int:
+         // End Method Declaration - __method____main____Vector__int____set__int__int
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:int:>::size() -> int
-         JUMP __end__method____main____vector__int____size
-         __method____main____vector__int____size:
+         // Method Declaration - Vector<:int:>::size() -> int
+         JUMP __end__method____main____Vector__int____size
+         __method____main____Vector__int____size:
             // Class Instance
                STACKGET __this 0
             // Parameters
@@ -455,7 +455,7 @@ POP __void
                            // This keyword
                               PUSH __this
                         // RHS
-                           PUSH __field____main____vector__int____size
+                           PUSH __field____main____Vector__int____size
                         POP __child
                         POP __parent
                         PUSH __parent[__child]
@@ -463,14 +463,14 @@ POP __void
                      RETURN __rVal
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__int____size:
-         // End Method Declaration - __method____main____vector__int____size
+         __end__method____main____Vector__int____size:
+         // End Method Declaration - __method____main____Vector__int____size
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:int:>::is_empty() -> int
-         JUMP __end__method____main____vector__int____is_empty
-         __method____main____vector__int____is_empty:
+         // Method Declaration - Vector<:int:>::is_empty() -> int
+         JUMP __end__method____main____Vector__int____is_empty
+         __method____main____Vector__int____is_empty:
             // Class Instance
                STACKGET __this 0
             // Parameters
@@ -485,7 +485,7 @@ POP __void
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main____vector__int____size
+                                 PUSH __field____main____Vector__int____size
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -500,19 +500,19 @@ POP __void
                      RETURN __rVal
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__int____is_empty:
-         // End Method Declaration - __method____main____vector__int____is_empty
+         __end__method____main____Vector__int____is_empty:
+         // End Method Declaration - __method____main____Vector__int____is_empty
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:int:>::push_back(int) -> void
-         JUMP __end__method____main____vector__int____push_back__int
-         __method____main____vector__int____push_back__int:
+         // Method Declaration - Vector<:int:>::push_back(int) -> void
+         JUMP __end__method____main____Vector__int____push_back__int
+         __method____main____Vector__int____push_back__int:
             // Class Instance
                STACKGET __this 0
             // Parameters
                // Param: value
-               STACKGET __main____vector__int__push_back__value 1
+               STACKGET __main____Vector__int__push_back__value 1
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -526,7 +526,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__int____size
+                                    PUSH __field____main____Vector__int____size
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -536,7 +536,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__int____capacity
+                                    PUSH __field____main____Vector__int____capacity
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -559,7 +559,7 @@ POP __void
                                              // This keyword
                                                 PUSH __this
                                           // RHS
-                                             PUSH __field____main____vector__int____capacity
+                                             PUSH __field____main____Vector__int____capacity
                                           POP __child
                                           POP __parent
                                           PUSH __parent[__child]
@@ -576,7 +576,7 @@ POP __void
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field____main____vector__int____capacity
+                                       PUSH __field____main____Vector__int____capacity
                                     POP __child
                                     POP __parent
                                     POP __rhs
@@ -592,7 +592,7 @@ POP __void
                                           // This keyword
                                              PUSH __this
                                        // RHS
-                                          PUSH __field____main____vector__int____capacity
+                                          PUSH __field____main____Vector__int____capacity
                                        POP __child
                                        POP __parent
                                        PUSH __parent[__child]
@@ -601,9 +601,9 @@ POP __void
                                     PUSH __ptr
                               // LHS
                                  // Variable Declaration
-                                    ASSIGN __main____vector__int__push_back__block__5__if__6__block__7__new_data 0
+                                    ASSIGN __main____Vector__int__push_back__block__5__if__6__block__7__new_data 0
                               POP __rhs
-                              ASSIGN __main____vector__int__push_back__block__5__if__6__block__7__new_data __rhs
+                              ASSIGN __main____Vector__int__push_back__block__5__if__6__block__7__new_data __rhs
                               PUSH __rhs
                            // Statement results can be ignored
                            POP __void
@@ -616,9 +616,9 @@ POP __void
                                        PUSH 0
                                  // LHS
                                     // Variable Declaration
-                                       ASSIGN __main____vector__int__push_back__block__5__if__6__block__7__for__8__i 0
+                                       ASSIGN __main____Vector__int__push_back__block__5__if__6__block__7__for__8__i 0
                                  POP __rhs
-                                 ASSIGN __main____vector__int__push_back__block__5__if__6__block__7__for__8__i __rhs
+                                 ASSIGN __main____Vector__int__push_back__block__5__if__6__block__7__for__8__i __rhs
                                  PUSH __rhs
                            JUMP __forcond__8
                            __for__8:
@@ -626,24 +626,24 @@ POP __void
                                  // Pre-Increment
                                     // RHS
                                        // Identifier - i
-                                          PUSH __main____vector__int__push_back__block__5__if__6__block__7__for__8__i
+                                          PUSH __main____Vector__int__push_back__block__5__if__6__block__7__for__8__i
                                     POP __rhs
-                                    ADD __main____vector__int__push_back__block__5__if__6__block__7__for__8__i __main____vector__int__push_back__block__5__if__6__block__7__for__8__i 1
-                                    ASSIGN __res __main____vector__int__push_back__block__5__if__6__block__7__for__8__i
+                                    ADD __main____Vector__int__push_back__block__5__if__6__block__7__for__8__i __main____Vector__int__push_back__block__5__if__6__block__7__for__8__i 1
+                                    ASSIGN __res __main____Vector__int__push_back__block__5__if__6__block__7__for__8__i
                                     PUSH __res
                               __forcond__8:
                               // Condition
                                  // Less Than
                                     // LHS
                                        // Identifier - i
-                                          PUSH __main____vector__int__push_back__block__5__if__6__block__7__for__8__i
+                                          PUSH __main____Vector__int__push_back__block__5__if__6__block__7__for__8__i
                                     // RHS
                                        // Member Accessor
                                           // LHS
                                              // This keyword
                                                 PUSH __this
                                           // RHS
-                                             PUSH __field____main____vector__int____size
+                                             PUSH __field____main____Vector__int____size
                                           POP __child
                                           POP __parent
                                           PUSH __parent[__child]
@@ -664,13 +664,13 @@ POP __void
                                                    // This keyword
                                                       PUSH __this
                                                 // RHS
-                                                   PUSH __field____main____vector__int____data
+                                                   PUSH __field____main____Vector__int____data
                                                 POP __child
                                                 POP __parent
                                                 PUSH __parent[__child]
                                           // OFFSET
                                              // Identifier - i
-                                                PUSH __main____vector__int__push_back__block__5__if__6__block__7__for__8__i
+                                                PUSH __main____Vector__int__push_back__block__5__if__6__block__7__for__8__i
                                           POP __offset
                                           POP __pointer
                                           PUSH __pointer[__offset]
@@ -678,10 +678,10 @@ POP __void
                                        // Subscript assignment
                                           // LHS
                                              // Identifier - new_data
-                                                PUSH __main____vector__int__push_back__block__5__if__6__block__7__new_data
+                                                PUSH __main____Vector__int__push_back__block__5__if__6__block__7__new_data
                                           // OFFSET
                                              // Identifier - i
-                                                PUSH __main____vector__int__push_back__block__5__if__6__block__7__for__8__i
+                                                PUSH __main____Vector__int__push_back__block__5__if__6__block__7__for__8__i
                                           POP __offset
                                           POP __pointer
                                     POP __rhs
@@ -701,7 +701,7 @@ POP __void
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field____main____vector__int____data
+                                       PUSH __field____main____Vector__int____data
                                     POP __child
                                     POP __parent
                                     PUSH __parent[__child]
@@ -714,14 +714,14 @@ POP __void
                            // Assignment
                               // RHS
                                  // Identifier - new_data
-                                    PUSH __main____vector__int__push_back__block__5__if__6__block__7__new_data
+                                    PUSH __main____Vector__int__push_back__block__5__if__6__block__7__new_data
                               // LHS
                                  // Member Accessor Assignment
                                     // LHS
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field____main____vector__int____data
+                                       PUSH __field____main____Vector__int____data
                                     POP __child
                                     POP __parent
                                     POP __rhs
@@ -737,7 +737,7 @@ POP __void
                   // Assignment
                      // RHS
                         // Identifier - value
-                           PUSH __main____vector__int__push_back__value
+                           PUSH __main____Vector__int__push_back__value
                      // LHS
                         // Subscript assignment
                            // LHS
@@ -746,7 +746,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__int____data
+                                    PUSH __field____main____Vector__int____data
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -756,7 +756,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__int____size
+                                    PUSH __field____main____Vector__int____size
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -774,7 +774,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__int____size
+                              PUSH __field____main____Vector__int____size
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
@@ -785,7 +785,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__int____size
+                              PUSH __field____main____Vector__int____size
                            POP __child
                            POP __parent
                            ADD __parent[__child] __parent[__child] 1
@@ -795,14 +795,14 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__int____push_back__int:
-         // End Method Declaration - __method____main____vector__int____push_back__int
+         __end__method____main____Vector__int____push_back__int:
+         // End Method Declaration - __method____main____Vector__int____push_back__int
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:int:>::pop_back() -> void
-         JUMP __end__method____main____vector__int____pop_back
-         __method____main____vector__int____pop_back:
+         // Method Declaration - Vector<:int:>::pop_back() -> void
+         JUMP __end__method____main____Vector__int____pop_back
+         __method____main____Vector__int____pop_back:
             // Class Instance
                STACKGET __this 0
             // Parameters
@@ -819,7 +819,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__int____size
+                                    PUSH __field____main____Vector__int____size
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -847,7 +847,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__int____size
+                              PUSH __field____main____Vector__int____size
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
@@ -858,7 +858,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__int____size
+                              PUSH __field____main____Vector__int____size
                            POP __child
                            POP __parent
                            SUBTRACT __parent[__child] __parent[__child] 1
@@ -868,47 +868,47 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__int____pop_back:
-         // End Method Declaration - __method____main____vector__int____pop_back
+         __end__method____main____Vector__int____pop_back:
+         // End Method Declaration - __method____main____Vector__int____pop_back
          //---------------------------------------------------------------
 
-      __endclass____main____vector__int:
-      // End Class Declaration - __main____vector__int
+      __endclass____main____Vector__int:
+      // End Class Declaration - __main____Vector__int
       //==================================================================
 
       //==================================================================
-      // Class Declaration - __main____vector__float inherits __main__Object
+      // Class Declaration - __main____Vector__float inherits __main__Object
          // Creating Dispatch Table
-            MALLOC __dtable____main____vector__float 6
+            MALLOC __dtable____main____Vector__float 6
             // Populate Dispatch Table
-            ASSIGN __dtable____main____vector__float[0] __method____main____vector__float____get__int
-            ASSIGN __dtable____main____vector__float[1] __method____main____vector__float____set__int__float
-            ASSIGN __dtable____main____vector__float[2] __method____main____vector__float____size
-            ASSIGN __dtable____main____vector__float[3] __method____main____vector__float____is_empty
-            ASSIGN __dtable____main____vector__float[4] __method____main____vector__float____push_back__float
-            ASSIGN __dtable____main____vector__float[5] __method____main____vector__float____pop_back
+            ASSIGN __dtable____main____Vector__float[0] __method____main____Vector__float____get__int
+            ASSIGN __dtable____main____Vector__float[1] __method____main____Vector__float____set__int__float
+            ASSIGN __dtable____main____Vector__float[2] __method____main____Vector__float____size
+            ASSIGN __dtable____main____Vector__float[3] __method____main____Vector__float____is_empty
+            ASSIGN __dtable____main____Vector__float[4] __method____main____Vector__float____push_back__float
+            ASSIGN __dtable____main____Vector__float[5] __method____main____Vector__float____pop_back
          //---------------------------------------------------------------
-         // Field - float[] vector<:float:>::data
-         ASSIGN __field____main____vector__float____data 1
-         //---------------------------------------------------------------
-         //---------------------------------------------------------------
-         // Field - int vector<:float:>::size
-         ASSIGN __field____main____vector__float____size 2
+         // Field - float[] Vector<:float:>::data
+         ASSIGN __field____main____Vector__float____data 1
          //---------------------------------------------------------------
          //---------------------------------------------------------------
-         // Field - int vector<:float:>::capacity
-         ASSIGN __field____main____vector__float____capacity 3
+         // Field - int Vector<:float:>::size
+         ASSIGN __field____main____Vector__float____size 2
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // Field - int Vector<:float:>::capacity
+         ASSIGN __field____main____Vector__float____capacity 3
          //---------------------------------------------------------------
       // skip over class methods
-      JUMP __endclass____main____vector__float
+      JUMP __endclass____main____Vector__float
          //---------------------------------------------------------------
-         // Constructor Declaration - vector<:float:>::vector() -> vector<:float:>
-         JUMP __end__ctor____main____vector__float____vector
-         __ctor____main____vector__float____vector:
+         // Constructor Declaration - Vector<:float:>::Vector() -> Vector<:float:>
+         JUMP __end__ctor____main____Vector__float____Vector
+         __ctor____main____Vector__float____Vector:
             // Creating Class Instance
                MALLOC __this 4
                // Add Dispatch Table
-               ASSIGN __this[0] __dtable____main____vector__float
+               ASSIGN __this[0] __dtable____main____Vector__float
             // Parameters
             // Body
                //---------------------------------------------------------
@@ -923,7 +923,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__float____capacity
+                              PUSH __field____main____Vector__float____capacity
                            POP __child
                            POP __parent
                            POP __rhs
@@ -941,7 +941,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__float____size
+                              PUSH __field____main____Vector__float____size
                            POP __child
                            POP __parent
                            POP __rhs
@@ -957,7 +957,7 @@ POP __void
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main____vector__float____capacity
+                                 PUSH __field____main____Vector__float____capacity
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -970,7 +970,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__float____data
+                              PUSH __field____main____Vector__float____data
                            POP __child
                            POP __parent
                            POP __rhs
@@ -980,19 +980,19 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN __this
-         __end__ctor____main____vector__float____vector:
-         // End Constructor Declaration - __ctor____main____vector__float____vector
+         __end__ctor____main____Vector__float____Vector:
+         // End Constructor Declaration - __ctor____main____Vector__float____Vector
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:float:>::get(int) -> float
-         JUMP __end__method____main____vector__float____get__int
-         __method____main____vector__float____get__int:
+         // Method Declaration - Vector<:float:>::get(int) -> float
+         JUMP __end__method____main____Vector__float____get__int
+         __method____main____Vector__float____get__int:
             // Class Instance
                STACKGET __this 0
             // Parameters
                // Param: index
-               STACKGET __main____vector__float__get__index 1
+               STACKGET __main____Vector__float__get__index 1
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -1004,13 +1004,13 @@ POP __void
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main____vector__float____data
+                                 PUSH __field____main____Vector__float____data
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
                         // OFFSET
                            // Identifier - index
-                              PUSH __main____vector__float__get__index
+                              PUSH __main____Vector__float__get__index
                         POP __offset
                         POP __pointer
                         PUSH __pointer[__offset]
@@ -1018,28 +1018,28 @@ POP __void
                      RETURN __rVal
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__float____get__int:
-         // End Method Declaration - __method____main____vector__float____get__int
+         __end__method____main____Vector__float____get__int:
+         // End Method Declaration - __method____main____Vector__float____get__int
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:float:>::set(int, float) -> void
-         JUMP __end__method____main____vector__float____set__int__float
-         __method____main____vector__float____set__int__float:
+         // Method Declaration - Vector<:float:>::set(int, float) -> void
+         JUMP __end__method____main____Vector__float____set__int__float
+         __method____main____Vector__float____set__int__float:
             // Class Instance
                STACKGET __this 0
             // Parameters
                // Param: index
-               STACKGET __main____vector__float__set__index 1
+               STACKGET __main____Vector__float__set__index 1
                // Param: value
-               STACKGET __main____vector__float__set__value 2
+               STACKGET __main____Vector__float__set__value 2
             // Body
                //---------------------------------------------------------
                // Code Block
                   // Assignment
                      // RHS
                         // Identifier - value
-                           PUSH __main____vector__float__set__value
+                           PUSH __main____Vector__float__set__value
                      // LHS
                         // Subscript assignment
                            // LHS
@@ -1048,13 +1048,13 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__float____data
+                                    PUSH __field____main____Vector__float____data
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
                            // OFFSET
                               // Identifier - index
-                                 PUSH __main____vector__float__set__index
+                                 PUSH __main____Vector__float__set__index
                            POP __offset
                            POP __pointer
                      POP __rhs
@@ -1064,14 +1064,14 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__float____set__int__float:
-         // End Method Declaration - __method____main____vector__float____set__int__float
+         __end__method____main____Vector__float____set__int__float:
+         // End Method Declaration - __method____main____Vector__float____set__int__float
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:float:>::size() -> int
-         JUMP __end__method____main____vector__float____size
-         __method____main____vector__float____size:
+         // Method Declaration - Vector<:float:>::size() -> int
+         JUMP __end__method____main____Vector__float____size
+         __method____main____Vector__float____size:
             // Class Instance
                STACKGET __this 0
             // Parameters
@@ -1084,7 +1084,7 @@ POP __void
                            // This keyword
                               PUSH __this
                         // RHS
-                           PUSH __field____main____vector__float____size
+                           PUSH __field____main____Vector__float____size
                         POP __child
                         POP __parent
                         PUSH __parent[__child]
@@ -1092,14 +1092,14 @@ POP __void
                      RETURN __rVal
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__float____size:
-         // End Method Declaration - __method____main____vector__float____size
+         __end__method____main____Vector__float____size:
+         // End Method Declaration - __method____main____Vector__float____size
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:float:>::is_empty() -> int
-         JUMP __end__method____main____vector__float____is_empty
-         __method____main____vector__float____is_empty:
+         // Method Declaration - Vector<:float:>::is_empty() -> int
+         JUMP __end__method____main____Vector__float____is_empty
+         __method____main____Vector__float____is_empty:
             // Class Instance
                STACKGET __this 0
             // Parameters
@@ -1114,7 +1114,7 @@ POP __void
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main____vector__float____size
+                                 PUSH __field____main____Vector__float____size
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -1129,19 +1129,19 @@ POP __void
                      RETURN __rVal
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__float____is_empty:
-         // End Method Declaration - __method____main____vector__float____is_empty
+         __end__method____main____Vector__float____is_empty:
+         // End Method Declaration - __method____main____Vector__float____is_empty
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:float:>::push_back(float) -> void
-         JUMP __end__method____main____vector__float____push_back__float
-         __method____main____vector__float____push_back__float:
+         // Method Declaration - Vector<:float:>::push_back(float) -> void
+         JUMP __end__method____main____Vector__float____push_back__float
+         __method____main____Vector__float____push_back__float:
             // Class Instance
                STACKGET __this 0
             // Parameters
                // Param: value
-               STACKGET __main____vector__float__push_back__value 1
+               STACKGET __main____Vector__float__push_back__value 1
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -1155,7 +1155,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__float____size
+                                    PUSH __field____main____Vector__float____size
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -1165,7 +1165,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__float____capacity
+                                    PUSH __field____main____Vector__float____capacity
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -1188,7 +1188,7 @@ POP __void
                                              // This keyword
                                                 PUSH __this
                                           // RHS
-                                             PUSH __field____main____vector__float____capacity
+                                             PUSH __field____main____Vector__float____capacity
                                           POP __child
                                           POP __parent
                                           PUSH __parent[__child]
@@ -1205,7 +1205,7 @@ POP __void
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field____main____vector__float____capacity
+                                       PUSH __field____main____Vector__float____capacity
                                     POP __child
                                     POP __parent
                                     POP __rhs
@@ -1221,7 +1221,7 @@ POP __void
                                           // This keyword
                                              PUSH __this
                                        // RHS
-                                          PUSH __field____main____vector__float____capacity
+                                          PUSH __field____main____Vector__float____capacity
                                        POP __child
                                        POP __parent
                                        PUSH __parent[__child]
@@ -1230,9 +1230,9 @@ POP __void
                                     PUSH __ptr
                               // LHS
                                  // Variable Declaration
-                                    ASSIGN __main____vector__float__push_back__block__16__if__17__block__18__new_data 0
+                                    ASSIGN __main____Vector__float__push_back__block__16__if__17__block__18__new_data 0
                               POP __rhs
-                              ASSIGN __main____vector__float__push_back__block__16__if__17__block__18__new_data __rhs
+                              ASSIGN __main____Vector__float__push_back__block__16__if__17__block__18__new_data __rhs
                               PUSH __rhs
                            // Statement results can be ignored
                            POP __void
@@ -1245,9 +1245,9 @@ POP __void
                                        PUSH 0
                                  // LHS
                                     // Variable Declaration
-                                       ASSIGN __main____vector__float__push_back__block__16__if__17__block__18__for__19__i 0
+                                       ASSIGN __main____Vector__float__push_back__block__16__if__17__block__18__for__19__i 0
                                  POP __rhs
-                                 ASSIGN __main____vector__float__push_back__block__16__if__17__block__18__for__19__i __rhs
+                                 ASSIGN __main____Vector__float__push_back__block__16__if__17__block__18__for__19__i __rhs
                                  PUSH __rhs
                            JUMP __forcond__19
                            __for__19:
@@ -1255,24 +1255,24 @@ POP __void
                                  // Pre-Increment
                                     // RHS
                                        // Identifier - i
-                                          PUSH __main____vector__float__push_back__block__16__if__17__block__18__for__19__i
+                                          PUSH __main____Vector__float__push_back__block__16__if__17__block__18__for__19__i
                                     POP __rhs
-                                    ADD __main____vector__float__push_back__block__16__if__17__block__18__for__19__i __main____vector__float__push_back__block__16__if__17__block__18__for__19__i 1
-                                    ASSIGN __res __main____vector__float__push_back__block__16__if__17__block__18__for__19__i
+                                    ADD __main____Vector__float__push_back__block__16__if__17__block__18__for__19__i __main____Vector__float__push_back__block__16__if__17__block__18__for__19__i 1
+                                    ASSIGN __res __main____Vector__float__push_back__block__16__if__17__block__18__for__19__i
                                     PUSH __res
                               __forcond__19:
                               // Condition
                                  // Less Than
                                     // LHS
                                        // Identifier - i
-                                          PUSH __main____vector__float__push_back__block__16__if__17__block__18__for__19__i
+                                          PUSH __main____Vector__float__push_back__block__16__if__17__block__18__for__19__i
                                     // RHS
                                        // Member Accessor
                                           // LHS
                                              // This keyword
                                                 PUSH __this
                                           // RHS
-                                             PUSH __field____main____vector__float____size
+                                             PUSH __field____main____Vector__float____size
                                           POP __child
                                           POP __parent
                                           PUSH __parent[__child]
@@ -1293,13 +1293,13 @@ POP __void
                                                    // This keyword
                                                       PUSH __this
                                                 // RHS
-                                                   PUSH __field____main____vector__float____data
+                                                   PUSH __field____main____Vector__float____data
                                                 POP __child
                                                 POP __parent
                                                 PUSH __parent[__child]
                                           // OFFSET
                                              // Identifier - i
-                                                PUSH __main____vector__float__push_back__block__16__if__17__block__18__for__19__i
+                                                PUSH __main____Vector__float__push_back__block__16__if__17__block__18__for__19__i
                                           POP __offset
                                           POP __pointer
                                           PUSH __pointer[__offset]
@@ -1307,10 +1307,10 @@ POP __void
                                        // Subscript assignment
                                           // LHS
                                              // Identifier - new_data
-                                                PUSH __main____vector__float__push_back__block__16__if__17__block__18__new_data
+                                                PUSH __main____Vector__float__push_back__block__16__if__17__block__18__new_data
                                           // OFFSET
                                              // Identifier - i
-                                                PUSH __main____vector__float__push_back__block__16__if__17__block__18__for__19__i
+                                                PUSH __main____Vector__float__push_back__block__16__if__17__block__18__for__19__i
                                           POP __offset
                                           POP __pointer
                                     POP __rhs
@@ -1330,7 +1330,7 @@ POP __void
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field____main____vector__float____data
+                                       PUSH __field____main____Vector__float____data
                                     POP __child
                                     POP __parent
                                     PUSH __parent[__child]
@@ -1343,14 +1343,14 @@ POP __void
                            // Assignment
                               // RHS
                                  // Identifier - new_data
-                                    PUSH __main____vector__float__push_back__block__16__if__17__block__18__new_data
+                                    PUSH __main____Vector__float__push_back__block__16__if__17__block__18__new_data
                               // LHS
                                  // Member Accessor Assignment
                                     // LHS
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field____main____vector__float____data
+                                       PUSH __field____main____Vector__float____data
                                     POP __child
                                     POP __parent
                                     POP __rhs
@@ -1366,7 +1366,7 @@ POP __void
                   // Assignment
                      // RHS
                         // Identifier - value
-                           PUSH __main____vector__float__push_back__value
+                           PUSH __main____Vector__float__push_back__value
                      // LHS
                         // Subscript assignment
                            // LHS
@@ -1375,7 +1375,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__float____data
+                                    PUSH __field____main____Vector__float____data
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -1385,7 +1385,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__float____size
+                                    PUSH __field____main____Vector__float____size
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -1403,7 +1403,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__float____size
+                              PUSH __field____main____Vector__float____size
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
@@ -1414,7 +1414,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__float____size
+                              PUSH __field____main____Vector__float____size
                            POP __child
                            POP __parent
                            ADD __parent[__child] __parent[__child] 1
@@ -1424,14 +1424,14 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__float____push_back__float:
-         // End Method Declaration - __method____main____vector__float____push_back__float
+         __end__method____main____Vector__float____push_back__float:
+         // End Method Declaration - __method____main____Vector__float____push_back__float
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:float:>::pop_back() -> void
-         JUMP __end__method____main____vector__float____pop_back
-         __method____main____vector__float____pop_back:
+         // Method Declaration - Vector<:float:>::pop_back() -> void
+         JUMP __end__method____main____Vector__float____pop_back
+         __method____main____Vector__float____pop_back:
             // Class Instance
                STACKGET __this 0
             // Parameters
@@ -1448,7 +1448,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__float____size
+                                    PUSH __field____main____Vector__float____size
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -1476,7 +1476,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__float____size
+                              PUSH __field____main____Vector__float____size
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
@@ -1487,7 +1487,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__float____size
+                              PUSH __field____main____Vector__float____size
                            POP __child
                            POP __parent
                            SUBTRACT __parent[__child] __parent[__child] 1
@@ -1497,47 +1497,47 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__float____pop_back:
-         // End Method Declaration - __method____main____vector__float____pop_back
+         __end__method____main____Vector__float____pop_back:
+         // End Method Declaration - __method____main____Vector__float____pop_back
          //---------------------------------------------------------------
 
-      __endclass____main____vector__float:
-      // End Class Declaration - __main____vector__float
+      __endclass____main____Vector__float:
+      // End Class Declaration - __main____Vector__float
       //==================================================================
 
       //==================================================================
-      // Class Declaration - __main____vector__vector inherits __main__Object
+      // Class Declaration - __main____Vector__Vector inherits __main__Object
          // Creating Dispatch Table
-            MALLOC __dtable____main____vector__vector 6
+            MALLOC __dtable____main____Vector__Vector 6
             // Populate Dispatch Table
-            ASSIGN __dtable____main____vector__vector[0] __method____main____vector__vector____get__int
-            ASSIGN __dtable____main____vector__vector[1] __method____main____vector__vector____set__int__vector
-            ASSIGN __dtable____main____vector__vector[2] __method____main____vector__vector____size
-            ASSIGN __dtable____main____vector__vector[3] __method____main____vector__vector____is_empty
-            ASSIGN __dtable____main____vector__vector[4] __method____main____vector__vector____push_back__vector
-            ASSIGN __dtable____main____vector__vector[5] __method____main____vector__vector____pop_back
+            ASSIGN __dtable____main____Vector__Vector[0] __method____main____Vector__Vector____get__int
+            ASSIGN __dtable____main____Vector__Vector[1] __method____main____Vector__Vector____set__int__Vector
+            ASSIGN __dtable____main____Vector__Vector[2] __method____main____Vector__Vector____size
+            ASSIGN __dtable____main____Vector__Vector[3] __method____main____Vector__Vector____is_empty
+            ASSIGN __dtable____main____Vector__Vector[4] __method____main____Vector__Vector____push_back__Vector
+            ASSIGN __dtable____main____Vector__Vector[5] __method____main____Vector__Vector____pop_back
          //---------------------------------------------------------------
-         // Field - vector<:int:>[] vector<:vector<:int:>:>::data
-         ASSIGN __field____main____vector__vector____data 1
-         //---------------------------------------------------------------
-         //---------------------------------------------------------------
-         // Field - int vector<:vector<:int:>:>::size
-         ASSIGN __field____main____vector__vector____size 2
+         // Field - Vector<:int:>[] Vector<:Vector<:int:>:>::data
+         ASSIGN __field____main____Vector__Vector____data 1
          //---------------------------------------------------------------
          //---------------------------------------------------------------
-         // Field - int vector<:vector<:int:>:>::capacity
-         ASSIGN __field____main____vector__vector____capacity 3
+         // Field - int Vector<:Vector<:int:>:>::size
+         ASSIGN __field____main____Vector__Vector____size 2
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // Field - int Vector<:Vector<:int:>:>::capacity
+         ASSIGN __field____main____Vector__Vector____capacity 3
          //---------------------------------------------------------------
       // skip over class methods
-      JUMP __endclass____main____vector__vector
+      JUMP __endclass____main____Vector__Vector
          //---------------------------------------------------------------
-         // Constructor Declaration - vector<:vector<:int:>:>::vector() -> vector<:vector<:int:>:>
-         JUMP __end__ctor____main____vector__vector____vector
-         __ctor____main____vector__vector____vector:
+         // Constructor Declaration - Vector<:Vector<:int:>:>::Vector() -> Vector<:Vector<:int:>:>
+         JUMP __end__ctor____main____Vector__Vector____Vector
+         __ctor____main____Vector__Vector____Vector:
             // Creating Class Instance
                MALLOC __this 4
                // Add Dispatch Table
-               ASSIGN __this[0] __dtable____main____vector__vector
+               ASSIGN __this[0] __dtable____main____Vector__Vector
             // Parameters
             // Body
                //---------------------------------------------------------
@@ -1552,7 +1552,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__vector____capacity
+                              PUSH __field____main____Vector__Vector____capacity
                            POP __child
                            POP __parent
                            POP __rhs
@@ -1570,7 +1570,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__vector____size
+                              PUSH __field____main____Vector__Vector____size
                            POP __child
                            POP __parent
                            POP __rhs
@@ -1586,7 +1586,7 @@ POP __void
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main____vector__vector____capacity
+                                 PUSH __field____main____Vector__Vector____capacity
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -1599,7 +1599,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__vector____data
+                              PUSH __field____main____Vector__Vector____data
                            POP __child
                            POP __parent
                            POP __rhs
@@ -1609,19 +1609,19 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN __this
-         __end__ctor____main____vector__vector____vector:
-         // End Constructor Declaration - __ctor____main____vector__vector____vector
+         __end__ctor____main____Vector__Vector____Vector:
+         // End Constructor Declaration - __ctor____main____Vector__Vector____Vector
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:vector<:int:>:>::get(int) -> vector<:int:>
-         JUMP __end__method____main____vector__vector____get__int
-         __method____main____vector__vector____get__int:
+         // Method Declaration - Vector<:Vector<:int:>:>::get(int) -> Vector<:int:>
+         JUMP __end__method____main____Vector__Vector____get__int
+         __method____main____Vector__Vector____get__int:
             // Class Instance
                STACKGET __this 0
             // Parameters
                // Param: index
-               STACKGET __main____vector__vector__get__index 1
+               STACKGET __main____Vector__Vector__get__index 1
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -1633,13 +1633,13 @@ POP __void
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main____vector__vector____data
+                                 PUSH __field____main____Vector__Vector____data
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
                         // OFFSET
                            // Identifier - index
-                              PUSH __main____vector__vector__get__index
+                              PUSH __main____Vector__Vector__get__index
                         POP __offset
                         POP __pointer
                         PUSH __pointer[__offset]
@@ -1647,28 +1647,28 @@ POP __void
                      RETURN __rVal
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__vector____get__int:
-         // End Method Declaration - __method____main____vector__vector____get__int
+         __end__method____main____Vector__Vector____get__int:
+         // End Method Declaration - __method____main____Vector__Vector____get__int
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:vector<:int:>:>::set(int, vector<:int:>) -> void
-         JUMP __end__method____main____vector__vector____set__int__vector
-         __method____main____vector__vector____set__int__vector:
+         // Method Declaration - Vector<:Vector<:int:>:>::set(int, Vector<:int:>) -> void
+         JUMP __end__method____main____Vector__Vector____set__int__Vector
+         __method____main____Vector__Vector____set__int__Vector:
             // Class Instance
                STACKGET __this 0
             // Parameters
                // Param: index
-               STACKGET __main____vector__vector__set__index 1
+               STACKGET __main____Vector__Vector__set__index 1
                // Param: value
-               STACKGET __main____vector__vector__set__value 2
+               STACKGET __main____Vector__Vector__set__value 2
             // Body
                //---------------------------------------------------------
                // Code Block
                   // Assignment
                      // RHS
                         // Identifier - value
-                           PUSH __main____vector__vector__set__value
+                           PUSH __main____Vector__Vector__set__value
                      // LHS
                         // Subscript assignment
                            // LHS
@@ -1677,13 +1677,13 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__vector____data
+                                    PUSH __field____main____Vector__Vector____data
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
                            // OFFSET
                               // Identifier - index
-                                 PUSH __main____vector__vector__set__index
+                                 PUSH __main____Vector__Vector__set__index
                            POP __offset
                            POP __pointer
                      POP __rhs
@@ -1693,14 +1693,14 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__vector____set__int__vector:
-         // End Method Declaration - __method____main____vector__vector____set__int__vector
+         __end__method____main____Vector__Vector____set__int__Vector:
+         // End Method Declaration - __method____main____Vector__Vector____set__int__Vector
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:vector<:int:>:>::size() -> int
-         JUMP __end__method____main____vector__vector____size
-         __method____main____vector__vector____size:
+         // Method Declaration - Vector<:Vector<:int:>:>::size() -> int
+         JUMP __end__method____main____Vector__Vector____size
+         __method____main____Vector__Vector____size:
             // Class Instance
                STACKGET __this 0
             // Parameters
@@ -1713,7 +1713,7 @@ POP __void
                            // This keyword
                               PUSH __this
                         // RHS
-                           PUSH __field____main____vector__vector____size
+                           PUSH __field____main____Vector__Vector____size
                         POP __child
                         POP __parent
                         PUSH __parent[__child]
@@ -1721,14 +1721,14 @@ POP __void
                      RETURN __rVal
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__vector____size:
-         // End Method Declaration - __method____main____vector__vector____size
+         __end__method____main____Vector__Vector____size:
+         // End Method Declaration - __method____main____Vector__Vector____size
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:vector<:int:>:>::is_empty() -> int
-         JUMP __end__method____main____vector__vector____is_empty
-         __method____main____vector__vector____is_empty:
+         // Method Declaration - Vector<:Vector<:int:>:>::is_empty() -> int
+         JUMP __end__method____main____Vector__Vector____is_empty
+         __method____main____Vector__Vector____is_empty:
             // Class Instance
                STACKGET __this 0
             // Parameters
@@ -1743,7 +1743,7 @@ POP __void
                                  // This keyword
                                     PUSH __this
                               // RHS
-                                 PUSH __field____main____vector__vector____size
+                                 PUSH __field____main____Vector__Vector____size
                               POP __child
                               POP __parent
                               PUSH __parent[__child]
@@ -1758,19 +1758,19 @@ POP __void
                      RETURN __rVal
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__vector____is_empty:
-         // End Method Declaration - __method____main____vector__vector____is_empty
+         __end__method____main____Vector__Vector____is_empty:
+         // End Method Declaration - __method____main____Vector__Vector____is_empty
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:vector<:int:>:>::push_back(vector<:int:>) -> void
-         JUMP __end__method____main____vector__vector____push_back__vector
-         __method____main____vector__vector____push_back__vector:
+         // Method Declaration - Vector<:Vector<:int:>:>::push_back(Vector<:int:>) -> void
+         JUMP __end__method____main____Vector__Vector____push_back__Vector
+         __method____main____Vector__Vector____push_back__Vector:
             // Class Instance
                STACKGET __this 0
             // Parameters
                // Param: value
-               STACKGET __main____vector__vector__push_back__value 1
+               STACKGET __main____Vector__Vector__push_back__value 1
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -1784,7 +1784,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__vector____size
+                                    PUSH __field____main____Vector__Vector____size
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -1794,7 +1794,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__vector____capacity
+                                    PUSH __field____main____Vector__Vector____capacity
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -1817,7 +1817,7 @@ POP __void
                                              // This keyword
                                                 PUSH __this
                                           // RHS
-                                             PUSH __field____main____vector__vector____capacity
+                                             PUSH __field____main____Vector__Vector____capacity
                                           POP __child
                                           POP __parent
                                           PUSH __parent[__child]
@@ -1834,7 +1834,7 @@ POP __void
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field____main____vector__vector____capacity
+                                       PUSH __field____main____Vector__Vector____capacity
                                     POP __child
                                     POP __parent
                                     POP __rhs
@@ -1850,7 +1850,7 @@ POP __void
                                           // This keyword
                                              PUSH __this
                                        // RHS
-                                          PUSH __field____main____vector__vector____capacity
+                                          PUSH __field____main____Vector__Vector____capacity
                                        POP __child
                                        POP __parent
                                        PUSH __parent[__child]
@@ -1859,9 +1859,9 @@ POP __void
                                     PUSH __ptr
                               // LHS
                                  // Variable Declaration
-                                    ASSIGN __main____vector__vector__push_back__block__27__if__28__block__29__new_data 0
+                                    ASSIGN __main____Vector__Vector__push_back__block__27__if__28__block__29__new_data 0
                               POP __rhs
-                              ASSIGN __main____vector__vector__push_back__block__27__if__28__block__29__new_data __rhs
+                              ASSIGN __main____Vector__Vector__push_back__block__27__if__28__block__29__new_data __rhs
                               PUSH __rhs
                            // Statement results can be ignored
                            POP __void
@@ -1874,9 +1874,9 @@ POP __void
                                        PUSH 0
                                  // LHS
                                     // Variable Declaration
-                                       ASSIGN __main____vector__vector__push_back__block__27__if__28__block__29__for__30__i 0
+                                       ASSIGN __main____Vector__Vector__push_back__block__27__if__28__block__29__for__30__i 0
                                  POP __rhs
-                                 ASSIGN __main____vector__vector__push_back__block__27__if__28__block__29__for__30__i __rhs
+                                 ASSIGN __main____Vector__Vector__push_back__block__27__if__28__block__29__for__30__i __rhs
                                  PUSH __rhs
                            JUMP __forcond__30
                            __for__30:
@@ -1884,24 +1884,24 @@ POP __void
                                  // Pre-Increment
                                     // RHS
                                        // Identifier - i
-                                          PUSH __main____vector__vector__push_back__block__27__if__28__block__29__for__30__i
+                                          PUSH __main____Vector__Vector__push_back__block__27__if__28__block__29__for__30__i
                                     POP __rhs
-                                    ADD __main____vector__vector__push_back__block__27__if__28__block__29__for__30__i __main____vector__vector__push_back__block__27__if__28__block__29__for__30__i 1
-                                    ASSIGN __res __main____vector__vector__push_back__block__27__if__28__block__29__for__30__i
+                                    ADD __main____Vector__Vector__push_back__block__27__if__28__block__29__for__30__i __main____Vector__Vector__push_back__block__27__if__28__block__29__for__30__i 1
+                                    ASSIGN __res __main____Vector__Vector__push_back__block__27__if__28__block__29__for__30__i
                                     PUSH __res
                               __forcond__30:
                               // Condition
                                  // Less Than
                                     // LHS
                                        // Identifier - i
-                                          PUSH __main____vector__vector__push_back__block__27__if__28__block__29__for__30__i
+                                          PUSH __main____Vector__Vector__push_back__block__27__if__28__block__29__for__30__i
                                     // RHS
                                        // Member Accessor
                                           // LHS
                                              // This keyword
                                                 PUSH __this
                                           // RHS
-                                             PUSH __field____main____vector__vector____size
+                                             PUSH __field____main____Vector__Vector____size
                                           POP __child
                                           POP __parent
                                           PUSH __parent[__child]
@@ -1922,13 +1922,13 @@ POP __void
                                                    // This keyword
                                                       PUSH __this
                                                 // RHS
-                                                   PUSH __field____main____vector__vector____data
+                                                   PUSH __field____main____Vector__Vector____data
                                                 POP __child
                                                 POP __parent
                                                 PUSH __parent[__child]
                                           // OFFSET
                                              // Identifier - i
-                                                PUSH __main____vector__vector__push_back__block__27__if__28__block__29__for__30__i
+                                                PUSH __main____Vector__Vector__push_back__block__27__if__28__block__29__for__30__i
                                           POP __offset
                                           POP __pointer
                                           PUSH __pointer[__offset]
@@ -1936,10 +1936,10 @@ POP __void
                                        // Subscript assignment
                                           // LHS
                                              // Identifier - new_data
-                                                PUSH __main____vector__vector__push_back__block__27__if__28__block__29__new_data
+                                                PUSH __main____Vector__Vector__push_back__block__27__if__28__block__29__new_data
                                           // OFFSET
                                              // Identifier - i
-                                                PUSH __main____vector__vector__push_back__block__27__if__28__block__29__for__30__i
+                                                PUSH __main____Vector__Vector__push_back__block__27__if__28__block__29__for__30__i
                                           POP __offset
                                           POP __pointer
                                     POP __rhs
@@ -1959,7 +1959,7 @@ POP __void
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field____main____vector__vector____data
+                                       PUSH __field____main____Vector__Vector____data
                                     POP __child
                                     POP __parent
                                     PUSH __parent[__child]
@@ -1972,14 +1972,14 @@ POP __void
                            // Assignment
                               // RHS
                                  // Identifier - new_data
-                                    PUSH __main____vector__vector__push_back__block__27__if__28__block__29__new_data
+                                    PUSH __main____Vector__Vector__push_back__block__27__if__28__block__29__new_data
                               // LHS
                                  // Member Accessor Assignment
                                     // LHS
                                        // This keyword
                                           PUSH __this
                                     // RHS
-                                       PUSH __field____main____vector__vector____data
+                                       PUSH __field____main____Vector__Vector____data
                                     POP __child
                                     POP __parent
                                     POP __rhs
@@ -1995,7 +1995,7 @@ POP __void
                   // Assignment
                      // RHS
                         // Identifier - value
-                           PUSH __main____vector__vector__push_back__value
+                           PUSH __main____Vector__Vector__push_back__value
                      // LHS
                         // Subscript assignment
                            // LHS
@@ -2004,7 +2004,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__vector____data
+                                    PUSH __field____main____Vector__Vector____data
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -2014,7 +2014,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__vector____size
+                                    PUSH __field____main____Vector__Vector____size
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -2032,7 +2032,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__vector____size
+                              PUSH __field____main____Vector__Vector____size
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
@@ -2043,7 +2043,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__vector____size
+                              PUSH __field____main____Vector__Vector____size
                            POP __child
                            POP __parent
                            ADD __parent[__child] __parent[__child] 1
@@ -2053,14 +2053,14 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__vector____push_back__vector:
-         // End Method Declaration - __method____main____vector__vector____push_back__vector
+         __end__method____main____Vector__Vector____push_back__Vector:
+         // End Method Declaration - __method____main____Vector__Vector____push_back__Vector
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
-         // Method Declaration - vector<:vector<:int:>:>::pop_back() -> void
-         JUMP __end__method____main____vector__vector____pop_back
-         __method____main____vector__vector____pop_back:
+         // Method Declaration - Vector<:Vector<:int:>:>::pop_back() -> void
+         JUMP __end__method____main____Vector__Vector____pop_back
+         __method____main____Vector__Vector____pop_back:
             // Class Instance
                STACKGET __this 0
             // Parameters
@@ -2077,7 +2077,7 @@ POP __void
                                     // This keyword
                                        PUSH __this
                                  // RHS
-                                    PUSH __field____main____vector__vector____size
+                                    PUSH __field____main____Vector__Vector____size
                                  POP __child
                                  POP __parent
                                  PUSH __parent[__child]
@@ -2105,7 +2105,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__vector____size
+                              PUSH __field____main____Vector__Vector____size
                            POP __child
                            POP __parent
                            PUSH __parent[__child]
@@ -2116,7 +2116,7 @@ POP __void
                               // This keyword
                                  PUSH __this
                            // RHS
-                              PUSH __field____main____vector__vector____size
+                              PUSH __field____main____Vector__Vector____size
                            POP __child
                            POP __parent
                            SUBTRACT __parent[__child] __parent[__child] 1
@@ -2126,21 +2126,21 @@ POP __void
                   POP __void
                //---------------------------------------------------------
             RETURN 0
-         __end__method____main____vector__vector____pop_back:
-         // End Method Declaration - __method____main____vector__vector____pop_back
+         __end__method____main____Vector__Vector____pop_back:
+         // End Method Declaration - __method____main____Vector__Vector____pop_back
          //---------------------------------------------------------------
 
-      __endclass____main____vector__vector:
-      // End Class Declaration - __main____vector__vector
+      __endclass____main____Vector__Vector:
+      // End Class Declaration - __main____Vector__Vector
       //==================================================================
 
 // End Class Template - 
 //========================================================================
 
 //========================================================================
-// Function Declaration - println(vector<:int:>) -> void
-JUMP __end____main____println__vector__tparam0__int
-__main____println__vector__tparam0__int:
+// Function Declaration - println(Vector<:int:>) -> void
+JUMP __end____main____println__Vector__tparam0__int
+__main____println__Vector__tparam0__int:
    // Parameters
       // Param: arr
       STACKGET __main__println__arr 0
@@ -2167,7 +2167,7 @@ __main____println__vector__tparam0__int:
             // Condition
                // Greater Than
                   // LHS
-                     // Method Call - vector<:int:>::size() -> int
+                     // Method Call - Vector<:int:>::size() -> int
                         // LHS
                            // Identifier - arr
                               PUSH __main__println__arr
@@ -2176,7 +2176,7 @@ __main____println__vector__tparam0__int:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main____vector__int____size
+                        CALL __method____main____Vector__int____size
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2194,7 +2194,7 @@ __main____println__vector__tparam0__int:
             // Body
                // Function Call - print(int) -> void
                   // Arguments
-                     // Method Call - vector<:int:>::get(int) -> int
+                     // Method Call - Vector<:int:>::get(int) -> int
                         // LHS
                            // Identifier - arr
                               PUSH __main__println__arr
@@ -2207,7 +2207,7 @@ __main____println__vector__tparam0__int:
                         // Pushing args in reverse order
                         PUSH __arg0
                         PUSH __obj
-                        CALL __method____main____vector__int____get__int
+                        CALL __method____main____Vector__int____get__int
                         POP __void
                         // Remove args
                         POP __void
@@ -2259,7 +2259,7 @@ __main____println__vector__tparam0__int:
                      // Identifier - i
                         PUSH __main__println__block__33__for__35__i
                   // RHS
-                     // Method Call - vector<:int:>::size() -> int
+                     // Method Call - Vector<:int:>::size() -> int
                         // LHS
                            // Identifier - arr
                               PUSH __main__println__arr
@@ -2268,7 +2268,7 @@ __main____println__vector__tparam0__int:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main____vector__int____size
+                        CALL __method____main____Vector__int____size
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2315,7 +2315,7 @@ __main____println__vector__tparam0__int:
                   POP __void
                   // Function Call - print(int) -> void
                      // Arguments
-                        // Method Call - vector<:int:>::get(int) -> int
+                        // Method Call - Vector<:int:>::get(int) -> int
                            // LHS
                               // Identifier - arr
                                  PUSH __main__println__arr
@@ -2328,7 +2328,7 @@ __main____println__vector__tparam0__int:
                            // Pushing args in reverse order
                            PUSH __arg0
                            PUSH __obj
-                           CALL __method____main____vector__int____get__int
+                           CALL __method____main____Vector__int____get__int
                            POP __void
                            // Remove args
                            POP __void
@@ -2368,14 +2368,14 @@ __main____println__vector__tparam0__int:
          POP __void
       //------------------------------------------------------------------
    RETURN 0
-__end____main____println__vector__tparam0__int:
-// End Function Declaration - __main____println__vector__tparam0__int
+__end____main____println__Vector__tparam0__int:
+// End Function Declaration - __main____println__Vector__tparam0__int
 //========================================================================
 
 //========================================================================
-// Function Declaration - println(vector<:float:>) -> void
-JUMP __end____main____println__vector__tparam0__float
-__main____println__vector__tparam0__float:
+// Function Declaration - println(Vector<:float:>) -> void
+JUMP __end____main____println__Vector__tparam0__float
+__main____println__Vector__tparam0__float:
    // Parameters
       // Param: arr
       STACKGET __main__println__arr 0
@@ -2402,7 +2402,7 @@ __main____println__vector__tparam0__float:
             // Condition
                // Greater Than
                   // LHS
-                     // Method Call - vector<:float:>::size() -> int
+                     // Method Call - Vector<:float:>::size() -> int
                         // LHS
                            // Identifier - arr
                               PUSH __main__println__arr
@@ -2411,7 +2411,7 @@ __main____println__vector__tparam0__float:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main____vector__float____size
+                        CALL __method____main____Vector__float____size
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2429,7 +2429,7 @@ __main____println__vector__tparam0__float:
             // Body
                // Function Call - print(float) -> void
                   // Arguments
-                     // Method Call - vector<:float:>::get(int) -> float
+                     // Method Call - Vector<:float:>::get(int) -> float
                         // LHS
                            // Identifier - arr
                               PUSH __main__println__arr
@@ -2442,7 +2442,7 @@ __main____println__vector__tparam0__float:
                         // Pushing args in reverse order
                         PUSH __arg0
                         PUSH __obj
-                        CALL __method____main____vector__float____get__int
+                        CALL __method____main____Vector__float____get__int
                         POP __void
                         // Remove args
                         POP __void
@@ -2494,7 +2494,7 @@ __main____println__vector__tparam0__float:
                      // Identifier - i
                         PUSH __main__println__block__37__for__39__i
                   // RHS
-                     // Method Call - vector<:float:>::size() -> int
+                     // Method Call - Vector<:float:>::size() -> int
                         // LHS
                            // Identifier - arr
                               PUSH __main__println__arr
@@ -2503,7 +2503,7 @@ __main____println__vector__tparam0__float:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main____vector__float____size
+                        CALL __method____main____Vector__float____size
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2550,7 +2550,7 @@ __main____println__vector__tparam0__float:
                   POP __void
                   // Function Call - print(float) -> void
                      // Arguments
-                        // Method Call - vector<:float:>::get(int) -> float
+                        // Method Call - Vector<:float:>::get(int) -> float
                            // LHS
                               // Identifier - arr
                                  PUSH __main__println__arr
@@ -2563,7 +2563,7 @@ __main____println__vector__tparam0__float:
                            // Pushing args in reverse order
                            PUSH __arg0
                            PUSH __obj
-                           CALL __method____main____vector__float____get__int
+                           CALL __method____main____Vector__float____get__int
                            POP __void
                            // Remove args
                            POP __void
@@ -2603,14 +2603,14 @@ __main____println__vector__tparam0__float:
          POP __void
       //------------------------------------------------------------------
    RETURN 0
-__end____main____println__vector__tparam0__float:
-// End Function Declaration - __main____println__vector__tparam0__float
+__end____main____println__Vector__tparam0__float:
+// End Function Declaration - __main____println__Vector__tparam0__float
 //========================================================================
 
 //========================================================================
-// Function Declaration - print_board(vector<:vector<:int:>:>) -> void
-JUMP __end____main____print_board__vector__tparam0__vector
-__main____print_board__vector__tparam0__vector:
+// Function Declaration - print_board(Vector<:Vector<:int:>:>) -> void
+JUMP __end____main____print_board__Vector__tparam0__Vector
+__main____print_board__Vector__tparam0__Vector:
    // Parameters
       // Param: board
       STACKGET __main__print_board__board 0
@@ -2648,7 +2648,7 @@ __main____print_board__vector__tparam0__vector:
                      // Identifier - i
                         PUSH __main__print_board__block__41__for__42__i
                   // RHS
-                     // Method Call - vector<:vector<:int:>:>::size() -> int
+                     // Method Call - Vector<:Vector<:int:>:>::size() -> int
                         // LHS
                            // Identifier - board
                               PUSH __main__print_board__board
@@ -2657,7 +2657,7 @@ __main____print_board__vector__tparam0__vector:
                         POP __obj
                         // Pushing args in reverse order
                         PUSH __obj
-                        CALL __method____main____vector__vector____size
+                        CALL __method____main____Vector__Vector____size
                         POP __void
                         // Remove args
                         RESPONSE __retval
@@ -2670,9 +2670,9 @@ __main____print_board__vector__tparam0__vector:
                CMP __cond 0
                JEQ __endfor__42
             // Body
-               // Function Call - println(vector<:int:>) -> void
+               // Function Call - println(Vector<:int:>) -> void
                   // Arguments
-                     // Method Call - vector<:vector<:int:>:>::get(int) -> vector<:int:>
+                     // Method Call - Vector<:Vector<:int:>:>::get(int) -> Vector<:int:>
                         // LHS
                            // Identifier - board
                               PUSH __main__print_board__board
@@ -2685,7 +2685,7 @@ __main____print_board__vector__tparam0__vector:
                         // Pushing args in reverse order
                         PUSH __arg0
                         PUSH __obj
-                        CALL __method____main____vector__vector____get__int
+                        CALL __method____main____Vector__Vector____get__int
                         POP __void
                         // Remove args
                         POP __void
@@ -2695,7 +2695,7 @@ __main____print_board__vector__tparam0__vector:
                   // Pushing args in reverse order
                   PUSH __arg0
                   // *** println
-                  CALL __main____println__vector__tparam0__int
+                  CALL __main____println__Vector__tparam0__int
                   // Remove args
                   POP __void
                   RESPONSE __retval
@@ -2709,8 +2709,8 @@ __main____print_board__vector__tparam0__vector:
          //---------------------------------------------------------------
       //------------------------------------------------------------------
    RETURN 0
-__end____main____print_board__vector__tparam0__vector:
-// End Function Declaration - __main____print_board__vector__tparam0__vector
+__end____main____print_board__Vector__tparam0__Vector:
+// End Function Declaration - __main____print_board__Vector__tparam0__Vector
 //========================================================================
 
 //========================================================================
@@ -2765,10 +2765,10 @@ __end____main____min__int__int:
 
 // Assignment
    // RHS
-      // Constructor Call - vector<:int:>::vector() -> vector<:int:>
+      // Constructor Call - Vector<:int:>::Vector() -> Vector<:int:>
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main____vector__int____vector
+         CALL __ctor____main____Vector__int____Vector
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -2821,7 +2821,7 @@ __for__45:
       CMP __cond 0
       JEQ __endfor__45
    // Body
-      // Method Call - vector<:int:>::push_back(int) -> void
+      // Method Call - Vector<:int:>::push_back(int) -> void
          // LHS
             // Identifier - a
                PUSH __main__a
@@ -2834,7 +2834,7 @@ __for__45:
          // Pushing args in reverse order
          PUSH __arg0
          PUSH __obj
-         CALL __method____main____vector__int____push_back__int
+         CALL __method____main____Vector__int____push_back__int
          POP __void
          // Remove args
          POP __void
@@ -2847,7 +2847,7 @@ __for__45:
    // End of For
    __endfor__45:
 //------------------------------------------------------------------------
-// Function Call - println(vector<:int:>) -> void
+// Function Call - println(Vector<:int:>) -> void
    // Arguments
       // Identifier - a
          PUSH __main__a
@@ -2855,7 +2855,7 @@ __for__45:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL __main____println__vector__tparam0__int
+   CALL __main____println__Vector__tparam0__int
    // Remove args
    POP __void
    RESPONSE __retval
@@ -2864,10 +2864,10 @@ __for__45:
 POP __void
 // Assignment
    // RHS
-      // Constructor Call - vector<:int:>::vector() -> vector<:int:>
+      // Constructor Call - Vector<:int:>::Vector() -> Vector<:int:>
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main____vector__int____vector
+         CALL __ctor____main____Vector__int____Vector
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -2920,7 +2920,7 @@ __for__46:
       CMP __cond 0
       JEQ __endfor__46
    // Body
-      // Method Call - vector<:int:>::push_back(int) -> void
+      // Method Call - Vector<:int:>::push_back(int) -> void
          // LHS
             // Identifier - b
                PUSH __main__b
@@ -2942,7 +2942,7 @@ __for__46:
          // Pushing args in reverse order
          PUSH __arg0
          PUSH __obj
-         CALL __method____main____vector__int____push_back__int
+         CALL __method____main____Vector__int____push_back__int
          POP __void
          // Remove args
          POP __void
@@ -2955,7 +2955,7 @@ __for__46:
    // End of For
    __endfor__46:
 //------------------------------------------------------------------------
-// Function Call - println(vector<:int:>) -> void
+// Function Call - println(Vector<:int:>) -> void
    // Arguments
       // Identifier - b
          PUSH __main__b
@@ -2963,7 +2963,7 @@ __for__46:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL __main____println__vector__tparam0__int
+   CALL __main____println__Vector__tparam0__int
    // Remove args
    POP __void
    RESPONSE __retval
@@ -2972,10 +2972,10 @@ __for__46:
 POP __void
 // Assignment
    // RHS
-      // Constructor Call - vector<:int:>::vector() -> vector<:int:>
+      // Constructor Call - Vector<:int:>::Vector() -> Vector<:int:>
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main____vector__int____vector
+         CALL __ctor____main____Vector__int____Vector
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -3020,7 +3020,7 @@ __for__47:
          // RHS
             // Function Call - min(int, int) -> int
                // Arguments
-                  // Method Call - vector<:int:>::size() -> int
+                  // Method Call - Vector<:int:>::size() -> int
                      // LHS
                         // Identifier - a
                            PUSH __main__a
@@ -3029,12 +3029,12 @@ __for__47:
                      POP __obj
                      // Pushing args in reverse order
                      PUSH __obj
-                     CALL __method____main____vector__int____size
+                     CALL __method____main____Vector__int____size
                      POP __void
                      // Remove args
                      RESPONSE __retval
                      PUSH __retval
-                  // Method Call - vector<:int:>::size() -> int
+                  // Method Call - Vector<:int:>::size() -> int
                      // LHS
                         // Identifier - b
                            PUSH __main__b
@@ -3043,7 +3043,7 @@ __for__47:
                      POP __obj
                      // Pushing args in reverse order
                      PUSH __obj
-                     CALL __method____main____vector__int____size
+                     CALL __method____main____Vector__int____size
                      POP __void
                      // Remove args
                      RESPONSE __retval
@@ -3070,7 +3070,7 @@ __for__47:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Method Call - vector<:int:>::push_back(int) -> void
+         // Method Call - Vector<:int:>::push_back(int) -> void
             // LHS
                // Identifier - c
                   PUSH __main__c
@@ -3078,7 +3078,7 @@ __for__47:
             // Arguments
                // Addition
                   // LHS
-                     // Method Call - vector<:int:>::get(int) -> int
+                     // Method Call - Vector<:int:>::get(int) -> int
                         // LHS
                            // Identifier - a
                               PUSH __main__a
@@ -3091,14 +3091,14 @@ __for__47:
                         // Pushing args in reverse order
                         PUSH __arg0
                         PUSH __obj
-                        CALL __method____main____vector__int____get__int
+                        CALL __method____main____Vector__int____get__int
                         POP __void
                         // Remove args
                         POP __void
                         RESPONSE __retval
                         PUSH __retval
                   // RHS
-                     // Method Call - vector<:int:>::get(int) -> int
+                     // Method Call - Vector<:int:>::get(int) -> int
                         // LHS
                            // Identifier - b
                               PUSH __main__b
@@ -3111,7 +3111,7 @@ __for__47:
                         // Pushing args in reverse order
                         PUSH __arg0
                         PUSH __obj
-                        CALL __method____main____vector__int____get__int
+                        CALL __method____main____Vector__int____get__int
                         POP __void
                         // Remove args
                         POP __void
@@ -3126,7 +3126,7 @@ __for__47:
             // Pushing args in reverse order
             PUSH __arg0
             PUSH __obj
-            CALL __method____main____vector__int____push_back__int
+            CALL __method____main____Vector__int____push_back__int
             POP __void
             // Remove args
             POP __void
@@ -3140,7 +3140,7 @@ __for__47:
    // End of For
    __endfor__47:
 //------------------------------------------------------------------------
-// Function Call - println(vector<:int:>) -> void
+// Function Call - println(Vector<:int:>) -> void
    // Arguments
       // Identifier - c
          PUSH __main__c
@@ -3148,7 +3148,7 @@ __for__47:
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL __main____println__vector__tparam0__int
+   CALL __main____println__Vector__tparam0__int
    // Remove args
    POP __void
    RESPONSE __retval
@@ -3157,10 +3157,10 @@ __for__47:
 POP __void
 // Assignment
    // RHS
-      // Constructor Call - vector<:float:>::vector() -> vector<:float:>
+      // Constructor Call - Vector<:float:>::Vector() -> Vector<:float:>
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main____vector__float____vector
+         CALL __ctor____main____Vector__float____Vector
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -3172,7 +3172,7 @@ POP __void
    PUSH __rhs
 // Statement results can be ignored
 POP __void
-// Method Call - vector<:float:>::push_back(float) -> void
+// Method Call - Vector<:float:>::push_back(float) -> void
    // LHS
       // Identifier - d
          PUSH __main__d
@@ -3185,7 +3185,7 @@ POP __void
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main____vector__float____push_back__float
+   CALL __method____main____Vector__float____push_back__float
    POP __void
    // Remove args
    POP __void
@@ -3193,7 +3193,7 @@ POP __void
    PUSH __retval
 // Statement results can be ignored
 POP __void
-// Method Call - vector<:float:>::push_back(float) -> void
+// Method Call - Vector<:float:>::push_back(float) -> void
    // LHS
       // Identifier - d
          PUSH __main__d
@@ -3206,7 +3206,7 @@ POP __void
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main____vector__float____push_back__float
+   CALL __method____main____Vector__float____push_back__float
    POP __void
    // Remove args
    POP __void
@@ -3214,7 +3214,7 @@ POP __void
    PUSH __retval
 // Statement results can be ignored
 POP __void
-// Method Call - vector<:float:>::push_back(float) -> void
+// Method Call - Vector<:float:>::push_back(float) -> void
    // LHS
       // Identifier - d
          PUSH __main__d
@@ -3227,7 +3227,7 @@ POP __void
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main____vector__float____push_back__float
+   CALL __method____main____Vector__float____push_back__float
    POP __void
    // Remove args
    POP __void
@@ -3235,7 +3235,7 @@ POP __void
    PUSH __retval
 // Statement results can be ignored
 POP __void
-// Method Call - vector<:float:>::push_back(float) -> void
+// Method Call - Vector<:float:>::push_back(float) -> void
    // LHS
       // Identifier - d
          PUSH __main__d
@@ -3248,7 +3248,7 @@ POP __void
    // Pushing args in reverse order
    PUSH __arg0
    PUSH __obj
-   CALL __method____main____vector__float____push_back__float
+   CALL __method____main____Vector__float____push_back__float
    POP __void
    // Remove args
    POP __void
@@ -3256,7 +3256,7 @@ POP __void
    PUSH __retval
 // Statement results can be ignored
 POP __void
-// Method Call - vector<:float:>::pop_back() -> void
+// Method Call - Vector<:float:>::pop_back() -> void
    // LHS
       // Identifier - d
          PUSH __main__d
@@ -3265,14 +3265,14 @@ POP __void
    POP __obj
    // Pushing args in reverse order
    PUSH __obj
-   CALL __method____main____vector__float____pop_back
+   CALL __method____main____Vector__float____pop_back
    POP __void
    // Remove args
    RESPONSE __retval
    PUSH __retval
 // Statement results can be ignored
 POP __void
-// Function Call - println(vector<:float:>) -> void
+// Function Call - println(Vector<:float:>) -> void
    // Arguments
       // Identifier - d
          PUSH __main__d
@@ -3280,7 +3280,7 @@ POP __void
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL __main____println__vector__tparam0__float
+   CALL __main____println__Vector__tparam0__float
    // Remove args
    POP __void
    RESPONSE __retval
@@ -3299,10 +3299,10 @@ POP __void
 POP __void
 // Assignment
    // RHS
-      // Constructor Call - vector<:vector<:int:>:>::vector() -> vector<:vector<:int:>:>
+      // Constructor Call - Vector<:Vector<:int:>:>::Vector() -> Vector<:Vector<:int:>:>
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main____vector__vector____vector
+         CALL __ctor____main____Vector__Vector____Vector
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -3389,16 +3389,16 @@ __for__49:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Method Call - vector<:vector<:int:>:>::push_back(vector<:int:>) -> void
+         // Method Call - Vector<:Vector<:int:>:>::push_back(Vector<:int:>) -> void
             // LHS
                // Identifier - board
                   PUSH __main__board
             // RHS
             // Arguments
-               // Constructor Call - vector<:int:>::vector() -> vector<:int:>
+               // Constructor Call - Vector<:int:>::Vector() -> Vector<:int:>
                   // Arguments
                   // Pushing args in reverse order
-                  CALL __ctor____main____vector__int____vector
+                  CALL __ctor____main____Vector__int____Vector
                   // Remove args
                   RESPONSE __retval
                   PUSH __retval
@@ -3407,7 +3407,7 @@ __for__49:
             // Pushing args in reverse order
             PUSH __arg0
             PUSH __obj
-            CALL __method____main____vector__vector____push_back__vector
+            CALL __method____main____Vector__Vector____push_back__Vector
             POP __void
             // Remove args
             POP __void
@@ -3458,9 +3458,9 @@ __for__49:
             // Body
                //---------------------------------------------------------
                // Code Block
-                  // Method Call - vector<:int:>::push_back(int) -> void
+                  // Method Call - Vector<:int:>::push_back(int) -> void
                      // LHS
-                        // Method Call - vector<:vector<:int:>:>::get(int) -> vector<:int:>
+                        // Method Call - Vector<:Vector<:int:>:>::get(int) -> Vector<:int:>
                            // LHS
                               // Identifier - board
                                  PUSH __main__board
@@ -3473,7 +3473,7 @@ __for__49:
                            // Pushing args in reverse order
                            PUSH __arg0
                            PUSH __obj
-                           CALL __method____main____vector__vector____get__int
+                           CALL __method____main____Vector__Vector____get__int
                            POP __void
                            // Remove args
                            POP __void
@@ -3490,7 +3490,7 @@ __for__49:
                      // Pushing args in reverse order
                      PUSH __arg0
                      PUSH __obj
-                     CALL __method____main____vector__int____push_back__int
+                     CALL __method____main____Vector__int____push_back__int
                      POP __void
                      // Remove args
                      POP __void
@@ -3510,7 +3510,7 @@ __for__49:
    // End of For
    __endfor__49:
 //------------------------------------------------------------------------
-// Function Call - print_board(vector<:vector<:int:>:>) -> void
+// Function Call - print_board(Vector<:Vector<:int:>:>) -> void
    // Arguments
       // Identifier - board
          PUSH __main__board
@@ -3518,7 +3518,7 @@ __for__49:
    // Pushing args in reverse order
    PUSH __arg0
    // *** print_board
-   CALL __main____print_board__vector__tparam0__vector
+   CALL __main____print_board__Vector__tparam0__Vector
    // Remove args
    POP __void
    RESPONSE __retval
@@ -3537,10 +3537,10 @@ POP __void
 POP __void
 // Assignment
    // RHS
-      // Constructor Call - vector<:vector<:int:>:>::vector() -> vector<:vector<:int:>:>
+      // Constructor Call - Vector<:Vector<:int:>:>::Vector() -> Vector<:Vector<:int:>:>
          // Arguments
          // Pushing args in reverse order
-         CALL __ctor____main____vector__vector____vector
+         CALL __ctor____main____Vector__Vector____Vector
          // Remove args
          RESPONSE __retval
          PUSH __retval
@@ -3613,16 +3613,16 @@ __for__53:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Method Call - vector<:vector<:int:>:>::push_back(vector<:int:>) -> void
+         // Method Call - Vector<:Vector<:int:>:>::push_back(Vector<:int:>) -> void
             // LHS
                // Identifier - board2
                   PUSH __main__board2
             // RHS
             // Arguments
-               // Constructor Call - vector<:int:>::vector() -> vector<:int:>
+               // Constructor Call - Vector<:int:>::Vector() -> Vector<:int:>
                   // Arguments
                   // Pushing args in reverse order
-                  CALL __ctor____main____vector__int____vector
+                  CALL __ctor____main____Vector__int____Vector
                   // Remove args
                   RESPONSE __retval
                   PUSH __retval
@@ -3631,7 +3631,7 @@ __for__53:
             // Pushing args in reverse order
             PUSH __arg0
             PUSH __obj
-            CALL __method____main____vector__vector____push_back__vector
+            CALL __method____main____Vector__Vector____push_back__Vector
             POP __void
             // Remove args
             POP __void
@@ -3682,9 +3682,9 @@ __for__53:
             // Body
                //---------------------------------------------------------
                // Code Block
-                  // Method Call - vector<:int:>::push_back(int) -> void
+                  // Method Call - Vector<:int:>::push_back(int) -> void
                      // LHS
-                        // Method Call - vector<:vector<:int:>:>::get(int) -> vector<:int:>
+                        // Method Call - Vector<:Vector<:int:>:>::get(int) -> Vector<:int:>
                            // LHS
                               // Identifier - board2
                                  PUSH __main__board2
@@ -3697,7 +3697,7 @@ __for__53:
                            // Pushing args in reverse order
                            PUSH __arg0
                            PUSH __obj
-                           CALL __method____main____vector__vector____get__int
+                           CALL __method____main____Vector__Vector____get__int
                            POP __void
                            // Remove args
                            POP __void
@@ -3718,7 +3718,7 @@ __for__53:
                      // Pushing args in reverse order
                      PUSH __arg0
                      PUSH __obj
-                     CALL __method____main____vector__int____push_back__int
+                     CALL __method____main____Vector__int____push_back__int
                      POP __void
                      // Remove args
                      POP __void
@@ -3738,7 +3738,7 @@ __for__53:
    // End of For
    __endfor__53:
 //------------------------------------------------------------------------
-// Function Call - print_board(vector<:vector<:int:>:>) -> void
+// Function Call - print_board(Vector<:Vector<:int:>:>) -> void
    // Arguments
       // Identifier - board2
          PUSH __main__board2
@@ -3746,7 +3746,7 @@ __for__53:
    // Pushing args in reverse order
    PUSH __arg0
    // *** print_board
-   CALL __main____print_board__vector__tparam0__vector
+   CALL __main____print_board__Vector__tparam0__Vector
    // Remove args
    POP __void
    RESPONSE __retval
@@ -3764,9 +3764,9 @@ POP __void
 // Statement results can be ignored
 POP __void
 //========================================================================
-// Function Declaration - sum_boards(vector<:vector<:int:>:>, vector<:vector<:int:>:>) -> vector<:vector<:int:>:>
-JUMP __end____main____sum_boards__vector__tparam0__vector__vector__tparam0__vector
-__main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
+// Function Declaration - sum_boards(Vector<:Vector<:int:>:>, Vector<:Vector<:int:>:>) -> Vector<:Vector<:int:>:>
+JUMP __end____main____sum_boards__Vector__tparam0__Vector__Vector__tparam0__Vector
+__main____sum_boards__Vector__tparam0__Vector__Vector__tparam0__Vector:
    // Parameters
       // Param: a
       STACKGET __main__sum_boards__a 0
@@ -3777,10 +3777,10 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
       // Code Block
          // Assignment
             // RHS
-               // Constructor Call - vector<:vector<:int:>:>::vector() -> vector<:vector<:int:>:>
+               // Constructor Call - Vector<:Vector<:int:>:>::Vector() -> Vector<:Vector<:int:>:>
                   // Arguments
                   // Pushing args in reverse order
-                  CALL __ctor____main____vector__vector____vector
+                  CALL __ctor____main____Vector__Vector____Vector
                   // Remove args
                   RESPONSE __retval
                   PUSH __retval
@@ -3835,16 +3835,16 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
             // Body
                //---------------------------------------------------------
                // Code Block
-                  // Method Call - vector<:vector<:int:>:>::push_back(vector<:int:>) -> void
+                  // Method Call - Vector<:Vector<:int:>:>::push_back(Vector<:int:>) -> void
                      // LHS
                         // Identifier - c
                            PUSH __main__sum_boards__block__57__c
                      // RHS
                      // Arguments
-                        // Constructor Call - vector<:int:>::vector() -> vector<:int:>
+                        // Constructor Call - Vector<:int:>::Vector() -> Vector<:int:>
                            // Arguments
                            // Pushing args in reverse order
-                           CALL __ctor____main____vector__int____vector
+                           CALL __ctor____main____Vector__int____Vector
                            // Remove args
                            RESPONSE __retval
                            PUSH __retval
@@ -3853,7 +3853,7 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
                      // Pushing args in reverse order
                      PUSH __arg0
                      PUSH __obj
-                     CALL __method____main____vector__vector____push_back__vector
+                     CALL __method____main____Vector__Vector____push_back__Vector
                      POP __void
                      // Remove args
                      POP __void
@@ -3904,9 +3904,9 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
                      // Body
                         //------------------------------------------------
                         // Code Block
-                           // Method Call - vector<:int:>::push_back(int) -> void
+                           // Method Call - Vector<:int:>::push_back(int) -> void
                               // LHS
-                                 // Method Call - vector<:vector<:int:>:>::get(int) -> vector<:int:>
+                                 // Method Call - Vector<:Vector<:int:>:>::get(int) -> Vector<:int:>
                                     // LHS
                                        // Identifier - c
                                           PUSH __main__sum_boards__block__57__c
@@ -3919,7 +3919,7 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
                                     // Pushing args in reverse order
                                     PUSH __arg0
                                     PUSH __obj
-                                    CALL __method____main____vector__vector____get__int
+                                    CALL __method____main____Vector__Vector____get__int
                                     POP __void
                                     // Remove args
                                     POP __void
@@ -3929,9 +3929,9 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
                               // Arguments
                                  // Addition
                                     // LHS
-                                       // Method Call - vector<:int:>::get(int) -> int
+                                       // Method Call - Vector<:int:>::get(int) -> int
                                           // LHS
-                                             // Method Call - vector<:vector<:int:>:>::get(int) -> vector<:int:>
+                                             // Method Call - Vector<:Vector<:int:>:>::get(int) -> Vector<:int:>
                                                 // LHS
                                                    // Identifier - a
                                                       PUSH __main__sum_boards__a
@@ -3944,7 +3944,7 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
                                                 // Pushing args in reverse order
                                                 PUSH __arg0
                                                 PUSH __obj
-                                                CALL __method____main____vector__vector____get__int
+                                                CALL __method____main____Vector__Vector____get__int
                                                 POP __void
                                                 // Remove args
                                                 POP __void
@@ -3959,16 +3959,16 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
                                           // Pushing args in reverse order
                                           PUSH __arg0
                                           PUSH __obj
-                                          CALL __method____main____vector__int____get__int
+                                          CALL __method____main____Vector__int____get__int
                                           POP __void
                                           // Remove args
                                           POP __void
                                           RESPONSE __retval
                                           PUSH __retval
                                     // RHS
-                                       // Method Call - vector<:int:>::get(int) -> int
+                                       // Method Call - Vector<:int:>::get(int) -> int
                                           // LHS
-                                             // Method Call - vector<:vector<:int:>:>::get(int) -> vector<:int:>
+                                             // Method Call - Vector<:Vector<:int:>:>::get(int) -> Vector<:int:>
                                                 // LHS
                                                    // Identifier - b
                                                       PUSH __main__sum_boards__b
@@ -3981,7 +3981,7 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
                                                 // Pushing args in reverse order
                                                 PUSH __arg0
                                                 PUSH __obj
-                                                CALL __method____main____vector__vector____get__int
+                                                CALL __method____main____Vector__Vector____get__int
                                                 POP __void
                                                 // Remove args
                                                 POP __void
@@ -3996,7 +3996,7 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
                                           // Pushing args in reverse order
                                           PUSH __arg0
                                           PUSH __obj
-                                          CALL __method____main____vector__int____get__int
+                                          CALL __method____main____Vector__int____get__int
                                           POP __void
                                           // Remove args
                                           POP __void
@@ -4011,7 +4011,7 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
                               // Pushing args in reverse order
                               PUSH __arg0
                               PUSH __obj
-                              CALL __method____main____vector__int____push_back__int
+                              CALL __method____main____Vector__int____push_back__int
                               POP __void
                               // Remove args
                               POP __void
@@ -4038,13 +4038,13 @@ __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
             RETURN __rVal
       //------------------------------------------------------------------
    RETURN 0
-__end____main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
-// End Function Declaration - __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector
+__end____main____sum_boards__Vector__tparam0__Vector__Vector__tparam0__Vector:
+// End Function Declaration - __main____sum_boards__Vector__tparam0__Vector__Vector__tparam0__Vector
 //========================================================================
 
-// Function Call - print_board(vector<:vector<:int:>:>) -> void
+// Function Call - print_board(Vector<:Vector<:int:>:>) -> void
    // Arguments
-      // Function Call - sum_boards(vector<:vector<:int:>:>, vector<:vector<:int:>:>) -> vector<:vector<:int:>:>
+      // Function Call - sum_boards(Vector<:Vector<:int:>:>, Vector<:Vector<:int:>:>) -> Vector<:Vector<:int:>:>
          // Arguments
             // Identifier - board
                PUSH __main__board
@@ -4056,7 +4056,7 @@ __end____main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
          PUSH __arg1
          PUSH __arg0
          // *** sum_boards
-         CALL __main____sum_boards__vector__tparam0__vector__vector__tparam0__vector
+         CALL __main____sum_boards__Vector__tparam0__Vector__Vector__tparam0__Vector
          // Remove args
          POP __void
          POP __void
@@ -4066,7 +4066,7 @@ __end____main____sum_boards__vector__tparam0__vector__vector__tparam0__vector:
    // Pushing args in reverse order
    PUSH __arg0
    // *** print_board
-   CALL __main____print_board__vector__tparam0__vector
+   CALL __main____print_board__Vector__tparam0__Vector
    // Remove args
    POP __void
    RESPONSE __retval
