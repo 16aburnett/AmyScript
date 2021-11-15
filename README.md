@@ -1,20 +1,36 @@
 AmyScript
 ===========
 
-AmyScript is a middle-to-high-level programming language. It is still currently in development and the compiler exists in code/amyScriptCompiler. The expectation is that AmyScript is compiled to AmyAssembly which will then be interpreted. 
+AmyScript is a middle-to-high-level programming language. It is still currently in development and the compiler exists in `code/amyc`. The expectation is that AmyScript is compiled to AmyAssembly which will then be interpreted. 
 
 Check out the documentation at https://16aburnett.github.io/AmyScript/website
 
 AmyAssembly is a low-level command-based programming language. 
-The language is similar to assembly with some differences like variable amounts of registers. 
+The language is similar to assembly with some differences like variables instead of registers. 
+The interpreter exists in `code/amyasmi`
+
+Dependencies
+============
+
+- Python3.8 - Both the interpreter and compiler are written in Python3.8.
+- pyinstaller - used to build the compiler and interpreter 
+- Bash terminal - for running the bash build scripts 
+
+Building Tools
+==============
+
+Requires pyinstaller. This is still a work in progress. 
+```
+source install.sh
+```
+this will build the compiler and interpreter and add them to the PATH. Note, when you quit out of the terminal, you will need to source the install again to add the compiler and interpreter to the PATH. 
 
 Compiling AmyScript to AmyAssembly
 ==================================
-to compile an AmyScript file, navigate to the amyScriptCompiler directory which is where the compiler (and built-in library code) is located. 
 
 Run the following command to compile a file 
 ```
-$ python3 amyScriptCompiler.py yourFile.amy
+$ amyc yourFile.amy
 ```
 If your code successfully compiles, you will get a .assembly file including the compiled AmyAssembly. Check out the AmyAssembly if you want! It's pretty cool!
 
@@ -46,14 +62,11 @@ Hello, World!
 
 Running An AmyAssembly Program
 ==============================
-AmyAssembly is an interpreted language. 
+AmyAssembly can be executed using the AmyAssembly Interpreter (amyasmi).
 
-First navigate to the amyAssemblyInterpreter directory. 
-You can write your code in a file and use the below command to execute it (or use the AmyAssembly generated from the AmyScript compiler). 
-This implementation is written in python 3.8 so make sure you use python 3.8 or higher to run the interpreter.
 Documentation coming soon. 
 ```
-$ python3 amyAssemblyInterpreter.py yourFile.amy.assembly
+$ amyasmi yourFile.amy.assembly
 ```
 
 Sample AmyAssembly Program
