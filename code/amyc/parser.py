@@ -47,8 +47,11 @@ class Parser:
 # debug 
 
     def error(self, function, expectedToken, additional=""):
-        print(f"Error in {function} on line {self.tokens[self.currentToken].line}:{self.tokens[self.currentToken].column}")
-        print(f"   expected {expectedToken} but got {self.tokens[self.currentToken].type}")
+        print (f"Error in {function}")
+        print (f"   expected {expectedToken} but got {self.tokens[self.currentToken].type}")
+        print (f"   in file {self.tokens[self.currentToken].originalFilename}")
+        print (f"   on line {self.tokens[self.currentToken].originalLine}:{self.tokens[self.currentToken].column}")
+        print (self.lines[self.tokens[self.currentToken].line-1])
         if additional != "":
             print(f"   -> {additional}")
         exit(1)
@@ -155,9 +158,10 @@ class Parser:
         # if no inheritance specified, 
         # then it inherits Object by default 
         parent = "Object"
+        pToken = None
         if self.tokens[self.currentToken].type == "INHERITS":
             self.match ("classDeclaration", "INHERITS")
-            parent = self.inheritanceList ()[0]
+            parent, pToken = self.inheritanceList ()[0]
 
         # print (id, parent)
 
@@ -167,7 +171,7 @@ class Parser:
 
             self.leave ("classDeclaration")
 
-            decl = ClassDeclarationNode (type, id, token, parent, [], [], [], [])
+            decl = ClassDeclarationNode (type, id, token, parent, pToken, [], [], [], [])
             decl.isForwardDeclaration = True
             return decl
         
@@ -208,12 +212,13 @@ class Parser:
 
         # if there are no constructors, 
         # add an empty default constructor
+        # the token points to the class declaration
         if len(constructors) == 0:
-            constructors += [ConstructorDeclarationNode (None, [], CodeBlockNode ([]))]
+            constructors += [ConstructorDeclarationNode (token, [], CodeBlockNode ([]))]
 
         self.leave ("classDeclaration")
 
-        return ClassDeclarationNode (type, id, token, parent, constructors, fields, [], methods)
+        return ClassDeclarationNode (type, id, token, parent, pToken, constructors, fields, [], methods)
 
     # ====================================================================
     # inheritance list 
@@ -227,7 +232,7 @@ class Parser:
         parents = [] 
 
         if (self.tokens[self.currentToken].type == "IDENTIFIER"):
-            parents += [self.tokens[self.currentToken].lexeme]
+            parents += [[self.tokens[self.currentToken].lexeme, self.tokens[self.currentToken]]]
             self.match ("inheritanceList", "IDENTIFIER")
         else:
             self.error ("inheritanceList", "IDENTIFIER", "Inherits clause requires a classname")
@@ -898,8 +903,9 @@ class Parser:
             if (self.tokens[self.currentToken].type == "ASSIGN"):
                 line = self.tokens[self.currentToken].line
                 column = self.tokens[self.currentToken].column
+                assignToken = self.tokens[self.currentToken]
                 self.match ("assignexpr", "ASSIGN")
-                rhs = AssignExpressionNode (lhs, "=", None, line, column)
+                rhs = AssignExpressionNode (lhs, assignToken, None, line, column)
                 # if this is the first assignment expression
                 if (root == None):
                     # make this the root 
@@ -940,10 +946,11 @@ class Parser:
             
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
+            orToken = self.tokens[self.currentToken]
             self.match ("logicalOR", "LOR")
             rhs = self.logicalAND ()
 
-            lhs = LogicalOrExpressionNode (lhs, rhs, line, column)
+            lhs = LogicalOrExpressionNode (lhs, orToken, rhs, line, column)
 
         self.leave ("logicalOR")
 
@@ -962,10 +969,11 @@ class Parser:
 
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
+            andToken = self.tokens[self.currentToken]
             self.match ("logicalOR", "LAND")
             rhs = self.equalop ()
 
-            lhs = LogicalAndExpressionNode (lhs, rhs, line, column)
+            lhs = LogicalAndExpressionNode (lhs, andToken, rhs, line, column)
 
         self.leave ("logicalAND")
 
@@ -985,16 +993,14 @@ class Parser:
 
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
-            op = ""
+            opToken = self.tokens[self.currentToken]
             if self.tokens[self.currentToken].type == "EQ":
-                op = "=="
                 self.match ("equalop", "EQ")
             else:
-                op = "!="
                 self.match ("equalop", "NE")
             rhs = self.inequalop ()
 
-            lhs = EqualityExpressionNode (lhs, op, rhs, line, column)
+            lhs = EqualityExpressionNode (lhs, opToken, rhs, line, column)
 
         self.leave ("equalop")
 
@@ -1016,7 +1022,7 @@ class Parser:
 
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
-            op = self.tokens[self.currentToken].lexeme
+            op = self.tokens[self.currentToken]
             self.match ("inequalop", self.tokens[self.currentToken].type)
             rhs = self.addsub ()
 
@@ -1040,7 +1046,7 @@ class Parser:
 
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
-            op = self.tokens[self.currentToken].lexeme
+            op = self.tokens[self.currentToken]
             self.match ("addsub", self.tokens[self.currentToken].type)
             rhs = self.term ()
 
@@ -1065,7 +1071,7 @@ class Parser:
 
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
-            op = self.tokens[self.currentToken].lexeme
+            op = self.tokens[self.currentToken]
             self.match ("term", self.tokens[self.currentToken].type)
             rhs = self.unaryleft ()
 
@@ -1091,7 +1097,7 @@ class Parser:
             or self.tokens[self.currentToken].type == "MINUS" \
             or self.tokens[self.currentToken].type == "LNOT"  \
             or self.tokens[self.currentToken].type == "BNOT":
-            op = self.tokens[self.currentToken].lexeme
+            op = self.tokens[self.currentToken]
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
             self.match ("unaryleft", self.tokens[self.currentToken].type)
@@ -1117,14 +1123,16 @@ class Parser:
         if self.tokens[self.currentToken].type == "INCR":
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
+            op = self.tokens[self.currentToken]
             self.match ("unaryright", "INCR")
-            lhs = PostIncrementExpressionNode (lhs, line, column)
+            lhs = PostIncrementExpressionNode (lhs, op, line, column)
         # <unaryright> -> <arrayAccess> [ -- ]
         elif self.tokens[self.currentToken].type == "DECR":
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
+            op = self.tokens[self.currentToken]
             self.match ("unaryright", "DECR")
-            lhs = PostDecrementExpressionNode (lhs, line, column)
+            lhs = PostDecrementExpressionNode (lhs, op, line, column)
 
         self.leave ("unaryright")
 
@@ -1162,6 +1170,7 @@ class Parser:
 
                 line = self.tokens[self.currentToken].line
                 column = self.tokens[self.currentToken].column
+                opToken = self.tokens[self.currentToken]
                 self.match ("arrayAccess", "LPAREN")
                 args = []
                 # optional arguments 
@@ -1172,21 +1181,23 @@ class Parser:
                         self.match ("arrayAccess", "COMMA")
                         args += [self.assignexpr ()]
                 self.match ("arrayAccess", "RPAREN")
-                lhs = FunctionCallExpressionNode (lhs, args, templateParams, line, column)
+                lhs = FunctionCallExpressionNode (lhs, args, templateParams, opToken, line, column)
             # subscript operator 
             # <arrayAccess> -> <factor> { '[' <expr> ']' }
             elif self.tokens[self.currentToken].type == "LBRACKET":
                 line = self.tokens[self.currentToken].line
                 column = self.tokens[self.currentToken].column
+                opToken = self.tokens[self.currentToken]
                 self.match ("arrayAccess", "LBRACKET")
                 offset = self.expression ()
                 self.match ("arrayAccess", "RBRACKET")
-                lhs = SubscriptExpressionNode (lhs, offset, line, column)
+                lhs = SubscriptExpressionNode (lhs, opToken, offset, line, column)
             # member accessor
             # <arrayAccess> -> <factor> { DOT <factor> [ '(' [ <assignExpression> { COMMA <assignExpression> } ] ')' ] }
             elif (self.tokens[self.currentToken].type == "DOT"):
                 line = self.tokens[self.currentToken].line
                 column = self.tokens[self.currentToken].column
+                opToken = self.tokens[self.currentToken]
                 self.match ("arrayAccess", "DOT")
                 rhs = self.factor ()
                 # method call
@@ -1201,10 +1212,10 @@ class Parser:
                             self.match ("arrayAccess", "COMMA")
                             args += [self.assignexpr ()]
                     self.match ("arrayAccess", "RPAREN")
-                    lhs = MethodAccessorExpressionNode (lhs, rhs, args, line, column)
+                    lhs = MethodAccessorExpressionNode (lhs, opToken, rhs, args, line, column)
                 # field accessor
                 else:
-                    lhs = MemberAccessorExpressionNode (lhs, rhs, line, column)
+                    lhs = MemberAccessorExpressionNode (lhs, opToken, rhs, line, column)
 
         self.leave ("arrayAccess")
 
@@ -1250,6 +1261,7 @@ class Parser:
         elif self.tokens[self.currentToken].type == "LBRACKET":
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
+            opToken = self.tokens[self.currentToken]
             self.match ("factor", "LBRACKET")
             items = []
             # optional items 
@@ -1260,7 +1272,7 @@ class Parser:
                     self.match ("factor", "COMMA")
                     items += [self.assignexpr ()]
             self.match ("factor", "RBRACKET")
-            lhs = ListConstructorExpressionNode (items, line, column)
+            lhs = ListConstructorExpressionNode (opToken, items, line, column)
         # <factor> -> NEW ( TYPE '[' <expr> ']' { '[' <expr> ']' } | IDENTIFIER ( '[' <expr> ']' { '[' <expr> ']' } | '(' <args> ')' ) ) 
         elif self.tokens[self.currentToken].type == "NEW":
             line = self.tokens[self.currentToken].line
@@ -1347,6 +1359,7 @@ class Parser:
                     lhs = ArrayAllocatorExpressionNode (type, offsets, templateParams, line, column)
                 # constructor call 
                 elif (self.tokens[self.currentToken].type == "LPAREN"):
+                    opToken = self.tokens[self.currentToken]
                     self.match ("factor", "LPAREN")
                     args = []
                     # optional arguments 
@@ -1358,7 +1371,7 @@ class Parser:
                             args += [self.assignexpr ()]
                     self.match ("factor", "RPAREN")
 
-                    lhs = ConstructorCallExpressionNode (type, type.id, args, templateParams, line, column)
+                    lhs = ConstructorCallExpressionNode (type, type.id, opToken, args, templateParams, line, column)
 
                 else:
                     self.error ("factor", "LBRACKET", "Expecting an array allocator or class constructor call")
@@ -1368,16 +1381,17 @@ class Parser:
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
             self.match ("factor", "SIZEOF")
+            opToken = self.tokens[self.currentToken]
             self.match ("factor", "LPAREN")
             type = TypeSpecifierNode (Type.INT, "int", None)
             # ensure there is an expression
             if self.tokens[self.currentToken].type == "RPAREN":
                 print (f"Parsing Error: Sizeof requires an expression")
-                print (f"   Located on line {line}: column {column}")
-                print (f"   line:")
-                print (f"      {self.lines[line-1][:-1]}")
-                print (f"      ",end="")
-                for i in range(column-1):
+                print (f"   in file {opToken.originalFilename}")
+                print (f"   on line {opToken.originalLine}:{opToken.column}")
+                print (f"   {self.lines[opToken.line-1]}")
+                print (f"   ",end="")
+                for i in range(opToken.column-1):
                     print (" ", end="")
                 print ("^")
                 print ()
@@ -1388,33 +1402,34 @@ class Parser:
             # ensure user didn't try to provide more than one expression
             if self.tokens[self.currentToken].type == "COMMA":
                 print (f"Parsing Error: Sizeof only takes one array parameter")
-                print (f"   Located on line {line}: column {column}")
-                print (f"   line:")
-                print (f"      {self.lines[line-1][:-1]}")
-                print (f"      ",end="")
-                for i in range(column-1):
+                print (f"   in file {opToken.originalFilename}")
+                print (f"   on line {opToken.originalLine}:{opToken.column}")
+                print (f"   {self.lines[opToken.line-1]}")
+                print (f"   ",end="")
+                for i in range(opToken.column-1):
                     print (" ", end="")
                 print ("^")
                 print ()
                 exit(1)
             self.match ("factor", "RPAREN")
-            lhs = SizeofExpressionNode (type, rhs, line, column)
+            lhs = SizeofExpressionNode (type, opToken, rhs, line, column)
 
         # <factor> -> FREE ( <expression> ) 
         elif self.tokens[self.currentToken].type == "FREE":
             line = self.tokens[self.currentToken].line
             column = self.tokens[self.currentToken].column
             self.match ("factor", "FREE")
+            opToken = self.tokens[self.currentToken]
             self.match ("factor", "LPAREN")
             type = TypeSpecifierNode (Type.VOID, "void", None)
             # ensure there is an expression
             if self.tokens[self.currentToken].type == "RPAREN":
                 print (f"Parsing Error: Free requires an expression")
-                print (f"   Located on line {line}: column {column}")
-                print (f"   line:")
-                print (f"      {self.lines[line-1][:-1]}")
-                print (f"      ",end="")
-                for i in range(column-1):
+                print (f"   in file {opToken.originalFilename}")
+                print (f"   on line {opToken.originalLine}:{opToken.column}")
+                print (f"   {self.lines[opToken.line-1]}")
+                print (f"   ",end="")
+                for i in range(opToken.column-1):
                     print (" ", end="")
                 print ("^")
                 print ()
@@ -1425,17 +1440,17 @@ class Parser:
             # ensure user didn't try to provide more than one expression
             if self.tokens[self.currentToken].type == "COMMA":
                 print (f"Parsing Error: Free only takes one array parameter")
-                print (f"   Located on line {line}: column {column}")
-                print (f"   line:")
-                print (f"      {self.lines[line-1][:-1]}")
-                print (f"      ",end="")
-                for i in range(column-1):
+                print (f"   in file {opToken.originalFilename}")
+                print (f"   on line {opToken.originalLine}:{opToken.column}")
+                print (f"   {self.lines[opToken.line-1]}")
+                print (f"   ",end="")
+                for i in range(opToken.column-1):
                     print (" ", end="")
                 print ("^")
                 print ()
                 exit(1)
             self.match ("factor", "RPAREN")
-            lhs = FreeExpressionNode (type, rhs, line, column)
+            lhs = FreeExpressionNode (type, opToken, rhs, line, column)
 
         else:
             lhs = self.literal ()

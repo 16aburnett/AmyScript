@@ -1079,9 +1079,9 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitEqualityExpressionNode (self, node):
-        if node.op == "==":
+        if node.op.lexeme == "==":
             self.printComment ("Equal")
-        elif node.op == "!=":
+        elif node.op.lexeme == "!=":
             self.printComment ("Not Equal")
 
         self.indentation += 1
@@ -1100,9 +1100,9 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("POP __rhs")
         self.printCode ("POP __lhs")
 
-        if node.op == "==":
+        if node.op.lexeme == "==":
             self.printCode ("EQUAL __res __lhs __rhs")
-        elif node.op == "!=":
+        elif node.op.lexeme == "!=":
             self.printCode ("NEQUAL __res __lhs __rhs")
 
         # push result to the stack
@@ -1111,13 +1111,13 @@ class CodeGenVisitor (ASTVisitor):
         self.indentation -= 1
 
     def visitInequalityExpressionNode (self, node):
-        if node.op == "<":
+        if node.op.lexeme == "<":
             self.printComment ("Less Than")
-        elif node.op == "<=":
+        elif node.op.lexeme == "<=":
             self.printComment ("Less Than or Equal to")
-        elif node.op == ">":
+        elif node.op.lexeme == ">":
             self.printComment ("Greater Than")
-        elif node.op == ">=":
+        elif node.op.lexeme == ">=":
             self.printComment ("Greater Than or Equal to")
 
         self.indentation += 1
@@ -1136,13 +1136,13 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("POP __rhs")
         self.printCode ("POP __lhs")
 
-        if node.op == "<":
+        if node.op.lexeme == "<":
             self.printCode ("LT __res __lhs __rhs")
-        elif node.op == "<=":
+        elif node.op.lexeme == "<=":
             self.printCode ("LE __res __lhs __rhs")
-        elif node.op == ">":
+        elif node.op.lexeme == ">":
             self.printCode ("GT __res __lhs __rhs")
-        elif node.op == ">=":
+        elif node.op.lexeme == ">=":
             self.printCode ("GE __res __lhs __rhs")
 
         # push result to the stack
@@ -1152,10 +1152,10 @@ class CodeGenVisitor (ASTVisitor):
 
     def visitAdditiveExpressionNode (self, node):
         # addition 
-        if node.op == "+":
+        if node.op.lexeme == "+":
             self.printComment ("Addition")
         # subtraction 
-        elif node.op == "-":
+        elif node.op.lexeme == "-":
             self.printComment ("Subtraction")
 
         self.indentation += 1
@@ -1175,10 +1175,10 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("POP __lhs")
         
         # addition 
-        if node.op == "+":
+        if node.op.lexeme == "+":
             self.printCode ("ADD __res __lhs __rhs")
         # subtraction 
-        elif node.op == "-":
+        elif node.op.lexeme == "-":
             self.printCode ("SUBTRACT __res __lhs __rhs")
 
         # push result to the stack
@@ -1188,13 +1188,13 @@ class CodeGenVisitor (ASTVisitor):
 
     def visitMultiplicativeExpressionNode (self, node):
         # Multiplication 
-        if node.op == "*":
+        if node.op.lexeme == "*":
             self.printComment ("Multiplication")
         # division 
-        elif node.op == "/":
+        elif node.op.lexeme == "/":
             self.printComment ("Division")
         # Mod
-        elif node.op == "%":
+        elif node.op.lexeme == "%":
             self.printComment ("Mod")
 
         self.indentation += 1
@@ -1214,13 +1214,13 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("POP __lhs")
     
         # Multiplication 
-        if node.op == "*":
+        if node.op.lexeme == "*":
             self.printCode ("MULTIPLY __res __lhs __rhs")
         # division 
-        elif node.op == "/":
+        elif node.op.lexeme == "/":
             self.printCode ("DIVIDE __res __lhs __rhs")
         # Mod
-        elif node.op == "%":
+        elif node.op.lexeme == "%":
             self.printCode ("MOD __res __lhs __rhs")
 
         # push result to the stack
@@ -1231,18 +1231,18 @@ class CodeGenVisitor (ASTVisitor):
     #  ++ | -- | + | - | ! | ~
     # **INCR and DECR do not save the value
     def visitUnaryLeftExpressionNode (self, node):
-        if node.op == "++":
+        if node.op.lexeme == "++":
             self.printComment ("Pre-Increment")
             
-        elif node.op == "--":
+        elif node.op.lexeme == "--":
             self.printComment ("Pre-Decrement")
-        elif node.op == "+":
+        elif node.op.lexeme == "+":
             self.printComment ("Positive")
-        elif node.op == "-":
+        elif node.op.lexeme == "-":
             self.printComment ("Negative")
-        elif node.op == "!":
+        elif node.op.lexeme == "!":
             self.printComment ("Negate")
-        elif node.op == "~":
+        elif node.op.lexeme == "~":
             self.printComment ("Bitwise Negation")
 
         self.indentation += 1
@@ -1255,7 +1255,7 @@ class CodeGenVisitor (ASTVisitor):
         # get rhs off the stack 
         self.printCode ("POP __rhs")
     
-        if node.op == "++":
+        if node.op.lexeme == "++":
             if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
                 self.printCode (f"ADD {node.rhs.decl.scopeName} {node.rhs.decl.scopeName} 1")
                 self.printCode (f"ASSIGN __res {node.rhs.decl.scopeName}")
@@ -1314,7 +1314,7 @@ class CodeGenVisitor (ASTVisitor):
             else:
                 print ("yikes!")
                 exit (1)
-        elif node.op == "--":
+        elif node.op.lexeme == "--":
             if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
                 self.printCode (f"SUBTRACT {node.rhs.decl.scopeName} {node.rhs.decl.scopeName} 1")
                 self.printCode (f"ASSIGN __res {node.rhs.decl.scopeName}")
@@ -1373,13 +1373,13 @@ class CodeGenVisitor (ASTVisitor):
             else:
                 print ("yikes!")
                 exit (1)
-        elif node.op == "+":
+        elif node.op.lexeme == "+":
             self.printCode ("ASSIGN __res __rhs")
-        elif node.op == "-":
+        elif node.op.lexeme == "-":
             self.printCode ("SUBTRACT __res 0 __rhs")
-        elif node.op == "!":
+        elif node.op.lexeme == "!":
             self.printCode ("NOT __res __rhs")
-        elif node.op == "~":
+        elif node.op.lexeme == "~":
             self.printCode ("NOT __res __rhs")
 
         # push result to the stack

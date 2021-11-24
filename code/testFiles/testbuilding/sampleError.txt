@@ -1,0 +1,9 @@
+In file included from other.hpp:3:0,
+                 from test.cpp:4:
+utils.hpp:4:7: error: redefinition of ‘class Point’
+ class Point
+       ^~~~~
+In file included from test.cpp:3:0:
+utils.hpp:4:7: note: previous definition of ‘class Point’
+ class Point
+       ^~~~~

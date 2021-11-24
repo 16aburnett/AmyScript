@@ -230,12 +230,13 @@ class FunctionNode (CodeUnitNode):
 
 class ClassDeclarationNode (CodeUnitNode):
     
-    def __init__(self, type, id, token, parent, constructors, fields, virtualMethods, methods):
+    def __init__(self, type, id, token, parent, pToken, constructors, fields, virtualMethods, methods):
         self.type = type
         self.type.decl = self 
         self.id = id
         self.token = token
         self.parent = parent 
+        self.pToken = pToken
         self.pDecl = None 
         self.constructors = constructors
         self.fields = fields 
@@ -263,7 +264,7 @@ class ClassDeclarationNode (CodeUnitNode):
         visitor.visitClassDeclarationNode (self)
 
     def copy (self):
-        node = ClassDeclarationNode (self.type.copy(), self.id, self.token, self.parent, [c.copy() for c in self.constructors], [f.copy() for f in self.fields], [v.copy() for v in self.virtualMethods], [m.copy() for m in self.methods])
+        node = ClassDeclarationNode (self.type.copy(), self.id, self.token, self.parent, self.pToken, [c.copy() for c in self.constructors], [f.copy() for f in self.fields], [v.copy() for v in self.virtualMethods], [m.copy() for m in self.methods])
         node.children = [child.copy () for child in self.children]
         node.functionPointerList = [fptr.copy() for fptr in self.functionPointerList]
         node.scopeName = self.scopeName
@@ -739,9 +740,10 @@ class AssignExpressionNode (ExpressionNode):
 
 class LogicalOrExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, rhs, line, column):
+    def __init__(self, lhs, op, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
+        self.op = op
         self.rhs = rhs 
 
         self.lineNumber = line
@@ -751,7 +753,7 @@ class LogicalOrExpressionNode (ExpressionNode):
         visitor.visitLogicalOrExpressionNode (self)
 
     def copy (self):
-        return LogicalOrExpressionNode(self.lhs.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
+        return LogicalOrExpressionNode(self.lhs.copy(), self.rhs, self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode
@@ -759,9 +761,10 @@ class LogicalOrExpressionNode (ExpressionNode):
 
 class LogicalAndExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, rhs, line, column):
+    def __init__(self, lhs, op, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
+        self.op = op
         self.rhs = rhs 
 
         self.lineNumber = line
@@ -771,7 +774,7 @@ class LogicalAndExpressionNode (ExpressionNode):
         visitor.visitLogicalAndExpressionNode (self)
 
     def copy (self):
-        return LogicalAndExpressionNode(self.lhs.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
+        return LogicalAndExpressionNode(self.lhs.copy(), self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode
@@ -886,9 +889,10 @@ class UnaryLeftExpressionNode (ExpressionNode):
 
 class PostIncrementExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, line, column):
+    def __init__(self, lhs, op, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs 
+        self.op = op
 
         self.lineNumber = line
         self.columnNumber = column
@@ -897,16 +901,17 @@ class PostIncrementExpressionNode (ExpressionNode):
         visitor.visitPostIncrementExpressionNode (self)
 
     def copy (self):
-        return PostIncrementExpressionNode(self.lhs.copy(), self.lineNumber, self.columnNumber)
+        return PostIncrementExpressionNode(self.lhs.copy(), self.op, self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode
 
 class PostDecrementExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, line, column):
+    def __init__(self, lhs, op, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs 
+        self.op = op
 
         self.lineNumber = line
         self.columnNumber = column
@@ -915,7 +920,7 @@ class PostDecrementExpressionNode (ExpressionNode):
         visitor.visitPostDecrementExpressionNode (self)
 
     def copy (self):
-        return PostDecrementExpressionNode(self.lhs.copy(), self.lineNumber, self.columnNumber)
+        return PostDecrementExpressionNode(self.lhs.copy(), self.op, self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode
@@ -923,9 +928,10 @@ class PostDecrementExpressionNode (ExpressionNode):
 
 class SubscriptExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, offset, line, column):
+    def __init__(self, lhs, op, offset, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs 
+        self.op = op
         self.offset = offset
 
         self.lineNumber = line
@@ -935,7 +941,7 @@ class SubscriptExpressionNode (ExpressionNode):
         visitor.visitSubscriptExpressionNode (self)
 
     def copy (self):
-        return SubscriptExpressionNode(self.lhs.copy(), self.offset.copy(), self.lineNumber, self.columnNumber)
+        return SubscriptExpressionNode(self.lhs.copy(), self.op, self.offset.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # function - ExpressionNode
@@ -943,10 +949,11 @@ class SubscriptExpressionNode (ExpressionNode):
 
 class FunctionCallExpressionNode (ExpressionNode):
 
-    def __init__(self, function, args, templateParams, line, column):
+    def __init__(self, function, args, templateParams, op, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.function = function
         self.args = args 
+        self.op = op
 
         self.templateParams = templateParams 
 
@@ -959,7 +966,7 @@ class FunctionCallExpressionNode (ExpressionNode):
         visitor.visitFunctionCallExpressionNode (self)
 
     def copy (self):
-        return FunctionCallExpressionNode(self.function.copy(), [arg.copy() for arg in self.args], [tempParam.copy() for tempParam in self.templateParams], self.lineNumber, self.columnNumber)
+        return FunctionCallExpressionNode(self.function.copy(), [arg.copy() for arg in self.args], [tempParam.copy() for tempParam in self.templateParams], self.op, self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode - must be class type 
@@ -967,9 +974,10 @@ class FunctionCallExpressionNode (ExpressionNode):
 
 class MemberAccessorExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, rhs, line, column):
+    def __init__(self, lhs, op, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
+        self.op = op
         self.rhs = rhs
         # id is the assembly representation of the function 
         # for class method calls 
@@ -986,7 +994,7 @@ class MemberAccessorExpressionNode (ExpressionNode):
         visitor.visitMemberAccessorExpressionNode (self)
 
     def copy (self):
-        return MemberAccessorExpressionNode(self.lhs.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
+        return MemberAccessorExpressionNode(self.lhs.copy(), self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode - must be class type 
@@ -994,9 +1002,10 @@ class MemberAccessorExpressionNode (ExpressionNode):
 
 class FieldAccessorExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, rhs, line, column):
+    def __init__(self, lhs, op, rhs, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
+        self.op = op
         self.rhs = rhs
 
         self.decl = None
@@ -1008,7 +1017,7 @@ class FieldAccessorExpressionNode (ExpressionNode):
         visitor.visitFieldAccessorExpressionNode (self)
 
     def copy (self):
-        return FieldAccessorExpressionNode(self.lhs.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
+        return FieldAccessorExpressionNode(self.lhs.copy(), self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode - must be class type 
@@ -1016,9 +1025,10 @@ class FieldAccessorExpressionNode (ExpressionNode):
 
 class MethodAccessorExpressionNode (ExpressionNode):
 
-    def __init__(self, lhs, rhs, args, line, column):
+    def __init__(self, lhs, op, rhs, args, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
+        self.op = op
         self.rhs = rhs
         self.args = args
 
@@ -1031,7 +1041,7 @@ class MethodAccessorExpressionNode (ExpressionNode):
         visitor.visitMethodAccessorExpressionNode (self)
 
     def copy (self):
-        return MethodAccessorExpressionNode(self.lhs.copy(), self.rhs.copy(), [arg.copy() for arg in self.args], self.lineNumber, self.columnNumber)
+        return MethodAccessorExpressionNode(self.lhs.copy(), self.op, self.rhs.copy(), [arg.copy() for arg in self.args], self.lineNumber, self.columnNumber)
 
 # ========================================================================
 
@@ -1098,9 +1108,10 @@ class ArrayAllocatorExpressionNode (ExpressionNode):
 
 class ConstructorCallExpressionNode (ExpressionNode):
 
-    def __init__(self, type, id, args, templateParams, line, column):
+    def __init__(self, type, id, op, args, templateParams, line, column):
         self.type = type
         self.id = id
+        self.op = op
         self.args = args
 
         self.templateParams = templateParams
@@ -1114,14 +1125,15 @@ class ConstructorCallExpressionNode (ExpressionNode):
         visitor.visitConstructorCallExpressionNode (self)
 
     def copy (self):
-        return ConstructorCallExpressionNode(self.type.copy(), self.id, [a.copy() for a in self.args], [t.copy() for t in self.templateParams], self.lineNumber, self.columnNumber)
+        return ConstructorCallExpressionNode(self.type.copy(), self.id, self.op, [a.copy() for a in self.args], [t.copy() for t in self.templateParams], self.lineNumber, self.columnNumber)
 
 # ========================================================================
 
 class SizeofExpressionNode (ExpressionNode):
 
-    def __init__(self, type, rhs, line, column):
+    def __init__(self, type, op, rhs, line, column):
         self.type = type
+        self.op = op
         self.rhs = rhs
 
         self.lineNumber = line
@@ -1131,14 +1143,15 @@ class SizeofExpressionNode (ExpressionNode):
         visitor.visitSizeofExpressionNode (self)
 
     def copy (self):
-        return SizeofExpressionNode(self.type.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
+        return SizeofExpressionNode(self.type.copy(), self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 
 class FreeExpressionNode (ExpressionNode):
 
-    def __init__(self, type, rhs, line, column):
+    def __init__(self, type, op, rhs, line, column):
         self.type = type
+        self.op = op
         self.rhs = rhs
 
         self.lineNumber = line
@@ -1148,7 +1161,7 @@ class FreeExpressionNode (ExpressionNode):
         visitor.visitFreeExpressionNode (self)
 
     def copy (self):
-        return FreeExpressionNode(self.type.copy(), self.rhs.copy(), self.lineNumber, self.columnNumber)
+        return FreeExpressionNode(self.type.copy(), self.op, self.rhs.copy(), self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # value - int
@@ -1229,8 +1242,9 @@ class StringLiteralExpressionNode (ExpressionNode):
 
 class ListConstructorExpressionNode (ExpressionNode):
 
-    def __init__(self, elems:list, line, column):
+    def __init__(self, op, elems:list, line, column):
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
+        self.op = op
         self.elems = elems
 
         self.lineNumber = line
@@ -1240,7 +1254,7 @@ class ListConstructorExpressionNode (ExpressionNode):
         visitor.visitListConstructorExpressionNode (self)
 
     def copy (self):
-        return ListConstructorExpressionNode([e.copy() for e in self.elems], self.lineNumber, self.columnNumber)
+        return ListConstructorExpressionNode(self.op, [e.copy() for e in self.elems], self.lineNumber, self.columnNumber)
 
 # ========================================================================
 

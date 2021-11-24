@@ -233,59 +233,53 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Function Template - 
-   // Instances:
-      //==================================================================
-      // Function Declaration - max<:int:>(int, int) -> int
-      JUMP __end____main____max__int____int__int
-      __main____max__int____int__int:
-         // Parameters
-            // Param: a
-            STACKGET __main__max__a 0
-            // Param: b
-            STACKGET __main__max__b 1
-         // Body
-            //------------------------------------------------------------
-            // Code Block
-               //---------------------------------------------------------
-               // If-Statement
-                  // Condition
-                     // Greater Than or Equal to
-                        // LHS
-                           // Identifier - a
-                              PUSH __main__max__a
-                        // RHS
-                           // Identifier - b
-                              PUSH __main__max__b
-                        POP __rhs
-                        POP __lhs
-                        GE __res __lhs __rhs
-                        PUSH __res
-                     POP __cond
-                     CMP __cond 0
-                     JEQ __endif__1
-                  // Body
-                     // Return
-                        // Identifier - a
-                           PUSH __main__max__a
-                        POP __rVal
-                        RETURN __rVal
-                  JUMP __endif__1
-                  // End of if
-                  __endif__1:
-               //---------------------------------------------------------
+// Function Declaration - max(int, int) -> int
+JUMP __end____main____max__int__int
+__main____max__int__int:
+   // Parameters
+      // Param: a
+      STACKGET __main__max__a 0
+      // Param: b
+      STACKGET __main__max__b 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Greater Than or Equal to
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__max__a
+                  // RHS
+                     // Identifier - b
+                        PUSH __main__max__b
+                  POP __rhs
+                  POP __lhs
+                  GE __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__1
+            // Body
                // Return
-                  // Identifier - b
-                     PUSH __main__max__b
+                  // Identifier - a
+                     PUSH __main__max__a
                   POP __rVal
                   RETURN __rVal
-            //------------------------------------------------------------
-         RETURN 0
-      __end____main____max__int____int__int:
-      // End Function Declaration - __main____max__int____int__int
-      //==================================================================
-
-// End Function Template - 
+            JUMP __endif__1
+            // End of if
+            __endif__1:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - b
+               PUSH __main__max__b
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____max__int__int:
+// End Function Declaration - __main____max__int__int
 //========================================================================
 
 //========================================================================
@@ -406,62 +400,6 @@ __endOfLibrary:
          RETURN 0
       __end____main____sum__int____int__1:
       // End Function Declaration - __main____sum__int____int__1
-      //==================================================================
-
-// End Function Template - 
-//========================================================================
-
-//========================================================================
-// Function Template - 
-   // Instances:
-      //==================================================================
-      // Function Declaration - min<:int:>(int, int) -> int
-      JUMP __end____main____min__int____int__int
-      __main____min__int____int__int:
-         // Parameters
-            // Param: a
-            STACKGET __main__min__a 0
-            // Param: b
-            STACKGET __main__min__b 1
-         // Body
-            //------------------------------------------------------------
-            // Code Block
-               //---------------------------------------------------------
-               // If-Statement
-                  // Condition
-                     // Less Than or Equal to
-                        // LHS
-                           // Identifier - a
-                              PUSH __main__min__a
-                        // RHS
-                           // Identifier - b
-                              PUSH __main__min__b
-                        POP __rhs
-                        POP __lhs
-                        LE __res __lhs __rhs
-                        PUSH __res
-                     POP __cond
-                     CMP __cond 0
-                     JEQ __endif__5
-                  // Body
-                     // Return
-                        // Identifier - a
-                           PUSH __main__min__a
-                        POP __rVal
-                        RETURN __rVal
-                  JUMP __endif__5
-                  // End of if
-                  __endif__5:
-               //---------------------------------------------------------
-               // Return
-                  // Identifier - b
-                     PUSH __main__min__b
-                  POP __rVal
-                  RETURN __rVal
-            //------------------------------------------------------------
-         RETURN 0
-      __end____main____min__int____int__int:
-      // End Function Declaration - __main____min__int____int__int
       //==================================================================
 
 // End Function Template - 
@@ -781,7 +719,7 @@ POP __void
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif__12
+                        JEQ __endif__10
                      // Body
                         //------------------------------------------------
                         // Code Block
@@ -836,9 +774,9 @@ POP __void
                                     PUSH __ptr
                               // LHS
                                  // Variable Declaration
-                                    ASSIGN __main____Vector__int__push_back__block__11__if__12__block__13__new_data 0
+                                    ASSIGN __main____Vector__int__push_back__block__9__if__10__block__11__new_data 0
                               POP __rhs
-                              ASSIGN __main____Vector__int__push_back__block__11__if__12__block__13__new_data __rhs
+                              ASSIGN __main____Vector__int__push_back__block__9__if__10__block__11__new_data __rhs
                               PUSH __rhs
                            // Statement results can be ignored
                            POP __void
@@ -851,27 +789,27 @@ POP __void
                                        PUSH 0
                                  // LHS
                                     // Variable Declaration
-                                       ASSIGN __main____Vector__int__push_back__block__11__if__12__block__13__for__14__i 0
+                                       ASSIGN __main____Vector__int__push_back__block__9__if__10__block__11__for__12__i 0
                                  POP __rhs
-                                 ASSIGN __main____Vector__int__push_back__block__11__if__12__block__13__for__14__i __rhs
+                                 ASSIGN __main____Vector__int__push_back__block__9__if__10__block__11__for__12__i __rhs
                                  PUSH __rhs
-                           JUMP __forcond__14
-                           __for__14:
+                           JUMP __forcond__12
+                           __for__12:
                               // Update
                                  // Pre-Increment
                                     // RHS
                                        // Identifier - i
-                                          PUSH __main____Vector__int__push_back__block__11__if__12__block__13__for__14__i
+                                          PUSH __main____Vector__int__push_back__block__9__if__10__block__11__for__12__i
                                     POP __rhs
-                                    ADD __main____Vector__int__push_back__block__11__if__12__block__13__for__14__i __main____Vector__int__push_back__block__11__if__12__block__13__for__14__i 1
-                                    ASSIGN __res __main____Vector__int__push_back__block__11__if__12__block__13__for__14__i
+                                    ADD __main____Vector__int__push_back__block__9__if__10__block__11__for__12__i __main____Vector__int__push_back__block__9__if__10__block__11__for__12__i 1
+                                    ASSIGN __res __main____Vector__int__push_back__block__9__if__10__block__11__for__12__i
                                     PUSH __res
-                              __forcond__14:
+                              __forcond__12:
                               // Condition
                                  // Less Than
                                     // LHS
                                        // Identifier - i
-                                          PUSH __main____Vector__int__push_back__block__11__if__12__block__13__for__14__i
+                                          PUSH __main____Vector__int__push_back__block__9__if__10__block__11__for__12__i
                                     // RHS
                                        // Member Accessor
                                           // LHS
@@ -888,7 +826,7 @@ POP __void
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __endfor__14
+                                 JEQ __endfor__12
                               // Body
                                  // Assignment
                                     // RHS
@@ -905,7 +843,7 @@ POP __void
                                                 PUSH __parent[__child]
                                           // OFFSET
                                              // Identifier - i
-                                                PUSH __main____Vector__int__push_back__block__11__if__12__block__13__for__14__i
+                                                PUSH __main____Vector__int__push_back__block__9__if__10__block__11__for__12__i
                                           POP __offset
                                           POP __pointer
                                           PUSH __pointer[__offset]
@@ -913,10 +851,10 @@ POP __void
                                        // Subscript assignment
                                           // LHS
                                              // Identifier - new_data
-                                                PUSH __main____Vector__int__push_back__block__11__if__12__block__13__new_data
+                                                PUSH __main____Vector__int__push_back__block__9__if__10__block__11__new_data
                                           // OFFSET
                                              // Identifier - i
-                                                PUSH __main____Vector__int__push_back__block__11__if__12__block__13__for__14__i
+                                                PUSH __main____Vector__int__push_back__block__9__if__10__block__11__for__12__i
                                           POP __offset
                                           POP __pointer
                                     POP __rhs
@@ -925,9 +863,9 @@ POP __void
                                  // Statement results can be ignored
                                  POP __void
                               // Repeat
-                              JUMP __for__14
+                              JUMP __for__12
                               // End of For
-                              __endfor__14:
+                              __endfor__12:
                            //---------------------------------------------
                            // Free Operator
                               // RHS
@@ -949,7 +887,7 @@ POP __void
                            // Assignment
                               // RHS
                                  // Identifier - new_data
-                                    PUSH __main____Vector__int__push_back__block__11__if__12__block__13__new_data
+                                    PUSH __main____Vector__int__push_back__block__9__if__10__block__11__new_data
                               // LHS
                                  // Member Accessor Assignment
                                     // LHS
@@ -965,9 +903,9 @@ POP __void
                            // Statement results can be ignored
                            POP __void
                         //------------------------------------------------
-                     JUMP __endif__12
+                     JUMP __endif__10
                      // End of if
-                     __endif__12:
+                     __endif__10:
                   //------------------------------------------------------
                   // Assignment
                      // RHS
@@ -1067,13 +1005,13 @@ POP __void
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif__16
+                        JEQ __endif__14
                      // Body
                         // Return
                            RETURN 0
-                     JUMP __endif__16
+                     JUMP __endif__14
                      // End of if
-                     __endif__16:
+                     __endif__14:
                   //------------------------------------------------------
                   // Pre-Decrement
                      // RHS
@@ -1115,7 +1053,7 @@ POP __void
 //========================================================================
 
 //========================================================================
-// Function Declaration - main() -> int
+// Function Declaration - main() -> void
 JUMP __end____main____main
 __main____main:
    // Parameters
@@ -1133,16 +1071,16 @@ __main____main:
                   PUSH __retval
             // LHS
                // Variable Declaration
-                  ASSIGN __main__main__block__17__nums 0
+                  ASSIGN __main__main__block__15__nums 0
             POP __rhs
-            ASSIGN __main__main__block__17__nums __rhs
+            ASSIGN __main__main__block__15__nums __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
          // Method Call - Vector<:int:>::push_back(int) -> void
             // LHS
                // Identifier - nums
-                  PUSH __main__main__block__17__nums
+                  PUSH __main__main__block__15__nums
             // RHS
             // Arguments
                // Int Literal
@@ -1163,7 +1101,7 @@ __main____main:
          // Method Call - Vector<:int:>::push_back(int) -> void
             // LHS
                // Identifier - nums
-                  PUSH __main__main__block__17__nums
+                  PUSH __main__main__block__15__nums
             // RHS
             // Arguments
                // Int Literal
@@ -1184,7 +1122,7 @@ __main____main:
          // Method Call - Vector<:int:>::push_back(int) -> void
             // LHS
                // Identifier - nums
-                  PUSH __main__main__block__17__nums
+                  PUSH __main__main__block__15__nums
             // RHS
             // Arguments
                // Int Literal
@@ -1205,7 +1143,7 @@ __main____main:
          // Method Call - Vector<:int:>::push_back(int) -> void
             // LHS
                // Identifier - nums
-                  PUSH __main__main__block__17__nums
+                  PUSH __main__main__block__15__nums
             // RHS
             // Arguments
                // Int Literal
@@ -1226,7 +1164,7 @@ __main____main:
          // Method Call - Vector<:int:>::push_back(int) -> void
             // LHS
                // Identifier - nums
-                  PUSH __main__main__block__17__nums
+                  PUSH __main__main__block__15__nums
             // RHS
             // Arguments
                // Int Literal
@@ -1244,75 +1182,6 @@ __main____main:
             PUSH __retval
          // Statement results can be ignored
          POP __void
-         // Function Call - print(char[]) -> void
-            // Arguments
-               // String Literal
-                  MALLOC __str 5
-                  ASSIGN __str[0] 'N'
-                  ASSIGN __str[1] ':'
-                  ASSIGN __str[2] ' '
-                  ASSIGN __str[3] ' '
-                  ASSIGN __str[4] ' '
-                  PUSH __str
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** print
-            CALL print__char__1
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
-         // Statement results can be ignored
-         POP __void
-         // Function Call - println(int) -> void
-            // Arguments
-               // Method Call - Vector<:int:>::size() -> int
-                  // LHS
-                     // Identifier - nums
-                        PUSH __main__main__block__17__nums
-                  // RHS
-                  // Arguments
-                  POP __obj
-                  // Pushing args in reverse order
-                  PUSH __obj
-                  CALL __method____main____Vector__int____size
-                  POP __void
-                  // Remove args
-                  RESPONSE __retval
-                  PUSH __retval
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** println
-            CALL println__int
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
-         // Statement results can be ignored
-         POP __void
-         // Function Call - print(char[]) -> void
-            // Arguments
-               // String Literal
-                  MALLOC __str 5
-                  ASSIGN __str[0] 's'
-                  ASSIGN __str[1] 'u'
-                  ASSIGN __str[2] 'm'
-                  ASSIGN __str[3] ':'
-                  ASSIGN __str[4] ' '
-                  PUSH __str
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** print
-            CALL print__char__1
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
-         // Statement results can be ignored
-         POP __void
          // Function Call - println(int) -> void
             // Arguments
                // Function Call - sum<:int:>(int[]) -> int
@@ -1320,7 +1189,7 @@ __main____main:
                      // Member Accessor
                         // LHS
                            // Identifier - nums
-                              PUSH __main__main__block__17__nums
+                              PUSH __main__main__block__15__nums
                         // RHS
                            PUSH __field____main____Vector__int____data
                         POP __child
@@ -1346,311 +1215,13 @@ __main____main:
             PUSH __retval
          // Statement results can be ignored
          POP __void
-         // Assignment
-            // RHS
-               // Int Literal
-                  PUSH 0
-            // LHS
-               // Variable Declaration
-                  ASSIGN __main__main__block__17__max 0
-            POP __rhs
-            ASSIGN __main__main__block__17__max __rhs
-            PUSH __rhs
-         // Statement results can be ignored
-         POP __void
-         //---------------------------------------------------------------
-         // For-Loop
-         // Init
-            // Assignment
-               // RHS
-                  // Int Literal
-                     PUSH 0
-               // LHS
-                  // Variable Declaration
-                     ASSIGN __main__main__block__17__for__18__i 0
-               POP __rhs
-               ASSIGN __main__main__block__17__for__18__i __rhs
-               PUSH __rhs
-         JUMP __forcond__18
-         __for__18:
-            // Update
-               // Pre-Increment
-                  // RHS
-                     // Identifier - i
-                        PUSH __main__main__block__17__for__18__i
-                  POP __rhs
-                  ADD __main__main__block__17__for__18__i __main__main__block__17__for__18__i 1
-                  ASSIGN __res __main__main__block__17__for__18__i
-                  PUSH __res
-            __forcond__18:
-            // Condition
-               // Less Than
-                  // LHS
-                     // Identifier - i
-                        PUSH __main__main__block__17__for__18__i
-                  // RHS
-                     // Method Call - Vector<:int:>::size() -> int
-                        // LHS
-                           // Identifier - nums
-                              PUSH __main__main__block__17__nums
-                        // RHS
-                        // Arguments
-                        POP __obj
-                        // Pushing args in reverse order
-                        PUSH __obj
-                        CALL __method____main____Vector__int____size
-                        POP __void
-                        // Remove args
-                        RESPONSE __retval
-                        PUSH __retval
-                  POP __rhs
-                  POP __lhs
-                  LT __res __lhs __rhs
-                  PUSH __res
-               POP __cond
-               CMP __cond 0
-               JEQ __endfor__18
-            // Body
-               //---------------------------------------------------------
-               // Code Block
-                  // Assignment
-                     // RHS
-                        // Function Call - max<:int:>(int, int) -> int
-                           // Arguments
-                              // Identifier - max
-                                 PUSH __main__main__block__17__max
-                              // Subscript
-                                 // LHS
-                                    // Member Accessor
-                                       // LHS
-                                          // Identifier - nums
-                                             PUSH __main__main__block__17__nums
-                                       // RHS
-                                          PUSH __field____main____Vector__int____data
-                                       POP __child
-                                       POP __parent
-                                       PUSH __parent[__child]
-                                 // OFFSET
-                                    // Identifier - i
-                                       PUSH __main__main__block__17__for__18__i
-                                 POP __offset
-                                 POP __pointer
-                                 PUSH __pointer[__offset]
-                              POP __arg1
-                              POP __arg0
-                           // Pushing args in reverse order
-                           PUSH __arg1
-                           PUSH __arg0
-                           // *** max
-                           CALL __main____max__int____int__int
-                           // Remove args
-                           POP __void
-                           POP __void
-                           RESPONSE __retval
-                           PUSH __retval
-                     POP __rhs
-                     ASSIGN __main__main__block__17__max __rhs
-                     PUSH __rhs
-                  // Statement results can be ignored
-                  POP __void
-               //---------------------------------------------------------
-            // Repeat
-            JUMP __for__18
-            // End of For
-            __endfor__18:
-         //---------------------------------------------------------------
-         // Assignment
-            // RHS
-               // Identifier - max
-                  PUSH __main__main__block__17__max
-            // LHS
-               // Variable Declaration
-                  ASSIGN __main__main__block__17__min 0
-            POP __rhs
-            ASSIGN __main__main__block__17__min __rhs
-            PUSH __rhs
-         // Statement results can be ignored
-         POP __void
-         //---------------------------------------------------------------
-         // For-Loop
-         // Init
-            // Assignment
-               // RHS
-                  // Int Literal
-                     PUSH 0
-               // LHS
-                  // Variable Declaration
-                     ASSIGN __main__main__block__17__for__20__i 0
-               POP __rhs
-               ASSIGN __main__main__block__17__for__20__i __rhs
-               PUSH __rhs
-         JUMP __forcond__20
-         __for__20:
-            // Update
-               // Pre-Increment
-                  // RHS
-                     // Identifier - i
-                        PUSH __main__main__block__17__for__20__i
-                  POP __rhs
-                  ADD __main__main__block__17__for__20__i __main__main__block__17__for__20__i 1
-                  ASSIGN __res __main__main__block__17__for__20__i
-                  PUSH __res
-            __forcond__20:
-            // Condition
-               // Less Than
-                  // LHS
-                     // Identifier - i
-                        PUSH __main__main__block__17__for__20__i
-                  // RHS
-                     // Method Call - Vector<:int:>::size() -> int
-                        // LHS
-                           // Identifier - nums
-                              PUSH __main__main__block__17__nums
-                        // RHS
-                        // Arguments
-                        POP __obj
-                        // Pushing args in reverse order
-                        PUSH __obj
-                        CALL __method____main____Vector__int____size
-                        POP __void
-                        // Remove args
-                        RESPONSE __retval
-                        PUSH __retval
-                  POP __rhs
-                  POP __lhs
-                  LT __res __lhs __rhs
-                  PUSH __res
-               POP __cond
-               CMP __cond 0
-               JEQ __endfor__20
-            // Body
-               //---------------------------------------------------------
-               // Code Block
-                  // Assignment
-                     // RHS
-                        // Function Call - min<:int:>(int, int) -> int
-                           // Arguments
-                              // Identifier - min
-                                 PUSH __main__main__block__17__min
-                              // Subscript
-                                 // LHS
-                                    // Member Accessor
-                                       // LHS
-                                          // Identifier - nums
-                                             PUSH __main__main__block__17__nums
-                                       // RHS
-                                          PUSH __field____main____Vector__int____data
-                                       POP __child
-                                       POP __parent
-                                       PUSH __parent[__child]
-                                 // OFFSET
-                                    // Identifier - i
-                                       PUSH __main__main__block__17__for__20__i
-                                 POP __offset
-                                 POP __pointer
-                                 PUSH __pointer[__offset]
-                              POP __arg1
-                              POP __arg0
-                           // Pushing args in reverse order
-                           PUSH __arg1
-                           PUSH __arg0
-                           // *** min
-                           CALL __main____min__int____int__int
-                           // Remove args
-                           POP __void
-                           POP __void
-                           RESPONSE __retval
-                           PUSH __retval
-                     POP __rhs
-                     ASSIGN __main__main__block__17__min __rhs
-                     PUSH __rhs
-                  // Statement results can be ignored
-                  POP __void
-               //---------------------------------------------------------
-            // Repeat
-            JUMP __for__20
-            // End of For
-            __endfor__20:
-         //---------------------------------------------------------------
-         // Function Call - print(char[]) -> void
-            // Arguments
-               // String Literal
-                  MALLOC __str 5
-                  ASSIGN __str[0] 'm'
-                  ASSIGN __str[1] 'a'
-                  ASSIGN __str[2] 'x'
-                  ASSIGN __str[3] ':'
-                  ASSIGN __str[4] ' '
-                  PUSH __str
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** print
-            CALL print__char__1
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
-         // Statement results can be ignored
-         POP __void
-         // Function Call - println(int) -> void
-            // Arguments
-               // Identifier - max
-                  PUSH __main__main__block__17__max
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** println
-            CALL println__int
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
-         // Statement results can be ignored
-         POP __void
-         // Function Call - print(char[]) -> void
-            // Arguments
-               // String Literal
-                  MALLOC __str 5
-                  ASSIGN __str[0] 'm'
-                  ASSIGN __str[1] 'i'
-                  ASSIGN __str[2] 'n'
-                  ASSIGN __str[3] ':'
-                  ASSIGN __str[4] ' '
-                  PUSH __str
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** print
-            CALL print__char__1
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
-         // Statement results can be ignored
-         POP __void
-         // Function Call - println(int) -> void
-            // Arguments
-               // Identifier - min
-                  PUSH __main__main__block__17__min
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** println
-            CALL println__int
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
-         // Statement results can be ignored
-         POP __void
       //------------------------------------------------------------------
    RETURN 0
 __end____main____main:
 // End Function Declaration - __main____main
 //========================================================================
 
-// Function Call - main() -> int
+// Function Call - main() -> void
    // Arguments
    // Pushing args in reverse order
    // *** main

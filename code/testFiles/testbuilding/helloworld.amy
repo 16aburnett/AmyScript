@@ -1,6 +1,47 @@
-function void main ()
+// Sample Multi-File AmyScript program 
+// By: Amy Burnett
+//========================================================================
+
+#include "utils/stdlib.amy"
+#include "utils/vector.amy"
+
+//========================================================================
+
+function int main ()
 {
-    println ("Hello, World!");
+    Vector<:int:> nums = new Vector<:int:>();
+    nums.push_back (5);
+    nums.push_back (7);
+    nums.push_back (21);
+    nums.push_back (42);
+    nums.push_back (3);
+
+    print ("N:   ");
+    println (nums.size());
+
+    print ("sum: ");
+    println (sum<:int:>(nums.data));
+
+    int max = 0;
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        max = max<:int:>(max, nums.data[i]);
+    }
+
+    int min = max;
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        min = min<:int:>(min, nums.data[i]);
+    }
+
+    print ("max: ");
+    println (max);
+
+    print ("min: ");
+    println (min);
+
 }
 
 main ();
+
+//========================================================================

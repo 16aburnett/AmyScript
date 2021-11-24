@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # AmyScript tools installer 
 # Author: Amy Burnett
@@ -14,9 +14,13 @@ cd ..
 
 # Add compiler to path
 # Currently this is temporary
-echo "Adding compiler to path"
-echo "NOTE: this only persists for the current shell"
-export PATH="$AMY_DIR/amyc/dist/amyc:$PATH"
+if [[ ":$PATH:" == *":$AMY_DIR/amyc/dist/amyc:"* ]]; then
+    echo "amyc is already in PATH"
+else
+    echo "Adding compiler to PATH"
+    echo "NOTE: this only persists for the current shell"
+    export PATH="$AMY_DIR/amyc/dist/amyc:$PATH"
+fi
 
 # Build interpreter
 echo "Building AmyAssembly Interpreter"
@@ -26,7 +30,10 @@ cd ..
 
 # Add interpreter to path
 # Currently this is temporary
-echo "Adding interpreter to path"
-echo "NOTE: this only persists for the current shell"
-export PATH="$AMY_DIR/amyasmi/dist/amyasmi:$PATH"
-
+if [[ ":$PATH:" == *":$AMY_DIR/amyasmi/dist/amyasmi:"* ]]; then 
+    echo "amyasmi is already in PATH"
+else 
+    echo "Adding interpreter to PATH"
+    echo "NOTE: this only persists for the current shell"
+    export PATH="$AMY_DIR/amyasmi/dist/amyasmi:$PATH"
+fi 

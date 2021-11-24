@@ -1,3 +1,5 @@
+#! /bin/bash
+
 # Build script for AmyAssembly Interpreter 
 # Author: Amy Burnett
 

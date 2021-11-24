@@ -1,0 +1,409 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+// Global Builtin Variables
+
+    assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+exit:
+    halt
+
+//========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//========================================================================
+// Function Template - 
+   // Instances:
+      //==================================================================
+      // Function Declaration - sum<:int:>(int[]) -> int
+      JUMP __end____main____sum__int____int__1
+      __main____sum__int____int__1:
+         // Parameters
+            // Param: vals
+            STACKGET __main__sum__vals 0
+         // Body
+            //------------------------------------------------------------
+            // Code Block
+               // Assignment
+                  // RHS
+                     // Function Call - int() -> int
+                        // Arguments
+                        // Pushing args in reverse order
+                        // *** int
+                        CALL int
+                        // Remove args
+                        RESPONSE __retval
+                        PUSH __retval
+                  // LHS
+                     // Variable Declaration
+                        ASSIGN __main__sum__block__0__sum 0
+                  POP __rhs
+                  ASSIGN __main__sum__block__0__sum __rhs
+                  PUSH __rhs
+               // Statement results can be ignored
+               POP __void
+               //---------------------------------------------------------
+               // For-Loop
+               // Init
+                  // Assignment
+                     // RHS
+                        // Int Literal
+                           PUSH 0
+                     // LHS
+                        // Variable Declaration
+                           ASSIGN __main__sum__block__0__for__1__i 0
+                     POP __rhs
+                     ASSIGN __main__sum__block__0__for__1__i __rhs
+                     PUSH __rhs
+               JUMP __forcond__1
+               __for__1:
+                  // Update
+                     // Pre-Increment
+                        // RHS
+                           // Identifier - i
+                              PUSH __main__sum__block__0__for__1__i
+                        POP __rhs
+                        ADD __main__sum__block__0__for__1__i __main__sum__block__0__for__1__i 1
+                        ASSIGN __res __main__sum__block__0__for__1__i
+                        PUSH __res
+                  __forcond__1:
+                  // Condition
+                     // Less Than
+                        // LHS
+                           // Identifier - i
+                              PUSH __main__sum__block__0__for__1__i
+                        // RHS
+                           // Sizeof Operator
+                              // RHS
+                                 // Identifier - vals
+                                    PUSH __main__sum__vals
+                              // Calculate array size
+                              POP __array
+                              SIZEOF __size __array
+                              PUSH __size
+                        POP __rhs
+                        POP __lhs
+                        LT __res __lhs __rhs
+                        PUSH __res
+                     POP __cond
+                     CMP __cond 0
+                     JEQ __endfor__1
+                  // Body
+                     // Assignment
+                        // RHS
+                           // Addition
+                              // LHS
+                                 // Identifier - sum
+                                    PUSH __main__sum__block__0__sum
+                              // RHS
+                                 // Subscript
+                                    // LHS
+                                       // Identifier - vals
+                                          PUSH __main__sum__vals
+                                    // OFFSET
+                                       // Identifier - i
+                                          PUSH __main__sum__block__0__for__1__i
+                                    POP __offset
+                                    POP __pointer
+                                    PUSH __pointer[__offset]
+                              POP __rhs
+                              POP __lhs
+                              ADD __res __lhs __rhs
+                              PUSH __res
+                        POP __rhs
+                        ASSIGN __main__sum__block__0__sum __rhs
+                        PUSH __rhs
+                     // Statement results can be ignored
+                     POP __void
+                  // Repeat
+                  JUMP __for__1
+                  // End of For
+                  __endfor__1:
+               //---------------------------------------------------------
+               // Return
+                  // Identifier - sum
+                     PUSH __main__sum__block__0__sum
+                  POP __rVal
+                  RETURN __rVal
+            //------------------------------------------------------------
+         RETURN 0
+      __end____main____sum__int____int__1:
+      // End Function Declaration - __main____sum__int____int__1
+      //==================================================================
+
+// End Function Template - 
+//========================================================================
+
+// Function Call - println(int) -> void
+   // Arguments
+      // Function Call - sum<:int:>(int[]) -> int
+         // Arguments
+            // Array Constructor
+               // Elements
+               // Int Literal
+                  PUSH 1
+               // Int Literal
+                  PUSH 2
+               // Int Literal
+                  PUSH 3
+               // Int Literal
+                  PUSH 4
+               // Int Literal
+                  PUSH 5
+               POP __elem4
+               POP __elem3
+               POP __elem2
+               POP __elem1
+               POP __elem0
+               MALLOC __list 5
+               ASSIGN __list[0] __elem0
+               ASSIGN __list[1] __elem1
+               ASSIGN __list[2] __elem2
+               ASSIGN __list[3] __elem3
+               ASSIGN __list[4] __elem4
+               PUSH __list
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         // *** sum
+         CALL __main____sum__int____int__1
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__int
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

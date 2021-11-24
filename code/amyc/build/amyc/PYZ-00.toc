@@ -323,4 +323,7 @@
   ('amyAST', '/home/amy/Desktop/AmyScript/code/amyc/amyAST.py', 'PYMODULE'),
   ('tokenizer',
    '/home/amy/Desktop/AmyScript/code/amyc/tokenizer.py',
+   'PYMODULE'),
+  ('preprocessor',
+   '/home/amy/Desktop/AmyScript/code/amyc/preprocessor.py',
    'PYMODULE')])

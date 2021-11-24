@@ -1,3 +1,5 @@
+#! /bin/bash
+
 # Build script for AmyScript Compiler 
 # Author: Amy Burnett
 

@@ -36,6 +36,7 @@ class SymbolTable:
         self.nestLevel = 0
         # list of dictionaries
         self.table = [{}]
+        self.lines = []
 
     def enterScope (self):
         self.table.append ({})
@@ -90,19 +91,51 @@ class SymbolTable:
 
                 # CLASS TEMPLATES
                 if isinstance (decl, ClassTemplateDeclarationNode):
-                    # print (f"  {decl.types}")
+                    # print (f"  {decl.templateParams}")
                     # ensure there isnt already a template with the same amount of template params 
                     if len(decl.templateParams) in self.table[-1][name].typeDec:
-                        print (f"Semantic Error: Redeclaration of class template '{decl.id}' with {len(decl.types)} num template parameters")
-                        print (f"   Original on line {self.table[-1][name].typeDec[len(decl.types)].type.token.line} and column {self.table[-1][name].typeDec[len(decl.types)].type.token.column}")
-                        print (f"   Redeclaration on line {decl.type.token.line} and column {decl.type.token.column}")
+                        originalDec = self.table[-1][name].typeDec[len(decl.templateParams)].type
+                        print (f"Semantic Error: Redeclaration of class template '{decl.id}' with {len(decl.templateParams)} template parameters")
+                        print (f"   Original:")
+                        print (f"      in file {originalDec.token.originalFilename}")
+                        print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+                        print (f"      {self.lines[originalDec.token.line-1]}")
+                        print (f"      ",end="")
+                        for i in range(originalDec.token.column-1):
+                            print (" ", end="")
+                        print ("^")
+                        print (f"   Redeclaration:")
+                        print (f"      in file {decl._class.token.originalFilename}")
+                        print (f"      on line {decl._class.token.originalLine}:{decl._class.token.column}")
+                        print (f"      {self.lines[decl._class.token.line-1]}")
+                        print (f"      ",end="")
+                        for i in range(decl._class.token.column-1):
+                            print (" ", end="")
+                        print ("^")
+                        print ()
                         return False
                 # CLASS & ENUM
                 else:
                     if 0 in self.table[-1][name].typeDec:
+                        originalDec = self.table[-1][name].typeDec[0].type
                         print (f"Semantic Error: Redeclaration of class/enum '{decl.id}'")
-                        print (f"   Original on line {self.table[-1][name].typeDec[0].type.token.line} and column {self.table[-1][name].typeDec[0].type.token.column}")
-                        print (f"   Redeclaration on line {decl.type.token.line} and column {decl.type.token.column}")
+                        print (f"   Original:")
+                        print (f"      in file {originalDec.token.originalFilename}")
+                        print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+                        print (f"      {self.lines[originalDec.token.line-1]}")
+                        print (f"      ",end="")
+                        for i in range(originalDec.token.column-1):
+                            print (" ", end="")
+                        print ("^")
+                        print (f"   Redeclaration:")
+                        print (f"      in file {decl.type.token.originalFilename}")
+                        print (f"      on line {decl.type.token.originalLine}:{decl.type.token.column}")
+                        print (f"      {self.lines[decl.type.token.line-1]}")
+                        print (f"      ",end="")
+                        for i in range(decl.type.token.column-1):
+                            print (" ", end="")
+                        print ("^")
+                        print ()
                         return False
 
             # ensure symbol is in table 
@@ -169,9 +202,25 @@ class SymbolTable:
                     # print (f"  {decl.types}")
                     # ensure there isnt already a template with the same amount of template params 
                     if len(decl.types) in self.table[-1][name].funDec:
-                        print (f"Semantic Error: Redeclaration of template function '{decl.id}' with {len(decl.types)} num template parameters")
-                        print (f"   Original on line {self.table[-1][name].funDec[len(decl.types)].type.token.line} and column {self.table[-1][name].funDec[len(decl.types)].type.token.column}")
-                        print (f"   Redeclaration on line {decl.type.token.line} and column {decl.type.token.column}")
+                        originalDec = self.table[-1][name].funDec[len(decl.types)].type
+                        print (f"Semantic Error: Redeclaration of template function '{decl.id}' with {len(decl.types)} template parameters")
+                        print (f"   Original:")
+                        print (f"      in file {originalDec.token.originalFilename}")
+                        print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+                        print (f"      {self.lines[originalDec.token.line-1]}")
+                        print (f"      ",end="")
+                        for i in range(originalDec.token.column-1):
+                            print (" ", end="")
+                        print ("^")
+                        print (f"   Redeclaration:")
+                        print (f"      in file {decl.type.token.originalFilename}")
+                        print (f"      on line {decl.type.token.originalLine}:{decl.type.token.column}")
+                        print (f"      {self.lines[decl.type.token.line-1]}")
+                        print (f"      ",end="")
+                        for i in range(decl.type.token.column-1):
+                            print (" ", end="")
+                        print ("^")
+                        print ()
                         return False
             # reaches here if not a redeclaration 
 
@@ -311,6 +360,7 @@ class SymbolTable:
                             for j in range(1, len(params)):
                                 print (f", {params[j].type}", end="")
                         print (f")")
+                        print ()
                         return None
                     # ensure type of params match 
                     for j in range(len(params)):

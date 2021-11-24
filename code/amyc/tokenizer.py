@@ -17,6 +17,8 @@ class Token(NamedTuple):
     value: str
     line: int
     column: int
+    originalFilename: str
+    originalLine: str
 
 # ========================================================================
 
@@ -104,7 +106,7 @@ token_specification = [
 
 # ========================================================================
 
-def tokenize(code):
+def tokenize(code, mainFilename, debugLines=[]):
     tokens = [] 
     tok_regex = '|'.join('(?P<%s>%s)' % pair for pair in token_specification)
     line_num = 1
@@ -193,10 +195,15 @@ def tokenize(code):
                 kind = "CHARTYPE"
             elif (lexeme == "void"):
                 kind = "VOIDTYPE"
-
-        tokens +=  [Token(kind, lexeme, value, line_num, column)]
+        # get original line numbers and filename
+        originalFile = mainFilename
+        originalLine = line_num
+        if len(debugLines) != 0:
+            originalFile = debugLines[line_num-1][0]
+            originalLine = debugLines[line_num-1][1]
+        tokens +=  [Token(kind, lexeme, value, line_num, column, originalFile, originalLine)]
     # add end of file token
-    tokens += [Token("END_OF_FILE", "EOF", 0, line_num, len(code) - line_start + 1)]
+    tokens += [Token("END_OF_FILE", "EOF", 0, line_num, len(code) - line_start + 1, mainFilename, line_num)]
     return tokens 
 
 # ========================================================================

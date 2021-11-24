@@ -1,0 +1,17 @@
+// Max function 
+// Author: Amy Burnett
+//========================================================================
+
+#ifndef MAX_H
+#define MAX_H
+
+template <:T:>
+function T max (T a, T b)
+{
+    if (a >= b) return a;
+    return b;
+}
+
+#endif 
+
+//========================================================================

@@ -1,0 +1,109 @@
+// AmyScript Vector implementation + testing 
+// Author: Amy Burnett
+//========================================================================
+
+// includes are relative paths to the file that they are in
+#include "stdlib.amy"
+
+//========================================================================
+
+int INITIAL_CAPACITY = 10; 
+
+//========================================================================
+
+template <:data_type:>
+class Vector
+{
+
+    public field data_type[] data; 
+    public field int size; 
+    public field int capacity; 
+
+    //--------------------------------------------------------------------
+
+    constructor ()
+    {
+        this.capacity = INITIAL_CAPACITY;
+        this.size = 0; 
+        this.data = new data_type[this.capacity];
+    }
+
+    //--------------------------------------------------------------------
+
+    // gets the value at a given index 
+    public method data_type get (int index)
+    {
+        return this.data[index]; 
+    }
+
+    //--------------------------------------------------------------------
+
+    // sets the value at a given index
+    public method void set (int index, data_type value)
+    {
+        this.data[index] = value; 
+    }
+
+    //--------------------------------------------------------------------
+
+    // gets the size of the Vector
+    public method int size ()
+    {
+        return this.size; 
+    }
+
+    //--------------------------------------------------------------------
+
+    // returns true if this Vector is empty, false otherwise 
+    public method int is_empty ()
+    {
+        return this.size == 0; 
+    }
+
+    //--------------------------------------------------------------------
+
+    // pushes a given value to the end of the Vector
+    // this is a constant operation if an increase in capacity is unneeded
+    public method void push_back (data_type value)
+    {
+        // ensure capacity
+        if (this.size == this.capacity)
+        {
+            // increase capacity
+            this.capacity = this.capacity * 2; 
+            // reallocate data with the larger capacity
+            data_type[] new_data = new data_type[this.capacity];
+            // copy values over
+            for (int i = 0; i < this.size; ++i)
+                new_data[i] = this.data[i];
+            // free original array
+            free (this.data);
+            // save new array
+            this.data = new_data; 
+        }
+        // insert new value
+        this.data[this.size] = value;
+        // increase size
+        ++this.size; 
+    }
+
+    //--------------------------------------------------------------------
+
+    // removes the last value in the Vector
+    // this is always constant time 
+    public method void pop_back ()
+    {
+        // ensure there are values to pop 
+        if (this.size == 0)
+            return; 
+        // decrease size
+        --this.size; 
+    }
+
+    //--------------------------------------------------------------------
+
+
+}
+
+
+//========================================================================

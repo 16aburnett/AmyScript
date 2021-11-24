@@ -3,8 +3,12 @@
 
 COMPILER=amyc
 
-helloworld.amy.assembly: 
-	$(COMPILER) helloworld.amy 
+SRC=helloworld.amy
+
+DEPENDENCIES=utils/stdlib.amy utils/vector.amy utils/max.amy
+
+$(SRC).assembly: $(SRC)
+	$(COMPILER) $(SRC) $(DEPENDENCIES)
 
 clean:
-	rm helloworld.amy.assembly
+	rm $(SRC).assembly

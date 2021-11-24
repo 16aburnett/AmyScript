@@ -22,6 +22,8 @@ class SymbolTableVisitor (ASTVisitor):
 
         self.parameters = []
         self.lines = lines 
+        self.table.lines = self.lines
+
         self.wasSuccessful = True
         self.checkDeclaration = True
         # works as a stack for nested class declarations
@@ -47,8 +49,8 @@ class SymbolTableVisitor (ASTVisitor):
             if (node.decl == None):
                 print (f"Semantic Error: '{node}' does not name a type")
                 if node.token != None:
-                    print (f"   Located on line {node.token.line}: column {node.token.column}")
-                    print (f"   line:")
+                    print (f"   in file {node.token.originalFilename}")
+                    print (f"   on line {node.token.originalLine}:{node.token.column}")
                     print (f"      {self.lines[node.token.line-1]}")
                     print (f"      ",end="")
                     for i in range(node.token.column-1):
@@ -69,8 +71,21 @@ class SymbolTableVisitor (ASTVisitor):
             varname = node.id 
             originalDec = self.table.lookup (varname, Kind.VAR)
             print (f"Semantic Error: Redeclaration of Param '{varname}'")
-            print (f"   Originally on line {node.token.line}: column {node.token.column}")
-            print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+            print (f"   in file {node.token.originalFilename}")
+            print (f"   Original:")
+            print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+            print (f"      {self.lines[originalDec.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(originalDec.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print (f"   Redeclaration:")
+            print (f"      on line {node.token.originalLine}:{node.token.column}")
+            print (f"      {self.lines[node.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
             print ()
             self.wasSuccessful = False
 
@@ -87,9 +102,23 @@ class SymbolTableVisitor (ASTVisitor):
         if (not wasSuccessful):
             varname = node.id 
             originalDec = self.table.lookup (varname, Kind.VAR)
-            print (f"Semantic Error: Redeclaration of '{varname}'")
-            print (f"   Originally on line {node.token.line}: column {node.token.column}")
-            print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+            print (f"Semantic Error: Redeclaration of variable '{varname}'")
+            print (f"   Original:")
+            print (f"      in file {originalDec.token.originalFilename}")
+            print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+            print (f"      {self.lines[originalDec.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(originalDec.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print (f"   Redeclaration:")
+            print (f"      in file {node.token.originalFilename}")
+            print (f"      on line {node.token.originalLine}:{node.token.column}")
+            print (f"      {self.lines[node.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
             print ()
             self.wasSuccessful = False
 
@@ -127,8 +156,22 @@ class SymbolTableVisitor (ASTVisitor):
             if (not wasSuccessful):
                 originalDec = self.table.lookup (node.id, Kind.FUNC, node.params)
                 print (f"Semantic Error: Redeclaration of function '{node.signature}'")
-                print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
-                print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+                print (f"   Original:")
+                print (f"      in file {originalDec.token.originalFilename}")
+                print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+                print (f"      {self.lines[originalDec.token.line-1]}")
+                print (f"      ",end="")
+                for i in range(originalDec.token.column-1):
+                    print (" ", end="")
+                print ("^")
+                print (f"   Redeclaration:")
+                print (f"      in file {node.token.originalFilename}")
+                print (f"      on line {node.token.originalLine}:{node.token.column}")
+                print (f"      {self.lines[node.token.line-1]}")
+                print (f"      ",end="")
+                for i in range(node.token.column-1):
+                    print (" ", end="")
+                print ("^")
                 print ()
                 self.wasSuccessful = False
         else:
@@ -168,8 +211,22 @@ class SymbolTableVisitor (ASTVisitor):
                 varname = node.id 
                 originalDec = self.table.lookup (varname, Kind.TYPE)
                 print (f"Semantic Error: Redeclaration of class '{varname}'")
-                print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
-                print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+                print (f"   Original:")
+                print (f"      in file {originalDec.token.originalFilename}")
+                print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+                print (f"      {self.lines[originalDec.token.line-1]}")
+                print (f"      ",end="")
+                for i in range(originalDec.token.column-1):
+                    print (" ", end="")
+                print ("^")
+                print (f"   Redeclaration:")
+                print (f"      in file {node.token.originalFilename}")
+                print (f"      on line {node.token.originalLine}:{node.token.column}")
+                print (f"      {self.lines[node.token.line-1]}")
+                print (f"      ",end="")
+                for i in range(node.token.column-1):
+                    print (" ", end="")
+                print ("^")
                 print ()
                 self.wasSuccessful = False
         else:
@@ -181,9 +238,16 @@ class SymbolTableVisitor (ASTVisitor):
             pDecl = self.table.lookup (node.parent, Kind.TYPE)
             if pDecl == None:
                 print (f"Semantic Error: '{node.parent}' does not name a type")
-                print (f"   On line {node.token.line}: column {node.token.column}")
+                print (f"   in file {node.pToken.originalFilename}")
+                print (f"   on line {node.pToken.originalLine}:{node.pToken.column}")
+                print (f"   {self.lines[node.pToken.line-1]}")
+                print (f"   ",end="")
+                for i in range(node.pToken.column-1):
+                    print (" ", end="")
+                print ("^")
                 print ()
                 self.wasSuccessful = False
+                return
             # save parent decl 
             node.pDecl = pDecl 
             # save self as a child to parent 
@@ -345,9 +409,23 @@ class SymbolTableVisitor (ASTVisitor):
         if (not wasSuccessful):
             varname = node.id 
             originalDec = self.table.lookup (node.signature, Kind.VAR)
-            print (f"Semantic Error: Redeclaration of Field '{varname}'")
-            print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
-            print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+            print (f"Semantic Error: Redeclaration of Field, '{varname}'")
+            print (f"   Original:")
+            print (f"      in file {originalDec.token.originalFilename}")
+            print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+            print (f"      {self.lines[originalDec.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(originalDec.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print (f"   Redeclaration:")
+            print (f"      in file {node.token.originalFilename}")
+            print (f"      on line {node.token.originalLine}:{node.token.column}")
+            print (f"      {self.lines[node.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
             print ()
             self.wasSuccessful = False
 
@@ -382,9 +460,23 @@ class SymbolTableVisitor (ASTVisitor):
 
         if (not wasSuccessful):
             originalDec = self.table.lookup (f"{node.parentClass.type}::{node.id}", Kind.FUNC, node.params)
-            print (f"Semantic Error: Redeclaration of Method '{node.signature}'")
-            print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
-            print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+            print (f"Semantic Error: Redeclaration of Method, '{node.signature}'")
+            print (f"   Original:")
+            print (f"      in file {originalDec.token.originalFilename}")
+            print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+            print (f"      {self.lines[originalDec.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(originalDec.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print (f"   Redeclaration:")
+            print (f"      in file {node.token.originalFilename}")
+            print (f"      on line {node.token.originalLine}:{node.token.column}")
+            print (f"      {self.lines[node.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
             print ()
             self.wasSuccessful = False
 
@@ -413,9 +505,23 @@ class SymbolTableVisitor (ASTVisitor):
 
         if (not wasSuccessful):
             originalDec = self.table.lookup (f"{node.parentClass.type}::{node.parentClass.id}", Kind.FUNC, node.params)
-            print (f"Semantic Error: Redeclaration of ctor, '{node.signature}'")
-            print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
-            print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+            print (f"Semantic Error: Redeclaration of Constructor, '{node.signature}'")
+            print (f"   Original:")
+            print (f"      in file {originalDec.token.originalFilename}")
+            print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+            print (f"      {self.lines[originalDec.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(originalDec.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print (f"   Redeclaration:")
+            print (f"      in file {node.token.originalFilename}")
+            print (f"      on line {node.token.originalLine}:{node.token.column}")
+            print (f"      {self.lines[node.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
             print ()
             self.wasSuccessful = False
 
@@ -428,16 +534,37 @@ class SymbolTableVisitor (ASTVisitor):
         if (not wasSuccessful):
             varname = node.id 
             originalDec = self.table.lookup (varname, Kind.TYPE)
-            print (f"Semantic Error: Redeclaration of enum '{varname}'")
-            print (f"   Originally on line {originalDec.token.line}: column {originalDec.token.column}")
-            print (f"   Redeclaration on line {node.token.line}: column {node.token.column}")
+            print (f"Semantic Error: Redeclaration of Enum, '{varname}'")
+            print (f"   Original:")
+            print (f"      in file {originalDec.token.originalFilename}")
+            print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
+            print (f"      {self.lines[originalDec.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(originalDec.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print (f"   Redeclaration:")
+            print (f"      in file {node.token.originalFilename}")
+            print (f"      on line {node.token.originalLine}:{node.token.column}")
+            print (f"      {self.lines[node.token.line-1]}")
+            print (f"      ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
             print ()
             self.wasSuccessful = False
 
+        # *** enums currently cannot inherit from other enums/classes
         pDecl = self.table.lookup (node.parent, Kind.TYPE)
         if pDecl == None:
             print (f"Semantic Error: '{node.parent}' does not name a type")
-            print (f"   On line {node.token.line}: column {node.token.column}")
+            print (f"   in file {node.token.originalFilename}")
+            print (f"   on line {node.token.originalLine}:{node.token.column}")
+            print (f"   {self.lines[node.token.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
             print ()
             self.wasSuccessful = False
         # save parent decl 
@@ -448,7 +575,9 @@ class SymbolTableVisitor (ASTVisitor):
     def visitFunctionTemplateNode (self, node):
 
         # add template function to scope 
-        self.table.insert (node, node.id, Kind.FUNC)
+        wasSuccessful = self.table.insert (node, node.id, Kind.FUNC)
+        if not wasSuccessful:
+            self.wasSuccessful = False 
 
         # **ensure template types are unique 
 
@@ -467,7 +596,9 @@ class SymbolTableVisitor (ASTVisitor):
     def visitClassTemplateDeclarationNode (self, node):
 
         # add template class to scope 
-        self.table.insert (node, node.id, Kind.TYPE)
+        wasSuccessful = self.table.insert (node, node.id, Kind.TYPE)
+        if not wasSuccessful:
+            self.wasSuccessful = False
 
         # **ensure template types are unique 
 
@@ -559,10 +690,10 @@ class SymbolTableVisitor (ASTVisitor):
         # ensure return statement is in a function
         if len(self.containingFunction) == 0:
             print (f"Semantic Error: Return statement must be in a function or method")
-            print (f"   Located on line {node.token.line}: column {node.token.column}")
-            print (f"   line:")
-            print (f"      {self.lines[node.token.line-1][:]}")
-            print (f"      ",end="")
+            print (f"   in file {node.token.originalFilename}")
+            print (f"   on line {node.token.originalLine}:{node.token.column}")
+            print (f"   {self.lines[node.token.line-1]}")
+            print (f"   ",end="")
             for i in range(node.token.column-1):
                 print (" ", end="")
             print ("^")
@@ -572,10 +703,10 @@ class SymbolTableVisitor (ASTVisitor):
         # ensure there is no return value if in a constructor 
         if isinstance (self.containingFunction[-1], ConstructorDeclarationNode) and node.expr != None:
             print (f"Semantic Error: Cannot return a value in a constructor")
-            print (f"   Located on line {node.token.line}: column {node.token.column}")
-            print (f"   line:")
-            print (f"      {self.lines[node.token.line-1][:]}")
-            print (f"      ",end="")
+            print (f"   in file {node.token.originalFilename}")
+            print (f"   on line {node.token.originalLine}:{node.token.column}")
+            print (f"   {self.lines[node.token.line-1]}")
+            print (f"   ",end="")
             for i in range(node.token.column-1):
                 print (" ", end="")
             print ("^")
@@ -612,15 +743,15 @@ class SymbolTableVisitor (ASTVisitor):
                 isDiffType = not isSubtype
             if (not isArrayNullOp and not isObjectNullOp and (isDiffType or isDiffDimensions)):
                 print (f"Semantic Error: Return value does not match function's return type")
-                print (f"   Located on line {node.token.line}: column {node.token.column}")
-                print (f"   line:")
-                print (f"      {self.lines[node.token.line-1][:]}")
-                print (f"      ",end="")
+                print (f"   in file {node.token.originalFilename}")
+                print (f"   on line {node.token.originalLine}:{node.token.column}")
+                print (f"   {self.lines[node.token.line-1]}")
+                print (f"   ",end="")
                 for i in range(node.token.column-1):
                     print (" ", end="")
                 print ("^")
                 print (f"   Expected: {self.containingFunction[-1].type}")
-                print (f"   Actual:   {node.expr.type}")
+                print (f"   Got:      {node.expr.type}")
                 print ()
                 self.wasSuccessful = False 
                 return 
@@ -629,10 +760,10 @@ class SymbolTableVisitor (ASTVisitor):
         # ensure continue is in a loop
         if len(self.containingLoop) == 0:
             print (f"Semantic Error: Continue statement must be in a loop body")
-            print (f"   Located on line {node.token.line}: column {node.token.column}")
-            print (f"   line:")
-            print (f"      {self.lines[node.token.line-1][:]}")
-            print (f"      ",end="")
+            print (f"   in file {node.token.originalFilename}")
+            print (f"   on line {node.token.originalLine}:{node.token.column}")
+            print (f"   {self.lines[node.token.line-1]}")
+            print (f"   ",end="")
             for i in range(node.token.column-1):
                 print (" ", end="")
             print ("^")
@@ -644,10 +775,10 @@ class SymbolTableVisitor (ASTVisitor):
         # ensure break is in a loop
         if len(self.containingLoop) == 0:
             print (f"Semantic Error: Break statement must be in a loop body")
-            print (f"   Located on line {node.token.line}: column {node.token.column}")
-            print (f"   line:")
-            print (f"      {self.lines[node.token.line-1][:]}")
-            print (f"      ",end="")
+            print (f"   in file {node.token.originalFilename}")
+            print (f"   on line {node.token.originalLine}:{node.token.column}")
+            print (f"   {self.lines[node.token.line-1]}")
+            print (f"   ",end="")
             for i in range(node.token.column-1):
                 print (" ", end="")
             print ("^")
@@ -709,15 +840,15 @@ class SymbolTableVisitor (ASTVisitor):
                 parent = parent.pDecl
             isDiffType = not isSubtype
         if (not isArrayNullOp and not isObjectNullOp and (isDiffType or isDiffDimensions)):
-            print (f"Semantic Error: mismatching types in assign")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   {node.lhs.type} != {node.rhs.type}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"Semantic Error: mismatching types in assign, \"{node.op.lexeme}\"")
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   {node.lhs.type} != {node.rhs.type}")
             print ()
             self.wasSuccessful = False
 
@@ -738,14 +869,14 @@ class SymbolTableVisitor (ASTVisitor):
                 or node.lhs.type.arrayDimensions > 0
                 or node.rhs.type.arrayDimensions > 0)):
             print (f"Semantic Error: mismatching types in ||")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   {node.lhs.type} != {node.rhs.type}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   {node.lhs.type} != {node.rhs.type}")
             print ()
             self.wasSuccessful = False
 
@@ -766,14 +897,14 @@ class SymbolTableVisitor (ASTVisitor):
                 or node.lhs.type.arrayDimensions > 0
                 or node.rhs.type.arrayDimensions > 0)):
             print (f"Semantic Error: mismatching types in &&")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   {node.lhs.type} != {node.rhs.type}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   {node.lhs.type} != {node.rhs.type}")
             print ()
             self.wasSuccessful = False
 
@@ -791,14 +922,14 @@ class SymbolTableVisitor (ASTVisitor):
                 or node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions
                 or node.lhs.type.id != node.rhs.type.id)):
             print (f"Semantic Error: mismatching types in equality")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   {node.lhs.type} != {node.rhs.type}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   {node.lhs.type} != {node.rhs.type}")
             print ()
             self.wasSuccessful = False
 
@@ -816,14 +947,14 @@ class SymbolTableVisitor (ASTVisitor):
                 or node.lhs.type.arrayDimensions > 0
                 or node.rhs.type.arrayDimensions > 0):
             print (f"Semantic Error: mismatching types in inequality")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   {node.lhs.type} != {node.rhs.type}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   {node.lhs.type} != {node.rhs.type}")
             print ()
             self.wasSuccessful = False
 
@@ -840,17 +971,15 @@ class SymbolTableVisitor (ASTVisitor):
                 and node.lhs.type.type != Type.FLOAT)
                 or node.lhs.type.arrayDimensions > 0
                 or node.rhs.type.arrayDimensions > 0):
-            print (f"Semantic Error: invalid/mismatching types for addition/subtraction")
-            print (f"   LHS: {node.lhs.type}")
-            print (f"   RHS: {node.rhs.type}")
-            print (f"   Valid types include int and float")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"Semantic Error: invalid/mismatching types for \"{node.op.lexeme}\"")
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   {node.lhs.type} != {node.rhs.type}")
             print ()
             self.wasSuccessful = False
 
@@ -866,17 +995,15 @@ class SymbolTableVisitor (ASTVisitor):
                 and node.lhs.type.type != Type.FLOAT)
                 or node.lhs.type.arrayDimensions > 0
                 or node.rhs.type.arrayDimensions > 0):
-            print (f"Semantic Error: invalid/mismatching types for mult/div/mod")
-            print (f"   LHS: {node.lhs.type}")
-            print (f"   RHS: {node.rhs.type}")
-            print (f"   Valid types include int and float")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"Semantic Error: invalid/mismatching types for \"{node.op.lexeme}\"")
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   {node.lhs.type} != {node.rhs.type}")
             print ()
             self.wasSuccessful = False
             
@@ -890,13 +1017,14 @@ class SymbolTableVisitor (ASTVisitor):
                 and node.rhs.type.type != Type.FLOAT)
                 or node.rhs.type.arrayDimensions > 0):
             print (f"Semantic Error: invalid type for unary left operator")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   RHS type: {node.rhs.type}")
             print ()
             self.wasSuccessful = False
 
@@ -909,14 +1037,14 @@ class SymbolTableVisitor (ASTVisitor):
                 and node.lhs.type.type != Type.FLOAT)
                 or node.lhs.type.arrayDimensions > 0):
             print (f"Semantic Error: invalid type for increment operator")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   type: {node.lhs.type}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   LHS type: {node.lhs.type}")
             print ()
             self.wasSuccessful = False
 
@@ -929,14 +1057,14 @@ class SymbolTableVisitor (ASTVisitor):
                 and node.lhs.type.type != Type.FLOAT)
                 or node.lhs.type.arrayDimensions > 0):
             print (f"Semantic Error: invalid type for decrement operator")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   type: {node.lhs.type}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   LHS type: {node.lhs.type}")
             print ()
             self.wasSuccessful = False
 
@@ -948,14 +1076,14 @@ class SymbolTableVisitor (ASTVisitor):
             # ensure lhs is an array 
             if (node.lhs.type.arrayDimensions == 0):
                 print (f"Semantic Error: lhs must be an array")
-                print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-                print (f"   type: {node.lhs.type}")
-                print (f"   line:")
-                print (f"      {self.lines[node.lineNumber-1][:]}")
-                print (f"      ",end="")
-                for i in range(node.columnNumber-1):
+                print (f"   in file {node.op.originalFilename}")
+                print (f"   on line {node.op.originalLine}:{node.op.column}")
+                print (f"   {self.lines[node.op.line-1]}")
+                print (f"   ",end="")
+                for i in range(node.op.column-1):
                     print (" ", end="")
                 print ("^")
+                print (f"   LHS type: {node.lhs.type}")
                 print ()
                 self.wasSuccessful = False
 
@@ -975,14 +1103,14 @@ class SymbolTableVisitor (ASTVisitor):
         isEnum = typedecl and isinstance (typedecl, EnumDeclarationNode)
         if not (isInt or isEnum):
             print (f"Semantic Error: Offset of subscript operator must be an integer or enum")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   type: {node.offset.type}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
+            print (f"   Offset type: {node.offset.type}")
             print ()
             self.wasSuccessful = False
 
@@ -1020,11 +1148,11 @@ class SymbolTableVisitor (ASTVisitor):
         # make sure the function declaration exists and its a function or constructor 
         if (decl == None or not isinstance (decl,(FunctionNode, ConstructorDeclarationNode))):
             print (f"Semantic Error: No function matching signature {signature}")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1052,11 +1180,11 @@ class SymbolTableVisitor (ASTVisitor):
                     # ensure rhs is an identifier
                     if not isinstance (node.rhs, IdentifierExpressionNode):
                         print (f"Semantic Error: RHS of dot operator must be an indentifier")
-                        print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-                        print (f"   line:")
-                        print (f"      {self.lines[node.lineNumber-1][:]}")
-                        print (f"      ",end="")
-                        for i in range(node.columnNumber-1):
+                        print (f"   in file {node.op.originalFilename}")
+                        print (f"   on line {node.op.originalLine}:{node.op.column}")
+                        print (f"   {self.lines[node.op.line-1]}")
+                        print (f"   ",end="")
+                        for i in range(node.op.column-1):
                             print (" ", end="")
                         print ("^")
                         print ()
@@ -1073,11 +1201,11 @@ class SymbolTableVisitor (ASTVisitor):
                     # did not find member
                     else:
                         print (f"Semantic Error: '{node.rhs.id}' is not a member of '{node.lhs.id}'")
-                        print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-                        print (f"   line:")
-                        print (f"      {self.lines[node.lineNumber-1][:]}")
-                        print (f"      ",end="")
-                        for i in range(node.columnNumber-1):
+                        print (f"   in file {node.op.originalFilename}")
+                        print (f"   on line {node.op.originalLine}:{node.op.column}")
+                        print (f"   {self.lines[node.op.line-1]}")
+                        print (f"   ",end="")
+                        for i in range(node.op.column-1):
                             print (" ", end="")
                         print ("^")
                         print ()
@@ -1098,11 +1226,11 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"Semantic Error: LHS of dot operator must be of class type")
             print (f"   LHS Type: {node.lhs.type}")
             print (f"   LHS Decl: {lhsdecl}")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1137,11 +1265,11 @@ class SymbolTableVisitor (ASTVisitor):
                     break
         if not isMember:
             print (f"Semantic Error: '{rhsid}' is not a member of '{lhsdecl.id}'")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1159,12 +1287,11 @@ class SymbolTableVisitor (ASTVisitor):
         if not isinstance (lhsdecl, ClassDeclarationNode):
             print (f"Semantic Error: LHS of dot operator must be of class type")
             print (f"   LHS Type: {node.lhs.type}")
-            print (f"   LHS Decl: {lhsdecl}")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1196,11 +1323,11 @@ class SymbolTableVisitor (ASTVisitor):
                     break
         if not isMember:
             print (f"Semantic Error: '{rhsid}' is not a member of '{lhsdecl.id}'")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1218,12 +1345,11 @@ class SymbolTableVisitor (ASTVisitor):
         if not isinstance (lhsdecl, ClassDeclarationNode):
             print (f"Semantic Error: LHS of dot operator must be of class type")
             print (f"   LHS Type: {node.lhs.type}")
-            print (f"   LHS Decl: {lhsdecl}")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1252,11 +1378,11 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"'{lhsdecl.id}' is incomplete")
         if not isMember:
             print (f"Semantic Error: '{rhsid}' is not a member of '{lhsdecl.id}'")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1290,11 +1416,11 @@ class SymbolTableVisitor (ASTVisitor):
         # make sure the function declaration exists and its a function
         if (decl == None or not isinstance (decl, MethodDeclarationNode)):
             print (f"Semantic Error: No method matching signature {signature}")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1306,17 +1432,17 @@ class SymbolTableVisitor (ASTVisitor):
     def visitThisExpressionNode (self, node):
         # ensure there is a containing class
         if (len(self.containingClass) == 0):
-                print (f"Semantic Error: 'this' keyword used outside of class")
-                print (f"   Located on line {node.token.line}: column {node.token.column}")
-                print (f"   line:")
-                print (f"      {self.lines[node.lineNumber-1][:-1]}")
-                print (f"      ",end="")
-                for i in range(node.columnNumber-1):
-                    print (" ", end="")
-                print ("^")
-                print ()
-                self.wasSuccessful = False
-                return
+            print (f"Semantic Error: 'this' keyword used outside of class")
+            print (f"   in file {node.token.originalFilename}")
+            print (f"   on line {node.token.originalLine}:{node.token.column}")
+            print (f"   {self.lines[node.token.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.token.column-1):
+                print (" ", end="")
+            print ("^")
+            print ()
+            self.wasSuccessful = False
+            return
         
         # ** make sure this is in a constructor or method
 
@@ -1332,11 +1458,11 @@ class SymbolTableVisitor (ASTVisitor):
             # variable has no declaration
             if (decl == None):
                 print (f"Semantic Error: '{node.id}' was not declared in this scope")
-                print (f"   Located on line {node.token.line}: column {node.token.column}")
-                print (f"   line:")
-                print (f"      {self.lines[node.lineNumber-1][:-1]}")
-                print (f"      ",end="")
-                for i in range(node.columnNumber-1):
+                print (f"   in file {node.token.originalFilename}")
+                print (f"   on line {node.token.originalLine}:{node.token.column}")
+                print (f"   {self.lines[node.token.line-1]}")
+                print (f"   ",end="")
+                for i in range(node.token.column-1):
                     print (" ", end="")
                 print ("^")
                 print ()
@@ -1378,11 +1504,11 @@ class SymbolTableVisitor (ASTVisitor):
         # make sure the function declaration exists and its a function
         if (decl == None or not isinstance (decl, ConstructorDeclarationNode)):
             print (f"Semantic Error: No method matching signature {signature}")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1398,11 +1524,11 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"Semantic Error: Sizeof requires an array")
             print (f"   Expected: <type>[]")
             print (f"   But got:  {node.rhs.type}")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1416,11 +1542,11 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"Semantic Error: Free requires an array or object")
             print (f"   Expected: <type>[] or <userType>")
             print (f"   But got:  {node.rhs.type}")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1446,11 +1572,11 @@ class SymbolTableVisitor (ASTVisitor):
         if len(node.elems) == 0:
             print (f"Semantic Error: Empty list constructor")
             print (f"   List constructor needs at least one value")
-            print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-            print (f"   line:")
-            print (f"      {self.lines[node.lineNumber-1][:-1]}")
-            print (f"      ",end="")
-            for i in range(node.columnNumber-1):
+            print (f"   in file {node.op.originalFilename}")
+            print (f"   on line {node.op.originalLine}:{node.op.column}")
+            print (f"   {self.lines[node.op.line-1]}")
+            print (f"   ",end="")
+            for i in range(node.op.column-1):
                 print (" ", end="")
             print ("^")
             print ()
@@ -1466,11 +1592,11 @@ class SymbolTableVisitor (ASTVisitor):
         for elem in node.elems:
             if elem.type.type != firstType.type or elem.type.arrayDimensions != firstType.arrayDimensions:
                 print (f"Semantic Error: All elements in a list constructor must have the same type")
-                print (f"   Located on line {node.lineNumber}: column {node.columnNumber}")
-                print (f"   line:")
-                print (f"      {self.lines[node.lineNumber-1][:-1]}")
-                print (f"      ",end="")
-                for i in range(node.columnNumber-1):
+                print (f"   in file {node.op.originalFilename}")
+                print (f"   on line {node.op.originalLine}:{node.op.column}")
+                print (f"   {self.lines[node.op.line-1]}")
+                print (f"   ",end="")
+                for i in range(node.op.column-1):
                     print (" ", end="")
                 print ("^")
                 print ()

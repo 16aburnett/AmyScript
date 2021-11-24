@@ -1,6 +1,6 @@
 # Amy Script Compiler
 # By Amy Burnett
-# April 10 2021
+# November 19 2021
 # ========================================================================
 
 import sys 
@@ -8,6 +8,7 @@ from sys import exit
 from enum import Enum
 
 if __name__ == "__main__":
+    import preprocessor
     from tokenizer import tokenize
     from amyAST import *
     from parser import Parser
@@ -27,23 +28,36 @@ else:
 
 class AmyScriptCompiler:
 
-    def __init__(self):
+    def __init__(self, mainFilename, otherFilenames, debug=False, emitAST=False):
+        self.mainFilename = mainFilename
+        self.otherFilenames = otherFilenames
+        self.files = {}
         self.debug = False
         self.ast = ""
+        self.emitAST = emitAST
+        self.astFilename = mainFilename + ".ast"
+        self.debugLines = []
 
     #---------------------------------------------------------------------
 
-    def compile (self, code):
+    def compile (self):
 
-        lines = code.split ("\n")
+        #=== PREPROCESSING =======================================================
 
-        statements = code
+        # send through preprocessor
+        pp = preprocessor.AmyScriptPreprocessor(mainFilename, otherFilenames)
+        # pp.outputProcessed = True
+        preprocessedCode = pp.process ()
+        self.debugLines = pp.outputLines
+        self.files = pp.files 
+
+        lines = preprocessedCode.split ("\n")
 
         #=== TOKENIZATION ========================================================
 
         if (self.debug):
             print ("Tokenizing...")
-        tokens = tokenize(statements)
+        tokens = tokenize(preprocessedCode, self.mainFilename, self.debugLines)
 
         #=== PARSING =============================================================
 
@@ -388,12 +402,12 @@ class AmyScriptCompiler:
         # LIBRARY OBJECTS
 
         # create default object type 
-        objClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Object", None), "Object", None, [], [], [], [], [])
+        objClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Object", None), "Object", None, None, [], [], [], [], [])
         objClass.scopeName = "__main__Object"
         symbolTableVisitor.table.insert (objClass, "Object", Kind.TYPE)
 
         # create default object type 
-        enumClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Enum", None), "Enum", None, ["Object"], [], [], [], [])
+        enumClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Enum", None), "Enum", None, None, ["Object"], [], [], [], [])
         enumClass.scopeName = "__main__Enum"
         symbolTableVisitor.table.insert (enumClass, "Enum", Kind.TYPE)
 
@@ -423,9 +437,6 @@ class AmyScriptCompiler:
         # file = open(astFilename, "w")
         # file.write (astOutput)
 
-        #=== DISPATCH TABLE GEN ==================================================
-
-
         #=== CODE GENERATION =====================================================
 
         codeGenVisitor = CodeGenVisitor (lines)
@@ -444,27 +455,24 @@ class AmyScriptCompiler:
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
-        print("Usage:", sys.argv[0], "<file-name>")
+        print("Usage:", sys.argv[0], "<file-name> {<extra-filenames>}")
         exit()
 
-    # determine what file to read from
-    file = sys.stdin
-    srcFilename = ""
-    astFilename = "output.amy.ast"
-    destFilename = "output.amy.assembly"
-    if (len(sys.argv) >= 2):
-        srcFilename = sys.argv[1]
-        file = open(srcFilename)
-        astFilename = srcFilename + ".ast"
-        destFilename = srcFilename + ".assembly"
-        
-    srcCode = file.readlines ()
+    # get all filenames 
+    # first file is main file 
+    mainFilename = sys.argv[1]
+    destFilename = mainFilename + ".assembly"
+    # get rest of files if they are provided 
+    otherFilenames = []
+    for i in range(2, len(sys.argv)):
+        otherFilenames += [sys.argv[i]]
 
-    compiler = AmyScriptCompiler ()
-    destCode = compiler.compile ("".join(srcCode))
+    # compile code 
+    compiler = AmyScriptCompiler (mainFilename, otherFilenames)
+    destCode = compiler.compile ()
 
     # output generated/compiled code to separate file
-    print (f"Writing compiled code to {destFilename}")
+    print (f"Writing compiled code to \"{destFilename}\"")
     file = open(destFilename, "w")
     file.write (destCode)
 
