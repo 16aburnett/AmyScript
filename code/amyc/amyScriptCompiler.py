@@ -6,6 +6,7 @@
 import sys 
 from sys import exit
 from enum import Enum
+import argparse 
 
 if __name__ == "__main__":
     import preprocessor
@@ -28,13 +29,18 @@ else:
 
 class AmyScriptCompiler:
 
-    def __init__(self, mainFilename, otherFilenames, debug=False, emitAST=False):
+    def __init__(self, mainFilename, otherFilenames, destFilename="a.amy.assembly", debug=False, emitAST=False, emitPreprocessed=False, preprocess=False):
         self.mainFilename = mainFilename
         self.otherFilenames = otherFilenames
+        self.destFilename = destFilename
         self.files = {}
         self.debug = False
         self.ast = ""
+
         self.emitAST = emitAST
+        self.emitPreprocessed = emitPreprocessed
+        self.onlyPreprocess = preprocess
+
         self.astFilename = mainFilename + ".ast"
         self.debugLines = []
 
@@ -45,13 +51,16 @@ class AmyScriptCompiler:
         #=== PREPROCESSING =======================================================
 
         # send through preprocessor
-        pp = preprocessor.AmyScriptPreprocessor(mainFilename, otherFilenames)
-        # pp.outputProcessed = True
+        pp = preprocessor.AmyScriptPreprocessor(mainFilename, otherFilenames, emitPreprocessed=self.emitPreprocessed)
         preprocessedCode = pp.process ()
         self.debugLines = pp.outputLines
         self.files = pp.files 
 
         lines = preprocessedCode.split ("\n")
+
+        # exit if only preprocessing
+        if self.onlyPreprocess:
+            return
 
         #=== TOKENIZATION ========================================================
 
@@ -424,7 +433,7 @@ class AmyScriptCompiler:
 
         # Reaches Here if the code is valid
         if (self.debug):
-            print ("Valid!")
+            print ("Passes Semantic Analysis")
 
         # get a string representation of the ast 
         visitor = PrintVisitor ()
@@ -434,8 +443,10 @@ class AmyScriptCompiler:
         # save ast 
         self.ast = astOutput
 
-        # file = open(astFilename, "w")
-        # file.write (astOutput)
+        if self.emitAST:
+            print (f"Writing AST to \"{self.astFilename}\"")
+            file = open(self.astFilename, "w")
+            file.write (astOutput)
 
         #=== CODE GENERATION =====================================================
 
@@ -445,7 +456,14 @@ class AmyScriptCompiler:
 
         #=== OUTPUT ==============================================================
 
-        return "".join(codeGenVisitor.code)
+        destCode = "".join(codeGenVisitor.code)
+
+        # output generated/compiled code to separate file
+        print (f"Writing compiled code to \"{self.destFilename}\"")
+        file = open(self.destFilename, "w")
+        file.write (destCode)
+
+        return destCode
 
         #=== END =================================================================
 
@@ -454,26 +472,32 @@ class AmyScriptCompiler:
 
 if __name__ == "__main__":
 
-    if len(sys.argv) < 2:
-        print("Usage:", sys.argv[0], "<file-name> {<extra-filenames>}")
-        exit()
+    argparser = argparse.ArgumentParser(description="Tests argparse")
 
-    # get all filenames 
-    # first file is main file 
-    mainFilename = sys.argv[1]
-    destFilename = mainFilename + ".assembly"
-    # get rest of files if they are provided 
-    otherFilenames = []
-    for i in range(2, len(sys.argv)):
-        otherFilenames += [sys.argv[i]]
+    argparser.add_argument(dest="sourceFiles", nargs="+", help="source files to compile (first file should be the main file)")
+    argparser.add_argument("-o", "--outputFilename", dest="outputFilename", help="name of the outputted compiled file")
+    argparser.add_argument("--emitPreprocessed", dest="emitPreprocessed", action="store_true", help="output the preprocessed code")
+    argparser.add_argument("--emitAST", dest="emitAST", action="store_true", help="output the ast")
+    argparser.add_argument("--preprocess", dest="preprocess", action="store_true", help="only run preprocessor")
+
+    args = argparser.parse_args()
+
+    mainFilename = args.sourceFiles[0]
+    otherFilenames = args.sourceFiles[1:]
+    destFilename = "a.amy.assembly"
+    if args.outputFilename:
+        destFilename = args.outputFilename
 
     # compile code 
-    compiler = AmyScriptCompiler (mainFilename, otherFilenames)
+    compiler = AmyScriptCompiler (
+        mainFilename, 
+        otherFilenames, 
+        destFilename=destFilename,
+        emitAST=args.emitAST, 
+        emitPreprocessed=args.emitPreprocessed, 
+        preprocess=args.preprocess
+    )
     destCode = compiler.compile ()
 
-    # output generated/compiled code to separate file
-    print (f"Writing compiled code to \"{destFilename}\"")
-    file = open(destFilename, "w")
-    file.write (destCode)
 
 

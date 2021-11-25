@@ -29,10 +29,10 @@ class DirectiveToken:
 
 class AmyScriptPreprocessor:
 
-    def __init__(self, mainFilename, otherFilenames=[]):
+    def __init__(self, mainFilename, otherFilenames=[], emitPreprocessed=False):
         self.mainFilename = mainFilename
         self.otherFilenames = otherFilenames
-        self.outputProcessed = False 
+        self.outputProcessed = emitPreprocessed 
         self.outputFilename = mainFilename + ".preprocessed"
         self.outputDebug = False 
         self.debugOutputFilename = mainFilename + ".debug"
@@ -119,10 +119,11 @@ class AmyScriptPreprocessor:
                         # print ("including", nextFilepath)
                         # ensure file was provided to include
                         if nextFilepath not in self.files:
-                            print (f"Preprocessor Error: Unknown file to include \"{args[0].value}\"")
-                            print (f"   in {currentFilename}")
+                            print (f"Preprocessor Error: Unknown file in relative include \"{args[0].value}\"")
+                            print (f"   in file {currentFilename}")
                             print (f"   on line {currentLineNum}")
                             print (line)
+                            print (f"   attempted lookup {nextFilepath}")
                             print (f"   *Make sure you provide all the necessary files to the compiler")
                             exit()
                         # save current file index

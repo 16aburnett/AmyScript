@@ -292,7 +292,7 @@ class SymbolTable:
                         visitor.wasSuccessful = True
                         _class.accept (visitor)
                         if not visitor.wasSuccessful:
-                            print (f"**From instantiation of class '{_class.id+tempSignature}'", end="\n\n")
+                            print (f"^~~~From instantiation of class '{_class.id+tempSignature}'", end="\n\n")
                             exit (1)
                         # restore previous success
                         visitor.wasSuccessful = visitor.wasSuccessful and oldWasSuccessful
@@ -345,7 +345,7 @@ class SymbolTable:
                         visitor.wasSuccessful = True
                         func.accept (visitor)
                         if not visitor.wasSuccessful:
-                            print (f"**From instantiation of function '{func.signature}'", end="\n\n")
+                            print (f"^~~~From instantiation of function '{func.signature}'", end="\n\n")
                         # restore previous success
                         visitor.wasSuccessful = visitor.wasSuccessful and oldWasSuccessful
                         visitor.insertFunc = True 

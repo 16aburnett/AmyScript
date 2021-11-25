@@ -870,10 +870,10 @@ class PrintVisitor (ASTVisitor):
     
     def visitSizeofExpressionNode (self, node):
         self.printSpaces (self.level)
-        self.outputstrings += [f"Sizeof Operator: {node.type}"]
+        self.outputstrings += [f"Sizeof Operator: {node.type}\n"]
         self.level += 1
         self.printSpaces (self.level)
-        self.outputstrings += ["RHS:"]
+        self.outputstrings += ["RHS:\n"]
         self.level += 1
         node.rhs.accept (self)
         self.level -= 1

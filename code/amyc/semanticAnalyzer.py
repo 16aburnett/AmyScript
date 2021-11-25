@@ -868,7 +868,7 @@ class SymbolTableVisitor (ASTVisitor):
             or (node.lhs.type.type != Type.INT)
                 or node.lhs.type.arrayDimensions > 0
                 or node.rhs.type.arrayDimensions > 0)):
-            print (f"Semantic Error: mismatching types in ||")
+            print (f"Semantic Error: invalid/mismatching types types in ||")
             print (f"   in file {node.op.originalFilename}")
             print (f"   on line {node.op.originalLine}:{node.op.column}")
             print (f"   {self.lines[node.op.line-1]}")
@@ -896,7 +896,7 @@ class SymbolTableVisitor (ASTVisitor):
             or (node.lhs.type.type != Type.INT)
                 or node.lhs.type.arrayDimensions > 0
                 or node.rhs.type.arrayDimensions > 0)):
-            print (f"Semantic Error: mismatching types in &&")
+            print (f"Semantic Error: invalid/mismatching types types in &&")
             print (f"   in file {node.op.originalFilename}")
             print (f"   on line {node.op.originalLine}:{node.op.column}")
             print (f"   {self.lines[node.op.line-1]}")
@@ -921,7 +921,7 @@ class SymbolTableVisitor (ASTVisitor):
         if (not isArrayNullOp and not isObjectNullOp and (node.lhs.type.type != node.rhs.type.type
                 or node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions
                 or node.lhs.type.id != node.rhs.type.id)):
-            print (f"Semantic Error: mismatching types in equality")
+            print (f"Semantic Error: invalid/mismatching types in equality")
             print (f"   in file {node.op.originalFilename}")
             print (f"   on line {node.op.originalLine}:{node.op.column}")
             print (f"   {self.lines[node.op.line-1]}")
@@ -943,10 +943,11 @@ class SymbolTableVisitor (ASTVisitor):
         # ensure types work 
         if (node.lhs.type.type != node.rhs.type.type
             or (node.lhs.type.type != Type.INT
-                and node.lhs.type.type != Type.FLOAT)
+                and node.lhs.type.type != Type.FLOAT
+                and node.lhs.type.type != Type.CHAR)
                 or node.lhs.type.arrayDimensions > 0
                 or node.rhs.type.arrayDimensions > 0):
-            print (f"Semantic Error: mismatching types in inequality")
+            print (f"Semantic Error: invalid/mismatching types in inequality")
             print (f"   in file {node.op.originalFilename}")
             print (f"   on line {node.op.originalLine}:{node.op.column}")
             print (f"   {self.lines[node.op.line-1]}")

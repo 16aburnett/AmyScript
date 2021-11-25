@@ -23,6 +23,106 @@
         return b; 
     }
 
+    function void print (int[] array)
+    {
+        print ('[');
+        if (sizeof (array) > 0)
+            print (array[0]);
+        for (int i = 1; i < sizeof (array); ++i)
+        {
+            print (',');
+            print (' ');
+            print (array[i]);
+        }
+        print (']');
+    }
+
+    function void println (int[] array)
+    {
+        print (array);
+        println ();
+    }
+
+    function void print (float[] array)
+    {
+        print ('[');
+        if (sizeof (array) > 0)
+            print (array[0]);
+        for (int i = 1; i < sizeof (array); ++i)
+        {
+            print (',');
+            print (' ');
+            print (array[i]);
+        }
+        print (']');
+    }
+
+    function void println (float[] array)
+    {
+        print (array);
+        println ();
+    }
+
+    template <:T:>
+    function void merge (T[] array, int left, int mid, int right)
+    {
+        int leftArraySize = mid - left + 1;
+        int rightArraySize = right - mid; 
+
+        // Create temp arrays 
+        T[] leftArray = new T[leftArraySize];
+        T[] rightArray = new T[rightArraySize];
+
+        // Copy data to temp arrays 
+        for (int i = 0; i < leftArraySize; ++i)
+            leftArray[i] = array[left + i];
+        for (int j = 0; j < rightArraySize; ++j)
+            rightArray[j] = array[mid + 1 + j];
+
+        int i = 0;
+        int j = 0;
+        int k = left; 
+
+        while (i < leftArraySize && j < rightArraySize)
+        {
+            if (leftArray[i] <= rightArray[j])
+            {
+                array[k++] = leftArray[i++];
+            }
+            else
+            {
+                array[k++] = rightArray[j++];
+            }
+        }
+
+        // Copy over remaining of leftArray
+        while (i < leftArraySize)
+        {   
+            array[k++] = leftArray[i++];
+        }
+        // Copy over remaining of rightArray
+        while (j < rightArraySize)
+        {   
+            array[k++] = rightArray[j++];
+        }
+
+        // clean up temp arrays
+        free (leftArray);
+        free (rightArray);
+    }
+
+    template <:T:>
+    function void mergeSort (T[] array, int begin, int end)
+    {
+        if (begin >= end) return;
+
+        int mid = begin + (end - begin) / 2;
+        mergeSort<:T:> (array, begin, mid);
+        mergeSort<:T:> (array, mid + 1, end);
+        merge<:T:> (array, begin, mid, end);
+    }
+
+
 #endif
 
 //========================================================================

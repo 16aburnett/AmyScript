@@ -9,12 +9,22 @@
 
 function int main ()
 {
+
+    char[] temp = "=== Vector<:int:> ===================";
+    println (temp);
+    free (temp);
+
     Vector<:int:> nums = new Vector<:int:>();
     nums.push_back (5);
     nums.push_back (7);
     nums.push_back (21);
     nums.push_back (42);
     nums.push_back (3);
+    nums.push_back (128);
+    nums.push_back (32);
+    nums.push_back (42);
+    nums.push_back (10);
+    nums.push_back (4);
 
     print ("N:   ");
     println (nums.size());
@@ -39,6 +49,80 @@ function int main ()
 
     print ("min: ");
     println (min);
+
+    temp = "Before sort: ";
+    print (temp);
+    free (temp);
+    println (nums.data);
+
+    // this only works correctly because nums.size should equal nums.capacity
+    // also this merge sort implementation has an inclusive end (YUCK!)
+    mergeSort<:int:> (nums.data, 0, nums.size()-1);
+
+    temp = "After sort:  ";
+    print (temp);
+    free (temp);
+    println (nums.data);
+
+    temp = "=== Vector<:float:> =================";
+    println (temp);
+    free (temp);
+
+    Vector<:float:> nums2 = new Vector<:float:> ();
+    nums2.push_back (3.14);
+    nums2.push_back (3.14);
+    nums2.push_back (0.75);
+    nums2.push_back (0.5);
+    nums2.push_back (21.0);
+    nums2.push_back (128.3);
+    nums2.push_back (0.25);
+    nums2.push_back (42.1);
+    nums2.push_back (0.0);
+    nums2.push_back (6.28);
+
+    temp = "Before sort: ";
+    print (temp);
+    free (temp);
+    println (nums2.data);
+
+    // this only works correctly because nums.size should equal nums.capacity
+    // also this merge sort implementation has an inclusive end (YUCK!)
+    mergeSort<:float:> (nums2.data, 0, nums2.size()-1);
+
+    temp = "After sort:  ";
+    print (temp);
+    free (temp);
+    println (nums2.data);
+
+    temp = "=== Vector<:char:> ==================";
+    println (temp);
+    free (temp);
+
+    Vector<:char:> nums3 = new Vector<:char:> ();
+    nums3.push_back ('f');
+    nums3.push_back ('g');
+    nums3.push_back ('k');
+    nums3.push_back ('j');
+    nums3.push_back ('d');
+    nums3.push_back ('a');
+    nums3.push_back ('q');
+    nums3.push_back ('z');
+    nums3.push_back ('m');
+    nums3.push_back ('n');
+
+    temp = "Before sort: ";
+    print (temp);
+    free (temp);
+    println (nums3.data);
+
+    // this only works correctly because nums.size should equal nums.capacity
+    // also this merge sort implementation has an inclusive end (YUCK!)
+    mergeSort<:char:> (nums3.data, 0, nums3.size()-1);
+
+    temp = "After sort:  ";
+    print (temp);
+    free (temp);
+    println (nums3.data);
 
 }
 
