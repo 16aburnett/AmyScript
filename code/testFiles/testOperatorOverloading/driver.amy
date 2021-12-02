@@ -1,0 +1,43 @@
+// Simple operator overloading test file
+// Author: Amy Burnett
+//========================================================================
+
+//#include "utils/vector.amy"
+
+//========================================================================
+
+class Point 
+{
+    public field int x;
+    public field int y; 
+    constructor (int x, int y) {this.x = x; this.y = y;}
+}
+
+function void print (Point p)
+{
+    print ('(');
+    print (p.x);
+    print (',');
+    print (' ');
+    print (p.y);
+    print (')');
+}
+
+function void println (Point p)
+{
+    print (p);
+    println ();
+}
+
+// operator overloading function 
+function Point __add__ (Point lhs, Point rhs)
+{
+    return new Point (lhs.x + rhs.x, lhs.y + rhs.y);
+}
+
+
+//========================================================================
+
+
+
+println (new Point (7, 3) + new Point (4, 2));

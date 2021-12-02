@@ -7,9 +7,11 @@ from enum import Enum
 from sys import exit
 
 if __name__ == "symbolTable":
+    from tokenizer import printToken
     from amyAST import *
     from template import TemplateVisitor
 else:
+    from .tokenizer import printToken
     from .amyAST import *  
     from .template import TemplateVisitor
 
@@ -97,21 +99,9 @@ class SymbolTable:
                         originalDec = self.table[-1][name].typeDec[len(decl.templateParams)].type
                         print (f"Semantic Error: Redeclaration of class template '{decl.id}' with {len(decl.templateParams)} template parameters")
                         print (f"   Original:")
-                        print (f"      in file {originalDec.token.originalFilename}")
-                        print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
-                        print (f"      {self.lines[originalDec.token.line-1]}")
-                        print (f"      ",end="")
-                        for i in range(originalDec.token.column-1):
-                            print (" ", end="")
-                        print ("^")
+                        printToken (originalDec.token, "      ")
                         print (f"   Redeclaration:")
-                        print (f"      in file {decl._class.token.originalFilename}")
-                        print (f"      on line {decl._class.token.originalLine}:{decl._class.token.column}")
-                        print (f"      {self.lines[decl._class.token.line-1]}")
-                        print (f"      ",end="")
-                        for i in range(decl._class.token.column-1):
-                            print (" ", end="")
-                        print ("^")
+                        printToken (decl._class.token, "      ")
                         print ()
                         return False
                 # CLASS & ENUM
@@ -120,21 +110,9 @@ class SymbolTable:
                         originalDec = self.table[-1][name].typeDec[0].type
                         print (f"Semantic Error: Redeclaration of class/enum '{decl.id}'")
                         print (f"   Original:")
-                        print (f"      in file {originalDec.token.originalFilename}")
-                        print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
-                        print (f"      {self.lines[originalDec.token.line-1]}")
-                        print (f"      ",end="")
-                        for i in range(originalDec.token.column-1):
-                            print (" ", end="")
-                        print ("^")
+                        printToken (originalDec.token, "      ")
                         print (f"   Redeclaration:")
-                        print (f"      in file {decl.type.token.originalFilename}")
-                        print (f"      on line {decl.type.token.originalLine}:{decl.type.token.column}")
-                        print (f"      {self.lines[decl.type.token.line-1]}")
-                        print (f"      ",end="")
-                        for i in range(decl.type.token.column-1):
-                            print (" ", end="")
-                        print ("^")
+                        printToken (decl.type.token, "      ")
                         print ()
                         return False
 
@@ -205,21 +183,9 @@ class SymbolTable:
                         originalDec = self.table[-1][name].funDec[len(decl.types)].type
                         print (f"Semantic Error: Redeclaration of template function '{decl.id}' with {len(decl.types)} template parameters")
                         print (f"   Original:")
-                        print (f"      in file {originalDec.token.originalFilename}")
-                        print (f"      on line {originalDec.token.originalLine}:{originalDec.token.column}")
-                        print (f"      {self.lines[originalDec.token.line-1]}")
-                        print (f"      ",end="")
-                        for i in range(originalDec.token.column-1):
-                            print (" ", end="")
-                        print ("^")
+                        printToken (originalDec.token, "      ")
                         print (f"   Redeclaration:")
-                        print (f"      in file {decl.type.token.originalFilename}")
-                        print (f"      on line {decl.type.token.originalLine}:{decl.type.token.column}")
-                        print (f"      {self.lines[decl.type.token.line-1]}")
-                        print (f"      ",end="")
-                        for i in range(decl.type.token.column-1):
-                            print (" ", end="")
-                        print ("^")
+                        printToken (decl.type.token, "      ")
                         print ()
                         return False
             # reaches here if not a redeclaration 
@@ -463,7 +429,7 @@ class SymbolTable:
                     # check if viable overloads were found 
                     if len(candidates) == 0:
                         # no viable overloads found at this scope
-                        print (f"no viable candidates")
+                        print (f"Semantic Error: no viable candidates found for \"{name}\"")
                         # return None 
                         continue
                     # found viable overloads 
@@ -489,7 +455,7 @@ class SymbolTable:
                             print (f", {params[j].type}",end="")
                         print (f")")
                         for j in maxI:
-                            print (f"   Candidate:  {candidates[j][0].signature}")
+                            print (f"   Candidate: {candidates[j][0].signature}")
                             print (f"      Steps: {candidates[j][1]}")
                         return None
                     # no ambiguity -> found viable candidate

@@ -1,0 +1,30 @@
+
+
+
+
+int x = 10;
+x += 21;
+print ("int x = 10; x += 21 -> ");
+println (x);
+
+
+float[] nums = new float[5]; 
+
+nums[0] = 4.0;
+
+nums[0] *= nums[0];
+
+print ("nums[0] = 4.0; nums[0] *= nums[0] -> ");
+println (nums[0]);
+
+class A 
+{
+    public field int x;
+}
+
+A a = new A();
+
+a.x = 10;
+a.x += 42;
+print ("a.x = 10; a.x += 42 -> ");
+println (a.x);

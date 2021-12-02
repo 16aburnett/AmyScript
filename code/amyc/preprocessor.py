@@ -49,7 +49,7 @@ class AmyScriptPreprocessor:
             print (f"Preprocessor Error: '{self.mainFilename}' does not exist")
             print (f"   Current Dir: {os.getcwd()}")
             print (f"   Absolute Path: {os.path.abspath(self.mainFilename)}")
-            exit ()
+            exit (1)
 
         # Read in files 
         # print ("file:", self.mainFilename)
@@ -65,7 +65,7 @@ class AmyScriptPreprocessor:
                 print (f"Preprocessor Error: '{self.otherFilenames[i]}' does not exist")
                 print (f"   Current Dir: {os.getcwd()}")
                 print (f"   Absolute Path: {os.path.abspath(self.otherFilenames[i])}")
-                exit ()
+                exit (1)
             # add file to included files 
             self.files[os.path.abspath(self.otherFilenames[i])] = open (os.path.abspath(self.otherFilenames[i]), "r").readlines ()
             # ensure last line ends in newline
@@ -80,7 +80,8 @@ class AmyScriptPreprocessor:
         self.outputLines = []
         fileToProcessStack = [[os.path.abspath(self.mainFilename), 0]]
         variables = {"COMPILER":sys.argv[0]}
-        # stores the success/fail of the containing if directive
+        # stores the location and the success/fail of the containing if directive
+        # this is used to include/exclude lines within a conditional directive block 
         containingIf = []
         # process all files
         while len(fileToProcessStack) > 0:
@@ -104,16 +105,19 @@ class AmyScriptPreprocessor:
                     # include "<filename>"
                     if cmd == "include":
                         # ignore if containing if was false
-                        if len(containingIf) > 0 and containingIf[-1] == False:
+                        if len(containingIf) > 0 and containingIf[-1][1] == False:
                             currentLineNum += 1
                             continue
 
                         # ensure string was provided 
                         if len(args) == 0 or args[0].type != STRING:
                             print (f"Preprocessor Error: {cmd} directive needs a string")
-                            print (f"   [{currentFilename}]:{currentLineNum}")
+                            print (f"   in file {currentFilename}")
+                            for i in range(len(fileToProcessStack)-2, -1, -1):
+                                print (f"      included from {fileToProcessStack[i][0]}:{fileToProcessStack[i][1]}")
+                            print (f"   on line {currentLineNum+1}")
                             print (line)
-                            exit()
+                            exit(1)
                         # abspath will simplify any '..' 
                         nextFilepath = os.path.abspath(os.path.join(currentDirectory, args[0].value))
                         # print ("including", nextFilepath)
@@ -121,13 +125,16 @@ class AmyScriptPreprocessor:
                         if nextFilepath not in self.files:
                             print (f"Preprocessor Error: Unknown file in relative include \"{args[0].value}\"")
                             print (f"   in file {currentFilename}")
-                            print (f"   on line {currentLineNum}")
+                            for i in range(len(fileToProcessStack)-2, -1, -1):
+                                print (f"      included from {fileToProcessStack[i][0]}:{fileToProcessStack[i][1]}")
+                            print (f"   on line {currentLineNum+1}")
                             print (line)
                             print (f"   attempted lookup {nextFilepath}")
                             print (f"   *Make sure you provide all the necessary files to the compiler")
-                            exit()
+                            exit(1)
                         # save current file index
-                        fileToProcessStack[-1][1] = currentLineNum+1
+                        currentLineNum += 1
+                        fileToProcessStack[-1][1] = currentLineNum
                         # switch to other file
                         fileToProcessStack += [[nextFilepath, 0]]
                         currentDirectory = os.path.split (fileToProcessStack[-1][0])[0]
@@ -139,16 +146,19 @@ class AmyScriptPreprocessor:
                     # define <identifier> 
                     elif cmd == "define":
                         # ignore if containing if was false
-                        if len(containingIf) > 0 and containingIf[-1] == False:
+                        if len(containingIf) > 0 and containingIf[-1][1] == False:
                             currentLineNum += 1
                             continue
                         
                         # ensure identifier was provided 
                         if len(args) == 0 or args[0].type != IDENTIFIER:
                             print (f"Preprocessor Error: {cmd} directive needs an identifier")
-                            print (f"   [{currentFilename}]:{currentLineNum}")
+                            print (f"   in file {currentFilename}")
+                            for i in range(len(fileToProcessStack)-2, -1, -1):
+                                print (f"      included from {fileToProcessStack[i][0]}:{fileToProcessStack[i][1]}")
+                            print (f"   on line {currentLineNum+1}")
                             print (line)
-                            exit()
+                            exit(1)
                         # define the identifier
                         variables[args[0].value] = 0
                     # IFDEF
@@ -157,61 +167,82 @@ class AmyScriptPreprocessor:
                         # ensure identifier was provided 
                         if len(args) == 0 or args[0].type != IDENTIFIER:
                             print (f"Preprocessor Error: {cmd} directive needs an identifier")
-                            print (f"   [{currentFilename}]:{currentLineNum}")
+                            print (f"   in file {currentFilename}")
+                            for i in range(len(fileToProcessStack)-2, -1, -1):
+                                print (f"      included from {fileToProcessStack[i][0]}:{fileToProcessStack[i][1]}")
+                            print (f"   on line {currentLineNum+1}")
                             print (line)
-                            exit()
+                            exit(1)
+                        fileToProcessStack[-1][1] = currentLineNum
+                        currentLocation = [fileToProcessStack[-1][0], fileToProcessStack[-1][1]+1, [], line]
+                        for i in range(len(fileToProcessStack)-2, -1, -1):
+                            currentLocation[2] += [[fileToProcessStack[i][0], fileToProcessStack[i][1]]]
                         if args[0].value in variables:
                             # print ("exists")
                             # mark as false if containing if was false
-                            if len(containingIf) > 0 and containingIf[-1] == False:
-                                containingIf += [False]
+                            if len(containingIf) > 0 and containingIf[-1][1] == False:
+                                containingIf += [[currentLocation, False]]
                             else:
-                                containingIf += [True]
+                                containingIf += [[currentLocation, True]]
                         else:
                             # print ("DNE")
                             # mark as false if containing if was false
-                            if len(containingIf) > 0 and containingIf[-1] == False:
-                                containingIf += [False]
+                            if len(containingIf) > 0 and containingIf[-1][1] == False:
+                                containingIf += [[currentLocation, False]]
                             else:
-                                containingIf += [False]
+                                containingIf += [[currentLocation, False]]
                     # IFNDEF
                     # ifndef <identifier>
                     elif cmd == "ifndef":
                         # ensure identifier was provided 
                         if len(args) == 0 or args[0].type != IDENTIFIER:
                             print (f"Preprocessor Error: {cmd} directive needs an identifier")
-                            print (f"   [{currentFilename}]:{currentLineNum}")
+                            print (f"   in file {currentFilename}")
+                            for i in range(len(fileToProcessStack)-2, -1, -1):
+                                print (f"      included from {fileToProcessStack[i][0]}:{fileToProcessStack[i][1]}")
+                            print (f"   on line {currentLineNum+1}")
                             print (line)
-                            exit()
+                            exit(1)
+                        fileToProcessStack[-1][1] = currentLineNum
+                        currentLocation = [fileToProcessStack[-1][0], fileToProcessStack[-1][1]+1, [], line]
+                        for i in range(len(fileToProcessStack)-2, -1, -1):
+                            currentLocation[2] += [[fileToProcessStack[i][0], fileToProcessStack[i][1]]]
                         if args[0].value not in variables:
                             # print ("DNE")
                             # mark as false if containing if was false
-                            if len(containingIf) > 0 and containingIf[-1] == False:
-                                containingIf += [False]
+                            if len(containingIf) > 0 and containingIf[-1][1] == False:
+                                containingIf += [[currentLocation, False]]
                             else:
-                                containingIf += [True]
+                                containingIf += [[currentLocation, True]]
                         else:
                             # print ("exists")
                             # mark as false if containing if was false
-                            if len(containingIf) > 0 and containingIf[-1] == False:
-                                containingIf += [False]
+                            if len(containingIf) > 0 and containingIf[-1][1] == False:
+                                containingIf += [[currentLocation, False]]
                             else:
-                                containingIf += [False]
+                                containingIf += [[currentLocation, False]]
                     # ELSE
                     # else
                     elif cmd == "else":
                         # ensure there was a previous if  
                         if len(containingIf) == 0:
                             print (f"Preprocessor Error: else without a matching if")
-                            print (f"   [{currentFilename}]:{currentLineNum}")
+                            print (f"   in file {currentFilename}")
+                            for i in range(len(fileToProcessStack)-2, -1, -1):
+                                print (f"      included from {fileToProcessStack[i][0]}:{fileToProcessStack[i][1]}")
+                            print (f"   on line {currentLineNum+1}")
                             print (line)
-                            exit()
+                            exit(1)
                         # this is true only if the if that contains it is not false and the prev if was true 
                         # this else overwrites the prev containing if 
-                        if len(containingIf) > 1 and containingIf[-2] == False:
-                            containingIf[-1] = False
+                        fileToProcessStack[-1][1] = currentLineNum
+                        currentLocation = [fileToProcessStack[-1][0], fileToProcessStack[-1][1]+1, [], line]
+                        for i in range(len(fileToProcessStack)-2, -1, -1):
+                            currentLocation[2] += [[fileToProcessStack[i][0], fileToProcessStack[i][1]]]
+                        if len(containingIf) > 1 and containingIf[-2][1] == False:
+                            containingIf[-1] = [currentLocation, False]
                         else:
-                            containingIf[-1] = not containingIf[-1]
+                            containingIf[-1] = [currentLocation, not containingIf[-1][1]]
                         
                     # ENDIF
                     # endif
@@ -219,9 +250,12 @@ class AmyScriptPreprocessor:
                         # ensure there was an if to end
                         if len(containingIf) == 0:
                             print (f"Preprocessor Error: unmatched {cmd}")
-                            print (f"   [{currentFilename}]:{currentLineNum}")
+                            print (f"   in file {currentFilename}")
+                            for i in range(len(fileToProcessStack)-2, -1, -1):
+                                print (f"      included from {fileToProcessStack[i][0]}:{fileToProcessStack[i][1]}")
+                            print (f"   on line {currentLineNum+1}")
                             print (line)
-                            exit()
+                            exit(1)
                         # exit prev 
                         containingIf.pop()
 
@@ -230,18 +264,38 @@ class AmyScriptPreprocessor:
                     continue 
 
                 # no directive - just include line 
-                if len(containingIf) == 0 or containingIf[-1] == True:
-                    self.outputLines += [[currentFilename, currentLineNum+1, line]]
+                if len(containingIf) == 0 or containingIf[-1][1] == True:
+                    # determine include chain for error reporting 
+                    includeChain = []
+                    for j in range(len(fileToProcessStack)-2, -1, -1):
+                        includeChain += [[fileToProcessStack[j][0], fileToProcessStack[j][1]]]
+                    self.outputLines += [[currentFilename, currentLineNum+1, line, includeChain]]
                 currentLineNum += 1
-                
+            
             # finished processing current file
+            # return to previous file or end if this was the main file
             fileToProcessStack.pop ()
+
+        # Ensure all ifs were closed 
+        if len(containingIf) != 0:
+            print (f"Preprocessor Error: Unclosed conditional directives")
+            for i in range(len(containingIf)):
+                print (f"   Unclosed if:")
+                print (f"      in file {containingIf[i][0][0]}")
+                for j in range(len(containingIf[i][0][2])):
+                    print (f"         included from {containingIf[i][0][2][j][0]}:{containingIf[i][0][2][j][1]}")
+                print (f"      on line {containingIf[i][0][1]}")
+                print (f"      {containingIf[i][0][3]}")
+                print (f"      condition result: {containingIf[i][1]}")
+                print ()
+            exit (1)
 
         # output new code
         debugOutputStr = []
         outputStr = []
         for line in self.outputLines:
             # print (f"[{line[0]}]:{line[1]} {line[2].rstrip()}")
+            # print (f"   {line[3]}")
             debugOutputStr += [f"[{line[0]}]:{line[1]} {line[2].rstrip()}"]
             outputStr += [line[2]]
         debugOutputStr = "\n".join(debugOutputStr)
@@ -312,7 +366,7 @@ class AmyScriptPreprocessor:
                 # ensure string was closed 
                 if currentIndex >= len(line) or line[currentIndex] != "\"":
                     print ("Preprocessor Error: string not closed")
-                    exit()
+                    exit(1)
                 # add string to args 
                 arguments += [DirectiveToken(STRING, "".join(arg))]
                 # skip over "
@@ -344,7 +398,7 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 2:
         print("Usage:", sys.argv[0], "<file-name> {<extra-filenames>}")
-        exit()
+        exit(1)
     
     # get all filenames 
     # first file is main file 

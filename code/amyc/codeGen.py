@@ -946,7 +946,7 @@ class CodeGenVisitor (ASTVisitor):
         node.rhs.accept (self)
 
     def visitAssignExpressionNode (self, node):
-        self.printComment ("Assignment")
+        self.printComment (f"Assignment - '{node.op.lexeme}'")
 
         self.indentation += 1
 
@@ -961,10 +961,12 @@ class CodeGenVisitor (ASTVisitor):
             node.lhs.accept (self)
             self.indentation -= 1
             self.printCode (f"POP __rhs")
-            self.printCode (f"ASSIGN {node.lhs.scopeName} __rhs")
+            lhsStr = f"{node.lhs.scopeName}"
+
         elif isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
             self.printCode (f"POP __rhs")
-            self.printCode (f"ASSIGN {node.lhs.decl.scopeName} __rhs")
+            lhsStr = f"{node.lhs.decl.scopeName}"
+
         elif isinstance(node.lhs, SubscriptExpressionNode):
             self.printComment ("LHS")
             self.indentation += 1
@@ -989,7 +991,8 @@ class CodeGenVisitor (ASTVisitor):
             self.indentation -= 1
 
             self.printCode (f"POP __rhs")
-            self.printCode (f"ASSIGN __pointer[__offset] __rhs")
+            lhsStr = f"__pointer[__offset]"
+
         elif isinstance (node.lhs, MemberAccessorExpressionNode):
             self.printComment ("LHS")
             self.indentation += 1
@@ -1013,15 +1016,36 @@ class CodeGenVisitor (ASTVisitor):
             self.printCode ("POP __parent")
 
             self.printCode (f"POP __rhs")
-            self.printCode (f"ASSIGN __parent[__child] __rhs")
+            
+            lhsStr = f"__parent[__child]"
 
             self.indentation -= 1
             self.indentation -= 1
 
-        
-        # assign expressions return result of expression
-        # ** this should probably be conditional 
-        self.printCode ("PUSH __rhs")
+        # =
+        if node.op.type == "ASSIGN":
+            self.printCode (f"ASSIGN {lhsStr} __rhs")
+            self.printCode ("PUSH __rhs")
+        # +=
+        elif node.op.type == "ASSIGN_ADD":
+            self.printCode (f"ADD {lhsStr} {lhsStr} __rhs")
+            self.printCode (f"PUSH {lhsStr}")
+        # -=
+        elif node.op.type == "ASSIGN_SUB":
+            self.printCode (f"SUBTRACT {lhsStr} {lhsStr} __rhs")
+            self.printCode (f"PUSH {lhsStr}")
+        # *=
+        elif node.op.type == "ASSIGN_MUL":
+            self.printCode (f"MULTIPLY {lhsStr} {lhsStr} __rhs")
+            self.printCode (f"PUSH {lhsStr}")
+        # /=
+        elif node.op.type == "ASSIGN_DIV":
+            self.printCode (f"DIVIDE {lhsStr} {lhsStr} __rhs")
+            self.printCode (f"PUSH {lhsStr}")
+        # %=
+        elif node.op.type == "ASSIGN_MOD":
+            self.printCode (f"MOD {lhsStr} {lhsStr} __rhs")
+            self.printCode (f"PUSH {lhsStr}")
         
         self.indentation -= 1
 

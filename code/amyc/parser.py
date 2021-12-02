@@ -6,8 +6,10 @@
 from sys import exit
 
 if __name__ == "parser":
+    from tokenizer import printToken
     from amyAST import *
 else:
+    from .tokenizer import printToken
     from .amyAST import *
 
 # ========================================================================
@@ -47,11 +49,9 @@ class Parser:
 # debug 
 
     def error(self, function, expectedToken, additional=""):
-        print (f"Error in {function}")
+        print (f"Parse Error: Attempted to parse <{function}>")
         print (f"   expected {expectedToken} but got {self.tokens[self.currentToken].type}")
-        print (f"   in file {self.tokens[self.currentToken].originalFilename}")
-        print (f"   on line {self.tokens[self.currentToken].originalLine}:{self.tokens[self.currentToken].column}")
-        print (self.lines[self.tokens[self.currentToken].line-1])
+        printToken (self.tokens[self.currentToken])
         if additional != "":
             print(f"   -> {additional}")
         exit(1)
@@ -900,11 +900,16 @@ class Parser:
             lhs = self.varDeclaration ()
 
             # if there is an assign
-            if (self.tokens[self.currentToken].type == "ASSIGN"):
+            if (   self.tokens[self.currentToken].type == "ASSIGN" \
+                or self.tokens[self.currentToken].type == "ASSIGN_ADD" \
+                or self.tokens[self.currentToken].type == "ASSIGN_SUB" \
+                or self.tokens[self.currentToken].type == "ASSIGN_MUL" \
+                or self.tokens[self.currentToken].type == "ASSIGN_DIV" \
+                or self.tokens[self.currentToken].type == "ASSIGN_MOD"):
                 line = self.tokens[self.currentToken].line
                 column = self.tokens[self.currentToken].column
                 assignToken = self.tokens[self.currentToken]
-                self.match ("assignexpr", "ASSIGN")
+                self.match ("assignexpr", self.tokens[self.currentToken].type)
                 rhs = AssignExpressionNode (lhs, assignToken, None, line, column)
                 # if this is the first assignment expression
                 if (root == None):

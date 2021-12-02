@@ -22,14 +22,18 @@ function T max (T a, T b)
 
 //========================================================================
 
+//========================================================================
+
     template <:T:>
-    function T sum (T[] vals)
+    function T sum (T[] vals, int begin, int end)
     {
         T sum = T();
-        for (int i = 0; i < sizeof(vals); ++i)
+        for (int i = begin; i < end; ++i)
             sum = sum + vals[i]; 
         return sum; 
     }
+
+//========================================================================
 
     template <:T:>
     function T min (T a, T b)
@@ -38,45 +42,7 @@ function T max (T a, T b)
         return b; 
     }
 
-    function void print (int[] array)
-    {
-        print ('[');
-        if (sizeof (array) > 0)
-            print (array[0]);
-        for (int i = 1; i < sizeof (array); ++i)
-        {
-            print (',');
-            print (' ');
-            print (array[i]);
-        }
-        print (']');
-    }
-
-    function void println (int[] array)
-    {
-        print (array);
-        println ();
-    }
-
-    function void print (float[] array)
-    {
-        print ('[');
-        if (sizeof (array) > 0)
-            print (array[0]);
-        for (int i = 1; i < sizeof (array); ++i)
-        {
-            print (',');
-            print (' ');
-            print (array[i]);
-        }
-        print (']');
-    }
-
-    function void println (float[] array)
-    {
-        print (array);
-        println ();
-    }
+//========================================================================
 
     template <:T:>
     function void merge (T[] array, int left, int mid, int right)
@@ -126,6 +92,8 @@ function T max (T a, T b)
         free (rightArray);
     }
 
+//========================================================================
+
     template <:T:>
     function void mergeSort (T[] array, int begin, int end)
     {
@@ -137,6 +105,22 @@ function T max (T a, T b)
         merge<:T:> (array, begin, mid, end);
     }
 
+//========================================================================
+
+    // generic object printing function 
+    function void print (Object obj)
+    {
+        print ("<Object>");
+    }
+
+    // generic object printing function 
+    function void println (Object obj)
+    {
+        print (obj);
+        println ();
+    }
+
+//========================================================================
 
 
 //========================================================================
@@ -151,6 +135,7 @@ function T max (T a, T b)
 
 
 //========================================================================
+
 
 //========================================================================
 
@@ -255,6 +240,82 @@ class Vector
 
 //========================================================================
 
+function void print (Vector<:int:> v)
+{
+    print ('[');
+    if (!v.is_empty()) 
+        print (v.data[0]);
+    for (int i = 1; i < v.size(); ++i)
+    {
+        print (',');
+        print (' ');
+        print (v.data[i]);
+    }
+    print (']');
+}
+
+function void println (Vector<:int:> v)
+{
+    print (v);
+    println ();
+}
+
+function void print (Vector<:float:> v)
+{
+    print ('[');
+    if (!v.is_empty()) 
+        print (v.data[0]);
+    for (int i = 1; i < v.size(); ++i)
+    {
+        print (',');
+        print (' ');
+        print (v.data[i]);
+    }
+    print (']');
+}
+
+function void println (Vector<:float:> v)
+{
+    print (v);
+    println ();
+}
+
+function void print (Vector<:char:> v)
+{
+    print ('[');
+    if (!v.is_empty()) 
+        print (v.data[0]);
+    for (int i = 1; i < v.size(); ++i)
+    {
+        print (',');
+        print (' ');
+        print (v.data[i]);
+    }
+    print (']');
+}
+
+function void println (Vector<:char:> v)
+{
+    print (v);
+    println ();
+}
+
+//========================================================================
+
+// including the same file doesn't generate errors thanks to macro guards 
+// AmyScript Vector implementation + testing 
+// Author: Amy Burnett
+//========================================================================
+
+// includes are relative paths to the file that they are in
+// AmyScript standard library 
+// Author: Amy Burnett
+//========================================================================
+
+
+//========================================================================
+
+
 //========================================================================
 
 function int main ()
@@ -272,15 +333,12 @@ function int main ()
     nums.push_back (3);
     nums.push_back (128);
     nums.push_back (32);
-    nums.push_back (42);
-    nums.push_back (10);
-    nums.push_back (4);
 
     print ("N:   ");
     println (nums.size());
 
     print ("sum: ");
-    println (sum<:int:>(nums.data));
+    println (sum<:int:>(nums.data, 0, nums.size()));
 
     int max = 0;
     for (int i = 0; i < nums.size(); ++i)
@@ -303,16 +361,14 @@ function int main ()
     temp = "Before sort: ";
     print (temp);
     free (temp);
-    println (nums.data);
+    println (nums);
 
-    // this only works correctly because nums.size should equal nums.capacity
-    // also this merge sort implementation has an inclusive end (YUCK!)
     mergeSort<:int:> (nums.data, 0, nums.size()-1);
 
     temp = "After sort:  ";
     print (temp);
     free (temp);
-    println (nums.data);
+    println (nums);
 
     temp = "=== Vector<:float:> =================";
     println (temp);
@@ -327,22 +383,18 @@ function int main ()
     nums2.push_back (128.3);
     nums2.push_back (0.25);
     nums2.push_back (42.1);
-    nums2.push_back (0.0);
-    nums2.push_back (6.28);
 
     temp = "Before sort: ";
     print (temp);
     free (temp);
-    println (nums2.data);
+    println (nums2);
 
-    // this only works correctly because nums.size should equal nums.capacity
-    // also this merge sort implementation has an inclusive end (YUCK!)
     mergeSort<:float:> (nums2.data, 0, nums2.size()-1);
 
     temp = "After sort:  ";
     print (temp);
     free (temp);
-    println (nums2.data);
+    println (nums2);
 
     temp = "=== Vector<:char:> ==================";
     println (temp);
@@ -363,16 +415,27 @@ function int main ()
     temp = "Before sort: ";
     print (temp);
     free (temp);
-    println (nums3.data);
+    println (nums3);
 
-    // this only works correctly because nums.size should equal nums.capacity
-    // also this merge sort implementation has an inclusive end (YUCK!)
     mergeSort<:char:> (nums3.data, 0, nums3.size()-1);
 
     temp = "After sort:  ";
     print (temp);
     free (temp);
-    println (nums3.data);
+    println (nums3);
+
+    temp = "=== Vector<:Vector<:int:>:> =========";
+    println (temp);
+    free (temp);
+
+    Vector<:Vector<:int:>:> board = new Vector<:Vector<:int:>:> ();
+
+    board.push_back (new Vector<:int:>());
+    board.push_back (null);
+    
+    println (board.get(0).size());
+    // this gives an interpreter error
+    //println (board.get(1).size());
 
 }
 

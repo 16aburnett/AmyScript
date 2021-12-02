@@ -4,6 +4,8 @@
 
 #include "utils/stdlib.amy"
 #include "utils/vector.amy"
+// including the same file doesn't generate errors thanks to macro guards 
+#include "utils/vector.amy"
 
 //========================================================================
 
@@ -22,15 +24,12 @@ function int main ()
     nums.push_back (3);
     nums.push_back (128);
     nums.push_back (32);
-    nums.push_back (42);
-    nums.push_back (10);
-    nums.push_back (4);
 
     print ("N:   ");
     println (nums.size());
 
     print ("sum: ");
-    println (sum<:int:>(nums.data));
+    println (sum<:int:>(nums.data, 0, nums.size()));
 
     int max = 0;
     for (int i = 0; i < nums.size(); ++i)
@@ -53,16 +52,14 @@ function int main ()
     temp = "Before sort: ";
     print (temp);
     free (temp);
-    println (nums.data);
+    println (nums);
 
-    // this only works correctly because nums.size should equal nums.capacity
-    // also this merge sort implementation has an inclusive end (YUCK!)
     mergeSort<:int:> (nums.data, 0, nums.size()-1);
 
     temp = "After sort:  ";
     print (temp);
     free (temp);
-    println (nums.data);
+    println (nums);
 
     temp = "=== Vector<:float:> =================";
     println (temp);
@@ -77,22 +74,18 @@ function int main ()
     nums2.push_back (128.3);
     nums2.push_back (0.25);
     nums2.push_back (42.1);
-    nums2.push_back (0.0);
-    nums2.push_back (6.28);
 
     temp = "Before sort: ";
     print (temp);
     free (temp);
-    println (nums2.data);
+    println (nums2);
 
-    // this only works correctly because nums.size should equal nums.capacity
-    // also this merge sort implementation has an inclusive end (YUCK!)
     mergeSort<:float:> (nums2.data, 0, nums2.size()-1);
 
     temp = "After sort:  ";
     print (temp);
     free (temp);
-    println (nums2.data);
+    println (nums2);
 
     temp = "=== Vector<:char:> ==================";
     println (temp);
@@ -113,16 +106,27 @@ function int main ()
     temp = "Before sort: ";
     print (temp);
     free (temp);
-    println (nums3.data);
+    println (nums3);
 
-    // this only works correctly because nums.size should equal nums.capacity
-    // also this merge sort implementation has an inclusive end (YUCK!)
     mergeSort<:char:> (nums3.data, 0, nums3.size()-1);
 
     temp = "After sort:  ";
     print (temp);
     free (temp);
-    println (nums3.data);
+    println (nums3);
+
+    temp = "=== Vector<:Vector<:int:>:> =========";
+    println (temp);
+    free (temp);
+
+    Vector<:Vector<:int:>:> board = new Vector<:Vector<:int:>:> ();
+
+    board.push_back (new Vector<:int:>());
+    board.push_back (null);
+    
+    println (board.get(0).size());
+    // this gives an interpreter error
+    //println (board.get(1).size());
 
 }
 
