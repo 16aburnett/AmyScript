@@ -330,6 +330,20 @@ class AmyScriptCompiler:
         builtinFunction.signature = signature
         symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
 
+        #  char char ();
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None, []), "char", None, [], None)
+        builtinFunction.scopeName = "char"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
+
         #  int floatToInt (float);
         param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.INT, "int", None), "floatToInt", None, [param0], None)
@@ -350,6 +364,21 @@ class AmyScriptCompiler:
         param0.type.arrayDimensions = 1
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.INT, "int", None), "stringToInt", None, [param0], None)
         builtinFunction.scopeName = "stringToInt__char__1"
+        # create signature for node
+        signature = [f"{builtinFunction.id}("]
+        if len(builtinFunction.params) > 0:
+            signature += [builtinFunction.params[0].type.__str__()]
+        for i in range(1, len(builtinFunction.params)):
+            signature += [f", {builtinFunction.params[i].type.__str__()}"]
+        signature += [")"]
+        signature = "".join(signature)
+        builtinFunction.signature = signature
+        symbolTableVisitor.table.insert (builtinFunction, builtinFunction.id, Kind.FUNC)
+
+        #  int charToInt (char);
+        param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
+        builtinFunction = FunctionNode (TypeSpecifierNode (Type.INT, "int", None), "charToInt", None, [param0], None)
+        builtinFunction.scopeName = "charToInt__char"
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:

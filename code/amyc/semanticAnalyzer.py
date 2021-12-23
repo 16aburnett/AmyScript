@@ -796,17 +796,46 @@ class SymbolTableVisitor (ASTVisitor):
         node.type = node.lhs.type
 
         # ensure types work for add/sub
-        hasOverloadedMethod = self.table.lookup (f"__add__", Kind.FUNC, [node.lhs, node.rhs]) != None
+        if node.op.lexeme == '+':
+            overloadedFunctionName = "__add__"
+        elif node.op.lexeme == '-':
+            overloadedFunctionName = "__sub__"
+        hasOverloadedMethod = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs]) != None
+        hasOverloadedFunction = self.table.lookup (overloadedFunctionName, Kind.FUNC, [node.lhs, node.rhs]) != None
         # print (f"__add__({node.lhs.type.__str__()}, {node.rhs.type.__str__()})", hasOverloadedMethod)
         if ((node.lhs.type.type != node.rhs.type.type
             or (node.lhs.type.type != Type.INT
                 and node.lhs.type.type != Type.FLOAT)
             or node.lhs.type.arrayDimensions > 0
             or node.rhs.type.arrayDimensions > 0)
-            and not hasOverloadedMethod):
+            and not hasOverloadedMethod
+            and not hasOverloadedFunction):
             print (f"Semantic Error: invalid/mismatching types for \"{node.op.lexeme}\"")
             printToken (node.op)
             print (f"   {node.lhs.type} != {node.rhs.type}")
+            print ()
+            self.wasSuccessful = False
+            
+        # function operator overload 
+        elif hasOverloadedFunction and not hasOverloadedMethod:
+            node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (overloadedFunctionName, node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
+            node.overloadedFunctionCall.decl = self.table.lookup (overloadedFunctionName, Kind.FUNC, [node.lhs, node.rhs])
+        
+        # method operator overload
+        elif hasOverloadedMethod and not hasOverloadedFunction:
+            node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (f"{node.lhs.type}::{overloadedFunctionName}", node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
+            node.overloadedFunctionCall.decl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])
+        
+        # ambiguous 
+        elif hasOverloadedFunction and hasOverloadedMethod:
+            overloadedMethodDecl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])
+            overloadedFunctionDecl = self.table.lookup (overloadedFunctionName, Kind.FUNC, [node.lhs, node.rhs])
+            print (f"Semantic Error: Ambiguous overload for subscript operator")
+            printToken (node.op)
+            print (f"   Candidate: {overloadedMethodDecl.signature}")
+            printToken (overloadedMethodDecl.token)
+            print (f"   Candidate: {overloadedFunctionDecl.signature}")
+            printToken (overloadedFunctionDecl.token)
             print ()
             self.wasSuccessful = False
 
@@ -817,17 +846,51 @@ class SymbolTableVisitor (ASTVisitor):
         node.type = node.lhs.type
 
         # ensure types work for mult/div/mod 
-        if (node.lhs.type.type != node.rhs.type.type
+        if node.op.lexeme == '*':
+            overloadedFunctionName = "__mult__"
+        elif node.op.lexeme == '/':
+            overloadedFunctionName = "__div__"
+        elif node.op.lexeme == '%':
+            overloadedFunctionName = "__mod__"
+
+        hasOverloadedMethod = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs]) != None
+        hasOverloadedFunction = self.table.lookup (overloadedFunctionName, Kind.FUNC, [node.lhs, node.rhs]) != None
+
+        if ((node.lhs.type.type != node.rhs.type.type
             or (node.lhs.type.type != Type.INT
                 and node.lhs.type.type != Type.FLOAT)
-                or node.lhs.type.arrayDimensions > 0
-                or node.rhs.type.arrayDimensions > 0):
+            or node.lhs.type.arrayDimensions > 0
+            or node.rhs.type.arrayDimensions > 0)
+            and not hasOverloadedMethod
+            and not hasOverloadedFunction):
             print (f"Semantic Error: invalid/mismatching types for \"{node.op.lexeme}\"")
             printToken (node.op)
             print (f"   {node.lhs.type} != {node.rhs.type}")
             print ()
             self.wasSuccessful = False
             
+        # function operator overload 
+        elif hasOverloadedFunction and not hasOverloadedMethod:
+            node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (overloadedFunctionName, node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
+            node.overloadedFunctionCall.decl = self.table.lookup (overloadedFunctionName, Kind.FUNC, [node.lhs, node.rhs])
+        
+        # method operator overload
+        elif hasOverloadedMethod and not hasOverloadedFunction:
+            node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (f"{node.lhs.type}::{overloadedFunctionName}", node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
+            node.overloadedFunctionCall.decl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])
+        
+        # ambiguous 
+        elif hasOverloadedFunction and hasOverloadedMethod:
+            overloadedMethodDecl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])
+            overloadedFunctionDecl = self.table.lookup (overloadedFunctionName, Kind.FUNC, [node.lhs, node.rhs])
+            print (f"Semantic Error: Ambiguous overload for \"{overloadedFunctionName}\" operator")
+            printToken (node.op)
+            print (f"   Candidate: {overloadedMethodDecl.signature}")
+            printToken (overloadedMethodDecl.token)
+            print (f"   Candidate: {overloadedFunctionDecl.signature}")
+            printToken (overloadedFunctionDecl.token)
+            print ()
+            self.wasSuccessful = False
 
     def visitUnaryLeftExpressionNode (self, node):
         node.rhs.accept (self)
@@ -873,35 +936,80 @@ class SymbolTableVisitor (ASTVisitor):
 
     def visitSubscriptExpressionNode (self, node):
 
+        # *** implement multiple offsets for overloads
+
         if self.checkDeclaration:
             node.lhs.accept (self)
 
             # ensure lhs is an array 
-            if (node.lhs.type.arrayDimensions == 0):
+            hasOverloadedMethod = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and self.table.lookup (f"{node.lhs.type}::__subscript__", Kind.FUNC, [node.offset]) != None
+            hasOverloadedFunction = self.table.lookup ("__subscript__", Kind.FUNC, [node.lhs, node.offset]) != None
+            if (node.lhs.type.arrayDimensions == 0
+               and not hasOverloadedMethod
+               and not hasOverloadedFunction):
                 print (f"Semantic Error: lhs must be an array")
                 printToken (node.op)
                 print (f"   LHS type: {node.lhs.type}")
                 print ()
                 self.wasSuccessful = False
 
-        # the type for this is lhs - 1 dimension
-        node.type = node.lhs.type.copy ()
+        # nonoverloaded 
+        if not hasOverloadedFunction and not hasOverloadedMethod:
+            # the type for this is lhs - 1 dimension
+            node.type = node.lhs.type.copy ()
 
-        node.type.arrayDimensions = node.lhs.type.arrayDimensions - 1
+            node.type.arrayDimensions = node.lhs.type.arrayDimensions - 1
 
-        node.type.accept (self)
+            node.type.accept (self)
+            node.offset.accept (self)
 
-        node.offset.accept (self)
+            # ensure offset is type int or enum 
+            isInt = node.offset.type.type == Type.INT and node.offset.type.arrayDimensions == 0
+            isEnum = False
+            typedecl = self.table.lookup(node.offset.type.id, Kind.TYPE)
+            isEnum = typedecl and isinstance (typedecl, EnumDeclarationNode)
+            if not (isInt or isEnum):
+                print (f"Semantic Error: Offset of subscript operator must be an integer or enum")
+                printToken (node.op)
+                print (f"   Offset type: {node.offset.type}")
+                print ()
+                self.wasSuccessful = False
+        # overloaded method
+        elif hasOverloadedMethod and not hasOverloadedFunction:
+            overloadedFunctionDecl = self.table.lookup (f"{node.lhs.type}::__subscript__", Kind.FUNC, [node.offset])
 
-        # ensure offset is type int or enum 
-        isInt = node.offset.type.type == Type.INT and node.offset.type.arrayDimensions == 0
-        isEnum = False
-        typedecl = self.table.lookup(node.offset.type.id, Kind.TYPE)
-        isEnum = typedecl and isinstance (typedecl, EnumDeclarationNode)
-        if not (isInt or isEnum):
-            print (f"Semantic Error: Offset of subscript operator must be an integer or enum")
+            # this type would be the return type of the overloaded call 
+            node.type = overloadedFunctionDecl.type.copy ()
+
+            node.type.accept (self)
+            node.offset.accept (self)
+
+            # just using a function call for simplicity
+            # NOTE: implicit object parameter is also passed as an arg
+            node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (f"{node.lhs.type}::__subscript__", node.op, 0, 0), [node.lhs, node.offset], [], node.op, 0, 0)
+            node.overloadedFunctionCall.decl = overloadedFunctionDecl
+        # overloaded function
+        elif hasOverloadedFunction and not hasOverloadedMethod:
+            overloadedFunctionDecl = self.table.lookup ("__subscript__", Kind.FUNC, [node.lhs, node.offset])
+
+            # this type would be the return type of the overloaded call 
+            node.type = overloadedFunctionDecl.type.copy ()
+
+            node.type.accept (self)
+            node.offset.accept (self)
+
+            node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode ("__subscript__", node.op, 0, 0), [node.lhs, node.offset], [], node.op, 0, 0)
+            node.overloadedFunctionCall.decl = overloadedFunctionDecl
+        # ambiguous 
+        elif hasOverloadedFunction and hasOverloadedMethod:
+            overloadedMethodDecl = self.table.lookup (f"{node.lhs.type}::__subscript__", Kind.FUNC, [node.offset])
+            overloadedFunctionDecl = self.table.lookup ("__subscript__", Kind.FUNC, [node.lhs, node.offset])
+            print (f"Semantic Error: Ambiguous overload for \"__subscript__\" operator")
             printToken (node.op)
-            print (f"   Offset type: {node.offset.type}")
+            print (f"   Candidate: {overloadedMethodDecl.signature}")
+            printToken (overloadedMethodDecl.token)
+            print (f"   Candidate: {overloadedFunctionDecl.signature}")
+            printToken (overloadedFunctionDecl.token)
             print ()
             self.wasSuccessful = False
 

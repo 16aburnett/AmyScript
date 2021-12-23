@@ -63,6 +63,7 @@ OPCODE_ItoF        = 37 # int to float
 OPCODE_STRING      = 38 # int/float to string
 OPCODE_StoF        = 39 # string to float
 OPCODE_StoI        = 40 # string to int 
+OPCODE_CtoI        = 41 # char to int 
 toOpCode = {
     "assign"      : OPCODE_ASSIGN,
     "malloc"      : OPCODE_MALLOC,
@@ -104,7 +105,8 @@ toOpCode = {
     "itof"        : OPCODE_ItoF,
     "string"      : OPCODE_STRING,
     "stof"        : OPCODE_StoF,
-    "stoi"        : OPCODE_StoI
+    "stoi"        : OPCODE_StoI,
+    "ctoi"        : OPCODE_CtoI
 }
 
 # PARAM MODES
@@ -1102,6 +1104,22 @@ class AmyAssemblyInterpreter:
                         s += [heap.memory[src+i]]
                     s = "".join(s)
                     heap.memory[address] = int (s)
+                # Case 3: Invalid param type
+                else:
+                    print(f"Error: dest should be memory or stack")
+                    exit(1)
+            elif cmd == OPCODE_CtoI:
+                # CTOI dest src 
+                # Case1 : dest variable
+                if params[0] == MODE_STACK:
+                    src, i = getNextValue(heap, stack, params, 2)
+                    stack[base_pointer][params[1]] = int (src)
+                # Case2 : dest memory
+                elif params[0] == MODE_MEMORY:
+                    pmode, pointer, omode, offset = params[1:5]
+                    address = getMemAddress(stack, pmode, pointer, omode, offset)
+                    src, i = getNextValue(heap, stack, params, 5)
+                    heap.memory[address] = int (src)
                 # Case 3: Invalid param type
                 else:
                     print(f"Error: dest should be memory or stack")

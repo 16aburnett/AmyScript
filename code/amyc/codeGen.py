@@ -1198,12 +1198,22 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("POP __rhs")
         self.printCode ("POP __lhs")
         
-        # addition 
-        if node.op.lexeme == "+":
-            self.printCode ("ADD __res __lhs __rhs")
-        # subtraction 
-        elif node.op.lexeme == "-":
-            self.printCode ("SUBTRACT __res __lhs __rhs")
+        # simple additive 
+        if node.overloadedFunctionCall == None:
+            # addition
+            if node.op.lexeme == "+":
+                self.printCode ("ADD __res __lhs __rhs")
+            # subtraction 
+            elif node.op.lexeme == "-":
+                self.printCode ("SUBTRACT __res __lhs __rhs")
+        # overloaded function call 
+        else:
+            self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
+            # push args in reverse order
+            self.printCode (f"PUSH __rhs")
+            self.printCode (f"PUSH __lhs")
+            self.printCode (f"CALL {node.overloadedFunctionCall.decl.scopeName}")
+            self.printCode (f"RESPONSE __res")
 
         # push result to the stack
         self.printCode ("PUSH __res")
@@ -1237,15 +1247,26 @@ class CodeGenVisitor (ASTVisitor):
         self.printCode ("POP __rhs")
         self.printCode ("POP __lhs")
     
-        # Multiplication 
-        if node.op.lexeme == "*":
-            self.printCode ("MULTIPLY __res __lhs __rhs")
-        # division 
-        elif node.op.lexeme == "/":
-            self.printCode ("DIVIDE __res __lhs __rhs")
-        # Mod
-        elif node.op.lexeme == "%":
-            self.printCode ("MOD __res __lhs __rhs")
+        # simple multiplicative  
+        if node.overloadedFunctionCall == None:
+            # Multiplication 
+            if node.op.lexeme == "*":
+                self.printCode ("MULTIPLY __res __lhs __rhs")
+            # division 
+            elif node.op.lexeme == "/":
+                self.printCode ("DIVIDE __res __lhs __rhs")
+            # Mod
+            elif node.op.lexeme == "%":
+                self.printCode ("MOD __res __lhs __rhs")
+        # overloaded function call 
+        else:
+            self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
+            # push args in reverse order
+            self.printCode (f"PUSH __rhs")
+            self.printCode (f"PUSH __lhs")
+            self.printCode (f"CALL {node.overloadedFunctionCall.decl.scopeName}")
+            self.printCode (f"RESPONSE __res")
+        
 
         # push result to the stack
         self.printCode ("PUSH __res")
@@ -1566,7 +1587,19 @@ class CodeGenVisitor (ASTVisitor):
 
         self.printCode ("POP __offset")
         self.printCode ("POP __pointer")
-        self.printCode ("PUSH __pointer[__offset]")
+
+        # simple subscript  
+        if node.overloadedFunctionCall == None:
+            self.printCode ("PUSH __pointer[__offset]")
+        # overloaded function call 
+        else:
+            self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
+            # push args in reverse order
+            self.printCode (f"PUSH __offset")
+            self.printCode (f"PUSH __pointer")
+            self.printCode (f"CALL {node.overloadedFunctionCall.decl.scopeName}")
+            self.printCode (f"RESPONSE __res")
+            self.printCode (f"PUSH __res")
 
         self.indentation -= 1
 

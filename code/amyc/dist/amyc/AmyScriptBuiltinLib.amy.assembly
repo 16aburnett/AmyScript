@@ -171,6 +171,12 @@ int:
     return 0
 
 //========================================================================
+// returns default char value
+// char char ();
+char:
+    return '0'
+
+//========================================================================
 // converts float to int
 // int floatToInt (float);
 floatToInt__float:
@@ -184,6 +190,14 @@ floatToInt__float:
 stringToInt__char__1:
     stackget val 0
     stoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char
+// int charToInt (char);
+charToInt__char:
+    stackget val 0
+    ctoi res val
     return res
 
 //========================================================================

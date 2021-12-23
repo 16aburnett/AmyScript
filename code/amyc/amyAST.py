@@ -833,6 +833,8 @@ class AdditiveExpressionNode (ExpressionNode):
         self.op = op
         self.rhs = rhs 
 
+        self.overloadedFunctionCall = None
+
         self.lineNumber = line
         self.columnNumber = column
 
@@ -854,6 +856,8 @@ class MultiplicativeExpressionNode (ExpressionNode):
         self.lhs = lhs
         self.op = op
         self.rhs = rhs 
+
+        self.overloadedFunctionCall = None
 
         self.lineNumber = line
         self.columnNumber = column
@@ -933,6 +937,9 @@ class SubscriptExpressionNode (ExpressionNode):
         self.lhs = lhs 
         self.op = op
         self.offset = offset
+
+        self.overloadedFunctionCall = None
+        self.overloadedMethodCall = None
 
         self.lineNumber = line
         self.columnNumber = column
