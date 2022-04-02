@@ -96,6 +96,9 @@ class ProgramNode (Node):
         self.lineNumber = 0
         self.columnNumber = 0
 
+        self.localVariables = []
+        self.stringLiterals = []
+
     def accept (self, visitor):
         visitor.visitProgramNode (self)
 
@@ -103,6 +106,7 @@ class ProgramNode (Node):
         node = ProgramNode (None)
         for codeunit in self.codeunits:
             node.codeunits += [codeunit.copy ()]
+        node.localVariables = [n.copy() for n in self.localVariables]
         return node
 
 # ========================================================================
@@ -137,11 +141,15 @@ class VariableDeclarationNode (DeclarationNode):
         self.lineNumber = 0
         self.columnNumber = 0
 
+        # x86 fields
+        self.stackOffset = 0
+
     def accept (self, visitor):
         visitor.visitVariableDeclarationNode (self)
 
     def copy (self):
         node = VariableDeclarationNode (self.type.copy(), self.id, self.token)
+        node.stackOffset = self.stackOffset
         return node
 
 # ========================================================================
@@ -154,11 +162,14 @@ class ParameterNode (DeclarationNode):
         self.lineNumber = 0
         self.columnNumber = 0
 
+        self.stackOffset = 0
+
     def accept (self, visitor):
         visitor.visitParameterNode (self)
 
     def copy (self):
         node = ParameterNode (self.type.copy(), self.id, self.token)
+        node.stackOffset = self.stackOffset
         return node
 
 # ========================================================================
@@ -209,11 +220,15 @@ class FunctionNode (CodeUnitNode):
         self.signature = ""
 
         self.scopeName = ""
+        self.label = ""
+        self.endLabel = ""
 
         self.templateParams = []
 
         self.lineNumber = 0
         self.columnNumber = 0
+
+        self.localVariables = []
 
     def accept (self, visitor):
         visitor.visitFunctionNode (self)
@@ -222,6 +237,9 @@ class FunctionNode (CodeUnitNode):
         node = FunctionNode (self.type.copy(), self.id, self.token, [param.copy() for param in self.params], self.body.copy())
         node.signature = self.signature
         node.scopeName = self.scopeName
+        node.label = self.label
+        node.endLabel = self.endLabel
+        node.localVariables = [n.copy() for n in self.localVariables]
         return node
 
 # ========================================================================
@@ -1237,6 +1255,9 @@ class StringLiteralExpressionNode (ExpressionNode):
 
         self.lineNumber = 0
         self.columnNumber = 0
+
+        # x86
+        self.label = "<ERROR:LABEL NOT SET>"
 
     def accept (self, visitor):
         visitor.visitStringLiteralExpressionNode (self)

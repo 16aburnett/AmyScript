@@ -23,6 +23,8 @@ class SymbolTableVisitor (ASTVisitor):
         self.table = SymbolTable ()
 
         self.parameters = []
+        self.isFunctionBody = False
+
         self.lines = lines 
         self.table.lines = self.lines
 
@@ -33,9 +35,15 @@ class SymbolTableVisitor (ASTVisitor):
         self.containingFunction = [] 
         self.containingLoop = []
 
+        # keeps track of the root 
+        self.programNode = None
+
         self.insertFunc = True 
 
     def visitProgramNode (self, node):
+        # keep track of the root node 
+        self.programNode = node
+
         for codeunit in node.codeunits:
             if codeunit != None:
                 codeunit.accept (self)
@@ -95,6 +103,14 @@ class SymbolTableVisitor (ASTVisitor):
             print ()
             self.wasSuccessful = False
 
+        # save a reference to this variable for the function header
+        if len(self.containingFunction) > 0:
+            self.containingFunction[-1].localVariables += [node]
+        # if global code, save to global localVariables 
+        else:
+            self.programNode.localVariables += [node]
+
+
     def visitFunctionNode (self, node):
         node.type.accept (self)
 
@@ -149,7 +165,9 @@ class SymbolTableVisitor (ASTVisitor):
         containingLoop = self.containingLoop
         self.containingLoop = []
 
+        self.isFunctionBody = True
         node.body.accept (self)
+        self.isFunctionBody = False
 
         self.containingFunction.pop ()
         # restore containing loop state
@@ -646,7 +664,15 @@ class SymbolTableVisitor (ASTVisitor):
             return 
 
     def visitCodeBlockNode (self, node):
-        self.table.enterScope ()
+
+        # determine scope type
+        # this is used to determine number of dynamic links to follow
+        scopeType = ScopeType.OTHER
+        if self.isFunctionBody:
+            scopeType = ScopeType.FUNCTION
+            self.isFunctionBody = False
+
+        self.table.enterScope (scopeType)
 
         # if this is a function body
         # then add the parameters to this scope
@@ -1301,6 +1327,7 @@ class SymbolTableVisitor (ASTVisitor):
                 node.type = decl.type
                 # save declaration 
                 node.decl = decl 
+                # print(f"==> {node.decl.id} : linksFollowed={self.table.linksFollowed}")
 
     def visitArrayAllocatorExpressionNode (self, node):
         node.type.accept (self)
@@ -1373,7 +1400,9 @@ class SymbolTableVisitor (ASTVisitor):
         pass
 
     def visitStringLiteralExpressionNode (self, node):
-        pass
+        # FOR X86-64
+        # save with program node so these can be added to the data section
+        self.programNode.stringLiterals += [node]
 
     def visitListConstructorExpressionNode (self, node):
         for elem in node.elems:

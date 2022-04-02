@@ -1,0 +1,130 @@
+// AmyScript compiled to x86-64 test 
+
+// test integer arithmetic + local variables
+{
+    int x = (-17 + 42 * (2 + 2) + 1) * -1 % 3;
+    int y = x * 23;
+    println (y / x);
+}
+
+// test chars 
+{
+    char c0 = '\101'; // octal for 'A' ;)
+    char c1 = 'm';
+    char c2 = 'y';
+    char c3 = '\n';
+    print (c0); print (c1); print (c2); print (c3);
+}
+
+// test strings
+{
+    char[] string0 = "\110ello, "; // \110 is octal for 'H' ;)
+    char[] string1 = "World!";
+    print (string0); print (string1); print ("\n");
+}
+
+// test conditionals 
+
+{
+    int x = 1; 
+    int y = ~x;
+    int z = x+y && ++y && --x && !x++;
+    print (x); print (' '); print (y); print (' '); println (z);
+    if (x == 1)
+    {
+        println ('A');
+    }
+    elif (y != -1) println ('B');
+    else println ('C');
+
+    print ("x: "); println (x);
+    print (" x <  0 -> "); println (x < 0);
+    print (" x <= 0 -> "); println (x <= 0);
+    print (" x == 0 -> "); println (x == 0);
+    print (" x >= 0 -> "); println (x >= 0);
+    print (" x >  0 -> "); println (x > 0);
+
+    if (y < 0)
+        println ("y < 0");
+    elif (y == 0)
+        println ("y == 0");
+    elif (y > 0)
+        println ("y > 0");
+
+    if (z <= 0)
+        if (z < 0)
+            println ("z < 0");
+        else 
+            println ("z == 0");
+    elif (z > 0)
+        println ("z > 0");
+
+}
+
+// test loops
+{
+    for (int i = 0; i < 10; ++i)
+    {
+        print (i);
+        print (' ');
+    }
+    println();
+
+    // test break
+    for (int i = 10; i > -5; --i)
+    {
+        print (i);
+        print (' ');
+        if (i <= 0)
+            break;
+    }
+    println ();
+
+    // test while 
+    int j = 1;
+    while (j < 100)
+    {  
+        print (j*j);
+        print (' ');
+        ++j;
+        if (j < 10) 
+            continue;
+        else
+            break;
+        --j; // dead code
+    }
+    println ();
+
+    // for-else??
+}
+
+// test functions
+
+{
+    function int mul2 (int a)
+    {
+        return a * 2;
+    }
+
+    println (mul2 (mul2 (mul2 (16))));
+
+    function int add (int a, int b, int c)
+    {
+        int d = a + b + c;
+        return d; 
+    }
+
+    print ("add (7, 4, 21) -> ");
+    println (add (7, 4, 21));
+
+    int x = 10;
+
+    function int mulx (int a)
+    {
+        return a * x;
+    }
+
+    print ("x = "); print (x); print ("; mulx (7) -> "); println (mulx(7));
+
+}
+

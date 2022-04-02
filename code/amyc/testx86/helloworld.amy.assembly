@@ -1,0 +1,2089 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+// Global Builtin Variables
+
+    assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+exit:
+    halt
+
+//========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
+
+//========================================================================
+// returns default char value
+// char char ();
+char:
+    return '0'
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char
+// int charToInt (char);
+charToInt__char:
+    stackget val 0
+    ctoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//------------------------------------------------------------------------
+// Code Block
+   // Assignment - '='
+      // RHS
+         // Mod
+            // LHS
+               // Multiplication
+                  // LHS
+                     // Addition
+                        // LHS
+                           // Addition
+                              // LHS
+                                 // Negative
+                                    // RHS
+                                       // Int Literal
+                                          PUSH 17
+                                    POP __rhs
+                                    SUBTRACT __res 0 __rhs
+                                    PUSH __res
+                              // RHS
+                                 // Multiplication
+                                    // LHS
+                                       // Int Literal
+                                          PUSH 42
+                                    // RHS
+                                       // Addition
+                                          // LHS
+                                             // Int Literal
+                                                PUSH 2
+                                          // RHS
+                                             // Int Literal
+                                                PUSH 2
+                                          POP __rhs
+                                          POP __lhs
+                                          ADD __res __lhs __rhs
+                                          PUSH __res
+                                    POP __rhs
+                                    POP __lhs
+                                    MULTIPLY __res __lhs __rhs
+                                    PUSH __res
+                              POP __rhs
+                              POP __lhs
+                              ADD __res __lhs __rhs
+                              PUSH __res
+                        // RHS
+                           // Int Literal
+                              PUSH 1
+                        POP __rhs
+                        POP __lhs
+                        ADD __res __lhs __rhs
+                        PUSH __res
+                  // RHS
+                     // Negative
+                        // RHS
+                           // Int Literal
+                              PUSH 1
+                        POP __rhs
+                        SUBTRACT __res 0 __rhs
+                        PUSH __res
+                  POP __rhs
+                  POP __lhs
+                  MULTIPLY __res __lhs __rhs
+                  PUSH __res
+            // RHS
+               // Int Literal
+                  PUSH 3
+            POP __rhs
+            POP __lhs
+            MOD __res __lhs __rhs
+            PUSH __res
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__0__x 0
+      POP __rhs
+      ASSIGN __main__block__0__x __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Assignment - '='
+      // RHS
+         // Multiplication
+            // LHS
+               // Identifier - x
+                  PUSH __main__block__0__x
+            // RHS
+               // Int Literal
+                  PUSH 23
+            POP __rhs
+            POP __lhs
+            MULTIPLY __res __lhs __rhs
+            PUSH __res
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__0__y 0
+      POP __rhs
+      ASSIGN __main__block__0__y __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Function Call - println(int) -> void
+      // Arguments
+         // Division
+            // LHS
+               // Identifier - y
+                  PUSH __main__block__0__y
+            // RHS
+               // Identifier - x
+                  PUSH __main__block__0__x
+            POP __rhs
+            POP __lhs
+            DIVIDE __res __lhs __rhs
+            PUSH __res
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+// Code Block
+   // Assignment - '='
+      // RHS
+         // Char Literal
+            PUSH '\101'
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__1__c0 0
+      POP __rhs
+      ASSIGN __main__block__1__c0 __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Assignment - '='
+      // RHS
+         // Char Literal
+            PUSH 'm'
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__1__c1 0
+      POP __rhs
+      ASSIGN __main__block__1__c1 __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Assignment - '='
+      // RHS
+         // Char Literal
+            PUSH 'y'
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__1__c2 0
+      POP __rhs
+      ASSIGN __main__block__1__c2 __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Assignment - '='
+      // RHS
+         // Char Literal
+            PUSH '\n'
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__1__c3 0
+      POP __rhs
+      ASSIGN __main__block__1__c3 __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char) -> void
+      // Arguments
+         // Identifier - c0
+            PUSH __main__block__1__c0
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char) -> void
+      // Arguments
+         // Identifier - c1
+            PUSH __main__block__1__c1
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char) -> void
+      // Arguments
+         // Identifier - c2
+            PUSH __main__block__1__c2
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char) -> void
+      // Arguments
+         // Identifier - c3
+            PUSH __main__block__1__c3
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+// Code Block
+   // Assignment - '='
+      // RHS
+         // String Literal
+            MALLOC __str 10
+            ASSIGN __str[0] '\'
+            ASSIGN __str[1] '1'
+            ASSIGN __str[2] '1'
+            ASSIGN __str[3] '0'
+            ASSIGN __str[4] 'e'
+            ASSIGN __str[5] 'l'
+            ASSIGN __str[6] 'l'
+            ASSIGN __str[7] 'o'
+            ASSIGN __str[8] ','
+            ASSIGN __str[9] ' '
+            PUSH __str
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__2__string0 0
+      POP __rhs
+      ASSIGN __main__block__2__string0 __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Assignment - '='
+      // RHS
+         // String Literal
+            MALLOC __str 6
+            ASSIGN __str[0] 'W'
+            ASSIGN __str[1] 'o'
+            ASSIGN __str[2] 'r'
+            ASSIGN __str[3] 'l'
+            ASSIGN __str[4] 'd'
+            ASSIGN __str[5] '!'
+            PUSH __str
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__2__string1 0
+      POP __rhs
+      ASSIGN __main__block__2__string1 __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // Identifier - string0
+            PUSH __main__block__2__string0
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // Identifier - string1
+            PUSH __main__block__2__string1
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // String Literal
+            MALLOC __str 1
+            ASSIGN __str[0] '\n'
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+// Code Block
+   // Assignment - '='
+      // RHS
+         // Int Literal
+            PUSH 1
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__3__x 0
+      POP __rhs
+      ASSIGN __main__block__3__x __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Assignment - '='
+      // RHS
+         // Bitwise Negation
+            // RHS
+               // Identifier - x
+                  PUSH __main__block__3__x
+            POP __rhs
+            NOT __res __rhs
+            PUSH __res
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__3__y 0
+      POP __rhs
+      ASSIGN __main__block__3__y __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Assignment - '='
+      // RHS
+         // AND
+            // LHS
+               // AND
+                  // LHS
+                     // AND
+                        // LHS
+                           // Addition
+                              // LHS
+                                 // Identifier - x
+                                    PUSH __main__block__3__x
+                              // RHS
+                                 // Identifier - y
+                                    PUSH __main__block__3__y
+                              POP __rhs
+                              POP __lhs
+                              ADD __res __lhs __rhs
+                              PUSH __res
+                        // RHS
+                           // Pre-Increment
+                              // RHS
+                                 // Identifier - y
+                                    PUSH __main__block__3__y
+                              POP __rhs
+                              ADD __main__block__3__y __main__block__3__y 1
+                              ASSIGN __res __main__block__3__y
+                              PUSH __res
+                        POP __rhs
+                        POP __lhs
+                        AND __res __lhs __rhs
+                        PUSH __res
+                  // RHS
+                     // Pre-Decrement
+                        // RHS
+                           // Identifier - x
+                              PUSH __main__block__3__x
+                        POP __rhs
+                        SUBTRACT __main__block__3__x __main__block__3__x 1
+                        ASSIGN __res __main__block__3__x
+                        PUSH __res
+                  POP __rhs
+                  POP __lhs
+                  AND __res __lhs __rhs
+                  PUSH __res
+            // RHS
+               // Negate
+                  // RHS
+                     // Post-Increment
+                        ASSIGN __res __main__block__3__x
+                        ADD __main__block__3__x __main__block__3__x 1
+                        PUSH __res
+                  POP __rhs
+                  NOT __res __rhs
+                  PUSH __res
+            POP __rhs
+            POP __lhs
+            AND __res __lhs __rhs
+            PUSH __res
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__3__z 0
+      POP __rhs
+      ASSIGN __main__block__3__z __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(int) -> void
+      // Arguments
+         // Identifier - x
+            PUSH __main__block__3__x
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char) -> void
+      // Arguments
+         // Char Literal
+            PUSH ' '
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(int) -> void
+      // Arguments
+         // Identifier - y
+            PUSH __main__block__3__y
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char) -> void
+      // Arguments
+         // Char Literal
+            PUSH ' '
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - println(int) -> void
+      // Arguments
+         // Identifier - z
+            PUSH __main__block__3__z
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   //---------------------------------------------------------------------
+   // If-Statement
+      // Condition
+         // Equal
+            // LHS
+               // Identifier - x
+                  PUSH __main__block__3__x
+            // RHS
+               // Int Literal
+                  PUSH 1
+            POP __rhs
+            POP __lhs
+            EQUAL __res __lhs __rhs
+            PUSH __res
+         POP __cond
+         CMP __cond 0
+         JEQ __elif__4x0
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - println(char) -> void
+               // Arguments
+                  // Char Literal
+                     PUSH 'A'
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Statement results can be ignored
+            POP __void
+         //---------------------------------------------------------------
+      JUMP __endif__4
+      //------------------------------------------------------------------
+      // Elif-Statement
+      __elif__4x0:
+         // Condition
+         // Not Equal
+            // LHS
+               // Identifier - y
+                  PUSH __main__block__3__y
+            // RHS
+               // Negative
+                  // RHS
+                     // Int Literal
+                        PUSH 1
+                  POP __rhs
+                  SUBTRACT __res 0 __rhs
+                  PUSH __res
+            POP __rhs
+            POP __lhs
+            NEQUAL __res __lhs __rhs
+            PUSH __res
+         POP __cond
+         CMP __cond 0
+         JEQ __else__4
+         // Body
+         // Function Call - println(char) -> void
+            // Arguments
+               // Char Literal
+                  PUSH 'B'
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         JUMP __endif__4
+      //------------------------------------------------------------------
+      //------------------------------------------------------------------
+      // Else-Statement
+      __else__4:
+      // Function Call - println(char) -> void
+         // Arguments
+            // Char Literal
+               PUSH 'C'
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         // *** println
+         CALL println__char
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+      // Statement results can be ignored
+      POP __void
+      //------------------------------------------------------------------
+      // End of if
+      __endif__4:
+   //---------------------------------------------------------------------
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // String Literal
+            MALLOC __str 3
+            ASSIGN __str[0] 'x'
+            ASSIGN __str[1] ':'
+            ASSIGN __str[2] ' '
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - println(int) -> void
+      // Arguments
+         // Identifier - x
+            PUSH __main__block__3__x
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // String Literal
+            MALLOC __str 11
+            ASSIGN __str[0] ' '
+            ASSIGN __str[1] 'x'
+            ASSIGN __str[2] ' '
+            ASSIGN __str[3] '<'
+            ASSIGN __str[4] ' '
+            ASSIGN __str[5] ' '
+            ASSIGN __str[6] '0'
+            ASSIGN __str[7] ' '
+            ASSIGN __str[8] '-'
+            ASSIGN __str[9] '>'
+            ASSIGN __str[10] ' '
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - println(int) -> void
+      // Arguments
+         // Less Than
+            // LHS
+               // Identifier - x
+                  PUSH __main__block__3__x
+            // RHS
+               // Int Literal
+                  PUSH 0
+            POP __rhs
+            POP __lhs
+            LT __res __lhs __rhs
+            PUSH __res
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // String Literal
+            MALLOC __str 11
+            ASSIGN __str[0] ' '
+            ASSIGN __str[1] 'x'
+            ASSIGN __str[2] ' '
+            ASSIGN __str[3] '<'
+            ASSIGN __str[4] '='
+            ASSIGN __str[5] ' '
+            ASSIGN __str[6] '0'
+            ASSIGN __str[7] ' '
+            ASSIGN __str[8] '-'
+            ASSIGN __str[9] '>'
+            ASSIGN __str[10] ' '
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - println(int) -> void
+      // Arguments
+         // Less Than or Equal to
+            // LHS
+               // Identifier - x
+                  PUSH __main__block__3__x
+            // RHS
+               // Int Literal
+                  PUSH 0
+            POP __rhs
+            POP __lhs
+            LE __res __lhs __rhs
+            PUSH __res
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // String Literal
+            MALLOC __str 11
+            ASSIGN __str[0] ' '
+            ASSIGN __str[1] 'x'
+            ASSIGN __str[2] ' '
+            ASSIGN __str[3] '='
+            ASSIGN __str[4] '='
+            ASSIGN __str[5] ' '
+            ASSIGN __str[6] '0'
+            ASSIGN __str[7] ' '
+            ASSIGN __str[8] '-'
+            ASSIGN __str[9] '>'
+            ASSIGN __str[10] ' '
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - println(int) -> void
+      // Arguments
+         // Equal
+            // LHS
+               // Identifier - x
+                  PUSH __main__block__3__x
+            // RHS
+               // Int Literal
+                  PUSH 0
+            POP __rhs
+            POP __lhs
+            EQUAL __res __lhs __rhs
+            PUSH __res
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // String Literal
+            MALLOC __str 11
+            ASSIGN __str[0] ' '
+            ASSIGN __str[1] 'x'
+            ASSIGN __str[2] ' '
+            ASSIGN __str[3] '>'
+            ASSIGN __str[4] '='
+            ASSIGN __str[5] ' '
+            ASSIGN __str[6] '0'
+            ASSIGN __str[7] ' '
+            ASSIGN __str[8] '-'
+            ASSIGN __str[9] '>'
+            ASSIGN __str[10] ' '
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - println(int) -> void
+      // Arguments
+         // Greater Than or Equal to
+            // LHS
+               // Identifier - x
+                  PUSH __main__block__3__x
+            // RHS
+               // Int Literal
+                  PUSH 0
+            POP __rhs
+            POP __lhs
+            GE __res __lhs __rhs
+            PUSH __res
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // String Literal
+            MALLOC __str 11
+            ASSIGN __str[0] ' '
+            ASSIGN __str[1] 'x'
+            ASSIGN __str[2] ' '
+            ASSIGN __str[3] '>'
+            ASSIGN __str[4] ' '
+            ASSIGN __str[5] ' '
+            ASSIGN __str[6] '0'
+            ASSIGN __str[7] ' '
+            ASSIGN __str[8] '-'
+            ASSIGN __str[9] '>'
+            ASSIGN __str[10] ' '
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - println(int) -> void
+      // Arguments
+         // Greater Than
+            // LHS
+               // Identifier - x
+                  PUSH __main__block__3__x
+            // RHS
+               // Int Literal
+                  PUSH 0
+            POP __rhs
+            POP __lhs
+            GT __res __lhs __rhs
+            PUSH __res
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   //---------------------------------------------------------------------
+   // If-Statement
+      // Condition
+         // Less Than
+            // LHS
+               // Identifier - y
+                  PUSH __main__block__3__y
+            // RHS
+               // Int Literal
+                  PUSH 0
+            POP __rhs
+            POP __lhs
+            LT __res __lhs __rhs
+            PUSH __res
+         POP __cond
+         CMP __cond 0
+         JEQ __elif__6x0
+      // Body
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // String Literal
+                  MALLOC __str 5
+                  ASSIGN __str[0] 'y'
+                  ASSIGN __str[1] ' '
+                  ASSIGN __str[2] '<'
+                  ASSIGN __str[3] ' '
+                  ASSIGN __str[4] '0'
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+      JUMP __endif__6
+      //------------------------------------------------------------------
+      // Elif-Statement
+      __elif__6x0:
+         // Condition
+         // Equal
+            // LHS
+               // Identifier - y
+                  PUSH __main__block__3__y
+            // RHS
+               // Int Literal
+                  PUSH 0
+            POP __rhs
+            POP __lhs
+            EQUAL __res __lhs __rhs
+            PUSH __res
+         POP __cond
+         CMP __cond 0
+         JEQ __elif__6x1
+         // Body
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // String Literal
+                  MALLOC __str 6
+                  ASSIGN __str[0] 'y'
+                  ASSIGN __str[1] ' '
+                  ASSIGN __str[2] '='
+                  ASSIGN __str[3] '='
+                  ASSIGN __str[4] ' '
+                  ASSIGN __str[5] '0'
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         JUMP __endif__6
+      //------------------------------------------------------------------
+      //------------------------------------------------------------------
+      // Elif-Statement
+      __elif__6x1:
+         // Condition
+         // Greater Than
+            // LHS
+               // Identifier - y
+                  PUSH __main__block__3__y
+            // RHS
+               // Int Literal
+                  PUSH 0
+            POP __rhs
+            POP __lhs
+            GT __res __lhs __rhs
+            PUSH __res
+         POP __cond
+         CMP __cond 0
+         JEQ __endif__6
+         // Body
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // String Literal
+                  MALLOC __str 5
+                  ASSIGN __str[0] 'y'
+                  ASSIGN __str[1] ' '
+                  ASSIGN __str[2] '>'
+                  ASSIGN __str[3] ' '
+                  ASSIGN __str[4] '0'
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         JUMP __endif__6
+      //------------------------------------------------------------------
+      // End of if
+      __endif__6:
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // If-Statement
+      // Condition
+         // Less Than or Equal to
+            // LHS
+               // Identifier - z
+                  PUSH __main__block__3__z
+            // RHS
+               // Int Literal
+                  PUSH 0
+            POP __rhs
+            POP __lhs
+            LE __res __lhs __rhs
+            PUSH __res
+         POP __cond
+         CMP __cond 0
+         JEQ __elif__7x0
+      // Body
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - z
+                        PUSH __main__block__3__z
+                  // RHS
+                     // Int Literal
+                        PUSH 0
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __else__8
+            // Body
+               // Function Call - println(char[]) -> void
+                  // Arguments
+                     // String Literal
+                        MALLOC __str 5
+                        ASSIGN __str[0] 'z'
+                        ASSIGN __str[1] ' '
+                        ASSIGN __str[2] '<'
+                        ASSIGN __str[3] ' '
+                        ASSIGN __str[4] '0'
+                        PUSH __str
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg0
+                  // *** println
+                  CALL println__char__1
+                  // Remove args
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+               // Statement results can be ignored
+               POP __void
+            JUMP __endif__8
+            //------------------------------------------------------------
+            // Else-Statement
+            __else__8:
+            // Function Call - println(char[]) -> void
+               // Arguments
+                  // String Literal
+                     MALLOC __str 6
+                     ASSIGN __str[0] 'z'
+                     ASSIGN __str[1] ' '
+                     ASSIGN __str[2] '='
+                     ASSIGN __str[3] '='
+                     ASSIGN __str[4] ' '
+                     ASSIGN __str[5] '0'
+                     PUSH __str
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** println
+               CALL println__char__1
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Statement results can be ignored
+            POP __void
+            //------------------------------------------------------------
+            // End of if
+            __endif__8:
+         //---------------------------------------------------------------
+      JUMP __endif__7
+      //------------------------------------------------------------------
+      // Elif-Statement
+      __elif__7x0:
+         // Condition
+         // Greater Than
+            // LHS
+               // Identifier - z
+                  PUSH __main__block__3__z
+            // RHS
+               // Int Literal
+                  PUSH 0
+            POP __rhs
+            POP __lhs
+            GT __res __lhs __rhs
+            PUSH __res
+         POP __cond
+         CMP __cond 0
+         JEQ __endif__7
+         // Body
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // String Literal
+                  MALLOC __str 5
+                  ASSIGN __str[0] 'z'
+                  ASSIGN __str[1] ' '
+                  ASSIGN __str[2] '>'
+                  ASSIGN __str[3] ' '
+                  ASSIGN __str[4] '0'
+                  PUSH __str
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         JUMP __endif__7
+      //------------------------------------------------------------------
+      // End of if
+      __endif__7:
+   //---------------------------------------------------------------------
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+// Code Block
+   //---------------------------------------------------------------------
+   // For-Loop
+   // Init
+      // Assignment - '='
+         // RHS
+            // Int Literal
+               PUSH 0
+         // LHS
+            // Variable Declaration
+               ASSIGN __main__block__9__for__10__i 0
+         POP __rhs
+         ASSIGN __main__block__9__for__10__i __rhs
+         PUSH __rhs
+   JUMP __forcond__10
+   __for__10:
+      // Update
+         // Pre-Increment
+            // RHS
+               // Identifier - i
+                  PUSH __main__block__9__for__10__i
+            POP __rhs
+            ADD __main__block__9__for__10__i __main__block__9__for__10__i 1
+            ASSIGN __res __main__block__9__for__10__i
+            PUSH __res
+      __forcond__10:
+      // Condition
+         // Less Than
+            // LHS
+               // Identifier - i
+                  PUSH __main__block__9__for__10__i
+            // RHS
+               // Int Literal
+                  PUSH 10
+            POP __rhs
+            POP __lhs
+            LT __res __lhs __rhs
+            PUSH __res
+         POP __cond
+         CMP __cond 0
+         JEQ __endfor__10
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - print(int) -> void
+               // Arguments
+                  // Identifier - i
+                     PUSH __main__block__9__for__10__i
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** print
+               CALL print__int
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Statement results can be ignored
+            POP __void
+            // Function Call - print(char) -> void
+               // Arguments
+                  // Char Literal
+                     PUSH ' '
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** print
+               CALL print__char
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Statement results can be ignored
+            POP __void
+         //---------------------------------------------------------------
+      // Repeat
+      JUMP __for__10
+      // End of For
+      __endfor__10:
+   //---------------------------------------------------------------------
+   // Function Call - println() -> void
+      // Arguments
+      // Pushing args in reverse order
+      // *** println
+      CALL println
+      // Remove args
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   //---------------------------------------------------------------------
+   // For-Loop
+   // Init
+      // Assignment - '='
+         // RHS
+            // Int Literal
+               PUSH 10
+         // LHS
+            // Variable Declaration
+               ASSIGN __main__block__9__for__12__i 0
+         POP __rhs
+         ASSIGN __main__block__9__for__12__i __rhs
+         PUSH __rhs
+   JUMP __forcond__12
+   __for__12:
+      // Update
+         // Pre-Decrement
+            // RHS
+               // Identifier - i
+                  PUSH __main__block__9__for__12__i
+            POP __rhs
+            SUBTRACT __main__block__9__for__12__i __main__block__9__for__12__i 1
+            ASSIGN __res __main__block__9__for__12__i
+            PUSH __res
+      __forcond__12:
+      // Condition
+         // Greater Than
+            // LHS
+               // Identifier - i
+                  PUSH __main__block__9__for__12__i
+            // RHS
+               // Negative
+                  // RHS
+                     // Int Literal
+                        PUSH 5
+                  POP __rhs
+                  SUBTRACT __res 0 __rhs
+                  PUSH __res
+            POP __rhs
+            POP __lhs
+            GT __res __lhs __rhs
+            PUSH __res
+         POP __cond
+         CMP __cond 0
+         JEQ __endfor__12
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - print(int) -> void
+               // Arguments
+                  // Identifier - i
+                     PUSH __main__block__9__for__12__i
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** print
+               CALL print__int
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Statement results can be ignored
+            POP __void
+            // Function Call - print(char) -> void
+               // Arguments
+                  // Char Literal
+                     PUSH ' '
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** print
+               CALL print__char
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Statement results can be ignored
+            POP __void
+            //------------------------------------------------------------
+            // If-Statement
+               // Condition
+                  // Less Than or Equal to
+                     // LHS
+                        // Identifier - i
+                           PUSH __main__block__9__for__12__i
+                     // RHS
+                        // Int Literal
+                           PUSH 0
+                     POP __rhs
+                     POP __lhs
+                     LE __res __lhs __rhs
+                     PUSH __res
+                  POP __cond
+                  CMP __cond 0
+                  JEQ __endif__14
+               // Body
+                  // Break out of __for__12
+                  JUMP __endfor__12
+               JUMP __endif__14
+               // End of if
+               __endif__14:
+            //------------------------------------------------------------
+         //---------------------------------------------------------------
+      // Repeat
+      JUMP __for__12
+      // End of For
+      __endfor__12:
+   //---------------------------------------------------------------------
+   // Function Call - println() -> void
+      // Arguments
+      // Pushing args in reverse order
+      // *** println
+      CALL println
+      // Remove args
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Assignment - '='
+      // RHS
+         // Int Literal
+            PUSH 1
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__9__j 0
+      POP __rhs
+      ASSIGN __main__block__9__j __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   //---------------------------------------------------------------------
+   // While-Loop
+   __while__15:
+      // Condition
+         // Less Than
+            // LHS
+               // Identifier - j
+                  PUSH __main__block__9__j
+            // RHS
+               // Int Literal
+                  PUSH 100
+            POP __rhs
+            POP __lhs
+            LT __res __lhs __rhs
+            PUSH __res
+         POP __cond
+         CMP __cond 0
+         JEQ __endwhile__15
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Function Call - print(int) -> void
+               // Arguments
+                  // Multiplication
+                     // LHS
+                        // Identifier - j
+                           PUSH __main__block__9__j
+                     // RHS
+                        // Identifier - j
+                           PUSH __main__block__9__j
+                     POP __rhs
+                     POP __lhs
+                     MULTIPLY __res __lhs __rhs
+                     PUSH __res
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** print
+               CALL print__int
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Statement results can be ignored
+            POP __void
+            // Function Call - print(char) -> void
+               // Arguments
+                  // Char Literal
+                     PUSH ' '
+                  POP __arg0
+               // Pushing args in reverse order
+               PUSH __arg0
+               // *** print
+               CALL print__char
+               // Remove args
+               POP __void
+               RESPONSE __retval
+               PUSH __retval
+            // Statement results can be ignored
+            POP __void
+            // Pre-Increment
+               // RHS
+                  // Identifier - j
+                     PUSH __main__block__9__j
+               POP __rhs
+               ADD __main__block__9__j __main__block__9__j 1
+               ASSIGN __res __main__block__9__j
+               PUSH __res
+            // Statement results can be ignored
+            POP __void
+            //------------------------------------------------------------
+            // If-Statement
+               // Condition
+                  // Less Than
+                     // LHS
+                        // Identifier - j
+                           PUSH __main__block__9__j
+                     // RHS
+                        // Int Literal
+                           PUSH 10
+                     POP __rhs
+                     POP __lhs
+                     LT __res __lhs __rhs
+                     PUSH __res
+                  POP __cond
+                  CMP __cond 0
+                  JEQ __else__17
+               // Body
+                  // Continue in __while__15
+                  JUMP __while__15
+               JUMP __endif__17
+               //---------------------------------------------------------
+               // Else-Statement
+               __else__17:
+               // Break out of __while__15
+               JUMP __endwhile__15
+               //---------------------------------------------------------
+               // End of if
+               __endif__17:
+            //------------------------------------------------------------
+            // Pre-Decrement
+               // RHS
+                  // Identifier - j
+                     PUSH __main__block__9__j
+               POP __rhs
+               SUBTRACT __main__block__9__j __main__block__9__j 1
+               ASSIGN __res __main__block__9__j
+               PUSH __res
+            // Statement results can be ignored
+            POP __void
+         //---------------------------------------------------------------
+      JUMP __while__15
+      // End of While
+      __endwhile__15:
+   //---------------------------------------------------------------------
+   // Function Call - println() -> void
+      // Arguments
+      // Pushing args in reverse order
+      // *** println
+      CALL println
+      // Remove args
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+// Code Block
+   //=====================================================================
+   // Function Declaration - mul2(int) -> int
+   JUMP __end____main__block__18____mul2__int
+   __main__block__18____mul2__int:
+      // Parameters
+         // Param: a
+         STACKGET __main__block__18__mul2__a 0
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Multiplication
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__block__18__mul2__a
+                  // RHS
+                     // Int Literal
+                        PUSH 2
+                  POP __rhs
+                  POP __lhs
+                  MULTIPLY __res __lhs __rhs
+                  PUSH __res
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end____main__block__18____mul2__int:
+   // End Function Declaration - __main__block__18____mul2__int
+   //=====================================================================
+
+   // Function Call - println(int) -> void
+      // Arguments
+         // Function Call - mul2(int) -> int
+            // Arguments
+               // Function Call - mul2(int) -> int
+                  // Arguments
+                     // Function Call - mul2(int) -> int
+                        // Arguments
+                           // Int Literal
+                              PUSH 16
+                           POP __arg0
+                        // Pushing args in reverse order
+                        PUSH __arg0
+                        // *** mul2
+                        CALL __main__block__18____mul2__int
+                        // Remove args
+                        POP __void
+                        RESPONSE __retval
+                        PUSH __retval
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg0
+                  // *** mul2
+                  CALL __main__block__18____mul2__int
+                  // Remove args
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** mul2
+            CALL __main__block__18____mul2__int
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   //=====================================================================
+   // Function Declaration - add(int, int, int) -> int
+   JUMP __end____main__block__18____add__int__int__int
+   __main__block__18____add__int__int__int:
+      // Parameters
+         // Param: a
+         STACKGET __main__block__18__add__a 0
+         // Param: b
+         STACKGET __main__block__18__add__b 1
+         // Param: c
+         STACKGET __main__block__18__add__c 2
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment - '='
+               // RHS
+                  // Addition
+                     // LHS
+                        // Addition
+                           // LHS
+                              // Identifier - a
+                                 PUSH __main__block__18__add__a
+                           // RHS
+                              // Identifier - b
+                                 PUSH __main__block__18__add__b
+                           POP __rhs
+                           POP __lhs
+                           ADD __res __lhs __rhs
+                           PUSH __res
+                     // RHS
+                        // Identifier - c
+                           PUSH __main__block__18__add__c
+                     POP __rhs
+                     POP __lhs
+                     ADD __res __lhs __rhs
+                     PUSH __res
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__block__18__add__block__20__d 0
+               POP __rhs
+               ASSIGN __main__block__18__add__block__20__d __rhs
+               PUSH __rhs
+            // Statement results can be ignored
+            POP __void
+            // Return
+               // Identifier - d
+                  PUSH __main__block__18__add__block__20__d
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end____main__block__18____add__int__int__int:
+   // End Function Declaration - __main__block__18____add__int__int__int
+   //=====================================================================
+
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // String Literal
+            MALLOC __str 18
+            ASSIGN __str[0] 'a'
+            ASSIGN __str[1] 'd'
+            ASSIGN __str[2] 'd'
+            ASSIGN __str[3] ' '
+            ASSIGN __str[4] '('
+            ASSIGN __str[5] '7'
+            ASSIGN __str[6] ','
+            ASSIGN __str[7] ' '
+            ASSIGN __str[8] '4'
+            ASSIGN __str[9] ','
+            ASSIGN __str[10] ' '
+            ASSIGN __str[11] '2'
+            ASSIGN __str[12] '1'
+            ASSIGN __str[13] ')'
+            ASSIGN __str[14] ' '
+            ASSIGN __str[15] '-'
+            ASSIGN __str[16] '>'
+            ASSIGN __str[17] ' '
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - println(int) -> void
+      // Arguments
+         // Function Call - add(int, int, int) -> int
+            // Arguments
+               // Int Literal
+                  PUSH 7
+               // Int Literal
+                  PUSH 4
+               // Int Literal
+                  PUSH 21
+               POP __arg2
+               POP __arg1
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg2
+            PUSH __arg1
+            PUSH __arg0
+            // *** add
+            CALL __main__block__18____add__int__int__int
+            // Remove args
+            POP __void
+            POP __void
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Assignment - '='
+      // RHS
+         // Int Literal
+            PUSH 10
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__block__18__x 0
+      POP __rhs
+      ASSIGN __main__block__18__x __rhs
+      PUSH __rhs
+   // Statement results can be ignored
+   POP __void
+   //=====================================================================
+   // Function Declaration - mulx(int) -> int
+   JUMP __end____main__block__18____mulx__int
+   __main__block__18____mulx__int:
+      // Parameters
+         // Param: a
+         STACKGET __main__block__18__mulx__a 0
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Return
+               // Multiplication
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__block__18__mulx__a
+                  // RHS
+                     // Identifier - x
+                        PUSH __main__block__18__x
+                  POP __rhs
+                  POP __lhs
+                  MULTIPLY __res __lhs __rhs
+                  PUSH __res
+               POP __rVal
+               RETURN __rVal
+         //---------------------------------------------------------------
+      RETURN 0
+   __end____main__block__18____mulx__int:
+   // End Function Declaration - __main__block__18____mulx__int
+   //=====================================================================
+
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // String Literal
+            MALLOC __str 4
+            ASSIGN __str[0] 'x'
+            ASSIGN __str[1] ' '
+            ASSIGN __str[2] '='
+            ASSIGN __str[3] ' '
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(int) -> void
+      // Arguments
+         // Identifier - x
+            PUSH __main__block__18__x
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - print(char[]) -> void
+      // Arguments
+         // String Literal
+            MALLOC __str 14
+            ASSIGN __str[0] ';'
+            ASSIGN __str[1] ' '
+            ASSIGN __str[2] 'm'
+            ASSIGN __str[3] 'u'
+            ASSIGN __str[4] 'l'
+            ASSIGN __str[5] 'x'
+            ASSIGN __str[6] ' '
+            ASSIGN __str[7] '('
+            ASSIGN __str[8] '7'
+            ASSIGN __str[9] ')'
+            ASSIGN __str[10] ' '
+            ASSIGN __str[11] '-'
+            ASSIGN __str[12] '>'
+            ASSIGN __str[13] ' '
+            PUSH __str
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** print
+      CALL print__char__1
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+   // Function Call - println(int) -> void
+      // Arguments
+         // Function Call - mulx(int) -> int
+            // Arguments
+               // Int Literal
+                  PUSH 7
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** mulx
+            CALL __main__block__18____mulx__int
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         POP __arg0
+      // Pushing args in reverse order
+      PUSH __arg0
+      // *** println
+      CALL println__int
+      // Remove args
+      POP __void
+      RESPONSE __retval
+      PUSH __retval
+   // Statement results can be ignored
+   POP __void
+//------------------------------------------------------------------------
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

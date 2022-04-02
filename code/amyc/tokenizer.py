@@ -41,7 +41,7 @@ token_specification = [
 # literals 
     ('FLOAT',    r'\d*\.\d+'), 
     ('INT',      r'\d+(\.\d*)?'), 
-    ('CHAR',     r'\'(\\n|\\t|\\r|\\b|\\f|.)\''),   
+    ('CHAR',     r'\'(\\[A-Za-z_0-9]*|.)\''),   # '0' '\n' '\101'
     # ('STRING',   r'"[^"\\]*(\\.[^"\\]*)*"'),   
     ('STRING',   r'"([^"]|\\")*"'),   
 # Keywords - handled after identifiers are matched
