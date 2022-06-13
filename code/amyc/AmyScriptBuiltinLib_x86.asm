@@ -4,7 +4,9 @@
 
         global _start
         section   .text
-        extern printf, exit
+        extern printf, exit, getline, stdin
+        extern free, malloc
+        extern atoi, atof
 
 ; ========================================================================
 
@@ -21,6 +23,21 @@ exit__int:
 
         pop     rbp 
         ret
+
+; ========================================================================
+
+; Frees memory of the given pointer
+; void free()
+; - exit_code : [rbp + 16]
+; - uses external exit function from libc
+; free__void__: 
+;         push    rbp 
+;         mov     rbp, rsp 
+        
+
+
+;         pop     rbp 
+;         ret
 
 ; ========================================================================
 ; Prints a given string to the screen
@@ -331,7 +348,9 @@ println__float:
         ret 
 
 section .data
-__data__println__float__format: db "%f", 10, 0
+; g uses the shortest representation
+; of f and e (scientific)
+__data__println__float__format: db "%g", 10, 0
 section .text
 
 ; //========================================================================
@@ -381,15 +400,29 @@ section .text
 
 ; //========================================================================
 ; // grabs input from the console 
+; this waits for a line if there isnt one
 ; // char[] input ();
-; input:
-;     input __line
-;     return __line
+input:
+        ; function setup
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 16
+        ; function body 
+        mov     qword [rbp-8], 0    ; char* buffer = nullptr;
+        mov     qword [rbp-16], 0   ; size_t buflen = 0;
+        ; getline (&buffer, &buflen, stdin);
+        mov     rdx, qword [stdin]  ; stdin
+        lea     rcx, [rbp-16]
+        lea     rax, [rbp-8]
+        mov     rsi, rcx
+        mov     rdi, rax
+        call    getline
+        ; return pointer to the line
+        mov     rax, qword [rbp-8]
 
-; //========================================================================
-; // exits/stops the program 
-; exit:
-;     halt
+        add     rsp, 16
+        pop     rbp
+        ret 
 
 ; //========================================================================
 ; // returns default float value
@@ -408,10 +441,18 @@ section .text
 ; //========================================================================
 ; // parses a float from a given char[]
 ; // float stringToFloat (char[]);
-; stringToFloat__char__1:
-;     stackget val 0
-;     stof res val
-;     return res
+; str : [rbp + 16]
+stringToFloat__char__1:
+        ; function setup
+        push    rbp
+        mov     rbp, rsp
+
+        mov     rdi, qword [rbp+16]
+        call    atof
+        ; value stored in xmm0
+        
+        pop rbp
+        ret
 
 ; //========================================================================
 ; // returns default int value
@@ -435,11 +476,19 @@ section .text
 
 ; //========================================================================
 ; // parses an int from a given char[]
-; // int stringToInt (char[]);
-; stringToInt__char__1:
-;     stackget val 0
-;     stoi res val
-;     return res
+; // int stringToInt (char[] str);
+; str : [rbp + 16]
+stringToInt__char__1:
+        ; function setup
+        push    rbp
+        mov     rbp, rsp
+
+        mov     rdi, qword [rbp+16]
+        call    atoi
+        ; value stored in rax
+
+        pop rbp
+        ret
 
 ; //========================================================================
 ; // parses an int from a given char
@@ -473,3 +522,7 @@ section .text
 ;     return __null
 
 ; ========================================================================
+
+section .data
+__builtin__neg: dq -1.0
+section .text

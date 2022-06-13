@@ -11,7 +11,9 @@
 
         global _start
         section   .text
-        extern printf, exit
+        extern printf, exit, getline, stdin
+        extern free, malloc
+        extern atoi, atof
 
 ; ========================================================================
 
@@ -28,6 +30,21 @@ exit__int:
 
         pop     rbp 
         ret
+
+; ========================================================================
+
+; Frees memory of the given pointer
+; void free()
+; - exit_code : [rbp + 16]
+; - uses external exit function from libc
+; free__void__: 
+;         push    rbp 
+;         mov     rbp, rsp 
+        
+
+
+;         pop     rbp 
+;         ret
 
 ; ========================================================================
 ; Prints a given string to the screen
@@ -338,7 +355,9 @@ println__float:
         ret 
 
 section .data
-__data__println__float__format: db "%f", 10, 0
+; g uses the shortest representation
+; of f and e (scientific)
+__data__println__float__format: db "%g", 10, 0
 section .text
 
 ; //========================================================================
@@ -388,15 +407,29 @@ section .text
 
 ; //========================================================================
 ; // grabs input from the console 
+; this waits for a line if there isnt one
 ; // char[] input ();
-; input:
-;     input __line
-;     return __line
+input:
+        ; function setup
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 16
+        ; function body 
+        mov     qword [rbp-8], 0    ; char* buffer = nullptr;
+        mov     qword [rbp-16], 0   ; size_t buflen = 0;
+        ; getline (&buffer, &buflen, stdin);
+        mov     rdx, qword [stdin]  ; stdin
+        lea     rcx, [rbp-16]
+        lea     rax, [rbp-8]
+        mov     rsi, rcx
+        mov     rdi, rax
+        call    getline
+        ; return pointer to the line
+        mov     rax, qword [rbp-8]
 
-; //========================================================================
-; // exits/stops the program 
-; exit:
-;     halt
+        add     rsp, 16
+        pop     rbp
+        ret 
 
 ; //========================================================================
 ; // returns default float value
@@ -415,10 +448,18 @@ section .text
 ; //========================================================================
 ; // parses a float from a given char[]
 ; // float stringToFloat (char[]);
-; stringToFloat__char__1:
-;     stackget val 0
-;     stof res val
-;     return res
+; str : [rbp + 16]
+stringToFloat__char__1:
+        ; function setup
+        push    rbp
+        mov     rbp, rsp
+
+        mov     rdi, qword [rbp+16]
+        call    atof
+        ; value stored in xmm0
+        
+        pop rbp
+        ret
 
 ; //========================================================================
 ; // returns default int value
@@ -442,11 +483,19 @@ section .text
 
 ; //========================================================================
 ; // parses an int from a given char[]
-; // int stringToInt (char[]);
-; stringToInt__char__1:
-;     stackget val 0
-;     stoi res val
-;     return res
+; // int stringToInt (char[] str);
+; str : [rbp + 16]
+stringToInt__char__1:
+        ; function setup
+        push    rbp
+        mov     rbp, rsp
+
+        mov     rdi, qword [rbp+16]
+        call    atoi
+        ; value stored in rax
+
+        pop rbp
+        ret
 
 ; //========================================================================
 ; // parses an int from a given char
@@ -480,7 +529,10 @@ section .text
 ;     return __null
 
 ; ========================================================================
-; ========================================================================
+
+section .data
+__builtin__neg: dq -1.0
+section .text; ========================================================================
 ; ### COMPILED CODE ######################################################
 ; ========================================================================
 
@@ -489,7 +541,7 @@ main:
         ; Main Header:
         push rbp
         mov rbp, rsp
-        sub rsp, 128
+        sub rsp, 160
         ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
         ; x [rbp - 8]
         ; y [rbp - 16]
@@ -506,71 +558,62 @@ main:
         ; i [rbp - 104]
         ; j [rbp - 112]
         ; x [rbp - 120]
+        ; x [rbp - 128]
+        ; y [rbp - 136]
+        ; line [rbp - 144]
+        ; x [rbp - 152]
+        ; y [rbp - 160]
 
         ; Body
 ;------------------------------------------------------------------------
         ; Code Block
            ; Assignment - '='
               ; RHS
-                 ; Mod
+                 ; Mod - int, int
                     ; LHS
-                       ; Multiplication
+                       ; Multiplication - int, int
                           ; LHS
-                             ; Addition
+                             ; Addition - int, int
                                 ; LHS
-                                   ; Addition
+                                   ; Addition - int, int
                                       ; LHS
-                                         ; Negative
-                                            ; RHS
-                                               ; Int Literal
-                                                  push 17
-                                            pop rdx
-                                            ; val = 0 - val
-                                            mov rax, 0
-                                            sub rax, rdx
-                                            push rax
+                                         ; Int Literal
+                                            push -17
                                       ; RHS
-                                         ; Multiplication
+                                         ; Multiplication - int, int
                                             ; LHS
                                                ; Int Literal
                                                   push 42
                                             ; RHS
-                                               ; Addition
+                                               ; Addition - int, int
                                                   ; LHS
                                                      ; Int Literal
                                                         push 2
                                                   ; RHS
                                                      ; Int Literal
                                                         push 2
-                                                  pop rdx
-                                                  pop rax
+                                                  pop rdx ; rhs
+                                                  pop rax ; lhs
                                                   add rax, rdx
                                                   push rax
                                             pop rdx
                                             pop rax
                                             imul rax, rdx
                                             push rax
-                                      pop rdx
-                                      pop rax
+                                      pop rdx ; rhs
+                                      pop rax ; lhs
                                       add rax, rdx
                                       push rax
                                 ; RHS
                                    ; Int Literal
                                       push 1
-                                pop rdx
-                                pop rax
+                                pop rdx ; rhs
+                                pop rax ; lhs
                                 add rax, rdx
                                 push rax
                           ; RHS
-                             ; Negative
-                                ; RHS
-                                   ; Int Literal
-                                      push 1
-                                pop rdx
-                                ; val = 0 - val
-                                mov rax, 0
-                                sub rax, rdx
-                                push rax
+                             ; Int Literal
+                                push -1
                           pop rdx
                           pop rax
                           imul rax, rdx
@@ -596,7 +639,7 @@ main:
            pop rdx
            ; Assignment - '='
               ; RHS
-                 ; Multiplication
+                 ; Multiplication - int, int
                     ; LHS
                        ; Identifier - x
                           push qword [rbp - 8]
@@ -620,7 +663,7 @@ main:
               sub rsp, 8
               ; Arguments
                  ; Eval arg0
-                    ; Division
+                    ; Division - int, int
                        ; LHS
                           ; Identifier - y
                              push qword [rbp - 16]
@@ -641,6 +684,7 @@ main:
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -709,6 +753,7 @@ main:
               call print__char
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -726,6 +771,7 @@ main:
               call print__char
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -743,6 +789,7 @@ main:
               call print__char
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -760,6 +807,7 @@ main:
               call print__char
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -808,6 +856,7 @@ main:
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -825,6 +874,7 @@ main:
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -844,6 +894,7 @@ main:
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -864,7 +915,7 @@ main:
            pop rdx
            ; Assignment - '='
               ; RHS
-                 ; Bitwise Negation
+                 ; Bitwise Negation - int
                     ; RHS
                        ; Identifier - x
                           push qword [rbp - 72]
@@ -888,15 +939,15 @@ main:
                           ; Eval LHS
                              ; AND
                                 ; Eval LHS
-                                   ; Addition
+                                   ; Addition - int, int
                                       ; LHS
                                          ; Identifier - x
                                             push qword [rbp - 72]
                                       ; RHS
                                          ; Identifier - y
                                             push qword [rbp - 80]
-                                      pop rdx
-                                      pop rax
+                                      pop rdx ; rhs
+                                      pop rax ; lhs
                                       add rax, rdx
                                       push rax
                                 ; Check if we need to short-circuit
@@ -904,7 +955,7 @@ main:
                                    test rax, rax
                                    je .AND_SHORT_CIRCUIT4
                                 ; Eval RHS
-                                   ; Pre-Increment
+                                   ; Pre-Increment - int
                                       ; RHS
                                          ; Identifier - y
                                             push qword [rbp - 80]
@@ -929,7 +980,7 @@ main:
                              test rax, rax
                              je .AND_SHORT_CIRCUIT5
                           ; Eval RHS
-                             ; Pre-Decrement
+                             ; Pre-Decrement - int
                                 ; RHS
                                    ; Identifier - x
                                       push qword [rbp - 72]
@@ -954,7 +1005,7 @@ main:
                        test rax, rax
                        je .AND_SHORT_CIRCUIT6
                     ; Eval RHS
-                       ; Negate
+                       ; Negate - int
                           ; RHS
                              ; Post-Increment
                                 mov rax, qword [rbp - 72]
@@ -999,6 +1050,7 @@ main:
               call print__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1016,6 +1068,7 @@ main:
               call print__char
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1033,6 +1086,7 @@ main:
               call print__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1050,6 +1104,7 @@ main:
               call print__char
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1067,6 +1122,7 @@ main:
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1106,6 +1162,7 @@ main:
                        call println__char
                        ; Remove args
                        add rsp, 8
+                       ; Push return value
                        push rax
                     ; Statement results can be ignored
                     pop rdx
@@ -1120,15 +1177,8 @@ main:
                        ; Identifier - y
                           push qword [rbp - 80]
                     ; RHS
-                       ; Negative
-                          ; RHS
-                             ; Int Literal
-                                push 1
-                          pop rdx
-                          ; val = 0 - val
-                          mov rax, 0
-                          sub rax, rdx
-                          push rax
+                       ; Int Literal
+                          push -1
                     pop rdx ; rhs
                     pop rax ; lhs
                     cmp rax, rdx
@@ -1153,6 +1203,7 @@ main:
                     call println__char
                     ; Remove args
                     add rsp, 8
+                    ; Push return value
                     push rax
                  ; Statement results can be ignored
                  pop rdx
@@ -1175,6 +1226,7 @@ main:
                  call println__char
                  ; Remove args
                  add rsp, 8
+                 ; Push return value
                  push rax
               ; Statement results can be ignored
               pop rdx
@@ -1198,6 +1250,7 @@ main:
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1215,6 +1268,7 @@ main:
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1234,6 +1288,7 @@ main:
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1262,6 +1317,7 @@ main:
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1281,6 +1337,7 @@ main:
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1309,6 +1366,7 @@ main:
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1328,6 +1386,7 @@ main:
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1356,6 +1415,7 @@ main:
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1375,6 +1435,7 @@ main:
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1403,6 +1464,7 @@ main:
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1422,6 +1484,7 @@ main:
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1450,6 +1513,7 @@ main:
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1489,6 +1553,7 @@ main:
                     call println__char__1
                     ; Remove args
                     add rsp, 8
+                    ; Push return value
                     push rax
                  ; Statement results can be ignored
                  pop rdx
@@ -1530,6 +1595,7 @@ main:
                     call println__char__1
                     ; Remove args
                     add rsp, 8
+                    ; Push return value
                     push rax
                  ; Statement results can be ignored
                  pop rdx
@@ -1572,6 +1638,7 @@ main:
                     call println__char__1
                     ; Remove args
                     add rsp, 8
+                    ; Push return value
                     push rax
                  ; Statement results can be ignored
                  pop rdx
@@ -1636,6 +1703,7 @@ main:
                           call println__char__1
                           ; Remove args
                           add rsp, 8
+                          ; Push return value
                           push rax
                        ; Statement results can be ignored
                        pop rdx
@@ -1659,6 +1727,7 @@ main:
                        call println__char__1
                        ; Remove args
                        add rsp, 8
+                       ; Push return value
                        push rax
                     ; Statement results can be ignored
                     pop rdx
@@ -1704,6 +1773,7 @@ main:
                     call println__char__1
                     ; Remove args
                     add rsp, 8
+                    ; Push return value
                     push rax
                  ; Statement results can be ignored
                  pop rdx
@@ -1731,7 +1801,7 @@ main:
            jmp .__forcond__13
 .__for__13:
               ; Update
-                 ; Pre-Increment
+                 ; Pre-Increment - int
                     ; RHS
                        ; Identifier - i
                           push qword [rbp - 96]
@@ -1774,6 +1844,7 @@ main:
                        call print__int
                        ; Remove args
                        add rsp, 8
+                       ; Push return value
                        push rax
                     ; Statement results can be ignored
                     pop rdx
@@ -1791,6 +1862,7 @@ main:
                        call print__char
                        ; Remove args
                        add rsp, 8
+                       ; Push return value
                        push rax
                     ; Statement results can be ignored
                     pop rdx
@@ -1808,6 +1880,7 @@ jmp .__for__13
               call println
               ; Remove args
               add rsp, 0
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1827,7 +1900,7 @@ jmp .__for__13
            jmp .__forcond__15
 .__for__15:
               ; Update
-                 ; Pre-Decrement
+                 ; Pre-Decrement - int
                     ; RHS
                        ; Identifier - i
                           push qword [rbp - 104]
@@ -1842,15 +1915,8 @@ jmp .__for__13
                        ; Identifier - i
                           push qword [rbp - 104]
                     ; RHS
-                       ; Negative
-                          ; RHS
-                             ; Int Literal
-                                push 5
-                          pop rdx
-                          ; val = 0 - val
-                          mov rax, 0
-                          sub rax, rdx
-                          push rax
+                       ; Int Literal
+                          push -5
                     pop rdx ; rhs
                     pop rax ; lhs
                     cmp rax, rdx
@@ -1877,6 +1943,7 @@ jmp .__for__13
                        call print__int
                        ; Remove args
                        add rsp, 8
+                       ; Push return value
                        push rax
                     ; Statement results can be ignored
                     pop rdx
@@ -1894,6 +1961,7 @@ jmp .__for__13
                        call print__char
                        ; Remove args
                        add rsp, 8
+                       ; Push return value
                        push rax
                     ; Statement results can be ignored
                     pop rdx
@@ -1937,6 +2005,7 @@ jmp .__for__15
               call println
               ; Remove args
               add rsp, 0
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -1980,7 +2049,7 @@ jmp .__for__15
                        sub rsp, 8
                        ; Arguments
                           ; Eval arg0
-                             ; Multiplication
+                             ; Multiplication - int, int
                                 ; LHS
                                    ; Identifier - j
                                       push qword [rbp - 112]
@@ -1998,6 +2067,7 @@ jmp .__for__15
                        call print__int
                        ; Remove args
                        add rsp, 8
+                       ; Push return value
                        push rax
                     ; Statement results can be ignored
                     pop rdx
@@ -2015,10 +2085,11 @@ jmp .__for__15
                        call print__char
                        ; Remove args
                        add rsp, 8
+                       ; Push return value
                        push rax
                     ; Statement results can be ignored
                     pop rdx
-                    ; Pre-Increment
+                    ; Pre-Increment - int
                        ; RHS
                           ; Identifier - j
                              push qword [rbp - 112]
@@ -2060,7 +2131,7 @@ jmp .__for__15
                        ; End of if
 .__endif__20:
             ;------------------------------------------------------------
-                    ; Pre-Decrement
+                    ; Pre-Decrement - int
                        ; RHS
                           ; Identifier - j
                              push qword [rbp - 112]
@@ -2083,6 +2154,7 @@ jmp .__for__15
               call println
               ; Remove args
               add rsp, 0
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -2106,7 +2178,7 @@ jmp .__for__15
          ;---------------------------------------------------------------
                  ; Code Block
                     ; Return
-                       ; Multiplication
+                       ; Multiplication - int, int
                           ; LHS
                              ; Identifier - a
                                 push qword [rbp - -16]
@@ -2157,6 +2229,7 @@ jmp .__for__15
                                          call .__main__block__21____mul2__int
                                          ; Remove args
                                          add rsp, 8
+                                         ; Push return value
                                          push rax
                                    ; Move arg0's result to reverse order position on stack
                                    pop rax
@@ -2165,6 +2238,7 @@ jmp .__for__15
                                 call .__main__block__21____mul2__int
                                 ; Remove args
                                 add rsp, 8
+                                ; Push return value
                                 push rax
                           ; Move arg0's result to reverse order position on stack
                           pop rax
@@ -2173,6 +2247,7 @@ jmp .__for__15
                        call .__main__block__21____mul2__int
                        ; Remove args
                        add rsp, 8
+                       ; Push return value
                        push rax
                  ; Move arg0's result to reverse order position on stack
                  pop rax
@@ -2181,6 +2256,7 @@ jmp .__for__15
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -2205,24 +2281,24 @@ jmp .__for__15
                  ; Code Block
                     ; Assignment - '='
                        ; RHS
-                          ; Addition
+                          ; Addition - int, int
                              ; LHS
-                                ; Addition
+                                ; Addition - int, int
                                    ; LHS
                                       ; Identifier - a
                                          push qword [rbp - -16]
                                    ; RHS
                                       ; Identifier - b
                                          push qword [rbp - -24]
-                                   pop rdx
-                                   pop rax
+                                   pop rdx ; rhs
+                                   pop rax ; lhs
                                    add rax, rdx
                                    push rax
                              ; RHS
                                 ; Identifier - c
                                    push qword [rbp - -32]
-                             pop rdx
-                             pop rax
+                             pop rdx ; rhs
+                             pop rax ; lhs
                              add rax, rdx
                              push rax
                        ; LHS
@@ -2263,6 +2339,7 @@ jmp .__for__15
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -2297,6 +2374,7 @@ jmp .__for__15
                        call .__main__block__21____add__int__int__int
                        ; Remove args
                        add rsp, 24
+                       ; Push return value
                        push rax
                  ; Move arg0's result to reverse order position on stack
                  pop rax
@@ -2305,6 +2383,7 @@ jmp .__for__15
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -2337,7 +2416,7 @@ jmp .__for__15
          ;---------------------------------------------------------------
                  ; Code Block
                     ; Return
-                       ; Multiplication
+                       ; Multiplication - int, int
                           ; LHS
                              ; Identifier - a
                                 push qword [rbp - -16]
@@ -2375,6 +2454,7 @@ jmp .__for__15
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -2392,6 +2472,7 @@ jmp .__for__15
               call print__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -2411,6 +2492,7 @@ jmp .__for__15
               call print__char__1
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
@@ -2433,6 +2515,7 @@ jmp .__for__15
                        call .__main__block__21____mulx__int
                        ; Remove args
                        add rsp, 8
+                       ; Push return value
                        push rax
                  ; Move arg0's result to reverse order position on stack
                  pop rax
@@ -2441,10 +2524,2147 @@ jmp .__for__15
               call println__int
               ; Remove args
               add rsp, 8
+              ; Push return value
               push rax
            ; Statement results can be ignored
            pop rdx
 ;------------------------------------------------------------------------
+        ; Function Call - println(char[]) -> void
+           ; Make space for 1 arg(s)
+           sub rsp, 8
+           ; Arguments
+              ; Eval arg0
+                 ; String Literal
+                    ; "=== Testing Conversions ==="
+                    mov rax, .str18
+                    push rax
+              ; Move arg0's result to reverse order position on stack
+              pop rax
+              mov qword [rsp + 0], rax
+           ; Call println(char[])
+           call println__char__1
+           ; Remove args
+           add rsp, 8
+           ; Push return value
+           push rax
+        ; Statement results can be ignored
+        pop rdx
+;------------------------------------------------------------------------
+        ; Code Block
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "stringToInt (\"-47\") - 2 = "
+                       mov rax, .str19
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Subtraction - int, int
+                       ; LHS
+                          ; Function Call - stringToInt(char[]) -> int
+                             ; Make space for 1 arg(s)
+                             sub rsp, 8
+                             ; Arguments
+                                ; Eval arg0
+                                   ; String Literal
+                                      ; "-47 "
+                                      mov rax, .str20
+                                      push rax
+                                ; Move arg0's result to reverse order position on stack
+                                pop rax
+                                mov qword [rsp + 0], rax
+                             ; Call stringToInt(char[])
+                             call stringToInt__char__1
+                             ; Remove args
+                             add rsp, 8
+                             ; Push return value
+                             push rax
+                       ; RHS
+                          ; Int Literal
+                             push 2
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       sub rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "stringToFloat (\"31415e-4\") = "
+                       mov rax, .str21
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(float) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Function Call - stringToFloat(char[]) -> float
+                       ; Make space for 1 arg(s)
+                       sub rsp, 8
+                       ; Arguments
+                          ; Eval arg0
+                             ; String Literal
+                                ; "31415e-4"
+                                mov rax, .str22
+                                push rax
+                          ; Move arg0's result to reverse order position on stack
+                          pop rax
+                          mov qword [rsp + 0], rax
+                       ; Call stringToFloat(char[])
+                       call stringToFloat__char__1
+                       ; Remove args
+                       add rsp, 8
+                       ; Push return value
+                       movq rax, xmm0
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(float)
+              call println__float
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+;------------------------------------------------------------------------
+        ; Function Call - println(char[]) -> void
+           ; Make space for 1 arg(s)
+           sub rsp, 8
+           ; Arguments
+              ; Eval arg0
+                 ; String Literal
+                    ; "=== Testing Integer Arithmetic ==="
+                    mov rax, .str23
+                    push rax
+              ; Move arg0's result to reverse order position on stack
+              pop rax
+              mov qword [rsp + 0], rax
+           ; Call println(char[])
+           call println__char__1
+           ; Remove args
+           add rsp, 8
+           ; Push return value
+           push rax
+        ; Statement results can be ignored
+        pop rdx
+;------------------------------------------------------------------------
+        ; Code Block
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "-(7) = "
+                       mov rax, .str24
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Negative - int
+                       ; RHS
+                          ; Int Literal
+                             push 7
+                       pop rdx
+                       ; val = 0 - val
+                       mov rax, 0
+                       sub rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "-(-(7)) = "
+                       mov rax, .str25
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Negative - int
+                       ; RHS
+                          ; Negative - int
+                             ; RHS
+                                ; Int Literal
+                                   push 7
+                             pop rdx
+                             ; val = 0 - val
+                             mov rax, 0
+                             sub rax, rdx
+                             push rax
+                       pop rdx
+                       ; val = 0 - val
+                       mov rax, 0
+                       sub rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "7 + 14 = "
+                       mov rax, .str26
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Addition - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 7
+                       ; RHS
+                          ; Int Literal
+                             push 14
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       add rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "-43 + 3 + -7 + 3 = "
+                       mov rax, .str27
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Addition - int, int
+                       ; LHS
+                          ; Addition - int, int
+                             ; LHS
+                                ; Addition - int, int
+                                   ; LHS
+                                      ; Int Literal
+                                         push -43
+                                   ; RHS
+                                      ; Int Literal
+                                         push 3
+                                   pop rdx ; rhs
+                                   pop rax ; lhs
+                                   add rax, rdx
+                                   push rax
+                             ; RHS
+                                ; Int Literal
+                                   push -7
+                             pop rdx ; rhs
+                             pop rax ; lhs
+                             add rax, rdx
+                             push rax
+                       ; RHS
+                          ; Int Literal
+                             push 3
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       add rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; " 7 -  14 = "
+                       mov rax, .str28
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Subtraction - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 7
+                       ; RHS
+                          ; Int Literal
+                             push 14
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       sub rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "-7 - -14 = "
+                       mov rax, .str29
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Subtraction - int, int
+                       ; LHS
+                          ; Int Literal
+                             push -7
+                       ; RHS
+                          ; Int Literal
+                             push -14
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       sub rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; " 7 - -14 = "
+                       mov rax, .str30
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Subtraction - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 7
+                       ; RHS
+                          ; Int Literal
+                             push -14
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       sub rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "-7 -  14 = "
+                       mov rax, .str31
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Subtraction - int, int
+                       ; LHS
+                          ; Int Literal
+                             push -7
+                       ; RHS
+                          ; Int Literal
+                             push 14
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       sub rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "-7 -  14 - 21 + -14 + 7 = "
+                       mov rax, .str32
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Addition - int, int
+                       ; LHS
+                          ; Subtraction - int, int
+                             ; LHS
+                                ; Subtraction - int, int
+                                   ; LHS
+                                      ; Subtraction - int, int
+                                         ; LHS
+                                            ; Int Literal
+                                               push -7
+                                         ; RHS
+                                            ; Int Literal
+                                               push 14
+                                         pop rdx ; rhs
+                                         pop rax ; lhs
+                                         sub rax, rdx
+                                         push rax
+                                   ; RHS
+                                      ; Int Literal
+                                         push 21
+                                   pop rdx ; rhs
+                                   pop rax ; lhs
+                                   sub rax, rdx
+                                   push rax
+                             ; RHS
+                                ; Int Literal
+                                   push -14
+                             pop rdx ; rhs
+                             pop rax ; lhs
+                             sub rax, rdx
+                             push rax
+                       ; RHS
+                          ; Int Literal
+                             push 7
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       add rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; " 7 *  14 = "
+                       mov rax, .str33
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Multiplication - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 7
+                       ; RHS
+                          ; Int Literal
+                             push 14
+                       pop rdx
+                       pop rax
+                       imul rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "-7 * -14 = "
+                       mov rax, .str34
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Multiplication - int, int
+                       ; LHS
+                          ; Int Literal
+                             push -7
+                       ; RHS
+                          ; Int Literal
+                             push -14
+                       pop rdx
+                       pop rax
+                       imul rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; " 7 * -14 = "
+                       mov rax, .str35
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Multiplication - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 7
+                       ; RHS
+                          ; Int Literal
+                             push -14
+                       pop rdx
+                       pop rax
+                       imul rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "-7 *  14 = "
+                       mov rax, .str36
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Multiplication - int, int
+                       ; LHS
+                          ; Int Literal
+                             push -7
+                       ; RHS
+                          ; Int Literal
+                             push 14
+                       pop rdx
+                       pop rax
+                       imul rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "10 / 2 = "
+                       mov rax, .str37
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Division - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 10
+                       ; RHS
+                          ; Int Literal
+                             push 2
+                       pop rdx
+                       pop rax
+                       mov esi, edx
+                       mov edx, 0
+                       cdq
+                       idiv esi
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "10 / 3 = "
+                       mov rax, .str38
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Division - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 10
+                       ; RHS
+                          ; Int Literal
+                             push 3
+                       pop rdx
+                       pop rax
+                       mov esi, edx
+                       mov edx, 0
+                       cdq
+                       idiv esi
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; " 1 / 2 = "
+                       mov rax, .str39
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Division - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 1
+                       ; RHS
+                          ; Int Literal
+                             push 2
+                       pop rdx
+                       pop rax
+                       mov esi, edx
+                       mov edx, 0
+                       cdq
+                       idiv esi
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "10 % 3 = "
+                       mov rax, .str40
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Mod - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 10
+                       ; RHS
+                          ; Int Literal
+                             push 3
+                       pop rdx
+                       pop rax
+                       mov esi, edx
+                       mov edx, 0
+                       cdq
+                       idiv esi
+                       mov rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "10 % 2 = "
+                       mov rax, .str41
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Mod - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 10
+                       ; RHS
+                          ; Int Literal
+                             push 2
+                       pop rdx
+                       pop rax
+                       mov esi, edx
+                       mov edx, 0
+                       cdq
+                       idiv esi
+                       mov rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "4526 % 645 = "
+                       mov rax, .str42
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Mod - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 4526
+                       ; RHS
+                          ; Int Literal
+                             push 645
+                       pop rdx
+                       pop rax
+                       mov esi, edx
+                       mov edx, 0
+                       cdq
+                       idiv esi
+                       mov rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "-10 % 3 = "
+                       mov rax, .str43
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Mod - int, int
+                       ; LHS
+                          ; Int Literal
+                             push -10
+                       ; RHS
+                          ; Int Literal
+                             push 3
+                       pop rdx
+                       pop rax
+                       mov esi, edx
+                       mov edx, 0
+                       cdq
+                       idiv esi
+                       mov rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; " 1 % 2 = "
+                       mov rax, .str44
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Mod - int, int
+                       ; LHS
+                          ; Int Literal
+                             push 1
+                       ; RHS
+                          ; Int Literal
+                             push 2
+                       pop rdx
+                       pop rax
+                       mov esi, edx
+                       mov edx, 0
+                       cdq
+                       idiv esi
+                       mov rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "((7 - 49) / 2 * -1 + 3 * 3) % (3 + 4) == 2 = "
+                       mov rax, .str45
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Equal
+                       ; LHS
+                          ; Mod - int, int
+                             ; LHS
+                                ; Addition - int, int
+                                   ; LHS
+                                      ; Multiplication - int, int
+                                         ; LHS
+                                            ; Division - int, int
+                                               ; LHS
+                                                  ; Subtraction - int, int
+                                                     ; LHS
+                                                        ; Int Literal
+                                                           push 7
+                                                     ; RHS
+                                                        ; Int Literal
+                                                           push 49
+                                                     pop rdx ; rhs
+                                                     pop rax ; lhs
+                                                     sub rax, rdx
+                                                     push rax
+                                               ; RHS
+                                                  ; Int Literal
+                                                     push 2
+                                               pop rdx
+                                               pop rax
+                                               mov esi, edx
+                                               mov edx, 0
+                                               cdq
+                                               idiv esi
+                                               push rax
+                                         ; RHS
+                                            ; Int Literal
+                                               push -1
+                                         pop rdx
+                                         pop rax
+                                         imul rax, rdx
+                                         push rax
+                                   ; RHS
+                                      ; Multiplication - int, int
+                                         ; LHS
+                                            ; Int Literal
+                                               push 3
+                                         ; RHS
+                                            ; Int Literal
+                                               push 3
+                                         pop rdx
+                                         pop rax
+                                         imul rax, rdx
+                                         push rax
+                                   pop rdx ; rhs
+                                   pop rax ; lhs
+                                   add rax, rdx
+                                   push rax
+                             ; RHS
+                                ; Addition - int, int
+                                   ; LHS
+                                      ; Int Literal
+                                         push 3
+                                   ; RHS
+                                      ; Int Literal
+                                         push 4
+                                   pop rdx ; rhs
+                                   pop rax ; lhs
+                                   add rax, rdx
+                                   push rax
+                             pop rdx
+                             pop rax
+                             mov esi, edx
+                             mov edx, 0
+                             cdq
+                             idiv esi
+                             mov rax, rdx
+                             push rax
+                       ; RHS
+                          ; Int Literal
+                             push 2
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       cmp rax, rdx
+                       sete al
+                       movzx eax, al
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+;------------------------------------------------------------------------
+        ; Function Call - println(char[]) -> void
+           ; Make space for 1 arg(s)
+           sub rsp, 8
+           ; Arguments
+              ; Eval arg0
+                 ; String Literal
+                    ; "=== Testing Floating Point Arithmetic ==="
+                    mov rax, .str46
+                    push rax
+              ; Move arg0's result to reverse order position on stack
+              pop rax
+              mov qword [rsp + 0], rax
+           ; Call println(char[])
+           call println__char__1
+           ; Remove args
+           add rsp, 8
+           ; Push return value
+           push rax
+        ; Statement results can be ignored
+        pop rdx
+;------------------------------------------------------------------------
+        ; Code Block
+           ; Assignment - '='
+              ; RHS
+                 ; Float Literal
+                    mov rax, qword [.float0]
+                    push rax
+              ; LHS
+                 ; Variable Declaration - x
+                    mov rax, qword [rbp - 128]  ; __main__block__27__x
+              pop rdx ; __rhs
+              mov qword [rbp - 128], rdx
+              push rdx
+           ; Statement results can be ignored
+           pop rdx
+           ; Assignment - '='
+              ; RHS
+                 ; Float Literal
+                    mov rax, qword [.float1]
+                    push rax
+              ; LHS
+                 ; Variable Declaration - y
+                    mov rax, qword [rbp - 136]  ; __main__block__27__y
+              pop rdx ; __rhs
+              mov qword [rbp - 136], rdx
+              push rdx
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "3.14 + 0.0015 = "
+                       mov rax, .str47
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(float) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Addition - float, float
+                       ; LHS
+                          ; Identifier - x
+                             push qword [rbp - 128]
+                       ; RHS
+                          ; Identifier - y
+                             push qword [rbp - 136]
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       ; Move to big boi reg
+                       movq xmm0, rax ; lhs
+                       movq xmm1, rdx ; rhs
+                       addsd xmm0, xmm1 ; perform addition
+                       movq rax, xmm0
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(float)
+              call println__float
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "64.0 + 8.123 + 0.63001 = "
+                       mov rax, .str48
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(float) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Addition - float, float
+                       ; LHS
+                          ; Addition - float, float
+                             ; LHS
+                                ; Float Literal
+                                   mov rax, qword [.float2]
+                                   push rax
+                             ; RHS
+                                ; Float Literal
+                                   mov rax, qword [.float3]
+                                   push rax
+                             pop rdx ; rhs
+                             pop rax ; lhs
+                             ; Move to big boi reg
+                             movq xmm0, rax ; lhs
+                             movq xmm1, rdx ; rhs
+                             addsd xmm0, xmm1 ; perform addition
+                             movq rax, xmm0
+                             push rax
+                       ; RHS
+                          ; Float Literal
+                             mov rax, qword [.float4]
+                             push rax
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       ; Move to big boi reg
+                       movq xmm0, rax ; lhs
+                       movq xmm1, rdx ; rhs
+                       addsd xmm0, xmm1 ; perform addition
+                       movq rax, xmm0
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(float)
+              call println__float
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "-(3.14) = "
+                       mov rax, .str49
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(float) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Negative - float
+                       ; RHS
+                          ; Float Literal
+                             mov rax, qword [.float5]
+                             push rax
+                       pop rdx
+                       ; Implemented as multiplying by -1.0
+                       movsd xmm1, qword [__builtin__neg] ; -1.0
+                       movq xmm0, rax
+                       mulsd xmm0, xmm1 ; v = v * -1.0
+                       movq rax, xmm0
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(float)
+              call println__float
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "3.14159 - 1.234 = "
+                       mov rax, .str50
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(float) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Subtraction - float, float
+                       ; LHS
+                          ; Float Literal
+                             mov rax, qword [.float6]
+                             push rax
+                       ; RHS
+                          ; Float Literal
+                             mov rax, qword [.float7]
+                             push rax
+                       pop rdx ; rhs
+                       pop rax ; lhs
+                       ; Move to big boi reg
+                       movq xmm0, rax ; lhs
+                       movq xmm1, rdx ; rhs
+                       subsd xmm0, xmm1 ; perform subtraction
+                       movq rax, xmm0
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(float)
+              call println__float
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "1.5943 * 2.0 = "
+                       mov rax, .str51
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(float) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Multiplication - float, float
+                       ; LHS
+                          ; Float Literal
+                             mov rax, qword [.float8]
+                             push rax
+                       ; RHS
+                          ; Float Literal
+                             mov rax, qword [.float9]
+                             push rax
+                       pop rdx
+                       pop rax
+                       ; Move to big boi reg
+                       movq xmm0, rax ; lhs
+                       movq xmm1, rdx ; rhs
+                       mulsd xmm0, xmm1 ; perform multiplication
+                       movq rax, xmm0
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(float)
+              call println__float
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "0.000043 * 1.0e5 = "
+                       mov rax, .str52
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(float) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Multiplication - float, float
+                       ; LHS
+                          ; Float Literal
+                             mov rax, qword [.float10]
+                             push rax
+                       ; RHS
+                          ; Float Literal
+                             mov rax, qword [.float11]
+                             push rax
+                       pop rdx
+                       pop rax
+                       ; Move to big boi reg
+                       movq xmm0, rax ; lhs
+                       movq xmm1, rdx ; rhs
+                       mulsd xmm0, xmm1 ; perform multiplication
+                       movq rax, xmm0
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(float)
+              call println__float
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "42.5 / 2.0 = "
+                       mov rax, .str53
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(float) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Division - float, float
+                       ; LHS
+                          ; Float Literal
+                             mov rax, qword [.float12]
+                             push rax
+                       ; RHS
+                          ; Float Literal
+                             mov rax, qword [.float13]
+                             push rax
+                       pop rdx
+                       pop rax
+                       ; Move to big boi reg
+                       movq xmm0, rax ; lhs
+                       movq xmm1, rdx ; rhs
+                       divsd xmm0, xmm1 ; perform division
+                       movq rax, xmm0
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(float)
+              call println__float
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "12.5 / 0.125 = "
+                       mov rax, .str54
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(float) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Division - float, float
+                       ; LHS
+                          ; Float Literal
+                             mov rax, qword [.float14]
+                             push rax
+                       ; RHS
+                          ; Float Literal
+                             mov rax, qword [.float15]
+                             push rax
+                       pop rdx
+                       pop rax
+                       ; Move to big boi reg
+                       movq xmm0, rax ; lhs
+                       movq xmm1, rdx ; rhs
+                       divsd xmm0, xmm1 ; perform division
+                       movq rax, xmm0
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(float)
+              call println__float
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+;------------------------------------------------------------------------
+        ; Function Call - exit(int) -> void
+           ; Make space for 1 arg(s)
+           sub rsp, 8
+           ; Arguments
+              ; Eval arg0
+                 ; Int Literal
+                    push 0
+              ; Move arg0's result to reverse order position on stack
+              pop rax
+              mov qword [rsp + 0], rax
+           ; Call exit(int)
+           call exit__int
+           ; Remove args
+           add rsp, 8
+           ; Push return value
+           push rax
+        ; Statement results can be ignored
+        pop rdx
+;------------------------------------------------------------------------
+        ; Code Block
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "Enter a phrase => "
+                       mov rax, .str55
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Assignment - '='
+              ; RHS
+                 ; Function Call - input() -> char[]
+                    ; Make space for 0 arg(s)
+                    sub rsp, 0
+                    ; Arguments
+                    ; Call input()
+                    call input
+                    ; Remove args
+                    add rsp, 0
+                    ; Push return value
+                    push rax
+              ; LHS
+                 ; Variable Declaration - line
+                    mov rax, qword [rbp - 144]  ; __main__block__28__line
+              pop rdx ; __rhs
+              mov qword [rbp - 144], rdx
+              push rdx
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Identifier - line
+                       push qword [rbp - 144]
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "Enter integer ==> "
+                       mov rax, .str56
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Assignment - '='
+              ; RHS
+                 ; Function Call - input() -> char[]
+                    ; Make space for 0 arg(s)
+                    sub rsp, 0
+                    ; Arguments
+                    ; Call input()
+                    call input
+                    ; Remove args
+                    add rsp, 0
+                    ; Push return value
+                    push rax
+              pop rdx ; __rhs
+              mov qword [rbp - 144], rdx
+              push rdx
+           ; Statement results can be ignored
+           pop rdx
+           ; Assignment - '='
+              ; RHS
+                 ; Function Call - stringToInt(char[]) -> int
+                    ; Make space for 1 arg(s)
+                    sub rsp, 8
+                    ; Arguments
+                       ; Eval arg0
+                          ; Identifier - line
+                             push qword [rbp - 144]
+                       ; Move arg0's result to reverse order position on stack
+                       pop rax
+                       mov qword [rsp + 0], rax
+                    ; Call stringToInt(char[])
+                    call stringToInt__char__1
+                    ; Remove args
+                    add rsp, 8
+                    ; Push return value
+                    push rax
+              ; LHS
+                 ; Variable Declaration - x
+                    mov rax, qword [rbp - 152]  ; __main__block__28__x
+              pop rdx ; __rhs
+              mov qword [rbp - 152], rdx
+              push rdx
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "x * x => "
+                       mov rax, .str57
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(int) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Multiplication - int, int
+                       ; LHS
+                          ; Identifier - x
+                             push qword [rbp - 152]
+                       ; RHS
+                          ; Identifier - x
+                             push qword [rbp - 152]
+                       pop rdx
+                       pop rax
+                       imul rax, rdx
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(int)
+              call println__int
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "Enter float ==> "
+                       mov rax, .str58
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Assignment - '='
+              ; RHS
+                 ; Function Call - input() -> char[]
+                    ; Make space for 0 arg(s)
+                    sub rsp, 0
+                    ; Arguments
+                    ; Call input()
+                    call input
+                    ; Remove args
+                    add rsp, 0
+                    ; Push return value
+                    push rax
+              pop rdx ; __rhs
+              mov qword [rbp - 144], rdx
+              push rdx
+           ; Statement results can be ignored
+           pop rdx
+           ; Assignment - '='
+              ; RHS
+                 ; Function Call - stringToFloat(char[]) -> float
+                    ; Make space for 1 arg(s)
+                    sub rsp, 8
+                    ; Arguments
+                       ; Eval arg0
+                          ; Identifier - line
+                             push qword [rbp - 144]
+                       ; Move arg0's result to reverse order position on stack
+                       pop rax
+                       mov qword [rsp + 0], rax
+                    ; Call stringToFloat(char[])
+                    call stringToFloat__char__1
+                    ; Remove args
+                    add rsp, 8
+                    ; Push return value
+                    movq rax, xmm0
+                    push rax
+              ; LHS
+                 ; Variable Declaration - y
+                    mov rax, qword [rbp - 160]  ; __main__block__28__y
+              pop rdx ; __rhs
+              mov qword [rbp - 160], rdx
+              push rdx
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - print(char[]) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; String Literal
+                       ; "y => "
+                       mov rax, .str59
+                       push rax
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call print(char[])
+              call print__char__1
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+           ; Function Call - println(float) -> void
+              ; Make space for 1 arg(s)
+              sub rsp, 8
+              ; Arguments
+                 ; Eval arg0
+                    ; Identifier - y
+                       push qword [rbp - 160]
+                 ; Move arg0's result to reverse order position on stack
+                 pop rax
+                 mov qword [rsp + 0], rax
+              ; Call println(float)
+              call println__float
+              ; Remove args
+              add rsp, 8
+              ; Push return value
+              push rax
+           ; Statement results can be ignored
+           pop rdx
+;------------------------------------------------------------------------
+        ; Function Call - exit(int) -> void
+           ; Make space for 1 arg(s)
+           sub rsp, 8
+           ; Arguments
+              ; Eval arg0
+                 ; Int Literal
+                    push 0
+              ; Move arg0's result to reverse order position on stack
+              pop rax
+              mov qword [rsp + 0], rax
+           ; Call exit(int)
+           call exit__int
+           ; Remove args
+           add rsp, 8
+           ; Push return value
+           push rax
+        ; Statement results can be ignored
+        pop rdx
 ; ========================================================================
 ; ### END OF CODE ########################################################
 ; ========================================================================
@@ -2474,3 +4694,61 @@ jmp .__for__15
 .str15: db 'a', 'd', 'd', ' ', '(', '7', ',', ' ', '4', ',', ' ', '2', '1', ')', ' ', '-', '>', ' ', 0
 .str16: db 'x', ' ', '=', ' ', 0
 .str17: db ';', ' ', 'm', 'u', 'l', 'x', ' ', '(', '7', ')', ' ', '-', '>', ' ', 0
+.str18: db '=', '=', '=', ' ', 'T', 'e', 's', 't', 'i', 'n', 'g', ' ', 'C', 'o', 'n', 'v', 'e', 'r', 's', 'i', 'o', 'n', 's', ' ', '=', '=', '=', 0
+.str19: db 's', 't', 'r', 'i', 'n', 'g', 'T', 'o', 'I', 'n', 't', ' ', '(', '"', '-', '4', '7', '"', ')', ' ', '-', ' ', '2', ' ', '=', ' ', 0
+.str20: db '-', '4', '7', ' ', 0
+.str21: db 's', 't', 'r', 'i', 'n', 'g', 'T', 'o', 'F', 'l', 'o', 'a', 't', ' ', '(', '"', '3', '1', '4', '1', '5', 'e', '-', '4', '"', ')', ' ', '=', ' ', 0
+.str22: db '3', '1', '4', '1', '5', 'e', '-', '4', 0
+.str23: db '=', '=', '=', ' ', 'T', 'e', 's', 't', 'i', 'n', 'g', ' ', 'I', 'n', 't', 'e', 'g', 'e', 'r', ' ', 'A', 'r', 'i', 't', 'h', 'm', 'e', 't', 'i', 'c', ' ', '=', '=', '=', 0
+.str24: db '-', '(', '7', ')', ' ', '=', ' ', 0
+.str25: db '-', '(', '-', '(', '7', ')', ')', ' ', '=', ' ', 0
+.str26: db '7', ' ', '+', ' ', '1', '4', ' ', '=', ' ', 0
+.str27: db '-', '4', '3', ' ', '+', ' ', '3', ' ', '+', ' ', '-', '7', ' ', '+', ' ', '3', ' ', '=', ' ', 0
+.str28: db ' ', '7', ' ', '-', ' ', ' ', '1', '4', ' ', '=', ' ', 0
+.str29: db '-', '7', ' ', '-', ' ', '-', '1', '4', ' ', '=', ' ', 0
+.str30: db ' ', '7', ' ', '-', ' ', '-', '1', '4', ' ', '=', ' ', 0
+.str31: db '-', '7', ' ', '-', ' ', ' ', '1', '4', ' ', '=', ' ', 0
+.str32: db '-', '7', ' ', '-', ' ', ' ', '1', '4', ' ', '-', ' ', '2', '1', ' ', '+', ' ', '-', '1', '4', ' ', '+', ' ', '7', ' ', '=', ' ', 0
+.str33: db ' ', '7', ' ', '*', ' ', ' ', '1', '4', ' ', '=', ' ', 0
+.str34: db '-', '7', ' ', '*', ' ', '-', '1', '4', ' ', '=', ' ', 0
+.str35: db ' ', '7', ' ', '*', ' ', '-', '1', '4', ' ', '=', ' ', 0
+.str36: db '-', '7', ' ', '*', ' ', ' ', '1', '4', ' ', '=', ' ', 0
+.str37: db '1', '0', ' ', '/', ' ', '2', ' ', '=', ' ', 0
+.str38: db '1', '0', ' ', '/', ' ', '3', ' ', '=', ' ', 0
+.str39: db ' ', '1', ' ', '/', ' ', '2', ' ', '=', ' ', 0
+.str40: db '1', '0', ' ', '%', ' ', '3', ' ', '=', ' ', 0
+.str41: db '1', '0', ' ', '%', ' ', '2', ' ', '=', ' ', 0
+.str42: db '4', '5', '2', '6', ' ', '%', ' ', '6', '4', '5', ' ', '=', ' ', 0
+.str43: db '-', '1', '0', ' ', '%', ' ', '3', ' ', '=', ' ', 0
+.str44: db ' ', '1', ' ', '%', ' ', '2', ' ', '=', ' ', 0
+.str45: db '(', '(', '7', ' ', '-', ' ', '4', '9', ')', ' ', '/', ' ', '2', ' ', '*', ' ', '-', '1', ' ', '+', ' ', '3', ' ', '*', ' ', '3', ')', ' ', '%', ' ', '(', '3', ' ', '+', ' ', '4', ')', ' ', '=', '=', ' ', '2', ' ', '=', ' ', 0
+.str46: db '=', '=', '=', ' ', 'T', 'e', 's', 't', 'i', 'n', 'g', ' ', 'F', 'l', 'o', 'a', 't', 'i', 'n', 'g', ' ', 'P', 'o', 'i', 'n', 't', ' ', 'A', 'r', 'i', 't', 'h', 'm', 'e', 't', 'i', 'c', ' ', '=', '=', '=', 0
+.str47: db '3', '.', '1', '4', ' ', '+', ' ', '0', '.', '0', '0', '1', '5', ' ', '=', ' ', 0
+.str48: db '6', '4', '.', '0', ' ', '+', ' ', '8', '.', '1', '2', '3', ' ', '+', ' ', '0', '.', '6', '3', '0', '0', '1', ' ', '=', ' ', 0
+.str49: db '-', '(', '3', '.', '1', '4', ')', ' ', '=', ' ', 0
+.str50: db '3', '.', '1', '4', '1', '5', '9', ' ', '-', ' ', '1', '.', '2', '3', '4', ' ', '=', ' ', 0
+.str51: db '1', '.', '5', '9', '4', '3', ' ', '*', ' ', '2', '.', '0', ' ', '=', ' ', 0
+.str52: db '0', '.', '0', '0', '0', '0', '4', '3', ' ', '*', ' ', '1', '.', '0', 'e', '5', ' ', '=', ' ', 0
+.str53: db '4', '2', '.', '5', ' ', '/', ' ', '2', '.', '0', ' ', '=', ' ', 0
+.str54: db '1', '2', '.', '5', ' ', '/', ' ', '0', '.', '1', '2', '5', ' ', '=', ' ', 0
+.str55: db 'E', 'n', 't', 'e', 'r', ' ', 'a', ' ', 'p', 'h', 'r', 'a', 's', 'e', ' ', '=', '>', ' ', 0
+.str56: db 'E', 'n', 't', 'e', 'r', ' ', 'i', 'n', 't', 'e', 'g', 'e', 'r', ' ', '=', '=', '>', ' ', 0
+.str57: db 'x', ' ', '*', ' ', 'x', ' ', '=', '>', ' ', 0
+.str58: db 'E', 'n', 't', 'e', 'r', ' ', 'f', 'l', 'o', 'a', 't', ' ', '=', '=', '>', ' ', 0
+.str59: db 'y', ' ', '=', '>', ' ', 0
+.float0: dq 3.14
+.float1: dq 0.0015
+.float2: dq 64.0
+.float3: dq 8.123
+.float4: dq 0.63001
+.float5: dq 3.14
+.float6: dq 3.14159
+.float7: dq 1.234
+.float8: dq 1.5943
+.float9: dq 2.0
+.float10: dq 4.3e-05
+.float11: dq 100000.0
+.float12: dq 42.5
+.float13: dq 2.0
+.float14: dq 12.5
+.float15: dq 0.125

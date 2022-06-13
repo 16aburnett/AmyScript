@@ -97,6 +97,7 @@ class ProgramNode (Node):
         self.columnNumber = 0
 
         self.localVariables = []
+        self.floatLiterals = []
         self.stringLiterals = []
 
     def accept (self, visitor):
@@ -1217,6 +1218,9 @@ class FloatLiteralExpressionNode (ExpressionNode):
 
         self.lineNumber = 0
         self.columnNumber = 0
+        
+        # x86
+        self.label = "<ERROR:LABEL NOT SET>"
 
     def accept (self, visitor):
         visitor.visitFloatLiteralExpressionNode (self)

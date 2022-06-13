@@ -145,6 +145,8 @@ class CodeGenVisitor_x86 (ASTVisitor):
         # * can be optimized to include only unique labels
         for i in range(len(node.stringLiterals)):
             node.stringLiterals[i].label = f".str{i}"
+        for i in range(len(node.floatLiterals)):
+            node.floatLiterals[i].label = f".float{i}"
 
         self.printLabel ("_start:")
         self.printLabel ("main:")
@@ -230,6 +232,9 @@ class CodeGenVisitor_x86 (ASTVisitor):
             line += [", 0"]
 
             self.printLabel ("".join(line))
+        # print all float literals 
+        for i in range(len(node.floatLiterals)):
+            self.printLabel (f"{node.floatLiterals[i].label}: dq {node.floatLiterals[i].value}")
 
     def visitTypeSpecifierNode (self, node):
         pass
@@ -1382,10 +1387,10 @@ class CodeGenVisitor_x86 (ASTVisitor):
     def visitAdditiveExpressionNode (self, node):
         # addition 
         if node.op.lexeme == "+":
-            self.printComment ("Addition")
+            self.printComment (f"Addition - {node.lhs.type}, {node.rhs.type}")
         # subtraction 
         elif node.op.lexeme == "-":
-            self.printComment ("Subtraction")
+            self.printComment (f"Subtraction - {node.lhs.type}, {node.rhs.type}")
 
         self.indentation += 1
 
@@ -1400,11 +1405,26 @@ class CodeGenVisitor_x86 (ASTVisitor):
         node.rhs.accept (self)
         self.indentation -= 1
         # get rhs and lhs off the stack 
-        self.printCode ("pop rdx")
-        self.printCode ("pop rax")
+        self.printCode ("pop rdx ; rhs")
+        self.printCode ("pop rax ; lhs")
         
-        # simple additive 
-        if node.overloadedFunctionCall == None:
+        # floating point addition/subtraction
+        if node.lhs.type.__str__() == "float" or node.rhs.type.__str__() == "float":
+            self.printComment ("Move to big boi reg")
+            self.printCode ("movq xmm0, rax ; lhs")
+            self.printCode ("movq xmm1, rdx ; rhs")
+
+            # addition
+            if node.op.lexeme == "+":
+                self.printCode ("addsd xmm0, xmm1 ; perform addition")
+            # subtraction 
+            elif node.op.lexeme == "-":
+                self.printCode ("subsd xmm0, xmm1 ; perform subtraction")
+
+            self.printCode ("movq rax, xmm0")
+            
+        # simple integer addition/subtraction
+        elif node.overloadedFunctionCall == None:
             # addition
             if node.op.lexeme == "+":
                 self.printCode ("add rax, rdx")
@@ -1427,13 +1447,13 @@ class CodeGenVisitor_x86 (ASTVisitor):
     def visitMultiplicativeExpressionNode (self, node):
         # Multiplication 
         if node.op.lexeme == "*":
-            self.printComment ("Multiplication")
+            self.printComment (f"Multiplication - {node.lhs.type}, {node.rhs.type}")
         # division 
         elif node.op.lexeme == "/":
-            self.printComment ("Division")
+            self.printComment (f"Division - {node.lhs.type}, {node.rhs.type}")
         # Mod
         elif node.op.lexeme == "%":
-            self.printComment ("Mod")
+            self.printComment (f"Mod - {node.lhs.type}, {node.rhs.type}")
 
         self.indentation += 1
 
@@ -1451,8 +1471,25 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.printCode ("pop rdx")
         self.printCode ("pop rax")
     
+        # floating point 
+        if node.lhs.type.__str__() == "float" or node.rhs.type.__str__() == "float":
+            self.printComment ("Move to big boi reg")
+            self.printCode ("movq xmm0, rax ; lhs")
+            self.printCode ("movq xmm1, rdx ; rhs")
+
+            # Multiplication 
+            if node.op.lexeme == "*":
+                self.printCode ("mulsd xmm0, xmm1 ; perform multiplication")
+            # division 
+            elif node.op.lexeme == "/":
+                self.printCode ("divsd xmm0, xmm1 ; perform division")
+            # Mod
+            elif node.op.lexeme == "%":
+                print ("Error: mod not allowed with floating point operands")
+
+            self.printCode ("movq rax, xmm0")
         # simple multiplicative  
-        if node.overloadedFunctionCall == None:
+        elif node.overloadedFunctionCall == None:
             # Multiplication 
             if node.op.lexeme == "*":
                 self.printCode ("imul rax, rdx")
@@ -1492,18 +1529,17 @@ class CodeGenVisitor_x86 (ASTVisitor):
     # **INCR and DECR do not save the value
     def visitUnaryLeftExpressionNode (self, node):
         if node.op.lexeme == "++":
-            self.printComment ("Pre-Increment")
-            
+            self.printComment (f"Pre-Increment - {node.rhs.type}")
         elif node.op.lexeme == "--":
-            self.printComment ("Pre-Decrement")
+            self.printComment (f"Pre-Decrement - {node.rhs.type}")
         elif node.op.lexeme == "+":
-            self.printComment ("Positive")
+            self.printComment (f"Positive - {node.rhs.type}")
         elif node.op.lexeme == "-":
-            self.printComment ("Negative")
+            self.printComment (f"Negative - {node.rhs.type}")
         elif node.op.lexeme == "!":
-            self.printComment ("Negate")
+            self.printComment (f"Negate - {node.rhs.type}")
         elif node.op.lexeme == "~":
-            self.printComment ("Bitwise Negation")
+            self.printComment (f"Bitwise Negation - {node.rhs.type}")
 
         self.indentation += 1
 
@@ -1638,9 +1674,18 @@ class CodeGenVisitor_x86 (ASTVisitor):
             self.printCode ("mov rax, 0")
             self.printCode ("add rax, rdx")
         elif node.op.lexeme == "-":
-            self.printComment ("val = 0 - val")
-            self.printCode ("mov rax, 0")
-            self.printCode ("sub rax, rdx")
+            # floating point
+            if node.rhs.type.__str__() == "float":
+                self.printComment ("Implemented as multiplying by -1.0")
+                self.printCode ("movsd xmm1, qword [__builtin__neg] ; -1.0")
+                self.printCode ("movq xmm0, rax")
+                self.printCode ("mulsd xmm0, xmm1 ; v = v * -1.0")
+                self.printCode ("movq rax, xmm0")
+            # integer
+            else:
+                self.printComment ("val = 0 - val")
+                self.printCode ("mov rax, 0")
+                self.printCode ("sub rax, rdx")
         elif node.op.lexeme == "!":
             self.printCode ("cmp rdx, 0")
             self.printCode ("sete al")
@@ -1871,8 +1916,17 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.printCode (f"add rsp, {len(node.args)*8}")
         
         # put function's return val on the stack
-        self.printCode ("push rax")
+        # float values are stored in xmm0
+        self.printComment ("Push return value")
+        if node.decl.type.__str__() == "float":
+            # move from fancy reg to normal reg
+            self.printCode ("movq rax, xmm0")
+            self.printCode ("push rax")
+        # all other types of return values
+        else:
+            self.printCode ("push rax")
 
+        # restore indentation
         self.indentation -= 1
 
     def visitMemberAccessorExpressionNode (self, node):
@@ -2139,7 +2193,8 @@ class CodeGenVisitor_x86 (ASTVisitor):
     def visitFloatLiteralExpressionNode (self, node):
         self.printComment ("Float Literal")
         self.indentation += 1
-        self.printCode (f"PUSH {node.value}")
+        self.printCode (f"mov rax, qword [{node.label}]")
+        self.printCode ("push rax")
         self.indentation -= 1
 
     def visitCharLiteralExpressionNode (self, node):

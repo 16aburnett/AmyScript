@@ -284,11 +284,22 @@ class AmyScriptCompiler:
         symbolTableVisitor.table.insert (printCharFunc, printCharFunc.id, Kind.FUNC)
 
         #  void exit ();
+        # for x86 this directly calls the system exit
         exitFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "exit", None, [], None)
         exitFunc.scopeName = "exit"
         exitFunc.label = exitFunc.scopeName
         # create signature for node
         exitFunc.signature = "exit()"
+        symbolTableVisitor.table.insert (exitFunc, exitFunc.id, Kind.FUNC)
+
+       #  void exit (int exit_status);
+        # for x86 this directly calls the system exit
+        param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "exit_status", None)
+        exitFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "exit", None, [param0], None)
+        exitFunc.scopeName = "exit__int"
+        exitFunc.label = exitFunc.scopeName
+        # create signature for node
+        exitFunc.signature = "exit(int)"
         symbolTableVisitor.table.insert (exitFunc, exitFunc.id, Kind.FUNC)
 
         #  float float ();

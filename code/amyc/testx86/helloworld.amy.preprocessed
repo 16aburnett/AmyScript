@@ -128,3 +128,117 @@
 
 }
 
+// test conversions
+println ("=== Testing Conversions ===");
+{
+    // string to int 
+    print  ("stringToInt (\"-47\") - 2 = "); 
+    println (stringToInt ( "-47 ") - 2);
+
+    // string to float
+    print  ("stringToFloat (\"31415e-4\") = "); 
+    println (stringToFloat ( "31415e-4"));
+
+}
+
+// test integer arithmetic
+println ("=== Testing Integer Arithmetic ===");
+{
+    // negate 
+    print ("-(7) = "); println (-(7));
+    print ("-(-(7)) = "); println (-(-(7)));
+
+    // addition
+    print ("7 + 14 = "); println (7 + 14);
+    print ("-43 + 3 + -7 + 3 = "); println (-43 + 3 + -7 + 3);
+    
+    // subtraction
+    print (" 7 -  14 = "); println ( 7 -  14);
+    print ("-7 - -14 = "); println (-7 - -14);
+    print (" 7 - -14 = "); println ( 7 - -14);
+    print ("-7 -  14 = "); println (-7 -  14);
+    print ("-7 -  14 - 21 + -14 + 7 = "); println (-7 -  14 - 21 - -14 + 7 );
+    
+    // multiplication
+    print (" 7 *  14 = "); println ( 7 *  14);
+    print ("-7 * -14 = "); println (-7 * -14);
+    print (" 7 * -14 = "); println ( 7 * -14);
+    print ("-7 *  14 = "); println (-7 *  14);
+
+    // division 
+    print ("10 / 2 = "); println (10 / 2);
+    print ("10 / 3 = "); println (10 / 3);
+    print (" 1 / 2 = "); println (1 / 2);
+
+    // mod 
+    print ("10 % 3 = "); println (10 % 3);
+    print ("10 % 2 = "); println (10 % 2);
+    print ("4526 % 645 = "); println (4526 % 645);
+    print ("-10 % 3 = "); println (-10 % 3);
+    print (" 1 % 2 = "); println (1 % 2);
+
+    // all together now
+    print ("((7 - 49) / 2 * -1 + 3 * 3) % (3 + 4) == 2 = "); println (((7 - 49) / 2 * -1 + 3 * 3) % (3 + 4) == 2);
+
+}
+
+// test floating point arithmetic 
+println ("=== Testing Floating Point Arithmetic ===");
+{
+    // addition 
+    float x = 3.14;
+    float y = 0.0015;
+    print ("3.14 + 0.0015 = "); println (x + y);
+    print ("64.0 + 8.123 + 0.63001 = "); println (64.0 + 8.123 + 0.63001 );
+
+    // negate 
+    print ("-(3.14) = "); println (-(3.14));
+
+    // subtraction 
+    print ("3.14159 - 1.234 = "); println (3.14159 - 1.234);
+
+    // multiplication 
+    print ("1.5943 * 2.0 = "); println (1.5943 * 2.0);
+    print ("0.000043 * 1.0e5 = "); println (0.000043 * 1.0e5);
+
+    // division 
+    print ("42.5 / 2.0 = "); println (42.5 / 2.0);
+    print ("12.5 / 0.125 = "); println (12.5 / 0.125);
+
+    // all together now 
+}
+
+exit (0);
+
+// test input
+{
+    // read a line
+    print ("Enter a phrase => ");
+    char[] line = input();
+    // then output that line that we read
+    print (line);
+    // ** need to free line
+
+    // get an integer
+    print ("Enter integer ==> ");
+    line = input();
+    int x = stringToInt (line);
+    // ** need to free line
+    print ("x * x => "); println (x*x);
+
+    // get a float
+    print ("Enter float ==> ");
+    line = input();
+    // ** need to free line
+    float y = stringToFloat (line);
+    print ("y => "); println (y);
+
+}
+
+
+
+
+
+
+
+exit (0);

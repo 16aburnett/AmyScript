@@ -1394,7 +1394,9 @@ class SymbolTableVisitor (ASTVisitor):
         pass
 
     def visitFloatLiteralExpressionNode (self, node):
-        pass
+        # FOR X86-64
+        # save with program node so these can be added to the data section
+        self.programNode.floatLiterals += [node]
 
     def visitCharLiteralExpressionNode (self, node):
         pass
