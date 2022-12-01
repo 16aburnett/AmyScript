@@ -119,7 +119,7 @@ class DeclarationNode (Node):
         self.id = id
         self.token = token
 
-        self.scopeName = ""
+        self.scopeName = "<unset-scope-name>"
 
         self.lineNumber = 0
         self.columnNumber = 0
@@ -163,6 +163,7 @@ class ParameterNode (DeclarationNode):
         self.lineNumber = 0
         self.columnNumber = 0
 
+        # x86 fields
         self.stackOffset = 0
 
     def accept (self, visitor):
@@ -276,6 +277,12 @@ class ClassDeclarationNode (CodeUnitNode):
 
         self.isForwardDeclaration = False 
 
+        # x86 dispatch table offset
+        self.stackOffset = 0
+
+        # x86 this keyword offset
+        self.thisStackOffset = 0
+
         self.lineNumber = 0
         self.columnNumber = 0
 
@@ -307,6 +314,9 @@ class FieldDeclarationNode (DeclarationNode):
         self.signatureNoScope = ""
 
         self.isInherited = False 
+
+        # x86 fields
+        self.stackOffset = 0
 
         self.lineNumber = 0
         self.columnNumber = 0
@@ -347,6 +357,8 @@ class MethodDeclarationNode (DeclarationNode):
         self.lineNumber = 0
         self.columnNumber = 0
 
+        self.localVariables = []
+
     def accept (self, visitor):
         visitor.visitMethodDeclarationNode (self)
 
@@ -385,6 +397,8 @@ class ConstructorDeclarationNode (DeclarationNode):
 
         self.lineNumber = 0
         self.columnNumber = 0
+
+        self.localVariables = []
 
     def accept (self, visitor):
         visitor.visitConstructorDeclarationNode (self)

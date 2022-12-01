@@ -1,3 +1,10 @@
+; ### x86-64 generated from AmyScript Compiler ###########################
+; ========================================================================
+
+; ========================================================================
+; ### LIBRARY CODE #######################################################
+; ========================================================================
+
 ; AmyScript Built-in library
 ; Author: Amy Burnett
 ; ========================================================================
@@ -17,12 +24,10 @@
 exit__int: 
         push    rbp 
         mov     rbp, rsp 
-        and     rsp, -16                 ; ensure stack is 16-byte aligned
         
         mov     rdi, qword [rbp + 16]
         call exit                          ; invoke operating system to exit
 
-        mov     rsp, rbp                 ; restore stack pointer
         pop     rbp 
         ret
 
@@ -48,14 +53,12 @@ exit__int:
 print__char__1:
         push rbp
         mov rbp, rsp
-        and     rsp, -16                 ; ensure stack is 16-byte aligned
 
         mov     rsi, qword [rbp + 16]
         mov     rdi, __data__print__char__1__format
         mov     eax, 0
         call    printf 
 
-        mov     rsp, rbp                 ; restore stack pointer
         pop rbp
         ret
 
@@ -92,19 +95,17 @@ section .text
 print__int:
         push    rbp 
         mov     rbp, rsp
-        and     rsp, -16                 ; ensure stack is 16-byte aligned
 
         mov     rsi, qword [rbp + 16]
         mov     rdi, __data__print__int__format
         mov     eax, 0
         call    printf 
 
-        mov     rsp, rbp                 ; restore stack pointer
         pop     rbp
         ret 
 
 section .data
-__data__print__int__format: db "%ld", 0
+__data__print__int__format: db "%d", 0
 section .text
 
 ; Prints an int to the screen
@@ -114,95 +115,95 @@ section .text
 ;        push rdx
 ;        call print__int
 ;        pop
-; manual_print__int:
-;         push    rbp
-;         mov     rbp, rsp  
-;         sub     rsp, 4                   ; num        [rbp -  4] [int 4-bytes]
-;         sub     rsp, 4                   ; isNegative [rbp -  8] [int 4-bytes]
-;         sub     rsp, 4                   ; digit      [rbp - 12] [int 4-bytes]
-;         sub     rsp, 4                   ; char       [rbp - 16] [int 4-bytes]
-;         sub     rsp, 4                   ; numDigits  [rbp - 20] [int 4-bytes]
+manual_print__int:
+        push    rbp
+        mov     rbp, rsp  
+        sub     rsp, 4                   ; num        [rbp -  4] [int 4-bytes]
+        sub     rsp, 4                   ; isNegative [rbp -  8] [int 4-bytes]
+        sub     rsp, 4                   ; digit      [rbp - 12] [int 4-bytes]
+        sub     rsp, 4                   ; char       [rbp - 16] [int 4-bytes]
+        sub     rsp, 4                   ; numDigits  [rbp - 20] [int 4-bytes]
 
-;         ; initialize local vars
-;         mov     edx, dword [rbp + 16]
-;         mov     dword [rbp - 4], edx
-;         mov     dword [rbp - 8], 0
-;         mov     dword [rbp - 12], 0
-;         mov     dword [rbp - 16], 0
-;         mov     dword [rbp - 20], 0
+        ; initialize local vars
+        mov     edx, dword [rbp + 16]
+        mov     dword [rbp - 4], edx
+        mov     dword [rbp - 8], 0
+        mov     dword [rbp - 12], 0
+        mov     dword [rbp - 16], 0
+        mov     dword [rbp - 20], 0
 
-;         ; account for negative numbers
-;         ; if num < 0:
-;         ;   isNegative = 1
-;         ;   num = -num
-;         cmp     dword [rbp - 4], 0
-;         jge     positive0
-;         mov     dword [rbp - 8], 1
-;         neg     dword [rbp - 4]
-; positive0: nop
+        ; account for negative numbers
+        ; if num < 0:
+        ;   isNegative = 1
+        ;   num = -num
+        cmp     dword [rbp - 4], 0
+        jge     positive0
+        mov     dword [rbp - 8], 1
+        neg     dword [rbp - 4]
+positive0: nop
 
-;         ; while num > 9:
-; while0:
-;         cmp     dword [rbp - 4], 9 
-;         jle     endwhile0 
-;         ;   digit = num % 10
-;         ;   num = num / 10
-;         mov     edi, 10
-;         mov     eax, dword [rbp - 4]
-;         cdq     
-;         idiv    edi
-;         mov     dword [rbp - 12], edx  ; digit = num % 10
-;         mov     dword [rbp - 4], eax   ; num = num / 10
+        ; while num > 9:
+while0:
+        cmp     dword [rbp - 4], 9 
+        jle     endwhile0 
+        ;   digit = num % 10
+        ;   num = num / 10
+        mov     edi, 10
+        mov     eax, dword [rbp - 4]
+        cdq     
+        idiv    edi
+        mov     dword [rbp - 12], edx  ; digit = num % 10
+        mov     dword [rbp - 4], eax   ; num = num / 10
 
-;         ;   char = digit + '0'
-;         mov     eax, dword [rbp - 12]
-;         add     eax, '0'
-;         ;   push char
-;         push    rax
-;         ;   numDigits++ 
-;         inc     dword [rbp - 20]
-;         ; repeat
-;         jmp     while0
-; endwhile0: 
+        ;   char = digit + '0'
+        mov     eax, dword [rbp - 12]
+        add     eax, '0'
+        ;   push char
+        push    rax
+        ;   numDigits++ 
+        inc     dword [rbp - 20]
+        ; repeat
+        jmp     while0
+endwhile0: 
 
-;         ;   char = num + '0'
-;         mov     eax, dword [rbp - 4]
-;         add     eax, '0'
-;         ;   push char
-;         push    rax
-;         ;   numDigits++ 
-;         inc     dword [rbp - 20]
+        ;   char = num + '0'
+        mov     eax, dword [rbp - 4]
+        add     eax, '0'
+        ;   push char
+        push    rax
+        ;   numDigits++ 
+        inc     dword [rbp - 20]
         
-;         ; if isNegative == 1:
-;         cmp     dword [rbp - 8], 1
-;         jne     positive1
-;         ;   push '-'
-;         push    '-'
-;         ;   numDigits++
-;         inc     dword [rbp - 20]
+        ; if isNegative == 1:
+        cmp     dword [rbp - 8], 1
+        jne     positive1
+        ;   push '-'
+        push    '-'
+        ;   numDigits++
+        inc     dword [rbp - 20]
 
-; positive1: 
-;         nop
+positive1: 
+        nop
         
-;         ; while numDigits > 0:
-; while1:
-;         cmp     dword [rbp - 20], 0
-;         jle     endwhile1
-;         ;   pop char
-;         pop     rdx
-;         ;   printchar char
-;         push    rdx   ; arg0
-;         call    print__char 
-;         pop     rdx    ; arg0
-;         ;   numDigits--
-;         dec     dword [rbp - 20]
-;         ;   repeat 
-;         jmp     while1
-; endwhile1:
+        ; while numDigits > 0:
+while1:
+        cmp     dword [rbp - 20], 0
+        jle     endwhile1
+        ;   pop char
+        pop     rdx
+        ;   printchar char
+        push    rdx   ; arg0
+        call    print__char 
+        pop     rdx    ; arg0
+        ;   numDigits--
+        dec     dword [rbp - 20]
+        ;   repeat 
+        jmp     while1
+endwhile1:
 
-;         mov     rsp, rbp                 ; pop local vars 
-;         pop     rbp
-;         ret
+        mov     rsp, rbp                 ; pop local vars 
+        pop     rbp
+        ret
 
 ; ========================================================================
 
@@ -213,14 +214,12 @@ section .text
 print__char:
         push    rbp 
         mov     rbp, rsp
-        and     rsp, -16                 ; ensure stack is 16-byte aligned
 
         mov     rsi, qword [rbp + 16]
         mov     rdi, __data__print__char__format
         mov     eax, 0
         call    printf 
 
-        mov     rsp, rbp                 ; restore stack pointer
         pop     rbp
         ret 
 
@@ -244,7 +243,7 @@ manual_print__char:
         mov     rdx, 1                   ; number of bytes
         syscall                          ; invoke operating system to do the write
 
-        mov     rsp, rbp                 ; restore stack pointer
+        mov     rsp, rbp                 ; pop local vars 
         pop     rbp
         ret
 
@@ -264,19 +263,17 @@ manual_print__char:
 print__float:
         push    rbp 
         mov     rbp, rsp
-        and     rsp, -16                 ; ensure stack is 16-byte aligned
 
-        movsd   xmm0, qword [rbp + 16]
+        movq    xmm0, qword [rbp + 16]
         mov     rdi, __data__print__float__format
         mov     eax, 1
         call    printf 
 
-        mov     rsp, rbp                 ; pop local vars 
         pop     rbp
         ret 
 
 section .data
-__data__print__float__format: db "%g", 0
+__data__print__float__format: db "%f", 0
 section .text
 
 ; //========================================================================
@@ -286,14 +283,12 @@ section .text
 println__char__1:
         push rbp
         mov rbp, rsp
-        and     rsp, -16                 ; ensure stack is 16-byte aligned
 
         mov     rsi, qword [rbp + 16]
         mov     rdi, __data__println__char__1__format
         mov     eax, 0
         call    printf 
 
-        mov     rsp, rbp                 ; pop local vars 
         pop rbp
         ret
 
@@ -331,36 +326,31 @@ section .text
 println__int:
         push    rbp 
         mov     rbp, rsp
-        and     rsp, -16                 ; ensure stack is 16-byte aligned
 
         mov     rsi, qword [rbp + 16]
         mov     rdi, __data__println__int__format
         mov     eax, 0
-        call    printf
+        call    printf 
 
-        mov     rsp, rbp                 ; pop local vars 
         pop     rbp
         ret 
 
 section .data
-__data__println__int__format: db "%ld", 10, 0
+__data__println__int__format: db "%d", 10, 0
 section .text
 
 ; ========================================================================
 ; // Prints a float to the screen with a newline
 ; // void println (float floatToPrint);
-; valueToPrint : [rbp + 16]
 println__float:
         push    rbp 
         mov     rbp, rsp
-        and     rsp, -16                 ; ensure stack is 16-byte aligned
 
-        movsd   xmm0, qword [rbp + 16]
+        movq    xmm0, qword [rbp + 16]
         mov     rdi, __data__println__float__format
-        mov     eax, 1                   ; one floating point
-        call    printf
+        mov     eax, 1
+        call    printf 
 
-        mov     rsp, rbp                 ; pop local vars 
         pop     rbp
         ret 
 
@@ -382,7 +372,6 @@ println__char:
         mov     eax, 0
         call    printf 
 
-        mov     rsp, rbp                 ; pop local vars 
         pop     rbp
         ret 
 
@@ -450,19 +439,11 @@ input:
 
 ; //========================================================================
 ; // converts int to float
-; // float intToFloat (int value);
-; value : [rbp + 16]
-intToFloat__int:
-        ; function prologue
-        push    rbp
-        mov     rbp, rsp
-        
-        cvtsi2sd xmm0, qword [rbp + 16] ; xmm0 = float(value)
-
-        ; function epilogue
-        mov     rsp, rbp
-        pop     rbp
-        ret 
+; // float intToFloat (int);
+; intToFloat__int:
+;     stackget val 0
+;     itof res val
+;     return res
 
 ; //========================================================================
 ; // parses a float from a given char[]
@@ -547,12 +528,54 @@ stringToInt__char__1:
 ; null:
 ;     return __null
 
-; //========================================================================
-
-
-
 ; ========================================================================
 
 section .data
 __builtin__neg: dq -1.0
-section .text
+section .text; ========================================================================
+; ### COMPILED CODE ######################################################
+; ========================================================================
+
+_start:
+main:
+        ; Main Header:
+        push rbp
+        mov rbp, rsp
+        sub rsp, 0
+        ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+
+        ; Body
+        ; Function Call - print(float) -> void
+           ; Make space for 1 arg(s)
+           sub rsp, 8
+           ; Arguments
+              ; Eval arg0
+                 ; Float Literal
+                    mov rax, qword [.float0]
+                    push rax
+              ; Move arg0's result to reverse order position on stack
+              pop rax
+              mov qword [rsp + 0], rax
+           ; Call print(float)
+           call print__float
+           ; Remove args
+           add rsp, 8
+           ; Push return value
+           push rax
+        ; Statement results can be ignored
+        pop rdx
+; ========================================================================
+; ### END OF CODE ########################################################
+; ========================================================================
+
+        push 0
+        call exit__int
+; ========================================================================
+; ### DATA SECTION #######################################################
+; ========================================================================
+
+        section .data
+.float0: dq 3.14
+.floatNegOne: dq -1.0
+.floatZero: dq 0.0
+.floatOne: dq 1.0

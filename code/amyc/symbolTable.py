@@ -219,7 +219,7 @@ class SymbolTable:
 
     def lookup (self, name, kind, params=[], templateParams=[], visitor=None):
 
-        # print (f"[SymbolTable] [lookup] {name}",end="")
+        # print (f"[SymbolTable] [lookup] [debug] {name}",end="")
         # if len(templateParams) > 0:
         #     print (f"<:{templateParams[0]}",end="")
         #     for i in range(1, len(templateParams)):
@@ -315,22 +315,26 @@ class SymbolTable:
                         tempSignature += [f", {templateParams[j].__str__()}"]
                     tempSignature += [f":>"]
                     tempSignature = "".join(tempSignature)
-                    # print (tempSignature)
+                    # print (f"[SymbolTable] [lookup] [debug] desired template signature: {tempSignature}")
                     # create template instance if it DNE
                     if tempSignature not in self.table[i][name].funDec[len(templateParams)].instantiations:
-                        # print ("creating function template instance...")
+                        # print (f"[SymbolTable] [lookup] [debug] creating new function template instance...")
                         # create instance
                         func = self.table[i][name].funDec[len(templateParams)].function.copy()
                         self.table[i][name].funDec[len(templateParams)].instantiations[tempSignature] = func
                         # overrite template aliases with their new types 
                         templateVisitor = TemplateVisitor (self.table[i][name].funDec[len(templateParams)].types, templateParams)
+                        # print (f"[SymbolTable] [lookup] [debug] template visitor start - ")
                         func.accept (templateVisitor)
+                        # print (f"[SymbolTable] [lookup] [debug] template visitor end - ")
                         # analyze new instance 
                         visitor.insertFunc = False
                         func.templateParams = templateParams
                         oldWasSuccessful = visitor.wasSuccessful
                         visitor.wasSuccessful = True
+                        # print (f"[SymbolTable] [lookup] [debug] visit new instance start - ")
                         func.accept (visitor)
+                        # print (f"[SymbolTable] [lookup] [debug] visit new instance end - ")
                         if not visitor.wasSuccessful:
                             print (f"^~~~From instantiation of function '{func.signature}'", end="\n\n")
                         # restore previous success

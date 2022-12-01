@@ -18,6 +18,7 @@ else:
 # ========================================================================
 
 DIVIDER_LENGTH = 75 
+INITIAL_INDENT_LENGTH = 9
 TAB_LENGTH = 3
 
 LIB_FILENAME = os.path.dirname(__file__) + "/AmyScriptBuiltinLib_x86.asm"
@@ -40,7 +41,11 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.parentLoops = []
         self.pushParent = False
         self.scopeNames = ["__main"]
-        self.indent = "        "
+        self.indent = "".join ([' ' for i in range(INITIAL_INDENT_LENGTH)])
+
+        self.floatNegOneLabel = ".floatNegOne"
+        self.floatZeroLabel = ".floatZero"
+        self.floatOneLabel = ".floatOne"
 
     # === HELPER FUNCTIONS ===============================================
 
@@ -165,7 +170,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.printComment ("Local Variables - Each variable is currently 64-bit (sorry not sorry)")
         for i in range(len(node.localVariables)):
             offset = i*8+8
-            self.printComment (f"{node.localVariables[i].id} [rbp - {offset}]")
+            self.printComment (f"[rbp - {offset}] - {node.localVariables[i].type} {node.localVariables[i].id} ({node.localVariables[i].scopeName})")
             # save the address for future lookups 
             node.localVariables[i].stackOffset = offset 
 
@@ -216,6 +221,11 @@ class CodeGenVisitor_x86 (ASTVisitor):
                 if len(repr(asciiString[0])) > 3:  
                     line += [f"{ord(asciiString[0])}"]  
                     # print (ord(asciiString[0]))
+                # if it is an apostrophe 
+                # an apostrophe would become '''
+                # which is causes problems
+                elif asciiString[0] == '\'':
+                    line += [f"{ord(asciiString[0])}"]
                 # normal character
                 else:
                     line += [f"'{asciiString[0]}'"]
@@ -225,6 +235,11 @@ class CodeGenVisitor_x86 (ASTVisitor):
                 if len(repr(asciiString[j])) > 3:  
                     line += [f", {ord(asciiString[j])}"]  
                     # print (ord(asciiString[j]))
+                # if it is an apostrophe 
+                # an apostrophe would become '''
+                # which is causes problems
+                elif asciiString[j] == '\'':
+                    line += [f", {ord(asciiString[j])}"]
                 # normal character
                 else:
                     line += [f", '{asciiString[j]}'"]
@@ -235,6 +250,11 @@ class CodeGenVisitor_x86 (ASTVisitor):
         # print all float literals 
         for i in range(len(node.floatLiterals)):
             self.printLabel (f"{node.floatLiterals[i].label}: dq {node.floatLiterals[i].value}")
+
+        # predefined floats
+        self.printLabel (f"{self.floatNegOneLabel}: dq -1.0")
+        self.printLabel (f"{self.floatZeroLabel}: dq 0.0")
+        self.printLabel (f"{self.floatOneLabel}: dq 1.0")
 
     def visitTypeSpecifierNode (self, node):
         pass
@@ -335,6 +355,10 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.indentation += 1
         self.printCode ("push rbp")
         self.printCode ("mov rbp, rsp")
+        # local variables
+        neededSpace = len(node.localVariables) * 8 # each var is 8-bytes
+        space = neededSpace if neededSpace % 16 == 0 else neededSpace + 8 # 16 byte aligned
+        self.printCode (f"sub rsp, {space}")
         self.indentation -= 1
 
         # load parameters 
@@ -355,7 +379,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.indentation += 1
         for i in range(len(node.localVariables)):
             offset = i*8+8
-            self.printComment (f"{node.localVariables[i].id} [rbp - {offset}]")
+            self.printComment (f"[rbp - {offset}] - {node.localVariables[i].type} {node.localVariables[i].id} ({node.localVariables[i].scopeName})")
             # save the address for future lookups 
             node.localVariables[i].stackOffset = offset 
         self.indentation -= 1
@@ -368,10 +392,14 @@ class CodeGenVisitor_x86 (ASTVisitor):
         node.body.accept (self)
         self.indentation -= 1
 
+        # FUNCTION EPILOGUE
         # extra return statement for if return is not provided 
-        self.printCode ("ret ; ensure function returns")
+        self.printComment ("Function Epilogue")
+        self.printCode ("mov rsp, rbp ; remove local vars + unpopped pushes")
+        self.printCode ("pop rbp")
+        self.printCode ("ret")
 
-        self.indentation -= 1
+        self.indentation -= 1 # end function
 
         self.printLabel (f"{node.endLabel}:")
 
@@ -446,21 +474,28 @@ class CodeGenVisitor_x86 (ASTVisitor):
                     scopeName += [f"__{ctor.params[i].type.arrayDimensions}"]
             ctor.scopeName = "".join(scopeName)
 
-        # create dispatch table 
-        self.printComment ("Creating Dispatch Table")
-        node.dtableScopeName = "__dtable__" + "".join (self.scopeNames)
+        self.printComment ("Class data")
+        self.printCode ("section .data")
         self.indentation += 1
-        self.printCode (f"MALLOC {node.dtableScopeName} {len(node.virtualMethods)}")
+        # dispatch table 
+        self.printComment ("Dispatch Table - this might need to be a malloc**")
+        node.dtableScopeName = ".__dtable__" + "".join (self.scopeNames)
+        numBytes = len(node.virtualMethods)
+        self.printCode (f"{node.dtableScopeName}:")
+        # self.printCode (f"mov rdi, {numBytes} ; numVirtualMethods * 8 bytes")
+        # self.printCode (f"call malloc ; allocate space for dtable")
+        # self.printCode (f" ; save pointer to {node.dtableScopeName}")
         # populate dispatch table
-        self.printComment ("Populate Dispatch Table")
+        self.printComment ("Dispatch Table Entries")
         for i in range(len(node.functionPointerList)):
-            self.printCode (f"ASSIGN {node.dtableScopeName}[{i}] {node.functionPointerList[i].scopeName}")
+            self.printCode (f"dq .{node.functionPointerList[i].scopeName} ; {i}")
         self.indentation -= 1
+        self.printCode ("section .text")
 
         # create scope names for fields 
         for field in node.fields:
             # variable names are modified by its scope 
-            fieldScopeName = "__field__" + "".join (self.scopeNames) + "____" + field.id
+            fieldScopeName = ".__field__" + "".join (self.scopeNames) + "____" + field.id
             field.scopeName = fieldScopeName
 
         # dispatch table pointer is at i = 0 
@@ -474,7 +509,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
         # add jump to skip over class dec  
         self.indentation -= 1
         self.printComment ("skip over class methods")
-        self.printCode (f"JUMP __endclass__{node.scopeName}")
+        self.printCode (f"jmp .__endclass__{node.scopeName}")
         self.indentation += 1
 
         for ctor in node.constructors:
@@ -487,7 +522,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
 
         self.indentation -= 1
 
-        self.printCode (f"__endclass__{node.scopeName}:")
+        self.printLabel (f".__endclass__{node.scopeName}:")
 
         self.printComment (f"End Class Declaration - {node.scopeName}")
         self.printDivider ()
@@ -503,7 +538,9 @@ class CodeGenVisitor_x86 (ASTVisitor):
             self.printComment (f"Inherited from {node.parentClass.pDecl.id}")
 
         # fieldIndexVarname = f"__field__{node.id}__{field.id}"
-        self.printCode (f"ASSIGN {node.scopeName} {node.index}")
+        self.printCode (f"section .data")
+        self.printCode (f"{node.scopeName}: dq {node.index}")
+        self.printCode (f"section .text")
 
         self.printSubDivider ()
 
@@ -517,47 +554,78 @@ class CodeGenVisitor_x86 (ASTVisitor):
         if node.isInherited:
             self.printComment (f"Inherited from {node.parentClass.pDecl.id}")
 
-        endLabel = f"__end{node.scopeName}"
-        methodLabel = node.scopeName
+        endLabel = f".__end{node.scopeName}"
+        methodLabel = "."+node.scopeName
 
         # add jump to skip over function 
-        self.printCode (f"JUMP {endLabel}")
+        self.printCode (f"jmp {endLabel}")
 
         # place function jump-point label 
         self.printCode (methodLabel + ":")
 
         self.indentation += 1
 
+
+
         # inherited methods
         if node.isInherited:
             self.printComment (f"Jump to {node.inheritedMethod.parentClass.id}'s version")
-            self.printCode (f"JUMP {node.inheritedMethod.scopeName}")
+            self.printCode (f"jmp .{node.inheritedMethod.scopeName}")
         else:
 
-            # load class instance 
-            # first thing on the stack
-            self.printComment ("Class Instance")
-            self.indentation += 1
-            self.printCode ("STACKGET __this 0")
-            self.indentation -= 1 
+            # FUNCTION HEADER
+            self.printComment ("Function Header:")
 
-            # load parameters 
+            # setup stack
+            self.printComment ("Setup stack frame")
+            self.indentation += 1 # start stack frame setup
+            self.printCode ("push rbp")
+            self.printCode ("mov rbp, rsp")
+            # this keyword
+            # local variables   
+            self.printComment ("Local Variables - Each variable is currently 64-bit (sorry not sorry)")
+            self.indentation += 1 # start locals
+            neededSpace = (len(node.localVariables)+1) * 8 # each var is 8-bytes
+            space = neededSpace if neededSpace % 16 == 0 else neededSpace + 8 # 16 byte aligned
+            self.printCode (f"sub rsp, {space} ; space for local variables (16-byte aligned)")    
+            self.printComment (f"[rbp - 8] - this - Reference to 'this' object instance")
+            self.printCode (f"mov rdx, qword [rbp + 16] ; param passed 'this'")
+            self.printCode (f"mov qword [rbp - 8], rdx ; save this to a local")
+            node.parentClass.thisStackOffset = 8
+            for i in range(len(node.localVariables)):
+                offset = i*8+8+8
+                self.printComment (f"[rbp - {offset}] - {node.localVariables[i].type} {node.localVariables[i].id} ({node.localVariables[i].scopeName})")
+                # save the address for future lookups 
+                node.localVariables[i].stackOffset = offset 
+            self.indentation -= 1 # end of local vars
+            self.indentation -= 1 # end stack frame setup
+
+            # load parameters - just for comments
             self.printComment ("Parameters")
-            self.indentation += 1
-            for i in range(1, len(node.params)+1):
-                self.printComment (f"Param: {node.params[i-1].id}")
-                node.params[i-1].accept (self)
-                # keep the same parameter name 
-                self.printCode (f"STACKGET {node.params[i-1].scopeName} {i}")
-            self.indentation -= 1        
+            self.indentation += 1 # start parameters
+            # foreach parameter
+            for i in range(len(node.params)):
+                node.params[i].accept (self)
+                # +16 because retaddr (8-bytes) and prev_rbp (8-bytes)
+                # +8 more bytes because first param is 'this'
+                offset = i*8+16+8
+                self.printComment (f"Param: {node.params[i].id} [rbp + {offset}] ({node.params[i].scopeName})")
+                # * parameter offsets are made negative since they are accessed opposite to localVars
+                # could be weird, might want to flip localVars to be negative instead
+                node.params[i].stackOffset = -offset 
+            self.indentation -= 1  # end parameters      
 
             self.printComment ("Body")
             self.indentation += 1
             node.body.accept (self)
             self.indentation -= 1
 
+            # FUNCTION EPILOGUE
             # extra return statement for if return is not provided 
-            self.printCode ("RETURN 0")
+            self.printComment ("Function Epilogue")
+            self.printCode ("mov rsp, rbp ; remove local vars + unpopped pushes")
+            self.printCode ("pop rbp")
+            self.printCode ("ret")
 
         self.indentation -= 1
 
@@ -578,8 +646,8 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.printSubDivider ()
         self.printComment (f"Constructor Declaration - {node.signature} -> {node.parentClass.type}")
 
-        endLabel = f"__end{node.scopeName}"
-        ctorLabel = f"{node.scopeName}"
+        endLabel = f".__end{node.scopeName}"
+        ctorLabel = f".{node.scopeName}"
 
         # AD HOC CENTRAL!!
         # fill in prereferences with scopename 
@@ -588,35 +656,68 @@ class CodeGenVisitor_x86 (ASTVisitor):
                 self.code[i] = self.code[i].replace(f"${node.signature}", node.scopeName)
 
         # add jump to skip over function 
-        self.printCode (f"JUMP {endLabel}")
+        self.printCode (f"jmp {endLabel}")
 
         # place function jump-point label 
         self.printCode (ctorLabel + ":")
 
+        # FUNCTION HEADER
+        self.printComment ("Function Header:")
         self.indentation += 1
+
+        # setup stack
+        self.printComment ("Setup stack frame")
+        self.indentation += 1 # start stack frame setup
+        self.printCode ("push rbp")
+        self.printCode ("mov rbp, rsp")
+        # this keyword
+        # local variables   
+        self.printComment ("Local Variables - Each variable is currently 64-bit (sorry not sorry)")
+        self.indentation += 1
+        neededSpace = (len(node.localVariables)+1) * 8 # each var is 8-bytes
+        space = neededSpace if neededSpace % 16 == 0 else neededSpace + 8 # 16 byte aligned
+        self.printCode (f"sub rsp, {space} ; space for local variables (16-byte aligned)")    
+        self.printComment (f"[rbp - 8] - this - Reference to 'this' object instance")
+        node.parentClass.thisStackOffset = 8
+        for i in range(len(node.localVariables)):
+            offset = i*8+8+8
+            self.printComment (f"[rbp - {offset}] - {node.localVariables[i].type} {node.localVariables[i].id} ({node.localVariables[i].scopeName})")
+            # save the address for future lookups 
+            node.localVariables[i].stackOffset = offset 
+        self.indentation -= 1 # end of local vars
+        self.indentation -= 1 # end stack frame setup
 
         # create class instance 
         self.printComment ("Creating Class Instance")
         self.indentation += 1
         # +1 because all classes start with a dispatch table 
-        self.printCode (f"MALLOC __this {len(node.parentClass.fields)+1}")
+        self.printCode (f"mov rdi, {(len(node.parentClass.fields)+1)*8} ; [dtable, field0, field1, ..., fieldN] each 8 bytes")
+        self.printCode (f"call malloc")
+        self.printCode (f"mov qword [rbp - {node.parentClass.thisStackOffset}], rax ; save class instance as 'this'")
 
         # add dispatch table to instance
         self.printComment ("Add Dispatch Table")
-        self.printCode (f"ASSIGN __this[0] {node.parentClass.dtableScopeName}")
+        self.printCode (f"mov rax, qword [rbp - {node.parentClass.thisStackOffset}] ; this")
+        self.printCode (f"mov qword [rax + 0], {node.parentClass.dtableScopeName} ; this[0] = &dtable")
 
         # ** maybe initialize entries? or that might be inefficient
         self.indentation -= 1
 
-        # load parameters 
+        # load parameters - just for comments
         self.printComment ("Parameters")
-        self.indentation += 1
+        self.indentation += 1 # start parameters
+        # foreach parameter
         for i in range(len(node.params)):
-            self.printComment (f"Param: {node.params[i].id}")
             node.params[i].accept (self)
-            # keep the same parameter name 
-            self.printCode (f"STACKGET {node.params[i].scopeName} {i}")
-        self.indentation -= 1        
+            # +16 because retaddr (8-bytes) and prev_rbp (8-bytes)
+            offset = i*8+16
+            self.printComment (f"Param: {node.params[i].id} [rbp + {offset}]")
+            # * parameter offsets are made negative since they are accessed opposite to localVars
+            # could be weird, might want to flip localVars to be negative instead
+            node.params[i].stackOffset = -offset 
+        self.indentation -= 1  # end parameters
+
+        self.indentation -= 1  # end function header
 
         self.printComment ("Body")
         self.indentation += 1
@@ -624,7 +725,14 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.indentation -= 1
 
         # return constructed class instance
-        self.printCode ("RETURN __this")
+        self.printCode (f"mov rax, qword [rbp - {node.parentClass.thisStackOffset}] ; __this")   
+
+        # FUNCTION EPILOGUE
+        # extra return statement for if return is not provided 
+        self.printComment ("Function Epilogue")
+        self.printCode ("mov rsp, rbp ; remove local vars + unpopped pushes")
+        self.printCode ("pop rbp")
+        self.printCode ("ret")
 
         self.indentation -= 1
 
@@ -869,6 +977,10 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.printComment ("Init")
         self.indentation += 1
         node.init.accept (self)
+        # result of init can be ignored
+        # *** this can fail if the init does not push to the stack
+        self.printComment ("Loop init result can be discarded")
+        self.printCode (f"pop rax")
         self.indentation -= 1
 
         # skip over update
@@ -882,6 +994,10 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.printComment ("Update")
         self.indentation += 1
         node.update.accept (self)
+        # result of update can be ignored
+        # *** this can fail if the update does not push to the stack
+        self.printComment ("Loop update result can be discarded")
+        self.printCode (f"pop rax")
         self.indentation -= 1
 
         self.printLabel (f".{condLabel}:")
@@ -1091,19 +1207,36 @@ class CodeGenVisitor_x86 (ASTVisitor):
         node.rhs.accept (self)
         self.indentation -= 1
 
+        # determine number of bytes being assigned
+        destSize = 8
+        if node.rhs.type.__str__() == "char":
+            destSize = 1
+
         if isinstance(node.lhs, VariableDeclarationNode):
             self.printComment ("LHS")
             self.indentation += 1
             node.lhs.accept (self)
             self.indentation -= 1
-            self.printCode (f"pop rdx ; __rhs")
-            lhsStr = f"qword [rbp - {node.lhs.stackOffset}]"
+            # self.printCode (f"pop rdx ; __rhs")
+            # char - 1 byte 
+            if node.rhs.type.__str__() == "char":
+                lhsStr = f"byte [rbp - {node.lhs.stackOffset}]"
+            # int, float, pointer - 8 bytes
+            else:
+                lhsStr = f"qword [rbp - {node.lhs.stackOffset}]"
 
         elif isinstance(node.lhs, IdentifierExpressionNode):
-            self.printCode (f"pop rdx ; __rhs")
-            lhsStr = f"qword [rbp - {node.lhs.decl.stackOffset}]"
+            # self.printCode (f"pop rdx ; __rhs")
+            # char - 1 byte 
+            if node.rhs.type.__str__() == "char":
+                lhsStr = f"byte [rbp - {node.lhs.decl.stackOffset}]"
+            # int, float, pointer - 8 bytes
+            else:
+                lhsStr = f"qword [rbp - {node.lhs.decl.stackOffset}]"
         elif isinstance(node.lhs, ThisExpressionNode):
-            self.printCode (f"pop rdx ; __rhs")
+            print ("This assignment - Not implemented")
+            exit (1)
+            # self.printCode (f"pop rdx ; __rhs")
             lhsStr = f"{node.lhs.decl.scopeName}"
         elif isinstance(node.lhs, SubscriptExpressionNode):
             self.printComment ("LHS")
@@ -1122,14 +1255,20 @@ class CodeGenVisitor_x86 (ASTVisitor):
             node.lhs.offset.accept (self)
             self.indentation -= 1
 
-            self.printCode ("pop rdx ; __offset")
-            self.printCode ("pop rax ; __pointer")
+            self.printCode ("pop rdi ; __offset")
+            pointerReg = "rbx"
+            self.printCode (f"pop {pointerReg} ; __pointer")
 
             self.indentation -= 1
             self.indentation -= 1
 
-            self.printCode (f"pop rdx ; __rhs")
-            lhsStr = f"__pointer[__offset]"
+            # self.printCode (f"pop rdx ; __rhs")
+            # char - 1 byte 
+            if node.rhs.type.__str__() == "char":
+                lhsStr = f"byte [{pointerReg} + rdi]"
+            # int, float, pointer - 8 bytes
+            else:
+                lhsStr = f"qword [{pointerReg} + 8*rdi]"
 
         elif isinstance (node.lhs, MemberAccessorExpressionNode):
             self.printComment ("LHS")
@@ -1147,43 +1286,116 @@ class CodeGenVisitor_x86 (ASTVisitor):
             self.indentation += 1
             # # construct field index var 
             # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"PUSH {node.lhs.decl.scopeName}")
+            self.printCode (f"push qword [{node.lhs.decl.scopeName}] ; {node.lhs.id}")
             self.indentation -= 1
 
-            self.printCode ("POP __child")
-            self.printCode ("POP __parent")
-
-            self.printCode (f"POP __rhs")
+            self.printCode ("pop rdi ; rhs")
+            self.printCode ("pop rbx ; lhs")
             
-            lhsStr = f"__parent[__child]"
+            lhsStr = f"qword [rbx + 8*rdi]"
 
             self.indentation -= 1
             self.indentation -= 1
+        
+        # get rhs value
+        self.printCode (f"pop rdx ; rhs value")
 
+        # perform operation and save to lhsStr
         # =
         if node.op.type == "ASSIGN":
-            self.printCode (f"mov {lhsStr}, rdx")
+            if destSize == 1:
+                self.printCode (f"mov {lhsStr}, dl")
+            # 8 bytes
+            else:
+                self.printCode (f"mov {lhsStr}, rdx")
             self.printCode ("push rdx")
         # +=
         elif node.op.type == "ASSIGN_ADD":
-            self.printCode (f"ADD {lhsStr} {lhsStr} __rhs")
-            self.printCode (f"PUSH {lhsStr}")
+            # floating point 
+            if node.type.__str__() == "float":
+                self.printCode (f"movq xmm0, rdx    ; load rhs value, xmm0 = mem[0], zero")
+                self.printCode (f"addsd xmm0, {lhsStr} ; add lhs and rhs")
+                self.printCode (f"movsd {lhsStr}, xmm0 ; write back to lhs")
+                self.printCode (f"movq rax, xmm0")
+                self.printCode (f"push rax          ; push result for other expressions")
+            # integer
+            else:
+                self.printCode (f"mov rax, {lhsStr} ; read lhs value")
+                self.printCode (f"add rax, rdx      ; add lhs and rhs")
+                self.printCode (f"mov {lhsStr}, rax ; write back to lhs")
+                self.printCode (f"push rax          ; push result for other expressions")
         # -=
         elif node.op.type == "ASSIGN_SUB":
-            self.printCode (f"SUBTRACT {lhsStr} {lhsStr} __rhs")
-            self.printCode (f"PUSH {lhsStr}")
+            # floating point 
+            if node.type.__str__() == "float":
+                self.printCode (f"movq xmm0, {lhsStr} ; load lhs value, xmm0 = mem[0], zero")
+                self.printCode (f"movq xmm1, rdx ; load rhs value, xmm1 = mem[0], zero")
+                self.printCode (f"subsd xmm0, xmm1 ; lhs = lhs - rhs")
+                self.printCode (f"movsd {lhsStr}, xmm0 ; write back to lhs")
+                self.printCode (f"movq rax, xmm0")
+                self.printCode (f"push rax          ; push result for other expressions")
+            # integer
+            else:
+                self.printCode (f"mov rax, {lhsStr} ; read lhs value")
+                self.printCode (f"sub rax, rdx      ; lhs = lhs - rhs")
+                self.printCode (f"mov {lhsStr}, rax ; write back to lhs")
+                self.printCode (f"push rax          ; push result for other expressions")
         # *=
         elif node.op.type == "ASSIGN_MUL":
-            self.printCode (f"MULTIPLY {lhsStr} {lhsStr} __rhs")
-            self.printCode (f"PUSH {lhsStr}")
+            # floating point 
+            if node.type.__str__() == "float":
+                self.printCode (f"movq xmm0, {lhsStr} ; load lhs value, xmm0 = mem[0], zero")
+                self.printCode (f"movq xmm1, rdx ; load rhs value, xmm1 = mem[0], zero")
+                self.printCode (f"mulsd xmm0, xmm1 ; lhs = lhs * rhs")
+                self.printCode (f"movsd {lhsStr}, xmm0 ; write back to lhs")
+                self.printCode (f"movq rax, xmm0")
+                self.printCode (f"push rax          ; push result for other expressions")
+            # integer
+            else:
+                self.printCode (f"mov rax, {lhsStr} ; read lhs value")
+                self.printCode (f"imul rax, rdx      ; lhs = lhs * rhs")
+                self.printCode (f"mov {lhsStr}, rax ; write back to lhs")
+                self.printCode (f"push rax          ; push result for other expressions")
         # /=
         elif node.op.type == "ASSIGN_DIV":
-            self.printCode (f"DIVIDE {lhsStr} {lhsStr} __rhs")
-            self.printCode (f"PUSH {lhsStr}")
+            # floating point 
+            if node.type.__str__() == "float":
+                self.printCode (f"movq xmm0, {lhsStr} ; load lhs value, xmm0 = mem[0], zero")
+                self.printCode (f"movq xmm1, rdx      ; load rhs value, xmm1 = mem[0], zero")
+                self.printCode (f"divsd xmm0, xmm1    ; lhs = lhs / rhs")
+                self.printCode (f"movsd {lhsStr}, xmm0 ; write back to lhs")
+                self.printCode (f"movq rax, xmm0")
+                self.printCode (f"push rax          ; push result for other expressions")
+            # integer
+            else:
+                self.printCode (f"mov rax, {lhsStr} ; read lhs value")
+                # rhs value in rdx already
+                self.printCode ("mov esi, edx")
+                self.printCode ("mov edx, 0")
+                self.printCode ("cdq")
+                self.printCode ("idiv esi ; lhs = lhs / rhs")
+                # rax now contains quotient
+                # rdx contains remainder
+                self.printCode (f"mov {lhsStr}, rax ; write back to lhs")
+                self.printCode (f"push rax          ; push result for other expressions")
         # %=
         elif node.op.type == "ASSIGN_MOD":
-            self.printCode (f"MOD {lhsStr} {lhsStr} __rhs")
-            self.printCode (f"PUSH {lhsStr}")
+            # floating point 
+            if node.type.__str__() == "float":
+                print ("[codegen] Error: mod operands cannot be floats")
+                exit (1)
+            # integer
+            else:
+                self.printCode (f"mov rax, {lhsStr} ; read lhs value")
+                # rhs value in rdx already
+                self.printCode ("mov esi, edx")
+                self.printCode ("mov edx, 0")
+                self.printCode ("cdq")
+                self.printCode ("idiv esi ; lhs = lhs / rhs")
+                # rax now contains quotient
+                # rdx contains remainder
+                self.printCode (f"mov {lhsStr}, rdx ; write back to lhs")
+                self.printCode (f"push rdx          ; push result for other expressions")
         
         self.indentation -= 1
 
@@ -1526,7 +1738,6 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.indentation -= 1
             
     #  ++ | -- | + | - | ! | ~
-    # **INCR and DECR do not save the value
     def visitUnaryLeftExpressionNode (self, node):
         if node.op.lexeme == "++":
             self.printComment (f"Pre-Increment - {node.rhs.type}")
@@ -1551,10 +1762,18 @@ class CodeGenVisitor_x86 (ASTVisitor):
         # get rhs off the stack 
         self.printCode ("pop rdx")
     
+        # pre-increment
         if node.op.lexeme == "++":
             if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
-                self.printCode (f"add qword [rbp - {node.rhs.decl.stackOffset}], 1")
-                self.printCode (f"mov rax, qword [rbp - {node.rhs.decl.stackOffset}]")
+                # floating point
+                if node.rhs.type.__str__() == "float":
+                    self.printCode (f"movsd xmm0, qword [{self.floatOneLabel}] ; xmm0 = 1.0, zero")
+                    self.printCode (f"addsd xmm0, qword [rbp - {node.rhs.decl.stackOffset}] ; rhs + 1.0")
+                    self.printCode (f"movsd qword [rbp - {node.rhs.decl.stackOffset}], xmm0 ; update rhs")
+                    self.printCode (f"mov rax, qword [rbp - {node.rhs.decl.stackOffset}] ; return rhs")
+                else:
+                    self.printCode (f"add qword [rbp - {node.rhs.decl.stackOffset}], 1")
+                    self.printCode (f"mov rax, qword [rbp - {node.rhs.decl.stackOffset}]")
             elif isinstance(node.rhs, SubscriptExpressionNode):
                 self.printComment ("RHS")
                 self.indentation += 1
@@ -1572,14 +1791,25 @@ class CodeGenVisitor_x86 (ASTVisitor):
                 node.rhs.offset.accept (self)
                 self.indentation -= 1
 
-                self.printCode ("POP __offset")
-                self.printCode ("POP __pointer")
+                self.printCode ("pop rdi ; rhs")
+                self.printCode ("pop rbx ; lhs")
+                
+                lhsStr = f"qword [rbx + 8*rdi]"
+
+                # floating point
+                if node.rhs.type.__str__() == "float":
+                    self.printCode (f"movsd xmm0, qword [{self.floatOneLabel}] ; xmm0 = 1.0")
+                    self.printCode (f"addsd xmm0, {lhsStr} ; rhs + 1.0")
+                    self.printCode (f"movsd {lhsStr}, xmm0 ; update rhs")
+                    self.printCode (f"mov rax, {lhsStr} ; return rhs")
+                else:
+                    self.printCode (f"mov rax, {lhsStr}")
+                    self.printCode (f"add rax, 1")
+                    self.printCode (f"mov {lhsStr}, rax")
 
                 self.indentation -= 1
-                self.indentation -= 1
+                self.indentation -= 1 # end subscript assign
 
-                self.printCode (f"ADD __pointer[__offset] __pointer[__offset] 1")
-                self.printCode (f"ASSIGN __res __pointer[__offset]")
             elif isinstance (node.rhs, MemberAccessorExpressionNode):
                 self.printComment ("LHS")
                 self.indentation += 1
@@ -1596,29 +1826,47 @@ class CodeGenVisitor_x86 (ASTVisitor):
                 self.indentation += 1
                 # construct field index var 
                 # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
-                self.printCode (f"PUSH {node.rhs.decl.scopeName}")
+                self.printCode (f"push qword [{node.rhs.decl.scopeName}] ; {node.rhs.rhs.id}")
                 self.indentation -= 1
 
-                self.printCode ("POP __child")
-                self.printCode ("POP __parent")
+                self.printCode ("pop rdi ; rhs")
+                self.printCode ("pop rbx ; lhs")
+                
+                lhsStr = f"qword [rbx + 8*rdi]"
 
-                self.printCode (f"ADD __parent[__child] __parent[__child] 1")
-                self.printCode (f"ASSIGN __res __parent[__child]")
+                # floating point
+                if node.rhs.type.__str__() == "float":
+                    self.printCode (f"movsd xmm0, qword [{self.floatOneLabel}] ; xmm0 = 1.0, zero")
+                    self.printCode (f"addsd xmm0, {lhsStr} ; rhs + 1.0")
+                    self.printCode (f"movsd {lhsStr}, xmm0 ; update rhs")
+                    self.printCode (f"mov rax, {lhsStr} ; return rhs")
+                else:
+                    self.printCode (f"mov rax, {lhsStr}")
+                    self.printCode (f"add rax, 1")
+                    self.printCode (f"mov {lhsStr}, rax")
 
                 self.indentation -= 1
                 self.indentation -= 1
             else:
                 print ("yikes!")
                 exit (1)
+        # pre-decrement
         elif node.op.lexeme == "--":
             if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
-                self.printCode (f"sub qword [rbp - {node.rhs.decl.stackOffset}], 1")
-                self.printCode (f"mov rax, qword [rbp - {node.rhs.decl.stackOffset}]")
+                # floating point
+                if node.rhs.type.__str__() == "float":
+                    self.printCode (f"movsd xmm0, qword [{self.floatNegOneLabel}] ; xmm0 = -1.0, zero")
+                    self.printCode (f"addsd xmm0, qword [rbp - {node.rhs.decl.stackOffset}] ; rhs + -1.0")
+                    self.printCode (f"movsd qword [rbp - {node.rhs.decl.stackOffset}], xmm0 ; update rhs")
+                    self.printCode (f"mov rax, qword [rbp - {node.rhs.decl.stackOffset}] ; return rhs")
+                else:
+                    self.printCode (f"sub qword [rbp - {node.rhs.decl.stackOffset}], 1")
+                    self.printCode (f"mov rax, qword [rbp - {node.rhs.decl.stackOffset}]")
             elif isinstance(node.rhs, SubscriptExpressionNode):
                 self.printComment ("RHS")
                 self.indentation += 1
-                self.printComment ("Subscript assignment")
 
+                self.printComment ("Subscript assignment")
                 self.indentation += 1
 
                 self.printComment ("LHS")
@@ -1631,14 +1879,25 @@ class CodeGenVisitor_x86 (ASTVisitor):
                 node.rhs.offset.accept (self)
                 self.indentation -= 1
 
-                self.printCode ("POP __offset")
-                self.printCode ("POP __pointer")
+                self.printCode ("pop rdi ; rhs")
+                self.printCode ("pop rbx ; lhs")
+                
+                lhsStr = f"qword [rbx + 8*rdi]"
+
+                # floating point
+                if node.rhs.type.__str__() == "float":
+                    self.printCode (f"movsd xmm0, qword [{self.floatNegOneLabel}] ; xmm0 = -1.0")
+                    self.printCode (f"addsd xmm0, {lhsStr} ; rhs + -1.0")
+                    self.printCode (f"movsd {lhsStr}, xmm0 ; update rhs")
+                    self.printCode (f"mov rax, {lhsStr} ; return rhs")
+                else:
+                    self.printCode (f"mov rax, {lhsStr}")
+                    self.printCode (f"sub rax, 1")
+                    self.printCode (f"mov {lhsStr}, rax")
 
                 self.indentation -= 1
-                self.indentation -= 1
+                self.indentation -= 1 # end subscript assign
 
-                self.printCode (f"SUBTRACT __pointer[__offset] __pointer[__offset] 1")
-                self.printCode (f"ASSIGN __res __pointer[__offset]")
             elif isinstance (node.rhs, MemberAccessorExpressionNode):
                 self.printComment ("LHS")
                 self.indentation += 1
@@ -1655,30 +1914,47 @@ class CodeGenVisitor_x86 (ASTVisitor):
                 self.indentation += 1
                 # construct field index var 
                 # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
-                self.printCode (f"PUSH {node.rhs.decl.scopeName}")
+                self.printCode (f"push qword [{node.rhs.decl.scopeName}] ; {node.rhs.rhs.id}")
                 self.indentation -= 1
 
-                self.printCode ("POP __child")
-                self.printCode ("POP __parent")
+                self.printCode ("pop rdi ; rhs")
+                self.printCode ("pop rbx ; lhs")
+                
+                lhsStr = f"qword [rbx + 8*rdi]"
 
-                self.printCode (f"SUBTRACT __parent[__child] __parent[__child] 1")
-                self.printCode (f"ASSIGN __res __parent[__child]")
+                # floating point
+                if node.rhs.type.__str__() == "float":
+                    self.printCode (f"movsd xmm0, qword [{self.floatNegOneLabel}] ; xmm0 = -1.0")
+                    self.printCode (f"addsd xmm0, {lhsStr} ; rhs + -1.0")
+                    self.printCode (f"movsd {lhsStr}, xmm0 ; update rhs")
+                    self.printCode (f"mov rax, {lhsStr} ; return rhs")
+                else:
+                    self.printCode (f"mov rax, {lhsStr}")
+                    self.printCode (f"sub rax, 1")
+                    self.printCode (f"mov {lhsStr}, rax")
 
                 self.indentation -= 1
                 self.indentation -= 1
             else:
                 print ("yikes!")
                 exit (1)
+        # positive
         elif node.op.lexeme == "+":
-            self.printComment ("val = 0 + val")
-            self.printCode ("mov rax, 0")
-            self.printCode ("add rax, rdx")
+            # floating point
+            if node.rhs.type.__str__() == "float":
+                self.printComment ("Just a no op for now")
+                self.printCode ("mov rax, rdx")
+            # integer
+            else:
+                self.printComment ("val = 0 + val")
+                self.printCode ("mov rax, 0")
+                self.printCode ("add rax, rdx")
         elif node.op.lexeme == "-":
             # floating point
             if node.rhs.type.__str__() == "float":
                 self.printComment ("Implemented as multiplying by -1.0")
                 self.printCode ("movsd xmm1, qword [__builtin__neg] ; -1.0")
-                self.printCode ("movq xmm0, rax")
+                self.printCode ("movq xmm0, rdx")
                 self.printCode ("mulsd xmm0, xmm1 ; v = v * -1.0")
                 self.printCode ("movq rax, xmm0")
             # integer
@@ -1695,7 +1971,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
             self.printCode ("mov rax, rdx")
 
         # push result to the stack
-        self.printCode ("push rax")
+        self.printCode ("push rax ; push result")
 
         self.indentation -= 1
 
@@ -1705,8 +1981,17 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.indentation += 1
 
         if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-            self.printCode (f"mov rax, qword [rbp - {node.lhs.decl.stackOffset}]")
-            self.printCode (f"add qword [rbp - {node.lhs.decl.stackOffset}], 1")
+            # floating point
+            if node.lhs.type.__str__() == "float":
+                self.printCode (f"movsd xmm0, qword [rbp - {node.lhs.decl.stackOffset}] ; xmm0 = mem[0], zero")
+                self.printCode (f"movsd xmm2, qword [{self.floatOneLabel}] ; xmm2 = 1.0, zero")
+                self.printCode (f"movaps xmm1, xmm0")
+                self.printCode (f"addsd xmm1, xmm2")
+                self.printCode (f"movsd qword [rbp - {node.lhs.decl.stackOffset}], xmm1 ; update lhs")
+                self.printCode (f"movq rax, xmm0 ; return lhs")
+            else:
+                self.printCode (f"mov rax, qword [rbp - {node.lhs.decl.stackOffset}]")
+                self.printCode (f"add qword [rbp - {node.lhs.decl.stackOffset}], 1")
         elif isinstance(node.lhs, SubscriptExpressionNode):
             self.printComment ("RHS")
             self.indentation += 1
@@ -1724,14 +2009,25 @@ class CodeGenVisitor_x86 (ASTVisitor):
             node.lhs.offset.accept (self)
             self.indentation -= 1
 
-            self.printCode ("POP __offset")
-            self.printCode ("POP __pointer")
+            self.printCode ("pop rdi ; rhs")
+            self.printCode ("pop rbx ; lhs")
+            
+            lhsStr = f"qword [rbx + 8*rdi]"
+
+            # floating point
+            if node.lhs.type.__str__() == "float":
+                self.printCode (f"movsd xmm0, {lhsStr} ; xmm0 = mem[0], zero")
+                self.printCode (f"movsd xmm2, qword [{self.floatOneLabel}] ; xmm2 = 1.0, zero")
+                self.printCode (f"movaps xmm1, xmm0")
+                self.printCode (f"addsd xmm1, xmm2")
+                self.printCode (f"movsd {lhsStr}, xmm1 ; update lhs")
+                self.printCode (f"movq rax, xmm0 ; return lhs")
+            else:
+                self.printCode (f"mov rax, {lhsStr} ; save original value")
+                self.printCode (f"add {lhsStr}, 1   ; increment")
 
             self.indentation -= 1
             self.indentation -= 1
-
-            self.printCode (f"ASSIGN __res __pointer[__offset]")
-            self.printCode (f"ADD __pointer[__offset] __pointer[__offset] 1")
         elif isinstance (node.lhs, MemberAccessorExpressionNode):
             self.printComment ("LHS")
             self.indentation += 1
@@ -1746,16 +2042,25 @@ class CodeGenVisitor_x86 (ASTVisitor):
 
             self.printComment ("RHS")
             self.indentation += 1
-            # construct field index var 
-            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"PUSH {node.lhs.decl.scopeName}")
+            self.printCode (f"push qword [{node.lhs.decl.scopeName}] ; {node.lhs.rhs.id}")
             self.indentation -= 1
 
-            self.printCode ("POP __child")
-            self.printCode ("POP __parent")
-
-            self.printCode (f"ASSIGN __res __parent[__child]")
-            self.printCode (f"ADD __parent[__child] __parent[__child] 1")
+            self.printCode ("pop rdi ; rhs")
+            self.printCode ("pop rbx ; lhs")
+            
+            lhsStr = f"qword [rbx + 8*rdi]"
+            
+            # floating point
+            if node.lhs.type.__str__() == "float":
+                self.printCode (f"movsd xmm0, {lhsStr} ; xmm0 = mem[0], zero")
+                self.printCode (f"movsd xmm2, qword [{self.floatOneLabel}] ; xmm2 = 1.0, zero")
+                self.printCode (f"movaps xmm1, xmm0")
+                self.printCode (f"addsd xmm1, xmm2")
+                self.printCode (f"movsd {lhsStr}, xmm1 ; update lhs")
+                self.printCode (f"movq rax, xmm0 ; return lhs")
+            else:
+                self.printCode (f"mov rax, {lhsStr} ; save original value")
+                self.printCode (f"add {lhsStr}, 1   ; increment")
 
             self.indentation -= 1
             self.indentation -= 1
@@ -1774,8 +2079,17 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.indentation += 1
 
         if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-            self.printCode (f"mov rax, qword [rbp - {node.lhs.decl.stackOffset}]")
-            self.printCode (f"sub qword [rbp - {node.lhs.decl.stackOffset}], 1")
+            # floating point
+            if node.lhs.type.__str__() == "float":
+                self.printCode (f"movsd xmm0, qword [rbp - {node.lhs.decl.stackOffset}] ; xmm0 = mem[0], zero")
+                self.printCode (f"movsd xmm2, qword [{self.floatNegOneLabel}] ; xmm2 = -1.0, zero")
+                self.printCode (f"movaps xmm1, xmm0")
+                self.printCode (f"addsd xmm1, xmm2")
+                self.printCode (f"movsd qword [rbp - {node.lhs.decl.stackOffset}], xmm1 ; update lhs")
+                self.printCode (f"movq rax, xmm0 ; return lhs")
+            else:
+                self.printCode (f"mov rax, qword [rbp - {node.lhs.decl.stackOffset}]")
+                self.printCode (f"sub qword [rbp - {node.lhs.decl.stackOffset}], 1")
         elif isinstance(node.lhs, SubscriptExpressionNode):
             self.printComment ("RHS")
             self.indentation += 1
@@ -1793,14 +2107,25 @@ class CodeGenVisitor_x86 (ASTVisitor):
             node.lhs.offset.accept (self)
             self.indentation -= 1
 
-            self.printCode ("POP __offset")
-            self.printCode ("POP __pointer")
+            self.printCode ("pop rdi ; rhs")
+            self.printCode ("pop rbx ; lhs")
+            
+            lhsStr = f"qword [rbx + 8*rdi]"
+
+            # floating point
+            if node.lhs.type.__str__() == "float":
+                self.printCode (f"movsd xmm0, {lhsStr} ; xmm0 = mem[0], zero")
+                self.printCode (f"movsd xmm2, qword [{self.floatNegOneLabel}] ; xmm2 = -1.0, zero")
+                self.printCode (f"movaps xmm1, xmm0")
+                self.printCode (f"addsd xmm1, xmm2")
+                self.printCode (f"movsd {lhsStr}, xmm1 ; update lhs")
+                self.printCode (f"movq rax, xmm0 ; return lhs")
+            else:
+                self.printCode (f"mov rax, {lhsStr} ; save original value")
+                self.printCode (f"sub {lhsStr}, 1   ; decrement")
 
             self.indentation -= 1
             self.indentation -= 1
-
-            self.printCode (f"ASSIGN __res __pointer[__offset]")
-            self.printCode (f"SUBTRACT __pointer[__offset] __pointer[__offset] 1")
         elif isinstance (node.lhs, MemberAccessorExpressionNode):
             self.printComment ("LHS")
             self.indentation += 1
@@ -1815,16 +2140,25 @@ class CodeGenVisitor_x86 (ASTVisitor):
 
             self.printComment ("RHS")
             self.indentation += 1
-            # construct field index var 
-            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"PUSH {node.lhs.decl.scopeName}")
+            self.printCode (f"push qword [{node.lhs.decl.scopeName}] ; {node.lhs.rhs.id}")
             self.indentation -= 1
 
-            self.printCode ("POP __child")
-            self.printCode ("POP __parent")
+            self.printCode ("pop rdi ; rhs")
+            self.printCode ("pop rbx ; lhs")
+            
+            lhsStr = f"qword [rbx + 8*rdi]"
 
-            self.printCode (f"ASSIGN __res __parent[__child]")
-            self.printCode (f"SUBTRACT __parent[__child] __parent[__child] 1")
+            # floating point
+            if node.lhs.type.__str__() == "float":
+                self.printCode (f"movsd xmm0, {lhsStr} ; xmm0 = mem[0], zero")
+                self.printCode (f"movsd xmm2, qword [{self.floatNegOneLabel}] ; xmm2 = -1.0, zero")
+                self.printCode (f"movaps xmm1, xmm0")
+                self.printCode (f"addsd xmm1, xmm2")
+                self.printCode (f"movsd {lhsStr}, xmm1 ; update lhs")
+                self.printCode (f"movq rax, xmm0 ; return lhs")
+            else:
+                self.printCode (f"mov rax, {lhsStr} ; save original value")
+                self.printCode (f"sub {lhsStr}, 1   ; decrement")
 
             self.indentation -= 1
             self.indentation -= 1
@@ -1852,21 +2186,26 @@ class CodeGenVisitor_x86 (ASTVisitor):
         node.offset.accept (self)
         self.indentation -= 1
 
-        self.printCode ("POP __offset")
-        self.printCode ("POP __pointer")
-
+        self.printCode ("pop rdx ; __offset")
+        self.printCode ("pop rax ; __pointer")
+        
         # simple subscript  
         if node.overloadedFunctionCall == None:
-            self.printCode ("PUSH __pointer[__offset]")
+            # char - 1 byte 
+            # we still read qword because stack is in 64 bit mode 
+            if node.type.__str__() == "char":
+                self.printCode ("push qword [rax + rdx] ; pointer + sizeof(data_t) * offset")
+            # int, float, pointer - 8 bytes
+            else:
+                self.printCode ("push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset")
         # overloaded function call 
         else:
             self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
             # push args in reverse order
-            self.printCode (f"PUSH __offset")
-            self.printCode (f"PUSH __pointer")
-            self.printCode (f"CALL {node.overloadedFunctionCall.decl.scopeName}")
-            self.printCode (f"RESPONSE __res")
-            self.printCode (f"PUSH __res")
+            self.printCode (f"push rdx ; __offset")
+            self.printCode (f"push rax ; __pointer")
+            self.printCode (f"call {node.overloadedFunctionCall.decl.scopeName}")
+            self.printCode (f"push rax ; __res, return value")
 
         self.indentation -= 1
 
@@ -1958,12 +2297,12 @@ class CodeGenVisitor_x86 (ASTVisitor):
             print (f"   this could have happened due to a cyclic reference/composition with template classes")
             print (f"   cyclic references are not yet supported")
             exit (1)
-        self.printCode (f"PUSH {node.decl.scopeName}")
+        self.printCode (f"push qword [{node.decl.scopeName}] ; stored index associated with field that is being accessed")
         self.indentation -= 1
 
-        self.printCode ("POP __child")
-        self.printCode ("POP __parent")
-        self.printCode ("PUSH __parent[__child]")
+        self.printCode ("pop rdx ; rhs")
+        self.printCode ("pop rax ; lhs")
+        self.printCode ("push qword [rax + 8*rdx] ; lhs.rhs")
 
         self.indentation -= 1
 
@@ -1997,17 +2336,21 @@ class CodeGenVisitor_x86 (ASTVisitor):
 
         self.indentation += 1
 
+        # must be allocated before object param
+        self.printComment (f"Make space for {len(node.args)} arg(s) and object parameter")
+        self.printCode (f"sub rsp, {(len(node.args)+1)*8}")
+
         self.printComment ("LHS")
         self.indentation += 1
         node.lhs.accept (self)
+        self.printCode ("pop rax ; object parameter")
+        self.printCode (f"mov qword [rsp + 0], rax ; place as first parameter")
         self.indentation -= 1
 
         self.printComment ("RHS")
         self.indentation += 1
-        # construct field index var 
-        # methodName = f"__method__{node.lhs.type.id}__{node.rhs.id}"
+        # *** nothing atm
         self.indentation -= 1
-
 
         self.printComment ("Arguments")
         self.indentation += 1
@@ -2015,29 +2358,20 @@ class CodeGenVisitor_x86 (ASTVisitor):
         # an argument could be another function call
         # to avoid conflicts with variables, 
         # we will have a separate loop to pop the values
-        for arg in node.args:
-            arg.accept (self)
-
-        argIndex = len(node.args)-1
-        for arg in node.args:
-            # save argument 
-            argName = f"__arg{argIndex}"
-            argIndex -= 1
-            self.printCode (f"POP {argName}")
-        self.indentation -= 1
+        for i in range(len(node.args)):
+            self.printComment (f"Eval arg{i}")
+            self.indentation += 1
+            node.args[i].accept (self)
+            self.indentation -= 1
+            
+            # move arg result to proper place in stack
+            self.printComment (f"Move arg{i}'s result to reverse order position on stack")
+            self.printCode ("pop rax")
+            offset = (i+1) * 8
+            self.printCode (f"mov qword [rsp + {offset}], rax")
         
-        # parent object should be on the stack
-        # *happens after args incase args uses __obj
-        # in another method call
-        self.printCode ("POP __obj")
-
-        # add arguments in reverse order
-        self.printComment ("Pushing args in reverse order")
-        for i in range(len(node.args)-1, -1, -1):
-            self.printCode (f"PUSH __arg{i}")
-
-        # push parent object instance last
-        self.printCode (f"PUSH __obj")
+        self.indentation -= 1 # end args
+        
 
         # if virtual function
         if node.decl.isVirtual:
@@ -2054,36 +2388,41 @@ class CodeGenVisitor_x86 (ASTVisitor):
             else:
                 print (f"Error: Dispatch Function not found")
             # call proper dispatch function 
-            self.printCode (f"ASSIGN __dtable __obj[0]")
-            self.printCode (f"CALL __dtable[{i}]")
+            self.printCode (f"mov rdx, qword [rsp + 0] ;  rdx = object")
+            self.printCode (f"mov rdi, qword [rdx + 0] ;  rdi = object[0] ; dtable")
+            self.printCode (f"call qword [rdi + {8*index}] ; dtable[{index}] ; {node.decl.scopeName}")
 
         # otherwise, call function normally
         else:
-            self.printCode (f"CALL {node.decl.scopeName}")
-
-        # remove parent object instance
-        self.printCode (f"POP __void")
+            self.printCode (f"call .{node.decl.scopeName}")
 
         # remove arguments from stack
         self.printComment ("Remove args")
-        for i in range(0, len(node.args)):
-            self.printCode (f"POP __void")
-                
+        self.printCode (f"add rsp, {(len(node.args)+1)*8}")
+        
         # put function's return val on the stack
-        self.printCode ("RESPONSE __retval")
-        self.printCode ("PUSH __retval")
+        # float values are stored in xmm0
+        self.printComment ("Push return value")
+        if node.decl.type.__str__() == "float":
+            # move from fancy reg to normal reg
+            self.printCode ("movq rax, xmm0")
+            self.printCode ("push rax")
+        # all other types of return values
+        else:
+            self.printCode ("push rax")
 
+        # restore indentation
         self.indentation -= 1
 
     def visitThisExpressionNode (self, node):
         self.printComment (f"This keyword")
         self.indentation += 1
         # push [rbp - 8] ; this 
-        self.printCode (f"PUSH __this")
+        self.printCode (f"push qword [rbp - {node.decl.thisStackOffset}] ; __this")
         self.indentation -= 1
 
     def visitIdentifierExpressionNode (self, node):
-        self.printComment (f"Identifier - {node.id}")
+        self.printComment (f"Identifier - {node.type} {node.id}")
         self.indentation += 1
         self.printCode (f"push qword [rbp - {node.decl.stackOffset}]")
         self.indentation -= 1
@@ -2095,11 +2434,22 @@ class CodeGenVisitor_x86 (ASTVisitor):
         for d in node.dimensions:
             d.accept (self)
         
-        # ** maybe make a large array for multiple dimensions
-        self.printCode (f"POP __size")
-        self.printCode (f"MALLOC __ptr __size")
+        # get array size 
+        self.printCode (f"pop rdx ; num elements for dimension[0]")
 
-        self.printCode (f"PUSH __ptr")
+        # determine element size in bytes
+        # char - 1 byte
+        # int, float, pointer - 8 bytes
+        if node.type.__str__() == "char[]":
+            self.printCode (f"mov edi, rdx ; num bytes to allocate (1 byte per element)")
+        # int[] float[] x[][]
+        else:
+            self.printCode (f"imul rdx, 8 ; 8 bytes per element")
+            self.printCode (f"mov rdi, rdx ; num bytes to allocate")
+        
+        self.printCode (f"call malloc ; allocates edi bytes on heap and stores pointer in rax")
+
+        self.printCode (f"push rax ; __ptr")
 
         self.indentation -= 1
 
@@ -2108,41 +2458,58 @@ class CodeGenVisitor_x86 (ASTVisitor):
 
         self.indentation += 1
 
+        self.printComment (f"Make space for {len(node.args)} arg(s)")
+        self.printCode (f"sub rsp, {len(node.args)*8}")
+
         self.printComment ("Arguments")
         self.indentation += 1
         # calc arguments first
         # an argument could be another function call
         # to avoid conflicts with variables, 
         # we will have a separate loop to pop the values
-        for arg in node.args:
-            arg.accept (self)
-
-        # retrieve values in reverse order
-        argIndex = len(node.args)-1
-        for arg in node.args:
-            # save argument 
-            argName = f"__arg{argIndex}"
-            argIndex -= 1
-            self.printCode (f"POP {argName}")
-        self.indentation -= 1
+        for i in range(len(node.args)):
+            self.printComment (f"Eval arg{i}")
+            self.indentation += 1
+            node.args[i].accept (self)
+            self.indentation -= 1
+            
+            # move arg result to proper place in stack
+            self.printComment (f"Move arg{i}'s result to reverse order position on stack")
+            self.printCode ("pop rax")
+            offset = i * 8
+            self.printCode (f"mov qword [rsp + {offset}], rax")
         
-        # add arguments in reverse order
-        self.printComment ("Pushing args in reverse order")
-        for i in range(len(node.args)-1, -1, -1):
-            self.printCode (f"PUSH __arg{i}")
+        self.indentation -= 1 # end args
 
         # call function
-        self.printCode (f"CALL {node.decl.scopeName}")
+        self.printComment (f"Call {node.decl.signature}")
+        if node.decl.scopeName == "":
+            # x = sum([1 if '\n' in s else 0 for s in self.code])
+            # print (f"[code-gen] Error: no scope name for {node.function.id} {[t.type.__str__() for t in node.args]} {node.lineNumber} {x}")
+            # print (f"   this could have happened due to a template using a class that was defined after the template")
+            # print (f"   temporary fix: move the class declaration to above the template class that uses it")
+            # solution! extremely ad hoc 
+            self.printCode (f"call ${node.decl.signature}")
+            # exit (1)
+        else:
+            self.printCode (f"call .{node.decl.scopeName}")
 
         # remove arguments from stack
         self.printComment ("Remove args")
-        for i in range(0, len(node.args)):
-            self.printCode (f"POP __void")
+        self.printCode (f"add rsp, {len(node.args)*8}")
         
         # put function's return val on the stack
-        self.printCode ("RESPONSE __retval")
-        self.printCode ("PUSH __retval")
+        # float values are stored in xmm0
+        self.printComment ("Push return value")
+        if node.decl.type.__str__() == "float":
+            # move from fancy reg to normal reg
+            self.printCode ("movq rax, xmm0")
+            self.printCode ("push rax")
+        # all other types of return values
+        else:
+            self.printCode ("push rax")
 
+        # restore indentation
         self.indentation -= 1
     
     def visitSizeofExpressionNode(self, node):
@@ -2154,6 +2521,9 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.indentation += 1
         node.rhs.accept (self)
         self.indentation -= 1
+
+        print (f"[codegen] Error: sizeof keyword not implemented for x86")
+        return False
 
         self.printComment ("Calculate array size")
         self.printCode ("POP __array")
@@ -2172,28 +2542,28 @@ class CodeGenVisitor_x86 (ASTVisitor):
         node.rhs.accept (self)
         self.indentation -= 1
 
-        self.printComment ("Free array")
-        self.printCode ("POP __array")
-        self.printCode ("FREE __array")
-        # put the array back on the stack 
-        # this will get popped off the stack for the case:
-        #    free(arr);
-        # but the value can still be used 
-        #    freedBAsWell = free(a) == b;
-        self.printCode ("PUSH __array")
+        self.printComment ("Free pointer")
+        self.printCode ("pop rdi   ; pointer")
+        self.printCode ("call free ; free the pointer")
+        # we have to have this 
+        # otherwise the result of this expression
+        # will be popped making more pops
+        # than pushes
+        self.printCode ("push rax  ; undefined return value")
 
         self.indentation -= 1
 
     def visitIntLiteralExpressionNode (self, node):
         self.printComment ("Int Literal")
         self.indentation += 1
-        self.printCode (f"push {node.value}")
+        self.printCode (f"mov rax, {node.value}")
+        self.printCode (f"push rax")
         self.indentation -= 1
 
     def visitFloatLiteralExpressionNode (self, node):
         self.printComment ("Float Literal")
         self.indentation += 1
-        self.printCode (f"mov rax, qword [{node.label}]")
+        self.printCode (f"mov rax, qword [{node.label}] ; {node.value}")
         self.printCode ("push rax")
         self.indentation -= 1
 
@@ -2257,25 +2627,36 @@ class CodeGenVisitor_x86 (ASTVisitor):
         for elem in node.elems:
             elem.accept (self)
             
-        elemIndex = len(node.elems)-1
-        # retrieve values in reverse order
-        for elem in node.elems:
-            # save element 
-            elemName = f"__elem{elemIndex}"
-            elemIndex -= 1
-            self.printCode (f"POP {elemName}")
+        # allocate space for array
+        # ** right now this is only on heap
+        # but after evaluating the arguments, we already have the array on the stack lmao - usable?
 
-        self.printCode (f"MALLOC __list {len(node.elems)}")
+        # determine element size in bytes
+        # char - 1 byte
+        # int, float, pointer - 8 bytes
+        if node.type.__str__() == "char[]":
+            self.printCode (f"mov edi, {len(node.elems)} ; number of bytes to allocate (nArgs * 1byte (char))")
+        else:
+            self.printCode (f"mov edi, {len(node.elems)*8} ; number of bytes to allocate (nArgs * 8bytes)")
+        
+        self.printCode (f"call malloc ; allocates edi bytes on heap and stores pointer in rax")
 
         # add elements to list in correct order
-        for i in range(len(node.elems)):
-            self.printCode (f"ASSIGN __list[{i}] __elem{i}")
+        self.printComment ("Populate array values")
+        for i in range(len(node.elems)-1, -1, -1):
+            self.printCode (f"pop rdx ; get array element {i}")
+            # determine element size in bytes
+            # char - 1 byte
+            if node.type.__str__() == "char[]":
+                self.printCode (f"mov byte [rax + {i}], dl ; arr[{i}] = rdx")
+            # int, float, pointer - 8 bytes
+            else:
+                self.printCode (f"mov qword [rax + {i*8}], rdx ; arr[{i}] = rdx")
 
         # push array onto stack
-        self.printCode ("PUSH __list")
+        self.printCode ("push rax")
 
         self.indentation -= 1
-        
 
     def visitNullExpressionNode (self, node):
         self.printComment ("Null Literal")

@@ -1,3 +1,10 @@
+; ### x86-64 generated from AmyScript Compiler ###########################
+; ========================================================================
+
+; ========================================================================
+; ### LIBRARY CODE #######################################################
+; ========================================================================
+
 ; AmyScript Built-in library
 ; Author: Amy Burnett
 ; ========================================================================
@@ -555,4 +562,59 @@ stringToInt__char__1:
 
 section .data
 __builtin__neg: dq -1.0
-section .text
+section .text; ========================================================================
+; ### COMPILED CODE ######################################################
+; ========================================================================
+
+_start:
+main:
+         ; Main Header:
+         push rbp
+         mov rbp, rsp
+         sub rsp, 0
+         ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+
+         ; Body
+         ; Function Call - print(int) -> void
+            ; Make space for 1 arg(s)
+            sub rsp, 8
+            ; Arguments
+               ; Eval arg0
+                  ; Subtraction - int, int
+                     ; LHS
+                        ; Int Literal
+                           mov rax, -2000000000
+                           push rax
+                     ; RHS
+                        ; Int Literal
+                           mov rax, 1000000000
+                           push rax
+                     pop rdx ; rhs
+                     pop rax ; lhs
+                     sub rax, rdx
+                     push rax
+               ; Move arg0's result to reverse order position on stack
+               pop rax
+               mov qword [rsp + 0], rax
+            ; Call print(int)
+            call print__int
+            ; Remove args
+            add rsp, 8
+            ; Push return value
+            push rax
+         ; Statement results can be ignored
+         pop rdx
+; ========================================================================
+; ### END OF CODE ########################################################
+; ========================================================================
+
+         push 0
+         call exit__int
+; ========================================================================
+; ### DATA SECTION #######################################################
+; ========================================================================
+
+         section .data
+.floatNegOne: dq -1.0
+.floatZero: dq 0.0
+.floatOne: dq 1.0

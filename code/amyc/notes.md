@@ -41,3 +41,38 @@ when x then y else z
     - print(float, precision=5) 
 
 - [ ] negative mod is diff for python vs x86
+
+
+- [ ] massive update to documention!
+    - revamp codeblocks
+    - admonitions
+    - the works
+    - syntax highlighting
+
+
+- [ ] change amyscript to amy++
+    - we need to make a higher level language than this
+
+
+- [ ] build my own unittest framework
+    - python script that creates amyscript files
+    - then compiles them 
+    - ensures that it compiles
+    - then runs it on x86 
+    - ensure the stdout value is correct
+    - then runs it on amyasm 
+    - ensure the stdout value is correct
+
+
+- [ ] 0xff, 0b0101
+
+ECX - Used as a loop counter. "this" pointer in C++.
+
+
+- [ ] keep eyes out for stack alignment 
+and rsp, -16 ; ensure stack is 16-byte aligned
+
+
+
+instead of pointers
+- address ptr = null;

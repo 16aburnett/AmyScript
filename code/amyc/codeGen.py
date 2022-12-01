@@ -1938,13 +1938,16 @@ class CodeGenVisitor (ASTVisitor):
         for i in range(len(chars)-1):
             if i >= len(chars)-1:
                 break
-            if chars[i] == "\\" and \
-                (chars[i+1] == 'n'  \
-                or chars[i+1] == 't'\
-                or chars[i+1] == 'r'\
-                or chars[i+1] == 'b'):
+            if chars[i] == "\\": # and \
+                # (chars[i+1] == 'n'  \
+                # or chars[i+1] == 't'\
+                # or chars[i+1] == 'r'\
+                # or chars[i+1] == 'b'):
                 chars[i] = "\\" + chars[i+1]
                 del chars[i+1]
+            # add backslash to apostrophe 
+            elif chars[i] == '\'':
+                chars[i] = '\\\''
         node.value = chars
         backSlashes = 0
         # for c in node.value:

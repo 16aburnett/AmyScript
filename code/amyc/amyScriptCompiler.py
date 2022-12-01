@@ -482,6 +482,13 @@ class AmyScriptCompiler:
         # LIBRARY OBJECTS
 
         # create default object type 
+        # class Object
+        # {
+        #   public virtual char[] toString ()
+        #   {
+        #       return "<Object>";
+        #   }
+        # }
         objClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Object", None), "Object", None, None, [], [], [], [], [])
         objClass.scopeName = "__main__Object"
         symbolTableVisitor.table.insert (objClass, "Object", Kind.TYPE)
@@ -565,7 +572,7 @@ if __name__ == "__main__":
         destFilename = args.outputFilename
 
     # ensure valid target
-    if args.target == None or args.target == "amyasm": # Default 
+    if args.target == None or args.target[0] == "amyasm": # Default 
         target=TARGET_AMYASM
     elif args.target[0] == "x86":  # Intel x86
         target=TARGET_X86

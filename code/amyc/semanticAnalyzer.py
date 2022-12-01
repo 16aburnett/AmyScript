@@ -353,6 +353,23 @@ class SymbolTableVisitor (ASTVisitor):
         # print ()
         # print ()
 
+        # save a reference to this classes dispatch table for the function header
+        # if len(self.containingFunction) > 0:
+        #     self.containingFunction[-1].localVariables += [node]
+        # # if global code, save to global localVariables 
+        # else:
+        #     self.programNode.localVariables += [node]
+        
+        # add fields to parent function
+        # for field in node.fields:
+        #     if len(self.containingFunction) > 0:
+        #         self.containingFunction[-1].localVariables += [field]
+        #     # if global code, save to global localVariables 
+        #     else:
+        #         self.programNode.localVariables += [field]
+
+        # ** adding these to a data section instead of malloc
+
 
         # remove current containing class (going out of scope)
         self.containingClass.pop ()
@@ -730,6 +747,15 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"   {node.lhs.type} != {node.rhs.type}")
             print ()
             self.wasSuccessful = False
+                    
+        # ensure operands arent floats if operator is mod 
+        elif node.op.lexeme == '%=' and (node.lhs.type.__str__() == 'float' or node.rhs.type.__str__() == 'float'):
+            print (f"Semantic Error: float values cannot be used with the mod operator ({node.op.lexeme})")
+            printToken (node.op)
+            print (f"   LHS: {node.lhs.type}")
+            print (f"   RHS: {node.rhs.type}")
+            print ()
+            self.wasSuccessful = False
 
     def visitLogicalOrExpressionNode (self, node):
         node.lhs.accept (self)
@@ -892,6 +918,15 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"Semantic Error: invalid/mismatching types for \"{node.op.lexeme}\"")
             printToken (node.op)
             print (f"   {node.lhs.type} != {node.rhs.type}")
+            print ()
+            self.wasSuccessful = False
+        
+        # ensure operands arent floats if operator is mod 
+        elif node.op.lexeme == '%' and (node.lhs.type.__str__() == 'float' or node.rhs.type.__str__() == 'float'):
+            print (f"Semantic Error: float values cannot be used with the mod operator ({node.op.lexeme})")
+            printToken (node.op)
+            print (f"   LHS: {node.lhs.type}")
+            print (f"   RHS: {node.rhs.type}")
             print ()
             self.wasSuccessful = False
             

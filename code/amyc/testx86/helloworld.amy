@@ -205,7 +205,608 @@ println ("=== Testing Floating Point Arithmetic ===");
     print ("42.5 / 2.0 = "); println (42.5 / 2.0);
     print ("12.5 / 0.125 = "); println (12.5 / 0.125);
 
+    // print ("12.5 % 0.125 = "); println (12.5 % 0.125);
+    // Semantic Error: float values cannot be used with the mod operator (%)
+    //    in file /home/amy/Desktop/AmyScript/code/amyc/testx86/helloworld.amy
+    //    on line 208:46
+    //            print ("12.5 % 0.125 = "); println (12.5 % 0.125);
+    //                                                    ^
+    //    LHS: float
+    //    RHS: float
+
     // all together now 
+}
+
+// test assignment arithmetic
+println ("=== Testing Assignment Arithmetic ===");
+{
+    // assignment
+    int x = 21; 
+    print ("int x = 21; => "); println (x);
+    float y = 3.14; 
+    print ("float y = 3.14; => "); println (y);
+    y = 0.0021; 
+    print ("y = 0.0021; => "); println (y);
+    char c = 'A';
+    print ("char c = 'A'; => "); println (c);
+    c = 'm';
+    print ("c = 'm'; => "); println (c);
+    print ("print(c = 'y') => "); println (c = 'y');
+
+    // pre-increment
+    int a = 16; 
+    print ("a = 16; ++a => "); println (++a);
+    print ("a => "); println (a);
+    float b = 3.14; 
+    print ("b = 3.14; ++b => "); println (++b);
+    print ("b => "); println (b);
+
+    // post-increment
+    a = 42;
+    print ("a = 42; a++ => "); println (a++);
+    print ("a => "); println (a);
+    b = 6.28; 
+    print ("b = 6.28; b++ => "); println (b++);
+    print ("b => "); println (b);
+
+    // pre-decrement
+    a = 16; 
+    print ("a = 16; --a => "); println (--a);
+    print ("a => "); println (a);
+    b = 3.14; 
+    print ("b = 3.14; --b => "); println (--b);
+    print ("b => "); println (b);
+
+    // post-decrement
+    a = 42;
+    print ("a = 42; a-- => "); println (a--);
+    print ("a => "); println (a);
+    b = -6.28; 
+    print ("b = -6.28; b-- => "); println (b--);
+    print ("b => "); println (b);
+
+    // add assign
+    print ("a = 32; a += 63 => "); a = 32; println (a += 63);
+    print ("b = 3.14; b += 0.25 => "); b = 3.14; println (b += 0.25);
+
+    // sub assign 
+    print ("a = 32; a -= 47 => "); a = 32; println (a -= 47);
+    print ("b = -3.14; b -= 1.21 => "); b = -3.14; println (b -= 1.21);
+
+    // mul assign
+    print ("a = 2; a *= 16 => "); a = 2; println (a *= 16);
+    print ("b = 0.5; b *= 57.0 => "); b = 0.5; println (b *= 57.0);
+
+    // div assign 
+    print ("a = 256; a /= 64 => "); a = 256; println (a /= 64);
+    print ("a = 256; a /= 65 => "); a = 256; println (a /= 65);
+    print ("b = 25.0; b /= 3.0 => "); b = 25.0; println (b /= 3.0);
+    print ("b = 0.435; b /= 435.0 => "); b = 0.435; println (b /= 435.0);
+
+    // mod assign
+    print ("a = 2352; a %= 2 => "); a = 2352; println (a %= 2);
+    print ("a = 137; a %= 3 => "); a = 137; println (a %= 3);
+    print ("a = 2353; a %= 5 => "); a = 2353; println (a %= 5);
+    print ("a = -7; a %= 2 => "); a = -7; println (a %= 2);
+    // print ("b = 5.23; b %= 0.42 => "); b = 5.23; println (b %= 0.42);
+    // Semantic Error: float values cannot be used with the mod operator (%=)
+    //    in file /home/amy/Desktop/AmyScript/code/amyc/testx86/helloworld.amy
+    //    on line 291:61
+    //            print ("b = 5.23; b %= 0.42 => "); b = 5.23; println (b %= 0.42);
+    //                                                                    ^
+    //    LHS: float
+    //    RHS: float
+
+}
+
+// test equality 
+println ("=== Testing Equality ===");
+
+// test inequality 
+println ("=== Testing Inequality ===");
+
+// test arrays 
+println ("=== Testing Arrays ===");
+{
+    // array creation
+    int[] nums = [7, 3, 19, -42];
+    println ("int[] nums = [7, 3, 19, -42];");
+    float[] floats = [3.14, 0.25, 2.0, 6.28];
+    println ("float[] floats = [3.14, 0.25, 2.0, 6.28];");
+    char[] str = ['H', 'e', 'l', 'l', 'o'];
+    println ("char[] str = ['H', 'e', 'l', 'l', 'o'];");
+    // int[] A = [3, 5, 12, 0.5];
+    // Semantic Error: All elements in a list constructor must have the same type
+    int[] ints = new int[3];
+    println ("int[] ints = new int[3];");
+
+    // array access
+    print ("nums[0] => "); println (nums[0]);
+    print ("nums[1] => "); println (nums[1]);
+    print ("nums[2] => "); println (nums[2]);
+    print ("nums[3] => "); println (nums[3]);
+    print ("floats[0] => "); println (floats[0]);
+    print ("floats[1] => "); println (floats[1]);
+    print ("floats[2] => "); println (floats[2]);
+    print ("floats[3] => "); println (floats[3]);
+    print ("str[0] => "); println (str[0]);
+    print ("str[1] => "); println (str[1]);
+    print ("str[2] => "); println (str[2]);
+    print ("str[3] => "); println (str[3]);
+    print ("str[4] => "); println (str[4]);
+    print ("println (str); => "); println (str);
+    print ("ints[0] => "); println (ints[0]);
+    print ("ints[1] => "); println (ints[1]);
+    print ("ints[2] => "); println (ints[2]);
+
+    // array assignment 
+    print ("nums[2] = -17; => "); println (nums[2] = -17);
+    print ("nums[2] => "); println (nums[2]);
+    print ("floats[1] = 123.456; => "); println (floats[1] = 123.456);
+    print ("floats[1] => "); println (floats[1]);
+    print ("str[0] = 'A' => "); println (str[0] = 'A');
+    print ("str[0] => "); println (str[0]);
+    print ("str[1] = 'm' => "); println (str[1] = 'm');
+    print ("str[1] => "); println (str[1]);
+    print ("str[2] = 'y' => "); println (str[2] = 'y');
+    print ("str[2] => "); println (str[2]);
+    print ("str[3] = '\\0' => "); println (str[3] = '\0');
+    print ("str[3] => "); println (str[3]);
+    print ("str[4] => "); println (str[4]);
+    print ("println (str); => "); println (str);
+    print ("ints[0] = nums[0] => "); println (ints[0] = nums[0]);
+    print ("ints[1] = nums[1] => "); println (ints[1] = nums[1]);
+    print ("ints[2] = nums[2] => "); println (ints[2] = nums[2]);
+
+}
+
+// array usuability Check
+println ("=== Testing Array Cont ===");
+{
+    template <:T:>
+    function void printArray (T[] arr, int size)
+    {
+        print ('[');
+        if (size > 0 )
+            print (arr[0]);
+        for (int i = 1; i < size; ++i)
+        {
+            print (", ");
+            print (arr[i]);
+        }
+        println (']');
+    }
+
+    function void printArray (char[] arr, int size)
+    {
+        print ('[');
+        if (size > 0 )
+        {
+            print ('\'');
+            print (arr[0]);
+            print ('\'');
+        }
+        for (int i = 1; i < size; ++i)
+        {
+            print (", ");
+            print ('\'');
+            print (arr[i]);
+            print ('\'');
+        }
+        println (']');
+    }
+
+    int n = 10;
+    int[] arr = new int[n];
+
+    for (int i = 0; i < n; ++i)
+    {
+        arr[i] = i;
+    }
+
+    printArray<:int:> (arr, n);
+
+    for (int i = 0; i < n; ++i)
+        arr[i] *= 2; 
+
+    printArray<:int:> (arr, n);
+
+    for (int i = 0; i < n; ++i)
+        arr[i] += 2; 
+
+    printArray<:int:> (arr, n);
+
+    float[] floats = new float[3];
+
+    for (int i = 0; i < 3; ++i)
+    {
+        floats[i] = intToFloat (i);
+    }
+    
+    printArray<:float:> (floats, 3);
+
+    for (int i = 0; i < 3; ++i)
+    {
+        floats[i] /= 3.25;
+    }
+
+    printArray<:float:> (floats, 3);
+
+    char[] str = "Hello, world!";
+
+    printArray (str, 13);
+    println (str);
+
+
+
+    function void add (int[] a, int[] b, int[] c, int n)
+    {
+        for (int i = 0; i < n; ++i)
+            c[i] = a[i] + b[i];
+    }
+
+    int[] a = [0, 1, 2, 3, 4, 5];
+    int[] b = [5, 4, 3, 2, 1, 0];
+    int[] c = [0, 0, 0, 0, 0, 0];
+    print ("a = "); printArray<:int:> (a, 6);
+    print ("b = "); printArray<:int:> (b, 6);
+    print ("c = "); printArray<:int:> (c, 6);
+    println ("c = a + b"); add (a, b, c, 6);
+    print ("c = "); printArray<:int:> (c, 6);
+
+}
+
+
+println ("=== Testing Multidimensional Arrays ===");
+{
+
+    template <:T:>
+    function void printMatrix (T[][] mat, int r, int c)
+    {
+        for (int i = 0; i < r; ++i)
+        {
+            for (int j = 0; j < c; ++j)
+            {
+                print (mat[i][j]);
+                print (' ');
+            }
+            println ();
+        }
+    }
+
+    function void matmul_square (int[][] A, int[][] B, int[][] C, int n)
+    {
+        for (int i = 0; i < n; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                for (int k = 0; k < n; ++k)
+                {
+                    C[i][j] += A[i][k] * B[k][j];
+                }
+            }
+        }
+    }
+
+    function void mat_add (int[][] A, int[][] B, int[][] C, int n)
+    {
+        for (int i = 0; i < n; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                C[i][j] = A[i][j] + B[i][j];
+            }
+        }
+    }
+
+    int[][] A = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8]
+    ];
+
+    int[][] B = [
+        [8, 7, 6],
+        [5, 4, 3],
+        [2, 1, 0]
+    ];
+
+    int[][] C = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+    ];
+
+    println ("A = ");
+    printMatrix<:int:> (A, 3, 3); println ();
+    println ("B = ");
+    printMatrix<:int:> (B, 3, 3); println ();
+    println ("C = ");
+    printMatrix<:int:> (C, 3, 3); println ();
+
+    println ("C = A (dot) B"); println ();
+    matmul_square (A, B, C, 3);
+    println ("C = ");
+    printMatrix<:int:> (C, 3, 3); println ();
+
+    int[][] D = new int[3][3];
+    D[0] = new int[3];
+    D[1] = new int[3];
+    D[2] = new int[3];
+
+    println ("D = A + B"); println ();
+    mat_add (A, B, D, 3);
+    println ("D = ");
+    printMatrix<:int:> (D, 3, 3);
+
+
+    float[][] mat = [
+        [1.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 0.0, 1.0]
+    ];
+
+
+    println (mat[0][0]);
+    printMatrix<:float:> (mat, 3, 3);
+
+    // remember to free memory
+    free (mat[0]);
+    free (mat[1]);
+    free (mat[2]);
+    free (mat);
+
+    //println (mat[0][0]);
+    // Segfault - we freed this memory
+
+
+}
+
+
+// test functions 
+
+
+// test classes
+println ("=== Testing Classes ===");
+{
+    class Vector2D
+    {
+        public field float x; 
+        public field float y; 
+        constructor (float x, float y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+        public method void set (float x, float y)
+        {
+            this.x = x;
+            this.y = y; 
+        }
+        public method void set (Vector2D other)
+        {
+            this.x = other.x;
+            this.y = other.y;
+        }
+        public method void add (Vector2D other)
+        {
+            this.x += other.x;
+            this.y += other.y;
+        }
+    }
+
+    Vector2D v = new Vector2D (0.5, 3.1415);
+    print ("v.x = "); println (v.x);
+    print ("v.y = "); println (v.y);
+    println ("v.set (42.0, 0.0043);"); v.set (42.0, 0.0043);
+    print ("v.x = "); println (v.x);
+    print ("v.y = "); println (v.y);
+    
+
+    Vector2D v2 = new Vector2D (0.5, 3.1415);
+    print ("v2.x = "); println (v2.x);
+    print ("v2.y = "); println (v2.y);
+    
+    println ("v2.set (v);"); v2.set (v);
+    print ("v2.x = "); println (v2.x);
+    print ("v2.y = "); println (v2.y);
+
+    println ("v2.add (v);"); v2.add (v);
+    print ("v2.x = "); println (v2.x);
+    print ("v2.y = "); println (v2.y);
+
+    println ("v2.add (v);"); v2.add (v);
+    print ("v2.x = "); println (v2.x);
+    print ("v2.y = "); println (v2.y);
+
+    println ("v2.add (v);"); v2.add (v);
+    print ("v2.x = "); println (v2.x);
+    print ("v2.y = "); println (v2.y);
+
+    class Vector3D inherits Vector2D 
+    {
+        public field float z; 
+        constructor (float x, float y, float z)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
+        public method void set (Vector3D other)
+        {
+            Vector2D other2d = new Vector2D(other.x, other.y);
+            this.set (other2d); // should call inherited method
+            free (other2d);
+            this.z = other.z;
+        }
+
+        public method void set (float x, float y, float z)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+    }
+
+    function void print (Vector3D v)
+    {
+        print ('(');
+        print (v.x);
+        print (", ");
+        print (v.y);
+        print (", ");
+        print (v.z);
+        print (')');
+    }
+
+    function void println (Vector3D v)
+    {
+        print ('(');
+        print (v.x);
+        print (", ");
+        print (v.y);
+        print (", ");
+        print (v.z);
+        println (')');
+    }
+
+    println ("Vector3D v3 = new Vector3D (1.0, 2.0, 3.0);");
+    Vector3D v3 = new Vector3D (1.0, 2.0, 3.0);
+    println (v3);
+    println ("Vector3D v4 = new Vector3D (5.5, 6.25, 7.75);");
+    Vector3D v4 = new Vector3D (5.5, 6.25, 7.75);
+    println (v4);
+
+    println ("v3.set (v2); // inherited from Vector2D"); v3.set (v2);
+    println (v3);
+
+    println ("v3.set (0.0, 0.0, 0.0);"); v3.set (0.0, 0.0, 0.0);
+    println ("v3.set (v4);"); v3.set (v4);
+    println (v3);
+
+
+}
+
+
+println ("=== Testing ArrayList ===");
+{
+
+    class Printable
+    {
+        public virtual char[] toString ()
+        {
+            return "<Object>";
+        }
+    }
+
+    function char[] string (Printable p)
+    {
+        return p.toString ();
+    }
+
+    template <:T:>
+    class Vector inherits Printable
+    {
+        public field T[]   data;
+        public field int   size;
+        public field int   capacity;  
+
+        constructor ()
+        {
+            this.capacity = 10;
+            this.data = new T[this.capacity];
+            this.size = 0; 
+        }
+
+        public method void pushBack (T val)
+        {
+            // ensure there is space 
+            if (this.size + 1 >= this.capacity)
+            {
+                this.capacity = this.capacity * 2; 
+                T[] nData = new T[this.capacity];
+                // move old data over
+                for (int i = 0; i < this.size; ++i)
+                {
+                    nData[i] = this.data[i];
+                }
+                free (this.data);
+                this.data = nData; 
+            }
+
+            // add new num
+            this.data[this.size] = val; 
+            ++this.size; 
+        }
+
+        public method T popBack ()
+        {
+            return this.data[--this.size];
+        }
+
+        public method T get (int index)
+        {
+            return this.data[index];
+        }
+
+        public virtual char[] toString ()
+        {
+            return "<Vector>";
+        }
+
+    }
+
+    function void print (Printable o)
+    {
+        print (o.toString ());
+    }
+
+    function void println (Printable o)
+    {
+        println (o.toString ());
+    }
+
+    Vector<:int:> myArray = new Vector<:int:> ();
+
+    myArray.pushBack (42);
+    myArray.pushBack (7);
+    myArray.popBack ();
+    myArray.pushBack (19);
+    myArray.pushBack (25);
+    myArray.popBack ();
+
+    for (int i = 0; i < myArray.size; ++i)
+    {
+        print (myArray.get(i));
+        print (" ");
+    }
+    println ();
+
+    println ((myArray.data[0])--);
+
+    println (myArray.data[0]);
+
+    println (myArray.size++);
+
+    println (myArray.size);
+
+    println (myArray);
+
+    Vector<:float:> vals = new Vector<:float:>();
+
+    vals.pushBack(42.0);
+    vals.pushBack(12345.6789);
+
+    println (vals.get (1));
+
+    for (int i = 0; i < vals.size; ++i)
+    {
+        print (vals.get(i));
+        print (" ");
+    }
+    println ();
+
 }
 
 exit (0);

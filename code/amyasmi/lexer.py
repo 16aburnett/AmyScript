@@ -143,22 +143,27 @@ class Lexer:
             if self.source[self.index] == "\'":
                 token = []
                 self.index += 1
-                while self.index < len(self.source) and self.source[self.index] != "\'":
+                while self.index < len(self.source) and not (self.source[self.index] == "\'"):
                     token += [self.source[self.index]]
-                    self.index += 1
+                    # skip escaped characters
+                    if self.source[self.index] == '\\':
+                        token += [self.source[self.index+1]]
+                        self.index += 2
+                    else:
+                        self.index += 1
                 # no ending quotation marks
                 if self.index >= len(self.source):
-                    return ERROR, f"Line ended without closing double quotes in {self.source}"
+                    return ERROR, f"Syntax Error: Line ended without closing quotation mark in {self.source}"
                 # index should be at the ending quotation mark
                 self.index += 1
                 # ensure next position is whitespace or the end
                 if self.index < len(self.source) and self.source[self.index] not in DELIMITERS:
-                    return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+                    return ERROR, f"Syntax Error: Unexpected {self.source[self.index]} for line \n {self.source}"
                 # string successfully matched
                 return CHAR, "".join(token)
 
             self.index += 1
-        return ERROR, f"Unexpected {self.source[self.index]} for line \n {self.source}"
+        return ERROR, f"Syntax Error: Unexpected {self.source[self.index]} for line \n {self.source}"
 
     def hasToken(self) -> bool:
         return self.index < len(self.source)
