@@ -1138,6 +1138,7 @@ class AmyAssemblyInterpreter:
 
         # print ("=======================================")
         # printheap(heap)
+        # print (heap.allocatedMemory)
 
         # print("*** End of program ***")
 

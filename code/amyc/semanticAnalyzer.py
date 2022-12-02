@@ -716,6 +716,12 @@ class SymbolTableVisitor (ASTVisitor):
 
         node.type = node.lhs.type
 
+        # ensure types work for overloaded operators
+        if node.op.lexeme == '=':
+            overloadedFunctionName = "__assign__"
+        hasOverloadedMethod = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs]) != None
+        # hasOverloadedFunction = self.table.lookup (overloadedFunctionName, Kind.FUNC, [node.lhs, node.rhs]) != None
+
         # ensure types work 
         isDiffType = node.lhs.type.__str__() != node.rhs.type.__str__()
         isDiffDimensions = node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions 
@@ -741,7 +747,7 @@ class SymbolTableVisitor (ASTVisitor):
                     break 
                 parent = parent.pDecl
             isDiffType = not isSubtype
-        if (not isArrayNullOp and not isObjectNullOp and (isDiffType or isDiffDimensions)):
+        if (not isArrayNullOp and not isObjectNullOp and (isDiffType or isDiffDimensions)) and not hasOverloadedMethod:
             print (f"Semantic Error: mismatching types in assign, \"{node.op.lexeme}\"")
             printToken (node.op)
             print (f"   {node.lhs.type} != {node.rhs.type}")
@@ -749,13 +755,18 @@ class SymbolTableVisitor (ASTVisitor):
             self.wasSuccessful = False
                     
         # ensure operands arent floats if operator is mod 
-        elif node.op.lexeme == '%=' and (node.lhs.type.__str__() == 'float' or node.rhs.type.__str__() == 'float'):
+        elif (node.op.lexeme == '%=' and (node.lhs.type.__str__() == 'float' or node.rhs.type.__str__() == 'float')) and not hasOverloadedMethod:
             print (f"Semantic Error: float values cannot be used with the mod operator ({node.op.lexeme})")
             printToken (node.op)
             print (f"   LHS: {node.lhs.type}")
             print (f"   RHS: {node.rhs.type}")
             print ()
             self.wasSuccessful = False
+
+        # method operator overload
+        if hasOverloadedMethod:
+            node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (f"{node.lhs.type}::{overloadedFunctionName}", node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
+            node.overloadedFunctionCall.decl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])
 
     def visitLogicalOrExpressionNode (self, node):
         node.lhs.accept (self)
@@ -872,12 +883,16 @@ class SymbolTableVisitor (ASTVisitor):
         elif hasOverloadedFunction and not hasOverloadedMethod:
             node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (overloadedFunctionName, node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
             node.overloadedFunctionCall.decl = self.table.lookup (overloadedFunctionName, Kind.FUNC, [node.lhs, node.rhs])
+            # this additive's type becomes the return type of the overloaded function call
+            node.type = node.overloadedFunctionCall.decl.type
         
         # method operator overload
         elif hasOverloadedMethod and not hasOverloadedFunction:
             node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (f"{node.lhs.type}::{overloadedFunctionName}", node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
             node.overloadedFunctionCall.decl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])
-        
+            # this additive's type becomes the return type of the overloaded function call
+            node.type = node.overloadedFunctionCall.decl.type
+
         # ambiguous 
         elif hasOverloadedFunction and hasOverloadedMethod:
             overloadedMethodDecl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])

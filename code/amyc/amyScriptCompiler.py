@@ -31,6 +31,7 @@ else:
 
 TARGET_AMYASM = "amyasm"
 TARGET_X86    = "x86"
+TARGET_PYTHON = "python"
 
 class AmyScriptCompiler:
 
@@ -561,7 +562,7 @@ if __name__ == "__main__":
     argparser.add_argument("--emitPreprocessed", dest="emitPreprocessed", action="store_true", help="output the preprocessed code")
     argparser.add_argument("--emitAST", dest="emitAST", action="store_true", help="output the ast")
     argparser.add_argument("--preprocess", dest="preprocess", action="store_true", help="only run preprocessor")
-    argparser.add_argument("--target", nargs=1, dest="target", help="specifies the target language to compile to [default amyasm] (amyasm | x86)")
+    argparser.add_argument("--target", nargs=1, dest="target", help="specifies the target language to compile to [default amyasm] (amyasm | x86 | python)")
 
     args = argparser.parse_args()
 
@@ -576,6 +577,8 @@ if __name__ == "__main__":
         target=TARGET_AMYASM
     elif args.target[0] == "x86":  # Intel x86
         target=TARGET_X86
+    elif args.target[0] == "python": # transpile to python
+        target=TARGET_PYTHON
     else: # Invalid/unknown target
         print (f"Unknown target {args.target}")
         exit (1)

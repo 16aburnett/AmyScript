@@ -1,0 +1,87 @@
+
+
+
+
+template <:T:>
+class Vector
+{
+    public field T[]   data;
+    public field int   size;
+    public field int   capacity;  
+
+    constructor ()
+    {
+        this.capacity = 10;
+        this.data = new T[this.capacity];
+        this.size = 0; 
+    }
+
+    public method void pushBack (T val)
+    {
+        // ensure there is space 
+        if (this.size + 1 >= this.capacity)
+        {
+            this.capacity = this.capacity * 2; 
+            T[] nData = new T[this.capacity];
+            // move old data over
+            for (int i = 0; i < this.size; ++i)
+            {
+                nData[i] = this.data[i];
+            }
+            free (this.data);
+            this.data = nData; 
+        }
+
+        // add new num
+        this.data[this.size] = val; 
+        ++this.size; 
+    }
+
+    public method T popBack ()
+    {
+        return this.data[--this.size];
+    }
+
+    public method T get (int index)
+    {
+        return this.data[index];
+    }
+
+    public method void set (int index, T value)
+    {
+        this.data[index] = value;
+    }
+
+}
+
+
+Vector<:int:> elfCalories = new Vector<:int:>();
+
+char[] line = input();
+
+while (line[0] != '$')
+{
+    int calorieTotal = 0;
+
+    while (line[0] != '\n' && line[0] != '$')
+    {
+        calorieTotal += stringToInt (line);
+        free (line);
+        line = input();
+    }
+
+    elfCalories.pushBack (calorieTotal);
+
+    if (line[0] == '$') break;
+
+    free (line);
+    line = input();
+}
+
+int maxCalories = 0;
+
+for (int i = 0; i < elfCalories.size; ++i)
+    if (elfCalories.get(i) > maxCalories)
+        maxCalories = elfCalories.get(i);
+
+println (maxCalories);

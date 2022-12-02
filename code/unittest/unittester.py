@@ -109,13 +109,18 @@ class TestGroup:
 #         numTests += 1
 
 # returns [numSuccessfulTests, numTests]
-def runTest_helper (test, code:str, testTarget:TestTarget, level:int, groupChain:str=""):
+def runTest_helper (test, code:str, testTarget:TestTarget, level:int, groupChain:str="", shouldBreakOnFail=False):
     if isinstance(test, TestGroup):
+
+        for i in range(level):
+            print ('| ', end='')
+        print ('v ', end='')
+        print (test.name)
 
         numSuccessful = 0
         numTests = 0
         for subtest in test.tests:
-            [numSuccessfulSubtests, numSubtests] = runTest_helper (subtest, code + test.sharedCode, testTarget, level+1, f"{groupChain} > {test.name}")
+            [numSuccessfulSubtests, numSubtests] = runTest_helper (subtest, code + test.sharedCode, testTarget, level+1, f"{groupChain} > {test.name}", shouldBreakOnFail=shouldBreakOnFail)
             numSuccessful += numSuccessfulSubtests
             numTests += numSubtests
 
@@ -295,11 +300,15 @@ def runTest_helper (test, code:str, testTarget:TestTarget, level:int, groupChain
         print ('> ', end='')
         print (f"{test.name} {numSuccessfulTests} / {numTests} passed")
 
+        if numSuccessfulTests != numTests and shouldBreakOnFail:
+            print ("Error: Exiting due to failed test")
+            exit (1)
+
         return [numSuccessfulTests, numTests]
 
-def runTest (test, testTarget:TestTarget=TestTarget.AMYASM):
+def runTest (test, testTarget:TestTarget=TestTarget.AMYASM, shouldBreakOnFail=False):
 
-    runTest_helper (test, "", testTarget, 0)
+    runTest_helper (test, "", testTarget, 0, shouldBreakOnFail=shouldBreakOnFail)
 
 
 # ** new code
@@ -321,19 +330,55 @@ allTests = TestGroup ("All Tests", "", [
                 Test ("Test1", code="print (21 + -23);", expectedOutput="-2"),
                 Test ("Test2", code="print (-21 + 23);", expectedOutput="2"),
                 Test ("Test3", code="print (-21 + -23);", expectedOutput="-44"),
-                Test ("Test4", code="print (2000000000 + 1000000000);", expectedOutput="-1294967296", expectedOutputAMYASM="3000000000")
+                Test ("Test4", code="print (2000000000 + 1000000000);", expectedOutput="3000000000", expectedOutputAMYASM="3000000000")
             ]),
             TestGroup ("Subtraction", "", [
                 Test ("Test0", code="print (21 - 23);", expectedOutput="-2"),
                 Test ("Test1", code="print (21 - -23);", expectedOutput="44"),
                 Test ("Test2", code="print (-21 - 23);", expectedOutput="-44"),
                 Test ("Test3", code="print (-21 - -23);", expectedOutput="2"),
-                Test ("Test4", code="print (-2000000000 - 1000000000);", expectedOutput="1294967296", expectedOutputAMYASM="-3000000000")
+                Test ("Test4", code="print (-2000000000 - 1000000000);", expectedOutput="-3000000000", expectedOutputAMYASM="-3000000000")
+            ]),
+            TestGroup ("Multiplication", "", [
+                Test ("Test0", code="print (3 * 31);", expectedOutput="93"),
+                Test ("Test1", code="print (7 * -7);", expectedOutput="-49"),
+                Test ("Test2", code="print (-9 * 4);", expectedOutput="-36"),
+                Test ("Test3", code="print (-5 * -20);", expectedOutput="100"),
+                Test ("Test4", code="print (-1000000000 * 1000000000);", expectedOutput="-1000000000000000000", expectedOutputAMYASM="-1000000000000000000")
+            ]),
+            TestGroup ("Division", "", [
+                Test ("Test0", code="print (45 / 9);", expectedOutput="5"),
+                Test ("Test1", code="print (45 / -5);", expectedOutput="-9"),
+                Test ("Test2", code="print (-5 / 2);", expectedOutput="-2", expectedOutputAMYASM="-3"),
+                Test ("Test3", code="print (-5 / -20);", expectedOutput="0")
+            ]),
+            TestGroup ("Mod", "", [
+                Test ("Test0", code="print (45 % 9);", expectedOutput="0"),
+                Test ("Test1", code="print (45 % 2);", expectedOutput="1"),
+                Test ("Test2", code="print (-5 % 2);", expectedOutput="-1", expectedOutputAMYASM="1"),
+                Test ("Test3", code="print (-5 % -20);", expectedOutput="-5")
+            ]),
+            TestGroup ("Combining Operators", "", [
+                Test (
+                    "Test0", 
+                    code="""
+int x = (-17 + 42 * (2 + 2) + 1) * -1 % 3;
+int y = x * 23;
+print (y / x);""", 
+                    expectedOutput="23"
+                ),
             ])
         ])
+    ]),
+    TestGroup ("Variables", "", [
+        Test ("Declaration", code="int x;", expectedOutput=""),
+        Test ("Assignment", code="int x = 10;", expectedOutput=""),
+        Test ("Variable value", code="int x = 10;print(x);", expectedOutput="10"),
+        Test ("Arithmetic With Variables", code="int x = 30; int y = 42; print ((x + y) / 8);", expectedOutput="9"),
+        Test ("Reassign Variables", code="int x = 10; x = 42; print(x);", expectedOutput="42"),
     ])
 ])
 
 
 
-runTest (allTests, TestTarget.ALL)
+runTest (allTests, TestTarget.ALL, shouldBreakOnFail=False)

@@ -255,19 +255,31 @@ __endOfLibrary:
 //### COMPILED CODE ######################################################
 //========================================================================
 
+// Assignment - '='
+   // RHS
+      // Int Literal
+         PUSH 10
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__x 0
+   POP __rhs
+   ASSIGN __main__x __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Assignment - '='
+   // RHS
+      // Int Literal
+         PUSH 42
+   POP __rhs
+   ASSIGN __main__x __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
 // Function Call - print(int) -> void
    // Arguments
-      // Subtraction
-         // LHS
-            // Int Literal
-               PUSH -2000000000
-         // RHS
-            // Int Literal
-               PUSH 1000000000
-         POP __rhs
-         POP __lhs
-         SUBTRACT __res __lhs __rhs
-         PUSH __res
+      // Identifier - x
+         PUSH __main__x
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0

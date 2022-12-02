@@ -1707,22 +1707,23 @@ class CodeGenVisitor_x86 (ASTVisitor):
                 self.printCode ("imul rax, rdx")
             # division 
             elif node.op.lexeme == "/":
-                self.printCode ("mov esi, edx")
-                self.printCode ("mov edx, 0")
-                self.printCode ("cdq")
-                self.printCode ("idiv esi")
+                # rax contains the dividend (lhs)
+                self.printCode ("mov rsi, rdx")
+                self.printCode ("xor rdx, rdx")
+                self.printCode ("cqo ; sign extend rax into rdx (specifically for 64bit -> 128bit)")
+                self.printCode ("idiv rsi ; perform rdx:rax (128bit) / rsi (64bit) = rax")
                 # rax now contains quotient
                 # rdx contains remainder
             # Mod
             elif node.op.lexeme == "%":
-                self.printCode ("mov esi, edx")
-                self.printCode ("mov edx, 0")
-                self.printCode ("cdq")
-                self.printCode ("idiv esi")
+                self.printCode ("mov rsi, rdx")
+                self.printCode ("xor rdx, rdx")
+                self.printCode ("cqo ; sign extend rax into rdx (specifically for 64bit -> 128bit)")
+                self.printCode ("idiv rsi ; perform rdx:rax (128bit) / rsi (64bit)")
                 # rax now contains quotient
                 # rdx contains remainder
                 # we want rax to have rdx
-                self.printCode ("mov rax, rdx")
+                self.printCode ("mov rax, rdx ; move remainder to rax")
         # overloaded function call 
         else:
             self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")

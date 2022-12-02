@@ -571,28 +571,41 @@ main:
          ; Main Header:
          push rbp
          mov rbp, rsp
-         sub rsp, 0
+         sub rsp, 16
          ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+         ; [rbp - 8] - int x (<unset-scope-name>)
 
          ; Body
+         ; Assignment - '='
+            ; RHS
+               ; Int Literal
+                  mov rax, 10
+                  push rax
+            ; LHS
+               ; Variable Declaration - x
+                  mov rax, qword [rbp - 8]  ; __main__x
+            pop rdx ; rhs value
+            mov qword [rbp - 8], rdx
+            push rdx
+         ; Statement results can be ignored
+         pop rdx
+         ; Assignment - '='
+            ; RHS
+               ; Int Literal
+                  mov rax, 42
+                  push rax
+            pop rdx ; rhs value
+            mov qword [rbp - 8], rdx
+            push rdx
+         ; Statement results can be ignored
+         pop rdx
          ; Function Call - print(int) -> void
             ; Make space for 1 arg(s)
             sub rsp, 8
             ; Arguments
                ; Eval arg0
-                  ; Subtraction - int, int
-                     ; LHS
-                        ; Int Literal
-                           mov rax, -2000000000
-                           push rax
-                     ; RHS
-                        ; Int Literal
-                           mov rax, 1000000000
-                           push rax
-                     pop rdx ; rhs
-                     pop rax ; lhs
-                     sub rax, rdx
-                     push rax
+                  ; Identifier - int x
+                     push qword [rbp - 8]
                ; Move arg0's result to reverse order position on stack
                pop rax
                mov qword [rsp + 0], rax

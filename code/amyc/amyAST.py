@@ -758,6 +758,8 @@ class AssignExpressionNode (ExpressionNode):
         self.op = op
         self.rhs = rhs 
 
+        self.overloadedFunctionCall = None
+
         self.lineNumber = line
         self.columnNumber = column
 
