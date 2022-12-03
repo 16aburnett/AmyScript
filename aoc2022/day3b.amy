@@ -1,0 +1,65 @@
+
+
+#include "Vector.amy"
+
+char[] letters = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+char[] line = input();
+
+int total = 0;
+
+Vector<:char[]:> lines = new Vector<:char[]:>();
+
+while (line[0] != '$')
+{
+    lines.pushBack (line);
+
+    line = input();
+}
+
+for (int l = 0; l < lines.size; l+=3)
+{
+    
+    char[] line0 = lines.data[l+0];
+    char[] line1 = lines.data[l+1];
+    char[] line2 = lines.data[l+2];
+
+    // find the common letter between three lines
+    char common = '0';
+    for (int i = 0; i < sizeof(line0)-1; ++i)
+    {
+        for (int j = 0; j < sizeof(line1)-1; ++j)
+        {
+            // check if match
+            //print (line0[i]); print (' '); println (line1[j]);
+            if (line0[i] == line1[j])
+            {
+                // first two have the char, check the third
+                for (int k = 0; k < sizeof(line2)-1; ++k)
+                {
+                    // check if match
+                    if (line0[i] == line2[k])
+                    {
+                        common = line0[i];
+                    }
+                }
+            }
+        }
+    }
+
+    // get score
+    int score = 0;
+    for (int i = 0; i < sizeof(letters); ++i)
+    {
+        if (letters[i] == common)
+            score = i;
+    }
+    
+    print (common); print (' '); println (score);
+
+    total += score;
+
+}
+
+
+println (total);

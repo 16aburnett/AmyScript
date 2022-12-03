@@ -1,8 +1,7 @@
 
-function int max (int a, int b)
+int c = 10;
+function void setc (int a)
 {
-    if (a >= b)
-        return a;
-    return b;
+    c = a;
 }
-print (max(42, 3));
+setc (42); print (c);

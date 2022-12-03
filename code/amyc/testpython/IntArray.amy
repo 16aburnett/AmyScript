@@ -1,0 +1,97 @@
+
+#ifndef VECTOR_H
+#define VECTOR_H
+
+class IntArray
+{
+    public field int[]   data;
+    public field int   size;
+    public field int   capacity;  
+
+    constructor ()
+    {
+        this.capacity = 10;
+        this.size = 0; 
+        this.data = new int[this.capacity];
+    }
+
+    public method void pushBack (int val)
+    {
+        // ensure there is space 
+        if (this.size + 1 >= this.capacity)
+        {
+            this.capacity = this.capacity * 2; 
+            int[] nData = new int[this.capacity];
+            // move old data over
+            for (int i = 0; i < this.size; ++i)
+            {
+                nData[i] = this.data[i];
+            }
+            free (this.data);
+            this.data = nData; 
+        }
+
+        // add new num
+        this.data[this.size] = val; 
+        ++this.size; 
+    }
+
+    public method int popBack ()
+    {
+        this.size -= 1;
+        return this.data[this.size+1];
+    }
+
+    public method int get (int index)
+    {
+        return this.data[index];
+    }
+
+    public method void set (int index, int value)
+    {
+        this.data[index] = value;
+    }
+
+}
+
+function void print (IntArray arr)
+{
+    print ('[');
+    if (arr.size != 0)
+    {
+        print (arr.data[0]);
+    }
+    for (int i = 1; i < arr.size; ++i)
+    {
+        print (',');
+        print (' ');
+        print (arr.data[i]);
+    }
+    print (']');
+}
+
+function void println (IntArray arr)
+{
+    print (arr);
+    println ();
+}
+
+IntArray arr = new IntArray();
+
+println (arr);
+
+arr.pushBack (10);
+
+println (arr);
+
+for (int i = 0; i < 5; ++i)
+    arr.pushBack (i*2);
+
+println (arr);
+
+arr.popBack ();
+
+println (arr);
+
+
+#endif

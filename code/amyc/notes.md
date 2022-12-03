@@ -25,6 +25,12 @@ when x then y else z
 10+ hours - Saturday, Mar 26, 2022
 
 Friday, Dec 2, 2022 - stayed up til 4:22am writing backend for python :)
+Saturday, Dec 3, 2022 - stayed up til 3:00am implementing classes for python backend (and tweeks for x86)
+
+- [ ] remove all unnecessary files
+
+- [ ] separate amyasm to a separate repo
+- [ ] targets should have default output file names
 
 - [ ] backend to python
 - [ ] backend to c++
@@ -73,6 +79,7 @@ Friday, Dec 2, 2022 - stayed up til 4:22am writing backend for python :)
     - syntax highlighting
     - amyasm docs
     - compiler docs - talk about targets (amyasm, x86, python)
+    - stdin for testing input
 
 
 - [ ] change amyscript to amy++

@@ -269,8 +269,6 @@ class CodeGenVisitor_python (ASTVisitor):
         else: 
             self.printComment (f"Class Declaration - {node.scopeName}")
 
-        self.indentation += 1
-
         # create scope names for methods
         for method in node.methods:
             # variable names are modified by its scope 
@@ -305,15 +303,11 @@ class CodeGenVisitor_python (ASTVisitor):
             ctor.scopeName = "".join(scopeName)
 
         # create dispatch table 
-        self.printComment ("Creating Dispatch Table")
+        self.printComment ("Creating Dispatch Table (will be populated later)")
         node.dtableScopeName = "__dtable__" + "".join (self.scopeNames)
-        self.indentation += 1
-        self.printCode (f"MALLOC {node.dtableScopeName} {len(node.virtualMethods)}")
-        # populate dispatch table
-        self.printComment ("Populate Dispatch Table")
-        for i in range(len(node.functionPointerList)):
-            self.printCode (f"ASSIGN {node.dtableScopeName}[{i}] {node.functionPointerList[i].scopeName}")
-        self.indentation -= 1
+        self.printIndent ()
+        self.printCode (f"{node.dtableScopeName} = []")
+        self.printNewline ()
 
         # create scope names for fields 
         for field in node.fields:
@@ -329,12 +323,6 @@ class CodeGenVisitor_python (ASTVisitor):
             field.accept (self)
             i += 1
 
-        # add jump to skip over class dec  
-        self.indentation -= 1
-        self.printComment ("skip over class methods")
-        self.printCode (f"JUMP __endclass__{node.scopeName}")
-        self.indentation += 1
-
         for ctor in node.constructors:
             ctor.parentClass = node
             ctor.accept (self)
@@ -342,10 +330,17 @@ class CodeGenVisitor_python (ASTVisitor):
         for method in node.methods:
             method.parentClass = node
             method.accept (self)
-
-        self.indentation -= 1
-
-        self.printCode (f"__endclass__{node.scopeName}:")
+        
+        self.printComment ("Populate Dispatch Table")
+        self.printIndent ()
+        self.printCode (f"{node.dtableScopeName} = [")
+        # populate dispatch table
+        if len(node.functionPointerList) != 0:
+            self.printCode (f"{node.functionPointerList[0].scopeName}")
+        for i in range(1, len(node.functionPointerList)):
+            self.printCode (f", {node.functionPointerList[i].scopeName}")
+        self.printCode ("]")
+        self.printNewline ()
 
         self.printComment (f"End Class Declaration - {node.scopeName}")
         self.printDivider ()
@@ -361,7 +356,9 @@ class CodeGenVisitor_python (ASTVisitor):
             self.printComment (f"Inherited from {node.parentClass.pDecl.id}")
 
         # fieldIndexVarname = f"__field__{node.id}__{field.id}"
-        self.printCode (f"ASSIGN {node.scopeName} {node.index}")
+        self.printIndent ()
+        self.printCode (f"{node.scopeName} = {node.index}")
+        self.printNewline ()
 
         self.printSubDivider ()
 
@@ -378,11 +375,15 @@ class CodeGenVisitor_python (ASTVisitor):
         endLabel = f"__end{node.scopeName}"
         methodLabel = node.scopeName
 
-        # add jump to skip over function 
-        self.printCode (f"JUMP {endLabel}")
-
-        # place function jump-point label 
-        self.printCode (methodLabel + ":")
+        # ensure we start with the object instance param
+        self.printIndent ()
+        self.printCode (f"def {methodLabel} (this")
+        # parameters
+        for i in range(len(node.params)):
+            self.printCode (", ")
+            node.params[i].accept (self)
+        self.printCode ("):")   
+        self.printNewline ()
 
         self.indentation += 1
 
@@ -391,35 +392,15 @@ class CodeGenVisitor_python (ASTVisitor):
             self.printComment (f"Jump to {node.inheritedMethod.parentClass.id}'s version")
             self.printCode (f"JUMP {node.inheritedMethod.scopeName}")
         else:
-
-            # load class instance 
-            # first thing on the stack
-            self.printComment ("Class Instance")
-            self.indentation += 1
-            self.printCode ("STACKGET __this 0")
-            self.indentation -= 1 
-
-            # load parameters 
-            self.printComment ("Parameters")
-            self.indentation += 1
-            for i in range(1, len(node.params)+1):
-                self.printComment (f"Param: {node.params[i-1].id}")
-                node.params[i-1].accept (self)
-                # keep the same parameter name 
-                self.printCode (f"STACKGET {node.params[i-1].scopeName} {i}")
-            self.indentation -= 1        
-
             self.printComment ("Body")
-            self.indentation += 1
             node.body.accept (self)
-            self.indentation -= 1
 
             # extra return statement for if return is not provided 
-            self.printCode ("RETURN 0")
+            self.printIndent ()
+            self.printCode ("return 0")
+            self.printNewline ()
 
         self.indentation -= 1
-
-        self.printCode (f"{endLabel}:")
 
         self.printComment (f"End Method Declaration - {methodLabel}")
         self.printSubDivider ()
@@ -445,48 +426,44 @@ class CodeGenVisitor_python (ASTVisitor):
             if f"${node.signature}" in self.code[i]:
                 self.code[i] = self.code[i].replace(f"${node.signature}", node.scopeName)
 
-        # add jump to skip over function 
-        self.printCode (f"JUMP {endLabel}")
-
-        # place function jump-point label 
-        self.printCode (ctorLabel + ":")
+        self.printIndent ()
+        self.printCode (f"def {ctorLabel} (")
+        # parameters
+        if len(node.params) != 0:
+            node.params[0].accept (self)
+        for i in range(1, len(node.params)):
+            self.printCode (", ")
+            node.params[i].accept (self)
+        self.printCode ("):")   
+        self.printNewline ()
 
         self.indentation += 1
 
         # create class instance 
         self.printComment ("Creating Class Instance")
-        self.indentation += 1
         # +1 because all classes start with a dispatch table 
-        self.printCode (f"MALLOC __this {len(node.parentClass.fields)+1}")
+        self.printIndent ()
+        self.printCode (f"this = [0] * {len(node.parentClass.fields)+1}")
+        self.printNewline ()
 
         # add dispatch table to instance
         self.printComment ("Add Dispatch Table")
-        self.printCode (f"ASSIGN __this[0] {node.parentClass.dtableScopeName}")
+        self.printIndent ()
+        self.printCode (f"this[0] = {node.parentClass.dtableScopeName}")
+        self.printNewline ()
 
         # ** maybe initialize entries? or that might be inefficient
-        self.indentation -= 1
-
-        # load parameters 
-        self.printComment ("Parameters")
-        self.indentation += 1
-        for i in range(len(node.params)):
-            self.printComment (f"Param: {node.params[i].id}")
-            node.params[i].accept (self)
-            # keep the same parameter name 
-            self.printCode (f"STACKGET {node.params[i].scopeName} {i}")
-        self.indentation -= 1        
 
         self.printComment ("Body")
-        self.indentation += 1
         node.body.accept (self)
-        self.indentation -= 1
 
         # return constructed class instance
-        self.printCode ("RETURN __this")
+        self.printComment ("Return the constructed instance")
+        self.printIndent ()
+        self.printCode ("return this")
+        self.printNewline ()
 
         self.indentation -= 1
-
-        self.printCode (f"{endLabel}:")
 
         self.printComment (f"End Constructor Declaration - {node.scopeName}")
         self.printSubDivider ()
@@ -677,6 +654,7 @@ class CodeGenVisitor_python (ASTVisitor):
 
         # init
         self.printComment ("Init")
+        self.printIndent ()
         node.init.accept (self)
         self.printNewline ()
 
@@ -840,33 +818,9 @@ class CodeGenVisitor_python (ASTVisitor):
                 lhsStr = f"__pointer[__offset]"
 
             elif isinstance (node.lhs, MemberAccessorExpressionNode):
-                self.printComment ("LHS")
-                self.indentation += 1
-                self.printComment ("Member Accessor Assignment")
-
-                self.indentation += 1
-
-                self.printComment ("LHS")
-                self.indentation += 1
+                # arr.size = arr[field__size] = 10
                 node.lhs.lhs.accept (self)
-                self.indentation -= 1
-
-                self.printComment ("RHS")
-                self.indentation += 1
-                # # construct field index var 
-                # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-                self.printCode (f"PUSH {node.lhs.decl.scopeName}")
-                self.indentation -= 1
-
-                self.printCode ("POP __child")
-                self.printCode ("POP __parent")
-
-                self.printCode (f"POP __rhs")
-                
-                lhsStr = f"__parent[__child]"
-
-                self.indentation -= 1
-                self.indentation -= 1
+                self.printCode (f"[{node.lhs.decl.scopeName}]")
                 
             # =
             if node.op.type == "ASSIGN":
@@ -1246,7 +1200,6 @@ class CodeGenVisitor_python (ASTVisitor):
         if node.hasParentheses:
             self.printCode ("(")
             
-
         # static calls 
         # lhs is not an identifier 
         if node.isstatic:
@@ -1257,31 +1210,16 @@ class CodeGenVisitor_python (ASTVisitor):
             self.indentation -= 1
             return 
 
-        self.printComment ("Member Accessor")
-
-        self.indentation += 1
-
-        self.printComment ("LHS")
-        self.indentation += 1
+        # obj[field_index]
         node.lhs.accept (self)
-        self.indentation -= 1
 
-        self.printComment ("RHS")
-        self.indentation += 1
         if node.decl.scopeName == "":
             x = sum([1 if '\n' in s else 0 for s in self.code])
             print (f"[code-gen] [member-accessor] Error: no scope name for '{node.decl.id}' on line {node.lineNumber}")
             print (f"   this could have happened due to a cyclic reference/composition with template classes")
             print (f"   cyclic references are not yet supported")
             exit (1)
-        self.printCode (f"PUSH {node.decl.scopeName}")
-        self.indentation -= 1
-
-        self.printCode ("POP __child")
-        self.printCode ("POP __parent")
-        self.printCode ("PUSH __parent[__child]")
-
-        self.indentation -= 1
+        self.printCode (f"[{node.decl.scopeName}]")
 
         # close parentheses if we were supposed to have parens
         if node.hasParentheses:
@@ -1324,54 +1262,10 @@ class CodeGenVisitor_python (ASTVisitor):
         if node.hasParentheses:
             self.printCode ("(")
             
-        if node.decl.isVirtual:
-            self.printComment (f"Virtual Method Call - {node.decl.signatureNoScope} -> {node.decl.type}")
-        else:
-            self.printComment (f"Method Call - {node.decl.signature} -> {node.decl.type}")
-
-        self.indentation += 1
-
-        self.printComment ("LHS")
-        self.indentation += 1
-        node.lhs.accept (self)
-        self.indentation -= 1
-
-        self.printComment ("RHS")
-        self.indentation += 1
-        # construct field index var 
-        # methodName = f"__method__{node.lhs.type.id}__{node.rhs.id}"
-        self.indentation -= 1
-
-
-        self.printComment ("Arguments")
-        self.indentation += 1
-        # calc arguments first
-        # an argument could be another function call
-        # to avoid conflicts with variables, 
-        # we will have a separate loop to pop the values
-        for arg in node.args:
-            arg.accept (self)
-
-        argIndex = len(node.args)-1
-        for arg in node.args:
-            # save argument 
-            argName = f"__arg{argIndex}"
-            argIndex -= 1
-            self.printCode (f"POP {argName}")
-        self.indentation -= 1
-        
-        # parent object should be on the stack
-        # *happens after args incase args uses __obj
-        # in another method call
-        self.printCode ("POP __obj")
-
-        # add arguments in reverse order
-        self.printComment ("Pushing args in reverse order")
-        for i in range(len(node.args)-1, -1, -1):
-            self.printCode (f"PUSH __arg{i}")
-
-        # push parent object instance last
-        self.printCode (f"PUSH __obj")
+        # if node.decl.isVirtual:
+        #     self.printComment (f"Virtual Method Call - {node.decl.signatureNoScope} -> {node.decl.type}")
+        # else:
+        #     self.printComment (f"Method Call - {node.decl.signature} -> {node.decl.type}")
 
         # if virtual function
         if node.decl.isVirtual:
@@ -1393,21 +1287,17 @@ class CodeGenVisitor_python (ASTVisitor):
 
         # otherwise, call function normally
         else:
-            self.printCode (f"CALL {node.decl.scopeName}")
+            self.printCode (f"{node.decl.scopeName}")
 
-        # remove parent object instance
-        self.printCode (f"POP __void")
-
-        # remove arguments from stack
-        self.printComment ("Remove args")
-        for i in range(0, len(node.args)):
-            self.printCode (f"POP __void")
-                
-        # put function's return val on the stack
-        self.printCode ("RESPONSE __retval")
-        self.printCode ("PUSH __retval")
-
-        self.indentation -= 1
+        
+        self.printCode (f" (")
+        # lhs is object parameter
+        node.lhs.accept (self)
+        # add rest of params after object param
+        for i in range(len(node.args)):
+            self.printCode (", ")
+            node.args[i].accept (self)
+        self.printCode (")")
 
         # close parentheses if we were supposed to have parens
         if node.hasParentheses:
@@ -1419,10 +1309,7 @@ class CodeGenVisitor_python (ASTVisitor):
         if node.hasParentheses:
             self.printCode ("(")
             
-        self.printComment (f"This keyword")
-        self.indentation += 1
-        self.printCode (f"PUSH __this")
-        self.indentation -= 1
+        self.printCode (f"this")
 
         # close parentheses if we were supposed to have parens
         if node.hasParentheses:
@@ -1460,46 +1347,15 @@ class CodeGenVisitor_python (ASTVisitor):
         if node.hasParentheses:
             self.printCode ("(")
             
-        self.printComment (f"Constructor Call - {node.decl.signature} -> {node.decl.parentClass.type}")
+        # self.printComment (f"Constructor Call - {node.decl.signature} -> {node.decl.parentClass.type}")
 
-        self.indentation += 1
-
-        self.printComment ("Arguments")
-        self.indentation += 1
-        # calc arguments first
-        # an argument could be another function call
-        # to avoid conflicts with variables, 
-        # we will have a separate loop to pop the values
-        for arg in node.args:
-            arg.accept (self)
-
-        # retrieve values in reverse order
-        argIndex = len(node.args)-1
-        for arg in node.args:
-            # save argument 
-            argName = f"__arg{argIndex}"
-            argIndex -= 1
-            self.printCode (f"POP {argName}")
-        self.indentation -= 1
-        
-        # add arguments in reverse order
-        self.printComment ("Pushing args in reverse order")
-        for i in range(len(node.args)-1, -1, -1):
-            self.printCode (f"PUSH __arg{i}")
-
-        # call function
-        self.printCode (f"CALL {node.decl.scopeName}")
-
-        # remove arguments from stack
-        self.printComment ("Remove args")
-        for i in range(0, len(node.args)):
-            self.printCode (f"POP __void")
-        
-        # put function's return val on the stack
-        self.printCode ("RESPONSE __retval")
-        self.printCode ("PUSH __retval")
-
-        self.indentation -= 1
+        self.printCode (f"{node.decl.scopeName} (")
+        if len(node.args) != 0:
+            node.args[0].accept (self)
+        for i in range(1, len(node.args)):
+            self.printCode (", ")
+            node.args[i].accept (self)
+        self.printCode (")")
 
         # close parentheses if we were supposed to have parens
         if node.hasParentheses:
@@ -1537,26 +1393,11 @@ class CodeGenVisitor_python (ASTVisitor):
         if node.hasParentheses:
             self.printCode ("(")
             
-        self.printComment ("Free Operator")
-        self.indentation += 1
-
-        # calc rhs
-        self.printComment ("RHS")
-        self.indentation += 1
+        # nothing to do, python has its own garbage collector ;)
+        # for now, i am just calling the builtin free function which will do nothing
+        self.printCode ("free (")
         node.rhs.accept (self)
-        self.indentation -= 1
-
-        self.printComment ("Free array")
-        self.printCode ("POP __array")
-        self.printCode ("FREE __array")
-        # put the array back on the stack 
-        # this will get popped off the stack for the case:
-        #    free(arr);
-        # but the value can still be used 
-        #    freedBAsWell = free(a) == b;
-        self.printCode ("PUSH __array")
-
-        self.indentation -= 1
+        self.printCode (")")
 
         # close parentheses if we were supposed to have parens
         if node.hasParentheses:

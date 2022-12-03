@@ -17,14 +17,9 @@ def exit__int (exit_code):
 # # void free()
 # # - exit_code : [rbp + 16]
 # # - uses external exit function from libc
-# # free__void__: 
-# #         push    rbp 
-# #         mov     rbp, rsp 
-        
-
-
-# #         pop     rbp 
-# #         ret
+def free (ptr):
+    # do nothing, python has its own garbage collection
+    pass
 
 # # ========================================================================
 # # Prints a given string to the screen

@@ -514,23 +514,6 @@ function void print10 ()
 }
 print10 ();
 """, expectedOutput="10"),
-    ])
-])
-
-
-
-# runTest (allTests, TestTarget.ALL, shouldBreakOnFail=False)
-
-runTest (
-    TestGroup ("Functions", "", [
-        Test ("Super Simple Function Declaration", code=
-"""
-function void print10 ()
-{
-    print (10);
-}
-print10 ();
-""", expectedOutput="10"),
         Test ("Test Parameters", code=
 """
 function void printint (int a)
@@ -572,4 +555,25 @@ function int max (int a, int b)
                 Test ("a == b", "print (max(7, 7));", expectedOutput="7"),
                 Test ("a > b", "print (max(42, 3));", expectedOutput="42"),
             ]),
-    ]), TestTarget.ALL, shouldBreakOnFail=False)
+        TestGroup (
+            "Function with side effects", 
+            """
+            int c = 10;
+            function void setc (int a)
+            {
+                c = a;
+            }
+            """, 
+            [
+                Test ("before call", "print (c);", expectedOutput="10"),
+                Test ("after call", "setc (42); print (c);", expectedOutput="42"),
+            ]
+        ),
+    ])
+])
+
+
+
+runTest (allTests, TestTarget.ALL, shouldBreakOnFail=False)
+
+# runTest (, TestTarget.ALL, shouldBreakOnFail=False)

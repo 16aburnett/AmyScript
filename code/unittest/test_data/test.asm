@@ -571,15 +571,29 @@ main:
          ; Main Header:
          push rbp
          mov rbp, rsp
-         sub rsp, 0
+         sub rsp, 16
          ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+         ; [rbp - 8] - int c (<unset-scope-name>)
 
          ; Body
+         ; Assignment - '='
+            ; RHS
+               ; Int Literal
+                  mov rax, 10
+                  push rax
+            ; LHS
+               ; Variable Declaration - c
+                  mov rax, qword [rbp - 8]  ; __main__c
+            pop rdx ; rhs value
+            mov qword [rbp - 8], rdx
+            push rdx
+         ; Statement results can be ignored
+         pop rdx
 ; ========================================================================
-         ; Function Declaration - max(int, int) -> int
+         ; Function Declaration - setc(int) -> void
          ; Skip over function declaration
-         jmp .__end____main____max__int__int
-.__main____max__int__int:
+         jmp .__end____main____setc__int
+.__main____setc__int:
             ; Function Header:
                ; Setup stack frame
                   push rbp
@@ -587,90 +601,55 @@ main:
                   sub rsp, 0
                ; Parameters
                   ; Param: a [rbp + 16]
-                  ; Param: b [rbp + 24]
                ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
 
             ; Body
       ;------------------------------------------------------------------
                ; Code Block
-         ;---------------------------------------------------------------
-                  ; If-Statement
-                     ; Condition
-                        ; Greater Than or Equal to
-                           ; LHS
-                              ; Identifier - int a
-                                 push qword [rbp - -16]
-                           ; RHS
-                              ; Identifier - int b
-                                 push qword [rbp - -24]
-                           pop rdx ; rhs
-                           pop rax ; lhs
-                           cmp rax, rdx
-                           setge al
-                           movzx eax, al
-                           push rax
-                        pop rdx ; __cond
-                        cmp rdx, 0 ; ensure condition is true
-                        je .__endif__1 ; jump to end
-                     ; Body
-                        ; Return
-                           ; Identifier - int a
-                              push qword [rbp - -16]
-                           pop rax ; return value (int)
-                           ; Clean up stack and return
-                           mov rsp, rbp ; remove local vars + unpopped pushes
-                           pop rbp
-                           ret
-                     jmp .__endif__1 ; jump to end of condition chain
-                     ; End of if
-.__endif__1:
-         ;---------------------------------------------------------------
-                  ; Return
-                     ; Identifier - int b
-                        push qword [rbp - -24]
-                     pop rax ; return value (int)
-                     ; Clean up stack and return
-                     mov rsp, rbp ; remove local vars + unpopped pushes
-                     pop rbp
-                     ret
+                  ; Assignment - '='
+                     ; RHS
+                        ; Identifier - int a
+                           push qword [rbp - -16]
+                     pop rdx ; rhs value
+                     mov qword [rbp - 8], rdx
+                     push rdx
+                  ; Statement results can be ignored
+                  pop rdx
       ;------------------------------------------------------------------
             ; Function Epilogue
             mov rsp, rbp ; remove local vars + unpopped pushes
             pop rbp
             ret
-.__end____main____max__int__int:
-         ; End Function Declaration - max(int, int) -> int
+.__end____main____setc__int:
+         ; End Function Declaration - setc(int) -> void
 ; ========================================================================
 
+         ; Function Call - setc(int) -> void
+            ; Make space for 1 arg(s)
+            sub rsp, 8
+            ; Arguments
+               ; Eval arg0
+                  ; Int Literal
+                     mov rax, 42
+                     push rax
+               ; Move arg0's result to reverse order position on stack
+               pop rax
+               mov qword [rsp + 0], rax
+            ; Call setc(int)
+            call .__main____setc__int
+            ; Remove args
+            add rsp, 8
+            ; Push return value
+            push rax
+         ; Statement results can be ignored
+         pop rdx
          ; Function Call - print(int) -> void
             ; Make space for 1 arg(s)
             sub rsp, 8
             ; Arguments
                ; Eval arg0
-                  ; Function Call - max(int, int) -> int
-                     ; Make space for 2 arg(s)
-                     sub rsp, 16
-                     ; Arguments
-                        ; Eval arg0
-                           ; Int Literal
-                              mov rax, 42
-                              push rax
-                        ; Move arg0's result to reverse order position on stack
-                        pop rax
-                        mov qword [rsp + 0], rax
-                        ; Eval arg1
-                           ; Int Literal
-                              mov rax, 3
-                              push rax
-                        ; Move arg1's result to reverse order position on stack
-                        pop rax
-                        mov qword [rsp + 8], rax
-                     ; Call max(int, int)
-                     call .__main____max__int__int
-                     ; Remove args
-                     add rsp, 16
-                     ; Push return value
-                     push rax
+                  ; Identifier - int c
+                     push qword [rbp - 8]
                ; Move arg0's result to reverse order position on stack
                pop rax
                mov qword [rsp + 0], rax

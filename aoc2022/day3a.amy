@@ -1,0 +1,51 @@
+
+
+#include "Vector.amy"
+
+char[] letters = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+char[] line = input();
+
+int total = 0;
+
+while (line[0] != '$')
+{
+
+    int size = sizeof (line);
+
+    int c0 = 0;
+    int e0 = size / 2;
+    int c1 = e0;
+    int e1 = size;
+
+    // find the common letter
+    char common = '0';
+    for (int i = c0; i < e0; ++i)
+    {
+        for (int j = c1; j < e1; ++j)
+        {
+            // check if match
+            if (line[i] == line[j])
+            {
+                common = line[i];
+            }
+        }
+    }
+    println (common);
+
+    // get score
+    int score = 0;
+    for (int i = 0; i < sizeof(letters); ++i)
+    {
+        if (letters[i] == common)
+            score = i;
+    }
+    println (score);
+
+    total += score;
+
+    free (line);
+    line = input();
+}
+
+println (total);
