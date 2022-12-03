@@ -1123,7 +1123,9 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.scopeNames.pop ()
 
     def visitExpressionStatementNode (self, node):
-        if node.expr != None:
+        # ignore variable decl
+        # int x; should not translate to anything
+        if node.expr != None and not isinstance(node.expr, VariableDeclarationNode):
             node.expr.accept (self)
             # don't need stack value from statement
             # in some cases, this extra value on the stack can break things
@@ -1138,7 +1140,10 @@ class CodeGenVisitor_x86 (ASTVisitor):
         if node.expr != None:
             node.expr.accept (self)
             # get return value 
-            self.printCode ("pop rax")
+            self.printCode (f"pop rax ; return value ({node.expr.type})")
+            # store float return values in xmm0
+            if node.expr.type.type == Type.FLOAT and node.expr.type.arrayDimensions == 0:
+                self.printCode (f"movq xmm0, rax ; xmm0 is used for float return values")
             # restore rbp
             self.printComment ("Clean up stack and return")
             self.printCode ("mov rsp, rbp ; remove local vars + unpopped pushes")

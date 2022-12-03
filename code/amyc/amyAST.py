@@ -717,7 +717,9 @@ class CodeBlockNode (StatementNode):
 class ExpressionNode (Node):
 
     def __init__(self):
-        pass
+        # this field is used for compiling to python
+        # so that we can regenerate parentheses
+        self.hasParentheses = False
 
     def accept (self, visitor):
         visitor.visitExpressionNode (self)
@@ -753,6 +755,7 @@ class TupleExpressionNode (ExpressionNode):
 class AssignExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, rhs, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
@@ -776,6 +779,7 @@ class AssignExpressionNode (ExpressionNode):
 class LogicalOrExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, rhs, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
@@ -797,6 +801,7 @@ class LogicalOrExpressionNode (ExpressionNode):
 class LogicalAndExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, rhs, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
@@ -819,6 +824,7 @@ class LogicalAndExpressionNode (ExpressionNode):
 class EqualityExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, rhs, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
@@ -841,6 +847,7 @@ class EqualityExpressionNode (ExpressionNode):
 class InequalityExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, rhs, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
@@ -863,6 +870,7 @@ class InequalityExpressionNode (ExpressionNode):
 class AdditiveExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, rhs, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
@@ -887,6 +895,7 @@ class AdditiveExpressionNode (ExpressionNode):
 class MultiplicativeExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, rhs, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
@@ -910,6 +919,7 @@ class MultiplicativeExpressionNode (ExpressionNode):
 class UnaryLeftExpressionNode (ExpressionNode):
 
     def __init__(self, op, rhs, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.op = op
         self.rhs = rhs 
@@ -929,6 +939,7 @@ class UnaryLeftExpressionNode (ExpressionNode):
 class PostIncrementExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs 
         self.op = op
@@ -948,6 +959,7 @@ class PostIncrementExpressionNode (ExpressionNode):
 class PostDecrementExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs 
         self.op = op
@@ -968,6 +980,7 @@ class PostDecrementExpressionNode (ExpressionNode):
 class SubscriptExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, offset, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs 
         self.op = op
@@ -992,6 +1005,7 @@ class SubscriptExpressionNode (ExpressionNode):
 class FunctionCallExpressionNode (ExpressionNode):
 
     def __init__(self, function, args, templateParams, op, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.function = function
         self.args = args 
@@ -1017,6 +1031,7 @@ class FunctionCallExpressionNode (ExpressionNode):
 class MemberAccessorExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, rhs, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
@@ -1045,6 +1060,7 @@ class MemberAccessorExpressionNode (ExpressionNode):
 class FieldAccessorExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, rhs, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
@@ -1068,6 +1084,7 @@ class FieldAccessorExpressionNode (ExpressionNode):
 class MethodAccessorExpressionNode (ExpressionNode):
 
     def __init__(self, lhs, op, rhs, args, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.lhs = lhs
         self.op = op
@@ -1090,6 +1107,7 @@ class MethodAccessorExpressionNode (ExpressionNode):
 class ThisExpressionNode (ExpressionNode):
 
     def __init__(self, token, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.token = token
 
@@ -1110,6 +1128,7 @@ class ThisExpressionNode (ExpressionNode):
 class IdentifierExpressionNode (ExpressionNode):
 
     def __init__(self, id, token, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.id = id
         self.token = token
@@ -1130,6 +1149,7 @@ class IdentifierExpressionNode (ExpressionNode):
 class ArrayAllocatorExpressionNode (ExpressionNode):
 
     def __init__(self, type, dimensions, templateParams, line, column):
+        super ().__init__ ()
         self.type = type
         self.dimensions = dimensions
 
@@ -1151,6 +1171,7 @@ class ArrayAllocatorExpressionNode (ExpressionNode):
 class ConstructorCallExpressionNode (ExpressionNode):
 
     def __init__(self, type, id, op, args, templateParams, line, column):
+        super ().__init__ ()
         self.type = type
         self.id = id
         self.op = op
@@ -1174,6 +1195,7 @@ class ConstructorCallExpressionNode (ExpressionNode):
 class SizeofExpressionNode (ExpressionNode):
 
     def __init__(self, type, op, rhs, line, column):
+        super ().__init__ ()
         self.type = type
         self.op = op
         self.rhs = rhs
@@ -1192,6 +1214,7 @@ class SizeofExpressionNode (ExpressionNode):
 class FreeExpressionNode (ExpressionNode):
 
     def __init__(self, type, op, rhs, line, column):
+        super ().__init__ ()
         self.type = type
         self.op = op
         self.rhs = rhs
@@ -1211,6 +1234,7 @@ class FreeExpressionNode (ExpressionNode):
 class IntLiteralExpressionNode (ExpressionNode):
 
     def __init__(self, value:int):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.INT, "int", None)
         self.value = value
 
@@ -1229,6 +1253,7 @@ class IntLiteralExpressionNode (ExpressionNode):
 class FloatLiteralExpressionNode (ExpressionNode):
 
     def __init__(self, value:float):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.FLOAT, "float", None)
         self.value = value
 
@@ -1250,6 +1275,7 @@ class FloatLiteralExpressionNode (ExpressionNode):
 class CharLiteralExpressionNode (ExpressionNode):
 
     def __init__(self, value:chr):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.CHAR, "char", None)
         self.value = value
 
@@ -1268,6 +1294,7 @@ class CharLiteralExpressionNode (ExpressionNode):
 class StringLiteralExpressionNode (ExpressionNode):
 
     def __init__(self, value:str):
+        super ().__init__ ()
         # char[] instead of string
         self.type = TypeSpecifierNode (Type.CHAR, "char", None)
         self.type.arrayDimensions = 1
@@ -1291,6 +1318,7 @@ class StringLiteralExpressionNode (ExpressionNode):
 class ListConstructorExpressionNode (ExpressionNode):
 
     def __init__(self, op, elems:list, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.UNKNOWN, "", None)
         self.op = op
         self.elems = elems
@@ -1309,6 +1337,7 @@ class ListConstructorExpressionNode (ExpressionNode):
 class NullExpressionNode (ExpressionNode):
 
     def __init__(self, line, column):
+        super ().__init__ ()
         self.type = TypeSpecifierNode (Type.NULL, "null", None)
         self.value = 0
 

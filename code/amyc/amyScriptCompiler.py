@@ -17,6 +17,7 @@ if __name__ == "__main__":
     from semanticAnalyzer import *
     from codeGen import CodeGenVisitor
     from codegen_x86 import CodeGenVisitor_x86
+    from codegen_python import CodeGenVisitor_python
 else:
     from .tokenizer import tokenize
     from .amyAST import *
@@ -25,6 +26,7 @@ else:
     from .semanticAnalyzer import *
     from .codeGen import CodeGenVisitor
     from .codegen_x86 import CodeGenVisitor_x86
+    from .codegen_python import CodeGenVisitor_python
 
 
 # ========================================================================
@@ -533,6 +535,8 @@ class AmyScriptCompiler:
             codeGenVisitor = CodeGenVisitor (lines)
         elif target == TARGET_X86:
             codeGenVisitor = CodeGenVisitor_x86 (lines)
+        elif target == TARGET_PYTHON:
+            codeGenVisitor = CodeGenVisitor_python (lines)
 
         # generate code
         ast.accept (codeGenVisitor)

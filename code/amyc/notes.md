@@ -24,6 +24,28 @@ when x then y else z
 
 10+ hours - Saturday, Mar 26, 2022
 
+Friday, Dec 2, 2022 - stayed up til 4:22am writing backend for python :)
+
+- [ ] backend to python
+- [ ] backend to c++
+
+- [ ] exponent operator **
+- [ ] pointer syntax - I really dislike using * for pointers
+    - maybe use & 
+    int& arr = ???
+    - or address type?
+
+- [ ] semantic - 
+
+- [ ] type creation system
+    - typedef Number = int | float ???
+    https://docs.julialang.org/en/v1/manual/types/
+
+- [ ] stack vs heap - we really need this
+    - arrays are static size so we can just allocate stack space for the array
+    - this is really rooted in amyasm garbage
+
+- [ ] operator overloading
 
 - [ ] function capturing 
 - [ ] add log level (debug already exists)
@@ -36,6 +58,7 @@ when x then y else z
 
 - [ ] input(char[]) that prompts for a input
 
+- [ ] change input() to getline or something
 
 - [ ] named parameters 
     - print(float, precision=5) 
@@ -48,6 +71,8 @@ when x then y else z
     - admonitions
     - the works
     - syntax highlighting
+    - amyasm docs
+    - compiler docs - talk about targets (amyasm, x86, python)
 
 
 - [ ] change amyscript to amy++

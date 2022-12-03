@@ -255,31 +255,76 @@ __endOfLibrary:
 //### COMPILED CODE ######################################################
 //========================================================================
 
-// Assignment - '='
-   // RHS
-      // Int Literal
-         PUSH 10
-   // LHS
-      // Variable Declaration
-         ASSIGN __main__x 0
-   POP __rhs
-   ASSIGN __main__x __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
-// Assignment - '='
-   // RHS
-      // Int Literal
-         PUSH 42
-   POP __rhs
-   ASSIGN __main__x __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
+//========================================================================
+// Function Declaration - max(int, int) -> int
+JUMP __end____main____max__int__int
+__main____max__int__int:
+   // Parameters
+      // Param: a
+      STACKGET __main__max__a 0
+      // Param: b
+      STACKGET __main__max__b 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Greater Than or Equal to
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__max__a
+                  // RHS
+                     // Identifier - b
+                        PUSH __main__max__b
+                  POP __rhs
+                  POP __lhs
+                  GE __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__1
+            // Body
+               // Return
+                  // Identifier - a
+                     PUSH __main__max__a
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif__1
+            // End of if
+            __endif__1:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - b
+               PUSH __main__max__b
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____max__int__int:
+// End Function Declaration - __main____max__int__int
+//========================================================================
+
 // Function Call - print(int) -> void
    // Arguments
-      // Identifier - x
-         PUSH __main__x
+      // Function Call - max(int, int) -> int
+         // Arguments
+            // Int Literal
+               PUSH 42
+            // Int Literal
+               PUSH 3
+            POP __arg1
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg1
+         PUSH __arg0
+         // *** max
+         CALL __main____max__int__int
+         // Remove args
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0

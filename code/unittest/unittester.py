@@ -13,7 +13,8 @@ from enum import Enum
 class TestTarget (Enum):
     AMYASM = 0
     X86 = 1
-    ALL = 2 # tests all targets
+    PYTHON = 2
+    ALL = 3 # tests all targets
 
 # expectedOutputX86 - this is the expected output to match with the stdout 
 #   from running with target X86.
@@ -35,19 +36,33 @@ class Test:
         name:str, 
         code:str="", 
         expectedOutput:str="", 
-        expectedOutputX86:str=None, 
         expectedOutputAMYASM:str=None, 
+        expectedOutputX86:str=None, 
+        expectedOutputPython:str=None,
         expectedCompilerOutput:str=None,
         shouldCompile:bool=True
     ):
         self.name = name
         self.code = code
         self.expectedOutput = expectedOutput
-        self.expectedOutputX86 = expectedOutputX86 if expectedOutputX86 != None else expectedOutput
         self.expectedOutputAMYASM = expectedOutputAMYASM if expectedOutputAMYASM != None else expectedOutput
+        self.expectedOutputX86 = expectedOutputX86 if expectedOutputX86 != None else expectedOutput
+        self.expectedOutputPython = expectedOutputPython if expectedOutputPython != None else expectedOutput
         self.expectedCompilerOutput = expectedCompilerOutput
         self.shouldCompile = shouldCompile
 
+class MultiFileTest (Test):
+    def __init__(self, 
+        name: str, 
+        code: str = "", 
+        expectedOutput: str = "", 
+        expectedOutputAMYASM: str = None, 
+        expectedOutputX86: str = None, 
+        expectedOutputPython: str = None, 
+        expectedCompilerOutput: str = None, 
+        shouldCompile: bool = True
+    ):
+        super().__init__(name, code, expectedOutput, expectedOutputAMYASM, expectedOutputX86, expectedOutputPython, expectedCompilerOutput, shouldCompile)
 
 class TestGroup:
     def __init__(self, name:str, sharedCode:str="", tests:list=[]):
@@ -160,6 +175,9 @@ def runTest_helper (test, code:str, testTarget:TestTarget, level:int, groupChain
                     print (test.expectedCompilerOutput)
                     print ("Actual Compiler Output:")
                     print (compilerOutput.stdout)
+                    print (f"--- STDERR ---------------------")
+                    print (compilerOutput.stderr)
+                    print (f"--------------------------------")
                     print (f"================================")
                 else:
                     numSuccessfulTests += 1
@@ -175,6 +193,9 @@ def runTest_helper (test, code:str, testTarget:TestTarget, level:int, groupChain
                 print (f"Compiled? {isCompiled}")
                 print ("Compiler Output:")
                 print (compilerOutput.stdout)
+                print (f"--- STDERR ---------------------")
+                print (compilerOutput.stderr)
+                print (f"--------------------------------")
                 print (f"================================")
             
             # 3. Compiles when expecting fail
@@ -237,6 +258,9 @@ def runTest_helper (test, code:str, testTarget:TestTarget, level:int, groupChain
                     print (test.expectedCompilerOutput)
                     print ("Actual Compiler Output:")
                     print (compilerOutput.stdout)
+                    print (f"--- STDERR ---------------------")
+                    print (compilerOutput.stderr)
+                    print (f"--------------------------------")
                     print (f"================================")
                 else:
                     numSuccessfulTests += 1
@@ -252,6 +276,9 @@ def runTest_helper (test, code:str, testTarget:TestTarget, level:int, groupChain
                 print (f"Compiled? {isCompiled}")
                 print ("Compiler Output:")
                 print (compilerOutput.stdout)
+                print (f"--- STDERR ---------------------")
+                print (compilerOutput.stderr)
+                print (f"--------------------------------")
                 print (f"================================")
             
             # 3. Compiles when expecting fail
@@ -290,6 +317,101 @@ def runTest_helper (test, code:str, testTarget:TestTarget, level:int, groupChain
                     print (test.expectedOutputX86)
                     print ("Actual Output:")
                     print (result.stdout)
+                    print (f"================================")
+                else:
+                    numSuccessfulTests += 1
+            numTests += 1
+        if testTarget == TestTarget.PYTHON or testTarget == TestTarget.ALL:
+            # compile the code
+            os.system (f'cat > test_data/test.amy <<EOF \n{fullCode}\nEOF')
+            compilerOutput = subprocess.run ([f'python3', '../amyc/amyScriptCompiler.py', 'test_data/test.amy', '--target', 'python', '-o', 'test_data/test.py'], capture_output=True, text=True)
+
+            isCompiled = (compilerOutput.returncode == 0)
+
+            # 1. Failed to Compile when expecting fail
+            if not isCompiled and not test.shouldCompile:
+                # ensure expectedCompilerOutput exists
+                if test.expectedCompilerOutput not in compilerOutput.stdout:
+                    print (f"=== FAILED =====================")
+                    print (f"Test Group: {groupChain}")
+                    print (f"Test: {test.name}")
+                    print (f"Target: {TestTarget.PYTHON}")
+                    print ("Code:")
+                    print (fullCode)
+                    print (f"Compiled? {isCompiled}")
+                    print ("Expected Compiler Output:")
+                    print (test.expectedCompilerOutput)
+                    print ("Actual Compiler Output:")
+                    print (compilerOutput.stdout)
+                    print (compilerOutput.stderr)
+                    print (f"================================")
+                else:
+                    numSuccessfulTests += 1
+            
+            # 2. Failed to Compile when expecting success
+            elif not isCompiled and test.shouldCompile:
+                print (f"=== FAILED =====================")
+                print (f"Test Group: {groupChain}")
+                print (f"Test: {test.name}")
+                print (f"Target: {TestTarget.PYTHON}")
+                print ("Code:")
+                print (fullCode)
+                print (f"Compiled? {isCompiled}")
+                print ("Compiler Output:")
+                print (compilerOutput.stdout)
+                print (f"--- STDERR ---------------------")
+                print (compilerOutput.stderr)
+                print (f"--------------------------------")
+                print (f"================================")
+            
+            # 3. Compiles when expecting fail
+            elif isCompiled and not test.shouldCompile:
+                print (f"=== FAILED =====================")
+                print (f"Reason: Should have failed to compile")
+                print (f"Test Group: {groupChain}")
+                print (f"Test: {test.name}")
+                print (f"Target: {TestTarget.PYTHON}")
+                print ("Code:")
+                print (fullCode)
+                print (f"Compiled? {isCompiled}")
+                print ("Expected Compiler Output:")
+                print (test.expectedCompilerOutput)
+                print ("Compiler Output:")
+                print (compilerOutput.stdout)
+                print (f"================================")
+
+            # 4. Compiles when expecting success
+            else:
+                # run the code
+                result = subprocess.run (["python3", "test_data/test.py"], capture_output=True, text=True)
+                # ensure it was successful
+                wasTestSuccessful = result.stdout == test.expectedOutputPython
+                if not wasTestSuccessful:
+                    print (f"=== FAILED =====================")
+                    print (f"Test Group: {groupChain}")
+                    print (f"Test: {test.name}")
+                    print (f"Target: {TestTarget.PYTHON}")
+                    print ("Code:")
+                    print (fullCode)
+                    print (f"Compiled? {isCompiled}")
+                    print ("Expected Output:")
+                    print (test.expectedOutputPython)
+                    print ("Actual Output:")
+                    print (result.stdout)
+                    print (f"================================")
+                elif result.returncode != 0:
+                    print (f"=== FAILED =====================")
+                    print (f"Test Group: {groupChain}")
+                    print (f"Test: {test.name}")
+                    print (f"Target: {TestTarget.PYTHON}")
+                    print ("Code:")
+                    print (fullCode)
+                    print (f"Compiled? {isCompiled}")
+                    print ("Failed due to non-zero return code")
+                    print ("Returncode:", result.returncode)
+                    print (f"--- STDERR ---------------------")
+                    print (result.stderr)
+                    print (f"--------------------------------")
                     print (f"================================")
                 else:
                     numSuccessfulTests += 1
@@ -349,36 +471,105 @@ allTests = TestGroup ("All Tests", "", [
             TestGroup ("Division", "", [
                 Test ("Test0", code="print (45 / 9);", expectedOutput="5"),
                 Test ("Test1", code="print (45 / -5);", expectedOutput="-9"),
-                Test ("Test2", code="print (-5 / 2);", expectedOutput="-2", expectedOutputAMYASM="-3"),
+                Test ("Test2", code="print (-5 / 2);", expectedOutput="-2", expectedOutputAMYASM="-3", expectedOutputPython="-3"),
                 Test ("Test3", code="print (-5 / -20);", expectedOutput="0")
             ]),
             TestGroup ("Mod", "", [
                 Test ("Test0", code="print (45 % 9);", expectedOutput="0"),
                 Test ("Test1", code="print (45 % 2);", expectedOutput="1"),
-                Test ("Test2", code="print (-5 % 2);", expectedOutput="-1", expectedOutputAMYASM="1"),
+                Test ("Test2", code="print (-5 % 2);", expectedOutput="-1", expectedOutputAMYASM="1", expectedOutputPython="1"),
                 Test ("Test3", code="print (-5 % -20);", expectedOutput="-5")
             ]),
             TestGroup ("Combining Operators", "", [
                 Test (
                     "Test0", 
                     code="""
-int x = (-17 + 42 * (2 + 2) + 1) * -1 % 3;
+int x = (-17 + 42 * (2 + 2) + 1) * -1;
 int y = x * 23;
-print (y / x);""", 
-                    expectedOutput="23"
+print (y);""", 
+                    expectedOutput="-3496"
                 ),
             ])
         ])
     ]),
     TestGroup ("Variables", "", [
-        Test ("Declaration", code="int x;", expectedOutput=""),
+        Test ("Declaration", code="int x; int y = 10;", expectedOutput=""),
         Test ("Assignment", code="int x = 10;", expectedOutput=""),
-        Test ("Variable value", code="int x = 10;print(x);", expectedOutput="10"),
+        Test ("Variable value", code="float x = 3.14;print(x);", expectedOutput="3.14"),
         Test ("Arithmetic With Variables", code="int x = 30; int y = 42; print ((x + y) / 8);", expectedOutput="9"),
         Test ("Reassign Variables", code="int x = 10; x = 42; print(x);", expectedOutput="42"),
+        Test ("Ensure reference before assignment fails", code="int x; print (x);", shouldCompile=False, expectedCompilerOutput=""),
+    ]),
+    TestGroup ("Misc", "int x = 10;", [
+        Test ("Test0", code="print (x);", expectedOutput="10"),
+        Test ("Test1", code="print (x+2);", expectedOutput="12"),
+        Test ("Test2", code="print (x*2);", expectedOutput="20"),
+    ]),
+    TestGroup ("Functions", "", [
+        Test ("Super Simple Function Declaration", code=
+"""
+function void print10 ()
+{
+    print (10);
+}
+print10 ();
+""", expectedOutput="10"),
     ])
 ])
 
 
 
-runTest (allTests, TestTarget.ALL, shouldBreakOnFail=False)
+# runTest (allTests, TestTarget.ALL, shouldBreakOnFail=False)
+
+runTest (
+    TestGroup ("Functions", "", [
+        Test ("Super Simple Function Declaration", code=
+"""
+function void print10 ()
+{
+    print (10);
+}
+print10 ();
+""", expectedOutput="10"),
+        Test ("Test Parameters", code=
+"""
+function void printint (int a)
+{
+    print (a);
+}
+printint (42);
+""", expectedOutput="42"),
+        Test ("Test Return", code=
+"""
+function float getPI ()
+{
+    return 3.14;
+}
+print (getPI());
+""", expectedOutput="3.14"),
+        Test ("Test Return no value", code=
+"""
+function void printsomething ()
+{
+    print ("this");
+    return;
+    print ("not this");
+}
+printsomething();
+""", expectedOutput="this"),
+        TestGroup (
+            "Max function", 
+"""
+function int max (int a, int b)
+{
+    if (a >= b)
+        return a;
+    return b;
+}
+""", 
+            [
+                Test ("a < b", "print (max(-3, 7));", expectedOutput="7"),
+                Test ("a == b", "print (max(7, 7));", expectedOutput="7"),
+                Test ("a > b", "print (max(42, 3));", expectedOutput="42"),
+            ]),
+    ]), TestTarget.ALL, shouldBreakOnFail=False)

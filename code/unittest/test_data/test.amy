@@ -1,1 +1,8 @@
-int x = 10; x = 42; print(x);
+
+function int max (int a, int b)
+{
+    if (a >= b)
+        return a;
+    return b;
+}
+print (max(42, 3));

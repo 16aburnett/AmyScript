@@ -143,6 +143,15 @@ exit:
     halt
 
 //========================================================================
+
+// Exits the program with the given exit code 
+// void exit(int exit_code)
+// - exit_code : 
+exit__int:
+    // ** not implemented for amyasm
+    halt 
+
+//========================================================================
 // returns default float value
 // float float ();
 float:
