@@ -24,14 +24,9 @@ def exit__int (exit_code):
 # # void free()
 # # - exit_code : [rbp + 16]
 # # - uses external exit function from libc
-# # free__void__: 
-# #         push    rbp 
-# #         mov     rbp, rsp 
-        
-
-
-# #         pop     rbp 
-# #         ret
+def free (ptr):
+    # do nothing, python has its own garbage collection
+    pass
 
 # # ========================================================================
 # # Prints a given string to the screen
@@ -185,23 +180,852 @@ def null ():
 
 # # //========================================================================
 #=========================================================================
+#### SETUP EXPRESSION RESULT STACK ######################################
+#=========================================================================
+
+# This stack is used to store results of expressions
+stack = []
+
+#=========================================================================
 #### COMPILED CODE ######################################################
 #=========================================================================
 
-__main__c = 10
 #=========================================================================
-# Function Declaration - setc(int) -> void
-def __main____setc__int (__main__setc__a):
+# Class Template - 
+#=========================================================================
+# Class Declaration - __main____Vector__float inherits __main__Object
+# Creating Dispatch Table (will be populated later)
+__dtable____main____Vector__float = []
+#-------------------------------------------------------------------------
+# Field - float[] Vector<:float:>::data
+__field____main____Vector__float____data = 1
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Field - int Vector<:float:>::size
+__field____main____Vector__float____size = 2
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Field - int Vector<:float:>::capacity
+__field____main____Vector__float____capacity = 3
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Constructor Declaration - Vector<:float:>::Vector() -> Vector<:float:>
+def __ctor____main____Vector__float____Vector ():
+    # Creating Class Instance
+    this = [0] * 4
+    # Add Dispatch Table
+    this[0] = __dtable____main____Vector__float
     # Body
     #---------------------------------------------------------------------
     # Code Block
-    __main__c = __main__setc__a
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(10)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Vector__float____capacity)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Vector__float____size)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____capacity)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __dim = stack.pop ()
+    __res = [None] * __dim
+    stack.append (__res)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Vector__float____data)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
     #---------------------------------------------------------------------
-# End Function Declaration - __main____setc__int
+    # Return the constructed instance
+    return this
+# End Constructor Declaration - __ctor____main____Vector__float____Vector
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Method Declaration - Vector<:float:>::pushBack(float) -> void
+def __method____main____Vector__float____pushBack__float (this, __main____Vector__float__pushBack__val):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    #---------------------------------------------------------------------
+    # If-Statement
+    # Precomputing all if/elif conditions and give unique names
+    # bc we can't have code between if and elif
+    # Condition
+    # Greater Than or Equal to
+    # LHS
+    # Addition
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # RHS
+    # Int Literal
+    stack.append(1)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____capacity)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs >= __rhs
+    stack.append (__res)
+    __if__2__cond = stack.pop ()
+    # get condition from stack
+    if (__if__2__cond):
+        # Body
+        #-----------------------------------------------------------------
+        # Code Block
+        # Statement
+        # Assignment - '='
+        # RHS
+        # Multiplication
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append (__field____main____Vector__float____capacity)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # RHS
+        # Int Literal
+        stack.append(2)
+        __rhs = stack.pop()
+        __lhs = stack.pop()
+        __res = __lhs * __rhs
+        stack.append(__res)
+        # LHS
+        # Member Accessor Assignment
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append(__field____main____Vector__float____capacity)
+        __child = stack.pop()
+        __parent = stack.pop()
+        __rhs = stack.pop()
+        __parent[__child] = __rhs
+        stack.append (__parent[__child])
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Assignment - '='
+        # RHS
+        # Member Accessor
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append (__field____main____Vector__float____capacity)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __dim = stack.pop ()
+        __res = [None] * __dim
+        stack.append (__res)
+        # LHS
+        __main____Vector__float__pushBack__block__1__if__2__block__3__nData = 0
+        __rhs = stack.pop()
+        __main____Vector__float__pushBack__block__1__if__2__block__3__nData = __rhs
+        stack.append (__main____Vector__float__pushBack__block__1__if__2__block__3__nData)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+        # For-Loop
+        # Init
+        # Assignment - '='
+        # RHS
+        # Int Literal
+        stack.append(0)
+        # LHS
+        __main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i = 0
+        __rhs = stack.pop()
+        __main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i = __rhs
+        stack.append (__main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i)
+        # Using an infinite loop so we can write a separate multi-line condition
+        while (1):
+            # Condition
+            # Less Than
+            # LHS
+            stack.append(__main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i)
+            # RHS
+            # Member Accessor
+            # LHS
+            stack.append(this)
+            # RHS
+            stack.append (__field____main____Vector__float____size)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            __rhs = stack.pop ()
+            __lhs = stack.pop ()
+            __res = __lhs < __rhs
+            stack.append (__res)
+            __cond = stack.pop ()
+            # break out of loop if condition is false
+            if (__cond == 0): break
+            # Body
+            #-------------------------------------------------------------
+            # Code Block
+            # Statement
+            # Assignment - '='
+            # RHS
+            # Subscript
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(this)
+            # RHS
+            stack.append (__field____main____Vector__float____data)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # OFFSET
+            stack.append(__main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i)
+            __offset = stack.pop ()
+            __pointer = stack.pop ()
+            stack.append (__pointer[__offset])
+            # LHS
+            # Subscript assignment
+            # LHS
+            stack.append(__main____Vector__float__pushBack__block__1__if__2__block__3__nData)
+            # OFFSET
+            stack.append(__main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i)
+            __offset = stack.pop()
+            __pointer = stack.pop()
+            __rhs = stack.pop()
+            __pointer[__offset] = __rhs
+            stack.append (__pointer[__offset])
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
+            #-------------------------------------------------------------
+            # Update
+            # Pre-Increment
+            # RHS
+            stack.append(__main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i)
+            __rhs = stack.pop ()
+            __main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i = __main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i + 1
+            __res = __main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i
+            stack.append (__res)
+        #-----------------------------------------------------------------
+        # Statement
+        # Member Accessor
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append (__field____main____Vector__float____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __arr = stack.pop ()
+        free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Assignment - '='
+        # RHS
+        stack.append(__main____Vector__float__pushBack__block__1__if__2__block__3__nData)
+        # LHS
+        # Member Accessor Assignment
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append(__field____main____Vector__float____data)
+        __child = stack.pop()
+        __parent = stack.pop()
+        __rhs = stack.pop()
+        __parent[__child] = __rhs
+        stack.append (__parent[__child])
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+    # End of if
+    #---------------------------------------------------------------------
+    # Statement
+    # Assignment - '='
+    # RHS
+    stack.append(__main____Vector__float__pushBack__val)
+    # LHS
+    # Subscript assignment
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __offset = stack.pop()
+    __pointer = stack.pop()
+    __rhs = stack.pop()
+    __pointer[__offset] = __rhs
+    stack.append (__pointer[__offset])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Pre-Increment
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __rhs = stack.pop ()
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    __parent[__child] = __parent[__child] + 1
+    __res = __parent[__child]
+    stack.append (__res)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__float____pushBack__float
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Method Declaration - Vector<:float:>::popBack() -> float
+def __method____main____Vector__float____popBack (this):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Assignment - '-='
+    # RHS
+    # Int Literal
+    stack.append(1)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Vector__float____size)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __parent[__child] - __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Return
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    __rVal = stack.pop ()
+    return __rVal
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__float____popBack
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Method Declaration - Vector<:float:>::get(int) -> float
+def __method____main____Vector__float____get__int (this, __main____Vector__float__get__index):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Return
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    stack.append(__main____Vector__float__get__index)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    __rVal = stack.pop ()
+    return __rVal
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__float____get__int
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Method Declaration - Vector<:float:>::set(int, float) -> void
+def __method____main____Vector__float____set__int__float (this, __main____Vector__float__set__index, __main____Vector__float__set__value):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Assignment - '='
+    # RHS
+    stack.append(__main____Vector__float__set__value)
+    # LHS
+    # Subscript assignment
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__float____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    stack.append(__main____Vector__float__set__index)
+    __offset = stack.pop()
+    __pointer = stack.pop()
+    __rhs = stack.pop()
+    __pointer[__offset] = __rhs
+    stack.append (__pointer[__offset])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__float____set__int__float
+#-------------------------------------------------------------------------
+
+# Populate Dispatch Table
+__dtable____main____Vector__float = [__method____main____Vector__float____pushBack__float, __method____main____Vector__float____popBack, __method____main____Vector__float____get__int, __method____main____Vector__float____set__int__float]
+# End Class Declaration - __main____Vector__float
 #=========================================================================
 
-__main____setc__int (42)
-print__int (__main__c)
+# End Class Template - 
+#=========================================================================
+
+#=========================================================================
+# Function Template - 
+#=========================================================================
+# Function Declaration - print<:float:>(Vector<:float:>) -> void
+def __main____print__float____Vector__tparam0__float (__main__print__v):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Function Call - print(char) -> void
+    # Arguments
+    # Char Literal
+    stack.append('[')
+    __arg0 = stack.pop ()
+    # *** print
+    __res = print__char (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # If-Statement
+    # Precomputing all if/elif conditions and give unique names
+    # bc we can't have code between if and elif
+    # Condition
+    # Not Equal
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__print__v)
+    # RHS
+    stack.append (__field____main____Vector__float____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # RHS
+    # Int Literal
+    stack.append(0)
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs != __rhs
+    stack.append (__res)
+    __if__10__cond = stack.pop ()
+    # get condition from stack
+    if (__if__10__cond):
+        # Body
+        # Statement
+        # Function Call - print(float) -> void
+        # Arguments
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__print__v)
+        # RHS
+        stack.append (__field____main____Vector__float____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        # Int Literal
+        stack.append(0)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        __arg0 = stack.pop ()
+        # *** print
+        __res = print__float (__arg0)
+        stack.append (__res) # function call result
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+    # End of if
+    #---------------------------------------------------------------------
+    #---------------------------------------------------------------------
+    # For-Loop
+    # Init
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(1)
+    # LHS
+    __main__print__block__9__for__11__i = 0
+    __rhs = stack.pop()
+    __main__print__block__9__for__11__i = __rhs
+    stack.append (__main__print__block__9__for__11__i)
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Less Than
+        # LHS
+        stack.append(__main__print__block__9__for__11__i)
+        # RHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__print__v)
+        # RHS
+        stack.append (__field____main____Vector__float____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs < __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        #-----------------------------------------------------------------
+        # Code Block
+        # Statement
+        # Function Call - print(char) -> void
+        # Arguments
+        # Char Literal
+        stack.append(',')
+        __arg0 = stack.pop ()
+        # *** print
+        __res = print__char (__arg0)
+        stack.append (__res) # function call result
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Function Call - print(char) -> void
+        # Arguments
+        # Char Literal
+        stack.append(' ')
+        __arg0 = stack.pop ()
+        # *** print
+        __res = print__char (__arg0)
+        stack.append (__res) # function call result
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Function Call - print(float) -> void
+        # Arguments
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__print__v)
+        # RHS
+        stack.append (__field____main____Vector__float____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__print__block__9__for__11__i)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        __arg0 = stack.pop ()
+        # *** print
+        __res = print__float (__arg0)
+        stack.append (__res) # function call result
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+        # Update
+        # Pre-Increment
+        # RHS
+        stack.append(__main__print__block__9__for__11__i)
+        __rhs = stack.pop ()
+        __main__print__block__9__for__11__i = __main__print__block__9__for__11__i + 1
+        __res = __main__print__block__9__for__11__i
+        stack.append (__res)
+    #---------------------------------------------------------------------
+    # Statement
+    # Function Call - print(char) -> void
+    # Arguments
+    # Char Literal
+    stack.append(']')
+    __arg0 = stack.pop ()
+    # *** print
+    __res = print__char (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+# End Function Declaration - __main____print__float____Vector__tparam0__float
+#=========================================================================
+
+# End Function Template - 
+#=========================================================================
+
+#=========================================================================
+# Function Template - 
+#=========================================================================
+# Function Declaration - println<:float:>(Vector<:float:>) -> void
+def __main____println__float____Vector__tparam0__float (__main__println__v):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Function Call - print<:float:>(Vector<:float:>) -> void
+    # Arguments
+    stack.append(__main__println__v)
+    __arg0 = stack.pop ()
+    # *** print
+    __res = __main____print__float____Vector__tparam0__float (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Function Call - println() -> void
+    # Arguments
+    # *** println
+    __res = println ()
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+# End Function Declaration - __main____println__float____Vector__tparam0__float
+#=========================================================================
+
+# End Function Template - 
+#=========================================================================
+
+# Statement
+# Assignment - '='
+# RHS
+# Constructor Call - Vector<:float:>::Vector() -> Vector<:float:>
+# Arguments
+__retval = __ctor____main____Vector__float____Vector ()
+stack.append (__retval)
+# LHS
+__main__v = 0
+__rhs = stack.pop()
+__main__v = __rhs
+stack.append (__main__v)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
+# Statement
+# Method Call - Vector<:float:>::pushBack(float) -> void
+# LHS
+stack.append(__main__v)
+# RHS
+# Arguments
+# Float Literal
+stack.append(3.14)
+__arg0 = stack.pop ()
+__obj = stack.pop ()
+__retval = __method____main____Vector__float____pushBack__float (__obj, __arg0)
+stack.append (__retval)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
+# Statement
+# Method Call - Vector<:float:>::pushBack(float) -> void
+# LHS
+stack.append(__main__v)
+# RHS
+# Arguments
+# Negative
+# RHS
+# Float Literal
+stack.append(214.5)
+__rhs = stack.pop ()
+__res = -__rhs
+stack.append (__res)
+__arg0 = stack.pop ()
+__obj = stack.pop ()
+__retval = __method____main____Vector__float____pushBack__float (__obj, __arg0)
+stack.append (__retval)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
+# Statement
+# Method Call - Vector<:float:>::pushBack(float) -> void
+# LHS
+stack.append(__main__v)
+# RHS
+# Arguments
+# Float Literal
+stack.append(0.0001)
+__arg0 = stack.pop ()
+__obj = stack.pop ()
+__retval = __method____main____Vector__float____pushBack__float (__obj, __arg0)
+stack.append (__retval)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
+# Statement
+# Function Call - println<:float:>(Vector<:float:>) -> void
+# Arguments
+stack.append(__main__v)
+__arg0 = stack.pop ()
+# *** println
+__res = __main____println__float____Vector__tparam0__float (__arg0)
+stack.append (__res) # function call result
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
 
 #=========================================================================
 #### END OF CODE ########################################################

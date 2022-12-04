@@ -256,98 +256,41 @@ __endOfLibrary:
 //========================================================================
 
 //========================================================================
-// Class Declaration - __main____IntArray inherits __main__Object
+// Class Declaration - __main____A inherits __main__Object
    // Creating Dispatch Table
-      MALLOC __dtable____main____IntArray 4
+      MALLOC __dtable____main____A 0
       // Populate Dispatch Table
-      ASSIGN __dtable____main____IntArray[0] __method____main____IntArray____pushBack__int
-      ASSIGN __dtable____main____IntArray[1] __method____main____IntArray____popBack
-      ASSIGN __dtable____main____IntArray[2] __method____main____IntArray____get__int
-      ASSIGN __dtable____main____IntArray[3] __method____main____IntArray____set__int__int
    //---------------------------------------------------------------------
-   // Field - int[] IntArray::data
-   ASSIGN __field____main____IntArray____data 1
-   //---------------------------------------------------------------------
-   //---------------------------------------------------------------------
-   // Field - int IntArray::size
-   ASSIGN __field____main____IntArray____size 2
-   //---------------------------------------------------------------------
-   //---------------------------------------------------------------------
-   // Field - int IntArray::capacity
-   ASSIGN __field____main____IntArray____capacity 3
+   // Field - float A::x
+   ASSIGN __field____main____A____x 1
    //---------------------------------------------------------------------
 // skip over class methods
-JUMP __endclass____main____IntArray
+JUMP __endclass____main____A
    //---------------------------------------------------------------------
-   // Constructor Declaration - IntArray::IntArray() -> IntArray
-   JUMP __end__ctor____main____IntArray____IntArray
-   __ctor____main____IntArray____IntArray:
+   // Constructor Declaration - A::A(float) -> A
+   JUMP __end__ctor____main____A____A__float
+   __ctor____main____A____A__float:
       // Creating Class Instance
-         MALLOC __this 4
+         MALLOC __this 2
          // Add Dispatch Table
-         ASSIGN __this[0] __dtable____main____IntArray
+         ASSIGN __this[0] __dtable____main____A
       // Parameters
+         // Param: x
+         STACKGET __main____A__A__x 0
       // Body
          //---------------------------------------------------------------
          // Code Block
             // Assignment - '='
                // RHS
-                  // Int Literal
-                     PUSH 10
+                  // Identifier - x
+                     PUSH __main____A__A__x
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main____IntArray____capacity
-                     POP __child
-                     POP __parent
-                     POP __rhs
-               ASSIGN __parent[__child] __rhs
-               PUSH __rhs
-            // Statement results can be ignored
-            POP __void
-            // Assignment - '='
-               // RHS
-                  // Int Literal
-                     PUSH 0
-               // LHS
-                  // Member Accessor Assignment
-                     // LHS
-                        // This keyword
-                           PUSH __this
-                     // RHS
-                        PUSH __field____main____IntArray____size
-                     POP __child
-                     POP __parent
-                     POP __rhs
-               ASSIGN __parent[__child] __rhs
-               PUSH __rhs
-            // Statement results can be ignored
-            POP __void
-            // Assignment - '='
-               // RHS
-                  // Array Allocator
-                     // Member Accessor
-                        // LHS
-                           // This keyword
-                              PUSH __this
-                        // RHS
-                           PUSH __field____main____IntArray____capacity
-                        POP __child
-                        POP __parent
-                        PUSH __parent[__child]
-                     POP __size
-                     MALLOC __ptr __size
-                     PUSH __ptr
-               // LHS
-                  // Member Accessor Assignment
-                     // LHS
-                        // This keyword
-                           PUSH __this
-                     // RHS
-                        PUSH __field____main____IntArray____data
+                        PUSH __field____main____A____x
                      POP __child
                      POP __parent
                      POP __rhs
@@ -357,687 +300,142 @@ JUMP __endclass____main____IntArray
             POP __void
          //---------------------------------------------------------------
       RETURN __this
-   __end__ctor____main____IntArray____IntArray:
-   // End Constructor Declaration - __ctor____main____IntArray____IntArray
+   __end__ctor____main____A____A__float:
+   // End Constructor Declaration - __ctor____main____A____A__float
    //---------------------------------------------------------------------
 
+__endclass____main____A:
+// End Class Declaration - __main____A
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main____B inherits __main____A
+   // Creating Dispatch Table
+      MALLOC __dtable____main____B 0
+      // Populate Dispatch Table
    //---------------------------------------------------------------------
-   // Method Declaration - IntArray::pushBack(int) -> void
-   JUMP __end__method____main____IntArray____pushBack__int
-   __method____main____IntArray____pushBack__int:
-      // Class Instance
-         STACKGET __this 0
+   // Field - float B::x
+   // Inherited from A
+   ASSIGN __field____main____B____x 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - float B::y
+   ASSIGN __field____main____B____y 2
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - float B::z
+   ASSIGN __field____main____B____z 3
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main____B
+   //---------------------------------------------------------------------
+   // Constructor Declaration - B::B(float, float, float) -> B
+   JUMP __end__ctor____main____B____B__float__float__float
+   __ctor____main____B____B__float__float__float:
+      // Creating Class Instance
+         MALLOC __this 4
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main____B
       // Parameters
-         // Param: val
-         STACKGET __main____IntArray__pushBack__val 1
+         // Param: x
+         STACKGET __main____B__B__x 0
+         // Param: y
+         STACKGET __main____B__B__y 1
+         // Param: z
+         STACKGET __main____B__B__z 2
       // Body
          //---------------------------------------------------------------
          // Code Block
-            //------------------------------------------------------------
-            // If-Statement
-               // Condition
-                  // Greater Than or Equal to
-                     // LHS
-                        // Addition
-                           // LHS
-                              // Member Accessor
-                                 // LHS
-                                    // This keyword
-                                       PUSH __this
-                                 // RHS
-                                    PUSH __field____main____IntArray____size
-                                 POP __child
-                                 POP __parent
-                                 PUSH __parent[__child]
-                           // RHS
-                              // Int Literal
-                                 PUSH 1
-                           POP __rhs
-                           POP __lhs
-                           ADD __res __lhs __rhs
-                           PUSH __res
-                     // RHS
-                        // Member Accessor
-                           // LHS
-                              // This keyword
-                                 PUSH __this
-                           // RHS
-                              PUSH __field____main____IntArray____capacity
-                           POP __child
-                           POP __parent
-                           PUSH __parent[__child]
-                     POP __rhs
-                     POP __lhs
-                     GE __res __lhs __rhs
-                     PUSH __res
-                  POP __cond
-                  CMP __cond 0
-                  JEQ __endif__2
-               // Body
-                  //------------------------------------------------------
-                  // Code Block
-                     // Assignment - '='
-                        // RHS
-                           // Multiplication
-                              // LHS
-                                 // Member Accessor
-                                    // LHS
-                                       // This keyword
-                                          PUSH __this
-                                    // RHS
-                                       PUSH __field____main____IntArray____capacity
-                                    POP __child
-                                    POP __parent
-                                    PUSH __parent[__child]
-                              // RHS
-                                 // Int Literal
-                                    PUSH 2
-                              POP __rhs
-                              POP __lhs
-                              MULTIPLY __res __lhs __rhs
-                              PUSH __res
-                        // LHS
-                           // Member Accessor Assignment
-                              // LHS
-                                 // This keyword
-                                    PUSH __this
-                              // RHS
-                                 PUSH __field____main____IntArray____capacity
-                              POP __child
-                              POP __parent
-                              POP __rhs
-                        ASSIGN __parent[__child] __rhs
-                        PUSH __rhs
-                     // Statement results can be ignored
-                     POP __void
-                     // Assignment - '='
-                        // RHS
-                           // Array Allocator
-                              // Member Accessor
-                                 // LHS
-                                    // This keyword
-                                       PUSH __this
-                                 // RHS
-                                    PUSH __field____main____IntArray____capacity
-                                 POP __child
-                                 POP __parent
-                                 PUSH __parent[__child]
-                              POP __size
-                              MALLOC __ptr __size
-                              PUSH __ptr
-                        // LHS
-                           // Variable Declaration
-                              ASSIGN __main____IntArray__pushBack__block__1__if__2__block__3__nData 0
-                        POP __rhs
-                        ASSIGN __main____IntArray__pushBack__block__1__if__2__block__3__nData __rhs
-                        PUSH __rhs
-                     // Statement results can be ignored
-                     POP __void
-                     //---------------------------------------------------
-                     // For-Loop
-                     // Init
-                        // Assignment - '='
-                           // RHS
-                              // Int Literal
-                                 PUSH 0
-                           // LHS
-                              // Variable Declaration
-                                 ASSIGN __main____IntArray__pushBack__block__1__if__2__block__3__for__4__i 0
-                           POP __rhs
-                           ASSIGN __main____IntArray__pushBack__block__1__if__2__block__3__for__4__i __rhs
-                           PUSH __rhs
-                     JUMP __forcond__4
-                     __for__4:
-                        // Update
-                           // Pre-Increment
-                              // RHS
-                                 // Identifier - i
-                                    PUSH __main____IntArray__pushBack__block__1__if__2__block__3__for__4__i
-                              POP __rhs
-                              ADD __main____IntArray__pushBack__block__1__if__2__block__3__for__4__i __main____IntArray__pushBack__block__1__if__2__block__3__for__4__i 1
-                              ASSIGN __res __main____IntArray__pushBack__block__1__if__2__block__3__for__4__i
-                              PUSH __res
-                        __forcond__4:
-                        // Condition
-                           // Less Than
-                              // LHS
-                                 // Identifier - i
-                                    PUSH __main____IntArray__pushBack__block__1__if__2__block__3__for__4__i
-                              // RHS
-                                 // Member Accessor
-                                    // LHS
-                                       // This keyword
-                                          PUSH __this
-                                    // RHS
-                                       PUSH __field____main____IntArray____size
-                                    POP __child
-                                    POP __parent
-                                    PUSH __parent[__child]
-                              POP __rhs
-                              POP __lhs
-                              LT __res __lhs __rhs
-                              PUSH __res
-                           POP __cond
-                           CMP __cond 0
-                           JEQ __endfor__4
-                        // Body
-                           //---------------------------------------------
-                           // Code Block
-                              // Assignment - '='
-                                 // RHS
-                                    // Subscript
-                                       // LHS
-                                          // Member Accessor
-                                             // LHS
-                                                // This keyword
-                                                   PUSH __this
-                                             // RHS
-                                                PUSH __field____main____IntArray____data
-                                             POP __child
-                                             POP __parent
-                                             PUSH __parent[__child]
-                                       // OFFSET
-                                          // Identifier - i
-                                             PUSH __main____IntArray__pushBack__block__1__if__2__block__3__for__4__i
-                                       POP __offset
-                                       POP __pointer
-                                       PUSH __pointer[__offset]
-                                 // LHS
-                                    // Subscript assignment
-                                       // LHS
-                                          // Identifier - nData
-                                             PUSH __main____IntArray__pushBack__block__1__if__2__block__3__nData
-                                       // OFFSET
-                                          // Identifier - i
-                                             PUSH __main____IntArray__pushBack__block__1__if__2__block__3__for__4__i
-                                       POP __offset
-                                       POP __pointer
-                                 POP __rhs
-                                 ASSIGN __pointer[__offset] __rhs
-                                 PUSH __rhs
-                              // Statement results can be ignored
-                              POP __void
-                           //---------------------------------------------
-                        // Repeat
-                        JUMP __for__4
-                        // End of For
-                        __endfor__4:
-                     //---------------------------------------------------
-                     // Free Operator
-                        // RHS
-                           // Member Accessor
-                              // LHS
-                                 // This keyword
-                                    PUSH __this
-                              // RHS
-                                 PUSH __field____main____IntArray____data
-                              POP __child
-                              POP __parent
-                              PUSH __parent[__child]
-                        // Free array
-                        POP __array
-                        FREE __array
-                        PUSH __array
-                     // Statement results can be ignored
-                     POP __void
-                     // Assignment - '='
-                        // RHS
-                           // Identifier - nData
-                              PUSH __main____IntArray__pushBack__block__1__if__2__block__3__nData
-                        // LHS
-                           // Member Accessor Assignment
-                              // LHS
-                                 // This keyword
-                                    PUSH __this
-                              // RHS
-                                 PUSH __field____main____IntArray____data
-                              POP __child
-                              POP __parent
-                              POP __rhs
-                        ASSIGN __parent[__child] __rhs
-                        PUSH __rhs
-                     // Statement results can be ignored
-                     POP __void
-                  //------------------------------------------------------
-               JUMP __endif__2
-               // End of if
-               __endif__2:
-            //------------------------------------------------------------
             // Assignment - '='
                // RHS
-                  // Identifier - val
-                     PUSH __main____IntArray__pushBack__val
-               // LHS
-                  // Subscript assignment
-                     // LHS
-                        // Member Accessor
-                           // LHS
-                              // This keyword
-                                 PUSH __this
-                           // RHS
-                              PUSH __field____main____IntArray____data
-                           POP __child
-                           POP __parent
-                           PUSH __parent[__child]
-                     // OFFSET
-                        // Member Accessor
-                           // LHS
-                              // This keyword
-                                 PUSH __this
-                           // RHS
-                              PUSH __field____main____IntArray____size
-                           POP __child
-                           POP __parent
-                           PUSH __parent[__child]
-                     POP __offset
-                     POP __pointer
-               POP __rhs
-               ASSIGN __pointer[__offset] __rhs
-               PUSH __rhs
-            // Statement results can be ignored
-            POP __void
-            // Pre-Increment
-               // RHS
-                  // Member Accessor
-                     // LHS
-                        // This keyword
-                           PUSH __this
-                     // RHS
-                        PUSH __field____main____IntArray____size
-                     POP __child
-                     POP __parent
-                     PUSH __parent[__child]
-               POP __rhs
+                  // Identifier - x
+                     PUSH __main____B__B__x
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main____IntArray____size
+                        PUSH __field____main____B____x
                      POP __child
                      POP __parent
-                     ADD __parent[__child] __parent[__child] 1
-                     ASSIGN __res __parent[__child]
-               PUSH __res
+                     POP __rhs
+               ASSIGN __parent[__child] __rhs
+               PUSH __rhs
             // Statement results can be ignored
             POP __void
-         //---------------------------------------------------------------
-      RETURN 0
-   __end__method____main____IntArray____pushBack__int:
-   // End Method Declaration - __method____main____IntArray____pushBack__int
-   //---------------------------------------------------------------------
-
-   //---------------------------------------------------------------------
-   // Method Declaration - IntArray::popBack() -> int
-   JUMP __end__method____main____IntArray____popBack
-   __method____main____IntArray____popBack:
-      // Class Instance
-         STACKGET __this 0
-      // Parameters
-      // Body
-         //---------------------------------------------------------------
-         // Code Block
-            // Assignment - '-='
+            // Assignment - '='
                // RHS
-                  // Int Literal
-                     PUSH 1
+                  // Identifier - y
+                     PUSH __main____B__B__y
                // LHS
                   // Member Accessor Assignment
                      // LHS
                         // This keyword
                            PUSH __this
                      // RHS
-                        PUSH __field____main____IntArray____size
+                        PUSH __field____main____B____y
                      POP __child
                      POP __parent
                      POP __rhs
-               SUBTRACT __parent[__child] __parent[__child] __rhs
-               PUSH __parent[__child]
+               ASSIGN __parent[__child] __rhs
+               PUSH __rhs
             // Statement results can be ignored
             POP __void
-            // Return
-               // Subscript
-                  // LHS
-                     // Member Accessor
-                        // LHS
-                           // This keyword
-                              PUSH __this
-                        // RHS
-                           PUSH __field____main____IntArray____data
-                        POP __child
-                        POP __parent
-                        PUSH __parent[__child]
-                  // OFFSET
-                     // Addition
-                        // LHS
-                           // Member Accessor
-                              // LHS
-                                 // This keyword
-                                    PUSH __this
-                              // RHS
-                                 PUSH __field____main____IntArray____size
-                              POP __child
-                              POP __parent
-                              PUSH __parent[__child]
-                        // RHS
-                           // Int Literal
-                              PUSH 1
-                        POP __rhs
-                        POP __lhs
-                        ADD __res __lhs __rhs
-                        PUSH __res
-                  POP __offset
-                  POP __pointer
-                  PUSH __pointer[__offset]
-               POP __rVal
-               RETURN __rVal
-         //---------------------------------------------------------------
-      RETURN 0
-   __end__method____main____IntArray____popBack:
-   // End Method Declaration - __method____main____IntArray____popBack
-   //---------------------------------------------------------------------
-
-   //---------------------------------------------------------------------
-   // Method Declaration - IntArray::get(int) -> int
-   JUMP __end__method____main____IntArray____get__int
-   __method____main____IntArray____get__int:
-      // Class Instance
-         STACKGET __this 0
-      // Parameters
-         // Param: index
-         STACKGET __main____IntArray__get__index 1
-      // Body
-         //---------------------------------------------------------------
-         // Code Block
-            // Return
-               // Subscript
-                  // LHS
-                     // Member Accessor
-                        // LHS
-                           // This keyword
-                              PUSH __this
-                        // RHS
-                           PUSH __field____main____IntArray____data
-                        POP __child
-                        POP __parent
-                        PUSH __parent[__child]
-                  // OFFSET
-                     // Identifier - index
-                        PUSH __main____IntArray__get__index
-                  POP __offset
-                  POP __pointer
-                  PUSH __pointer[__offset]
-               POP __rVal
-               RETURN __rVal
-         //---------------------------------------------------------------
-      RETURN 0
-   __end__method____main____IntArray____get__int:
-   // End Method Declaration - __method____main____IntArray____get__int
-   //---------------------------------------------------------------------
-
-   //---------------------------------------------------------------------
-   // Method Declaration - IntArray::set(int, int) -> void
-   JUMP __end__method____main____IntArray____set__int__int
-   __method____main____IntArray____set__int__int:
-      // Class Instance
-         STACKGET __this 0
-      // Parameters
-         // Param: index
-         STACKGET __main____IntArray__set__index 1
-         // Param: value
-         STACKGET __main____IntArray__set__value 2
-      // Body
-         //---------------------------------------------------------------
-         // Code Block
             // Assignment - '='
                // RHS
-                  // Identifier - value
-                     PUSH __main____IntArray__set__value
+                  // Identifier - z
+                     PUSH __main____B__B__z
                // LHS
-                  // Subscript assignment
+                  // Member Accessor Assignment
                      // LHS
-                        // Member Accessor
-                           // LHS
-                              // This keyword
-                                 PUSH __this
-                           // RHS
-                              PUSH __field____main____IntArray____data
-                           POP __child
-                           POP __parent
-                           PUSH __parent[__child]
-                     // OFFSET
-                        // Identifier - index
-                           PUSH __main____IntArray__set__index
-                     POP __offset
-                     POP __pointer
-               POP __rhs
-               ASSIGN __pointer[__offset] __rhs
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main____B____z
+                     POP __child
+                     POP __parent
+                     POP __rhs
+               ASSIGN __parent[__child] __rhs
                PUSH __rhs
             // Statement results can be ignored
             POP __void
          //---------------------------------------------------------------
-      RETURN 0
-   __end__method____main____IntArray____set__int__int:
-   // End Method Declaration - __method____main____IntArray____set__int__int
+      RETURN __this
+   __end__ctor____main____B____B__float__float__float:
+   // End Constructor Declaration - __ctor____main____B____B__float__float__float
    //---------------------------------------------------------------------
 
-__endclass____main____IntArray:
-// End Class Declaration - __main____IntArray
+__endclass____main____B:
+// End Class Declaration - __main____B
 //========================================================================
 
 //========================================================================
-// Function Declaration - print(IntArray) -> void
-JUMP __end____main____print__IntArray
-__main____print__IntArray:
+// Function Declaration - printA(A) -> void
+JUMP __end____main____printA__A
+__main____printA__A:
    // Parameters
-      // Param: arr
-      STACKGET __main__print__arr 0
+      // Param: a
+      STACKGET __main__printA__a 0
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call - print(char) -> void
+         // Function Call - println(float) -> void
             // Arguments
-               // Char Literal
-                  PUSH '['
+               // Member Accessor
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__printA__a
+                  // RHS
+                     PUSH __field____main____A____x
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
                POP __arg0
             // Pushing args in reverse order
             PUSH __arg0
-            // *** print
-            CALL print__char
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
-         // Statement results can be ignored
-         POP __void
-         //---------------------------------------------------------------
-         // If-Statement
-            // Condition
-               // Not Equal
-                  // LHS
-                     // Member Accessor
-                        // LHS
-                           // Identifier - arr
-                              PUSH __main__print__arr
-                        // RHS
-                           PUSH __field____main____IntArray____size
-                        POP __child
-                        POP __parent
-                        PUSH __parent[__child]
-                  // RHS
-                     // Int Literal
-                        PUSH 0
-                  POP __rhs
-                  POP __lhs
-                  NEQUAL __res __lhs __rhs
-                  PUSH __res
-               POP __cond
-               CMP __cond 0
-               JEQ __endif__10
-            // Body
-               //---------------------------------------------------------
-               // Code Block
-                  // Function Call - print(int) -> void
-                     // Arguments
-                        // Subscript
-                           // LHS
-                              // Member Accessor
-                                 // LHS
-                                    // Identifier - arr
-                                       PUSH __main__print__arr
-                                 // RHS
-                                    PUSH __field____main____IntArray____data
-                                 POP __child
-                                 POP __parent
-                                 PUSH __parent[__child]
-                           // OFFSET
-                              // Int Literal
-                                 PUSH 0
-                           POP __offset
-                           POP __pointer
-                           PUSH __pointer[__offset]
-                        POP __arg0
-                     // Pushing args in reverse order
-                     PUSH __arg0
-                     // *** print
-                     CALL print__int
-                     // Remove args
-                     POP __void
-                     RESPONSE __retval
-                     PUSH __retval
-                  // Statement results can be ignored
-                  POP __void
-               //---------------------------------------------------------
-            JUMP __endif__10
-            // End of if
-            __endif__10:
-         //---------------------------------------------------------------
-         //---------------------------------------------------------------
-         // For-Loop
-         // Init
-            // Assignment - '='
-               // RHS
-                  // Int Literal
-                     PUSH 1
-               // LHS
-                  // Variable Declaration
-                     ASSIGN __main__print__block__9__for__12__i 0
-               POP __rhs
-               ASSIGN __main__print__block__9__for__12__i __rhs
-               PUSH __rhs
-         JUMP __forcond__12
-         __for__12:
-            // Update
-               // Pre-Increment
-                  // RHS
-                     // Identifier - i
-                        PUSH __main__print__block__9__for__12__i
-                  POP __rhs
-                  ADD __main__print__block__9__for__12__i __main__print__block__9__for__12__i 1
-                  ASSIGN __res __main__print__block__9__for__12__i
-                  PUSH __res
-            __forcond__12:
-            // Condition
-               // Less Than
-                  // LHS
-                     // Identifier - i
-                        PUSH __main__print__block__9__for__12__i
-                  // RHS
-                     // Member Accessor
-                        // LHS
-                           // Identifier - arr
-                              PUSH __main__print__arr
-                        // RHS
-                           PUSH __field____main____IntArray____size
-                        POP __child
-                        POP __parent
-                        PUSH __parent[__child]
-                  POP __rhs
-                  POP __lhs
-                  LT __res __lhs __rhs
-                  PUSH __res
-               POP __cond
-               CMP __cond 0
-               JEQ __endfor__12
-            // Body
-               //---------------------------------------------------------
-               // Code Block
-                  // Function Call - print(char) -> void
-                     // Arguments
-                        // Char Literal
-                           PUSH ','
-                        POP __arg0
-                     // Pushing args in reverse order
-                     PUSH __arg0
-                     // *** print
-                     CALL print__char
-                     // Remove args
-                     POP __void
-                     RESPONSE __retval
-                     PUSH __retval
-                  // Statement results can be ignored
-                  POP __void
-                  // Function Call - print(char) -> void
-                     // Arguments
-                        // Char Literal
-                           PUSH ' '
-                        POP __arg0
-                     // Pushing args in reverse order
-                     PUSH __arg0
-                     // *** print
-                     CALL print__char
-                     // Remove args
-                     POP __void
-                     RESPONSE __retval
-                     PUSH __retval
-                  // Statement results can be ignored
-                  POP __void
-                  // Function Call - print(int) -> void
-                     // Arguments
-                        // Subscript
-                           // LHS
-                              // Member Accessor
-                                 // LHS
-                                    // Identifier - arr
-                                       PUSH __main__print__arr
-                                 // RHS
-                                    PUSH __field____main____IntArray____data
-                                 POP __child
-                                 POP __parent
-                                 PUSH __parent[__child]
-                           // OFFSET
-                              // Identifier - i
-                                 PUSH __main__print__block__9__for__12__i
-                           POP __offset
-                           POP __pointer
-                           PUSH __pointer[__offset]
-                        POP __arg0
-                     // Pushing args in reverse order
-                     PUSH __arg0
-                     // *** print
-                     CALL print__int
-                     // Remove args
-                     POP __void
-                     RESPONSE __retval
-                     PUSH __retval
-                  // Statement results can be ignored
-                  POP __void
-               //---------------------------------------------------------
-            // Repeat
-            JUMP __for__12
-            // End of For
-            __endfor__12:
-         //---------------------------------------------------------------
-         // Function Call - print(char) -> void
-            // Arguments
-               // Char Literal
-                  PUSH ']'
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** print
-            CALL print__char
+            // *** println
+            CALL println__float
             // Remove args
             POP __void
             RESPONSE __retval
@@ -1046,29 +444,195 @@ __main____print__IntArray:
          POP __void
       //------------------------------------------------------------------
    RETURN 0
-__end____main____print__IntArray:
-// End Function Declaration - __main____print__IntArray
+__end____main____printA__A:
+// End Function Declaration - __main____printA__A
 //========================================================================
 
+// Assignment - '='
+   // RHS
+      // Constructor Call - A::A(float) -> A
+         // Arguments
+            // Float Literal
+               PUSH 3.14
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL __ctor____main____A____A__float
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__a 0
+   POP __rhs
+   ASSIGN __main__a __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Function Call - println(float) -> void
+   // Arguments
+      // Member Accessor
+         // LHS
+            // Identifier - a
+               PUSH __main__a
+         // RHS
+            PUSH __field____main____A____x
+         POP __child
+         POP __parent
+         PUSH __parent[__child]
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__float
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+// Assignment - '='
+   // RHS
+      // Constructor Call - B::B(float, float, float) -> B
+         // Arguments
+            // Float Literal
+               PUSH 0.1
+            // Float Literal
+               PUSH 0.4
+            // Float Literal
+               PUSH 34.23
+            POP __arg2
+            POP __arg1
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg2
+         PUSH __arg1
+         PUSH __arg0
+         CALL __ctor____main____B____B__float__float__float
+         // Remove args
+         POP __void
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__b 0
+   POP __rhs
+   ASSIGN __main__b __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Function Call - println(float) -> void
+   // Arguments
+      // Member Accessor
+         // LHS
+            // Identifier - b
+               PUSH __main__b
+         // RHS
+            PUSH __field____main____B____x
+         POP __child
+         POP __parent
+         PUSH __parent[__child]
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__float
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+// Function Call - printA(A) -> void
+   // Arguments
+      // Identifier - a
+         PUSH __main__a
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** printA
+   CALL __main____printA__A
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+// Function Call - printA(A) -> void
+   // Arguments
+      // Identifier - b
+         PUSH __main__b
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** printA
+   CALL __main____printA__A
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
-// Function Declaration - println(IntArray) -> void
-JUMP __end____main____println__IntArray
-__main____println__IntArray:
+// Function Declaration - print(A) -> void
+JUMP __end____main____print__A
+__main____print__A:
    // Parameters
-      // Param: arr
-      STACKGET __main__println__arr 0
+      // Param: a
+      STACKGET __main__print__a 0
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call - print(IntArray) -> void
+         // Function Call - print(float) -> void
             // Arguments
-               // Identifier - arr
-                  PUSH __main__println__arr
+               // Member Accessor
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__print__a
+                  // RHS
+                     PUSH __field____main____A____x
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
                POP __arg0
             // Pushing args in reverse order
             PUSH __arg0
             // *** print
-            CALL __main____print__IntArray
+            CALL print__float
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____print__A:
+// End Function Declaration - __main____print__A
+//========================================================================
+
+//========================================================================
+// Function Declaration - println(A) -> void
+JUMP __end____main____println__A
+__main____println__A:
+   // Parameters
+      // Param: a
+      STACKGET __main__println__a 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - print(A) -> void
+            // Arguments
+               // Identifier - a
+                  PUSH __main__println__a
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL __main____print__A
             // Remove args
             POP __void
             RESPONSE __retval
@@ -1087,194 +651,34 @@ __main____println__IntArray:
          POP __void
       //------------------------------------------------------------------
    RETURN 0
-__end____main____println__IntArray:
-// End Function Declaration - __main____println__IntArray
+__end____main____println__A:
+// End Function Declaration - __main____println__A
 //========================================================================
 
-// Assignment - '='
-   // RHS
-      // Constructor Call - IntArray::IntArray() -> IntArray
-         // Arguments
-         // Pushing args in reverse order
-         CALL __ctor____main____IntArray____IntArray
-         // Remove args
-         RESPONSE __retval
-         PUSH __retval
-   // LHS
-      // Variable Declaration
-         ASSIGN __main__arr 0
-   POP __rhs
-   ASSIGN __main__arr __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
-// Function Call - println(IntArray) -> void
+// Function Call - println(A) -> void
    // Arguments
-      // Identifier - arr
-         PUSH __main__arr
+      // Identifier - a
+         PUSH __main__a
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL __main____println__IntArray
+   CALL __main____println__A
    // Remove args
    POP __void
    RESPONSE __retval
    PUSH __retval
 // Statement results can be ignored
 POP __void
-// Method Call - IntArray::pushBack(int) -> void
-   // LHS
-      // Identifier - arr
-         PUSH __main__arr
-   // RHS
+// Function Call - println(A) -> void
    // Arguments
-      // Int Literal
-         PUSH 10
-      POP __arg0
-   POP __obj
-   // Pushing args in reverse order
-   PUSH __arg0
-   PUSH __obj
-   CALL __method____main____IntArray____pushBack__int
-   POP __void
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
-// Function Call - println(IntArray) -> void
-   // Arguments
-      // Identifier - arr
-         PUSH __main__arr
+      // Identifier - b
+         PUSH __main__b
       POP __arg0
    // Pushing args in reverse order
    PUSH __arg0
    // *** println
-   CALL __main____println__IntArray
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
-//------------------------------------------------------------------------
-// For-Loop
-// Init
-   // Assignment - '='
-      // RHS
-         // Int Literal
-            PUSH 0
-      // LHS
-         // Variable Declaration
-            ASSIGN __main__for__15__i 0
-      POP __rhs
-      ASSIGN __main__for__15__i __rhs
-      PUSH __rhs
-JUMP __forcond__15
-__for__15:
-   // Update
-      // Pre-Increment
-         // RHS
-            // Identifier - i
-               PUSH __main__for__15__i
-         POP __rhs
-         ADD __main__for__15__i __main__for__15__i 1
-         ASSIGN __res __main__for__15__i
-         PUSH __res
-   __forcond__15:
-   // Condition
-      // Less Than
-         // LHS
-            // Identifier - i
-               PUSH __main__for__15__i
-         // RHS
-            // Int Literal
-               PUSH 5
-         POP __rhs
-         POP __lhs
-         LT __res __lhs __rhs
-         PUSH __res
-      POP __cond
-      CMP __cond 0
-      JEQ __endfor__15
-   // Body
-      // Method Call - IntArray::pushBack(int) -> void
-         // LHS
-            // Identifier - arr
-               PUSH __main__arr
-         // RHS
-         // Arguments
-            // Multiplication
-               // LHS
-                  // Identifier - i
-                     PUSH __main__for__15__i
-               // RHS
-                  // Int Literal
-                     PUSH 2
-               POP __rhs
-               POP __lhs
-               MULTIPLY __res __lhs __rhs
-               PUSH __res
-            POP __arg0
-         POP __obj
-         // Pushing args in reverse order
-         PUSH __arg0
-         PUSH __obj
-         CALL __method____main____IntArray____pushBack__int
-         POP __void
-         // Remove args
-         POP __void
-         RESPONSE __retval
-         PUSH __retval
-      // Statement results can be ignored
-      POP __void
-   // Repeat
-   JUMP __for__15
-   // End of For
-   __endfor__15:
-//------------------------------------------------------------------------
-// Function Call - println(IntArray) -> void
-   // Arguments
-      // Identifier - arr
-         PUSH __main__arr
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   // *** println
-   CALL __main____println__IntArray
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
-// Method Call - IntArray::popBack() -> int
-   // LHS
-      // Identifier - arr
-         PUSH __main__arr
-   // RHS
-   // Arguments
-   POP __obj
-   // Pushing args in reverse order
-   PUSH __obj
-   CALL __method____main____IntArray____popBack
-   POP __void
-   // Remove args
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
-// Function Call - println(IntArray) -> void
-   // Arguments
-      // Identifier - arr
-         PUSH __main__arr
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   // *** println
-   CALL __main____println__IntArray
+   CALL __main____println__A
    // Remove args
    POP __void
    RESPONSE __retval

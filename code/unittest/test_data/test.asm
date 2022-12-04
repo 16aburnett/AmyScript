@@ -573,105 +573,1129 @@ main:
          mov rbp, rsp
          sub rsp, 16
          ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
-         ; [rbp - 8] - int c (<unset-scope-name>)
+         ; [rbp - 8] - Vector<:float:> v (<unset-scope-name>)
 
          ; Body
+; ========================================================================
+         ; Class Template - 
+            ; Instances:
+      ; ==================================================================
+               ; Class Declaration - __main____Vector__float inherits __main__Object
+                  ; Class data
+                  section .data
+                     ; Dispatch Table - this might need to be a malloc**
+                     .__dtable____main____Vector__float:
+                     ; Dispatch Table Entries
+                     dq .__method____main____Vector__float____pushBack__float ; 0
+                     dq .__method____main____Vector__float____popBack ; 1
+                     dq .__method____main____Vector__float____get__int ; 2
+                     dq .__method____main____Vector__float____set__int__float ; 3
+                  section .text
+         ;---------------------------------------------------------------
+                  ; Field - float[] Vector<:float:>::data
+                  section .data
+                  .__field____main____Vector__float____data: dq 1
+                  section .text
+         ;---------------------------------------------------------------
+         ;---------------------------------------------------------------
+                  ; Field - int Vector<:float:>::size
+                  section .data
+                  .__field____main____Vector__float____size: dq 2
+                  section .text
+         ;---------------------------------------------------------------
+         ;---------------------------------------------------------------
+                  ; Field - int Vector<:float:>::capacity
+                  section .data
+                  .__field____main____Vector__float____capacity: dq 3
+                  section .text
+         ;---------------------------------------------------------------
+               ; skip over class methods
+               jmp .__endclass____main____Vector__float
+         ;---------------------------------------------------------------
+                  ; Constructor Declaration - Vector<:float:>::Vector() -> Vector<:float:>
+                  jmp .__end__ctor____main____Vector__float____Vector
+                  .__ctor____main____Vector__float____Vector:
+                  ; Function Header:
+                     ; Setup stack frame
+                        push rbp
+                        mov rbp, rsp
+                        ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+                           sub rsp, 16 ; space for local variables (16-byte aligned)
+                           ; [rbp - 8] - this - Reference to 'this' object instance
+                     ; Creating Class Instance
+                        mov rdi, 32 ; [dtable, field0, field1, ..., fieldN] each 8 bytes
+                        call malloc
+                        mov qword [rbp - 8], rax ; save class instance as 'this'
+                        ; Add Dispatch Table
+                        mov rax, qword [rbp - 8] ; this
+                        mov qword [rax + 0], .__dtable____main____Vector__float ; this[0] = &dtable
+                     ; Parameters
+                  ; Body
+            ;------------------------------------------------------------
+                     ; Code Block
+                        ; Assignment - '='
+                           ; RHS
+                              ; Int Literal
+                                 mov rax, 10
+                                 push rax
+                           ; LHS
+                              ; Member Accessor Assignment
+                                 ; LHS
+                                    ; This keyword
+                                       push qword [rbp - 8] ; __this
+                                 ; RHS
+                                    push qword [.__field____main____Vector__float____capacity] ; 
+                                 pop rdi ; rhs
+                                 pop rbx ; lhs
+                           pop rdx ; rhs value
+                           mov qword [rbx + 8*rdi], rdx
+                           push rdx
+                        ; Statement results can be ignored
+                        pop rdx
+                        ; Assignment - '='
+                           ; RHS
+                              ; Int Literal
+                                 mov rax, 0
+                                 push rax
+                           ; LHS
+                              ; Member Accessor Assignment
+                                 ; LHS
+                                    ; This keyword
+                                       push qword [rbp - 8] ; __this
+                                 ; RHS
+                                    push qword [.__field____main____Vector__float____size] ; 
+                                 pop rdi ; rhs
+                                 pop rbx ; lhs
+                           pop rdx ; rhs value
+                           mov qword [rbx + 8*rdi], rdx
+                           push rdx
+                        ; Statement results can be ignored
+                        pop rdx
+                        ; Assignment - '='
+                           ; RHS
+                              ; Array Allocator
+                                 ; Member Accessor
+                                    ; LHS
+                                       ; This keyword
+                                          push qword [rbp - 8] ; __this
+                                    ; RHS
+                                       push qword [.__field____main____Vector__float____capacity] ; stored index associated with field that is being accessed
+                                    pop rdx ; rhs
+                                    pop rax ; lhs
+                                    push qword [rax + 8*rdx] ; lhs.rhs
+                                 pop rdx ; num elements for dimension[0]
+                                 imul rdx, 8 ; 8 bytes per element
+                                 mov rdi, rdx ; num bytes to allocate
+                                 call malloc ; allocates edi bytes on heap and stores pointer in rax
+                                 push rax ; __ptr
+                           ; LHS
+                              ; Member Accessor Assignment
+                                 ; LHS
+                                    ; This keyword
+                                       push qword [rbp - 8] ; __this
+                                 ; RHS
+                                    push qword [.__field____main____Vector__float____data] ; 
+                                 pop rdi ; rhs
+                                 pop rbx ; lhs
+                           pop rdx ; rhs value
+                           mov qword [rbx + 8*rdi], rdx
+                           push rdx
+                        ; Statement results can be ignored
+                        pop rdx
+            ;------------------------------------------------------------
+                  mov rax, qword [rbp - 8] ; __this
+                  ; Function Epilogue
+                  mov rsp, rbp ; remove local vars + unpopped pushes
+                  pop rbp
+                  ret
+               .__end__ctor____main____Vector__float____Vector:
+               ; End Constructor Declaration - __ctor____main____Vector__float____Vector
+      ;------------------------------------------------------------------
+
+      ;------------------------------------------------------------------
+               ; Method Declaration - Vector<:float:>::pushBack(float) -> void
+               jmp .__end__method____main____Vector__float____pushBack__float
+               .__method____main____Vector__float____pushBack__float:
+                  ; Function Header:
+                  ; Setup stack frame
+                     push rbp
+                     mov rbp, rsp
+                     ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+                        sub rsp, 32 ; space for local variables (16-byte aligned)
+                        ; [rbp - 8] - this - Reference to 'this' object instance
+                        mov rdx, qword [rbp + 16] ; param passed 'this'
+                        mov qword [rbp - 8], rdx ; save this to a local
+                        ; [rbp - 16] - float[] nData (<unset-scope-name>)
+                        ; [rbp - 24] - int i (<unset-scope-name>)
+                  ; Parameters
+                     ; Param: val [rbp + 24] (__main____Vector__float__pushBack__val)
+                  ; Body
+            ;------------------------------------------------------------
+                     ; Code Block
+               ;---------------------------------------------------------
+                        ; If-Statement
+                           ; Condition
+                              ; Greater Than or Equal to
+                                 ; LHS
+                                    ; Addition - int, int
+                                       ; LHS
+                                          ; Member Accessor
+                                             ; LHS
+                                                ; This keyword
+                                                   push qword [rbp - 8] ; __this
+                                             ; RHS
+                                                push qword [.__field____main____Vector__float____size] ; stored index associated with field that is being accessed
+                                             pop rdx ; rhs
+                                             pop rax ; lhs
+                                             push qword [rax + 8*rdx] ; lhs.rhs
+                                       ; RHS
+                                          ; Int Literal
+                                             mov rax, 1
+                                             push rax
+                                       pop rdx ; rhs
+                                       pop rax ; lhs
+                                       add rax, rdx
+                                       push rax
+                                 ; RHS
+                                    ; Member Accessor
+                                       ; LHS
+                                          ; This keyword
+                                             push qword [rbp - 8] ; __this
+                                       ; RHS
+                                          push qword [.__field____main____Vector__float____capacity] ; stored index associated with field that is being accessed
+                                       pop rdx ; rhs
+                                       pop rax ; lhs
+                                       push qword [rax + 8*rdx] ; lhs.rhs
+                                 pop rdx ; rhs
+                                 pop rax ; lhs
+                                 cmp rax, rdx
+                                 setge al
+                                 movzx eax, al
+                                 push rax
+                              pop rdx ; __cond
+                              cmp rdx, 0 ; ensure condition is true
+                              je .__endif__2 ; jump to end
+                           ; Body
+                     ;---------------------------------------------------
+                              ; Code Block
+                                 ; Assignment - '='
+                                    ; RHS
+                                       ; Multiplication - int, int
+                                          ; LHS
+                                             ; Member Accessor
+                                                ; LHS
+                                                   ; This keyword
+                                                      push qword [rbp - 8] ; __this
+                                                ; RHS
+                                                   push qword [.__field____main____Vector__float____capacity] ; stored index associated with field that is being accessed
+                                                pop rdx ; rhs
+                                                pop rax ; lhs
+                                                push qword [rax + 8*rdx] ; lhs.rhs
+                                          ; RHS
+                                             ; Int Literal
+                                                mov rax, 2
+                                                push rax
+                                          pop rdx
+                                          pop rax
+                                          imul rax, rdx
+                                          push rax
+                                    ; LHS
+                                       ; Member Accessor Assignment
+                                          ; LHS
+                                             ; This keyword
+                                                push qword [rbp - 8] ; __this
+                                          ; RHS
+                                             push qword [.__field____main____Vector__float____capacity] ; 
+                                          pop rdi ; rhs
+                                          pop rbx ; lhs
+                                    pop rdx ; rhs value
+                                    mov qword [rbx + 8*rdi], rdx
+                                    push rdx
+                                 ; Statement results can be ignored
+                                 pop rdx
+                                 ; Assignment - '='
+                                    ; RHS
+                                       ; Array Allocator
+                                          ; Member Accessor
+                                             ; LHS
+                                                ; This keyword
+                                                   push qword [rbp - 8] ; __this
+                                             ; RHS
+                                                push qword [.__field____main____Vector__float____capacity] ; stored index associated with field that is being accessed
+                                             pop rdx ; rhs
+                                             pop rax ; lhs
+                                             push qword [rax + 8*rdx] ; lhs.rhs
+                                          pop rdx ; num elements for dimension[0]
+                                          imul rdx, 8 ; 8 bytes per element
+                                          mov rdi, rdx ; num bytes to allocate
+                                          call malloc ; allocates edi bytes on heap and stores pointer in rax
+                                          push rax ; __ptr
+                                    ; LHS
+                                       ; Variable Declaration - nData
+                                          mov rax, qword [rbp - 16]  ; __main____Vector__float__pushBack__block__1__if__2__block__3__nData
+                                    pop rdx ; rhs value
+                                    mov qword [rbp - 16], rdx
+                                    push rdx
+                                 ; Statement results can be ignored
+                                 pop rdx
+                        ;------------------------------------------------
+                                 ; For-Loop
+                                 ; Init
+                                    ; Assignment - '='
+                                       ; RHS
+                                          ; Int Literal
+                                             mov rax, 0
+                                             push rax
+                                       ; LHS
+                                          ; Variable Declaration - i
+                                             mov rax, qword [rbp - 24]  ; __main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i
+                                       pop rdx ; rhs value
+                                       mov qword [rbp - 24], rdx
+                                       push rdx
+                                    ; Loop init result can be discarded
+                                    pop rax
+                                 jmp .__forcond__4
+.__for__4:
+                                    ; Update
+                                       ; Pre-Increment - int
+                                          ; RHS
+                                             ; Identifier - int i
+                                                push qword [rbp - 24]
+                                          pop rdx
+                                          add qword [rbp - 24], 1
+                                          mov rax, qword [rbp - 24]
+                                          push rax ; push result
+                                       ; Loop update result can be discarded
+                                       pop rax
+.__forcond__4:
+                                    ; Condition
+                                       ; Less Than
+                                          ; LHS
+                                             ; Identifier - int i
+                                                push qword [rbp - 24]
+                                          ; RHS
+                                             ; Member Accessor
+                                                ; LHS
+                                                   ; This keyword
+                                                      push qword [rbp - 8] ; __this
+                                                ; RHS
+                                                   push qword [.__field____main____Vector__float____size] ; stored index associated with field that is being accessed
+                                                pop rdx ; rhs
+                                                pop rax ; lhs
+                                                push qword [rax + 8*rdx] ; lhs.rhs
+                                          pop rdx ; rhs
+                                          pop rax ; lhs
+                                          cmp rax, rdx
+                                          setl al
+                                          movzx eax, al
+                                          push rax
+                                       pop rax ; __cond
+                                       cmp rax, 0 ; __cond
+                                       je .__endfor__4
+                                    ; Body
+                              ;------------------------------------------
+                                       ; Code Block
+                                          ; Assignment - '='
+                                             ; RHS
+                                                ; Subscript
+                                                   ; LHS
+                                                      ; Member Accessor
+                                                         ; LHS
+                                                            ; This keyword
+                                                               push qword [rbp - 8] ; __this
+                                                         ; RHS
+                                                            push qword [.__field____main____Vector__float____data] ; stored index associated with field that is being accessed
+                                                         pop rdx ; rhs
+                                                         pop rax ; lhs
+                                                         push qword [rax + 8*rdx] ; lhs.rhs
+                                                   ; OFFSET
+                                                      ; Identifier - int i
+                                                         push qword [rbp - 24]
+                                                   pop rdx ; __offset
+                                                   pop rax ; __pointer
+                                                   push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
+                                             ; LHS
+                                                ; Subscript assignment
+                                                   ; LHS
+                                                      ; Identifier - float[] nData
+                                                         push qword [rbp - 16]
+                                                   ; OFFSET
+                                                      ; Identifier - int i
+                                                         push qword [rbp - 24]
+                                                   pop rdi ; __offset
+                                                   pop rbx ; __pointer
+                                             pop rdx ; rhs value
+                                             mov qword [rbx + 8*rdi], rdx
+                                             push rdx
+                                          ; Statement results can be ignored
+                                          pop rdx
+                              ;------------------------------------------
+                                    ; Repeat
+jmp .__for__4
+                                    ; End of For
+.__endfor__4:
+                        ;------------------------------------------------
+                                 ; Free Operator
+                                    ; RHS
+                                       ; Member Accessor
+                                          ; LHS
+                                             ; This keyword
+                                                push qword [rbp - 8] ; __this
+                                          ; RHS
+                                             push qword [.__field____main____Vector__float____data] ; stored index associated with field that is being accessed
+                                          pop rdx ; rhs
+                                          pop rax ; lhs
+                                          push qword [rax + 8*rdx] ; lhs.rhs
+                                    ; Free pointer
+                                    pop rdi   ; pointer
+                                    call free ; free the pointer
+                                    push rax  ; undefined return value
+                                 ; Statement results can be ignored
+                                 pop rdx
+                                 ; Assignment - '='
+                                    ; RHS
+                                       ; Identifier - float[] nData
+                                          push qword [rbp - 16]
+                                    ; LHS
+                                       ; Member Accessor Assignment
+                                          ; LHS
+                                             ; This keyword
+                                                push qword [rbp - 8] ; __this
+                                          ; RHS
+                                             push qword [.__field____main____Vector__float____data] ; 
+                                          pop rdi ; rhs
+                                          pop rbx ; lhs
+                                    pop rdx ; rhs value
+                                    mov qword [rbx + 8*rdi], rdx
+                                    push rdx
+                                 ; Statement results can be ignored
+                                 pop rdx
+                     ;---------------------------------------------------
+                           jmp .__endif__2 ; jump to end of condition chain
+                           ; End of if
+.__endif__2:
+               ;---------------------------------------------------------
+                        ; Assignment - '='
+                           ; RHS
+                              ; Identifier - float val
+                                 push qword [rbp - -24]
+                           ; LHS
+                              ; Subscript assignment
+                                 ; LHS
+                                    ; Member Accessor
+                                       ; LHS
+                                          ; This keyword
+                                             push qword [rbp - 8] ; __this
+                                       ; RHS
+                                          push qword [.__field____main____Vector__float____data] ; stored index associated with field that is being accessed
+                                       pop rdx ; rhs
+                                       pop rax ; lhs
+                                       push qword [rax + 8*rdx] ; lhs.rhs
+                                 ; OFFSET
+                                    ; Member Accessor
+                                       ; LHS
+                                          ; This keyword
+                                             push qword [rbp - 8] ; __this
+                                       ; RHS
+                                          push qword [.__field____main____Vector__float____size] ; stored index associated with field that is being accessed
+                                       pop rdx ; rhs
+                                       pop rax ; lhs
+                                       push qword [rax + 8*rdx] ; lhs.rhs
+                                 pop rdi ; __offset
+                                 pop rbx ; __pointer
+                           pop rdx ; rhs value
+                           mov qword [rbx + 8*rdi], rdx
+                           push rdx
+                        ; Statement results can be ignored
+                        pop rdx
+                        ; Pre-Increment - int
+                           ; RHS
+                              ; Member Accessor
+                                 ; LHS
+                                    ; This keyword
+                                       push qword [rbp - 8] ; __this
+                                 ; RHS
+                                    push qword [.__field____main____Vector__float____size] ; stored index associated with field that is being accessed
+                                 pop rdx ; rhs
+                                 pop rax ; lhs
+                                 push qword [rax + 8*rdx] ; lhs.rhs
+                           pop rdx
+                           ; LHS
+                              ; Member Accessor Assignment
+                                 ; LHS
+                                    ; This keyword
+                                       push qword [rbp - 8] ; __this
+                                 ; RHS
+                                    push qword [.__field____main____Vector__float____size] ; size
+                                 pop rdi ; rhs
+                                 pop rbx ; lhs
+                                 mov rax, qword [rbx + 8*rdi]
+                                 add rax, 1
+                                 mov qword [rbx + 8*rdi], rax
+                           push rax ; push result
+                        ; Statement results can be ignored
+                        pop rdx
+            ;------------------------------------------------------------
+                  ; Function Epilogue
+                  mov rsp, rbp ; remove local vars + unpopped pushes
+                  pop rbp
+                  ret
+               .__end__method____main____Vector__float____pushBack__float:
+               ; End Method Declaration - .__method____main____Vector__float____pushBack__float
+      ;------------------------------------------------------------------
+
+      ;------------------------------------------------------------------
+               ; Method Declaration - Vector<:float:>::popBack() -> float
+               jmp .__end__method____main____Vector__float____popBack
+               .__method____main____Vector__float____popBack:
+                  ; Function Header:
+                  ; Setup stack frame
+                     push rbp
+                     mov rbp, rsp
+                     ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+                        sub rsp, 16 ; space for local variables (16-byte aligned)
+                        ; [rbp - 8] - this - Reference to 'this' object instance
+                        mov rdx, qword [rbp + 16] ; param passed 'this'
+                        mov qword [rbp - 8], rdx ; save this to a local
+                  ; Parameters
+                  ; Body
+            ;------------------------------------------------------------
+                     ; Code Block
+                        ; Assignment - '-='
+                           ; RHS
+                              ; Int Literal
+                                 mov rax, 1
+                                 push rax
+                           ; LHS
+                              ; Member Accessor Assignment
+                                 ; LHS
+                                    ; This keyword
+                                       push qword [rbp - 8] ; __this
+                                 ; RHS
+                                    push qword [.__field____main____Vector__float____size] ; 
+                                 pop rdi ; rhs
+                                 pop rbx ; lhs
+                           pop rdx ; rhs value
+                           mov rax, qword [rbx + 8*rdi] ; read lhs value
+                           sub rax, rdx      ; lhs = lhs - rhs
+                           mov qword [rbx + 8*rdi], rax ; write back to lhs
+                           push rax          ; push result for other expressions
+                        ; Statement results can be ignored
+                        pop rdx
+                        ; Return
+                           ; Subscript
+                              ; LHS
+                                 ; Member Accessor
+                                    ; LHS
+                                       ; This keyword
+                                          push qword [rbp - 8] ; __this
+                                    ; RHS
+                                       push qword [.__field____main____Vector__float____data] ; stored index associated with field that is being accessed
+                                    pop rdx ; rhs
+                                    pop rax ; lhs
+                                    push qword [rax + 8*rdx] ; lhs.rhs
+                              ; OFFSET
+                                 ; Member Accessor
+                                    ; LHS
+                                       ; This keyword
+                                          push qword [rbp - 8] ; __this
+                                    ; RHS
+                                       push qword [.__field____main____Vector__float____size] ; stored index associated with field that is being accessed
+                                    pop rdx ; rhs
+                                    pop rax ; lhs
+                                    push qword [rax + 8*rdx] ; lhs.rhs
+                              pop rdx ; __offset
+                              pop rax ; __pointer
+                              push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
+                           pop rax ; return value (float)
+                           movq xmm0, rax ; xmm0 is used for float return values
+                           ; Clean up stack and return
+                           mov rsp, rbp ; remove local vars + unpopped pushes
+                           pop rbp
+                           ret
+            ;------------------------------------------------------------
+                  ; Function Epilogue
+                  mov rsp, rbp ; remove local vars + unpopped pushes
+                  pop rbp
+                  ret
+               .__end__method____main____Vector__float____popBack:
+               ; End Method Declaration - .__method____main____Vector__float____popBack
+      ;------------------------------------------------------------------
+
+      ;------------------------------------------------------------------
+               ; Method Declaration - Vector<:float:>::get(int) -> float
+               jmp .__end__method____main____Vector__float____get__int
+               .__method____main____Vector__float____get__int:
+                  ; Function Header:
+                  ; Setup stack frame
+                     push rbp
+                     mov rbp, rsp
+                     ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+                        sub rsp, 16 ; space for local variables (16-byte aligned)
+                        ; [rbp - 8] - this - Reference to 'this' object instance
+                        mov rdx, qword [rbp + 16] ; param passed 'this'
+                        mov qword [rbp - 8], rdx ; save this to a local
+                  ; Parameters
+                     ; Param: index [rbp + 24] (__main____Vector__float__get__index)
+                  ; Body
+            ;------------------------------------------------------------
+                     ; Code Block
+                        ; Return
+                           ; Subscript
+                              ; LHS
+                                 ; Member Accessor
+                                    ; LHS
+                                       ; This keyword
+                                          push qword [rbp - 8] ; __this
+                                    ; RHS
+                                       push qword [.__field____main____Vector__float____data] ; stored index associated with field that is being accessed
+                                    pop rdx ; rhs
+                                    pop rax ; lhs
+                                    push qword [rax + 8*rdx] ; lhs.rhs
+                              ; OFFSET
+                                 ; Identifier - int index
+                                    push qword [rbp - -24]
+                              pop rdx ; __offset
+                              pop rax ; __pointer
+                              push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
+                           pop rax ; return value (float)
+                           movq xmm0, rax ; xmm0 is used for float return values
+                           ; Clean up stack and return
+                           mov rsp, rbp ; remove local vars + unpopped pushes
+                           pop rbp
+                           ret
+            ;------------------------------------------------------------
+                  ; Function Epilogue
+                  mov rsp, rbp ; remove local vars + unpopped pushes
+                  pop rbp
+                  ret
+               .__end__method____main____Vector__float____get__int:
+               ; End Method Declaration - .__method____main____Vector__float____get__int
+      ;------------------------------------------------------------------
+
+      ;------------------------------------------------------------------
+               ; Method Declaration - Vector<:float:>::set(int, float) -> void
+               jmp .__end__method____main____Vector__float____set__int__float
+               .__method____main____Vector__float____set__int__float:
+                  ; Function Header:
+                  ; Setup stack frame
+                     push rbp
+                     mov rbp, rsp
+                     ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+                        sub rsp, 16 ; space for local variables (16-byte aligned)
+                        ; [rbp - 8] - this - Reference to 'this' object instance
+                        mov rdx, qword [rbp + 16] ; param passed 'this'
+                        mov qword [rbp - 8], rdx ; save this to a local
+                  ; Parameters
+                     ; Param: index [rbp + 24] (__main____Vector__float__set__index)
+                     ; Param: value [rbp + 32] (__main____Vector__float__set__value)
+                  ; Body
+            ;------------------------------------------------------------
+                     ; Code Block
+                        ; Assignment - '='
+                           ; RHS
+                              ; Identifier - float value
+                                 push qword [rbp - -32]
+                           ; LHS
+                              ; Subscript assignment
+                                 ; LHS
+                                    ; Member Accessor
+                                       ; LHS
+                                          ; This keyword
+                                             push qword [rbp - 8] ; __this
+                                       ; RHS
+                                          push qword [.__field____main____Vector__float____data] ; stored index associated with field that is being accessed
+                                       pop rdx ; rhs
+                                       pop rax ; lhs
+                                       push qword [rax + 8*rdx] ; lhs.rhs
+                                 ; OFFSET
+                                    ; Identifier - int index
+                                       push qword [rbp - -24]
+                                 pop rdi ; __offset
+                                 pop rbx ; __pointer
+                           pop rdx ; rhs value
+                           mov qword [rbx + 8*rdi], rdx
+                           push rdx
+                        ; Statement results can be ignored
+                        pop rdx
+            ;------------------------------------------------------------
+                  ; Function Epilogue
+                  mov rsp, rbp ; remove local vars + unpopped pushes
+                  pop rbp
+                  ret
+               .__end__method____main____Vector__float____set__int__float:
+               ; End Method Declaration - .__method____main____Vector__float____set__int__float
+      ;------------------------------------------------------------------
+
+.__endclass____main____Vector__float:
+            ; End Class Declaration - __main____Vector__float
+   ; =====================================================================
+
+         ; End Class Template - 
+; ===========================================================================
+
+; ===========================================================================
+         ; Function Template - 
+         ; Instances:
+   ; =====================================================================
+            ; Function Declaration - print<:float:>(Vector<:float:>) -> void
+            ; Skip over function declaration
+            jmp .__end____main____print__float____Vector__tparam0__float
+.__main____print__float____Vector__tparam0__float:
+               ; Function Header:
+                  ; Setup stack frame
+                     push rbp
+                     mov rbp, rsp
+                     sub rsp, 16
+                  ; Parameters
+                     ; Param: v [rbp + 16]
+                  ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+                     ; [rbp - 8] - int i (<unset-scope-name>)
+
+               ; Body
+         ;---------------------------------------------------------------
+                  ; Code Block
+                     ; Function Call - print(char) -> void
+                        ; Make space for 1 arg(s)
+                        sub rsp, 8
+                        ; Arguments
+                           ; Eval arg0
+                              ; Char Literal
+                                 push '['
+                           ; Move arg0's result to reverse order position on stack
+                           pop rax
+                           mov qword [rsp + 0], rax
+                        ; Call print(char)
+                        call print__char
+                        ; Remove args
+                        add rsp, 8
+                        ; Push return value
+                        push rax
+                     ; Statement results can be ignored
+                     pop rdx
+            ;------------------------------------------------------------
+                     ; If-Statement
+                        ; Condition
+                           ; Not Equal
+                              ; LHS
+                                 ; Member Accessor
+                                    ; LHS
+                                       ; Identifier - Vector<:float:> v
+                                          push qword [rbp - -16]
+                                    ; RHS
+                                       push qword [.__field____main____Vector__float____size] ; stored index associated with field that is being accessed
+                                    pop rdx ; rhs
+                                    pop rax ; lhs
+                                    push qword [rax + 8*rdx] ; lhs.rhs
+                              ; RHS
+                                 ; Int Literal
+                                    mov rax, 0
+                                    push rax
+                              pop rdx ; rhs
+                              pop rax ; lhs
+                              cmp rax, rdx
+                              setne al
+                              movzx eax, al
+                              push rax
+                           pop rdx ; __cond
+                           cmp rdx, 0 ; ensure condition is true
+                           je .__endif__10 ; jump to end
+                        ; Body
+                           ; Function Call - print(float) -> void
+                              ; Make space for 1 arg(s)
+                              sub rsp, 8
+                              ; Arguments
+                                 ; Eval arg0
+                                    ; Subscript
+                                       ; LHS
+                                          ; Member Accessor
+                                             ; LHS
+                                                ; Identifier - Vector<:float:> v
+                                                   push qword [rbp - -16]
+                                             ; RHS
+                                                push qword [.__field____main____Vector__float____data] ; stored index associated with field that is being accessed
+                                             pop rdx ; rhs
+                                             pop rax ; lhs
+                                             push qword [rax + 8*rdx] ; lhs.rhs
+                                       ; OFFSET
+                                          ; Int Literal
+                                             mov rax, 0
+                                             push rax
+                                       pop rdx ; __offset
+                                       pop rax ; __pointer
+                                       push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
+                                 ; Move arg0's result to reverse order position on stack
+                                 pop rax
+                                 mov qword [rsp + 0], rax
+                              ; Call print(float)
+                              call print__float
+                              ; Remove args
+                              add rsp, 8
+                              ; Push return value
+                              push rax
+                           ; Statement results can be ignored
+                           pop rdx
+                        jmp .__endif__10 ; jump to end of condition chain
+                        ; End of if
+.__endif__10:
+            ;------------------------------------------------------------
+            ;------------------------------------------------------------
+                     ; For-Loop
+                     ; Init
+                        ; Assignment - '='
+                           ; RHS
+                              ; Int Literal
+                                 mov rax, 1
+                                 push rax
+                           ; LHS
+                              ; Variable Declaration - i
+                                 mov rax, qword [rbp - 8]  ; __main__print__block__9__for__11__i
+                           pop rdx ; rhs value
+                           mov qword [rbp - 8], rdx
+                           push rdx
+                        ; Loop init result can be discarded
+                        pop rax
+                     jmp .__forcond__11
+.__for__11:
+                        ; Update
+                           ; Pre-Increment - int
+                              ; RHS
+                                 ; Identifier - int i
+                                    push qword [rbp - 8]
+                              pop rdx
+                              add qword [rbp - 8], 1
+                              mov rax, qword [rbp - 8]
+                              push rax ; push result
+                           ; Loop update result can be discarded
+                           pop rax
+.__forcond__11:
+                        ; Condition
+                           ; Less Than
+                              ; LHS
+                                 ; Identifier - int i
+                                    push qword [rbp - 8]
+                              ; RHS
+                                 ; Member Accessor
+                                    ; LHS
+                                       ; Identifier - Vector<:float:> v
+                                          push qword [rbp - -16]
+                                    ; RHS
+                                       push qword [.__field____main____Vector__float____size] ; stored index associated with field that is being accessed
+                                    pop rdx ; rhs
+                                    pop rax ; lhs
+                                    push qword [rax + 8*rdx] ; lhs.rhs
+                              pop rdx ; rhs
+                              pop rax ; lhs
+                              cmp rax, rdx
+                              setl al
+                              movzx eax, al
+                              push rax
+                           pop rax ; __cond
+                           cmp rax, 0 ; __cond
+                           je .__endfor__11
+                        ; Body
+                  ;------------------------------------------------------
+                           ; Code Block
+                              ; Function Call - print(char) -> void
+                                 ; Make space for 1 arg(s)
+                                 sub rsp, 8
+                                 ; Arguments
+                                    ; Eval arg0
+                                       ; Char Literal
+                                          push ','
+                                    ; Move arg0's result to reverse order position on stack
+                                    pop rax
+                                    mov qword [rsp + 0], rax
+                                 ; Call print(char)
+                                 call print__char
+                                 ; Remove args
+                                 add rsp, 8
+                                 ; Push return value
+                                 push rax
+                              ; Statement results can be ignored
+                              pop rdx
+                              ; Function Call - print(char) -> void
+                                 ; Make space for 1 arg(s)
+                                 sub rsp, 8
+                                 ; Arguments
+                                    ; Eval arg0
+                                       ; Char Literal
+                                          push ' '
+                                    ; Move arg0's result to reverse order position on stack
+                                    pop rax
+                                    mov qword [rsp + 0], rax
+                                 ; Call print(char)
+                                 call print__char
+                                 ; Remove args
+                                 add rsp, 8
+                                 ; Push return value
+                                 push rax
+                              ; Statement results can be ignored
+                              pop rdx
+                              ; Function Call - print(float) -> void
+                                 ; Make space for 1 arg(s)
+                                 sub rsp, 8
+                                 ; Arguments
+                                    ; Eval arg0
+                                       ; Subscript
+                                          ; LHS
+                                             ; Member Accessor
+                                                ; LHS
+                                                   ; Identifier - Vector<:float:> v
+                                                      push qword [rbp - -16]
+                                                ; RHS
+                                                   push qword [.__field____main____Vector__float____data] ; stored index associated with field that is being accessed
+                                                pop rdx ; rhs
+                                                pop rax ; lhs
+                                                push qword [rax + 8*rdx] ; lhs.rhs
+                                          ; OFFSET
+                                             ; Identifier - int i
+                                                push qword [rbp - 8]
+                                          pop rdx ; __offset
+                                          pop rax ; __pointer
+                                          push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
+                                    ; Move arg0's result to reverse order position on stack
+                                    pop rax
+                                    mov qword [rsp + 0], rax
+                                 ; Call print(float)
+                                 call print__float
+                                 ; Remove args
+                                 add rsp, 8
+                                 ; Push return value
+                                 push rax
+                              ; Statement results can be ignored
+                              pop rdx
+                  ;------------------------------------------------------
+                        ; Repeat
+jmp .__for__11
+                        ; End of For
+.__endfor__11:
+            ;------------------------------------------------------------
+                     ; Function Call - print(char) -> void
+                        ; Make space for 1 arg(s)
+                        sub rsp, 8
+                        ; Arguments
+                           ; Eval arg0
+                              ; Char Literal
+                                 push ']'
+                           ; Move arg0's result to reverse order position on stack
+                           pop rax
+                           mov qword [rsp + 0], rax
+                        ; Call print(char)
+                        call print__char
+                        ; Remove args
+                        add rsp, 8
+                        ; Push return value
+                        push rax
+                     ; Statement results can be ignored
+                     pop rdx
+         ;---------------------------------------------------------------
+               ; Function Epilogue
+               mov rsp, rbp ; remove local vars + unpopped pushes
+               pop rbp
+               ret
+.__end____main____print__float____Vector__tparam0__float:
+            ; End Function Declaration - print<:float:>(Vector<:float:>) -> void
+   ; =====================================================================
+
+         ; End Function Template - 
+; ===========================================================================
+
+; ===========================================================================
+         ; Function Template - 
+         ; Instances:
+   ; =====================================================================
+            ; Function Declaration - println<:float:>(Vector<:float:>) -> void
+            ; Skip over function declaration
+            jmp .__end____main____println__float____Vector__tparam0__float
+.__main____println__float____Vector__tparam0__float:
+               ; Function Header:
+                  ; Setup stack frame
+                     push rbp
+                     mov rbp, rsp
+                     sub rsp, 0
+                  ; Parameters
+                     ; Param: v [rbp + 16]
+                  ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+
+               ; Body
+         ;---------------------------------------------------------------
+                  ; Code Block
+                     ; Function Call - print<:float:>(Vector<:float:>) -> void
+                        ; Make space for 1 arg(s)
+                        sub rsp, 8
+                        ; Arguments
+                           ; Eval arg0
+                              ; Identifier - Vector<:float:> v
+                                 push qword [rbp - -16]
+                           ; Move arg0's result to reverse order position on stack
+                           pop rax
+                           mov qword [rsp + 0], rax
+                        ; Call print<:float:>(Vector<:float:>)
+                        call .__main____print__float____Vector__tparam0__float
+                        ; Remove args
+                        add rsp, 8
+                        ; Push return value
+                        push rax
+                     ; Statement results can be ignored
+                     pop rdx
+                     ; Function Call - println() -> void
+                        ; Make space for 0 arg(s)
+                        sub rsp, 0
+                        ; Arguments
+                        ; Call println()
+                        call println
+                        ; Remove args
+                        add rsp, 0
+                        ; Push return value
+                        push rax
+                     ; Statement results can be ignored
+                     pop rdx
+         ;---------------------------------------------------------------
+               ; Function Epilogue
+               mov rsp, rbp ; remove local vars + unpopped pushes
+               pop rbp
+               ret
+.__end____main____println__float____Vector__tparam0__float:
+            ; End Function Declaration - println<:float:>(Vector<:float:>) -> void
+   ; =====================================================================
+
+         ; End Function Template - 
+; ===========================================================================
+
          ; Assignment - '='
-            ; RHS
-               ; Int Literal
-                  mov rax, 10
+         ; RHS
+            ; Constructor Call - Vector<:float:>::Vector() -> Vector<:float:>
+               ; Make space for 0 arg(s)
+               sub rsp, 0
+               ; Arguments
+               ; Call Vector<:float:>::Vector()
+               call .__ctor____main____Vector__float____Vector
+               ; Remove args
+               add rsp, 0
+               ; Push return value
+               push rax
+         ; LHS
+            ; Variable Declaration - v
+               mov rax, qword [rbp - 8]  ; __main__v
+         pop rdx ; rhs value
+         mov qword [rbp - 8], rdx
+         push rdx
+         ; Statement results can be ignored
+         pop rdx
+         ; Method Call - Vector<:float:>::pushBack(float) -> void
+         ; Make space for 1 arg(s) and object parameter
+         sub rsp, 16
+         ; LHS
+            ; Identifier - Vector<:float:> v
+               push qword [rbp - 8]
+            pop rax ; object parameter
+            mov qword [rsp + 0], rax ; place as first parameter
+         ; RHS
+         ; Arguments
+            ; Eval arg0
+               ; Float Literal
+                  mov rax, qword [.float0] ; 3.14
                   push rax
-            ; LHS
-               ; Variable Declaration - c
-                  mov rax, qword [rbp - 8]  ; __main__c
-            pop rdx ; rhs value
-            mov qword [rbp - 8], rdx
-            push rdx
+            ; Move arg0's result to reverse order position on stack
+            pop rax
+            mov qword [rsp + 8], rax
+         call .__method____main____Vector__float____pushBack__float
+         ; Remove args
+         add rsp, 16
+         ; Push return value
+         push rax
          ; Statement results can be ignored
          pop rdx
-; ========================================================================
-         ; Function Declaration - setc(int) -> void
-         ; Skip over function declaration
-         jmp .__end____main____setc__int
-.__main____setc__int:
-            ; Function Header:
-               ; Setup stack frame
-                  push rbp
-                  mov rbp, rsp
-                  sub rsp, 0
-               ; Parameters
-                  ; Param: a [rbp + 16]
-               ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
-
-            ; Body
-      ;------------------------------------------------------------------
-               ; Code Block
-                  ; Assignment - '='
-                     ; RHS
-                        ; Identifier - int a
-                           push qword [rbp - -16]
-                     pop rdx ; rhs value
-                     mov qword [rbp - 8], rdx
-                     push rdx
-                  ; Statement results can be ignored
+         ; Method Call - Vector<:float:>::pushBack(float) -> void
+         ; Make space for 1 arg(s) and object parameter
+         sub rsp, 16
+         ; LHS
+            ; Identifier - Vector<:float:> v
+               push qword [rbp - 8]
+            pop rax ; object parameter
+            mov qword [rsp + 0], rax ; place as first parameter
+         ; RHS
+         ; Arguments
+            ; Eval arg0
+               ; Negative - float
+                  ; RHS
+                     ; Float Literal
+                        mov rax, qword [.float1] ; 214.5
+                        push rax
                   pop rdx
-      ;------------------------------------------------------------------
-            ; Function Epilogue
-            mov rsp, rbp ; remove local vars + unpopped pushes
-            pop rbp
-            ret
-.__end____main____setc__int:
-         ; End Function Declaration - setc(int) -> void
-; ========================================================================
-
-         ; Function Call - setc(int) -> void
-            ; Make space for 1 arg(s)
-            sub rsp, 8
-            ; Arguments
-               ; Eval arg0
-                  ; Int Literal
-                     mov rax, 42
-                     push rax
-               ; Move arg0's result to reverse order position on stack
-               pop rax
-               mov qword [rsp + 0], rax
-            ; Call setc(int)
-            call .__main____setc__int
-            ; Remove args
-            add rsp, 8
-            ; Push return value
-            push rax
+                  ; Implemented as multiplying by -1.0
+                  movsd xmm1, qword [__builtin__neg] ; -1.0
+                  movq xmm0, rdx
+                  mulsd xmm0, xmm1 ; v = v * -1.0
+                  movq rax, xmm0
+                  push rax ; push result
+            ; Move arg0's result to reverse order position on stack
+            pop rax
+            mov qword [rsp + 8], rax
+         call .__method____main____Vector__float____pushBack__float
+         ; Remove args
+         add rsp, 16
+         ; Push return value
+         push rax
          ; Statement results can be ignored
          pop rdx
-         ; Function Call - print(int) -> void
-            ; Make space for 1 arg(s)
-            sub rsp, 8
-            ; Arguments
-               ; Eval arg0
-                  ; Identifier - int c
-                     push qword [rbp - 8]
-               ; Move arg0's result to reverse order position on stack
-               pop rax
-               mov qword [rsp + 0], rax
-            ; Call print(int)
-            call print__int
-            ; Remove args
-            add rsp, 8
-            ; Push return value
-            push rax
+         ; Method Call - Vector<:float:>::pushBack(float) -> void
+         ; Make space for 1 arg(s) and object parameter
+         sub rsp, 16
+         ; LHS
+            ; Identifier - Vector<:float:> v
+               push qword [rbp - 8]
+            pop rax ; object parameter
+            mov qword [rsp + 0], rax ; place as first parameter
+         ; RHS
+         ; Arguments
+            ; Eval arg0
+               ; Float Literal
+                  mov rax, qword [.float2] ; 0.0001
+                  push rax
+            ; Move arg0's result to reverse order position on stack
+            pop rax
+            mov qword [rsp + 8], rax
+         call .__method____main____Vector__float____pushBack__float
+         ; Remove args
+         add rsp, 16
+         ; Push return value
+         push rax
          ; Statement results can be ignored
          pop rdx
-; ========================================================================
-; ### END OF CODE ########################################################
-; ========================================================================
+         ; Function Call - println<:float:>(Vector<:float:>) -> void
+         ; Make space for 1 arg(s)
+         sub rsp, 8
+         ; Arguments
+            ; Eval arg0
+               ; Identifier - Vector<:float:> v
+                  push qword [rbp - 8]
+            ; Move arg0's result to reverse order position on stack
+            pop rax
+            mov qword [rsp + 0], rax
+         ; Call println<:float:>(Vector<:float:>)
+         call .__main____println__float____Vector__tparam0__float
+         ; Remove args
+         add rsp, 8
+         ; Push return value
+         push rax
+         ; Statement results can be ignored
+         pop rdx
+; ===========================================================================
+; ### END OF CODE ###########################################################
+; ===========================================================================
 
          push 0
          call exit__int
-; ========================================================================
-; ### DATA SECTION #######################################################
-; ========================================================================
+; ===========================================================================
+; ### DATA SECTION ##########################################################
+; ===========================================================================
 
          section .data
+.float0: dq 3.14
+.float1: dq 214.5
+.float2: dq 0.0001
 .floatNegOne: dq -1.0
 .floatZero: dq 0.0
 .floatOne: dq 1.0

@@ -47,22 +47,21 @@ class CodeGenVisitor_python (ASTVisitor):
         self.printSpaces (self.indentation)
 
     def printSpaces (self, level):
-            
         while level > 0:
             for i in range(TAB_LENGTH):
                 self.code += [" "]
             level -= 1
 
     def printCode (self, line):
-        self.code += [f"{line}"]
+        self.printSpaces (self.indentation)
+        self.code += [f"{line}\n"]
 
     def printComment (self, comment):
         if not self.shouldComment:
             return 
             
         self.printSpaces (self.indentation)
-        self.code += ["# ", comment]
-        self.printNewline ()
+        self.code += ["# ", comment, "\n"]
 
     def printHeader (self, header):
         if not self.shouldComment:
@@ -129,6 +128,16 @@ class CodeGenVisitor_python (ASTVisitor):
             self.code += [line]
 
         self.printDivider ()
+        self.printHeader ("SETUP EXPRESSION RESULT STACK")
+        self.printDivider ()
+        self.printNewline ()
+        
+        # expression result stack stores values from expressions 
+        self.printComment ("This stack is used to store results of expressions")
+        self.printCode ("stack = []")
+        self.printNewline ()
+
+        self.printDivider ()
         self.printHeader ("COMPILED CODE")
         self.printDivider ()
         self.printNewline ()
@@ -149,7 +158,6 @@ class CodeGenVisitor_python (ASTVisitor):
     def visitParameterNode (self, node):
         node.type.accept (self)
         node.scopeName = "".join (self.scopeNames) + "__" + node.id
-        self.printCode (node.scopeName)
 
     def visitCodeUnitNode (self, node):
         pass
@@ -161,7 +169,7 @@ class CodeGenVisitor_python (ASTVisitor):
         scopeName = "".join (self.scopeNames) + "__" + node.id
 
         # declare the variable with default value 
-        self.printCode (f"{scopeName}")
+        self.printCode (f"{scopeName} = 0")
         self.lhs = node.id
         node.scopeName = scopeName
 
@@ -217,16 +225,12 @@ class CodeGenVisitor_python (ASTVisitor):
         self.printDivider ()
         self.printComment (f"Function Declaration - {node.signature} -> {node.type}")
 
-        self.printIndent ()
-        self.printCode (f"def {node.scopeName} (")
         # parameters
-        if len(node.params) != 0:
-            node.params[0].accept (self)
-        for i in range(1, len(node.params)):
-            self.printCode (", ")
+        params = []
+        for i in range(len(node.params)):
             node.params[i].accept (self)
-        self.printCode ("):")
-        self.printNewline ()
+            params.append (node.params[i].scopeName)
+        self.printCode (f"def {node.scopeName} ({', '.join(params)}):")
 
         self.indentation += 1
         self.printComment ("Body")
@@ -305,9 +309,7 @@ class CodeGenVisitor_python (ASTVisitor):
         # create dispatch table 
         self.printComment ("Creating Dispatch Table (will be populated later)")
         node.dtableScopeName = "__dtable__" + "".join (self.scopeNames)
-        self.printIndent ()
         self.printCode (f"{node.dtableScopeName} = []")
-        self.printNewline ()
 
         # create scope names for fields 
         for field in node.fields:
@@ -332,15 +334,11 @@ class CodeGenVisitor_python (ASTVisitor):
             method.accept (self)
         
         self.printComment ("Populate Dispatch Table")
-        self.printIndent ()
-        self.printCode (f"{node.dtableScopeName} = [")
         # populate dispatch table
-        if len(node.functionPointerList) != 0:
-            self.printCode (f"{node.functionPointerList[0].scopeName}")
-        for i in range(1, len(node.functionPointerList)):
-            self.printCode (f", {node.functionPointerList[i].scopeName}")
-        self.printCode ("]")
-        self.printNewline ()
+        funcpointers = []
+        for i in range(len(node.functionPointerList)):
+            funcpointers.append (node.functionPointerList[i].scopeName)
+        self.printCode (f"{node.dtableScopeName} = [{', '.join(funcpointers)}]")
 
         self.printComment (f"End Class Declaration - {node.scopeName}")
         self.printDivider ()
@@ -356,9 +354,7 @@ class CodeGenVisitor_python (ASTVisitor):
             self.printComment (f"Inherited from {node.parentClass.pDecl.id}")
 
         # fieldIndexVarname = f"__field__{node.id}__{field.id}"
-        self.printIndent ()
         self.printCode (f"{node.scopeName} = {node.index}")
-        self.printNewline ()
 
         self.printSubDivider ()
 
@@ -376,29 +372,26 @@ class CodeGenVisitor_python (ASTVisitor):
         methodLabel = node.scopeName
 
         # ensure we start with the object instance param
-        self.printIndent ()
-        self.printCode (f"def {methodLabel} (this")
         # parameters
+        params = ['']
         for i in range(len(node.params)):
-            self.printCode (", ")
             node.params[i].accept (self)
-        self.printCode ("):")   
-        self.printNewline ()
+            params.append (node.params[i].scopeName)
+        self.printCode (f"def {methodLabel} (this{', '.join(params)}):")
 
         self.indentation += 1
 
         # inherited methods
         if node.isInherited:
             self.printComment (f"Jump to {node.inheritedMethod.parentClass.id}'s version")
-            self.printCode (f"JUMP {node.inheritedMethod.scopeName}")
+            self.printCode (f"__retval = {node.inheritedMethod.scopeName} (this{', '.join(params)})")
+            self.printCode (f"return __retval")
         else:
             self.printComment ("Body")
             node.body.accept (self)
 
             # extra return statement for if return is not provided 
-            self.printIndent ()
             self.printCode ("return 0")
-            self.printNewline ()
 
         self.indentation -= 1
 
@@ -426,42 +419,33 @@ class CodeGenVisitor_python (ASTVisitor):
             if f"${node.signature}" in self.code[i]:
                 self.code[i] = self.code[i].replace(f"${node.signature}", node.scopeName)
 
-        self.printIndent ()
-        self.printCode (f"def {ctorLabel} (")
         # parameters
-        if len(node.params) != 0:
-            node.params[0].accept (self)
-        for i in range(1, len(node.params)):
-            self.printCode (", ")
+        params = []
+        for i in range(len(node.params)):
             node.params[i].accept (self)
-        self.printCode ("):")   
-        self.printNewline ()
+            params.append (node.params[i].scopeName)
+        self.printCode (f"def {ctorLabel} ({', '.join(params)}):")
 
         self.indentation += 1
 
         # create class instance 
         self.printComment ("Creating Class Instance")
         # +1 because all classes start with a dispatch table 
-        self.printIndent ()
         self.printCode (f"this = [0] * {len(node.parentClass.fields)+1}")
-        self.printNewline ()
 
         # add dispatch table to instance
         self.printComment ("Add Dispatch Table")
-        self.printIndent ()
         self.printCode (f"this[0] = {node.parentClass.dtableScopeName}")
-        self.printNewline ()
 
         # ** maybe initialize entries? or that might be inefficient
-
+        
+        # *** are we supposed to support inherited ctors?
         self.printComment ("Body")
         node.body.accept (self)
 
         # return constructed class instance
         self.printComment ("Return the constructed instance")
-        self.printIndent ()
         self.printCode ("return this")
-        self.printNewline ()
 
         self.indentation -= 1
 
@@ -497,15 +481,8 @@ class CodeGenVisitor_python (ASTVisitor):
         self.printDivider ()
         self.printComment (f"Function Template - {node.scopeName}")
 
-        self.indentation += 1
-
-        self.printComment (f"Instances:")
-        self.indentation += 1
         for instance in node.instantiations:
             node.instantiations[instance].accept (self)
-
-        self.indentation -= 1
-        self.indentation -= 1
 
         self.printComment (f"End Function Template - {node.scopeName}")
         self.printDivider ()
@@ -515,15 +492,8 @@ class CodeGenVisitor_python (ASTVisitor):
         self.printDivider ()
         self.printComment (f"Class Template - {node.scopeName}")
 
-        self.indentation += 1
-
-        self.printComment (f"Instances:")
-        self.indentation += 1
         for instance in node.instantiations:
             node.instantiations[instance].accept (self)
-
-        self.indentation -= 1
-        self.indentation -= 1
 
         self.printComment (f"End Class Template - {node.scopeName}")
         self.printDivider ()
@@ -548,14 +518,25 @@ class CodeGenVisitor_python (ASTVisitor):
         # create new scope level 
         self.scopeNames += [f"__if__{ifIndex}"]
 
-        self.printIndent ()
-        self.printCode ("if (")
-        # condition
+        self.printComment ("Precomputing all if/elif conditions and give unique names")
+        self.printComment ("bc we can't have code between if and elif")
+        self.printComment ("Condition")
+        # condition is an expression 
+        # that gets evaluated and the result 
+        # should be stored on the stack 
         node.cond.accept (self)
-        self.printCode ("):")
-        self.printNewline ()
+        self.printCode (f"__if__{ifIndex}__cond = stack.pop ()")
+        for i in range(len(node.elifs)):
+            self.printComment (f"Condition for elif #{i}")
+            node.elifs[i].cond.accept (self)
+            self.printCode (f"__elif__{ifIndex}x{elifIndex}__cond = stack.pop ()")
+            elifIndex += 1
+        elifIndex = 0
 
-        # print the body 
+        self.printComment ("get condition from stack")
+        self.printCode (f"if (__if__{ifIndex}__cond):")
+
+        # print the body of if 
         self.indentation += 1
         self.printComment ("Body")
         node.body.accept (self)
@@ -570,20 +551,24 @@ class CodeGenVisitor_python (ASTVisitor):
 
             self.printSubDivider ()
             self.printComment ("Elif-Statement")
-            # self.printCode (f"__elif__{ifIndex}x{elifIndex}:")
-            elifIndex += 1
 
             # create new scope level 
             self.scopeNames += [f"__elif__{ifIndex}x{elifIndex}"]
 
-            self.printIndent ()
-            self.printCode ("elif (")
-            # condition
-            elifNode.cond.accept (self)
-            self.printCode ("):")
-            self.printNewline ()
+            self.printComment ("Condition")
+            # condition is an expression 
+            # that gets evaluated and the result 
+            # should be stored on the stack 
+            # elifNode.cond.accept (self)
 
-            # print the body 
+            # get condition result from stack
+            # ***this wont work bc it would separate if and elif
+            # self.printCode ("__cond = stack.pop ()")
+
+            self.printCode (f"elif (__elif__{ifIndex}x{elifIndex}__cond):")
+            elifIndex += 1
+
+            # Body
             self.indentation += 1
             self.printComment ("Body")
             elifNode.body.accept (self)
@@ -598,23 +583,23 @@ class CodeGenVisitor_python (ASTVisitor):
         if node.elseStmt != None:
             self.printSubDivider ()
             self.printComment ("Else-Statement")
-            self.printIndent ()
-            self.printCode (f"else:")
-            self.printNewline ()
 
             # create new scope level 
             self.scopeNames += [elseLabel]
+
+            self.printCode ("else:")
 
             self.indentation += 1
             node.elseStmt.body.accept (self)
             self.indentation -= 1
 
-            # jump to endif not necessary since else is always at the end 
-
             self.printSubDivider ()
 
             # exit scope
             self.scopeNames.pop ()
+
+        # end of if 
+        self.printComment ("End of if")
 
         self.printSubDivider ()
 
@@ -654,31 +639,31 @@ class CodeGenVisitor_python (ASTVisitor):
 
         # init
         self.printComment ("Init")
-        self.printIndent ()
         node.init.accept (self)
-        self.printNewline ()
 
-        self.printIndent ()
-        self.printCode ("while (")
-        # condition
-        node.cond.accept (self)
-        self.printCode ("):")
-        self.printNewline ()
+        self.printComment ("Using an infinite loop so we can write a separate multi-line condition")
+        self.printCode ("while (1):")
 
-        # body
         self.indentation += 1
+
+        self.printComment ("Condition")
+        node.cond.accept (self)
+        # get condition result from stack
+        self.printCode ("__cond = stack.pop ()")
+        # jump if false - negation of original condition
+        self.printComment ("break out of loop if condition is false")
+        self.printCode ("if (__cond == 0): break")
+
+        # print the body 
+        self.printComment ("Body")
         node.body.accept (self)
 
-        # update
-        self.printIndent ()
+
+        # perform update
+        self.printComment ("Update")
         node.update.accept (self)
-        self.printNewline ()
 
         self.indentation -= 1
-
-        # ** continue statements might be problematic, 
-        # we may need to inject the update to before continue
-        # but that still might not work because variable shadowing? maybe
 
         # end of loop context 
         # remove from current loop context
@@ -709,18 +694,27 @@ class CodeGenVisitor_python (ASTVisitor):
         node.endLabel = endLabel
         self.parentLoops += [node]
 
-        self.printIndent ()
-        self.printCode ("while (")
-        # condition
+        self.printComment ("Using an infinite loop so we can write a separate multi-line condition")
+        self.printCode ("while (1):")
+
+        self.indentation += 1
+
+        self.printComment ("Condition")
         node.cond.accept (self)
-        self.printCode ("):")
-        self.printNewline ()
+        # get condition result from stack
+        self.printCode ("__cond = stack.pop ()")
+        # jump if false - negation of original condition
+        self.printComment ("break out of loop if condition is false")
+        self.printCode ("if (__cond == 0): break")
 
         # print the body 
-        self.indentation += 1
         self.printComment ("Body")
         node.body.accept (self)
+
         self.indentation -= 1
+
+        # end of while 
+        self.printComment ("End of While")
 
         # end of loop context 
         # remove from current loop context
@@ -735,32 +729,36 @@ class CodeGenVisitor_python (ASTVisitor):
         # ignore variable decl
         # int x; should not translate to anything
         if node.expr != None and not isinstance(node.expr, VariableDeclarationNode):
-            self.printIndent ()
+            self.printComment ("Statement")
             node.expr.accept (self)
+            # don't need stack value from statement
+            # in some cases, this extra value on the stack can break things
+            self.printComment ("Statement results can be ignored")
+            self.printCode ("stack.pop ()")
+            self.printComment ("End Statement")
             self.printNewline ()
 
     def visitReturnStatementNode (self, node):
-        self.printIndent ()
-        self.printCode ("return")
+        self.printComment ("Return")
         # if there is a value provided 
         if node.expr != None:
-            self.printCode (' ')
             node.expr.accept (self)
-        self.printNewline ()
+            # get return value 
+            self.printCode ("__rVal = stack.pop ()")
+            self.printCode (f"return __rVal")
+        # no value provided 
+        else:
+            self.printCode ("return")
 
     def visitContinueStatementNode (self, node):
         self.printComment (f"Continue in {self.parentLoops[-1].startLabel}")
         # goes to the start of the loop (aka the condition)
-        self.printIndent ()
         self.printCode (f"continue")
-        self.printNewline ()
 
     def visitBreakStatementNode (self, node):
         self.printComment (f"Break out of {self.parentLoops[-1].startLabel}")
         # goes to the end of the loop
-        self.printIndent ()
         self.printCode (f"break")
-        self.printNewline ()
 
     def visitCodeBlockNode (self, node):
         self.printSubDivider ()
@@ -793,413 +791,508 @@ class CodeGenVisitor_python (ASTVisitor):
         node.rhs.accept (self)
 
     def visitAssignExpressionNode (self, node):
+        self.printComment (f"Assignment - '{node.op.lexeme}'")
 
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
+        self.printComment ("RHS")
+        node.rhs.accept (self)
 
         # simple assign 
         if node.overloadedFunctionCall == None:
 
             if isinstance(node.lhs, VariableDeclarationNode):
+                self.printComment ("LHS")
                 node.lhs.accept (self)
+                self.printCode (f"__rhs = stack.pop()")
                 lhsStr = f"{node.lhs.scopeName}"
 
             elif isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-                node.lhs.accept (self)
+                self.printCode (f"__rhs = stack.pop()")
                 lhsStr = f"{node.lhs.decl.scopeName}"
 
             elif isinstance(node.lhs, SubscriptExpressionNode):
+                self.printComment ("LHS")
+                self.printComment ("Subscript assignment")
+
+                self.printComment ("LHS")
                 node.lhs.lhs.accept (self)
-                self.printCode ("[")
+
+                self.printComment ("OFFSET")
                 node.lhs.offset.accept (self)
-                self.printCode ("]")
+
+                self.printCode (f"__offset = stack.pop()")
+                self.printCode (f"__pointer = stack.pop()")
+
+                self.printCode (f"__rhs = stack.pop()")
                 lhsStr = f"__pointer[__offset]"
 
             elif isinstance (node.lhs, MemberAccessorExpressionNode):
-                # arr.size = arr[field__size] = 10
+                self.printComment ("LHS")
+                self.printComment ("Member Accessor Assignment")
+
+                self.printComment ("LHS")
                 node.lhs.lhs.accept (self)
-                self.printCode (f"[{node.lhs.decl.scopeName}]")
+
+                self.printComment ("RHS")
+                # # construct field index var 
+                # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
+                self.printCode (f"stack.append({node.lhs.decl.scopeName})")
+
+                self.printCode (f"__child = stack.pop()")
+                self.printCode (f"__parent = stack.pop()")
+
+                self.printCode (f"__rhs = stack.pop()")
+                
+                lhsStr = f"__parent[__child]"
                 
             # =
             if node.op.type == "ASSIGN":
-                op = "="
+                self.printCode (f"{lhsStr} = __rhs")
             # +=
             elif node.op.type == "ASSIGN_ADD":
-                op = "+="
+                self.printCode (f"{lhsStr} = {lhsStr} + __rhs")
             # -=
             elif node.op.type == "ASSIGN_SUB":
-                op = "-="
+                self.printCode (f"{lhsStr} = {lhsStr} - __rhs")
             # *=
             elif node.op.type == "ASSIGN_MUL":
-                op = "*="
+                self.printCode (f"{lhsStr} = {lhsStr} * __rhs")
             # /=
             elif node.op.type == "ASSIGN_DIV":
-                op = "/="
+                self.printCode (f"{lhsStr} = {lhsStr} / __rhs")
             # %=
             elif node.op.type == "ASSIGN_MOD":
-                op = "%="
+                self.printCode (f"{lhsStr} = {lhsStr} % __rhs")
 
-
-            self.printCode (f" {op} ")
-            node.rhs.accept (self)
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+            self.printCode (f"stack.append ({lhsStr})")
         
 
     def visitLogicalOrExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-
+        self.printComment ("OR")
+        self.printComment ("LHS")
         node.lhs.accept (self)
-        self.printCode (" or ")
+        self.printComment ("RHS")
         node.rhs.accept (self)
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        # get rhs and lhs off the stack 
+        self.printCode ("__rhs = stack.pop ()")
+        self.printCode ("__lhs = stack.pop ()")
+        self.printCode ("__res = __lhs or __rhs")
+        # push result to the stack
+        self.printCode ("stack.append (__res)")
 
     def visitLogicalAndExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
+        self.printComment ("AND")
+        self.printComment ("LHS")
         node.lhs.accept (self)
-        self.printCode (" and ")
+        self.printComment ("RHS")
         node.rhs.accept (self)
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        # get rhs and lhs off the stack 
+        self.printCode ("__rhs = stack.pop ()")
+        self.printCode ("__lhs = stack.pop ()")
+        self.printCode ("__res = __lhs and __rhs")
+        # push result to the stack
+        self.printCode ("stack.append (__res)")
 
     def visitEqualityExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
+        if node.op.lexeme == "==":
+            self.printComment ("Equal")
+        elif node.op.lexeme == "!=":
+            self.printComment ("Not Equal")
+
+        # calc lhs 
+        self.printComment ("LHS")
         node.lhs.accept (self)
-        self.printCode (f" {node.op.lexeme} ")
+        # calc rhs 
+        self.printComment ("RHS")
         node.rhs.accept (self)
 
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        # get rhs and lhs off the stack 
+        self.printCode ("__rhs = stack.pop ()")
+        self.printCode ("__lhs = stack.pop ()")
+
+        if node.op.lexeme == "==":
+            self.printCode ("__res = __lhs == __rhs")
+        elif node.op.lexeme == "!=":
+            self.printCode ("__res = __lhs != __rhs")
+
+        # push result to the stack
+        self.printCode ("stack.append (__res)")
 
     def visitInequalityExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
+        if node.op.lexeme == "<":
+            self.printComment ("Less Than")
+        elif node.op.lexeme == "<=":
+            self.printComment ("Less Than or Equal to")
+        elif node.op.lexeme == ">":
+            self.printComment ("Greater Than")
+        elif node.op.lexeme == ">=":
+            self.printComment ("Greater Than or Equal to")
+
+        # calc lhs 
+        self.printComment ("LHS")
         node.lhs.accept (self)
-        self.printCode (f" {node.op.lexeme} ")
+        # calc rhs 
+        self.printComment ("RHS")
         node.rhs.accept (self)
 
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        # get rhs and lhs off the stack 
+        self.printCode ("__rhs = stack.pop ()")
+        self.printCode ("__lhs = stack.pop ()")
+
+        if node.op.lexeme == "<":
+            self.printCode ("__res = __lhs < __rhs")
+        elif node.op.lexeme == "<=":
+            self.printCode ("__res = __lhs <= __rhs")
+        elif node.op.lexeme == ">":
+            self.printCode ("__res = __lhs > __rhs")
+        elif node.op.lexeme == ">=":
+            self.printCode ("__res = __lhs >= __rhs")
+
+        # push result to the stack
+        self.printCode ("stack.append (__res)")
 
     def visitAdditiveExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        # simple additive 
-        if node.overloadedFunctionCall == None:
-            node.lhs.accept (self)
-            self.printCode (f" {node.op.lexeme} ")
-            node.rhs.accept (self)
-        # overloaded function call 
-        else:
-            self.printCode (f"{node.overloadedFunctionCall.decl.scopeName} (")
-            node.lhs.accept (self)
-            self.printCode (", ")
-            node.rhs.accept (self)
-            self.printCode (")")
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
-
-    def visitMultiplicativeExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        # simple additive 
-        if node.overloadedFunctionCall == None:
-            node.lhs.accept (self)
-            if node.op.lexeme == '*':
-                self.printCode (f" * ")
-            if node.op.lexeme == '/':
-                # integer division
-                if node.lhs.type.type == Type.INT:
-                    self.printCode (f" // ")
-                else:
-                    self.printCode (f" / ")
-            if node.op.lexeme == '%':
-                self.printCode (f" % ")
-            node.rhs.accept (self)
-        # overloaded function call 
-        else:
-            self.printCode (f"{node.overloadedFunctionCall.decl.scopeName} (")
-            node.lhs.accept (self)
-            self.printCode (", ")
-            node.rhs.accept (self)
-            self.printCode (")")
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
-            
-    #  ++ | -- | + | - | ! | ~
-    def visitUnaryLeftExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        if node.op.lexeme == "++":
-            node.rhs.accept (self)
-            self.printCode (" += 1")
-        elif node.op.lexeme == "--":
-            node.rhs.accept (self)
-            self.printCode (" -= 1")
-        elif node.op.lexeme == "+":
-            node.rhs.accept (self)
+        # addition 
+        if node.op.lexeme == "+":
+            self.printComment ("Addition")
+        # subtraction 
         elif node.op.lexeme == "-":
-            self.printCode ("-")
-            node.rhs.accept (self)
-        elif node.op.lexeme == "!":
-            self.printCode ("not ")
-            node.rhs.accept (self)
-        elif node.op.lexeme == "~":
-            self.printCode ("~")
-            node.rhs.accept (self)
+            self.printComment ("Subtraction")
 
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        # calc lhs 
+        self.printComment ("LHS")
+        node.lhs.accept (self)
+        # calc rhs 
+        self.printComment ("RHS")
+        node.rhs.accept (self)
 
-    def visitPostIncrementExpressionNode(self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printComment ("Post-Increment")
-
-        self.indentation += 1
-
-        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-            self.printCode (f"ASSIGN __res {node.lhs.decl.scopeName}")
-            self.printCode (f"ADD {node.lhs.decl.scopeName} {node.lhs.decl.scopeName} 1")
-        elif isinstance(node.lhs, SubscriptExpressionNode):
-            self.printComment ("RHS")
-            self.indentation += 1
-            self.printComment ("Subscript assignment")
-
-            self.indentation += 1
-
-            self.printComment ("LHS")
-            self.indentation += 1
-            node.lhs.lhs.accept (self)
-            self.indentation -= 1
-
-            self.printComment ("OFFSET")
-            self.indentation += 1
-            node.lhs.offset.accept (self)
-            self.indentation -= 1
-
-            self.printCode ("POP __offset")
-            self.printCode ("POP __pointer")
-
-            self.indentation -= 1
-            self.indentation -= 1
-
-            self.printCode (f"ASSIGN __res __pointer[__offset]")
-            self.printCode (f"ADD __pointer[__offset] __pointer[__offset] 1")
-        elif isinstance (node.lhs, MemberAccessorExpressionNode):
-            self.printComment ("LHS")
-            self.indentation += 1
-            self.printComment ("Member Accessor Assignment")
-
-            self.indentation += 1
-
-            self.printComment ("LHS")
-            self.indentation += 1
-            node.lhs.lhs.accept (self)
-            self.indentation -= 1
-
-            self.printComment ("RHS")
-            self.indentation += 1
-            # construct field index var 
-            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"PUSH {node.lhs.decl.scopeName}")
-            self.indentation -= 1
-
-            self.printCode ("POP __child")
-            self.printCode ("POP __parent")
-
-            self.printCode (f"ASSIGN __res __parent[__child]")
-            self.printCode (f"ADD __parent[__child] __parent[__child] 1")
-
-            self.indentation -= 1
-            self.indentation -= 1
-        else:
-            print ("yikes!")
-            exit (1)
-
-        # push result to the stack
-        self.printCode ("PUSH __res")
-
-        self.indentation -= 1
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
-
-    def visitPostDecrementExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printComment ("Post-Decrement")
-
-        self.indentation += 1
-
-        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-            self.printCode (f"ASSIGN __res {node.lhs.decl.scopeName}")
-            self.printCode (f"SUBTRACT {node.lhs.decl.scopeName} {node.lhs.decl.scopeName} 1")
-        elif isinstance(node.lhs, SubscriptExpressionNode):
-            self.printComment ("RHS")
-            self.indentation += 1
-            self.printComment ("Subscript assignment")
-
-            self.indentation += 1
-
-            self.printComment ("LHS")
-            self.indentation += 1
-            node.lhs.lhs.accept (self)
-            self.indentation -= 1
-
-            self.printComment ("OFFSET")
-            self.indentation += 1
-            node.lhs.offset.accept (self)
-            self.indentation -= 1
-
-            self.printCode ("POP __offset")
-            self.printCode ("POP __pointer")
-
-            self.indentation -= 1
-            self.indentation -= 1
-
-            self.printCode (f"ASSIGN __res __pointer[__offset]")
-            self.printCode (f"SUBTRACT __pointer[__offset] __pointer[__offset] 1")
-        elif isinstance (node.lhs, MemberAccessorExpressionNode):
-            self.printComment ("LHS")
-            self.indentation += 1
-            self.printComment ("Member Accessor Assignment")
-
-            self.indentation += 1
-
-            self.printComment ("LHS")
-            self.indentation += 1
-            node.lhs.lhs.accept (self)
-            self.indentation -= 1
-
-            self.printComment ("RHS")
-            self.indentation += 1
-            # construct field index var 
-            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"PUSH {node.lhs.decl.scopeName}")
-            self.indentation -= 1
-
-            self.printCode ("POP __child")
-            self.printCode ("POP __parent")
-
-            self.printCode (f"ASSIGN __res __parent[__child]")
-            self.printCode (f"SUBTRACT __parent[__child] __parent[__child] 1")
-
-            self.indentation -= 1
-            self.indentation -= 1
-        else:
-            print ("yikes!")
-            exit (1)
-
-        # push result to the stack
-        self.printCode ("PUSH __res")
-
-        self.indentation -= 1
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
-
-    def visitSubscriptExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        # simple subscript  
+        # get rhs and lhs off the stack 
+        self.printCode ("__rhs = stack.pop()")
+        self.printCode ("__lhs = stack.pop()")
+        
+        # simple additive 
         if node.overloadedFunctionCall == None:
-            node.lhs.accept (self)
-            self.printCode ("[")
-            node.offset.accept (self)
-            self.printCode ("]")
+            # addition
+            if node.op.lexeme == "+":
+                self.printCode ("__res = __lhs + __rhs")
+            # subtraction 
+            elif node.op.lexeme == "-":
+                self.printCode ("__res = __lhs - __rhs")
         # overloaded function call 
         else:
             self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
             # push args in reverse order
-            self.printCode (f"PUSH __offset")
-            self.printCode (f"PUSH __pointer")
-            self.printCode (f"CALL {node.overloadedFunctionCall.decl.scopeName}")
-            self.printCode (f"RESPONSE __res")
-            self.printCode (f"PUSH __res")
+            self.printCode (f"__res = {node.overloadedFunctionCall.decl.scopeName} (__lhs, __rhs)")
 
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        # push result to the stack
+        self.printCode ("stack.append(__res)")
+
+    def visitMultiplicativeExpressionNode (self, node):
+        if node.op.lexeme == "*":
+            self.printComment ("Multiplication")
+        elif node.op.lexeme == "/":
+            self.printComment ("Division")
+        elif node.op.lexeme == "%":
+            self.printComment ("Modulus")
+
+        # calc lhs 
+        self.printComment ("LHS")
+        node.lhs.accept (self)
+        # calc rhs 
+        self.printComment ("RHS")
+        node.rhs.accept (self)
+
+        # get rhs and lhs off the stack 
+        self.printCode ("__rhs = stack.pop()")
+        self.printCode ("__lhs = stack.pop()")
+        
+        # simple 
+        if node.overloadedFunctionCall == None:
+            # mul
+            if node.op.lexeme == "*":
+                self.printCode ("__res = __lhs * __rhs")
+            # div 
+            elif node.op.lexeme == "/":
+                # integer division
+                if node.lhs.type.type == Type.INT:
+                    self.printCode (f"__res = __lhs // __rhs")
+                else:
+                    self.printCode (f"__res = __lhs / __rhs")
+            # mod
+            elif node.op.lexeme == "%":
+                self.printCode ("__res = __lhs % __rhs")
+        # overloaded function call 
+        else:
+            self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
+            # push args in reverse order
+            self.printCode (f"__res = {node.overloadedFunctionCall.decl.scopeName} (__lhs, __rhs)")
+
+        # push result to the stack
+        self.printCode ("stack.append(__res)")
+            
+    #  ++ | -- | + | - | ! | ~
+    def visitUnaryLeftExpressionNode (self, node):
+        if node.op.lexeme == "++":
+            self.printComment ("Pre-Increment")
+        elif node.op.lexeme == "--":
+            self.printComment ("Pre-Decrement")
+        elif node.op.lexeme == "+":
+            self.printComment ("Positive")
+        elif node.op.lexeme == "-":
+            self.printComment ("Negative")
+        elif node.op.lexeme == "!":
+            self.printComment ("Negate")
+        elif node.op.lexeme == "~":
+            self.printComment ("Bitwise Negation")
+
+        # calc rhs 
+        self.printComment ("RHS")
+        node.rhs.accept (self)
+        # get rhs off the stack 
+        self.printCode ("__rhs = stack.pop ()")
+        # ** i think this could be a potential bug because we pop rhs before visiting lhs and offset
+    
+        if node.op.lexeme == "++":
+            if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
+                self.printCode (f"{node.rhs.decl.scopeName} = {node.rhs.decl.scopeName} + 1")
+                self.printCode (f"__res = {node.rhs.decl.scopeName}")
+            elif isinstance(node.rhs, SubscriptExpressionNode):
+                self.printComment ("RHS")
+                self.printComment ("Subscript assignment")
+
+                self.printComment ("LHS")
+                node.rhs.lhs.accept (self)
+
+                self.printComment ("OFFSET")
+                node.rhs.offset.accept (self)
+
+                self.printCode ("__offset = stack.pop ()")
+                self.printCode ("__pointer = stack.pop ()")
+
+                self.printCode (f"__pointer[__offset] = __pointer[__offset] + 1")
+                self.printCode (f"__res = __pointer[__offset]")
+            elif isinstance (node.rhs, MemberAccessorExpressionNode):
+                self.printComment ("LHS")
+                self.printComment ("Member Accessor Assignment")
+
+                self.printComment ("LHS")
+                node.rhs.lhs.accept (self)
+
+                self.printComment ("RHS")
+                # construct field index var 
+                # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
+                self.printCode (f"stack.append ({node.rhs.decl.scopeName})")
+
+                self.printCode ("__child = stack.pop ()")
+                self.printCode ("__parent = stack.pop ()")
+
+                self.printCode (f"__parent[__child] = __parent[__child] + 1")
+                self.printCode (f"__res = __parent[__child]")
+            else:
+                print ("yikes!")
+                exit (1)
+        elif node.op.lexeme == "--":
+            if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
+                self.printCode (f"{node.rhs.decl.scopeName} = {node.rhs.decl.scopeName} - 1")
+                self.printCode (f"__res = {node.rhs.decl.scopeName}")
+            elif isinstance(node.rhs, SubscriptExpressionNode):
+                self.printComment ("RHS")
+                self.printComment ("Subscript assignment")
+
+                self.printComment ("LHS")
+                node.rhs.lhs.accept (self)
+
+                self.printComment ("OFFSET")
+                node.rhs.offset.accept (self)
+
+                self.printCode ("__offset = stack.pop ()")
+                self.printCode ("__pointer = stack.pop ()")
+
+                self.printCode (f"__pointer[__offset] = __pointer[__offset] - 1")
+                self.printCode (f"__res = __pointer[__offset]")
+            elif isinstance (node.rhs, MemberAccessorExpressionNode):
+                self.printComment ("LHS")
+                self.printComment ("Member Accessor Assignment")
+
+                self.printComment ("LHS")
+                node.rhs.lhs.accept (self)
+
+                self.printComment ("RHS")
+                # construct field index var 
+                # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
+                self.printCode (f"stack.append ({node.rhs.decl.scopeName})")
+
+                self.printCode ("__child = stack.pop ()")
+                self.printCode ("__parent = stack.pop ()")
+
+                self.printCode (f"__parent[__child] = __parent[__child] - 1")
+                self.printCode (f"__res = __parent[__child]")
+            else:
+                print ("yikes!")
+                exit (1)
+        elif node.op.lexeme == "+":
+            self.printCode ("__res = __rhs")
+        elif node.op.lexeme == "-":
+            self.printCode ("__res = -__rhs")
+        elif node.op.lexeme == "!":
+            self.printCode ("__res = not __rhs")
+        elif node.op.lexeme == "~":
+            self.printCode ("__res = ~__rhs")
+
+        # push result to the stack
+        self.printCode ("stack.append (__res)")
+
+    def visitPostIncrementExpressionNode(self, node):
+        self.printComment ("Post-Increment")
+
+        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
+            self.printCode (f"__res = {node.lhs.decl.scopeName}")
+            self.printCode (f"{node.lhs.decl.scopeName} = {node.lhs.decl.scopeName} + 1")
+        elif isinstance(node.lhs, SubscriptExpressionNode):
+            self.printComment ("RHS")
+            self.printComment ("Subscript assignment")
+
+            self.printComment ("LHS")
+            node.lhs.lhs.accept (self)
+
+            self.printComment ("OFFSET")
+            node.lhs.offset.accept (self)
+
+            self.printCode ("__offset = stack.pop ()")
+            self.printCode ("__pointer = stack.pop ()")
+
+            self.printCode (f"__res = __pointer[__offset]")
+            self.printCode (f"__pointer[__offset] = __pointer[__offset] + 1")
+        elif isinstance (node.lhs, MemberAccessorExpressionNode):
+            self.printComment ("LHS")
+            self.printComment ("Member Accessor Assignment")
+
+            self.printComment ("LHS")
+            node.lhs.lhs.accept (self)
+
+            self.printComment ("RHS")
+            # construct field index var 
+            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
+            self.printCode (f"stack.append ({node.lhs.decl.scopeName})")
+
+            self.printCode ("__child = stack.pop ()")
+            self.printCode ("__parent = stack.pop ()")
+
+            self.printCode (f"__res = __parent[__child]")
+            self.printCode (f"__parent[__child] = __parent[__child] + 1")
+        else:
+            print ("yikes!")
+            exit (1)
+
+        # push result to the stack
+        self.printCode ("stack.append (__res)")
+
+    def visitPostDecrementExpressionNode (self, node):
+        self.printComment ("Post-Decrement")
+
+        if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
+            self.printCode (f"__res = {node.lhs.decl.scopeName}")
+            self.printCode (f"{node.lhs.decl.scopeName} = {node.lhs.decl.scopeName} - 1")
+        elif isinstance(node.lhs, SubscriptExpressionNode):
+            self.printComment ("RHS")
+            self.printComment ("Subscript assignment")
+
+            self.printComment ("LHS")
+            node.lhs.lhs.accept (self)
+
+            self.printComment ("OFFSET")
+            node.lhs.offset.accept (self)
+
+            self.printCode ("__offset = stack.pop ()")
+            self.printCode ("__pointer = stack.pop ()")
+
+            self.printCode (f"__res = __pointer[__offset]")
+            self.printCode (f"__pointer[__offset] = __pointer[__offset] - 1")
+        elif isinstance (node.lhs, MemberAccessorExpressionNode):
+            self.printComment ("LHS")
+            self.printComment ("Member Accessor Assignment")
+
+            self.printComment ("LHS")
+            node.lhs.lhs.accept (self)
+
+            self.printComment ("RHS")
+            # construct field index var 
+            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
+            self.printCode (f"stack.append ({node.lhs.decl.scopeName})")
+
+            self.printCode ("__child = stack.pop ()")
+            self.printCode ("__parent = stack.pop ()")
+
+            self.printCode (f"__res = __parent[__child]")
+            self.printCode (f"__parent[__child] = __parent[__child] - 1")
+        else:
+            print ("yikes!")
+            exit (1)
+
+        # push result to the stack
+        self.printCode ("stack.append (__res)")
+
+    def visitSubscriptExpressionNode (self, node):
+        self.printComment ("Subscript")
+
+        self.printComment ("LHS")
+        node.lhs.accept (self)
+        self.printComment ("OFFSET")
+        node.offset.accept (self)
+
+        self.printCode ("__offset = stack.pop ()")
+        self.printCode ("__pointer = stack.pop ()")
+
+        # simple subscript  
+        if node.overloadedFunctionCall == None:
+            self.printCode ("stack.append (__pointer[__offset])")
+        # overloaded function call 
+        else:
+            self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
+            # push args in reverse order
+            self.printCode (f"__res = {node.overloadedFunctionCall.decl.scopeName} (__pointer, __offset)")
+            self.printCode (f"stack.append (__res)")
 
     def visitFunctionCallExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printCode (f"{node.decl.scopeName} (")
+        self.printComment (f"Function Call - {node.decl.signature} -> {node.decl.type}")
 
-        # visit and print each argument comma separated
-        if len(node.args) != 0:
-            node.args[0].accept (self)
-        for i in range(1, len(node.args)):
-            self.printCode (", ")
-            node.args[i].accept (self)
+        self.printComment ("Arguments")
+        # calc arguments first
+        # an argument could be another function call
+        # to avoid conflicts with variables, 
+        # we will have a separate loop to pop the values
+        for arg in node.args:
+            arg.accept (self)
 
-        # end parameter list
-        self.printCode (")")
+        argIndex = len(node.args)-1
+        args = []
+        for arg in node.args:
+            # save argument 
+            argName = f"__arg{argIndex}"
+            argIndex -= 1
+            self.printCode (f"{argName} = stack.pop ()")
+            args.insert (0, argName)
 
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        # call function
+        self.printComment (f"*** {node.function.id}")
+        funcname = ""
+        if node.decl.scopeName == "":
+            # x = sum([1 if '\n' in s else 0 for s in self.code])
+            # print (f"[code-gen] Error: no scope name for {node.function.id} {[t.type.__str__() for t in node.args]} {node.lineNumber} {x}")
+            # print (f"   this could have happened due to a template using a class that was defined after the template")
+            # print (f"   temporary fix: move the class declaration to above the template class that uses it")
+            # solution! extremely ad hoc 
+            funcname = node.decl.signature
+            # exit (1)
+        else:
+            funcname = node.decl.scopeName
+
+        self.printCode (f"__res = {funcname} ({', '.join(args)})")
+        
+        # put function's return val on the stack
+        self.printCode ("stack.append (__res) # function call result")
 
     def visitMemberAccessorExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
+
         # static calls 
         # lhs is not an identifier 
         if node.isstatic:
@@ -1210,62 +1303,61 @@ class CodeGenVisitor_python (ASTVisitor):
             self.indentation -= 1
             return 
 
-        # obj[field_index]
+        self.printComment ("Member Accessor")
+
+        self.printComment ("LHS")
         node.lhs.accept (self)
 
+        self.printComment ("RHS")
         if node.decl.scopeName == "":
             x = sum([1 if '\n' in s else 0 for s in self.code])
             print (f"[code-gen] [member-accessor] Error: no scope name for '{node.decl.id}' on line {node.lineNumber}")
             print (f"   this could have happened due to a cyclic reference/composition with template classes")
             print (f"   cyclic references are not yet supported")
             exit (1)
-        self.printCode (f"[{node.decl.scopeName}]")
+        self.printCode (f"stack.append ({node.decl.scopeName})")
 
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printCode ("__child = stack.pop ()")
+        self.printCode ("__parent = stack.pop ()")
+        self.printCode ("stack.append (__parent[__child])")
 
     def visitFieldAccessorExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printComment ("Field Accessor")
-
-        self.indentation += 1
-
-        self.printComment ("LHS")
-        self.indentation += 1
-        node.lhs.accept (self)
-        self.indentation -= 1
-
-        self.printComment ("RHS")
-        self.indentation += 1
-        # construct field index var 
-        self.printCode (f"PUSH {node.decl.scopeName}")
-        self.indentation -= 1
-
-        self.printCode ("POP __child")
-        self.printCode ("POP __parent")
-        self.printCode ("PUSH __parent[__child]")
-
-        self.indentation -= 1
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        pass
 
     def visitMethodAccessorExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        # if node.decl.isVirtual:
-        #     self.printComment (f"Virtual Method Call - {node.decl.signatureNoScope} -> {node.decl.type}")
-        # else:
-        #     self.printComment (f"Method Call - {node.decl.signature} -> {node.decl.type}")
+        if node.decl.isVirtual:
+            self.printComment (f"Virtual Method Call - {node.decl.signatureNoScope} -> {node.decl.type}")
+        else:
+            self.printComment (f"Method Call - {node.decl.signature} -> {node.decl.type}")
+
+        self.printComment ("LHS")
+        node.lhs.accept (self)
+
+        self.printComment ("RHS")
+        # construct field index var 
+        # methodName = f"__method__{node.lhs.type.id}__{node.rhs.id}"
+
+        self.printComment ("Arguments")
+        # calc arguments first
+        # an argument could be another function call
+        # to avoid conflicts with variables, 
+        # we will have a separate loop to pop the values
+        for arg in node.args:
+            arg.accept (self)
+
+        argIndex = len(node.args)-1
+        args = ['']
+        for arg in node.args:
+            # save argument 
+            argName = f"__arg{argIndex}"
+            argIndex -= 1
+            self.printCode (f"{argName} = stack.pop ()")
+            args.insert (1, argName)
+        
+        # parent object should be on the stack
+        # *happens after args incase args uses __obj
+        # in another method call
+        self.printCode ("__obj = stack.pop ()")
 
         # if virtual function
         if node.decl.isVirtual:
@@ -1282,185 +1374,87 @@ class CodeGenVisitor_python (ASTVisitor):
             else:
                 print (f"Error: Dispatch Function not found")
             # call proper dispatch function 
-            self.printCode (f"ASSIGN __dtable __obj[0]")
-            self.printCode (f"CALL __dtable[{i}]")
+            self.printCode (f"__dtable = __obj[0]")
+            self.printCode (f"__retval = __dtable[{i}] (__obj{', '.join(args)})")
 
         # otherwise, call function normally
         else:
-            self.printCode (f"{node.decl.scopeName}")
-
-        
-        self.printCode (f" (")
-        # lhs is object parameter
-        node.lhs.accept (self)
-        # add rest of params after object param
-        for i in range(len(node.args)):
-            self.printCode (", ")
-            node.args[i].accept (self)
-        self.printCode (")")
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+            self.printCode (f"__retval = {node.decl.scopeName} (__obj{', '.join(args)})")
+                
+        # put function's return val on the stack
+        self.printCode ("stack.append (__retval)")
 
     def visitThisExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printCode (f"this")
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printCode (f"stack.append(this)")
 
     def visitIdentifierExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printCode (f"{node.decl.scopeName}")
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printCode (f"stack.append({node.decl.scopeName})")
 
     def visitArrayAllocatorExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        # this is probably not ideal and will likely cause problems
-        self.printCode ("[None] * ")
         node.dimensions[0].accept (self)
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printCode (f"__dim = stack.pop ()")
+        # this is probably not ideal and will likely cause problems
+        self.printCode (f"__res = [None] * __dim")
+        self.printCode ("stack.append (__res)")
 
     def visitConstructorCallExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        # self.printComment (f"Constructor Call - {node.decl.signature} -> {node.decl.parentClass.type}")
+        self.printComment (f"Constructor Call - {node.decl.signature} -> {node.decl.parentClass.type}")
 
-        self.printCode (f"{node.decl.scopeName} (")
-        if len(node.args) != 0:
-            node.args[0].accept (self)
-        for i in range(1, len(node.args)):
-            self.printCode (", ")
-            node.args[i].accept (self)
-        self.printCode (")")
+        self.printComment ("Arguments")
+        # calc arguments first
+        # an argument could be another function call
+        # to avoid conflicts with variables, 
+        # we will have a separate loop to pop the values
+        for arg in node.args:
+            arg.accept (self)
 
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        # retrieve values
+        argIndex = len(node.args)-1
+        args = []
+        for arg in node.args:
+            # save argument 
+            argName = f"__arg{argIndex}"
+            argIndex -= 1
+            self.printCode (f"{argName} = stack.pop ()")
+            args.insert (0, argName)
+
+        # call function
+        self.printCode (f"__retval = {node.decl.scopeName} ({', '.join(args)})")
+        
+        # put function's return val on the stack
+        self.printCode ("stack.append (__retval)")
     
     def visitSizeofExpressionNode(self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printComment ("Sizeof Operator")
-        self.indentation += 1
-
-        # calc rhs
-        self.printComment ("RHS")
-        self.indentation += 1
         node.rhs.accept (self)
-        self.indentation -= 1
-
-        self.printComment ("Calculate array size")
-        self.printCode ("POP __array")
-        self.printCode ("SIZEOF __size __array")
-        self.printCode ("PUSH __size")
-
-        self.indentation -= 1
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printCode ("__arr = stack.pop ()")
+        self.printCode ("__res = len (__arr)")
+        self.printCode ("stack.append (__res)")
     
     def visitFreeExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
         # nothing to do, python has its own garbage collector ;)
         # for now, i am just calling the builtin free function which will do nothing
-        self.printCode ("free (")
         node.rhs.accept (self)
-        self.printCode (")")
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printCode ("__arr = stack.pop ()")
+        self.printCode ("free (__arr)")
+        self.printCode ("stack.append (0)")
 
     def visitIntLiteralExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printCode (f"{node.value}")
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printComment ("Int Literal")
+        self.printCode (f"stack.append({node.value})")
 
     def visitFloatLiteralExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printCode (f"{node.value}")
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printComment ("Float Literal")
+        self.printCode (f"stack.append({node.value})")
 
     def visitCharLiteralExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printCode (f"'{(node.value)}'")
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printComment ("Char Literal")
+        self.printCode (f"stack.append('{node.value}')")
 
     def visitStringLiteralExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-        self.printCode (node.value)
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printCode (f"stack.append({node.value})")
 
     def visitListConstructorExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
-            
-
         self.printComment ("Array Constructor")
-
-        self.indentation += 1
 
         # evaluate each element
         # elements could be list constructors 
@@ -1487,27 +1481,12 @@ class CodeGenVisitor_python (ASTVisitor):
         self.printCode ("PUSH __list")
 
         self.indentation -= 1
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
         
 
     def visitNullExpressionNode (self, node):
-        # wrap expression in parentheses 
-        # if it should have parentheses
-        if node.hasParentheses:
-            self.printCode ("(")
             
         self.printComment ("Null Literal")
-        self.indentation += 1
-        self.printCode ("ASSIGN __null 0")
-        self.printCode ("PUSH __null")
-        self.indentation -= 1
-
-        # close parentheses if we were supposed to have parens
-        if node.hasParentheses:
-            self.printCode (")")
+        self.printCode ("stack.append (None)")
 
 
 # ========================================================================

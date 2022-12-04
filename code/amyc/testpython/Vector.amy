@@ -1,4 +1,7 @@
 
+#ifndef VECTOR_H
+#define VECTOR_H
+
 template <:T:>
 class Vector
 {
@@ -73,4 +76,44 @@ function void println (Vector<:T:> v)
     print<:T:> (v);
     println ();
 }
-            Vector<:float:> v = new Vector<:float:> ();v.pushBack (3.14); v.pushBack (-2.145e2); v.pushBack (1.0e-4); println<:float:> (v);
+
+Vector<:int:> nums = new Vector<:int:> ();
+println<:int:> (nums);
+
+nums.pushBack (4);
+println<:int:> (nums);
+
+nums.pushBack (24);
+println<:int:> (nums);
+
+println (nums.popBack ());
+println<:int:> (nums);
+
+nums.pushBack (42);
+println<:int:> (nums);
+
+for (int i = 0; i < 10; ++i)
+{
+    nums.pushBack (i*2);
+}
+println<:int:> (nums);
+
+Vector<:float:> v = new Vector<:float:> ();
+println<:float:> (v);
+
+v.pushBack (3.14);
+println<:float:> (v);
+
+v.pushBack (21.0);
+println<:float:> (v);
+
+v.pushBack (1.4123423423477723);
+println<:float:> (v);
+
+println (v.popBack ());
+println<:float:> (v);
+
+v.pushBack (1.0e-4);
+println<:float:> (v);
+
+#endif

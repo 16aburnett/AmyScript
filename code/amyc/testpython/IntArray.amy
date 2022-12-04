@@ -1,6 +1,6 @@
 
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef INTARRAY_H
+#define INTARRAY_H
 
 class IntArray
 {

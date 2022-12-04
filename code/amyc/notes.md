@@ -27,6 +27,8 @@ when x then y else z
 Friday, Dec 2, 2022 - stayed up til 4:22am writing backend for python :)
 Saturday, Dec 3, 2022 - stayed up til 3:00am implementing classes for python backend (and tweeks for x86)
 
+- [ ] arr[:] syntax
+
 - [ ] remove all unnecessary files
 
 - [ ] separate amyasm to a separate repo
@@ -53,7 +55,17 @@ Saturday, Dec 3, 2022 - stayed up til 3:00am implementing classes for python bac
 
 - [ ] operator overloading
 
+- [ ] extra keywords
+    - and, or, not
+    - c++ has support for this and so should i
+
 - [ ] function capturing 
+    function void setx [x] (int a)
+    {
+        x = a;
+    }
+    - adds reference to x
+
 - [ ] add log level (debug already exists)
     amyc -l {info, debug, trace} ...
     amyc --log-level {info, debug, trace} ...
@@ -96,7 +108,7 @@ Saturday, Dec 3, 2022 - stayed up til 3:00am implementing classes for python bac
     - ensure the stdout value is correct
 
 
-- [ ] 0xff, 0b0101
+- [ ] 0xff (not yet), 0b0101 (not yet), 1e-3 (already supported)
 
 ECX - Used as a loop counter. "this" pointer in C++.
 

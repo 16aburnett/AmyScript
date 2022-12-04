@@ -531,42 +531,129 @@ function float getPI ()
 print (getPI());
 """, expectedOutput="3.14"),
         Test ("Test Return no value", code=
-"""
-function void printsomething ()
-{
-    print ("this");
-    return;
-    print ("not this");
-}
-printsomething();
-""", expectedOutput="this"),
+            """
+            function void printsomething ()
+            {
+                print ("this");
+                return;
+                print ("not this");
+            }
+            printsomething();
+            """, expectedOutput="this"),
         TestGroup (
             "Max function", 
-"""
-function int max (int a, int b)
-{
-    if (a >= b)
-        return a;
-    return b;
-}
-""", 
+            """
+            function int max (int a, int b)
+            {
+                if (a >= b)
+                    return a;
+                return b;
+            }
+            """, 
             [
                 Test ("a < b", "print (max(-3, 7));", expectedOutput="7"),
                 Test ("a == b", "print (max(7, 7));", expectedOutput="7"),
                 Test ("a > b", "print (max(42, 3));", expectedOutput="42"),
             ]),
+    ]),
+    TestGroup ("Classes", "", [
         TestGroup (
-            "Function with side effects", 
+            "Templated Vector Class testing", 
             """
-            int c = 10;
-            function void setc (int a)
+template <:T:>
+class Vector
+{
+    public field T[]   data;
+    public field int   size;
+    public field int   capacity;  
+
+    constructor ()
+    {
+        this.capacity = 10;
+        this.size = 0; 
+        this.data = new T[this.capacity];
+    }
+
+    public method void pushBack (T val)
+    {
+        // ensure there is space 
+        if (this.size + 1 >= this.capacity)
+        {
+            this.capacity = this.capacity * 2; 
+            T[] nData = new T[this.capacity];
+            // move old data over
+            for (int i = 0; i < this.size; ++i)
             {
-                c = a;
+                nData[i] = this.data[i];
             }
+            free (this.data);
+            this.data = nData; 
+        }
+
+        // add new num
+        this.data[this.size] = val; 
+        ++this.size; 
+    }
+
+    public method T popBack ()
+    {
+        this.size -= 1;
+        return this.data[this.size];
+    }
+
+    public method T get (int index)
+    {
+        return this.data[index];
+    }
+
+    public method void set (int index, T value)
+    {
+        this.data[index] = value;
+    }
+
+}
+
+template <:T:>
+function void print (Vector<:T:> v)
+{
+    print ('[');
+    if (v.size != 0)
+        print (v.data[0]);
+    for (int i = 1; i < v.size; ++i)
+    {
+        print (',');
+        print (' ');
+        print (v.data[i]);
+    }
+    print (']');
+}
+
+template <:T:>
+function void println (Vector<:T:> v)
+{
+    print<:T:> (v);
+    println ();
+}
             """, 
             [
-                Test ("before call", "print (c);", expectedOutput="10"),
-                Test ("after call", "setc (42); print (c);", expectedOutput="42"),
+                TestGroup (
+                    "Vector<:int:>", 
+                    "Vector<:int:> v = new Vector<:int:> ();", 
+                    [
+                        Test ("Constructing Vector", code="println<:int:> (v);", expectedOutput="[]\n"),
+                        Test ("Push back", code="v.pushBack (42); println<:int:> (v);", expectedOutput="[42]\n"),
+                        Test ("Push back multiple", code="v.pushBack (42); v.pushBack (7); v.pushBack (-3); println<:int:> (v);", expectedOutput="[42, 7, -3]\n"),
+                    ]
+                ),
+                TestGroup (
+                    "Vector<:float:>", 
+                    "Vector<:float:> v = new Vector<:float:> ();", 
+                    [
+                        Test ("Constructing Vector", code="println<:float:> (v);", expectedOutput="[]\n"),
+                        Test ("Push back", code="v.pushBack (3.14); println<:float:> (v);", expectedOutput="[3.14]\n"),
+                        Test ("Push back multiple", code="v.pushBack (3.14); v.pushBack (-2.145e2); v.pushBack (1.0e-4); println<:float:> (v);", expectedOutput="[3.14, -214.5, 0.0001]\n"),
+                    ]
+                ),
             ]
         ),
     ])

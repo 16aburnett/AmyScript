@@ -2447,7 +2447,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
         # char - 1 byte
         # int, float, pointer - 8 bytes
         if node.type.__str__() == "char[]":
-            self.printCode (f"mov edi, rdx ; num bytes to allocate (1 byte per element)")
+            self.printCode (f"mov rdi, rdx ; num bytes to allocate (1 byte per element)")
         # int[] float[] x[][]
         else:
             self.printCode (f"imul rdx, 8 ; 8 bytes per element")
@@ -2529,7 +2529,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.indentation -= 1
 
         print (f"[codegen] Error: sizeof keyword not implemented for x86")
-        return False
+        exit (1)
 
         self.printComment ("Calculate array size")
         self.printCode ("POP __array")
