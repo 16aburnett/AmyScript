@@ -20,7 +20,7 @@ jump __endOfLibrary
 //========================================================================
 // Prints a given string to the screen
 // void print (char[] stringToPrint);
-print__char__1:
+__builtin__print__char__1:
     // grab string
     stackget __str 0
     sizeof __size __str
@@ -43,7 +43,7 @@ __print__char__1__endloop:
 //========================================================================
 // Prints an int to the screen
 // void print (int intToPrint);
-print__int:
+__builtin__print__int:
     stackget __str 0
     print __str
     return 0
@@ -51,7 +51,7 @@ print__int:
 //========================================================================
 // Prints a float to the screen
 // void print (float floatToPrint);
-print__float:
+__builtin__print__float:
     stackget __str 0
     print __str
     return 0
@@ -59,7 +59,7 @@ print__float:
 //========================================================================
 // Prints a char to the screen
 // void print (char charToPrint);
-print__char:
+__builtin__print__char:
     // grab string
     stackget __char 0
     print __char
@@ -68,7 +68,7 @@ print__char:
 //========================================================================
 // Prints an enum's integer value 
 // void print (Enum e);
-print__Enum:
+__builtin__print__Enum:
     stackget __e 0
     print __e
     return 0
@@ -76,7 +76,7 @@ print__Enum:
 //========================================================================
 // Prints a given string to the screen with a newline at the end
 // void println (char[] stringToPrint);
-println__char__1:
+__builtin__println__char__1:
     // grab string
     stackget __str 0
     sizeof __size __str
@@ -100,7 +100,7 @@ __println__char__1__endloop:
 //========================================================================
 // Prints an int to the screen with a newline
 // void print (int intToPrint);
-println__int:
+__builtin__println__int:
     stackget __str 0
     println __str
     return 0
@@ -108,7 +108,7 @@ println__int:
 //========================================================================
 // Prints a float to the screen with a newline
 // void println (float floatToPrint);
-println__float:
+__builtin__println__float:
     stackget __str 0
     println __str
     return 0
@@ -116,7 +116,7 @@ println__float:
 //========================================================================
 // Prints a char to the screen with a newline
 // void println (char charToPrint);
-println__char:
+__builtin__println__char:
     // grab string
     stackget __char 0
     println __char
@@ -125,7 +125,7 @@ println__char:
 //========================================================================
 // Prints an enum's integer value with a newline
 // void println (Enum e);
-println__Enum:
+__builtin__println__Enum:
     stackget __e 0
     println __e
     return 0
@@ -133,32 +133,41 @@ println__Enum:
 //========================================================================
 // Prints a newline to the console
 // void println ();
-println:
+__builtin__println:
     println 
     return 0
 
 //========================================================================
 // grabs input from the console 
 // char[] input ();
-input:
+__builtin__input:
     input __line
     return __line
 
 //========================================================================
 // exits/stops the program 
-exit:
+__builtin__exit:
     halt
+
+//========================================================================
+
+// Exits the program with the given exit code 
+// void exit(int exit_code)
+// - exit_code : 
+__builtin__exit__int:
+    // ** not implemented for amyasm
+    halt 
 
 //========================================================================
 // returns default float value
 // float float ();
-float:
+__builtin__float:
     return 0.0
 
 //========================================================================
 // converts int to float
 // float intToFloat (int);
-intToFloat__int:
+__builtin__intToFloat__int:
     stackget val 0
     itof res val
     return res
@@ -166,7 +175,7 @@ intToFloat__int:
 //========================================================================
 // parses a float from a given char[]
 // float stringToFloat (char[]);
-stringToFloat__char__1:
+__builtin__stringToFloat__char__1:
     stackget val 0
     stof res val
     return res
@@ -174,19 +183,19 @@ stringToFloat__char__1:
 //========================================================================
 // returns default int value
 // int int ();
-int:
+__builtin__int:
     return 0
 
 //========================================================================
 // returns default char value
 // char char ();
-char:
+__builtin__char:
     return '0'
 
 //========================================================================
 // converts float to int
 // int floatToInt (float);
-floatToInt__float:
+__builtin__floatToInt__float:
     stackget val 0
     ftoi res val
     return res
@@ -194,7 +203,7 @@ floatToInt__float:
 //========================================================================
 // parses an int from a given char[]
 // int stringToInt (char[]);
-stringToInt__char__1:
+__builtin__stringToInt__char__1:
     stackget val 0
     stoi res val
     return res
@@ -202,7 +211,7 @@ stringToInt__char__1:
 //========================================================================
 // parses an int from a given char
 // int charToInt (char);
-charToInt__char:
+__builtin__charToInt__char:
     stackget val 0
     ctoi res val
     return res
@@ -210,7 +219,7 @@ charToInt__char:
 //========================================================================
 // converts int to string
 // char[] string (int);
-string__int:
+__builtin__string__int:
     stackget val 0
     string res val
     return res
@@ -218,7 +227,7 @@ string__int:
 //========================================================================
 // converts float to string
 // char[] string (float);
-string__float:
+__builtin__string__float:
     stackget val 0
     string res val
     return res
@@ -227,7 +236,7 @@ string__float:
 
 // returns default value for array and object (null)
 // null null ();
-null:
+__builtin__null:
     return __null
 
 //========================================================================
@@ -248,286 +257,151 @@ __endOfLibrary:
 
 // Assignment - '='
    // RHS
-      // Mod
+      // Function Call - input() -> char[]
+         // Arguments
+         // Pushing args in reverse order
+         // *** input
+         CALL __builtin__input
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__line 0
+   POP __rhs
+   ASSIGN __main__line __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+//------------------------------------------------------------------------
+// While-Loop
+__while__0:
+   // Condition
+      // Not Equal
          // LHS
-            // Multiplication
+            // Subscript
                // LHS
-                  // Addition
-                     // LHS
-                        // Addition
-                           // LHS
-                              // Negative
-                                 // RHS
-                                    // Int Literal
-                                       PUSH 17
-                                 POP __rhs
-                                 SUBTRACT __res 0 __rhs
-                                 PUSH __res
-                           // RHS
-                              // Multiplication
-                                 // LHS
-                                    // Int Literal
-                                       PUSH 42
-                                 // RHS
-                                    // Addition
-                                       // LHS
-                                          // Int Literal
-                                             PUSH 2
-                                       // RHS
-                                          // Int Literal
-                                             PUSH 2
-                                       POP __rhs
-                                       POP __lhs
-                                       ADD __res __lhs __rhs
-                                       PUSH __res
-                                 POP __rhs
-                                 POP __lhs
-                                 MULTIPLY __res __lhs __rhs
-                                 PUSH __res
-                           POP __rhs
-                           POP __lhs
-                           ADD __res __lhs __rhs
-                           PUSH __res
-                     // RHS
-                        // Int Literal
-                           PUSH 1
-                     POP __rhs
-                     POP __lhs
-                     ADD __res __lhs __rhs
-                     PUSH __res
-               // RHS
-                  // Negative
-                     // RHS
-                        // Int Literal
-                           PUSH 1
-                     POP __rhs
-                     SUBTRACT __res 0 __rhs
-                     PUSH __res
-               POP __rhs
-               POP __lhs
-               MULTIPLY __res __lhs __rhs
-               PUSH __res
+                  // Identifier - line
+                     PUSH __main__line
+               // OFFSET
+                  // Int Literal
+                     PUSH 0
+               POP __offset
+               POP __pointer
+               PUSH __pointer[__offset]
          // RHS
-            // Int Literal
-               PUSH 3
+            // Char Literal
+               PUSH '$'
          POP __rhs
          POP __lhs
-         MOD __res __lhs __rhs
+         NEQUAL __res __lhs __rhs
          PUSH __res
-   // LHS
-      // Variable Declaration
-         ASSIGN __main__x 0
-   POP __rhs
-   ASSIGN __main__x __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
-// Assignment - '='
-   // RHS
-      // Multiplication
-         // LHS
-            // Identifier - x
-               PUSH __main__x
-         // RHS
-            // Int Literal
-               PUSH 21
-         POP __rhs
-         POP __lhs
-         MULTIPLY __res __lhs __rhs
-         PUSH __res
-   // LHS
-      // Variable Declaration
-         ASSIGN __main__y 0
-   POP __rhs
-   ASSIGN __main__y __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
-// Assignment - '='
-   // RHS
-      // Division
-         // LHS
-            // Identifier - y
-               PUSH __main__y
-         // RHS
-            // Identifier - x
-               PUSH __main__x
-         POP __rhs
-         POP __lhs
-         DIVIDE __res __lhs __rhs
-         PUSH __res
-   // LHS
-      // Variable Declaration
-         ASSIGN __main__z 0
-   POP __rhs
-   ASSIGN __main__z __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
-// Function Call - println(int) -> void
-   // Arguments
-      // Identifier - z
-         PUSH __main__z
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   // *** println
-   CALL println__int
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
-// Assignment - '='
-   // RHS
-      // Char Literal
-         PUSH 'A'
-   // LHS
-      // Variable Declaration
-         ASSIGN __main__c0 0
-   POP __rhs
-   ASSIGN __main__c0 __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
-// Assignment - '='
-   // RHS
-      // Char Literal
-         PUSH 'm'
-   // LHS
-      // Variable Declaration
-         ASSIGN __main__c1 0
-   POP __rhs
-   ASSIGN __main__c1 __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
-// Assignment - '='
-   // RHS
-      // Char Literal
-         PUSH 'y'
-   // LHS
-      // Variable Declaration
-         ASSIGN __main__c2 0
-   POP __rhs
-   ASSIGN __main__c2 __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
-// Assignment - '='
-   // RHS
-      // Char Literal
-         PUSH '\n'
-   // LHS
-      // Variable Declaration
-         ASSIGN __main__c3 0
-   POP __rhs
-   ASSIGN __main__c3 __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
-// Function Call - print(char) -> void
-   // Arguments
-      // Identifier - c0
-         PUSH __main__c0
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   // *** print
-   CALL print__char
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
-// Function Call - print(char) -> void
-   // Arguments
-      // Identifier - c1
-         PUSH __main__c1
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   // *** print
-   CALL print__char
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
-// Function Call - print(char) -> void
-   // Arguments
-      // Identifier - c2
-         PUSH __main__c2
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   // *** print
-   CALL print__char
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
-// Function Call - print(char) -> void
-   // Arguments
-      // Identifier - c3
-         PUSH __main__c3
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   // *** print
-   CALL print__char
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
-// Assignment - '='
-   // RHS
-      // String Literal
-         MALLOC __str 13
-         ASSIGN __str[0] 'H'
-         ASSIGN __str[1] 'e'
-         ASSIGN __str[2] 'l'
-         ASSIGN __str[3] 'l'
-         ASSIGN __str[4] 'o'
-         ASSIGN __str[5] ','
-         ASSIGN __str[6] ' '
-         ASSIGN __str[7] 'W'
-         ASSIGN __str[8] 'o'
-         ASSIGN __str[9] 'r'
-         ASSIGN __str[10] 'l'
-         ASSIGN __str[11] 'd'
-         ASSIGN __str[12] '!'
-         PUSH __str
-   // LHS
-      // Variable Declaration
-         ASSIGN __main__string 0
-   POP __rhs
-   ASSIGN __main__string __rhs
-   PUSH __rhs
-// Statement results can be ignored
-POP __void
-// Function Call - println(char[]) -> void
-   // Arguments
-      // Identifier - string
-         PUSH __main__string
-      POP __arg0
-   // Pushing args in reverse order
-   PUSH __arg0
-   // *** println
-   CALL println__char__1
-   // Remove args
-   POP __void
-   RESPONSE __retval
-   PUSH __retval
-// Statement results can be ignored
-POP __void
+      POP __cond
+      CMP __cond 0
+      JEQ __endwhile__0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - println(char) -> void
+            // Arguments
+               // Subscript
+                  // LHS
+                     // Identifier - line
+                        PUSH __main__line
+                  // OFFSET
+                     // Int Literal
+                        PUSH 0
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL __builtin__println__char
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         // Function Call - println(int) -> void
+            // Arguments
+               // Not Equal
+                  // LHS
+                     // Subscript
+                        // LHS
+                           // Identifier - line
+                              PUSH __main__line
+                        // OFFSET
+                           // Int Literal
+                              PUSH 0
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // RHS
+                     // Char Literal
+                        PUSH '$'
+                  POP __rhs
+                  POP __lhs
+                  NEQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL __builtin__println__int
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         // Function Call - println(char[]) -> void
+            // Arguments
+               // Identifier - line
+                  PUSH __main__line
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL __builtin__println__char__1
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         // Free Operator
+            // RHS
+               // Identifier - line
+                  PUSH __main__line
+            // Free array
+            POP __array
+            FREE __array
+            PUSH __array
+         // Statement results can be ignored
+         POP __void
+         // Assignment - '='
+            // RHS
+               // Function Call - input() -> char[]
+                  // Arguments
+                  // Pushing args in reverse order
+                  // *** input
+                  CALL __builtin__input
+                  // Remove args
+                  RESPONSE __retval
+                  PUSH __retval
+            POP __rhs
+            ASSIGN __main__line __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+      //------------------------------------------------------------------
+   JUMP __while__0
+   // End of While
+   __endwhile__0:
+//------------------------------------------------------------------------
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

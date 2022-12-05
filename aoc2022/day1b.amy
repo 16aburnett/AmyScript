@@ -45,21 +45,21 @@ function void bubbleSort (Vector<:T:> arr)
     }
 }
 
-for (int i = 0; i < elfCalories.size; ++i)
-{
-    print (elfCalories.get(i));
-    print (' ');
-}
-println ();
+//for (int i = 0; i < elfCalories.size; ++i)
+//{
+//    print (elfCalories.get(i));
+//    print (' ');
+//}
+//println ();
 
 bubbleSort<:int:> (elfCalories);
 
-for (int i = 0; i < elfCalories.size; ++i)
-{
-    print (elfCalories.get(i));
-    print (' ');
-}
-println ();
+//for (int i = 0; i < elfCalories.size; ++i)
+//{
+//    print (elfCalories.get(i));
+//    print (' ');
+//}
+//println ();
 
 int sumTop3Elves = elfCalories.get(0) + elfCalories.get(1) + elfCalories.get(2);
 

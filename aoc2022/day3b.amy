@@ -55,7 +55,7 @@ for (int l = 0; l < lines.size; l+=3)
             score = i;
     }
     
-    print (common); print (' '); println (score);
+    // print (common); print (' '); println (score);
 
     total += score;
 

@@ -1435,7 +1435,7 @@ class CodeGenVisitor_python (ASTVisitor):
         # for now, i am just calling the builtin free function which will do nothing
         node.rhs.accept (self)
         self.printCode ("__arr = stack.pop ()")
-        self.printCode ("free (__arr)")
+        self.printCode ("__builtin__free (__arr)")
         self.printCode ("stack.append (0)")
 
     def visitIntLiteralExpressionNode (self, node):
@@ -1451,6 +1451,7 @@ class CodeGenVisitor_python (ASTVisitor):
         self.printCode (f"stack.append('{node.value}')")
 
     def visitStringLiteralExpressionNode (self, node):
+        self.printComment ("String Literal")
         self.printCode (f"stack.append({node.value})")
 
     def visitListConstructorExpressionNode (self, node):

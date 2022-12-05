@@ -189,7 +189,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
 
         # exit program
         self.printCode ("push 0")
-        self.printCode ("call exit__int")
+        self.printCode ("call __builtin__exit__int")
 
         # data section
         self.printDivider ()
@@ -2200,7 +2200,9 @@ class CodeGenVisitor_x86 (ASTVisitor):
             # char - 1 byte 
             # we still read qword because stack is in 64 bit mode 
             if node.type.__str__() == "char":
-                self.printCode ("push qword [rax + rdx] ; pointer + sizeof(data_t) * offset")
+                self.printCode ("mov al, byte [rax + rdx] ; pointer + sizeof(data_t) * offset")
+                self.printCode ("movzx rax, al ; zero extend because we need to push 64bit to stack")
+                self.printCode ("push rax ; push char onto stack")
             # int, float, pointer - 8 bytes
             else:
                 self.printCode ("push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset")

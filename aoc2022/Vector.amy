@@ -7,12 +7,20 @@ class Vector
 {
     public field T[]   data;
     public field int   size;
-    public field int   capacity;  
+    public field int   capacity;
 
     constructor ()
     {
         this.capacity = 10;
         this.size = 0; 
+        this.data = new T[this.capacity];
+    }
+
+    // data is not initialized so it is likely garbage
+    constructor (int size)
+    {
+        this.capacity = size+10;
+        this.size = size; 
         this.data = new T[this.capacity];
     }
 
@@ -52,6 +60,28 @@ class Vector
         this.data[index] = value;
     }
 
+}
+
+template <:T:>
+function void print (Vector<:T:> v)
+{
+    print ('[');
+    if (v.size != 0)
+        print (v.data[0]);
+    for (int i = 1; i < v.size; ++i)
+    {
+        print (',');
+        print (' ');
+        print (v.data[i]);
+    }
+    print (']');
+}
+
+template <:T:>
+function void println (Vector<:T:> v)
+{
+    print<:T:> (v);
+    println ();
 }
 
 #endif

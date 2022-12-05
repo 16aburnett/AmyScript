@@ -658,6 +658,25 @@ main:
                         pop rdx
                         ; Assignment - '='
                            ; RHS
+                              ; Int Literal
+                                 mov rax, 0
+                                 push rax
+                           ; LHS
+                              ; Member Accessor Assignment
+                                 ; LHS
+                                    ; This keyword
+                                       push qword [rbp - 8] ; __this
+                                 ; RHS
+                                    push qword [.__field____main____Vector__int____size] ; 
+                                 pop rdi ; rhs
+                                 pop rbx ; lhs
+                           pop rdx ; rhs value
+                           mov qword [rbx + 8*rdi], rdx
+                           push rdx
+                        ; Statement results can be ignored
+                        pop rdx
+                        ; Assignment - '='
+                           ; RHS
                               ; Array Allocator
                                  ; Member Accessor
                                     ; LHS
@@ -680,25 +699,6 @@ main:
                                        push qword [rbp - 8] ; __this
                                  ; RHS
                                     push qword [.__field____main____Vector__int____data] ; 
-                                 pop rdi ; rhs
-                                 pop rbx ; lhs
-                           pop rdx ; rhs value
-                           mov qword [rbx + 8*rdi], rdx
-                           push rdx
-                        ; Statement results can be ignored
-                        pop rdx
-                        ; Assignment - '='
-                           ; RHS
-                              ; Int Literal
-                                 mov rax, 0
-                                 push rax
-                           ; LHS
-                              ; Member Accessor Assignment
-                                 ; LHS
-                                    ; This keyword
-                                       push qword [rbp - 8] ; __this
-                                 ; RHS
-                                    push qword [.__field____main____Vector__int____size] ; 
                                  pop rdi ; rhs
                                  pop rbx ; lhs
                            pop rdx ; rhs value
@@ -1106,7 +1106,7 @@ jmp .__for__4
                               pop rdx ; __offset
                               pop rax ; __pointer
                               push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
-                           pop rax
+                           pop rax ; return value (int)
                            ; Clean up stack and return
                            mov rsp, rbp ; remove local vars + unpopped pushes
                            pop rbp
@@ -1156,7 +1156,7 @@ jmp .__for__4
                               pop rdx ; __offset
                               pop rax ; __pointer
                               push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
-                           pop rax
+                           pop rax ; return value (int)
                            ; Clean up stack and return
                            mov rsp, rbp ; remove local vars + unpopped pushes
                            pop rbp
