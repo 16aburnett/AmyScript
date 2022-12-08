@@ -768,6 +768,10 @@ class SymbolTableVisitor (ASTVisitor):
             node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (f"{node.lhs.type}::{overloadedFunctionName}", node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
             node.overloadedFunctionCall.decl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])
 
+        # mark variable as assigned to
+        if isinstance (node.lhs, (VariableDeclarationNode, IdentifierExpressionNode)):
+            node.lhs.wasAssigned = True
+
     def visitLogicalOrExpressionNode (self, node):
         node.lhs.accept (self)
         node.rhs.accept (self)
@@ -1378,6 +1382,18 @@ class SymbolTableVisitor (ASTVisitor):
                 # save declaration 
                 node.decl = decl 
                 # print(f"==> {node.decl.id} : linksFollowed={self.table.linksFollowed}")
+            # wasassigned on identifier covers the case
+            # when the lhs of an assign is an identifier instead of a variable decl
+            # int x;
+            # x = 10;
+            if node.wasAssigned:
+                node.decl.wasAssigned = True
+            # ensure variable was assigned
+            if not node.wasAssigned and not node.decl.wasAssigned:
+                print (f"Semantic Error: variable '{node.id}' referenced before assignment")
+                printToken (node.token)
+                print ()
+                self.wasSuccessful = False
 
     def visitArrayAllocatorExpressionNode (self, node):
         node.type.accept (self)
@@ -1418,6 +1434,11 @@ class SymbolTableVisitor (ASTVisitor):
     
     def visitSizeofExpressionNode(self, node):
         node.rhs.accept (self)
+        print ("Semantic Error: sizeof keyword is deprecated")
+        printToken (node.op)
+        print ()
+        self.wasSuccessful = False
+        return
         # ensure RHS is an array
         if node.rhs.type.arrayDimensions == 0:
             print (f"Semantic Error: Sizeof requires an array")

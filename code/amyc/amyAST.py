@@ -121,6 +121,8 @@ class DeclarationNode (Node):
 
         self.scopeName = "<unset-scope-name>"
 
+        self.wasAssigned = False
+
         self.lineNumber = 0
         self.columnNumber = 0
 
@@ -162,6 +164,9 @@ class ParameterNode (DeclarationNode):
 
         self.lineNumber = 0
         self.columnNumber = 0
+
+        # parameters are always assigned
+        self.wasAssigned = True
 
         # x86 fields
         self.stackOffset = 0
@@ -1134,6 +1139,7 @@ class IdentifierExpressionNode (ExpressionNode):
         self.token = token
 
         self.decl = None
+        self.wasAssigned = False
 
         self.lineNumber = line
         self.columnNumber = column
