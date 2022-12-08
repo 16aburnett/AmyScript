@@ -21,7 +21,7 @@
 ; void exit(int exit_code)
 ; - exit_code : [rbp + 16]
 ; - uses external exit function from libc
-exit__int: 
+__builtin__exit__int: 
         push    rbp 
         mov     rbp, rsp 
         and     rsp, -16                 ; ensure stack is 16-byte aligned
@@ -39,7 +39,7 @@ exit__int:
 ; void free()
 ; - exit_code : [rbp + 16]
 ; - uses external exit function from libc
-; free__void__: 
+; __builtin__free__void__: 
 ;         push    rbp 
 ;         mov     rbp, rsp 
         
@@ -52,7 +52,8 @@ exit__int:
 ; Prints a given string to the screen
 ; void print (char[] stringToPrint);
 ; stringToPrint : [rbp + 16]
-print__char__1:
+; *requires null at the end of the string
+__builtin__print__char__1:
         push rbp
         mov rbp, rsp
         and     rsp, -16                 ; ensure stack is 16-byte aligned
@@ -96,7 +97,7 @@ section .text
 ; Utilizes printf "%d"
 ; void print (int valueToPrint);
 ; valueToPrint : [rbp + 16]
-print__int:
+__builtin__print__int:
         push    rbp 
         mov     rbp, rsp
         and     rsp, -16                 ; ensure stack is 16-byte aligned
@@ -217,7 +218,7 @@ section .text
 ; Utilizes printf "%c"
 ; void print (char valueToPrint);
 ; valueToPrint : [rbp + 16]
-print__char:
+__builtin__print__char:
         push    rbp 
         mov     rbp, rsp
         and     rsp, -16                 ; ensure stack is 16-byte aligned
@@ -268,7 +269,7 @@ manual_print__char:
 ;       ...
 ; section   .data
 ; myfloat: dq 3.1415926535
-print__float:
+__builtin__print__float:
         push    rbp 
         mov     rbp, rsp
         and     rsp, -16                 ; ensure stack is 16-byte aligned
@@ -290,7 +291,7 @@ section .text
 ; // Prints a given string to the screen with a newline at the end
 ; // void println (char[] stringToPrint);
 ; stringToPrint : [rbp + 16]
-println__char__1:
+__builtin__println__char__1:
         push rbp
         mov rbp, rsp
         and     rsp, -16                 ; ensure stack is 16-byte aligned
@@ -335,7 +336,7 @@ section .text
 ; Utilizes printf "%d"
 ; void println (int valueToPrint);
 ; valueToPrint : [rbp + 16]
-println__int:
+__builtin__println__int:
         push    rbp 
         mov     rbp, rsp
         and     rsp, -16                 ; ensure stack is 16-byte aligned
@@ -357,7 +358,7 @@ section .text
 ; // Prints a float to the screen with a newline
 ; // void println (float floatToPrint);
 ; valueToPrint : [rbp + 16]
-println__float:
+__builtin__println__float:
         push    rbp 
         mov     rbp, rsp
         and     rsp, -16                 ; ensure stack is 16-byte aligned
@@ -380,7 +381,7 @@ section .text
 ; //========================================================================
 ; // Prints a char to the screen with a newline
 ; // void println (char charToPrint);
-println__char:
+__builtin__println__char:
         push    rbp 
         mov     rbp, rsp
 
@@ -400,7 +401,7 @@ section .text
 ; //========================================================================
 ; // Prints an enum's integer value with a newline
 ; // void println (Enum e);
-; println__Enum:
+; __builtin__println__Enum:
 ;     stackget __e 0
 ;     println __e
 ;     return 0
@@ -408,7 +409,7 @@ section .text
 ; //========================================================================
 ; // Prints a newline to the console
 ; // void println ();
-println:
+__builtin__println:
         push    rbp 
         mov     rbp, rsp
 
@@ -427,7 +428,7 @@ section .text
 ; // grabs input from the console 
 ; this waits for a line if there isnt one
 ; // char[] input ();
-input:
+__builtin__input:
         ; function setup
         push    rbp
         mov     rbp, rsp
@@ -435,16 +436,25 @@ input:
         ; function body 
         mov     qword [rbp-8], 0    ; char* buffer = nullptr;
         mov     qword [rbp-16], 0   ; size_t buflen = 0;
-        ; getline (&buffer, &buflen, stdin);
+        ; num_chars = getline (&buffer, &buflen, stdin);
         mov     rdx, qword [stdin]  ; stdin
         lea     rcx, [rbp-16]
         lea     rax, [rbp-8]
         mov     rsi, rcx
         mov     rdi, rax
         call    getline
+        ; check for eof
+        cmp     rax, -1
+        je      __builtin__input__eof
         ; return pointer to the line
         mov     rax, qword [rbp-8]
+        jmp     __builtin__input__end
 
+__builtin__input__eof:
+        ; set rax to null
+        mov     rax, 0
+
+__builtin__input__end:
         add     rsp, 16
         pop     rbp
         ret 
@@ -452,14 +462,14 @@ input:
 ; //========================================================================
 ; // returns default float value
 ; // float float ();
-; float:
+; __builtin__float:
 ;     return 0.0
 
 ; //========================================================================
 ; // converts int to float
 ; // float intToFloat (int value);
 ; value : [rbp + 16]
-intToFloat__int:
+__builtin__intToFloat__int:
         ; function prologue
         push    rbp
         mov     rbp, rsp
@@ -475,7 +485,7 @@ intToFloat__int:
 ; // parses a float from a given char[]
 ; // float stringToFloat (char[]);
 ; str : [rbp + 16]
-stringToFloat__char__1:
+__builtin__stringToFloat__char__1:
         ; function setup
         push    rbp
         mov     rbp, rsp
@@ -490,19 +500,19 @@ stringToFloat__char__1:
 ; //========================================================================
 ; // returns default int value
 ; // int int ();
-; int:
+; __builtin__int:
 ;     return 0
 
 ; //========================================================================
 ; // returns default char value
 ; // char char ();
-; char:
+; __builtin__char:
 ;     return '0'
 
 ; //========================================================================
 ; // converts float to int
 ; // int floatToInt (float);
-; floatToInt__float:
+; __builtin__floatToInt__float:
 ;     stackget val 0
 ;     ftoi res val
 ;     return res
@@ -511,7 +521,7 @@ stringToFloat__char__1:
 ; // parses an int from a given char[]
 ; // int stringToInt (char[] str);
 ; str : [rbp + 16]
-stringToInt__char__1:
+__builtin__stringToInt__char__1:
         ; function setup
         push    rbp
         mov     rbp, rsp
@@ -526,7 +536,7 @@ stringToInt__char__1:
 ; //========================================================================
 ; // parses an int from a given char
 ; // int charToInt (char);
-; charToInt__char:
+; __builtin__charToInt__char:
 ;     stackget val 0
 ;     ctoi res val
 ;     return res
@@ -534,7 +544,7 @@ stringToInt__char__1:
 ; //========================================================================
 ; // converts int to string
 ; // char[] string (int);
-; string__int:
+; __builtin__string__int:
 ;     stackget val 0
 ;     string res val
 ;     return res
@@ -542,7 +552,7 @@ stringToInt__char__1:
 ; //========================================================================
 ; // converts float to string
 ; // char[] string (float);
-; string__float:
+; __builtin__string__float:
 ;     stackget val 0
 ;     string res val
 ;     return res
@@ -551,7 +561,7 @@ stringToInt__char__1:
 
 ; // returns default value for array and object (null)
 ; // null null ();
-; null:
+; __builtin__null:
 ;     return __null
 
 ; //========================================================================
@@ -580,7 +590,7 @@ main:
          ; Class Template - 
             ; Instances:
       ; ==================================================================
-               ; Class Declaration - __main____Vector__float inherits __main__Object
+               ; Class Declaration - __main____Vector__float inherits __builtin____main__Object
                   ; Class data
                   section .data
                      ; Dispatch Table - this might need to be a malloc**
@@ -1266,7 +1276,7 @@ jmp .__for__4
                            pop rax
                            mov qword [rsp + 0], rax
                         ; Call print(char)
-                        call print__char
+                        call __builtin__print__char
                         ; Remove args
                         add rsp, 8
                         ; Push return value
@@ -1328,7 +1338,7 @@ jmp .__for__4
                                  pop rax
                                  mov qword [rsp + 0], rax
                               ; Call print(float)
-                              call print__float
+                              call __builtin__print__float
                               ; Remove args
                               add rsp, 8
                               ; Push return value
@@ -1407,7 +1417,7 @@ jmp .__for__4
                                     pop rax
                                     mov qword [rsp + 0], rax
                                  ; Call print(char)
-                                 call print__char
+                                 call __builtin__print__char
                                  ; Remove args
                                  add rsp, 8
                                  ; Push return value
@@ -1425,7 +1435,7 @@ jmp .__for__4
                                     pop rax
                                     mov qword [rsp + 0], rax
                                  ; Call print(char)
-                                 call print__char
+                                 call __builtin__print__char
                                  ; Remove args
                                  add rsp, 8
                                  ; Push return value
@@ -1458,7 +1468,7 @@ jmp .__for__4
                                     pop rax
                                     mov qword [rsp + 0], rax
                                  ; Call print(float)
-                                 call print__float
+                                 call __builtin__print__float
                                  ; Remove args
                                  add rsp, 8
                                  ; Push return value
@@ -1482,7 +1492,7 @@ jmp .__for__11
                            pop rax
                            mov qword [rsp + 0], rax
                         ; Call print(char)
-                        call print__char
+                        call __builtin__print__char
                         ; Remove args
                         add rsp, 8
                         ; Push return value
@@ -1544,7 +1554,7 @@ jmp .__for__11
                         sub rsp, 0
                         ; Arguments
                         ; Call println()
-                        call println
+                        call __builtin__println
                         ; Remove args
                         add rsp, 0
                         ; Push return value
@@ -1687,7 +1697,7 @@ jmp .__for__11
 ; ===========================================================================
 
          push 0
-         call exit__int
+         call __builtin__exit__int
 ; ===========================================================================
 ; ### DATA SECTION ##########################################################
 ; ===========================================================================

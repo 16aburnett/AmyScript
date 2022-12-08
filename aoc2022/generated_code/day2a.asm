@@ -52,6 +52,7 @@ __builtin__exit__int:
 ; Prints a given string to the screen
 ; void print (char[] stringToPrint);
 ; stringToPrint : [rbp + 16]
+; *requires null at the end of the string
 __builtin__print__char__1:
         push rbp
         mov rbp, rsp
@@ -435,16 +436,25 @@ __builtin__input:
         ; function body 
         mov     qword [rbp-8], 0    ; char* buffer = nullptr;
         mov     qword [rbp-16], 0   ; size_t buflen = 0;
-        ; getline (&buffer, &buflen, stdin);
+        ; num_chars = getline (&buffer, &buflen, stdin);
         mov     rdx, qword [stdin]  ; stdin
         lea     rcx, [rbp-16]
         lea     rax, [rbp-8]
         mov     rsi, rcx
         mov     rdi, rax
         call    getline
+        ; check for eof
+        cmp     rax, -1
+        je      __builtin__input__eof
         ; return pointer to the line
         mov     rax, qword [rbp-8]
+        jmp     __builtin__input__end
 
+__builtin__input__eof:
+        ; set rax to null
+        mov     rax, 0
+
+__builtin__input__end:
         add     rsp, 16
         pop     rbp
         ret 
@@ -874,10 +884,14 @@ main:
                         ; Equal
                            ; LHS
                               ; Identifier - char rhs
-                                 push qword [rbp - 128]
+                                 mov al, byte [rbp - 128]
+                                 movzx rax, al
+                                 push rax
                            ; RHS
                               ; Identifier - char ROCK1
-                                 push qword [rbp - 40]
+                                 mov al, byte [rbp - 40]
+                                 movzx rax, al
+                                 push rax
                            pop rdx ; rhs
                            pop rax ; lhs
                            cmp rax, rdx
@@ -909,10 +923,14 @@ main:
                         ; Equal
                            ; LHS
                               ; Identifier - char rhs
-                                 push qword [rbp - 128]
+                                 mov al, byte [rbp - 128]
+                                 movzx rax, al
+                                 push rax
                            ; RHS
                               ; Identifier - char PAPER1
-                                 push qword [rbp - 48]
+                                 mov al, byte [rbp - 48]
+                                 movzx rax, al
+                                 push rax
                            pop rdx ; rhs
                            pop rax ; lhs
                            cmp rax, rdx
@@ -944,10 +962,14 @@ main:
                         ; Equal
                            ; LHS
                               ; Identifier - char rhs
-                                 push qword [rbp - 128]
+                                 mov al, byte [rbp - 128]
+                                 movzx rax, al
+                                 push rax
                            ; RHS
                               ; Identifier - char SCISSORS1
-                                 push qword [rbp - 56]
+                                 mov al, byte [rbp - 56]
+                                 movzx rax, al
+                                 push rax
                            pop rdx ; rhs
                            pop rax ; lhs
                            cmp rax, rdx
@@ -979,10 +1001,14 @@ main:
                         ; Equal
                            ; LHS
                               ; Identifier - char rhs
-                                 push qword [rbp - 128]
+                                 mov al, byte [rbp - 128]
+                                 movzx rax, al
+                                 push rax
                            ; RHS
                               ; Identifier - char ROCK1
-                                 push qword [rbp - 40]
+                                 mov al, byte [rbp - 40]
+                                 movzx rax, al
+                                 push rax
                            pop rdx ; rhs
                            pop rax ; lhs
                            cmp rax, rdx
@@ -1001,10 +1027,14 @@ main:
                                  ; Equal
                                     ; LHS
                                        ; Identifier - char lhs
-                                          push qword [rbp - 120]
+                                          mov al, byte [rbp - 120]
+                                          movzx rax, al
+                                          push rax
                                     ; RHS
                                        ; Identifier - char SCISSORS0
-                                          push qword [rbp - 32]
+                                          mov al, byte [rbp - 32]
+                                          movzx rax, al
+                                          push rax
                                     pop rdx ; rhs
                                     pop rax ; lhs
                                     cmp rax, rdx
@@ -1037,10 +1067,14 @@ main:
                                  ; Equal
                                     ; LHS
                                        ; Identifier - char lhs
-                                          push qword [rbp - 120]
+                                          mov al, byte [rbp - 120]
+                                          movzx rax, al
+                                          push rax
                                     ; RHS
                                        ; Identifier - char ROCK0
-                                          push qword [rbp - 16]
+                                          mov al, byte [rbp - 16]
+                                          movzx rax, al
+                                          push rax
                                     pop rdx ; rhs
                                     pop rax ; lhs
                                     cmp rax, rdx
@@ -1079,10 +1113,14 @@ main:
                         ; Equal
                            ; LHS
                               ; Identifier - char rhs
-                                 push qword [rbp - 128]
+                                 mov al, byte [rbp - 128]
+                                 movzx rax, al
+                                 push rax
                            ; RHS
                               ; Identifier - char PAPER1
-                                 push qword [rbp - 48]
+                                 mov al, byte [rbp - 48]
+                                 movzx rax, al
+                                 push rax
                            pop rdx ; rhs
                            pop rax ; lhs
                            cmp rax, rdx
@@ -1101,10 +1139,14 @@ main:
                                  ; Equal
                                     ; LHS
                                        ; Identifier - char lhs
-                                          push qword [rbp - 120]
+                                          mov al, byte [rbp - 120]
+                                          movzx rax, al
+                                          push rax
                                     ; RHS
                                        ; Identifier - char ROCK0
-                                          push qword [rbp - 16]
+                                          mov al, byte [rbp - 16]
+                                          movzx rax, al
+                                          push rax
                                     pop rdx ; rhs
                                     pop rax ; lhs
                                     cmp rax, rdx
@@ -1137,10 +1179,14 @@ main:
                                  ; Equal
                                     ; LHS
                                        ; Identifier - char lhs
-                                          push qword [rbp - 120]
+                                          mov al, byte [rbp - 120]
+                                          movzx rax, al
+                                          push rax
                                     ; RHS
                                        ; Identifier - char PAPER0
-                                          push qword [rbp - 24]
+                                          mov al, byte [rbp - 24]
+                                          movzx rax, al
+                                          push rax
                                     pop rdx ; rhs
                                     pop rax ; lhs
                                     cmp rax, rdx
@@ -1182,10 +1228,14 @@ main:
                         ; Equal
                            ; LHS
                               ; Identifier - char rhs
-                                 push qword [rbp - 128]
+                                 mov al, byte [rbp - 128]
+                                 movzx rax, al
+                                 push rax
                            ; RHS
                               ; Identifier - char SCISSORS1
-                                 push qword [rbp - 56]
+                                 mov al, byte [rbp - 56]
+                                 movzx rax, al
+                                 push rax
                            pop rdx ; rhs
                            pop rax ; lhs
                            cmp rax, rdx
@@ -1204,10 +1254,14 @@ main:
                                  ; Equal
                                     ; LHS
                                        ; Identifier - char lhs
-                                          push qword [rbp - 120]
+                                          mov al, byte [rbp - 120]
+                                          movzx rax, al
+                                          push rax
                                     ; RHS
                                        ; Identifier - char PAPER0
-                                          push qword [rbp - 24]
+                                          mov al, byte [rbp - 24]
+                                          movzx rax, al
+                                          push rax
                                     pop rdx ; rhs
                                     pop rax ; lhs
                                     cmp rax, rdx
@@ -1240,10 +1294,14 @@ main:
                                  ; Equal
                                     ; LHS
                                        ; Identifier - char lhs
-                                          push qword [rbp - 120]
+                                          mov al, byte [rbp - 120]
+                                          movzx rax, al
+                                          push rax
                                     ; RHS
                                        ; Identifier - char SCISSORS0
-                                          push qword [rbp - 32]
+                                          mov al, byte [rbp - 32]
+                                          movzx rax, al
+                                          push rax
                                     pop rdx ; rhs
                                     pop rax ; lhs
                                     cmp rax, rdx

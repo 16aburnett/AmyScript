@@ -106,8 +106,14 @@ def __builtin__println ():
 # # this waits for a line if there isnt one
 # # // char[] input ()#
 def __builtin__input ():
-    # amyscript expects the newline to be there
-    return input () + "\n"
+    try:
+        # amyscript expects the newline and null character
+        line = input () + "\n" + '\0'
+    except EOFError:
+        # return null if eof is encountered
+        line = None
+    return line
+
 
 # # //========================================================================
 # # // returns default float value
@@ -145,7 +151,10 @@ def __builtin__char ():
 # # // converts float to int
 # # // int floatToInt (float)#
 def __builtin__floatToInt__float (f):
-    return int(f)
+    # -1 to ignore the null terminator
+    if f[-1] == '\0':
+        return int(''.join(f[:-1]))
+    return int(''.join(f))
 
 # # //========================================================================
 # # // parses an int from a given char[]
@@ -153,11 +162,15 @@ def __builtin__floatToInt__float (f):
 # # str : [rbp + 16]
 def __builtin__stringToInt__char__1 (s):
     # print (s)
-    try:
-        res = int(''.join(s))
-    except:
-        res = 0
-    return res
+    # try:
+    #     res = int(''.join(s))
+    # except:
+    #     res = 0
+    # return res
+    # -1 to ignore the null terminator
+    if s[-1] == '\0':
+        return int(''.join(s[:-1]))
+    return int(''.join(s))
 
 
 # # //========================================================================

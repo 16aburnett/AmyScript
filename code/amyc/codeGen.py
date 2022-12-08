@@ -1973,7 +1973,7 @@ class CodeGenVisitor (ASTVisitor):
             # add backslash to apostrophe 
             elif chars[i] == '\'':
                 chars[i] = '\\\''
-        node.value = chars
+        node.value = chars + ['\\0']
         backSlashes = 0
         # for c in node.value:
         #     if c == '\\':

@@ -52,6 +52,7 @@ __builtin__exit__int:
 ; Prints a given string to the screen
 ; void print (char[] stringToPrint);
 ; stringToPrint : [rbp + 16]
+; *requires null at the end of the string
 __builtin__print__char__1:
         push rbp
         mov rbp, rsp
@@ -435,16 +436,25 @@ __builtin__input:
         ; function body 
         mov     qword [rbp-8], 0    ; char* buffer = nullptr;
         mov     qword [rbp-16], 0   ; size_t buflen = 0;
-        ; getline (&buffer, &buflen, stdin);
+        ; num_chars = getline (&buffer, &buflen, stdin);
         mov     rdx, qword [stdin]  ; stdin
         lea     rcx, [rbp-16]
         lea     rax, [rbp-8]
         mov     rsi, rcx
         mov     rdi, rax
         call    getline
+        ; check for eof
+        cmp     rax, -1
+        je      __builtin__input__eof
         ; return pointer to the line
         mov     rax, qword [rbp-8]
+        jmp     __builtin__input__end
 
+__builtin__input__eof:
+        ; set rax to null
+        mov     rax, 0
+
+__builtin__input__end:
         add     rsp, 16
         pop     rbp
         ret 

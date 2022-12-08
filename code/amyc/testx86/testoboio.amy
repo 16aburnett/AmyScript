@@ -1,0 +1,23 @@
+
+
+
+// input returns a null-terminated array
+// if eof is reached, then it returns null
+char[] line = input ();
+
+while (line != null)
+{
+    int i = 0;
+    while (line[i] != '\0')
+        println (line[i++]);
+
+    free (line);
+    line = input ();
+}
+
+
+println ("coolio");
+
+
+
+

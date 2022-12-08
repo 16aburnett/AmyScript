@@ -23,14 +23,13 @@ jump __endOfLibrary
 __builtin__print__char__1:
     // grab string
     stackget __str 0
-    sizeof __size __str
     // print each char
     // init
     assign __i 0
 __print__char__1__loop:
     // cond
-    cmp __i __size
-    jge __print__char__1__endloop
+    cmp __str[__i] 0
+    jeq __print__char__1__endloop
     // Body
     print __str[__i]
     // update
@@ -79,14 +78,13 @@ __builtin__print__Enum:
 __builtin__println__char__1:
     // grab string
     stackget __str 0
-    sizeof __size __str
     // print each char
     // init
     assign __i 0
 __println__char__1__loop:
     // cond
-    cmp __i __size
-    jge __println__char__1__endloop
+    cmp __str[__i] 0
+    jeq __println__char__1__endloop
     // Body
     print __str[__i]
     // update
@@ -279,19 +277,12 @@ __while__0:
    // Condition
       // Not Equal
          // LHS
-            // Subscript
-               // LHS
-                  // Identifier - line
-                     PUSH __main__line
-               // OFFSET
-                  // Int Literal
-                     PUSH 0
-               POP __offset
-               POP __pointer
-               PUSH __pointer[__offset]
+            // Identifier - line
+               PUSH __main__line
          // RHS
-            // Char Literal
-               PUSH '$'
+            // Null Literal
+               ASSIGN __null 0
+               PUSH __null
          POP __rhs
          POP __lhs
          NEQUAL __res __lhs __rhs
@@ -302,31 +293,22 @@ __while__0:
    // Body
       //------------------------------------------------------------------
       // Code Block
-         // Function Call - println(char) -> void
-            // Arguments
-               // Subscript
-                  // LHS
-                     // Identifier - line
-                        PUSH __main__line
-                  // OFFSET
-                     // Int Literal
-                        PUSH 0
-                  POP __offset
-                  POP __pointer
-                  PUSH __pointer[__offset]
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** println
-            CALL __builtin__println__char
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
+         // Assignment - '='
+            // RHS
+               // Int Literal
+                  PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__while__0__block__1__i 0
+            POP __rhs
+            ASSIGN __main__while__0__block__1__i __rhs
+            PUSH __rhs
          // Statement results can be ignored
          POP __void
-         // Function Call - println(int) -> void
-            // Arguments
+         //---------------------------------------------------------------
+         // While-Loop
+         __while__2:
+            // Condition
                // Not Equal
                   // LHS
                      // Subscript
@@ -334,44 +316,51 @@ __while__0:
                            // Identifier - line
                               PUSH __main__line
                         // OFFSET
-                           // Int Literal
-                              PUSH 0
+                           // Identifier - i
+                              PUSH __main__while__0__block__1__i
                         POP __offset
                         POP __pointer
                         PUSH __pointer[__offset]
                   // RHS
                      // Char Literal
-                        PUSH '$'
+                        PUSH '\0'
                   POP __rhs
                   POP __lhs
                   NEQUAL __res __lhs __rhs
                   PUSH __res
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** println
-            CALL __builtin__println__int
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
-         // Statement results can be ignored
-         POP __void
-         // Function Call - println(char[]) -> void
-            // Arguments
-               // Identifier - line
-                  PUSH __main__line
-               POP __arg0
-            // Pushing args in reverse order
-            PUSH __arg0
-            // *** println
-            CALL __builtin__println__char__1
-            // Remove args
-            POP __void
-            RESPONSE __retval
-            PUSH __retval
-         // Statement results can be ignored
-         POP __void
+               POP __cond
+               CMP __cond 0
+               JEQ __endwhile__2
+            // Body
+               // Function Call - println(char) -> void
+                  // Arguments
+                     // Subscript
+                        // LHS
+                           // Identifier - line
+                              PUSH __main__line
+                        // OFFSET
+                           // Post-Increment
+                              ASSIGN __res __main__while__0__block__1__i
+                              ADD __main__while__0__block__1__i __main__while__0__block__1__i 1
+                              PUSH __res
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                     POP __arg0
+                  // Pushing args in reverse order
+                  PUSH __arg0
+                  // *** println
+                  CALL __builtin__println__char
+                  // Remove args
+                  POP __void
+                  RESPONSE __retval
+                  PUSH __retval
+               // Statement results can be ignored
+               POP __void
+            JUMP __while__2
+            // End of While
+            __endwhile__2:
+         //---------------------------------------------------------------
          // Free Operator
             // RHS
                // Identifier - line
@@ -402,6 +391,29 @@ __while__0:
    // End of While
    __endwhile__0:
 //------------------------------------------------------------------------
+// Function Call - println(char[]) -> void
+   // Arguments
+      // String Literal
+         MALLOC __str 7
+         ASSIGN __str[0] 'c'
+         ASSIGN __str[1] 'o'
+         ASSIGN __str[2] 'o'
+         ASSIGN __str[3] 'l'
+         ASSIGN __str[4] 'i'
+         ASSIGN __str[5] 'o'
+         ASSIGN __str[6] '\0'
+         PUSH __str
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL __builtin__println__char__1
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
 //========================================================================
 //### END OF CODE ########################################################
 //========================================================================

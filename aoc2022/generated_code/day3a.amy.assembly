@@ -23,14 +23,13 @@ jump __endOfLibrary
 __builtin__print__char__1:
     // grab string
     stackget __str 0
-    sizeof __size __str
     // print each char
     // init
     assign __i 0
 __print__char__1__loop:
     // cond
-    cmp __i __size
-    jge __print__char__1__endloop
+    cmp __str[__i] 0
+    jeq __print__char__1__endloop
     // Body
     print __str[__i]
     // update
@@ -79,14 +78,13 @@ __builtin__print__Enum:
 __builtin__println__char__1:
     // grab string
     stackget __str 0
-    sizeof __size __str
     // print each char
     // init
     assign __i 0
 __println__char__1__loop:
     // cond
-    cmp __i __size
-    jge __println__char__1__endloop
+    cmp __str[__i] 0
+    jeq __println__char__1__endloop
     // Body
     print __str[__i]
     // update
@@ -276,7 +274,7 @@ __endOfLibrary:
 // Assignment - '='
    // RHS
       // String Literal
-         MALLOC __str 53
+         MALLOC __str 54
          ASSIGN __str[0] ' '
          ASSIGN __str[1] 'a'
          ASSIGN __str[2] 'b'
@@ -330,12 +328,25 @@ __endOfLibrary:
          ASSIGN __str[50] 'X'
          ASSIGN __str[51] 'Y'
          ASSIGN __str[52] 'Z'
+         ASSIGN __str[53] '\0'
          PUSH __str
    // LHS
       // Variable Declaration
          ASSIGN __main__letters 0
    POP __rhs
    ASSIGN __main__letters __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Assignment - '='
+   // RHS
+      // Int Literal
+         PUSH 53
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__letters_size 0
+   POP __rhs
+   ASSIGN __main__letters_size __rhs
    PUSH __rhs
 // Statement results can be ignored
 POP __void
@@ -400,20 +411,57 @@ __while__0:
       // Code Block
          // Assignment - '='
             // RHS
-               // Sizeof Operator
-                  // RHS
-                     // Identifier - line
-                        PUSH __main__line
-                  // Calculate array size
-                  POP __array
-                  SIZEOF __size __array
-                  PUSH __size
+               // Int Literal
+                  PUSH 0
             // LHS
                // Variable Declaration
                   ASSIGN __main__while__0__block__1__size 0
             POP __rhs
             ASSIGN __main__while__0__block__1__size __rhs
             PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         //---------------------------------------------------------------
+         // While-Loop
+         __while__2:
+            // Condition
+               // Not Equal
+                  // LHS
+                     // Subscript
+                        // LHS
+                           // Identifier - line
+                              PUSH __main__line
+                        // OFFSET
+                           // Post-Increment
+                              ASSIGN __res __main__while__0__block__1__size
+                              ADD __main__while__0__block__1__size __main__while__0__block__1__size 1
+                              PUSH __res
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // RHS
+                     // Char Literal
+                        PUSH '\0'
+                  POP __rhs
+                  POP __lhs
+                  NEQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endwhile__2
+            // Body
+            JUMP __while__2
+            // End of While
+            __endwhile__2:
+         //---------------------------------------------------------------
+         // Pre-Decrement
+            // RHS
+               // Identifier - size
+                  PUSH __main__while__0__block__1__size
+            POP __rhs
+            SUBTRACT __main__while__0__block__1__size __main__while__0__block__1__size 1
+            ASSIGN __res __main__while__0__block__1__size
+            PUSH __res
          // Statement results can be ignored
          POP __void
          // Assignment - '='
@@ -494,27 +542,27 @@ __while__0:
                      PUSH __main__while__0__block__1__c0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__while__0__block__1__for__2__i 0
+                     ASSIGN __main__while__0__block__1__for__3__i 0
                POP __rhs
-               ASSIGN __main__while__0__block__1__for__2__i __rhs
+               ASSIGN __main__while__0__block__1__for__3__i __rhs
                PUSH __rhs
-         JUMP __forcond__2
-         __for__2:
+         JUMP __forcond__3
+         __for__3:
             // Update
                // Pre-Increment
                   // RHS
                      // Identifier - i
-                        PUSH __main__while__0__block__1__for__2__i
+                        PUSH __main__while__0__block__1__for__3__i
                   POP __rhs
-                  ADD __main__while__0__block__1__for__2__i __main__while__0__block__1__for__2__i 1
-                  ASSIGN __res __main__while__0__block__1__for__2__i
+                  ADD __main__while__0__block__1__for__3__i __main__while__0__block__1__for__3__i 1
+                  ASSIGN __res __main__while__0__block__1__for__3__i
                   PUSH __res
-            __forcond__2:
+            __forcond__3:
             // Condition
                // Less Than
                   // LHS
                      // Identifier - i
-                        PUSH __main__while__0__block__1__for__2__i
+                        PUSH __main__while__0__block__1__for__3__i
                   // RHS
                      // Identifier - e0
                         PUSH __main__while__0__block__1__e0
@@ -524,7 +572,7 @@ __while__0:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor__2
+               JEQ __endfor__3
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -537,27 +585,27 @@ __while__0:
                               PUSH __main__while__0__block__1__c1
                         // LHS
                            // Variable Declaration
-                              ASSIGN __main__while__0__block__1__for__2__block__3__for__4__j 0
+                              ASSIGN __main__while__0__block__1__for__3__block__4__for__5__j 0
                         POP __rhs
-                        ASSIGN __main__while__0__block__1__for__2__block__3__for__4__j __rhs
+                        ASSIGN __main__while__0__block__1__for__3__block__4__for__5__j __rhs
                         PUSH __rhs
-                  JUMP __forcond__4
-                  __for__4:
+                  JUMP __forcond__5
+                  __for__5:
                      // Update
                         // Pre-Increment
                            // RHS
                               // Identifier - j
-                                 PUSH __main__while__0__block__1__for__2__block__3__for__4__j
+                                 PUSH __main__while__0__block__1__for__3__block__4__for__5__j
                            POP __rhs
-                           ADD __main__while__0__block__1__for__2__block__3__for__4__j __main__while__0__block__1__for__2__block__3__for__4__j 1
-                           ASSIGN __res __main__while__0__block__1__for__2__block__3__for__4__j
+                           ADD __main__while__0__block__1__for__3__block__4__for__5__j __main__while__0__block__1__for__3__block__4__for__5__j 1
+                           ASSIGN __res __main__while__0__block__1__for__3__block__4__for__5__j
                            PUSH __res
-                     __forcond__4:
+                     __forcond__5:
                      // Condition
                         // Less Than
                            // LHS
                               // Identifier - j
-                                 PUSH __main__while__0__block__1__for__2__block__3__for__4__j
+                                 PUSH __main__while__0__block__1__for__3__block__4__for__5__j
                            // RHS
                               // Identifier - e1
                                  PUSH __main__while__0__block__1__e1
@@ -567,7 +615,7 @@ __while__0:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endfor__4
+                        JEQ __endfor__5
                      // Body
                         //------------------------------------------------
                         // Code Block
@@ -582,7 +630,7 @@ __while__0:
                                                 PUSH __main__line
                                           // OFFSET
                                              // Identifier - i
-                                                PUSH __main__while__0__block__1__for__2__i
+                                                PUSH __main__while__0__block__1__for__3__i
                                           POP __offset
                                           POP __pointer
                                           PUSH __pointer[__offset]
@@ -593,7 +641,7 @@ __while__0:
                                                 PUSH __main__line
                                           // OFFSET
                                              // Identifier - j
-                                                PUSH __main__while__0__block__1__for__2__block__3__for__4__j
+                                                PUSH __main__while__0__block__1__for__3__block__4__for__5__j
                                           POP __offset
                                           POP __pointer
                                           PUSH __pointer[__offset]
@@ -603,7 +651,7 @@ __while__0:
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __endif__6
+                                 JEQ __endif__7
                               // Body
                                  //---------------------------------------
                                  // Code Block
@@ -615,7 +663,7 @@ __while__0:
                                                    PUSH __main__line
                                              // OFFSET
                                                 // Identifier - i
-                                                   PUSH __main__while__0__block__1__for__2__i
+                                                   PUSH __main__while__0__block__1__for__3__i
                                              POP __offset
                                              POP __pointer
                                              PUSH __pointer[__offset]
@@ -625,21 +673,21 @@ __while__0:
                                     // Statement results can be ignored
                                     POP __void
                                  //---------------------------------------
-                              JUMP __endif__6
+                              JUMP __endif__7
                               // End of if
-                              __endif__6:
+                              __endif__7:
                            //---------------------------------------------
                         //------------------------------------------------
                      // Repeat
-                     JUMP __for__4
+                     JUMP __for__5
                      // End of For
-                     __endfor__4:
+                     __endfor__5:
                   //------------------------------------------------------
                //---------------------------------------------------------
             // Repeat
-            JUMP __for__2
+            JUMP __for__3
             // End of For
-            __endfor__2:
+            __endfor__3:
          //---------------------------------------------------------------
          // Assignment - '='
             // RHS
@@ -662,43 +710,37 @@ __while__0:
                      PUSH 0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__while__0__block__1__for__8__i 0
+                     ASSIGN __main__while__0__block__1__for__9__i 0
                POP __rhs
-               ASSIGN __main__while__0__block__1__for__8__i __rhs
+               ASSIGN __main__while__0__block__1__for__9__i __rhs
                PUSH __rhs
-         JUMP __forcond__8
-         __for__8:
+         JUMP __forcond__9
+         __for__9:
             // Update
                // Pre-Increment
                   // RHS
                      // Identifier - i
-                        PUSH __main__while__0__block__1__for__8__i
+                        PUSH __main__while__0__block__1__for__9__i
                   POP __rhs
-                  ADD __main__while__0__block__1__for__8__i __main__while__0__block__1__for__8__i 1
-                  ASSIGN __res __main__while__0__block__1__for__8__i
+                  ADD __main__while__0__block__1__for__9__i __main__while__0__block__1__for__9__i 1
+                  ASSIGN __res __main__while__0__block__1__for__9__i
                   PUSH __res
-            __forcond__8:
+            __forcond__9:
             // Condition
                // Less Than
                   // LHS
                      // Identifier - i
-                        PUSH __main__while__0__block__1__for__8__i
+                        PUSH __main__while__0__block__1__for__9__i
                   // RHS
-                     // Sizeof Operator
-                        // RHS
-                           // Identifier - letters
-                              PUSH __main__letters
-                        // Calculate array size
-                        POP __array
-                        SIZEOF __size __array
-                        PUSH __size
+                     // Identifier - letters_size
+                        PUSH __main__letters_size
                   POP __rhs
                   POP __lhs
                   LT __res __lhs __rhs
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor__8
+               JEQ __endfor__9
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -713,7 +755,7 @@ __while__0:
                                        PUSH __main__letters
                                  // OFFSET
                                     // Identifier - i
-                                       PUSH __main__while__0__block__1__for__8__i
+                                       PUSH __main__while__0__block__1__for__9__i
                                  POP __offset
                                  POP __pointer
                                  PUSH __pointer[__offset]
@@ -726,26 +768,26 @@ __while__0:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif__10
+                        JEQ __endif__11
                      // Body
                         // Assignment - '='
                            // RHS
                               // Identifier - i
-                                 PUSH __main__while__0__block__1__for__8__i
+                                 PUSH __main__while__0__block__1__for__9__i
                            POP __rhs
                            ASSIGN __main__while__0__block__1__score __rhs
                            PUSH __rhs
                         // Statement results can be ignored
                         POP __void
-                     JUMP __endif__10
+                     JUMP __endif__11
                      // End of if
-                     __endif__10:
+                     __endif__11:
                   //------------------------------------------------------
                //---------------------------------------------------------
             // Repeat
-            JUMP __for__8
+            JUMP __for__9
             // End of For
-            __endfor__8:
+            __endfor__9:
          //---------------------------------------------------------------
          // Assignment - '+='
             // RHS

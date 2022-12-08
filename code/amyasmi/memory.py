@@ -13,6 +13,10 @@ class BlockHeader:
         self.prevBlock = prevBlock
         self.payloadSize = payloadSize
         self.isAlloc = isAlloc
+    def __str__ (self):
+        return (f"[{self.payloadSize}, {self.isAlloc}]")
+    def __repr__ (self):
+        return self.__str__ ()
 
 class Heap:
     def __init__(self):

@@ -1,0 +1,631 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+// Global Builtin Variables
+
+    assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+__builtin__print__char__1:
+    // grab string
+    stackget __str 0
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __str[__i] 0
+    jeq __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+__builtin__print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+__builtin__print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+__builtin__print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+__builtin__print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+__builtin__println__char__1:
+    // grab string
+    stackget __str 0
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __str[__i] 0
+    jeq __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+__builtin__println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+__builtin__println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+__builtin__println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+__builtin__println__Enum:
+    stackget __e 0
+    println __e
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+__builtin__println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+__builtin__input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+__builtin__exit:
+    halt
+
+//========================================================================
+
+// Exits the program with the given exit code 
+// void exit(int exit_code)
+// - exit_code : 
+__builtin__exit__int:
+    // ** not implemented for amyasm
+    halt 
+
+//========================================================================
+// returns default float value
+// float float ();
+__builtin__float:
+    return 0.0
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+__builtin__intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+__builtin__stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// returns default int value
+// int int ();
+__builtin__int:
+    return 0
+
+//========================================================================
+// returns default char value
+// char char ();
+__builtin__char:
+    return '0'
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+__builtin__floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+__builtin__stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char
+// int charToInt (char);
+__builtin__charToInt__char:
+    stackget val 0
+    ctoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+__builtin__string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+__builtin__string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+// returns default value for array and object (null)
+// null null ();
+__builtin__null:
+    return __null
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+// Assignment - '='
+   // RHS
+      // Function Call - input() -> char[]
+         // Arguments
+         // Pushing args in reverse order
+         // *** input
+         CALL __builtin__input
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__line 0
+   POP __rhs
+   ASSIGN __main__line __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Assignment - '='
+   // RHS
+      // Int Literal
+         PUSH 0
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__size 0
+   POP __rhs
+   ASSIGN __main__size __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+//------------------------------------------------------------------------
+// While-Loop
+__while__0:
+   // Condition
+      // Not Equal
+         // LHS
+            // Subscript
+               // LHS
+                  // Identifier - line
+                     PUSH __main__line
+               // OFFSET
+                  // Post-Increment
+                     ASSIGN __res __main__size
+                     ADD __main__size __main__size 1
+                     PUSH __res
+               POP __offset
+               POP __pointer
+               PUSH __pointer[__offset]
+         // RHS
+            // Char Literal
+               PUSH '\0'
+         POP __rhs
+         POP __lhs
+         NEQUAL __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endwhile__0
+   // Body
+   JUMP __while__0
+   // End of While
+   __endwhile__0:
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+// For-Loop
+// Init
+   // Assignment - '='
+      // RHS
+         // Int Literal
+            PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__1__i 0
+      POP __rhs
+      ASSIGN __main__for__1__i __rhs
+      PUSH __rhs
+JUMP __forcond__1
+__for__1:
+   // Update
+      // Pre-Increment
+         // RHS
+            // Identifier - i
+               PUSH __main__for__1__i
+         POP __rhs
+         ADD __main__for__1__i __main__for__1__i 1
+         ASSIGN __res __main__for__1__i
+         PUSH __res
+   __forcond__1:
+   // Condition
+      // Less Than
+         // LHS
+            // Identifier - i
+               PUSH __main__for__1__i
+         // RHS
+            // Subtraction
+               // LHS
+                  // Identifier - size
+                     PUSH __main__size
+               // RHS
+                  // Int Literal
+                     PUSH 3
+               POP __rhs
+               POP __lhs
+               SUBTRACT __res __lhs __rhs
+               PUSH __res
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor__1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Assignment - '='
+            // RHS
+               // Int Literal
+                  PUSH 1
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__1__block__2__is_unique 0
+            POP __rhs
+            ASSIGN __main__for__1__block__2__is_unique __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment - '='
+               // RHS
+                  // Identifier - i
+                     PUSH __main__for__1__i
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__for__1__block__2__for__3__j 0
+               POP __rhs
+               ASSIGN __main__for__1__block__2__for__3__j __rhs
+               PUSH __rhs
+         JUMP __forcond__3
+         __for__3:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - j
+                        PUSH __main__for__1__block__2__for__3__j
+                  POP __rhs
+                  ADD __main__for__1__block__2__for__3__j __main__for__1__block__2__for__3__j 1
+                  ASSIGN __res __main__for__1__block__2__for__3__j
+                  PUSH __res
+            __forcond__3:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - j
+                        PUSH __main__for__1__block__2__for__3__j
+                  // RHS
+                     // Addition
+                        // LHS
+                           // Identifier - i
+                              PUSH __main__for__1__i
+                        // RHS
+                           // Int Literal
+                              PUSH 14
+                        POP __rhs
+                        POP __lhs
+                        ADD __res __lhs __rhs
+                        PUSH __res
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__3
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // For-Loop
+                  // Init
+                     // Assignment - '='
+                        // RHS
+                           // Addition
+                              // LHS
+                                 // Identifier - j
+                                    PUSH __main__for__1__block__2__for__3__j
+                              // RHS
+                                 // Int Literal
+                                    PUSH 1
+                              POP __rhs
+                              POP __lhs
+                              ADD __res __lhs __rhs
+                              PUSH __res
+                        // LHS
+                           // Variable Declaration
+                              ASSIGN __main__for__1__block__2__for__3__block__4__for__5__k 0
+                        POP __rhs
+                        ASSIGN __main__for__1__block__2__for__3__block__4__for__5__k __rhs
+                        PUSH __rhs
+                  JUMP __forcond__5
+                  __for__5:
+                     // Update
+                        // Pre-Increment
+                           // RHS
+                              // Identifier - k
+                                 PUSH __main__for__1__block__2__for__3__block__4__for__5__k
+                           POP __rhs
+                           ADD __main__for__1__block__2__for__3__block__4__for__5__k __main__for__1__block__2__for__3__block__4__for__5__k 1
+                           ASSIGN __res __main__for__1__block__2__for__3__block__4__for__5__k
+                           PUSH __res
+                     __forcond__5:
+                     // Condition
+                        // Less Than
+                           // LHS
+                              // Identifier - k
+                                 PUSH __main__for__1__block__2__for__3__block__4__for__5__k
+                           // RHS
+                              // Addition
+                                 // LHS
+                                    // Identifier - i
+                                       PUSH __main__for__1__i
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 14
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                           POP __rhs
+                           POP __lhs
+                           LT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endfor__5
+                     // Body
+                        //------------------------------------------------
+                        // Code Block
+                           //---------------------------------------------
+                           // If-Statement
+                              // Condition
+                                 // Equal
+                                    // LHS
+                                       // Subscript
+                                          // LHS
+                                             // Identifier - line
+                                                PUSH __main__line
+                                          // OFFSET
+                                             // Identifier - j
+                                                PUSH __main__for__1__block__2__for__3__j
+                                          POP __offset
+                                          POP __pointer
+                                          PUSH __pointer[__offset]
+                                    // RHS
+                                       // Subscript
+                                          // LHS
+                                             // Identifier - line
+                                                PUSH __main__line
+                                          // OFFSET
+                                             // Identifier - k
+                                                PUSH __main__for__1__block__2__for__3__block__4__for__5__k
+                                          POP __offset
+                                          POP __pointer
+                                          PUSH __pointer[__offset]
+                                    POP __rhs
+                                    POP __lhs
+                                    EQUAL __res __lhs __rhs
+                                    PUSH __res
+                                 POP __cond
+                                 CMP __cond 0
+                                 JEQ __endif__7
+                              // Body
+                                 //---------------------------------------
+                                 // Code Block
+                                    // Assignment - '='
+                                       // RHS
+                                          // Int Literal
+                                             PUSH 0
+                                       POP __rhs
+                                       ASSIGN __main__for__1__block__2__is_unique __rhs
+                                       PUSH __rhs
+                                    // Statement results can be ignored
+                                    POP __void
+                                    // Break out of __for__5
+                                    JUMP __endfor__5
+                                 //---------------------------------------
+                              JUMP __endif__7
+                              // End of if
+                              __endif__7:
+                           //---------------------------------------------
+                        //------------------------------------------------
+                     // Repeat
+                     JUMP __for__5
+                     // End of For
+                     __endfor__5:
+                  //------------------------------------------------------
+                  //------------------------------------------------------
+                  // If-Statement
+                     // Condition
+                        // Negate
+                           // RHS
+                              // Identifier - is_unique
+                                 PUSH __main__for__1__block__2__is_unique
+                           POP __rhs
+                           NOT __res __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endif__9
+                     // Body
+                        // Break out of __for__3
+                        JUMP __endfor__3
+                     JUMP __endif__9
+                     // End of if
+                     __endif__9:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            // Repeat
+            JUMP __for__3
+            // End of For
+            __endfor__3:
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Identifier - is_unique
+                  PUSH __main__for__1__block__2__is_unique
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__10
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Function Call - println(int) -> void
+                     // Arguments
+                        // Addition
+                           // LHS
+                              // Identifier - i
+                                 PUSH __main__for__1__i
+                           // RHS
+                              // Int Literal
+                                 PUSH 14
+                           POP __rhs
+                           POP __lhs
+                           ADD __res __lhs __rhs
+                           PUSH __res
+                        POP __arg0
+                     // Pushing args in reverse order
+                     PUSH __arg0
+                     // *** println
+                     CALL __builtin__println__int
+                     // Remove args
+                     POP __void
+                     RESPONSE __retval
+                     PUSH __retval
+                  // Statement results can be ignored
+                  POP __void
+                  // Break out of __for__1
+                  JUMP __endfor__1
+               //---------------------------------------------------------
+            JUMP __endif__10
+            // End of if
+            __endif__10:
+         //---------------------------------------------------------------
+      //------------------------------------------------------------------
+   // Repeat
+   JUMP __for__1
+   // End of For
+   __endfor__1:
+//------------------------------------------------------------------------
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

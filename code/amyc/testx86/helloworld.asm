@@ -52,6 +52,7 @@ __builtin__exit__int:
 ; Prints a given string to the screen
 ; void print (char[] stringToPrint);
 ; stringToPrint : [rbp + 16]
+; *requires null at the end of the string
 __builtin__print__char__1:
         push rbp
         mov rbp, rsp
@@ -435,16 +436,25 @@ __builtin__input:
         ; function body 
         mov     qword [rbp-8], 0    ; char* buffer = nullptr;
         mov     qword [rbp-16], 0   ; size_t buflen = 0;
-        ; getline (&buffer, &buflen, stdin);
+        ; num_chars = getline (&buffer, &buflen, stdin);
         mov     rdx, qword [stdin]  ; stdin
         lea     rcx, [rbp-16]
         lea     rax, [rbp-8]
         mov     rsi, rcx
         mov     rdi, rax
         call    getline
+        ; check for eof
+        cmp     rax, -1
+        je      __builtin__input__eof
         ; return pointer to the line
         mov     rax, qword [rbp-8]
+        jmp     __builtin__input__end
 
+__builtin__input__eof:
+        ; set rax to null
+        mov     rax, 0
+
+__builtin__input__end:
         add     rsp, 16
         pop     rbp
         ret 
@@ -574,6 +584,7 @@ main:
          sub rsp, 16
          ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
          ; [rbp - 8] - char[] line (<unset-scope-name>)
+         ; [rbp - 16] - int i (<unset-scope-name>)
 
          ; Body
          ; Assignment - '='
@@ -602,24 +613,11 @@ main:
             ; Condition
                ; Not Equal
                   ; LHS
-                     ; Subscript
-                        ; LHS
-                           ; Identifier - char[] line
-                              push qword [rbp - 8]
-                        ; OFFSET
-                           ; Int Literal
-                              mov rax, 0
-                              push rax
-                        pop rdx ; __offset
-                        pop rax ; __pointer
-                        mov al, byte [rax + rdx] ; pointer + sizeof(data_t) * offset
-                        movzx rax, al ; zero extend because we need to push 64bit to stack
-                        push rax ; push char onto stack
-                        call __builtin__println__char
-                        call __builtin__println__int
+                     ; Identifier - char[] line
+                        push qword [rbp - 8]
                   ; RHS
-                     ; Char Literal
-                        push '$'
+                     ; Null Literal
+                        push 0
                   pop rdx ; rhs
                   pop rax ; lhs
                   cmp rax, rdx
@@ -632,24 +630,84 @@ main:
             ; Body
       ;------------------------------------------------------------------
                ; Code Block
-                  ; Function Call - print(char[]) -> void
-                     ; Make space for 1 arg(s)
-                     sub rsp, 8
-                     ; Arguments
-                        ; Eval arg0
-                           ; Identifier - char[] line
-                              push qword [rbp - 8]
-                        ; Move arg0's result to reverse order position on stack
-                        pop rax
-                        mov qword [rsp + 0], rax
-                     ; Call print(char[])
-                     call __builtin__print__char__1
-                     ; Remove args
-                     add rsp, 8
-                     ; Push return value
-                     push rax
+                  ; Assignment - '='
+                     ; RHS
+                        ; Int Literal
+                           mov rax, 0
+                           push rax
+                     ; LHS
+                        ; Variable Declaration - i
+                           mov rax, qword [rbp - 16]  ; __main__while__0__block__1__i
+                     pop rdx ; rhs value
+                     mov qword [rbp - 16], rdx
+                     push rdx
                   ; Statement results can be ignored
                   pop rdx
+         ;---------------------------------------------------------------
+                  ; While-Loop
+.__while__2:
+                     ; Condition
+                        ; Not Equal
+                           ; LHS
+                              ; Subscript
+                                 ; LHS
+                                    ; Identifier - char[] line
+                                       push qword [rbp - 8]
+                                 ; OFFSET
+                                    ; Identifier - int i
+                                       push qword [rbp - 16]
+                                 pop rdx ; __offset
+                                 pop rax ; __pointer
+                                 mov al, byte [rax + rdx] ; pointer + sizeof(data_t) * offset
+                                 movzx rax, al ; zero extend because we need to push 64bit to stack
+                                 push rax ; push char onto stack
+                           ; RHS
+                              ; Char Literal
+                                 push 0 ; \0
+                           pop rdx ; rhs
+                           pop rax ; lhs
+                           cmp rax, rdx
+                           setne al
+                           movzx eax, al
+                           push rax
+                        pop rax ; __cond
+                        cmp rax, 0 ; __cond
+                        je .__endwhile__2
+                     ; Body
+                        ; Function Call - println(char) -> void
+                           ; Make space for 1 arg(s)
+                           sub rsp, 8
+                           ; Arguments
+                              ; Eval arg0
+                                 ; Subscript
+                                    ; LHS
+                                       ; Identifier - char[] line
+                                          push qword [rbp - 8]
+                                    ; OFFSET
+                                       ; Post-Increment
+                                          mov rax, qword [rbp - 16]
+                                          add qword [rbp - 16], 1
+                                          push rax
+                                    pop rdx ; __offset
+                                    pop rax ; __pointer
+                                    mov al, byte [rax + rdx] ; pointer + sizeof(data_t) * offset
+                                    movzx rax, al ; zero extend because we need to push 64bit to stack
+                                    push rax ; push char onto stack
+                              ; Move arg0's result to reverse order position on stack
+                              pop rax
+                              mov qword [rsp + 0], rax
+                           ; Call println(char)
+                           call __builtin__println__char
+                           ; Remove args
+                           add rsp, 8
+                           ; Push return value
+                           push rax
+                        ; Statement results can be ignored
+                        pop rdx
+                     jmp .__while__2
+                     ; End of While
+.__endwhile__2:
+         ;---------------------------------------------------------------
                   ; Free Operator
                      ; RHS
                         ; Identifier - char[] line
@@ -682,6 +740,26 @@ main:
             ; End of While
 .__endwhile__0:
 ;------------------------------------------------------------------------
+         ; Function Call - println(char[]) -> void
+            ; Make space for 1 arg(s)
+            sub rsp, 8
+            ; Arguments
+               ; Eval arg0
+                  ; String Literal
+                     ; "coolio"
+                     mov rax, .str0
+                     push rax
+               ; Move arg0's result to reverse order position on stack
+               pop rax
+               mov qword [rsp + 0], rax
+            ; Call println(char[])
+            call __builtin__println__char__1
+            ; Remove args
+            add rsp, 8
+            ; Push return value
+            push rax
+         ; Statement results can be ignored
+         pop rdx
 ; ========================================================================
 ; ### END OF CODE ########################################################
 ; ========================================================================
@@ -693,6 +771,7 @@ main:
 ; ========================================================================
 
          section .data
+.str0: db 'c', 'o', 'o', 'l', 'i', 'o', 0
 .floatNegOne: dq -1.0
 .floatZero: dq 0.0
 .floatOne: dq 1.0

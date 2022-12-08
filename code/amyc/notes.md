@@ -27,12 +27,15 @@ when x then y else z
 Friday, Dec 2, 2022 - stayed up til 4:22am writing backend for python :)
 Saturday, Dec 3, 2022 - stayed up til 3:00am implementing classes for python backend (and tweeks for x86)
 Sunday Dec 4, 2022 - stayed up til 5:21am reimplementing a lot of the python backend to break up expressions into multiple lines so we can support pre/post incr/decr
+Monday Dec 5, 2022 - stayed up til 3:44am (mon)- solved new aoc prob and made aoc runner and bug fixes - x86 is the only target that isnt working so I need to work on that
+Tues Dec 6, 2022 - stayed up til 4:42am - working on bug fixes and stability - also added ability to check for eof and made strings null terminated so we can weed out sizeof to deprecate it
+
 
 - [ ] sizeof for x86
     - create a builtin array class 
     that stores pointer and array size?
     - maybe it should be user's responsibility?
-    
+
 
 - [ ] arr[:] syntax
 

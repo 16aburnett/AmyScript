@@ -106,8 +106,14 @@ def __builtin__println ():
 # # this waits for a line if there isnt one
 # # // char[] input ()#
 def __builtin__input ():
-    # amyscript expects the newline to be there
-    return input () + "\n"
+    try:
+        # amyscript expects the newline and null character
+        line = input () + "\n" + '\0'
+    except EOFError:
+        # return null if eof is encountered
+        line = None
+    return line
+
 
 # # //========================================================================
 # # // returns default float value
@@ -145,7 +151,10 @@ def __builtin__char ():
 # # // converts float to int
 # # // int floatToInt (float)#
 def __builtin__floatToInt__float (f):
-    return int(f)
+    # -1 to ignore the null terminator
+    if f[-1] == '\0':
+        return int(''.join(f[:-1]))
+    return int(''.join(f))
 
 # # //========================================================================
 # # // parses an int from a given char[]
@@ -153,11 +162,15 @@ def __builtin__floatToInt__float (f):
 # # str : [rbp + 16]
 def __builtin__stringToInt__char__1 (s):
     # print (s)
-    try:
-        res = int(''.join(s))
-    except:
-        res = 0
-    return res
+    # try:
+    #     res = int(''.join(s))
+    # except:
+    #     res = 0
+    # return res
+    # -1 to ignore the null terminator
+    if s[-1] == '\0':
+        return int(''.join(s[:-1]))
+    return int(''.join(s))
 
 
 # # //========================================================================
@@ -833,6 +846,38 @@ stack.pop ()
 # Statement
 # Assignment - '='
 # RHS
+# Addition
+# LHS
+# Addition
+# LHS
+# Int Literal
+stack.append(26)
+# RHS
+# Int Literal
+stack.append(26)
+__rhs = stack.pop()
+__lhs = stack.pop()
+__res = __lhs + __rhs
+stack.append(__res)
+# RHS
+# Int Literal
+stack.append(1)
+__rhs = stack.pop()
+__lhs = stack.pop()
+__res = __lhs + __rhs
+stack.append(__res)
+# LHS
+__main__letters_size = 0
+__rhs = stack.pop()
+__main__letters_size = __rhs
+stack.append (__main__letters_size)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
+# Statement
+# Assignment - '='
+# RHS
 # Function Call - input() -> char[]
 # Arguments
 # *** input
@@ -1015,6 +1060,63 @@ while (1):
     # Statement
     # Assignment - '='
     # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__for__12__block__13__line0_size = 0
+    __rhs = stack.pop()
+    __main__for__12__block__13__line0_size = __rhs
+    stack.append (__main__for__12__block__13__line0_size)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # While-Loop
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Not Equal
+        # LHS
+        # Subscript
+        # LHS
+        stack.append(__main__for__12__block__13__line0)
+        # OFFSET
+        # Post-Increment
+        __res = __main__for__12__block__13__line0_size
+        __main__for__12__block__13__line0_size = __main__for__12__block__13__line0_size + 1
+        stack.append (__res)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # RHS
+        # Char Literal
+        stack.append('\0')
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs != __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+    # End of While
+    #---------------------------------------------------------------------
+    # Statement
+    # Pre-Decrement
+    # RHS
+    stack.append(__main__for__12__block__13__line0_size)
+    __rhs = stack.pop ()
+    __main__for__12__block__13__line0_size = __main__for__12__block__13__line0_size - 1
+    __res = __main__for__12__block__13__line0_size
+    stack.append (__res)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
     # Subscript
     # LHS
     # Member Accessor
@@ -1044,6 +1146,63 @@ while (1):
     __rhs = stack.pop()
     __main__for__12__block__13__line1 = __rhs
     stack.append (__main__for__12__block__13__line1)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__for__12__block__13__line1_size = 0
+    __rhs = stack.pop()
+    __main__for__12__block__13__line1_size = __rhs
+    stack.append (__main__for__12__block__13__line1_size)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # While-Loop
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Not Equal
+        # LHS
+        # Subscript
+        # LHS
+        stack.append(__main__for__12__block__13__line1)
+        # OFFSET
+        # Post-Increment
+        __res = __main__for__12__block__13__line1_size
+        __main__for__12__block__13__line1_size = __main__for__12__block__13__line1_size + 1
+        stack.append (__res)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # RHS
+        # Char Literal
+        stack.append('\0')
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs != __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+    # End of While
+    #---------------------------------------------------------------------
+    # Statement
+    # Pre-Decrement
+    # RHS
+    stack.append(__main__for__12__block__13__line1_size)
+    __rhs = stack.pop ()
+    __main__for__12__block__13__line1_size = __main__for__12__block__13__line1_size - 1
+    __res = __main__for__12__block__13__line1_size
+    stack.append (__res)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -1087,6 +1246,63 @@ while (1):
     # Statement
     # Assignment - '='
     # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__for__12__block__13__line2_size = 0
+    __rhs = stack.pop()
+    __main__for__12__block__13__line2_size = __rhs
+    stack.append (__main__for__12__block__13__line2_size)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # While-Loop
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Not Equal
+        # LHS
+        # Subscript
+        # LHS
+        stack.append(__main__for__12__block__13__line2)
+        # OFFSET
+        # Post-Increment
+        __res = __main__for__12__block__13__line2_size
+        __main__for__12__block__13__line2_size = __main__for__12__block__13__line2_size + 1
+        stack.append (__res)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # RHS
+        # Char Literal
+        stack.append('\0')
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs != __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+    # End of While
+    #---------------------------------------------------------------------
+    # Statement
+    # Pre-Decrement
+    # RHS
+    stack.append(__main__for__12__block__13__line2_size)
+    __rhs = stack.pop ()
+    __main__for__12__block__13__line2_size = __main__for__12__block__13__line2_size - 1
+    __res = __main__for__12__block__13__line2_size
+    stack.append (__res)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
     # Char Literal
     stack.append('0')
     # LHS
@@ -1106,23 +1322,20 @@ while (1):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__for__12__block__13__for__14__i = 0
+    __main__for__12__block__13__for__17__i = 0
     __rhs = stack.pop()
-    __main__for__12__block__13__for__14__i = __rhs
-    stack.append (__main__for__12__block__13__for__14__i)
+    __main__for__12__block__13__for__17__i = __rhs
+    stack.append (__main__for__12__block__13__for__17__i)
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__for__12__block__13__for__14__i)
+        stack.append(__main__for__12__block__13__for__17__i)
         # RHS
         # Subtraction
         # LHS
-        stack.append(__main__for__12__block__13__line0)
-        __arr = stack.pop ()
-        __res = len (__arr)
-        stack.append (__res)
+        stack.append(__main__for__12__block__13__line0_size)
         # RHS
         # Int Literal
         stack.append(1)
@@ -1148,23 +1361,20 @@ while (1):
         # Int Literal
         stack.append(0)
         # LHS
-        __main__for__12__block__13__for__14__block__15__for__16__j = 0
+        __main__for__12__block__13__for__17__block__18__for__19__j = 0
         __rhs = stack.pop()
-        __main__for__12__block__13__for__14__block__15__for__16__j = __rhs
-        stack.append (__main__for__12__block__13__for__14__block__15__for__16__j)
+        __main__for__12__block__13__for__17__block__18__for__19__j = __rhs
+        stack.append (__main__for__12__block__13__for__17__block__18__for__19__j)
         # Using an infinite loop so we can write a separate multi-line condition
         while (1):
             # Condition
             # Less Than
             # LHS
-            stack.append(__main__for__12__block__13__for__14__block__15__for__16__j)
+            stack.append(__main__for__12__block__13__for__17__block__18__for__19__j)
             # RHS
             # Subtraction
             # LHS
-            stack.append(__main__for__12__block__13__line1)
-            __arr = stack.pop ()
-            __res = len (__arr)
-            stack.append (__res)
+            stack.append(__main__for__12__block__13__line1_size)
             # RHS
             # Int Literal
             stack.append(1)
@@ -1193,7 +1403,7 @@ while (1):
             # LHS
             stack.append(__main__for__12__block__13__line0)
             # OFFSET
-            stack.append(__main__for__12__block__13__for__14__i)
+            stack.append(__main__for__12__block__13__for__17__i)
             __offset = stack.pop ()
             __pointer = stack.pop ()
             stack.append (__pointer[__offset])
@@ -1202,7 +1412,7 @@ while (1):
             # LHS
             stack.append(__main__for__12__block__13__line1)
             # OFFSET
-            stack.append(__main__for__12__block__13__for__14__block__15__for__16__j)
+            stack.append(__main__for__12__block__13__for__17__block__18__for__19__j)
             __offset = stack.pop ()
             __pointer = stack.pop ()
             stack.append (__pointer[__offset])
@@ -1210,9 +1420,9 @@ while (1):
             __lhs = stack.pop ()
             __res = __lhs == __rhs
             stack.append (__res)
-            __if__18__cond = stack.pop ()
+            __if__21__cond = stack.pop ()
             # get condition from stack
-            if (__if__18__cond):
+            if (__if__21__cond):
                 # Body
                 #---------------------------------------------------------
                 # Code Block
@@ -1224,23 +1434,20 @@ while (1):
                 # Int Literal
                 stack.append(0)
                 # LHS
-                __main__for__12__block__13__for__14__block__15__for__16__block__17__if__18__block__19__for__20__k = 0
+                __main__for__12__block__13__for__17__block__18__for__19__block__20__if__21__block__22__for__23__k = 0
                 __rhs = stack.pop()
-                __main__for__12__block__13__for__14__block__15__for__16__block__17__if__18__block__19__for__20__k = __rhs
-                stack.append (__main__for__12__block__13__for__14__block__15__for__16__block__17__if__18__block__19__for__20__k)
+                __main__for__12__block__13__for__17__block__18__for__19__block__20__if__21__block__22__for__23__k = __rhs
+                stack.append (__main__for__12__block__13__for__17__block__18__for__19__block__20__if__21__block__22__for__23__k)
                 # Using an infinite loop so we can write a separate multi-line condition
                 while (1):
                     # Condition
                     # Less Than
                     # LHS
-                    stack.append(__main__for__12__block__13__for__14__block__15__for__16__block__17__if__18__block__19__for__20__k)
+                    stack.append(__main__for__12__block__13__for__17__block__18__for__19__block__20__if__21__block__22__for__23__k)
                     # RHS
                     # Subtraction
                     # LHS
-                    stack.append(__main__for__12__block__13__line2)
-                    __arr = stack.pop ()
-                    __res = len (__arr)
-                    stack.append (__res)
+                    stack.append(__main__for__12__block__13__line2_size)
                     # RHS
                     # Int Literal
                     stack.append(1)
@@ -1269,7 +1476,7 @@ while (1):
                     # LHS
                     stack.append(__main__for__12__block__13__line0)
                     # OFFSET
-                    stack.append(__main__for__12__block__13__for__14__i)
+                    stack.append(__main__for__12__block__13__for__17__i)
                     __offset = stack.pop ()
                     __pointer = stack.pop ()
                     stack.append (__pointer[__offset])
@@ -1278,7 +1485,7 @@ while (1):
                     # LHS
                     stack.append(__main__for__12__block__13__line2)
                     # OFFSET
-                    stack.append(__main__for__12__block__13__for__14__block__15__for__16__block__17__if__18__block__19__for__20__k)
+                    stack.append(__main__for__12__block__13__for__17__block__18__for__19__block__20__if__21__block__22__for__23__k)
                     __offset = stack.pop ()
                     __pointer = stack.pop ()
                     stack.append (__pointer[__offset])
@@ -1286,9 +1493,9 @@ while (1):
                     __lhs = stack.pop ()
                     __res = __lhs == __rhs
                     stack.append (__res)
-                    __if__22__cond = stack.pop ()
+                    __if__25__cond = stack.pop ()
                     # get condition from stack
-                    if (__if__22__cond):
+                    if (__if__25__cond):
                         # Body
                         #-------------------------------------------------
                         # Code Block
@@ -1299,7 +1506,7 @@ while (1):
                         # LHS
                         stack.append(__main__for__12__block__13__line0)
                         # OFFSET
-                        stack.append(__main__for__12__block__13__for__14__i)
+                        stack.append(__main__for__12__block__13__for__17__i)
                         __offset = stack.pop ()
                         __pointer = stack.pop ()
                         stack.append (__pointer[__offset])
@@ -1317,10 +1524,10 @@ while (1):
                     # Update
                     # Pre-Increment
                     # RHS
-                    stack.append(__main__for__12__block__13__for__14__block__15__for__16__block__17__if__18__block__19__for__20__k)
+                    stack.append(__main__for__12__block__13__for__17__block__18__for__19__block__20__if__21__block__22__for__23__k)
                     __rhs = stack.pop ()
-                    __main__for__12__block__13__for__14__block__15__for__16__block__17__if__18__block__19__for__20__k = __main__for__12__block__13__for__14__block__15__for__16__block__17__if__18__block__19__for__20__k + 1
-                    __res = __main__for__12__block__13__for__14__block__15__for__16__block__17__if__18__block__19__for__20__k
+                    __main__for__12__block__13__for__17__block__18__for__19__block__20__if__21__block__22__for__23__k = __main__for__12__block__13__for__17__block__18__for__19__block__20__if__21__block__22__for__23__k + 1
+                    __res = __main__for__12__block__13__for__17__block__18__for__19__block__20__if__21__block__22__for__23__k
                     stack.append (__res)
                 #---------------------------------------------------------
                 #---------------------------------------------------------
@@ -1330,20 +1537,20 @@ while (1):
             # Update
             # Pre-Increment
             # RHS
-            stack.append(__main__for__12__block__13__for__14__block__15__for__16__j)
+            stack.append(__main__for__12__block__13__for__17__block__18__for__19__j)
             __rhs = stack.pop ()
-            __main__for__12__block__13__for__14__block__15__for__16__j = __main__for__12__block__13__for__14__block__15__for__16__j + 1
-            __res = __main__for__12__block__13__for__14__block__15__for__16__j
+            __main__for__12__block__13__for__17__block__18__for__19__j = __main__for__12__block__13__for__17__block__18__for__19__j + 1
+            __res = __main__for__12__block__13__for__17__block__18__for__19__j
             stack.append (__res)
         #-----------------------------------------------------------------
         #-----------------------------------------------------------------
         # Update
         # Pre-Increment
         # RHS
-        stack.append(__main__for__12__block__13__for__14__i)
+        stack.append(__main__for__12__block__13__for__17__i)
         __rhs = stack.pop ()
-        __main__for__12__block__13__for__14__i = __main__for__12__block__13__for__14__i + 1
-        __res = __main__for__12__block__13__for__14__i
+        __main__for__12__block__13__for__17__i = __main__for__12__block__13__for__17__i + 1
+        __res = __main__for__12__block__13__for__17__i
         stack.append (__res)
     #---------------------------------------------------------------------
     # Statement
@@ -1368,21 +1575,18 @@ while (1):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__for__12__block__13__for__24__i = 0
+    __main__for__12__block__13__for__27__i = 0
     __rhs = stack.pop()
-    __main__for__12__block__13__for__24__i = __rhs
-    stack.append (__main__for__12__block__13__for__24__i)
+    __main__for__12__block__13__for__27__i = __rhs
+    stack.append (__main__for__12__block__13__for__27__i)
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__for__12__block__13__for__24__i)
+        stack.append(__main__for__12__block__13__for__27__i)
         # RHS
-        stack.append(__main__letters)
-        __arr = stack.pop ()
-        __res = len (__arr)
-        stack.append (__res)
+        stack.append(__main__letters_size)
         __rhs = stack.pop ()
         __lhs = stack.pop ()
         __res = __lhs < __rhs
@@ -1404,7 +1608,7 @@ while (1):
         # LHS
         stack.append(__main__letters)
         # OFFSET
-        stack.append(__main__for__12__block__13__for__24__i)
+        stack.append(__main__for__12__block__13__for__27__i)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -1414,14 +1618,14 @@ while (1):
         __lhs = stack.pop ()
         __res = __lhs == __rhs
         stack.append (__res)
-        __if__26__cond = stack.pop ()
+        __if__29__cond = stack.pop ()
         # get condition from stack
-        if (__if__26__cond):
+        if (__if__29__cond):
             # Body
             # Statement
             # Assignment - '='
             # RHS
-            stack.append(__main__for__12__block__13__for__24__i)
+            stack.append(__main__for__12__block__13__for__27__i)
             __rhs = stack.pop()
             __main__for__12__block__13__score = __rhs
             stack.append (__main__for__12__block__13__score)
@@ -1435,10 +1639,10 @@ while (1):
         # Update
         # Pre-Increment
         # RHS
-        stack.append(__main__for__12__block__13__for__24__i)
+        stack.append(__main__for__12__block__13__for__27__i)
         __rhs = stack.pop ()
-        __main__for__12__block__13__for__24__i = __main__for__12__block__13__for__24__i + 1
-        __res = __main__for__12__block__13__for__24__i
+        __main__for__12__block__13__for__27__i = __main__for__12__block__13__for__27__i + 1
+        __res = __main__for__12__block__13__for__27__i
         stack.append (__res)
     #---------------------------------------------------------------------
     # Statement

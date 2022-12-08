@@ -2426,13 +2426,20 @@ class CodeGenVisitor_x86 (ASTVisitor):
         self.printComment (f"This keyword")
         self.indentation += 1
         # push [rbp - 8] ; this 
+        # this is a pointer so we only need to worry about qword
         self.printCode (f"push qword [rbp - {node.decl.thisStackOffset}] ; __this")
         self.indentation -= 1
 
     def visitIdentifierExpressionNode (self, node):
         self.printComment (f"Identifier - {node.type} {node.id}")
         self.indentation += 1
-        self.printCode (f"push qword [rbp - {node.decl.stackOffset}]")
+        # chars
+        if node.type.__str__() == "char":
+            self.printCode (f"mov al, byte [rbp - {node.decl.stackOffset}]")
+            self.printCode (f"movzx rax, al")
+            self.printCode (f"push rax")
+        else:
+            self.printCode (f"push qword [rbp - {node.decl.stackOffset}]")
         self.indentation -= 1
 
     def visitArrayAllocatorExpressionNode (self, node):
@@ -2669,8 +2676,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
     def visitNullExpressionNode (self, node):
         self.printComment ("Null Literal")
         self.indentation += 1
-        self.printCode ("ASSIGN __null 0")
-        self.printCode ("PUSH __null")
+        self.printCode ("push 0")
         self.indentation -= 1
 
 

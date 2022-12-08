@@ -28,14 +28,14 @@ while (line[0] != '$')
 //println<:char[]:> (stacklines);
 //println<:char[]:> (instructionlines);
 
-char[][] tokens = split (stacklines.data[stacklines.size-1], ' ');
+Vector<:char[]:> tokens = split (stacklines.data[stacklines.size-1], ' ');
 
-//for (int i = 0; i < sizeof (tokens); ++i)
+//for (int i = 0; i < tokens.size; ++i)
 //{
-//    println (tokens[i]);
+//    println (tokens.data[i]);
 //}
 
-int size = stringToInt(tokens[sizeof(tokens)-2]);
+int size = stringToInt(tokens.data[tokens.size-2]);
 
 //println (size);
 
@@ -68,10 +68,10 @@ for (int i = 0; i < instructionlines.size; ++i)
 {
     // "move x from y to z"
     if (instructionlines.data[i][0] == '$') break;
-    char[][] tokens = split (instructionlines.data[i], ' ');
-    int num_boxes = stringToInt (tokens[1]);
-    int src = stringToInt (tokens[3])-1;
-    int dest = stringToInt (tokens[5])-1;
+    Vector<:char[]:> tokens = split (instructionlines.data[i], ' ');
+    int num_boxes = stringToInt (tokens.data[1]);
+    int src = stringToInt (tokens.data[3])-1;
+    int dest = stringToInt (tokens.data[5])-1;
     for (int j = 0; j < num_boxes; ++j)
     {
         char box = stacks.data[src].popBack ();
