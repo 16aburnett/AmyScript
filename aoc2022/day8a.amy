@@ -1,0 +1,114 @@
+
+
+#include "Vector.amy"
+#include "algorithms.amy"
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+int rows = lines.size;
+// -1 for ignoring newline
+int cols = strlen (lines.data[0])-1;
+
+// first count the perimeter 
+// bc all perimeter trees are visible from outside the grid
+int num_visible = rows * 2 + (cols-2)*2;
+
+// check each tree to find if it is visible
+// we can ignore the perimeter trees
+for (int i = 1; i < rows-1; ++i)
+{
+    for (int j = 1; j < cols-1; ++j)
+    {
+        // check if tree is visible
+        // tree is visible if it is larger than the rest 
+        // of the trees in any direction N E S W 
+        int is_visible = 0;
+        // North
+        // first assume it works and then try to disprove
+        int is_visible_north = 1;
+        for (int ii = i-1; ii >= 0; --ii)
+        {
+            // check if other tree is larger than current tree
+            if (charToInt(lines.data[ii][j]) >= charToInt(lines.data[i][j]))
+            {
+                is_visible_north = 0;
+                break;
+            }
+        }
+        if (is_visible_north)
+        {
+            is_visible = 1;
+            ++num_visible;
+            //print (i); print (' '); println (j);
+            continue;
+        }
+
+        // East
+        // first assume it works and then try to disprove
+        int is_visible_east = 1;
+        for (int jj = j+1; jj < cols; ++jj)
+        {
+            // check if other tree is larger than current tree
+            if (charToInt(lines.data[i][jj]) >= charToInt(lines.data[i][j]))
+            {
+                is_visible_east = 0;
+                break;
+            }
+        }
+        if (is_visible_east)
+        {
+            is_visible = 1;
+            ++num_visible;
+            //print (i); print (' '); println (j);
+            continue;
+        }
+
+        // South
+        // first assume it works and then try to disprove
+        int is_visible_south = 1;
+        for (int ii = i+1; ii < rows; ++ii)
+        {
+            // check if other tree is larger than current tree
+            if (charToInt(lines.data[ii][j]) >= charToInt(lines.data[i][j]))
+            {
+                is_visible_south = 0;
+                break;
+            }
+        }
+        if (is_visible_south)
+        {
+            is_visible = 1;
+            ++num_visible;
+            //print (i); print (' '); println (j);
+            continue;
+        }
+
+        // West
+        // first assume it works and then try to disprove
+        int is_visible_west = 1;
+        for (int jj = j-1; jj >= 0; --jj)
+        {
+            // check if other tree is larger than current tree
+            if (charToInt(lines.data[i][jj]) >= charToInt(lines.data[i][j]))
+            {
+                is_visible_west = 0;
+                break;
+            }
+        }
+        if (is_visible_west)
+        {
+            is_visible = 1;
+            ++num_visible;
+            //print (i); print (' '); println (j);
+            continue;
+        }
+    }
+}
+
+println (num_visible);

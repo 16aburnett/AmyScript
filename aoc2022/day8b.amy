@@ -1,0 +1,91 @@
+
+
+#include "Vector.amy"
+#include "algorithms.amy"
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+int rows = lines.size;
+// -1 for ignoring newline
+int cols = strlen (lines.data[0])-1;
+
+int best_scenic_score = 0;
+
+// check each tree to find if it is visible
+// we can ignore the perimeter trees
+// the perimeter trees will have a scenic score of zero
+// and we want to find the largest scenic score
+for (int i = 1; i < rows-1; ++i)
+{
+    for (int j = 1; j < cols-1; ++j)
+    {
+        // North
+        int num_visible_trees_north = 0;
+        for (int ii = i-1; ii >= 0; --ii)
+        {
+            ++num_visible_trees_north;
+            // check if other tree is larger than current tree
+            if (charToInt(lines.data[ii][j]) >= charToInt(lines.data[i][j]))
+            {
+                // stop checking because we cant see trees beyond
+                // larger trees
+                break;
+            }
+        }
+
+        // East
+        int num_visible_trees_east = 0;
+        for (int jj = j+1; jj < cols; ++jj)
+        {
+            ++num_visible_trees_east;
+            // check if other tree is larger than current tree
+            if (charToInt(lines.data[i][jj]) >= charToInt(lines.data[i][j]))
+            {
+                // stop checking because we cant see trees beyond
+                // larger trees
+                break;
+            }
+        }
+
+        // South
+        int num_visible_trees_south = 0;
+        for (int ii = i+1; ii < rows; ++ii)
+        {
+            ++num_visible_trees_south;
+            // check if other tree is larger than current tree
+            if (charToInt(lines.data[ii][j]) >= charToInt(lines.data[i][j]))
+            {
+                // stop checking because we cant see trees beyond
+                // larger trees
+                break;
+            }
+        }
+
+        // West
+        int num_visible_trees_west = 0;
+        for (int jj = j-1; jj >= 0; --jj)
+        {
+            ++num_visible_trees_west;
+            // check if other tree is larger than current tree
+            if (charToInt(lines.data[i][jj]) >= charToInt(lines.data[i][j]))
+            {
+                // stop checking because we cant see trees beyond
+                // larger trees
+                break;
+            }
+        }
+
+        // tree scenic score
+        int scenic_score = num_visible_trees_north * num_visible_trees_east * num_visible_trees_south * num_visible_trees_west;
+        if (scenic_score > best_scenic_score)
+            best_scenic_score = scenic_score;
+    }
+}
+
+println (best_scenic_score);

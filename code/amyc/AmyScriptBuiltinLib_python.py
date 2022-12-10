@@ -26,7 +26,8 @@ def __builtin__free (ptr):
 # # void print (char[] stringToPrint)#
 # # stringToPrint : [rbp + 16]
 def __builtin__print__char__1 (s):
-    print (s, end="")
+    # collapse char[] to python string
+    print (''.join(s), end="")
 
 # # ========================================================================
 
@@ -58,7 +59,8 @@ def __builtin__print__float (v):
 # # // void println (char[] stringToPrint)#
 # # stringToPrint : [rbp + 16]
 def __builtin__println__char__1 (v):
-    print (v)
+    # collapse char[] to python string
+    print (''.join(v))
 
 # # ========================================================================
 

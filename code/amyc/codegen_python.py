@@ -752,6 +752,9 @@ class CodeGenVisitor_python (ASTVisitor):
 
     def visitContinueStatementNode (self, node):
         self.printComment (f"Continue in {self.parentLoops[-1].startLabel}")
+        # for loops need to inject the update
+        if isinstance (self.parentLoops[-1], ForStatementNode):
+            self.parentLoops[-1].update.accept (self)
         # goes to the start of the loop (aka the condition)
         self.printCode (f"continue")
 

@@ -27,7 +27,7 @@ SAMPLE = 0
 INPUT = 1
 RUN_INPUT_MODE = SAMPLE
 
-RUN_TIMEOUT = 30
+RUN_TIMEOUT = 60
 
 libraries = ["Vector.amy", "algorithms.amy"]
 
@@ -113,30 +113,30 @@ def run (days, parts, targets, inputset, hide_answers):
             expected_answer = f.read ().strip ()
 
         # Run generated code
-        rstart = time.perf_counter()
-        if (run.target == "amyasm"):
-            run_output = subprocess.run ([f'python3', AMYASM_PATH, dest_filename], input=input_data, capture_output=True, text=True)
-        elif (run.target == "x86"):
-            # x86 needs to be assembled and linked
-            assembled_filename = f"generated_code/day{day}{part}.o"
-            os.system (f'nasm -f elf64 {dest_filename} -o {assembled_filename}')
-            bin_filename = f"generated_code/day{day}{part}.out"
-            os.system (f'ld {assembled_filename} -o {bin_filename} -lc --dynamic-linker /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2')
-            # we're finally ready to run the code
-            try:
+        try:
+            rstart = time.perf_counter()
+            if (run.target == "amyasm"):
+                run_output = subprocess.run ([f'python3', AMYASM_PATH, dest_filename], input=input_data, capture_output=True, text=True, timeout=RUN_TIMEOUT)
+            elif (run.target == "x86"):
+                # x86 needs to be assembled and linked
+                assembled_filename = f"generated_code/day{day}{part}.o"
+                os.system (f'nasm -f elf64 {dest_filename} -o {assembled_filename}')
+                bin_filename = f"generated_code/day{day}{part}.out"
+                os.system (f'ld {assembled_filename} -o {bin_filename} -lc --dynamic-linker /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2')
+                # we're finally ready to run the code
                 run_output = subprocess.run ([f"./{bin_filename}"], input=input_data, capture_output=True, text=True, timeout=RUN_TIMEOUT)
-            except subprocess.TimeoutExpired:
+            elif (run.target == "python"):
+                run_output = subprocess.run ([f'python3', dest_filename], input=input_data, capture_output=True, text=True, timeout=RUN_TIMEOUT)
+            else: 
+                print ("Error: invalid target:", run.target)
+                exit (1)
+            rend = time.perf_counter ()
+            run.runtime = rend - rstart
+        except subprocess.TimeoutExpired:
                 # catch timeout errors
                 print (f"Error: timeout of {RUN_TIMEOUT} seconds exceeded")
-                print (f"   Maybe there is a hang or the timeout needs to be increased or the process is waiing on input")
+                print (f"   Maybe there is a hang or the timeout needs to be increased or the process is waiting on input")
                 continue
-        elif (run.target == "python"):
-            run_output = subprocess.run ([f'python3', dest_filename], input=input_data, capture_output=True, text=True)
-        else: 
-            print ("Error: invalid target:", run.target)
-            exit (1)
-        rend = time.perf_counter ()
-        run.runtime = rend - rstart
 
         # Ensure code ran successfully
         run.ran_successfully = run_output.returncode == 0
@@ -201,7 +201,7 @@ if __name__ == "__main__":
 
     # print (args)
 
-    valid_days = [str(i) for i in range(1, 8)]
+    valid_days = [str(i) for i in range(1, 9)]
     days = args.days
     if "all" in args.days:
         days = valid_days
