@@ -871,662 +871,6 @@ __dtable____main____Vector__char__1 = [__method____main____Vector__char__1____pu
 #=========================================================================
 
 #=========================================================================
-# Class Declaration - __main____Vector__Vector inherits __builtin____main__Object
-# Creating Dispatch Table (will be populated later)
-__dtable____main____Vector__Vector = []
-#-------------------------------------------------------------------------
-# Field - Vector<:int:>[] Vector<:Vector<:int:>:>::data
-__field____main____Vector__Vector____data = 1
-#-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-# Field - int Vector<:Vector<:int:>:>::size
-__field____main____Vector__Vector____size = 2
-#-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-# Field - int Vector<:Vector<:int:>:>::capacity
-__field____main____Vector__Vector____capacity = 3
-#-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-# Constructor Declaration - Vector<:Vector<:int:>:>::Vector() -> Vector<:Vector<:int:>:>
-def __ctor____main____Vector__Vector____Vector ():
-    # Creating Class Instance
-    this = [0] * 4
-    # Add Dispatch Table
-    this[0] = __dtable____main____Vector__Vector
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Int Literal
-    stack.append(10)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vector__Vector____capacity)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Int Literal
-    stack.append(0)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vector__Vector____size)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____capacity)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __dim = stack.pop ()
-    __res = [None] * __dim
-    stack.append (__res)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vector__Vector____data)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-    # Return the constructed instance
-    return this
-# End Constructor Declaration - __ctor____main____Vector__Vector____Vector
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Constructor Declaration - Vector<:Vector<:int:>:>::Vector(int) -> Vector<:Vector<:int:>:>
-def __ctor____main____Vector__Vector____Vector__int (__main____Vector__Vector__Vector__size):
-    # Creating Class Instance
-    this = [0] * 4
-    # Add Dispatch Table
-    this[0] = __dtable____main____Vector__Vector
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Addition
-    # LHS
-    stack.append(__main____Vector__Vector__Vector__size)
-    # RHS
-    # Int Literal
-    stack.append(10)
-    __rhs = stack.pop()
-    __lhs = stack.pop()
-    __res = __lhs + __rhs
-    stack.append(__res)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vector__Vector____capacity)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Vector__Vector__Vector__size)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vector__Vector____size)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____capacity)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __dim = stack.pop ()
-    __res = [None] * __dim
-    stack.append (__res)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vector__Vector____data)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-    # Return the constructed instance
-    return this
-# End Constructor Declaration - __ctor____main____Vector__Vector____Vector__int
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - Vector<:Vector<:int:>:>::pushBack(Vector<:int:>) -> void
-def __method____main____Vector__Vector____pushBack__Vector (this, __main____Vector__Vector__pushBack__val):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    #---------------------------------------------------------------------
-    # If-Statement
-    # Precomputing all if/elif conditions and give unique names
-    # bc we can't have code between if and elif
-    # Condition
-    # Greater Than or Equal to
-    # LHS
-    # Addition
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    # Int Literal
-    stack.append(1)
-    __rhs = stack.pop()
-    __lhs = stack.pop()
-    __res = __lhs + __rhs
-    stack.append(__res)
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____capacity)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rhs = stack.pop ()
-    __lhs = stack.pop ()
-    __res = __lhs >= __rhs
-    stack.append (__res)
-    __if__15__cond = stack.pop ()
-    # get condition from stack
-    if (__if__15__cond):
-        # Body
-        #-----------------------------------------------------------------
-        # Code Block
-        # Statement
-        # Assignment - '='
-        # RHS
-        # Multiplication
-        # LHS
-        # Member Accessor
-        # LHS
-        stack.append(this)
-        # RHS
-        stack.append (__field____main____Vector__Vector____capacity)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # RHS
-        # Int Literal
-        stack.append(2)
-        __rhs = stack.pop()
-        __lhs = stack.pop()
-        __res = __lhs * __rhs
-        stack.append(__res)
-        # LHS
-        # Member Accessor Assignment
-        # LHS
-        stack.append(this)
-        # RHS
-        stack.append(__field____main____Vector__Vector____capacity)
-        __child = stack.pop()
-        __parent = stack.pop()
-        __rhs = stack.pop()
-        __parent[__child] = __rhs
-        stack.append (__parent[__child])
-        # Statement results can be ignored
-        stack.pop ()
-        # End Statement
-
-        # Statement
-        # Assignment - '='
-        # RHS
-        # Member Accessor
-        # LHS
-        stack.append(this)
-        # RHS
-        stack.append (__field____main____Vector__Vector____capacity)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        __dim = stack.pop ()
-        __res = [None] * __dim
-        stack.append (__res)
-        # LHS
-        __main____Vector__Vector__pushBack__block__14__if__15__block__16__nData = 0
-        __rhs = stack.pop()
-        __main____Vector__Vector__pushBack__block__14__if__15__block__16__nData = __rhs
-        stack.append (__main____Vector__Vector__pushBack__block__14__if__15__block__16__nData)
-        # Statement results can be ignored
-        stack.pop ()
-        # End Statement
-
-        #-----------------------------------------------------------------
-        # For-Loop
-        # Init
-        # Assignment - '='
-        # RHS
-        # Int Literal
-        stack.append(0)
-        # LHS
-        __main____Vector__Vector__pushBack__block__14__if__15__block__16__for__17__i = 0
-        __rhs = stack.pop()
-        __main____Vector__Vector__pushBack__block__14__if__15__block__16__for__17__i = __rhs
-        stack.append (__main____Vector__Vector__pushBack__block__14__if__15__block__16__for__17__i)
-        # Using an infinite loop so we can write a separate multi-line condition
-        while (1):
-            # Condition
-            # Less Than
-            # LHS
-            stack.append(__main____Vector__Vector__pushBack__block__14__if__15__block__16__for__17__i)
-            # RHS
-            # Member Accessor
-            # LHS
-            stack.append(this)
-            # RHS
-            stack.append (__field____main____Vector__Vector____size)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __rhs = stack.pop ()
-            __lhs = stack.pop ()
-            __res = __lhs < __rhs
-            stack.append (__res)
-            __cond = stack.pop ()
-            # break out of loop if condition is false
-            if (__cond == 0): break
-            # Body
-            #-------------------------------------------------------------
-            # Code Block
-            # Statement
-            # Assignment - '='
-            # RHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(this)
-            # RHS
-            stack.append (__field____main____Vector__Vector____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            stack.append(__main____Vector__Vector__pushBack__block__14__if__15__block__16__for__17__i)
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # LHS
-            # Subscript assignment
-            # LHS
-            stack.append(__main____Vector__Vector__pushBack__block__14__if__15__block__16__nData)
-            # OFFSET
-            stack.append(__main____Vector__Vector__pushBack__block__14__if__15__block__16__for__17__i)
-            __offset = stack.pop()
-            __pointer = stack.pop()
-            __rhs = stack.pop()
-            __pointer[__offset] = __rhs
-            stack.append (__pointer[__offset])
-            # Statement results can be ignored
-            stack.pop ()
-            # End Statement
-
-            #-------------------------------------------------------------
-            # Update
-            # Pre-Increment
-            # RHS
-            stack.append(__main____Vector__Vector__pushBack__block__14__if__15__block__16__for__17__i)
-            __rhs = stack.pop ()
-            __main____Vector__Vector__pushBack__block__14__if__15__block__16__for__17__i = __main____Vector__Vector__pushBack__block__14__if__15__block__16__for__17__i + 1
-            __res = __main____Vector__Vector__pushBack__block__14__if__15__block__16__for__17__i
-            stack.append (__res)
-        #-----------------------------------------------------------------
-        # Statement
-        # Member Accessor
-        # LHS
-        stack.append(this)
-        # RHS
-        stack.append (__field____main____Vector__Vector____data)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        __arr = stack.pop ()
-        __builtin__free (__arr)
-        stack.append (0)
-        # Statement results can be ignored
-        stack.pop ()
-        # End Statement
-
-        # Statement
-        # Assignment - '='
-        # RHS
-        stack.append(__main____Vector__Vector__pushBack__block__14__if__15__block__16__nData)
-        # LHS
-        # Member Accessor Assignment
-        # LHS
-        stack.append(this)
-        # RHS
-        stack.append(__field____main____Vector__Vector____data)
-        __child = stack.pop()
-        __parent = stack.pop()
-        __rhs = stack.pop()
-        __parent[__child] = __rhs
-        stack.append (__parent[__child])
-        # Statement results can be ignored
-        stack.pop ()
-        # End Statement
-
-        #-----------------------------------------------------------------
-    # End of if
-    #---------------------------------------------------------------------
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Vector__Vector__pushBack__val)
-    # LHS
-    # Subscript assignment
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____data)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # OFFSET
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __offset = stack.pop()
-    __pointer = stack.pop()
-    __rhs = stack.pop()
-    __pointer[__offset] = __rhs
-    stack.append (__pointer[__offset])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Pre-Increment
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rhs = stack.pop ()
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    __parent[__child] = __parent[__child] + 1
-    __res = __parent[__child]
-    stack.append (__res)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____Vector__Vector____pushBack__Vector
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - Vector<:Vector<:int:>:>::popBack() -> Vector<:int:>
-def __method____main____Vector__Vector____popBack (this):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Return
-    # Subscript
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____data)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # OFFSET
-    # Pre-Decrement
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rhs = stack.pop ()
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    __parent[__child] = __parent[__child] - 1
-    __res = __parent[__child]
-    stack.append (__res)
-    __offset = stack.pop ()
-    __pointer = stack.pop ()
-    stack.append (__pointer[__offset])
-    __rVal = stack.pop ()
-    return __rVal
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____Vector__Vector____popBack
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - Vector<:Vector<:int:>:>::clear() -> void
-def __method____main____Vector__Vector____clear (this):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    #---------------------------------------------------------------------
-    # While-Loop
-    # Using an infinite loop so we can write a separate multi-line condition
-    while (1):
-        # Condition
-        # Greater Than
-        # LHS
-        # Member Accessor
-        # LHS
-        stack.append(this)
-        # RHS
-        stack.append (__field____main____Vector__Vector____size)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # RHS
-        # Int Literal
-        stack.append(0)
-        __rhs = stack.pop ()
-        __lhs = stack.pop ()
-        __res = __lhs > __rhs
-        stack.append (__res)
-        __cond = stack.pop ()
-        # break out of loop if condition is false
-        if (__cond == 0): break
-        # Body
-        # Statement
-        # Method Call - Vector<:Vector<:int:>:>::popBack() -> Vector<:int:>
-        # LHS
-        stack.append(this)
-        # RHS
-        # Arguments
-        __obj = stack.pop ()
-        __retval = __method____main____Vector__Vector____popBack (__obj)
-        stack.append (__retval)
-        # Statement results can be ignored
-        stack.pop ()
-        # End Statement
-
-    # End of While
-    #---------------------------------------------------------------------
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____Vector__Vector____clear
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - Vector<:Vector<:int:>:>::get(int) -> Vector<:int:>
-def __method____main____Vector__Vector____get__int (this, __main____Vector__Vector__get__index):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Return
-    # Subscript
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____data)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # OFFSET
-    stack.append(__main____Vector__Vector__get__index)
-    __offset = stack.pop ()
-    __pointer = stack.pop ()
-    stack.append (__pointer[__offset])
-    __rVal = stack.pop ()
-    return __rVal
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____Vector__Vector____get__int
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - Vector<:Vector<:int:>:>::set(int, Vector<:int:>) -> void
-def __method____main____Vector__Vector____set__int__Vector (this, __main____Vector__Vector__set__index, __main____Vector__Vector__set__value):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Vector__Vector__set__value)
-    # LHS
-    # Subscript assignment
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____Vector__Vector____data)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # OFFSET
-    stack.append(__main____Vector__Vector__set__index)
-    __offset = stack.pop()
-    __pointer = stack.pop()
-    __rhs = stack.pop()
-    __pointer[__offset] = __rhs
-    stack.append (__pointer[__offset])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____Vector__Vector____set__int__Vector
-#-------------------------------------------------------------------------
-
-# Populate Dispatch Table
-__dtable____main____Vector__Vector = [__method____main____Vector__Vector____pushBack__Vector, __method____main____Vector__Vector____popBack, __method____main____Vector__Vector____clear, __method____main____Vector__Vector____get__int, __method____main____Vector__Vector____set__int__Vector]
-# End Class Declaration - __main____Vector__Vector
-#=========================================================================
-
-#=========================================================================
 # Class Declaration - __main____Vector__int inherits __builtin____main__Object
 # Creating Dispatch Table (will be populated later)
 __dtable____main____Vector__int = []
@@ -1762,9 +1106,9 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
     __lhs = stack.pop ()
     __res = __lhs >= __rhs
     stack.append (__res)
-    __if__27__cond = stack.pop ()
+    __if__15__cond = stack.pop ()
     # get condition from stack
-    if (__if__27__cond):
+    if (__if__15__cond):
         # Body
         #-----------------------------------------------------------------
         # Code Block
@@ -1818,10 +1162,10 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
         __res = [None] * __dim
         stack.append (__res)
         # LHS
-        __main____Vector__int__pushBack__block__26__if__27__block__28__nData = 0
+        __main____Vector__int__pushBack__block__14__if__15__block__16__nData = 0
         __rhs = stack.pop()
-        __main____Vector__int__pushBack__block__26__if__27__block__28__nData = __rhs
-        stack.append (__main____Vector__int__pushBack__block__26__if__27__block__28__nData)
+        __main____Vector__int__pushBack__block__14__if__15__block__16__nData = __rhs
+        stack.append (__main____Vector__int__pushBack__block__14__if__15__block__16__nData)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
@@ -1834,16 +1178,16 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
         # Int Literal
         stack.append(0)
         # LHS
-        __main____Vector__int__pushBack__block__26__if__27__block__28__for__29__i = 0
+        __main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i = 0
         __rhs = stack.pop()
-        __main____Vector__int__pushBack__block__26__if__27__block__28__for__29__i = __rhs
-        stack.append (__main____Vector__int__pushBack__block__26__if__27__block__28__for__29__i)
+        __main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i = __rhs
+        stack.append (__main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i)
         # Using an infinite loop so we can write a separate multi-line condition
         while (1):
             # Condition
             # Less Than
             # LHS
-            stack.append(__main____Vector__int__pushBack__block__26__if__27__block__28__for__29__i)
+            stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i)
             # RHS
             # Member Accessor
             # LHS
@@ -1877,16 +1221,16 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
             __parent = stack.pop ()
             stack.append (__parent[__child])
             # OFFSET
-            stack.append(__main____Vector__int__pushBack__block__26__if__27__block__28__for__29__i)
+            stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i)
             __offset = stack.pop ()
             __pointer = stack.pop ()
             stack.append (__pointer[__offset])
             # LHS
             # Subscript assignment
             # LHS
-            stack.append(__main____Vector__int__pushBack__block__26__if__27__block__28__nData)
+            stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__nData)
             # OFFSET
-            stack.append(__main____Vector__int__pushBack__block__26__if__27__block__28__for__29__i)
+            stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i)
             __offset = stack.pop()
             __pointer = stack.pop()
             __rhs = stack.pop()
@@ -1900,10 +1244,10 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
             # Update
             # Pre-Increment
             # RHS
-            stack.append(__main____Vector__int__pushBack__block__26__if__27__block__28__for__29__i)
+            stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i)
             __rhs = stack.pop ()
-            __main____Vector__int__pushBack__block__26__if__27__block__28__for__29__i = __main____Vector__int__pushBack__block__26__if__27__block__28__for__29__i + 1
-            __res = __main____Vector__int__pushBack__block__26__if__27__block__28__for__29__i
+            __main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i = __main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i + 1
+            __res = __main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i
             stack.append (__res)
         #-----------------------------------------------------------------
         # Statement
@@ -1925,7 +1269,7 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
         # Statement
         # Assignment - '='
         # RHS
-        stack.append(__main____Vector__int__pushBack__block__26__if__27__block__28__nData)
+        stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__nData)
         # LHS
         # Member Accessor Assignment
         # LHS
@@ -2182,11 +1526,857 @@ __dtable____main____Vector__int = [__method____main____Vector__int____pushBack__
 # End Class Declaration - __main____Vector__int
 #=========================================================================
 
+#=========================================================================
+# Class Declaration - __main____Vector__Monkey inherits __builtin____main__Object
+# Creating Dispatch Table (will be populated later)
+__dtable____main____Vector__Monkey = []
+#-------------------------------------------------------------------------
+# Field - Monkey[] Vector<:Monkey:>::data
+__field____main____Vector__Monkey____data = 1
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Field - int Vector<:Monkey:>::size
+__field____main____Vector__Monkey____size = 2
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Field - int Vector<:Monkey:>::capacity
+__field____main____Vector__Monkey____capacity = 3
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Constructor Declaration - Vector<:Monkey:>::Vector() -> Vector<:Monkey:>
+def __ctor____main____Vector__Monkey____Vector ():
+    # Creating Class Instance
+    this = [0] * 4
+    # Add Dispatch Table
+    this[0] = __dtable____main____Vector__Monkey
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(10)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Vector__Monkey____capacity)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Vector__Monkey____size)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____capacity)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __dim = stack.pop ()
+    __res = [None] * __dim
+    stack.append (__res)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Vector__Monkey____data)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # Return the constructed instance
+    return this
+# End Constructor Declaration - __ctor____main____Vector__Monkey____Vector
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Constructor Declaration - Vector<:Monkey:>::Vector(int) -> Vector<:Monkey:>
+def __ctor____main____Vector__Monkey____Vector__int (__main____Vector__Monkey__Vector__size):
+    # Creating Class Instance
+    this = [0] * 4
+    # Add Dispatch Table
+    this[0] = __dtable____main____Vector__Monkey
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Addition
+    # LHS
+    stack.append(__main____Vector__Monkey__Vector__size)
+    # RHS
+    # Int Literal
+    stack.append(10)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Vector__Monkey____capacity)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    stack.append(__main____Vector__Monkey__Vector__size)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Vector__Monkey____size)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____capacity)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __dim = stack.pop ()
+    __res = [None] * __dim
+    stack.append (__res)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Vector__Monkey____data)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # Return the constructed instance
+    return this
+# End Constructor Declaration - __ctor____main____Vector__Monkey____Vector__int
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Method Declaration - Vector<:Monkey:>::pushBack(Monkey) -> void
+def __method____main____Vector__Monkey____pushBack__Monkey (this, __main____Vector__Monkey__pushBack__val):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    #---------------------------------------------------------------------
+    # If-Statement
+    # Precomputing all if/elif conditions and give unique names
+    # bc we can't have code between if and elif
+    # Condition
+    # Greater Than or Equal to
+    # LHS
+    # Addition
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # RHS
+    # Int Literal
+    stack.append(1)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____capacity)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs >= __rhs
+    stack.append (__res)
+    __if__27__cond = stack.pop ()
+    # get condition from stack
+    if (__if__27__cond):
+        # Body
+        #-----------------------------------------------------------------
+        # Code Block
+        # Statement
+        # Assignment - '='
+        # RHS
+        # Multiplication
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append (__field____main____Vector__Monkey____capacity)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # RHS
+        # Int Literal
+        stack.append(2)
+        __rhs = stack.pop()
+        __lhs = stack.pop()
+        __res = __lhs * __rhs
+        stack.append(__res)
+        # LHS
+        # Member Accessor Assignment
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append(__field____main____Vector__Monkey____capacity)
+        __child = stack.pop()
+        __parent = stack.pop()
+        __rhs = stack.pop()
+        __parent[__child] = __rhs
+        stack.append (__parent[__child])
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Assignment - '='
+        # RHS
+        # Member Accessor
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append (__field____main____Vector__Monkey____capacity)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __dim = stack.pop ()
+        __res = [None] * __dim
+        stack.append (__res)
+        # LHS
+        __main____Vector__Monkey__pushBack__block__26__if__27__block__28__nData = 0
+        __rhs = stack.pop()
+        __main____Vector__Monkey__pushBack__block__26__if__27__block__28__nData = __rhs
+        stack.append (__main____Vector__Monkey__pushBack__block__26__if__27__block__28__nData)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+        # For-Loop
+        # Init
+        # Assignment - '='
+        # RHS
+        # Int Literal
+        stack.append(0)
+        # LHS
+        __main____Vector__Monkey__pushBack__block__26__if__27__block__28__for__29__i = 0
+        __rhs = stack.pop()
+        __main____Vector__Monkey__pushBack__block__26__if__27__block__28__for__29__i = __rhs
+        stack.append (__main____Vector__Monkey__pushBack__block__26__if__27__block__28__for__29__i)
+        # Using an infinite loop so we can write a separate multi-line condition
+        while (1):
+            # Condition
+            # Less Than
+            # LHS
+            stack.append(__main____Vector__Monkey__pushBack__block__26__if__27__block__28__for__29__i)
+            # RHS
+            # Member Accessor
+            # LHS
+            stack.append(this)
+            # RHS
+            stack.append (__field____main____Vector__Monkey____size)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            __rhs = stack.pop ()
+            __lhs = stack.pop ()
+            __res = __lhs < __rhs
+            stack.append (__res)
+            __cond = stack.pop ()
+            # break out of loop if condition is false
+            if (__cond == 0): break
+            # Body
+            #-------------------------------------------------------------
+            # Code Block
+            # Statement
+            # Assignment - '='
+            # RHS
+            # Subscript
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(this)
+            # RHS
+            stack.append (__field____main____Vector__Monkey____data)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # OFFSET
+            stack.append(__main____Vector__Monkey__pushBack__block__26__if__27__block__28__for__29__i)
+            __offset = stack.pop ()
+            __pointer = stack.pop ()
+            stack.append (__pointer[__offset])
+            # LHS
+            # Subscript assignment
+            # LHS
+            stack.append(__main____Vector__Monkey__pushBack__block__26__if__27__block__28__nData)
+            # OFFSET
+            stack.append(__main____Vector__Monkey__pushBack__block__26__if__27__block__28__for__29__i)
+            __offset = stack.pop()
+            __pointer = stack.pop()
+            __rhs = stack.pop()
+            __pointer[__offset] = __rhs
+            stack.append (__pointer[__offset])
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
+            #-------------------------------------------------------------
+            # Update
+            # Pre-Increment
+            # RHS
+            stack.append(__main____Vector__Monkey__pushBack__block__26__if__27__block__28__for__29__i)
+            __rhs = stack.pop ()
+            __main____Vector__Monkey__pushBack__block__26__if__27__block__28__for__29__i = __main____Vector__Monkey__pushBack__block__26__if__27__block__28__for__29__i + 1
+            __res = __main____Vector__Monkey__pushBack__block__26__if__27__block__28__for__29__i
+            stack.append (__res)
+        #-----------------------------------------------------------------
+        # Statement
+        # Member Accessor
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append (__field____main____Vector__Monkey____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __arr = stack.pop ()
+        __builtin__free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Assignment - '='
+        # RHS
+        stack.append(__main____Vector__Monkey__pushBack__block__26__if__27__block__28__nData)
+        # LHS
+        # Member Accessor Assignment
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append(__field____main____Vector__Monkey____data)
+        __child = stack.pop()
+        __parent = stack.pop()
+        __rhs = stack.pop()
+        __parent[__child] = __rhs
+        stack.append (__parent[__child])
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+    # End of if
+    #---------------------------------------------------------------------
+    # Statement
+    # Assignment - '='
+    # RHS
+    stack.append(__main____Vector__Monkey__pushBack__val)
+    # LHS
+    # Subscript assignment
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __offset = stack.pop()
+    __pointer = stack.pop()
+    __rhs = stack.pop()
+    __pointer[__offset] = __rhs
+    stack.append (__pointer[__offset])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Pre-Increment
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __rhs = stack.pop ()
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    __parent[__child] = __parent[__child] + 1
+    __res = __parent[__child]
+    stack.append (__res)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__Monkey____pushBack__Monkey
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Method Declaration - Vector<:Monkey:>::popBack() -> Monkey
+def __method____main____Vector__Monkey____popBack (this):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Return
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Pre-Decrement
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __rhs = stack.pop ()
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    __parent[__child] = __parent[__child] - 1
+    __res = __parent[__child]
+    stack.append (__res)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    __rVal = stack.pop ()
+    return __rVal
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__Monkey____popBack
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Method Declaration - Vector<:Monkey:>::clear() -> void
+def __method____main____Vector__Monkey____clear (this):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    #---------------------------------------------------------------------
+    # While-Loop
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Greater Than
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append (__field____main____Vector__Monkey____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # RHS
+        # Int Literal
+        stack.append(0)
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs > __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        # Statement
+        # Method Call - Vector<:Monkey:>::popBack() -> Monkey
+        # LHS
+        stack.append(this)
+        # RHS
+        # Arguments
+        __obj = stack.pop ()
+        __retval = __method____main____Vector__Monkey____popBack (__obj)
+        stack.append (__retval)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+    # End of While
+    #---------------------------------------------------------------------
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__Monkey____clear
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Method Declaration - Vector<:Monkey:>::get(int) -> Monkey
+def __method____main____Vector__Monkey____get__int (this, __main____Vector__Monkey__get__index):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Return
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    stack.append(__main____Vector__Monkey__get__index)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    __rVal = stack.pop ()
+    return __rVal
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__Monkey____get__int
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Method Declaration - Vector<:Monkey:>::set(int, Monkey) -> void
+def __method____main____Vector__Monkey____set__int__Monkey (this, __main____Vector__Monkey__set__index, __main____Vector__Monkey__set__value):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Assignment - '='
+    # RHS
+    stack.append(__main____Vector__Monkey__set__value)
+    # LHS
+    # Subscript assignment
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    stack.append(__main____Vector__Monkey__set__index)
+    __offset = stack.pop()
+    __pointer = stack.pop()
+    __rhs = stack.pop()
+    __pointer[__offset] = __rhs
+    stack.append (__pointer[__offset])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__Monkey____set__int__Monkey
+#-------------------------------------------------------------------------
+
+# Populate Dispatch Table
+__dtable____main____Vector__Monkey = [__method____main____Vector__Monkey____pushBack__Monkey, __method____main____Vector__Monkey____popBack, __method____main____Vector__Monkey____clear, __method____main____Vector__Monkey____get__int, __method____main____Vector__Monkey____set__int__Monkey]
+# End Class Declaration - __main____Vector__Monkey
+#=========================================================================
+
 # End Class Template - 
 #=========================================================================
 
 #=========================================================================
 # Function Template - 
+#=========================================================================
+# Function Declaration - print<:int:>(Vector<:int:>) -> void
+def __main____print__int____Vector__tparam0__int (__main__print__v):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Function Call - print(char) -> void
+    # Arguments
+    # Char Literal
+    stack.append('[')
+    __arg0 = stack.pop ()
+    # *** print
+    __res = __builtin__print__char (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # If-Statement
+    # Precomputing all if/elif conditions and give unique names
+    # bc we can't have code between if and elif
+    # Condition
+    # Not Equal
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__print__v)
+    # RHS
+    stack.append (__field____main____Vector__int____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # RHS
+    # Int Literal
+    stack.append(0)
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs != __rhs
+    stack.append (__res)
+    __if__37__cond = stack.pop ()
+    # get condition from stack
+    if (__if__37__cond):
+        # Body
+        # Statement
+        # Function Call - print(int) -> void
+        # Arguments
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__print__v)
+        # RHS
+        stack.append (__field____main____Vector__int____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        # Int Literal
+        stack.append(0)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        __arg0 = stack.pop ()
+        # *** print
+        __res = __builtin__print__int (__arg0)
+        stack.append (__res) # function call result
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+    # End of if
+    #---------------------------------------------------------------------
+    #---------------------------------------------------------------------
+    # For-Loop
+    # Init
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(1)
+    # LHS
+    __main__print__block__36__for__38__i = 0
+    __rhs = stack.pop()
+    __main__print__block__36__for__38__i = __rhs
+    stack.append (__main__print__block__36__for__38__i)
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Less Than
+        # LHS
+        stack.append(__main__print__block__36__for__38__i)
+        # RHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__print__v)
+        # RHS
+        stack.append (__field____main____Vector__int____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs < __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        #-----------------------------------------------------------------
+        # Code Block
+        # Statement
+        # Function Call - print(char) -> void
+        # Arguments
+        # Char Literal
+        stack.append(',')
+        __arg0 = stack.pop ()
+        # *** print
+        __res = __builtin__print__char (__arg0)
+        stack.append (__res) # function call result
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Function Call - print(char) -> void
+        # Arguments
+        # Char Literal
+        stack.append(' ')
+        __arg0 = stack.pop ()
+        # *** print
+        __res = __builtin__print__char (__arg0)
+        stack.append (__res) # function call result
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Function Call - print(int) -> void
+        # Arguments
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__print__v)
+        # RHS
+        stack.append (__field____main____Vector__int____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__print__block__36__for__38__i)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        __arg0 = stack.pop ()
+        # *** print
+        __res = __builtin__print__int (__arg0)
+        stack.append (__res) # function call result
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+        # Update
+        # Pre-Increment
+        # RHS
+        stack.append(__main__print__block__36__for__38__i)
+        __rhs = stack.pop ()
+        __main__print__block__36__for__38__i = __main__print__block__36__for__38__i + 1
+        __res = __main__print__block__36__for__38__i
+        stack.append (__res)
+    #---------------------------------------------------------------------
+    # Statement
+    # Function Call - print(char) -> void
+    # Arguments
+    # Char Literal
+    stack.append(']')
+    __arg0 = stack.pop ()
+    # *** print
+    __res = __builtin__print__char (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+# End Function Declaration - __main____print__int____Vector__tparam0__int
+#=========================================================================
+
 # End Function Template - 
 #=========================================================================
 
@@ -2216,9 +2406,9 @@ def __main____strlen__char__1 (__main__strlen__str):
     __lhs = stack.pop ()
     __res = __lhs == __rhs
     stack.append (__res)
-    __if__37__cond = stack.pop ()
+    __if__41__cond = stack.pop ()
     # get condition from stack
-    if (__if__37__cond):
+    if (__if__41__cond):
         # Body
         # Return
         # Negative
@@ -2238,10 +2428,10 @@ def __main____strlen__char__1 (__main__strlen__str):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__strlen__block__36__size = 0
+    __main__strlen__block__40__size = 0
     __rhs = stack.pop()
-    __main__strlen__block__36__size = __rhs
-    stack.append (__main__strlen__block__36__size)
+    __main__strlen__block__40__size = __rhs
+    stack.append (__main__strlen__block__40__size)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -2258,8 +2448,8 @@ def __main____strlen__char__1 (__main__strlen__str):
         stack.append(__main__strlen__str)
         # OFFSET
         # Post-Increment
-        __res = __main__strlen__block__36__size
-        __main__strlen__block__36__size = __main__strlen__block__36__size + 1
+        __res = __main__strlen__block__40__size
+        __main__strlen__block__40__size = __main__strlen__block__40__size + 1
         stack.append (__res)
         __offset = stack.pop ()
         __pointer = stack.pop ()
@@ -2280,7 +2470,7 @@ def __main____strlen__char__1 (__main__strlen__str):
     # Return
     # Subtraction
     # LHS
-    stack.append(__main__strlen__block__36__size)
+    stack.append(__main__strlen__block__40__size)
     # RHS
     # Int Literal
     stack.append(1)
@@ -2311,10 +2501,10 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
     __res = __main____strlen__char__1 (__arg0)
     stack.append (__res) # function call result
     # LHS
-    __main__strcmp__block__39__asize = 0
+    __main__strcmp__block__43__asize = 0
     __rhs = stack.pop()
-    __main__strcmp__block__39__asize = __rhs
-    stack.append (__main__strcmp__block__39__asize)
+    __main__strcmp__block__43__asize = __rhs
+    stack.append (__main__strcmp__block__43__asize)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -2330,10 +2520,10 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
     __res = __main____strlen__char__1 (__arg0)
     stack.append (__res) # function call result
     # LHS
-    __main__strcmp__block__39__bsize = 0
+    __main__strcmp__block__43__bsize = 0
     __rhs = stack.pop()
-    __main__strcmp__block__39__bsize = __rhs
-    stack.append (__main__strcmp__block__39__bsize)
+    __main__strcmp__block__43__bsize = __rhs
+    stack.append (__main__strcmp__block__43__bsize)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -2345,16 +2535,16 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
     # Condition
     # Not Equal
     # LHS
-    stack.append(__main__strcmp__block__39__asize)
+    stack.append(__main__strcmp__block__43__asize)
     # RHS
-    stack.append(__main__strcmp__block__39__bsize)
+    stack.append(__main__strcmp__block__43__bsize)
     __rhs = stack.pop ()
     __lhs = stack.pop ()
     __res = __lhs != __rhs
     stack.append (__res)
-    __if__40__cond = stack.pop ()
+    __if__44__cond = stack.pop ()
     # get condition from stack
-    if (__if__40__cond):
+    if (__if__44__cond):
         # Body
         # Return
         # Int Literal
@@ -2371,18 +2561,18 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__strcmp__block__39__for__41__i = 0
+    __main__strcmp__block__43__for__45__i = 0
     __rhs = stack.pop()
-    __main__strcmp__block__39__for__41__i = __rhs
-    stack.append (__main__strcmp__block__39__for__41__i)
+    __main__strcmp__block__43__for__45__i = __rhs
+    stack.append (__main__strcmp__block__43__for__45__i)
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__strcmp__block__39__for__41__i)
+        stack.append(__main__strcmp__block__43__for__45__i)
         # RHS
-        stack.append(__main__strcmp__block__39__asize)
+        stack.append(__main__strcmp__block__43__asize)
         __rhs = stack.pop ()
         __lhs = stack.pop ()
         __res = __lhs < __rhs
@@ -2404,7 +2594,7 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
         # LHS
         stack.append(__main__strcmp__a)
         # OFFSET
-        stack.append(__main__strcmp__block__39__for__41__i)
+        stack.append(__main__strcmp__block__43__for__45__i)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -2413,7 +2603,7 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
         # LHS
         stack.append(__main__strcmp__b)
         # OFFSET
-        stack.append(__main__strcmp__block__39__for__41__i)
+        stack.append(__main__strcmp__block__43__for__45__i)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -2421,9 +2611,9 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
         __lhs = stack.pop ()
         __res = __lhs != __rhs
         stack.append (__res)
-        __if__43__cond = stack.pop ()
+        __if__47__cond = stack.pop ()
         # get condition from stack
-        if (__if__43__cond):
+        if (__if__47__cond):
             # Body
             #-------------------------------------------------------------
             # Code Block
@@ -2439,10 +2629,10 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
         # Update
         # Pre-Increment
         # RHS
-        stack.append(__main__strcmp__block__39__for__41__i)
+        stack.append(__main__strcmp__block__43__for__45__i)
         __rhs = stack.pop ()
-        __main__strcmp__block__39__for__41__i = __main__strcmp__block__39__for__41__i + 1
-        __res = __main__strcmp__block__39__for__41__i
+        __main__strcmp__block__43__for__45__i = __main__strcmp__block__43__for__45__i + 1
+        __res = __main__strcmp__block__43__for__45__i
         stack.append (__res)
     #---------------------------------------------------------------------
     # Return
@@ -2485,10 +2675,10 @@ def __main____substr__char__1__int__int (__main__substr__a, __main__substr__star
     __res = [None] * __dim
     stack.append (__res)
     # LHS
-    __main__substr__block__45__res = 0
+    __main__substr__block__49__res = 0
     __rhs = stack.pop()
-    __main__substr__block__45__res = __rhs
-    stack.append (__main__substr__block__45__res)
+    __main__substr__block__49__res = __rhs
+    stack.append (__main__substr__block__49__res)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -2501,16 +2691,16 @@ def __main____substr__char__1__int__int (__main__substr__a, __main__substr__star
     # Int Literal
     stack.append(0)
     # LHS
-    __main__substr__block__45__for__46__i = 0
+    __main__substr__block__49__for__50__i = 0
     __rhs = stack.pop()
-    __main__substr__block__45__for__46__i = __rhs
-    stack.append (__main__substr__block__45__for__46__i)
+    __main__substr__block__49__for__50__i = __rhs
+    stack.append (__main__substr__block__49__for__50__i)
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__substr__block__45__for__46__i)
+        stack.append(__main__substr__block__49__for__50__i)
         # RHS
         # Subtraction
         # LHS
@@ -2540,7 +2730,7 @@ def __main____substr__char__1__int__int (__main__substr__a, __main__substr__star
         # OFFSET
         # Addition
         # LHS
-        stack.append(__main__substr__block__45__for__46__i)
+        stack.append(__main__substr__block__49__for__50__i)
         # RHS
         stack.append(__main__substr__start)
         __rhs = stack.pop()
@@ -2553,9 +2743,9 @@ def __main____substr__char__1__int__int (__main__substr__a, __main__substr__star
         # LHS
         # Subscript assignment
         # LHS
-        stack.append(__main__substr__block__45__res)
+        stack.append(__main__substr__block__49__res)
         # OFFSET
-        stack.append(__main__substr__block__45__for__46__i)
+        stack.append(__main__substr__block__49__for__50__i)
         __offset = stack.pop()
         __pointer = stack.pop()
         __rhs = stack.pop()
@@ -2569,10 +2759,10 @@ def __main____substr__char__1__int__int (__main__substr__a, __main__substr__star
         # Update
         # Pre-Increment
         # RHS
-        stack.append(__main__substr__block__45__for__46__i)
+        stack.append(__main__substr__block__49__for__50__i)
         __rhs = stack.pop ()
-        __main__substr__block__45__for__46__i = __main__substr__block__45__for__46__i + 1
-        __res = __main__substr__block__45__for__46__i
+        __main__substr__block__49__for__50__i = __main__substr__block__49__for__50__i + 1
+        __res = __main__substr__block__49__for__50__i
         stack.append (__res)
     #---------------------------------------------------------------------
     # Statement
@@ -2583,7 +2773,7 @@ def __main____substr__char__1__int__int (__main__substr__a, __main__substr__star
     # LHS
     # Subscript assignment
     # LHS
-    stack.append(__main__substr__block__45__res)
+    stack.append(__main__substr__block__49__res)
     # OFFSET
     # Subtraction
     # LHS
@@ -2604,7 +2794,7 @@ def __main____substr__char__1__int__int (__main__substr__a, __main__substr__star
     # End Statement
 
     # Return
-    stack.append(__main__substr__block__45__res)
+    stack.append(__main__substr__block__49__res)
     __rVal = stack.pop ()
     return __rVal
     #---------------------------------------------------------------------
@@ -2628,10 +2818,10 @@ def __main____first_index_of__char__1__char (__main__first_index_of__arr, __main
     __res = __main____strlen__char__1 (__arg0)
     stack.append (__res) # function call result
     # LHS
-    __main__first_index_of__block__48__size = 0
+    __main__first_index_of__block__52__size = 0
     __rhs = stack.pop()
-    __main__first_index_of__block__48__size = __rhs
-    stack.append (__main__first_index_of__block__48__size)
+    __main__first_index_of__block__52__size = __rhs
+    stack.append (__main__first_index_of__block__52__size)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -2644,18 +2834,18 @@ def __main____first_index_of__char__1__char (__main__first_index_of__arr, __main
     # Int Literal
     stack.append(0)
     # LHS
-    __main__first_index_of__block__48__for__49__i = 0
+    __main__first_index_of__block__52__for__53__i = 0
     __rhs = stack.pop()
-    __main__first_index_of__block__48__for__49__i = __rhs
-    stack.append (__main__first_index_of__block__48__for__49__i)
+    __main__first_index_of__block__52__for__53__i = __rhs
+    stack.append (__main__first_index_of__block__52__for__53__i)
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__first_index_of__block__48__for__49__i)
+        stack.append(__main__first_index_of__block__52__for__53__i)
         # RHS
-        stack.append(__main__first_index_of__block__48__size)
+        stack.append(__main__first_index_of__block__52__size)
         __rhs = stack.pop ()
         __lhs = stack.pop ()
         __res = __lhs < __rhs
@@ -2677,7 +2867,7 @@ def __main____first_index_of__char__1__char (__main__first_index_of__arr, __main
         # LHS
         stack.append(__main__first_index_of__arr)
         # OFFSET
-        stack.append(__main__first_index_of__block__48__for__49__i)
+        stack.append(__main__first_index_of__block__52__for__53__i)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -2687,12 +2877,12 @@ def __main____first_index_of__char__1__char (__main__first_index_of__arr, __main
         __lhs = stack.pop ()
         __res = __lhs == __rhs
         stack.append (__res)
-        __if__51__cond = stack.pop ()
+        __if__55__cond = stack.pop ()
         # get condition from stack
-        if (__if__51__cond):
+        if (__if__55__cond):
             # Body
             # Return
-            stack.append(__main__first_index_of__block__48__for__49__i)
+            stack.append(__main__first_index_of__block__52__for__53__i)
             __rVal = stack.pop ()
             return __rVal
         # End of if
@@ -2701,10 +2891,10 @@ def __main____first_index_of__char__1__char (__main__first_index_of__arr, __main
         # Update
         # Pre-Increment
         # RHS
-        stack.append(__main__first_index_of__block__48__for__49__i)
+        stack.append(__main__first_index_of__block__52__for__53__i)
         __rhs = stack.pop ()
-        __main__first_index_of__block__48__for__49__i = __main__first_index_of__block__48__for__49__i + 1
-        __res = __main__first_index_of__block__48__for__49__i
+        __main__first_index_of__block__52__for__53__i = __main__first_index_of__block__52__for__53__i + 1
+        __res = __main__first_index_of__block__52__for__53__i
         stack.append (__res)
     #---------------------------------------------------------------------
     # Return
@@ -2735,10 +2925,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
     __retval = __ctor____main____Vector__char__1____Vector ()
     stack.append (__retval)
     # LHS
-    __main__split__block__52__tokens = 0
+    __main__split__block__56__tokens = 0
     __rhs = stack.pop()
-    __main__split__block__52__tokens = __rhs
-    stack.append (__main__split__block__52__tokens)
+    __main__split__block__56__tokens = __rhs
+    stack.append (__main__split__block__56__tokens)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -2754,10 +2944,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
     __res = __main____strlen__char__1 (__arg0)
     stack.append (__res) # function call result
     # LHS
-    __main__split__block__52__size = 0
+    __main__split__block__56__size = 0
     __rhs = stack.pop()
-    __main__split__block__52__size = __rhs
-    stack.append (__main__split__block__52__size)
+    __main__split__block__56__size = __rhs
+    stack.append (__main__split__block__56__size)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -2768,10 +2958,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__split__block__52__i = 0
+    __main__split__block__56__i = 0
     __rhs = stack.pop()
-    __main__split__block__52__i = __rhs
-    stack.append (__main__split__block__52__i)
+    __main__split__block__56__i = __rhs
+    stack.append (__main__split__block__56__i)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -2782,10 +2972,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__split__block__52__j = 0
+    __main__split__block__56__j = 0
     __rhs = stack.pop()
-    __main__split__block__52__j = __rhs
-    stack.append (__main__split__block__52__j)
+    __main__split__block__56__j = __rhs
+    stack.append (__main__split__block__56__j)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -2797,9 +2987,9 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__split__block__52__i)
+        stack.append(__main__split__block__56__i)
         # RHS
-        stack.append(__main__split__block__52__size)
+        stack.append(__main__split__block__56__size)
         __rhs = stack.pop ()
         __lhs = stack.pop ()
         __res = __lhs < __rhs
@@ -2821,7 +3011,7 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
         # LHS
         stack.append(__main__split__str)
         # OFFSET
-        stack.append(__main__split__block__52__i)
+        stack.append(__main__split__block__56__i)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -2831,9 +3021,9 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
         __lhs = stack.pop ()
         __res = __lhs != __rhs
         stack.append (__res)
-        __if__55__cond = stack.pop ()
+        __if__59__cond = stack.pop ()
         # get condition from stack
-        if (__if__55__cond):
+        if (__if__59__cond):
             # Body
             #-------------------------------------------------------------
             # Code Block
@@ -2843,10 +3033,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # Int Literal
             stack.append(0)
             # LHS
-            __main__split__block__52__while__53__block__54__if__55__block__56__count = 0
+            __main__split__block__56__while__57__block__58__if__59__block__60__count = 0
             __rhs = stack.pop()
-            __main__split__block__52__while__53__block__54__if__55__block__56__count = __rhs
-            stack.append (__main__split__block__52__while__53__block__54__if__55__block__56__count)
+            __main__split__block__56__while__57__block__58__if__59__block__60__count = __rhs
+            stack.append (__main__split__block__56__while__57__block__58__if__59__block__60__count)
             # Statement results can be ignored
             stack.pop ()
             # End Statement
@@ -2854,12 +3044,12 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # Statement
             # Assignment - '='
             # RHS
-            stack.append(__main__split__block__52__i)
+            stack.append(__main__split__block__56__i)
             # LHS
-            __main__split__block__52__while__53__block__54__if__55__block__56__k = 0
+            __main__split__block__56__while__57__block__58__if__59__block__60__k = 0
             __rhs = stack.pop()
-            __main__split__block__52__while__53__block__54__if__55__block__56__k = __rhs
-            stack.append (__main__split__block__52__while__53__block__54__if__55__block__56__k)
+            __main__split__block__56__while__57__block__58__if__59__block__60__k = __rhs
+            stack.append (__main__split__block__56__while__57__block__58__if__59__block__60__k)
             # Statement results can be ignored
             stack.pop ()
             # End Statement
@@ -2871,9 +3061,9 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 # Condition
                 # Less Than
                 # LHS
-                stack.append(__main__split__block__52__while__53__block__54__if__55__block__56__k)
+                stack.append(__main__split__block__56__while__57__block__58__if__59__block__60__k)
                 # RHS
-                stack.append(__main__split__block__52__size)
+                stack.append(__main__split__block__56__size)
                 __rhs = stack.pop ()
                 __lhs = stack.pop ()
                 __res = __lhs < __rhs
@@ -2894,8 +3084,8 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 stack.append(__main__split__str)
                 # OFFSET
                 # Post-Increment
-                __res = __main__split__block__52__while__53__block__54__if__55__block__56__k
-                __main__split__block__52__while__53__block__54__if__55__block__56__k = __main__split__block__52__while__53__block__54__if__55__block__56__k + 1
+                __res = __main__split__block__56__while__57__block__58__if__59__block__60__k
+                __main__split__block__56__while__57__block__58__if__59__block__60__k = __main__split__block__56__while__57__block__58__if__59__block__60__k + 1
                 stack.append (__res)
                 __offset = stack.pop ()
                 __pointer = stack.pop ()
@@ -2906,17 +3096,17 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 __lhs = stack.pop ()
                 __res = __lhs != __rhs
                 stack.append (__res)
-                __if__58__cond = stack.pop ()
+                __if__62__cond = stack.pop ()
                 # get condition from stack
-                if (__if__58__cond):
+                if (__if__62__cond):
                     # Body
                     # Statement
                     # Pre-Increment
                     # RHS
-                    stack.append(__main__split__block__52__while__53__block__54__if__55__block__56__count)
+                    stack.append(__main__split__block__56__while__57__block__58__if__59__block__60__count)
                     __rhs = stack.pop ()
-                    __main__split__block__52__while__53__block__54__if__55__block__56__count = __main__split__block__52__while__53__block__54__if__55__block__56__count + 1
-                    __res = __main__split__block__52__while__53__block__54__if__55__block__56__count
+                    __main__split__block__56__while__57__block__58__if__59__block__60__count = __main__split__block__56__while__57__block__58__if__59__block__60__count + 1
+                    __res = __main__split__block__56__while__57__block__58__if__59__block__60__count
                     stack.append (__res)
                     # Statement results can be ignored
                     stack.pop ()
@@ -2925,7 +3115,7 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 #---------------------------------------------------------
                 # Else-Statement
                 else:
-                    # Break out of __while__57
+                    # Break out of __while__61
                     break
                 #---------------------------------------------------------
                 # End of if
@@ -2935,12 +3125,12 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # Statement
             # Method Call - Vector<:char[]:>::pushBack(char[]) -> void
             # LHS
-            stack.append(__main__split__block__52__tokens)
+            stack.append(__main__split__block__56__tokens)
             # RHS
             # Arguments
             # Addition
             # LHS
-            stack.append(__main__split__block__52__while__53__block__54__if__55__block__56__count)
+            stack.append(__main__split__block__56__while__57__block__58__if__59__block__60__count)
             # RHS
             # Int Literal
             stack.append(1)
@@ -2967,18 +3157,18 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # Int Literal
             stack.append(0)
             # LHS
-            __main__split__block__52__while__53__block__54__if__55__block__56__for__59__k = 0
+            __main__split__block__56__while__57__block__58__if__59__block__60__for__63__k = 0
             __rhs = stack.pop()
-            __main__split__block__52__while__53__block__54__if__55__block__56__for__59__k = __rhs
-            stack.append (__main__split__block__52__while__53__block__54__if__55__block__56__for__59__k)
+            __main__split__block__56__while__57__block__58__if__59__block__60__for__63__k = __rhs
+            stack.append (__main__split__block__56__while__57__block__58__if__59__block__60__for__63__k)
             # Using an infinite loop so we can write a separate multi-line condition
             while (1):
                 # Condition
                 # Less Than
                 # LHS
-                stack.append(__main__split__block__52__while__53__block__54__if__55__block__56__for__59__k)
+                stack.append(__main__split__block__56__while__57__block__58__if__59__block__60__for__63__k)
                 # RHS
-                stack.append(__main__split__block__52__while__53__block__54__if__55__block__56__count)
+                stack.append(__main__split__block__56__while__57__block__58__if__59__block__60__count)
                 __rhs = stack.pop ()
                 __lhs = stack.pop ()
                 __res = __lhs < __rhs
@@ -2997,8 +3187,8 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 stack.append(__main__split__str)
                 # OFFSET
                 # Post-Increment
-                __res = __main__split__block__52__i
-                __main__split__block__52__i = __main__split__block__52__i + 1
+                __res = __main__split__block__56__i
+                __main__split__block__56__i = __main__split__block__56__i + 1
                 stack.append (__res)
                 __offset = stack.pop ()
                 __pointer = stack.pop ()
@@ -3010,19 +3200,19 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__split__block__52__tokens)
+                stack.append(__main__split__block__56__tokens)
                 # RHS
                 stack.append (__field____main____Vector__char__1____data)
                 __child = stack.pop ()
                 __parent = stack.pop ()
                 stack.append (__parent[__child])
                 # OFFSET
-                stack.append(__main__split__block__52__j)
+                stack.append(__main__split__block__56__j)
                 __offset = stack.pop ()
                 __pointer = stack.pop ()
                 stack.append (__pointer[__offset])
                 # OFFSET
-                stack.append(__main__split__block__52__while__53__block__54__if__55__block__56__for__59__k)
+                stack.append(__main__split__block__56__while__57__block__58__if__59__block__60__for__63__k)
                 __offset = stack.pop()
                 __pointer = stack.pop()
                 __rhs = stack.pop()
@@ -3036,10 +3226,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 # Update
                 # Pre-Increment
                 # RHS
-                stack.append(__main__split__block__52__while__53__block__54__if__55__block__56__for__59__k)
+                stack.append(__main__split__block__56__while__57__block__58__if__59__block__60__for__63__k)
                 __rhs = stack.pop ()
-                __main__split__block__52__while__53__block__54__if__55__block__56__for__59__k = __main__split__block__52__while__53__block__54__if__55__block__56__for__59__k + 1
-                __res = __main__split__block__52__while__53__block__54__if__55__block__56__for__59__k
+                __main__split__block__56__while__57__block__58__if__59__block__60__for__63__k = __main__split__block__56__while__57__block__58__if__59__block__60__for__63__k + 1
+                __res = __main__split__block__56__while__57__block__58__if__59__block__60__for__63__k
                 stack.append (__res)
             #-------------------------------------------------------------
             # Statement
@@ -3054,19 +3244,19 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # LHS
             # Member Accessor
             # LHS
-            stack.append(__main__split__block__52__tokens)
+            stack.append(__main__split__block__56__tokens)
             # RHS
             stack.append (__field____main____Vector__char__1____data)
             __child = stack.pop ()
             __parent = stack.pop ()
             stack.append (__parent[__child])
             # OFFSET
-            stack.append(__main__split__block__52__j)
+            stack.append(__main__split__block__56__j)
             __offset = stack.pop ()
             __pointer = stack.pop ()
             stack.append (__pointer[__offset])
             # OFFSET
-            stack.append(__main__split__block__52__while__53__block__54__if__55__block__56__count)
+            stack.append(__main__split__block__56__while__57__block__58__if__59__block__60__count)
             __offset = stack.pop()
             __pointer = stack.pop()
             __rhs = stack.pop()
@@ -3079,10 +3269,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # Statement
             # Pre-Increment
             # RHS
-            stack.append(__main__split__block__52__j)
+            stack.append(__main__split__block__56__j)
             __rhs = stack.pop ()
-            __main__split__block__52__j = __main__split__block__52__j + 1
-            __res = __main__split__block__52__j
+            __main__split__block__56__j = __main__split__block__56__j + 1
+            __res = __main__split__block__56__j
             stack.append (__res)
             # Statement results can be ignored
             stack.pop ()
@@ -3094,10 +3284,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
         # Statement
         # Pre-Increment
         # RHS
-        stack.append(__main__split__block__52__i)
+        stack.append(__main__split__block__56__i)
         __rhs = stack.pop ()
-        __main__split__block__52__i = __main__split__block__52__i + 1
-        __res = __main__split__block__52__i
+        __main__split__block__56__i = __main__split__block__56__i + 1
+        __res = __main__split__block__56__i
         stack.append (__res)
         # Statement results can be ignored
         stack.pop ()
@@ -3107,7 +3297,7 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
     # End of While
     #---------------------------------------------------------------------
     # Return
-    stack.append(__main__split__block__52__tokens)
+    stack.append(__main__split__block__56__tokens)
     __rVal = stack.pop ()
     return __rVal
     #---------------------------------------------------------------------
@@ -3134,9 +3324,9 @@ def __main____max__int__int (__main__max__a, __main__max__b):
     __lhs = stack.pop ()
     __res = __lhs >= __rhs
     stack.append (__res)
-    __if__62__cond = stack.pop ()
+    __if__66__cond = stack.pop ()
     # get condition from stack
-    if (__if__62__cond):
+    if (__if__66__cond):
         # Body
         # Return
         stack.append(__main__max__a)
@@ -3172,9 +3362,9 @@ def __main____max__float__float (__main__max__a, __main__max__b):
     __lhs = stack.pop ()
     __res = __lhs >= __rhs
     stack.append (__res)
-    __if__64__cond = stack.pop ()
+    __if__68__cond = stack.pop ()
     # get condition from stack
-    if (__if__64__cond):
+    if (__if__68__cond):
         # Body
         # Return
         stack.append(__main__max__a)
@@ -3210,9 +3400,9 @@ def __main____min__int__int (__main__min__a, __main__min__b):
     __lhs = stack.pop ()
     __res = __lhs <= __rhs
     stack.append (__res)
-    __if__66__cond = stack.pop ()
+    __if__70__cond = stack.pop ()
     # get condition from stack
-    if (__if__66__cond):
+    if (__if__70__cond):
         # Body
         # Return
         stack.append(__main__min__a)
@@ -3248,9 +3438,9 @@ def __main____min__float__float (__main__min__a, __main__min__b):
     __lhs = stack.pop ()
     __res = __lhs <= __rhs
     stack.append (__res)
-    __if__68__cond = stack.pop ()
+    __if__72__cond = stack.pop ()
     # get condition from stack
-    if (__if__68__cond):
+    if (__if__72__cond):
         # Body
         # Return
         stack.append(__main__min__a)
@@ -3287,9 +3477,9 @@ def __main____abs__int (__main__abs__v):
     __lhs = stack.pop ()
     __res = __lhs < __rhs
     stack.append (__res)
-    __if__70__cond = stack.pop ()
+    __if__74__cond = stack.pop ()
     # get condition from stack
-    if (__if__70__cond):
+    if (__if__74__cond):
         # Body
         # Return
         # Negative
@@ -3331,9 +3521,9 @@ def __main____abs__float (__main__abs__v):
     __lhs = stack.pop ()
     __res = __lhs < __rhs
     stack.append (__res)
-    __if__72__cond = stack.pop ()
+    __if__76__cond = stack.pop ()
     # get condition from stack
-    if (__if__72__cond):
+    if (__if__76__cond):
         # Body
         # Return
         # Negative
@@ -3441,464 +3631,103 @@ while (1):
     #---------------------------------------------------------------------
 # End of While
 #-------------------------------------------------------------------------
+# Statement
+# Assignment - '='
+# RHS
+# Int Literal
+stack.append(0)
+# LHS
+__main__OP_MUL = 0
+__rhs = stack.pop()
+__main__OP_MUL = __rhs
+stack.append (__main__OP_MUL)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
+# Statement
+# Assignment - '='
+# RHS
+# Int Literal
+stack.append(1)
+# LHS
+__main__OP_ADD = 0
+__rhs = stack.pop()
+__main__OP_ADD = __rhs
+stack.append (__main__OP_ADD)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
+# Statement
+# Assignment - '='
+# RHS
+# Int Literal
+stack.append(2)
+# LHS
+__main__OP_SQUARE = 0
+__rhs = stack.pop()
+__main__OP_SQUARE = __rhs
+stack.append (__main__OP_SQUARE)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
 #=========================================================================
-# Class Declaration - __main____Vec inherits __builtin____main__Object
+# Class Declaration - __main____Monkey inherits __builtin____main__Object
 # Creating Dispatch Table (will be populated later)
-__dtable____main____Vec = []
+__dtable____main____Monkey = []
 #-------------------------------------------------------------------------
-# Field - int Vec::i
-__field____main____Vec____i = 1
-#-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-# Field - int Vec::j
-__field____main____Vec____j = 2
+# Field - Vector<:int:> Monkey::items
+__field____main____Monkey____items = 1
 #-------------------------------------------------------------------------
 #-------------------------------------------------------------------------
-# Field - int Vec::time
-__field____main____Vec____time = 3
+# Field - int Monkey::op
+__field____main____Monkey____op = 2
 #-------------------------------------------------------------------------
 #-------------------------------------------------------------------------
-# Constructor Declaration - Vec::Vec() -> Vec
-def __ctor____main____Vec____Vec ():
+# Field - int Monkey::operand
+__field____main____Monkey____operand = 3
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Field - int Monkey::divisible_by
+__field____main____Monkey____divisible_by = 4
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Field - int Monkey::true_monkey_id
+__field____main____Monkey____true_monkey_id = 5
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Field - int Monkey::false_monkey_id
+__field____main____Monkey____false_monkey_id = 6
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Field - int Monkey::inspected_items
+__field____main____Monkey____inspected_items = 7
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# Constructor Declaration - Monkey::Monkey() -> Monkey
+def __ctor____main____Monkey____Monkey ():
     # Creating Class Instance
-    this = [0] * 4
+    this = [0] * 8
     # Add Dispatch Table
-    this[0] = __dtable____main____Vec
+    this[0] = __dtable____main____Monkey
     # Body
     #---------------------------------------------------------------------
     # Code Block
     # Statement
     # Assignment - '='
     # RHS
-    # Int Literal
-    stack.append(0)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vec____i)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Int Literal
-    stack.append(0)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vec____j)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Int Literal
-    stack.append(0)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vec____time)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-    # Return the constructed instance
-    return this
-# End Constructor Declaration - __ctor____main____Vec____Vec
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Constructor Declaration - Vec::Vec(int, int) -> Vec
-def __ctor____main____Vec____Vec__int__int (__main____Vec__Vec__i, __main____Vec__Vec__j):
-    # Creating Class Instance
-    this = [0] * 4
-    # Add Dispatch Table
-    this[0] = __dtable____main____Vec
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Vec__Vec__i)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vec____i)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Vec__Vec__j)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vec____j)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Int Literal
-    stack.append(0)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vec____time)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-    # Return the constructed instance
-    return this
-# End Constructor Declaration - __ctor____main____Vec____Vec__int__int
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Constructor Declaration - Vec::Vec(int, int, int) -> Vec
-def __ctor____main____Vec____Vec__int__int__int (__main____Vec__Vec__i, __main____Vec__Vec__j, __main____Vec__Vec__time):
-    # Creating Class Instance
-    this = [0] * 4
-    # Add Dispatch Table
-    this[0] = __dtable____main____Vec
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Vec__Vec__i)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vec____i)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Vec__Vec__j)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vec____j)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Vec__Vec__time)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Vec____time)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-    # Return the constructed instance
-    return this
-# End Constructor Declaration - __ctor____main____Vec____Vec__int__int__int
-#-------------------------------------------------------------------------
-
-# Populate Dispatch Table
-__dtable____main____Vec = []
-# End Class Declaration - __main____Vec
-#=========================================================================
-
-#=========================================================================
-# Class Template - 
-#=========================================================================
-# Class Declaration - __main____Node__Vec inherits __builtin____main__Object
-# Creating Dispatch Table (will be populated later)
-__dtable____main____Node__Vec = []
-#-------------------------------------------------------------------------
-# Field - Vec Node<:Vec:>::data
-__field____main____Node__Vec____data = 1
-#-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-# Field - Node<:Vec:> Node<:Vec:>::prev
-__field____main____Node__Vec____prev = 2
-#-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-# Field - Node<:Vec:> Node<:Vec:>::next
-__field____main____Node__Vec____next = 3
-#-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-# Constructor Declaration - Node<:Vec:>::Node(Vec, Node<:Vec:>, Node<:Vec:>) -> Node<:Vec:>
-def __ctor____main____Node__Vec____Node__Vec__Node__Node (__main____Node__Vec__Node__data, __main____Node__Vec__Node__prev, __main____Node__Vec__Node__next):
-    # Creating Class Instance
-    this = [0] * 4
-    # Add Dispatch Table
-    this[0] = __dtable____main____Node__Vec
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Node__Vec__Node__data)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Node__Vec____data)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Node__Vec__Node__prev)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Node__Vec____prev)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____Node__Vec__Node__next)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append(__field____main____Node__Vec____next)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-    # Return the constructed instance
-    return this
-# End Constructor Declaration - __ctor____main____Node__Vec____Node__Vec__Node__Node
-#-------------------------------------------------------------------------
-
-# Populate Dispatch Table
-__dtable____main____Node__Vec = []
-# End Class Declaration - __main____Node__Vec
-#=========================================================================
-
-# End Class Template - 
-#=========================================================================
-
-#=========================================================================
-# Class Template - 
-#=========================================================================
-# Class Declaration - __main____LinkedList__Vec inherits __builtin____main__Object
-# Creating Dispatch Table (will be populated later)
-__dtable____main____LinkedList__Vec = []
-#-------------------------------------------------------------------------
-# Field - Node<:Vec:> LinkedList<:Vec:>::header
-__field____main____LinkedList__Vec____header = 1
-#-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-# Field - int LinkedList<:Vec:>::size
-__field____main____LinkedList__Vec____size = 2
-#-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-# Constructor Declaration - LinkedList<:Vec:>::LinkedList() -> LinkedList<:Vec:>
-def __ctor____main____LinkedList__Vec____LinkedList ():
-    # Creating Class Instance
-    this = [0] * 3
-    # Add Dispatch Table
-    this[0] = __dtable____main____LinkedList__Vec
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Constructor Call - Node<:Vec:>::Node(Vec, Node<:Vec:>, Node<:Vec:>) -> Node<:Vec:>
+    # Constructor Call - Vector<:int:>::Vector() -> Vector<:int:>
     # Arguments
-    # Function Call - Vec::Vec() -> Vec
-    # Arguments
-    # *** Vec::Vec
-    __res = __ctor____main____Vec____Vec ()
-    stack.append (__res) # function call result
-    # Null Literal
-    stack.append (None)
-    # Null Literal
-    stack.append (None)
-    __arg2 = stack.pop ()
-    __arg1 = stack.pop ()
-    __arg0 = stack.pop ()
-    __retval = __ctor____main____Node__Vec____Node__Vec__Node__Node (__arg0, __arg1, __arg2)
+    __retval = __ctor____main____Vector__int____Vector ()
     stack.append (__retval)
     # LHS
     # Member Accessor Assignment
     # LHS
     stack.append(this)
     # RHS
-    stack.append(__field____main____LinkedList__Vec____header)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append(__field____main____Node__Vec____next)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append(__field____main____Node__Vec____prev)
+    stack.append(__field____main____Monkey____items)
     __child = stack.pop()
     __parent = stack.pop()
     __rhs = stack.pop()
@@ -3918,7 +3747,107 @@ def __ctor____main____LinkedList__Vec____LinkedList ():
     # LHS
     stack.append(this)
     # RHS
-    stack.append(__field____main____LinkedList__Vec____size)
+    stack.append(__field____main____Monkey____op)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Monkey____operand)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Monkey____divisible_by)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Monkey____true_monkey_id)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Monkey____false_monkey_id)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(this)
+    # RHS
+    stack.append(__field____main____Monkey____inspected_items)
     __child = stack.pop()
     __parent = stack.pop()
     __rhs = stack.pop()
@@ -3931,1012 +3860,26 @@ def __ctor____main____LinkedList__Vec____LinkedList ():
     #---------------------------------------------------------------------
     # Return the constructed instance
     return this
-# End Constructor Declaration - __ctor____main____LinkedList__Vec____LinkedList
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - LinkedList<:Vec:>::pushBack(Vec) -> void
-def __method____main____LinkedList__Vec____pushBack__Vec (this, __main____LinkedList__Vec__pushBack__val):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append (__field____main____Node__Vec____prev)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # LHS
-    __main____LinkedList__Vec__pushBack__block__80__tail = 0
-    __rhs = stack.pop()
-    __main____LinkedList__Vec__pushBack__block__80__tail = __rhs
-    stack.append (__main____LinkedList__Vec__pushBack__block__80__tail)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Constructor Call - Node<:Vec:>::Node(Vec, Node<:Vec:>, Node<:Vec:>) -> Node<:Vec:>
-    # Arguments
-    stack.append(__main____LinkedList__Vec__pushBack__val)
-    stack.append(__main____LinkedList__Vec__pushBack__block__80__tail)
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __arg2 = stack.pop ()
-    __arg1 = stack.pop ()
-    __arg0 = stack.pop ()
-    __retval = __ctor____main____Node__Vec____Node__Vec__Node__Node (__arg0, __arg1, __arg2)
-    stack.append (__retval)
-    # LHS
-    __main____LinkedList__Vec__pushBack__block__80__node = 0
-    __rhs = stack.pop()
-    __main____LinkedList__Vec__pushBack__block__80__node = __rhs
-    stack.append (__main____LinkedList__Vec__pushBack__block__80__node)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____LinkedList__Vec__pushBack__block__80__node)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(__main____LinkedList__Vec__pushBack__block__80__tail)
-    # RHS
-    stack.append(__field____main____Node__Vec____next)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____LinkedList__Vec__pushBack__block__80__node)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append(__field____main____Node__Vec____prev)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Pre-Increment
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rhs = stack.pop ()
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    __parent[__child] = __parent[__child] + 1
-    __res = __parent[__child]
-    stack.append (__res)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____LinkedList__Vec____pushBack__Vec
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - LinkedList<:Vec:>::pushFront(Vec) -> void
-def __method____main____LinkedList__Vec____pushFront__Vec (this, __main____LinkedList__Vec__pushFront__val):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append (__field____main____Node__Vec____next)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # LHS
-    __main____LinkedList__Vec__pushFront__block__81__head = 0
-    __rhs = stack.pop()
-    __main____LinkedList__Vec__pushFront__block__81__head = __rhs
-    stack.append (__main____LinkedList__Vec__pushFront__block__81__head)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Constructor Call - Node<:Vec:>::Node(Vec, Node<:Vec:>, Node<:Vec:>) -> Node<:Vec:>
-    # Arguments
-    stack.append(__main____LinkedList__Vec__pushFront__val)
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    stack.append(__main____LinkedList__Vec__pushFront__block__81__head)
-    __arg2 = stack.pop ()
-    __arg1 = stack.pop ()
-    __arg0 = stack.pop ()
-    __retval = __ctor____main____Node__Vec____Node__Vec__Node__Node (__arg0, __arg1, __arg2)
-    stack.append (__retval)
-    # LHS
-    __main____LinkedList__Vec__pushFront__block__81__node = 0
-    __rhs = stack.pop()
-    __main____LinkedList__Vec__pushFront__block__81__node = __rhs
-    stack.append (__main____LinkedList__Vec__pushFront__block__81__node)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____LinkedList__Vec__pushFront__block__81__node)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(__main____LinkedList__Vec__pushFront__block__81__head)
-    # RHS
-    stack.append(__field____main____Node__Vec____prev)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    stack.append(__main____LinkedList__Vec__pushFront__block__81__node)
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append(__field____main____Node__Vec____next)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Pre-Increment
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rhs = stack.pop ()
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    __parent[__child] = __parent[__child] + 1
-    __res = __parent[__child]
-    stack.append (__res)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____LinkedList__Vec____pushFront__Vec
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - LinkedList<:Vec:>::popBack() -> Vec
-def __method____main____LinkedList__Vec____popBack (this):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    #---------------------------------------------------------------------
-    # If-Statement
-    # Precomputing all if/elif conditions and give unique names
-    # bc we can't have code between if and elif
-    # Condition
-    # Less Than or Equal to
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    # Int Literal
-    stack.append(0)
-    __rhs = stack.pop ()
-    __lhs = stack.pop ()
-    __res = __lhs <= __rhs
-    stack.append (__res)
-    __if__83__cond = stack.pop ()
-    # get condition from stack
-    if (__if__83__cond):
-        # Body
-        # Return
-        # Function Call - Vec::Vec() -> Vec
-        # Arguments
-        # *** Vec::Vec
-        __res = __ctor____main____Vec____Vec ()
-        stack.append (__res) # function call result
-        __rVal = stack.pop ()
-        return __rVal
-    # End of if
-    #---------------------------------------------------------------------
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append (__field____main____Node__Vec____prev)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # LHS
-    __main____LinkedList__Vec__popBack__block__82__tail = 0
-    __rhs = stack.pop()
-    __main____LinkedList__Vec__popBack__block__82__tail = __rhs
-    stack.append (__main____LinkedList__Vec__popBack__block__82__tail)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(__main____LinkedList__Vec__popBack__block__82__tail)
-    # RHS
-    stack.append (__field____main____Node__Vec____prev)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append(__field____main____Node__Vec____next)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(__main____LinkedList__Vec__popBack__block__82__tail)
-    # RHS
-    stack.append (__field____main____Node__Vec____prev)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append(__field____main____Node__Vec____prev)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Pre-Decrement
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rhs = stack.pop ()
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    __parent[__child] = __parent[__child] - 1
-    __res = __parent[__child]
-    stack.append (__res)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Return
-    # Member Accessor
-    # LHS
-    stack.append(__main____LinkedList__Vec__popBack__block__82__tail)
-    # RHS
-    stack.append (__field____main____Node__Vec____data)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rVal = stack.pop ()
-    return __rVal
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____LinkedList__Vec____popBack
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - LinkedList<:Vec:>::popFront() -> Vec
-def __method____main____LinkedList__Vec____popFront (this):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    #---------------------------------------------------------------------
-    # If-Statement
-    # Precomputing all if/elif conditions and give unique names
-    # bc we can't have code between if and elif
-    # Condition
-    # Less Than or Equal to
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    # Int Literal
-    stack.append(0)
-    __rhs = stack.pop ()
-    __lhs = stack.pop ()
-    __res = __lhs <= __rhs
-    stack.append (__res)
-    __if__85__cond = stack.pop ()
-    # get condition from stack
-    if (__if__85__cond):
-        # Body
-        # Return
-        # Function Call - Vec::Vec() -> Vec
-        # Arguments
-        # *** Vec::Vec
-        __res = __ctor____main____Vec____Vec ()
-        stack.append (__res) # function call result
-        __rVal = stack.pop ()
-        return __rVal
-    # End of if
-    #---------------------------------------------------------------------
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append (__field____main____Node__Vec____next)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # LHS
-    __main____LinkedList__Vec__popFront__block__84__head = 0
-    __rhs = stack.pop()
-    __main____LinkedList__Vec__popFront__block__84__head = __rhs
-    stack.append (__main____LinkedList__Vec__popFront__block__84__head)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(__main____LinkedList__Vec__popFront__block__84__head)
-    # RHS
-    stack.append (__field____main____Node__Vec____next)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append(__field____main____Node__Vec____prev)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Assignment - '='
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(__main____LinkedList__Vec__popFront__block__84__head)
-    # RHS
-    stack.append (__field____main____Node__Vec____next)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append(__field____main____Node__Vec____next)
-    __child = stack.pop()
-    __parent = stack.pop()
-    __rhs = stack.pop()
-    __parent[__child] = __rhs
-    stack.append (__parent[__child])
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Pre-Decrement
-    # RHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rhs = stack.pop ()
-    # LHS
-    # Member Accessor Assignment
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    __parent[__child] = __parent[__child] - 1
-    __res = __parent[__child]
-    stack.append (__res)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Return
-    # Member Accessor
-    # LHS
-    stack.append(__main____LinkedList__Vec__popFront__block__84__head)
-    # RHS
-    stack.append (__field____main____Node__Vec____data)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rVal = stack.pop ()
-    return __rVal
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____LinkedList__Vec____popFront
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - LinkedList<:Vec:>::begin() -> Node<:Vec:>
-def __method____main____LinkedList__Vec____begin (this):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Return
-    # Member Accessor
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append (__field____main____Node__Vec____next)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rVal = stack.pop ()
-    return __rVal
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____LinkedList__Vec____begin
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - LinkedList<:Vec:>::end() -> Node<:Vec:>
-def __method____main____LinkedList__Vec____end (this):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Return
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rVal = stack.pop ()
-    return __rVal
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____LinkedList__Vec____end
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - LinkedList<:Vec:>::rbegin() -> Node<:Vec:>
-def __method____main____LinkedList__Vec____rbegin (this):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Return
-    # Member Accessor
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    stack.append (__field____main____Node__Vec____prev)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rVal = stack.pop ()
-    return __rVal
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____LinkedList__Vec____rbegin
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - LinkedList<:Vec:>::rend() -> Node<:Vec:>
-def __method____main____LinkedList__Vec____rend (this):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Return
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____header)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __rVal = stack.pop ()
-    return __rVal
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____LinkedList__Vec____rend
-#-------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------
-# Method Declaration - LinkedList<:Vec:>::isEmpty() -> int
-def __method____main____LinkedList__Vec____isEmpty (this):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Return
-    # Equal
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(this)
-    # RHS
-    stack.append (__field____main____LinkedList__Vec____size)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # RHS
-    # Int Literal
-    stack.append(0)
-    __rhs = stack.pop ()
-    __lhs = stack.pop ()
-    __res = __lhs == __rhs
-    stack.append (__res)
-    __rVal = stack.pop ()
-    return __rVal
-    #---------------------------------------------------------------------
-    return 0
-# End Method Declaration - __method____main____LinkedList__Vec____isEmpty
+# End Constructor Declaration - __ctor____main____Monkey____Monkey
 #-------------------------------------------------------------------------
 
 # Populate Dispatch Table
-__dtable____main____LinkedList__Vec = [__method____main____LinkedList__Vec____pushBack__Vec, __method____main____LinkedList__Vec____pushFront__Vec, __method____main____LinkedList__Vec____popBack, __method____main____LinkedList__Vec____popFront, __method____main____LinkedList__Vec____begin, __method____main____LinkedList__Vec____end, __method____main____LinkedList__Vec____rbegin, __method____main____LinkedList__Vec____rend, __method____main____LinkedList__Vec____isEmpty]
-# End Class Declaration - __main____LinkedList__Vec
-#=========================================================================
-
-# End Class Template - 
-#=========================================================================
-
-#=========================================================================
-# Function Template - 
-# End Function Template - 
-#=========================================================================
-
-#=========================================================================
-# Function Template - 
-# End Function Template - 
-#=========================================================================
-
-#=========================================================================
-# Function Declaration - print(Vec) -> void
-def __main____print__Vec (__main__print__p):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Function Call - print(char) -> void
-    # Arguments
-    # Char Literal
-    stack.append('(')
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__char (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - print(int) -> void
-    # Arguments
-    # Member Accessor
-    # LHS
-    stack.append(__main__print__p)
-    # RHS
-    stack.append (__field____main____Vec____i)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__int (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - print(char) -> void
-    # Arguments
-    # Char Literal
-    stack.append(',')
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__char (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - print(char) -> void
-    # Arguments
-    # Char Literal
-    stack.append(' ')
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__char (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - print(int) -> void
-    # Arguments
-    # Member Accessor
-    # LHS
-    stack.append(__main__print__p)
-    # RHS
-    stack.append (__field____main____Vec____j)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__int (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - print(char) -> void
-    # Arguments
-    # Char Literal
-    stack.append(')')
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__char (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-# End Function Declaration - __main____print__Vec
-#=========================================================================
-
-#=========================================================================
-# Function Declaration - println(Vec) -> void
-def __main____println__Vec (__main__println__p):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Function Call - print(Vec) -> void
-    # Arguments
-    stack.append(__main__println__p)
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __main____print__Vec (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - println() -> void
-    # Arguments
-    # *** println
-    __res = __builtin__println ()
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-# End Function Declaration - __main____println__Vec
+__dtable____main____Monkey = []
+# End Class Declaration - __main____Monkey
 #=========================================================================
 
 # Statement
 # Assignment - '='
 # RHS
-# Constructor Call - Vector<:Vector<:int:>:>::Vector() -> Vector<:Vector<:int:>:>
+# Constructor Call - Vector<:Monkey:>::Vector() -> Vector<:Monkey:>
 # Arguments
-__retval = __ctor____main____Vector__Vector____Vector ()
+__retval = __ctor____main____Vector__Monkey____Vector ()
 stack.append (__retval)
 # LHS
-__main__elevations = 0
+__main__monkeys = 0
 __rhs = stack.pop()
-__main__elevations = __rhs
-stack.append (__main__elevations)
-# Statement results can be ignored
-stack.pop ()
-# End Statement
-
-# Statement
-# Assignment - '='
-# RHS
-# Constructor Call - Vector<:Vector<:int:>:>::Vector() -> Vector<:Vector<:int:>:>
-# Arguments
-__retval = __ctor____main____Vector__Vector____Vector ()
-stack.append (__retval)
-# LHS
-__main__was_visited = 0
-__rhs = stack.pop()
-__main__was_visited = __rhs
-stack.append (__main__was_visited)
-# Statement results can be ignored
-stack.pop ()
-# End Statement
-
-# Statement
-# Assignment - '='
-# RHS
-# String Literal
-stack.append("abcdefghijklmnopqrstuvwxyzSE"+'\0')
-# LHS
-__main__alphabet = 0
-__rhs = stack.pop()
-__main__alphabet = __rhs
-stack.append (__main__alphabet)
-# Statement results can be ignored
-stack.pop ()
-# End Statement
-
-# Statement
-# Assignment - '='
-# RHS
-# Constructor Call - Vec::Vec(int, int) -> Vec
-# Arguments
-# Int Literal
-stack.append(0)
-# Int Literal
-stack.append(0)
-__arg1 = stack.pop ()
-__arg0 = stack.pop ()
-__retval = __ctor____main____Vec____Vec__int__int (__arg0, __arg1)
-stack.append (__retval)
-# LHS
-__main__start_pos = 0
-__rhs = stack.pop()
-__main__start_pos = __rhs
-stack.append (__main__start_pos)
-# Statement results can be ignored
-stack.pop ()
-# End Statement
-
-# Statement
-# Assignment - '='
-# RHS
-# Constructor Call - Vec::Vec(int, int) -> Vec
-# Arguments
-# Int Literal
-stack.append(0)
-# Int Literal
-stack.append(0)
-__arg1 = stack.pop ()
-__arg0 = stack.pop ()
-__retval = __ctor____main____Vec____Vec__int__int (__arg0, __arg1)
-stack.append (__retval)
-# LHS
-__main__end_pos = 0
-__rhs = stack.pop()
-__main__end_pos = __rhs
-stack.append (__main__end_pos)
+__main__monkeys = __rhs
+stack.append (__main__monkeys)
 # Statement results can be ignored
 stack.pop ()
 # End Statement
@@ -4949,16 +3892,16 @@ stack.pop ()
 # Int Literal
 stack.append(0)
 # LHS
-__main__for__93__l = 0
+__main__for__80__l = 0
 __rhs = stack.pop()
-__main__for__93__l = __rhs
-stack.append (__main__for__93__l)
+__main__for__80__l = __rhs
+stack.append (__main__for__80__l)
 # Using an infinite loop so we can write a separate multi-line condition
 while (1):
     # Condition
     # Less Than
     # LHS
-    stack.append(__main__for__93__l)
+    stack.append(__main__for__80__l)
     # RHS
     # Member Accessor
     # LHS
@@ -4979,37 +3922,17 @@ while (1):
     #---------------------------------------------------------------------
     # Code Block
     # Statement
-    # Method Call - Vector<:Vector<:int:>:>::pushBack(Vector<:int:>) -> void
-    # LHS
-    stack.append(__main__elevations)
+    # Assignment - '='
     # RHS
+    # Constructor Call - Monkey::Monkey() -> Monkey
     # Arguments
-    # Constructor Call - Vector<:int:>::Vector() -> Vector<:int:>
-    # Arguments
-    __retval = __ctor____main____Vector__int____Vector ()
+    __retval = __ctor____main____Monkey____Monkey ()
     stack.append (__retval)
-    __arg0 = stack.pop ()
-    __obj = stack.pop ()
-    __retval = __method____main____Vector__Vector____pushBack__Vector (__obj, __arg0)
-    stack.append (__retval)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Method Call - Vector<:Vector<:int:>:>::pushBack(Vector<:int:>) -> void
     # LHS
-    stack.append(__main__was_visited)
-    # RHS
-    # Arguments
-    # Constructor Call - Vector<:int:>::Vector() -> Vector<:int:>
-    # Arguments
-    __retval = __ctor____main____Vector__int____Vector ()
-    stack.append (__retval)
-    __arg0 = stack.pop ()
-    __obj = stack.pop ()
-    __retval = __method____main____Vector__Vector____pushBack__Vector (__obj, __arg0)
-    stack.append (__retval)
+    __main__for__80__block__81__monkey = 0
+    __rhs = stack.pop()
+    __main__for__80__block__81__monkey = __rhs
+    stack.append (__main__for__80__block__81__monkey)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -5017,8 +3940,34 @@ while (1):
     # Statement
     # Assignment - '='
     # RHS
-    # Subtraction
+    # Function Call - substr(char[], int, int) -> char[]
+    # Arguments
+    # Subscript
     # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__lines)
+    # RHS
+    stack.append (__field____main____Vector__char__1____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Addition
+    # LHS
+    stack.append(__main__for__80__l)
+    # RHS
+    # Int Literal
+    stack.append(1)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    # Int Literal
+    stack.append(17)
     # Function Call - strlen(char[]) -> int
     # Arguments
     # Subscript
@@ -5032,7 +3981,16 @@ while (1):
     __parent = stack.pop ()
     stack.append (__parent[__child])
     # OFFSET
-    stack.append(__main__for__93__l)
+    # Addition
+    # LHS
+    stack.append(__main__for__80__l)
+    # RHS
+    # Int Literal
+    stack.append(1)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
     __offset = stack.pop ()
     __pointer = stack.pop ()
     stack.append (__pointer[__offset])
@@ -5040,18 +3998,39 @@ while (1):
     # *** strlen
     __res = __main____strlen__char__1 (__arg0)
     stack.append (__res) # function call result
-    # RHS
-    # Int Literal
-    stack.append(1)
-    __rhs = stack.pop()
-    __lhs = stack.pop()
-    __res = __lhs - __rhs
-    stack.append(__res)
+    __arg2 = stack.pop ()
+    __arg1 = stack.pop ()
+    __arg0 = stack.pop ()
+    # *** substr
+    __res = __main____substr__char__1__int__int (__arg0, __arg1, __arg2)
+    stack.append (__res) # function call result
     # LHS
-    __main__for__93__block__94__size = 0
+    __main__for__80__block__81__items_str = 0
     __rhs = stack.pop()
-    __main__for__93__block__94__size = __rhs
-    stack.append (__main__for__93__block__94__size)
+    __main__for__80__block__81__items_str = __rhs
+    stack.append (__main__for__80__block__81__items_str)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Function Call - split(char[], char) -> Vector<:char[]:>
+    # Arguments
+    stack.append(__main__for__80__block__81__items_str)
+    # Char Literal
+    stack.append(' ')
+    __arg1 = stack.pop ()
+    __arg0 = stack.pop ()
+    # *** split
+    __res = __main____split__char__1__char (__arg0, __arg1)
+    stack.append (__res) # function call result
+    # LHS
+    __main__for__80__block__81__tokens0 = 0
+    __rhs = stack.pop()
+    __main__for__80__block__81__tokens0 = __rhs
+    stack.append (__main__for__80__block__81__tokens0)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -5064,18 +4043,25 @@ while (1):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__for__93__block__94__for__95__c = 0
+    __main__for__80__block__81__for__82__i = 0
     __rhs = stack.pop()
-    __main__for__93__block__94__for__95__c = __rhs
-    stack.append (__main__for__93__block__94__for__95__c)
+    __main__for__80__block__81__for__82__i = __rhs
+    stack.append (__main__for__80__block__81__for__82__i)
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__for__93__block__94__for__95__c)
+        stack.append(__main__for__80__block__81__for__82__i)
         # RHS
-        stack.append(__main__for__93__block__94__size)
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens0)
+        # RHS
+        stack.append (__field____main____Vector__char__1____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
         __rhs = stack.pop ()
         __lhs = stack.pop ()
         __res = __lhs < __rhs
@@ -5089,11 +4075,278 @@ while (1):
         # Statement
         # Assignment - '='
         # RHS
-        # Function Call - first_index_of(char[], char) -> int
+        # Function Call - substr(char[], int, int) -> char[]
         # Arguments
-        stack.append(__main__alphabet)
         # Subscript
         # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens0)
+        # RHS
+        stack.append (__field____main____Vector__char__1____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__for__80__block__81__for__82__i)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # Int Literal
+        stack.append(0)
+        # Subtraction
+        # LHS
+        # Function Call - strlen(char[]) -> int
+        # Arguments
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens0)
+        # RHS
+        stack.append (__field____main____Vector__char__1____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__for__80__block__81__for__82__i)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        __arg0 = stack.pop ()
+        # *** strlen
+        __res = __main____strlen__char__1 (__arg0)
+        stack.append (__res) # function call result
+        # RHS
+        # Int Literal
+        stack.append(1)
+        __rhs = stack.pop()
+        __lhs = stack.pop()
+        __res = __lhs - __rhs
+        stack.append(__res)
+        __arg2 = stack.pop ()
+        __arg1 = stack.pop ()
+        __arg0 = stack.pop ()
+        # *** substr
+        __res = __main____substr__char__1__int__int (__arg0, __arg1, __arg2)
+        stack.append (__res) # function call result
+        # LHS
+        __main__for__80__block__81__for__82__block__83__item_str = 0
+        __rhs = stack.pop()
+        __main__for__80__block__81__for__82__block__83__item_str = __rhs
+        stack.append (__main__for__80__block__81__for__82__block__83__item_str)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Assignment - '='
+        # RHS
+        # Function Call - stringToInt(char[]) -> int
+        # Arguments
+        stack.append(__main__for__80__block__81__for__82__block__83__item_str)
+        __arg0 = stack.pop ()
+        # *** stringToInt
+        __res = __builtin__stringToInt__char__1 (__arg0)
+        stack.append (__res) # function call result
+        # LHS
+        __main__for__80__block__81__for__82__block__83__item = 0
+        __rhs = stack.pop()
+        __main__for__80__block__81__for__82__block__83__item = __rhs
+        stack.append (__main__for__80__block__81__for__82__block__83__item)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Method Call - Vector<:int:>::pushBack(int) -> void
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__monkey)
+        # RHS
+        stack.append (__field____main____Monkey____items)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # RHS
+        # Arguments
+        stack.append(__main__for__80__block__81__for__82__block__83__item)
+        __arg0 = stack.pop ()
+        __obj = stack.pop ()
+        __retval = __method____main____Vector__int____pushBack__int (__obj, __arg0)
+        stack.append (__retval)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        stack.append(__main__for__80__block__81__for__82__block__83__item_str)
+        __arr = stack.pop ()
+        __builtin__free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+        # Update
+        # Pre-Increment
+        # RHS
+        stack.append(__main__for__80__block__81__for__82__i)
+        __rhs = stack.pop ()
+        __main__for__80__block__81__for__82__i = __main__for__80__block__81__for__82__i + 1
+        __res = __main__for__80__block__81__for__82__i
+        stack.append (__res)
+    #---------------------------------------------------------------------
+    #---------------------------------------------------------------------
+    # For-Loop
+    # Init
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__for__80__block__81__for__84__i = 0
+    __rhs = stack.pop()
+    __main__for__80__block__81__for__84__i = __rhs
+    stack.append (__main__for__80__block__81__for__84__i)
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Less Than
+        # LHS
+        stack.append(__main__for__80__block__81__for__84__i)
+        # RHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens0)
+        # RHS
+        stack.append (__field____main____Vector__char__1____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs < __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        # Statement
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens0)
+        # RHS
+        stack.append (__field____main____Vector__char__1____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__for__80__block__81__for__84__i)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        __arr = stack.pop ()
+        __builtin__free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Update
+        # Pre-Increment
+        # RHS
+        stack.append(__main__for__80__block__81__for__84__i)
+        __rhs = stack.pop ()
+        __main__for__80__block__81__for__84__i = __main__for__80__block__81__for__84__i + 1
+        __res = __main__for__80__block__81__for__84__i
+        stack.append (__res)
+    #---------------------------------------------------------------------
+    # Statement
+    stack.append(__main__for__80__block__81__tokens0)
+    __arr = stack.pop ()
+    __builtin__free (__arr)
+    stack.append (0)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    stack.append(__main__for__80__block__81__items_str)
+    __arr = stack.pop ()
+    __builtin__free (__arr)
+    stack.append (0)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # If-Statement
+    # Precomputing all if/elif conditions and give unique names
+    # bc we can't have code between if and elif
+    # Condition
+    # Not Equal
+    # LHS
+    # Function Call - first_index_of(char[], char) -> int
+    # Arguments
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__lines)
+    # RHS
+    stack.append (__field____main____Vector__char__1____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Addition
+    # LHS
+    stack.append(__main__for__80__l)
+    # RHS
+    # Int Literal
+    stack.append(2)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    # Char Literal
+    stack.append('*')
+    __arg1 = stack.pop ()
+    __arg0 = stack.pop ()
+    # *** first_index_of
+    __res = __main____first_index_of__char__1__char (__arg0, __arg1)
+    stack.append (__res) # function call result
+    # RHS
+    # Negative
+    # RHS
+    # Int Literal
+    stack.append(1)
+    __rhs = stack.pop ()
+    __res = -__rhs
+    stack.append (__res)
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs != __rhs
+    stack.append (__res)
+    __if__85__cond = stack.pop ()
+    # get condition from stack
+    if (__if__85__cond):
+        # Body
+        #-----------------------------------------------------------------
+        # Code Block
+        # Statement
+        # Assignment - '='
+        # RHS
+        # Function Call - split(char[], char) -> Vector<:char[]:>
+        # Arguments
         # Subscript
         # LHS
         # Member Accessor
@@ -5105,25 +4358,31 @@ while (1):
         __parent = stack.pop ()
         stack.append (__parent[__child])
         # OFFSET
-        stack.append(__main__for__93__l)
+        # Addition
+        # LHS
+        stack.append(__main__for__80__l)
+        # RHS
+        # Int Literal
+        stack.append(2)
+        __rhs = stack.pop()
+        __lhs = stack.pop()
+        __res = __lhs + __rhs
+        stack.append(__res)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
-        # OFFSET
-        stack.append(__main__for__93__block__94__for__95__c)
-        __offset = stack.pop ()
-        __pointer = stack.pop ()
-        stack.append (__pointer[__offset])
+        # Char Literal
+        stack.append(' ')
         __arg1 = stack.pop ()
         __arg0 = stack.pop ()
-        # *** first_index_of
-        __res = __main____first_index_of__char__1__char (__arg0, __arg1)
+        # *** split
+        __res = __main____split__char__1__char (__arg0, __arg1)
         stack.append (__res) # function call result
         # LHS
-        __main__for__93__block__94__for__95__block__96__val = 0
+        __main__for__80__block__81__if__85__block__86__tokens1 = 0
         __rhs = stack.pop()
-        __main__for__93__block__94__for__95__block__96__val = __rhs
-        stack.append (__main__for__93__block__94__for__95__block__96__val)
+        __main__for__80__block__81__if__85__block__86__tokens1 = __rhs
+        stack.append (__main__for__80__block__81__if__85__block__86__tokens1)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
@@ -5135,73 +4394,68 @@ while (1):
         # Condition
         # Equal
         # LHS
-        stack.append(__main__for__93__block__94__for__95__block__96__val)
-        # RHS
-        # Int Literal
-        stack.append(26)
-        __rhs = stack.pop ()
-        __lhs = stack.pop ()
-        __res = __lhs == __rhs
-        stack.append (__res)
-        __if__97__cond = stack.pop ()
-        # Condition for elif #0
-        # Equal
+        # Subscript
         # LHS
-        stack.append(__main__for__93__block__94__for__95__block__96__val)
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__if__85__block__86__tokens1)
+        # RHS
+        stack.append (__field____main____Vector__char__1____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        # Subtraction
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__if__85__block__86__tokens1)
+        # RHS
+        stack.append (__field____main____Vector__char__1____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
         # RHS
         # Int Literal
-        stack.append(27)
+        stack.append(1)
+        __rhs = stack.pop()
+        __lhs = stack.pop()
+        __res = __lhs - __rhs
+        stack.append(__res)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # OFFSET
+        # Int Literal
+        stack.append(0)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # RHS
+        # Char Literal
+        stack.append('o')
         __rhs = stack.pop ()
         __lhs = stack.pop ()
         __res = __lhs == __rhs
         stack.append (__res)
-        __elif__97x0__cond = stack.pop ()
+        __if__87__cond = stack.pop ()
         # get condition from stack
-        if (__if__97__cond):
+        if (__if__87__cond):
             # Body
             #-------------------------------------------------------------
             # Code Block
             # Statement
             # Assignment - '='
             # RHS
-            # Int Literal
-            stack.append(0)
-            __rhs = stack.pop()
-            __main__for__93__block__94__for__95__block__96__val = __rhs
-            stack.append (__main__for__93__block__94__for__95__block__96__val)
-            # Statement results can be ignored
-            stack.pop ()
-            # End Statement
-
-            # Statement
-            # Assignment - '='
-            # RHS
-            stack.append(__main__for__93__l)
+            stack.append(__main__OP_SQUARE)
             # LHS
             # Member Accessor Assignment
             # LHS
-            stack.append(__main__start_pos)
+            stack.append(__main__for__80__block__81__monkey)
             # RHS
-            stack.append(__field____main____Vec____i)
-            __child = stack.pop()
-            __parent = stack.pop()
-            __rhs = stack.pop()
-            __parent[__child] = __rhs
-            stack.append (__parent[__child])
-            # Statement results can be ignored
-            stack.pop ()
-            # End Statement
-
-            # Statement
-            # Assignment - '='
-            # RHS
-            stack.append(__main__for__93__block__94__for__95__c)
-            # LHS
-            # Member Accessor Assignment
-            # LHS
-            stack.append(__main__start_pos)
-            # RHS
-            stack.append(__field____main____Vec____j)
+            stack.append(__field____main____Monkey____op)
             __child = stack.pop()
             __parent = stack.pop()
             __rhs = stack.pop()
@@ -5213,34 +4467,20 @@ while (1):
 
             #-------------------------------------------------------------
         #-----------------------------------------------------------------
-        # Elif-Statement
-        # Condition
-        elif (__elif__97x0__cond):
-            # Body
+        # Else-Statement
+        else:
             #-------------------------------------------------------------
             # Code Block
             # Statement
             # Assignment - '='
             # RHS
-            # Int Literal
-            stack.append(25)
-            __rhs = stack.pop()
-            __main__for__93__block__94__for__95__block__96__val = __rhs
-            stack.append (__main__for__93__block__94__for__95__block__96__val)
-            # Statement results can be ignored
-            stack.pop ()
-            # End Statement
-
-            # Statement
-            # Assignment - '='
-            # RHS
-            stack.append(__main__for__93__l)
+            stack.append(__main__OP_MUL)
             # LHS
             # Member Accessor Assignment
             # LHS
-            stack.append(__main__end_pos)
+            stack.append(__main__for__80__block__81__monkey)
             # RHS
-            stack.append(__field____main____Vec____i)
+            stack.append(__field____main____Monkey____op)
             __child = stack.pop()
             __parent = stack.pop()
             __rhs = stack.pop()
@@ -5253,13 +4493,49 @@ while (1):
             # Statement
             # Assignment - '='
             # RHS
-            stack.append(__main__for__93__block__94__for__95__c)
+            # Function Call - stringToInt(char[]) -> int
+            # Arguments
+            # Subscript
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__80__block__81__if__85__block__86__tokens1)
+            # RHS
+            stack.append (__field____main____Vector__char__1____data)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # OFFSET
+            # Subtraction
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__80__block__81__if__85__block__86__tokens1)
+            # RHS
+            stack.append (__field____main____Vector__char__1____size)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # RHS
+            # Int Literal
+            stack.append(1)
+            __rhs = stack.pop()
+            __lhs = stack.pop()
+            __res = __lhs - __rhs
+            stack.append(__res)
+            __offset = stack.pop ()
+            __pointer = stack.pop ()
+            stack.append (__pointer[__offset])
+            __arg0 = stack.pop ()
+            # *** stringToInt
+            __res = __builtin__stringToInt__char__1 (__arg0)
+            stack.append (__res) # function call result
             # LHS
             # Member Accessor Assignment
             # LHS
-            stack.append(__main__end_pos)
+            stack.append(__main__for__80__block__81__monkey)
             # RHS
-            stack.append(__field____main____Vec____j)
+            stack.append(__field____main____Monkey____operand)
             __child = stack.pop()
             __parent = stack.pop()
             __rhs = stack.pop()
@@ -5273,66 +4549,1058 @@ while (1):
         #-----------------------------------------------------------------
         # End of if
         #-----------------------------------------------------------------
+        #-----------------------------------------------------------------
+        # For-Loop
+        # Init
+        # Assignment - '='
+        # RHS
+        # Int Literal
+        stack.append(0)
+        # LHS
+        __main__for__80__block__81__if__85__block__86__for__90__j = 0
+        __rhs = stack.pop()
+        __main__for__80__block__81__if__85__block__86__for__90__j = __rhs
+        stack.append (__main__for__80__block__81__if__85__block__86__for__90__j)
+        # Using an infinite loop so we can write a separate multi-line condition
+        while (1):
+            # Condition
+            # Less Than
+            # LHS
+            stack.append(__main__for__80__block__81__if__85__block__86__for__90__j)
+            # RHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__80__block__81__if__85__block__86__tokens1)
+            # RHS
+            stack.append (__field____main____Vector__char__1____size)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            __rhs = stack.pop ()
+            __lhs = stack.pop ()
+            __res = __lhs < __rhs
+            stack.append (__res)
+            __cond = stack.pop ()
+            # break out of loop if condition is false
+            if (__cond == 0): break
+            # Body
+            # Statement
+            # Subscript
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__80__block__81__if__85__block__86__tokens1)
+            # RHS
+            stack.append (__field____main____Vector__char__1____data)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # OFFSET
+            stack.append(__main__for__80__block__81__if__85__block__86__for__90__j)
+            __offset = stack.pop ()
+            __pointer = stack.pop ()
+            stack.append (__pointer[__offset])
+            __arr = stack.pop ()
+            __builtin__free (__arr)
+            stack.append (0)
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
+            # Update
+            # Pre-Increment
+            # RHS
+            stack.append(__main__for__80__block__81__if__85__block__86__for__90__j)
+            __rhs = stack.pop ()
+            __main__for__80__block__81__if__85__block__86__for__90__j = __main__for__80__block__81__if__85__block__86__for__90__j + 1
+            __res = __main__for__80__block__81__if__85__block__86__for__90__j
+            stack.append (__res)
+        #-----------------------------------------------------------------
         # Statement
-        # Method Call - Vector<:int:>::pushBack(int) -> void
+        stack.append(__main__for__80__block__81__if__85__block__86__tokens1)
+        __arr = stack.pop ()
+        __builtin__free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+    #---------------------------------------------------------------------
+    # Else-Statement
+    else:
+        #-----------------------------------------------------------------
+        # Code Block
+        # Statement
+        # Assignment - '='
+        # RHS
+        # Function Call - split(char[], char) -> Vector<:char[]:>
+        # Arguments
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__lines)
+        # RHS
+        stack.append (__field____main____Vector__char__1____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        # Addition
+        # LHS
+        stack.append(__main__for__80__l)
+        # RHS
+        # Int Literal
+        stack.append(2)
+        __rhs = stack.pop()
+        __lhs = stack.pop()
+        __res = __lhs + __rhs
+        stack.append(__res)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # Char Literal
+        stack.append(' ')
+        __arg1 = stack.pop ()
+        __arg0 = stack.pop ()
+        # *** split
+        __res = __main____split__char__1__char (__arg0, __arg1)
+        stack.append (__res) # function call result
+        # LHS
+        __main__for__80__block__81__else__85__block__91__tokens1 = 0
+        __rhs = stack.pop()
+        __main__for__80__block__81__else__85__block__91__tokens1 = __rhs
+        stack.append (__main__for__80__block__81__else__85__block__91__tokens1)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+        # If-Statement
+        # Precomputing all if/elif conditions and give unique names
+        # bc we can't have code between if and elif
+        # Condition
+        # Equal
+        # LHS
+        # Subscript
         # LHS
         # Subscript
         # LHS
         # Member Accessor
         # LHS
-        stack.append(__main__elevations)
+        stack.append(__main__for__80__block__81__else__85__block__91__tokens1)
         # RHS
-        stack.append (__field____main____Vector__Vector____data)
+        stack.append (__field____main____Vector__char__1____data)
         __child = stack.pop ()
         __parent = stack.pop ()
         stack.append (__parent[__child])
         # OFFSET
-        stack.append(__main__for__93__l)
+        # Subtraction
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__else__85__block__91__tokens1)
+        # RHS
+        stack.append (__field____main____Vector__char__1____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # RHS
+        # Int Literal
+        stack.append(1)
+        __rhs = stack.pop()
+        __lhs = stack.pop()
+        __res = __lhs - __rhs
+        stack.append(__res)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # OFFSET
+        # Int Literal
+        stack.append(0)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
         # RHS
+        # Char Literal
+        stack.append('o')
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs == __rhs
+        stack.append (__res)
+        __if__92__cond = stack.pop ()
+        # get condition from stack
+        if (__if__92__cond):
+            # Body
+            #-------------------------------------------------------------
+            # Code Block
+            # Statement
+            # Assignment - '='
+            # RHS
+            stack.append(__main__OP_SQUARE)
+            # LHS
+            # Member Accessor Assignment
+            # LHS
+            stack.append(__main__for__80__block__81__monkey)
+            # RHS
+            stack.append(__field____main____Monkey____op)
+            __child = stack.pop()
+            __parent = stack.pop()
+            __rhs = stack.pop()
+            __parent[__child] = __rhs
+            stack.append (__parent[__child])
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
+            #-------------------------------------------------------------
+        #-----------------------------------------------------------------
+        # Else-Statement
+        else:
+            #-------------------------------------------------------------
+            # Code Block
+            # Statement
+            # Assignment - '='
+            # RHS
+            stack.append(__main__OP_ADD)
+            # LHS
+            # Member Accessor Assignment
+            # LHS
+            stack.append(__main__for__80__block__81__monkey)
+            # RHS
+            stack.append(__field____main____Monkey____op)
+            __child = stack.pop()
+            __parent = stack.pop()
+            __rhs = stack.pop()
+            __parent[__child] = __rhs
+            stack.append (__parent[__child])
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
+            # Statement
+            # Assignment - '='
+            # RHS
+            # Function Call - stringToInt(char[]) -> int
+            # Arguments
+            # Subscript
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__80__block__81__else__85__block__91__tokens1)
+            # RHS
+            stack.append (__field____main____Vector__char__1____data)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # OFFSET
+            # Subtraction
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__80__block__81__else__85__block__91__tokens1)
+            # RHS
+            stack.append (__field____main____Vector__char__1____size)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # RHS
+            # Int Literal
+            stack.append(1)
+            __rhs = stack.pop()
+            __lhs = stack.pop()
+            __res = __lhs - __rhs
+            stack.append(__res)
+            __offset = stack.pop ()
+            __pointer = stack.pop ()
+            stack.append (__pointer[__offset])
+            __arg0 = stack.pop ()
+            # *** stringToInt
+            __res = __builtin__stringToInt__char__1 (__arg0)
+            stack.append (__res) # function call result
+            # LHS
+            # Member Accessor Assignment
+            # LHS
+            stack.append(__main__for__80__block__81__monkey)
+            # RHS
+            stack.append(__field____main____Monkey____operand)
+            __child = stack.pop()
+            __parent = stack.pop()
+            __rhs = stack.pop()
+            __parent[__child] = __rhs
+            stack.append (__parent[__child])
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
+            #-------------------------------------------------------------
+        #-----------------------------------------------------------------
+        # End of if
+        #-----------------------------------------------------------------
+        #-----------------------------------------------------------------
+        # For-Loop
+        # Init
+        # Assignment - '='
+        # RHS
+        # Int Literal
+        stack.append(0)
+        # LHS
+        __main__for__80__block__81__else__85__block__91__for__95__j = 0
+        __rhs = stack.pop()
+        __main__for__80__block__81__else__85__block__91__for__95__j = __rhs
+        stack.append (__main__for__80__block__81__else__85__block__91__for__95__j)
+        # Using an infinite loop so we can write a separate multi-line condition
+        while (1):
+            # Condition
+            # Less Than
+            # LHS
+            stack.append(__main__for__80__block__81__else__85__block__91__for__95__j)
+            # RHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__80__block__81__else__85__block__91__tokens1)
+            # RHS
+            stack.append (__field____main____Vector__char__1____size)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            __rhs = stack.pop ()
+            __lhs = stack.pop ()
+            __res = __lhs < __rhs
+            stack.append (__res)
+            __cond = stack.pop ()
+            # break out of loop if condition is false
+            if (__cond == 0): break
+            # Body
+            # Statement
+            # Subscript
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__80__block__81__else__85__block__91__tokens1)
+            # RHS
+            stack.append (__field____main____Vector__char__1____data)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # OFFSET
+            stack.append(__main__for__80__block__81__else__85__block__91__for__95__j)
+            __offset = stack.pop ()
+            __pointer = stack.pop ()
+            stack.append (__pointer[__offset])
+            __arr = stack.pop ()
+            __builtin__free (__arr)
+            stack.append (0)
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
+            # Update
+            # Pre-Increment
+            # RHS
+            stack.append(__main__for__80__block__81__else__85__block__91__for__95__j)
+            __rhs = stack.pop ()
+            __main__for__80__block__81__else__85__block__91__for__95__j = __main__for__80__block__81__else__85__block__91__for__95__j + 1
+            __res = __main__for__80__block__81__else__85__block__91__for__95__j
+            stack.append (__res)
+        #-----------------------------------------------------------------
+        # Statement
+        stack.append(__main__for__80__block__81__else__85__block__91__tokens1)
+        __arr = stack.pop ()
+        __builtin__free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+    #---------------------------------------------------------------------
+    # End of if
+    #---------------------------------------------------------------------
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Function Call - split(char[], char) -> Vector<:char[]:>
+    # Arguments
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__lines)
+    # RHS
+    stack.append (__field____main____Vector__char__1____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Addition
+    # LHS
+    stack.append(__main__for__80__l)
+    # RHS
+    # Int Literal
+    stack.append(3)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    # Char Literal
+    stack.append(' ')
+    __arg1 = stack.pop ()
+    __arg0 = stack.pop ()
+    # *** split
+    __res = __main____split__char__1__char (__arg0, __arg1)
+    stack.append (__res) # function call result
+    # LHS
+    __main__for__80__block__81__tokens2 = 0
+    __rhs = stack.pop()
+    __main__for__80__block__81__tokens2 = __rhs
+    stack.append (__main__for__80__block__81__tokens2)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Function Call - stringToInt(char[]) -> int
+    # Arguments
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__for__80__block__81__tokens2)
+    # RHS
+    stack.append (__field____main____Vector__char__1____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Subtraction
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__for__80__block__81__tokens2)
+    # RHS
+    stack.append (__field____main____Vector__char__1____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # RHS
+    # Int Literal
+    stack.append(1)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs - __rhs
+    stack.append(__res)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    __arg0 = stack.pop ()
+    # *** stringToInt
+    __res = __builtin__stringToInt__char__1 (__arg0)
+    stack.append (__res) # function call result
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(__main__for__80__block__81__monkey)
+    # RHS
+    stack.append(__field____main____Monkey____divisible_by)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # For-Loop
+    # Init
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__for__80__block__81__for__96__j = 0
+    __rhs = stack.pop()
+    __main__for__80__block__81__for__96__j = __rhs
+    stack.append (__main__for__80__block__81__for__96__j)
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Less Than
+        # LHS
+        stack.append(__main__for__80__block__81__for__96__j)
+        # RHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens2)
+        # RHS
+        stack.append (__field____main____Vector__char__1____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs < __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        # Statement
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens2)
+        # RHS
+        stack.append (__field____main____Vector__char__1____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__for__80__block__81__for__96__j)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        __arr = stack.pop ()
+        __builtin__free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Update
+        # Pre-Increment
+        # RHS
+        stack.append(__main__for__80__block__81__for__96__j)
+        __rhs = stack.pop ()
+        __main__for__80__block__81__for__96__j = __main__for__80__block__81__for__96__j + 1
+        __res = __main__for__80__block__81__for__96__j
+        stack.append (__res)
+    #---------------------------------------------------------------------
+    # Statement
+    stack.append(__main__for__80__block__81__tokens2)
+    __arr = stack.pop ()
+    __builtin__free (__arr)
+    stack.append (0)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Function Call - split(char[], char) -> Vector<:char[]:>
+    # Arguments
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__lines)
+    # RHS
+    stack.append (__field____main____Vector__char__1____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Addition
+    # LHS
+    stack.append(__main__for__80__l)
+    # RHS
+    # Int Literal
+    stack.append(4)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    # Char Literal
+    stack.append(' ')
+    __arg1 = stack.pop ()
+    __arg0 = stack.pop ()
+    # *** split
+    __res = __main____split__char__1__char (__arg0, __arg1)
+    stack.append (__res) # function call result
+    # LHS
+    __main__for__80__block__81__tokens3 = 0
+    __rhs = stack.pop()
+    __main__for__80__block__81__tokens3 = __rhs
+    stack.append (__main__for__80__block__81__tokens3)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Function Call - stringToInt(char[]) -> int
+    # Arguments
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__for__80__block__81__tokens3)
+    # RHS
+    stack.append (__field____main____Vector__char__1____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Subtraction
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__for__80__block__81__tokens3)
+    # RHS
+    stack.append (__field____main____Vector__char__1____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # RHS
+    # Int Literal
+    stack.append(1)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs - __rhs
+    stack.append(__res)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    __arg0 = stack.pop ()
+    # *** stringToInt
+    __res = __builtin__stringToInt__char__1 (__arg0)
+    stack.append (__res) # function call result
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(__main__for__80__block__81__monkey)
+    # RHS
+    stack.append(__field____main____Monkey____true_monkey_id)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # For-Loop
+    # Init
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__for__80__block__81__for__97__j = 0
+    __rhs = stack.pop()
+    __main__for__80__block__81__for__97__j = __rhs
+    stack.append (__main__for__80__block__81__for__97__j)
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Less Than
+        # LHS
+        stack.append(__main__for__80__block__81__for__97__j)
+        # RHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens3)
+        # RHS
+        stack.append (__field____main____Vector__char__1____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs < __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        # Statement
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens3)
+        # RHS
+        stack.append (__field____main____Vector__char__1____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__for__80__block__81__for__97__j)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        __arr = stack.pop ()
+        __builtin__free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Update
+        # Pre-Increment
+        # RHS
+        stack.append(__main__for__80__block__81__for__97__j)
+        __rhs = stack.pop ()
+        __main__for__80__block__81__for__97__j = __main__for__80__block__81__for__97__j + 1
+        __res = __main__for__80__block__81__for__97__j
+        stack.append (__res)
+    #---------------------------------------------------------------------
+    # Statement
+    stack.append(__main__for__80__block__81__tokens3)
+    __arr = stack.pop ()
+    __builtin__free (__arr)
+    stack.append (0)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Function Call - split(char[], char) -> Vector<:char[]:>
+    # Arguments
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__lines)
+    # RHS
+    stack.append (__field____main____Vector__char__1____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Addition
+    # LHS
+    stack.append(__main__for__80__l)
+    # RHS
+    # Int Literal
+    stack.append(5)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    # Char Literal
+    stack.append(' ')
+    __arg1 = stack.pop ()
+    __arg0 = stack.pop ()
+    # *** split
+    __res = __main____split__char__1__char (__arg0, __arg1)
+    stack.append (__res) # function call result
+    # LHS
+    __main__for__80__block__81__tokens4 = 0
+    __rhs = stack.pop()
+    __main__for__80__block__81__tokens4 = __rhs
+    stack.append (__main__for__80__block__81__tokens4)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Function Call - stringToInt(char[]) -> int
+    # Arguments
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__for__80__block__81__tokens4)
+    # RHS
+    stack.append (__field____main____Vector__char__1____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    # Subtraction
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__for__80__block__81__tokens4)
+    # RHS
+    stack.append (__field____main____Vector__char__1____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # RHS
+    # Int Literal
+    stack.append(1)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs - __rhs
+    stack.append(__res)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    __arg0 = stack.pop ()
+    # *** stringToInt
+    __res = __builtin__stringToInt__char__1 (__arg0)
+    stack.append (__res) # function call result
+    # LHS
+    # Member Accessor Assignment
+    # LHS
+    stack.append(__main__for__80__block__81__monkey)
+    # RHS
+    stack.append(__field____main____Monkey____false_monkey_id)
+    __child = stack.pop()
+    __parent = stack.pop()
+    __rhs = stack.pop()
+    __parent[__child] = __rhs
+    stack.append (__parent[__child])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # For-Loop
+    # Init
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__for__80__block__81__for__98__j = 0
+    __rhs = stack.pop()
+    __main__for__80__block__81__for__98__j = __rhs
+    stack.append (__main__for__80__block__81__for__98__j)
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Less Than
+        # LHS
+        stack.append(__main__for__80__block__81__for__98__j)
+        # RHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens4)
+        # RHS
+        stack.append (__field____main____Vector__char__1____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs < __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        # Statement
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__for__80__block__81__tokens4)
+        # RHS
+        stack.append (__field____main____Vector__char__1____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__for__80__block__81__for__98__j)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        __arr = stack.pop ()
+        __builtin__free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Update
+        # Pre-Increment
+        # RHS
+        stack.append(__main__for__80__block__81__for__98__j)
+        __rhs = stack.pop ()
+        __main__for__80__block__81__for__98__j = __main__for__80__block__81__for__98__j + 1
+        __res = __main__for__80__block__81__for__98__j
+        stack.append (__res)
+    #---------------------------------------------------------------------
+    # Statement
+    stack.append(__main__for__80__block__81__tokens4)
+    __arr = stack.pop ()
+    __builtin__free (__arr)
+    stack.append (0)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Method Call - Vector<:Monkey:>::pushBack(Monkey) -> void
+    # LHS
+    stack.append(__main__monkeys)
+    # RHS
+    # Arguments
+    stack.append(__main__for__80__block__81__monkey)
+    __arg0 = stack.pop ()
+    __obj = stack.pop ()
+    __retval = __method____main____Vector__Monkey____pushBack__Monkey (__obj, __arg0)
+    stack.append (__retval)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # Update
+    # Assignment - '+='
+    # RHS
+    # Int Literal
+    stack.append(7)
+    __rhs = stack.pop()
+    __main__for__80__l = __main__for__80__l + __rhs
+    stack.append (__main__for__80__l)
+#-------------------------------------------------------------------------
+#=========================================================================
+# Function Declaration - println(Vector<:Monkey:>) -> void
+def __main____println__Vector__tparam0__Monkey (__main__println__monkeys):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    #---------------------------------------------------------------------
+    # For-Loop
+    # Init
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__println__block__99__for__100__i = 0
+    __rhs = stack.pop()
+    __main__println__block__99__for__100__i = __rhs
+    stack.append (__main__println__block__99__for__100__i)
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Less Than
+        # LHS
+        stack.append(__main__println__block__99__for__100__i)
+        # RHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__println__monkeys)
+        # RHS
+        stack.append (__field____main____Vector__Monkey____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs < __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        #-----------------------------------------------------------------
+        # Code Block
+        # Statement
+        # Function Call - print(int) -> void
         # Arguments
-        stack.append(__main__for__93__block__94__for__95__block__96__val)
+        stack.append(__main__println__block__99__for__100__i)
         __arg0 = stack.pop ()
-        __obj = stack.pop ()
-        __retval = __method____main____Vector__int____pushBack__int (__obj, __arg0)
-        stack.append (__retval)
+        # *** print
+        __res = __builtin__print__int (__arg0)
+        stack.append (__res) # function call result
         # Statement results can be ignored
         stack.pop ()
         # End Statement
 
         # Statement
-        # Method Call - Vector<:int:>::pushBack(int) -> void
+        # Function Call - print(char) -> void
+        # Arguments
+        # Char Literal
+        stack.append(':')
+        __arg0 = stack.pop ()
+        # *** print
+        __res = __builtin__print__char (__arg0)
+        stack.append (__res) # function call result
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Function Call - print<:int:>(Vector<:int:>) -> void
+        # Arguments
+        # Member Accessor
         # LHS
         # Subscript
         # LHS
         # Member Accessor
         # LHS
-        stack.append(__main__was_visited)
+        stack.append(__main__println__monkeys)
         # RHS
-        stack.append (__field____main____Vector__Vector____data)
+        stack.append (__field____main____Vector__Monkey____data)
         __child = stack.pop ()
         __parent = stack.pop ()
         stack.append (__parent[__child])
         # OFFSET
-        stack.append(__main__for__93__l)
+        stack.append(__main__println__block__99__for__100__i)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
         # RHS
-        # Arguments
-        # Negative
-        # RHS
-        # Int Literal
-        stack.append(1)
-        __rhs = stack.pop ()
-        __res = -__rhs
-        stack.append (__res)
+        stack.append (__field____main____Monkey____items)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
         __arg0 = stack.pop ()
-        __obj = stack.pop ()
-        __retval = __method____main____Vector__int____pushBack__int (__obj, __arg0)
-        stack.append (__retval)
+        # *** print
+        __res = __main____print__int____Vector__tparam0__int (__arg0)
+        stack.append (__res) # function call result
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Statement
+        # Function Call - println(int) -> void
+        # Arguments
+        # Member Accessor
+        # LHS
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__println__monkeys)
+        # RHS
+        stack.append (__field____main____Vector__Monkey____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__println__block__99__for__100__i)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # RHS
+        stack.append (__field____main____Monkey____inspected_items)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __arg0 = stack.pop ()
+        # *** println
+        __res = __builtin__println__int (__arg0)
+        stack.append (__res) # function call result
         # Statement results can be ignored
         stack.pop ()
         # End Statement
@@ -5341,100 +5609,170 @@ while (1):
         # Update
         # Pre-Increment
         # RHS
-        stack.append(__main__for__93__block__94__for__95__c)
+        stack.append(__main__println__block__99__for__100__i)
         __rhs = stack.pop ()
-        __main__for__93__block__94__for__95__c = __main__for__93__block__94__for__95__c + 1
-        __res = __main__for__93__block__94__for__95__c
+        __main__println__block__99__for__100__i = __main__println__block__99__for__100__i + 1
+        __res = __main__println__block__99__for__100__i
         stack.append (__res)
     #---------------------------------------------------------------------
     #---------------------------------------------------------------------
-    # Update
-    # Assignment - '+='
-    # RHS
-    # Int Literal
-    stack.append(1)
-    __rhs = stack.pop()
-    __main__for__93__l = __main__for__93__l + __rhs
-    stack.append (__main__for__93__l)
-#-------------------------------------------------------------------------
+# End Function Declaration - __main____println__Vector__tparam0__Monkey
 #=========================================================================
-# Function Declaration - bfs(Vector<:Vector<:int:>:>, Vector<:Vector<:int:>:>, Vec, Vec) -> int
-def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (__main__bfs__elevations, __main__bfs__board, __main__bfs__start_pos, __main__bfs__end_pos):
+
+# Statement
+# Assignment - '='
+# RHS
+# Int Literal
+stack.append(1)
+# LHS
+__main__common_div = 0
+__rhs = stack.pop()
+__main__common_div = __rhs
+stack.append (__main__common_div)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
+#-------------------------------------------------------------------------
+# For-Loop
+# Init
+# Assignment - '='
+# RHS
+# Int Literal
+stack.append(0)
+# LHS
+__main__for__102__i = 0
+__rhs = stack.pop()
+__main__for__102__i = __rhs
+stack.append (__main__for__102__i)
+# Using an infinite loop so we can write a separate multi-line condition
+while (1):
+    # Condition
+    # Less Than
+    # LHS
+    stack.append(__main__for__102__i)
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__monkeys)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs < __rhs
+    stack.append (__res)
+    __cond = stack.pop ()
+    # break out of loop if condition is false
+    if (__cond == 0): break
     # Body
     #---------------------------------------------------------------------
     # Code Block
     # Statement
-    # Assignment - '='
+    # Assignment - '*='
     # RHS
-    # Constructor Call - LinkedList<:Vec:>::LinkedList() -> LinkedList<:Vec:>
-    # Arguments
-    __retval = __ctor____main____LinkedList__Vec____LinkedList ()
-    stack.append (__retval)
+    # Member Accessor
     # LHS
-    __main__bfs__block__100__frontier = 0
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__monkeys)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    stack.append(__main__for__102__i)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    # RHS
+    stack.append (__field____main____Monkey____divisible_by)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
     __rhs = stack.pop()
-    __main__bfs__block__100__frontier = __rhs
-    stack.append (__main__bfs__block__100__frontier)
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
-    # LHS
-    stack.append(__main__bfs__block__100__frontier)
-    # RHS
-    # Arguments
-    # Constructor Call - Vec::Vec(int, int, int) -> Vec
-    # Arguments
-    # Member Accessor
-    # LHS
-    stack.append(__main__bfs__start_pos)
-    # RHS
-    stack.append (__field____main____Vec____i)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # Member Accessor
-    # LHS
-    stack.append(__main__bfs__start_pos)
-    # RHS
-    stack.append (__field____main____Vec____j)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # Int Literal
-    stack.append(0)
-    __arg2 = stack.pop ()
-    __arg1 = stack.pop ()
-    __arg0 = stack.pop ()
-    __retval = __ctor____main____Vec____Vec__int__int__int (__arg0, __arg1, __arg2)
-    stack.append (__retval)
-    __arg0 = stack.pop ()
-    __obj = stack.pop ()
-    __retval = __method____main____LinkedList__Vec____pushBack__Vec (__obj, __arg0)
-    stack.append (__retval)
+    __main__common_div = __main__common_div * __rhs
+    stack.append (__main__common_div)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
 
     #---------------------------------------------------------------------
-    # While-Loop
+    # Update
+    # Pre-Increment
+    # RHS
+    stack.append(__main__for__102__i)
+    __rhs = stack.pop ()
+    __main__for__102__i = __main__for__102__i + 1
+    __res = __main__for__102__i
+    stack.append (__res)
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# For-Loop
+# Init
+# Assignment - '='
+# RHS
+# Int Literal
+stack.append(0)
+# LHS
+__main__for__104__r = 0
+__rhs = stack.pop()
+__main__for__104__r = __rhs
+stack.append (__main__for__104__r)
+# Using an infinite loop so we can write a separate multi-line condition
+while (1):
+    # Condition
+    # Less Than
+    # LHS
+    stack.append(__main__for__104__r)
+    # RHS
+    # Int Literal
+    stack.append(10000)
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs < __rhs
+    stack.append (__res)
+    __cond = stack.pop ()
+    # break out of loop if condition is false
+    if (__cond == 0): break
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    #---------------------------------------------------------------------
+    # For-Loop
+    # Init
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__for__104__block__105__for__106__m = 0
+    __rhs = stack.pop()
+    __main__for__104__block__105__for__106__m = __rhs
+    stack.append (__main__for__104__block__105__for__106__m)
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
-        # Negate
-        # RHS
-        # Method Call - LinkedList<:Vec:>::isEmpty() -> int
+        # Less Than
         # LHS
-        stack.append(__main__bfs__block__100__frontier)
+        stack.append(__main__for__104__block__105__for__106__m)
         # RHS
-        # Arguments
-        __obj = stack.pop ()
-        __retval = __method____main____LinkedList__Vec____isEmpty (__obj)
-        stack.append (__retval)
+        # Member Accessor
+        # LHS
+        stack.append(__main__monkeys)
+        # RHS
+        stack.append (__field____main____Vector__Monkey____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
         __rhs = stack.pop ()
-        __res = not __rhs
+        __lhs = stack.pop ()
+        __res = __lhs < __rhs
         stack.append (__res)
         __cond = stack.pop ()
         # break out of loop if condition is false
@@ -5445,1163 +5783,682 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # Statement
         # Assignment - '='
         # RHS
-        # Method Call - LinkedList<:Vec:>::popFront() -> Vec
+        # Subscript
         # LHS
-        stack.append(__main__bfs__block__100__frontier)
+        # Member Accessor
+        # LHS
+        stack.append(__main__monkeys)
         # RHS
-        # Arguments
-        __obj = stack.pop ()
-        __retval = __method____main____LinkedList__Vec____popFront (__obj)
-        stack.append (__retval)
+        stack.append (__field____main____Vector__Monkey____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__for__104__block__105__for__106__m)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
         # LHS
-        __main__bfs__block__100__while__101__block__102__pos = 0
+        __main__for__104__block__105__for__106__block__107__monkey = 0
         __rhs = stack.pop()
-        __main__bfs__block__100__while__101__block__102__pos = __rhs
-        stack.append (__main__bfs__block__100__while__101__block__102__pos)
+        __main__for__104__block__105__for__106__block__107__monkey = __rhs
+        stack.append (__main__for__104__block__105__for__106__block__107__monkey)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
 
-        #-----------------------------------------------------------------
-        # If-Statement
-        # Precomputing all if/elif conditions and give unique names
-        # bc we can't have code between if and elif
-        # Condition
-        # Not Equal
-        # LHS
-        # Subscript
-        # LHS
-        # Member Accessor
-        # LHS
-        # Subscript
-        # LHS
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__board)
-        # RHS
-        stack.append (__field____main____Vector__Vector____data)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # OFFSET
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
-        # RHS
-        stack.append (__field____main____Vec____i)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        __offset = stack.pop ()
-        __pointer = stack.pop ()
-        stack.append (__pointer[__offset])
-        # RHS
-        stack.append (__field____main____Vector__int____data)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # OFFSET
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
-        # RHS
-        stack.append (__field____main____Vec____j)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        __offset = stack.pop ()
-        __pointer = stack.pop ()
-        stack.append (__pointer[__offset])
-        # RHS
-        # Negative
-        # RHS
-        # Int Literal
-        stack.append(1)
-        __rhs = stack.pop ()
-        __res = -__rhs
-        stack.append (__res)
-        __rhs = stack.pop ()
-        __lhs = stack.pop ()
-        __res = __lhs != __rhs
-        stack.append (__res)
-        __if__103__cond = stack.pop ()
-        # get condition from stack
-        if (__if__103__cond):
-            # Body
-            #-------------------------------------------------------------
-            # Code Block
-            # Continue in __while__101
-            continue
-            #-------------------------------------------------------------
-        # End of if
-        #-----------------------------------------------------------------
         # Statement
         # Assignment - '='
         # RHS
         # Member Accessor
         # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__for__104__block__105__for__106__block__107__monkey)
         # RHS
-        stack.append (__field____main____Vec____time)
+        stack.append (__field____main____Monkey____items)
         __child = stack.pop ()
         __parent = stack.pop ()
         stack.append (__parent[__child])
         # LHS
-        # Subscript assignment
-        # LHS
-        # Member Accessor
-        # LHS
-        # Subscript
-        # LHS
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__board)
-        # RHS
-        stack.append (__field____main____Vector__Vector____data)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # OFFSET
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
-        # RHS
-        stack.append (__field____main____Vec____i)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        __offset = stack.pop ()
-        __pointer = stack.pop ()
-        stack.append (__pointer[__offset])
-        # RHS
-        stack.append (__field____main____Vector__int____data)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # OFFSET
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
-        # RHS
-        stack.append (__field____main____Vec____j)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        __offset = stack.pop()
-        __pointer = stack.pop()
+        __main__for__104__block__105__for__106__block__107__monkey_items = 0
         __rhs = stack.pop()
-        __pointer[__offset] = __rhs
-        stack.append (__pointer[__offset])
+        __main__for__104__block__105__for__106__block__107__monkey_items = __rhs
+        stack.append (__main__for__104__block__105__for__106__block__107__monkey_items)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
 
         #-----------------------------------------------------------------
-        # If-Statement
-        # Precomputing all if/elif conditions and give unique names
-        # bc we can't have code between if and elif
-        # Condition
-        # Greater Than or Equal to
-        # LHS
-        # Subtraction
-        # LHS
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
-        # RHS
-        stack.append (__field____main____Vec____i)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # RHS
-        # Int Literal
-        stack.append(1)
-        __rhs = stack.pop()
-        __lhs = stack.pop()
-        __res = __lhs - __rhs
-        stack.append(__res)
+        # For-Loop
+        # Init
+        # Assignment - '='
         # RHS
         # Int Literal
         stack.append(0)
-        __rhs = stack.pop ()
-        __lhs = stack.pop ()
-        __res = __lhs >= __rhs
-        stack.append (__res)
-        __if__105__cond = stack.pop ()
-        # get condition from stack
-        if (__if__105__cond):
-            # Body
-            #-------------------------------------------------------------
-            # If-Statement
-            # Precomputing all if/elif conditions and give unique names
-            # bc we can't have code between if and elif
-            # Condition
-            # Less Than or Equal to
-            # LHS
-            # Subtraction
-            # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__elevations)
-            # RHS
-            stack.append (__field____main____Vector__Vector____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Subtraction
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____i)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # RHS
-            # Int Literal
-            stack.append(1)
-            __rhs = stack.pop()
-            __lhs = stack.pop()
-            __res = __lhs - __rhs
-            stack.append(__res)
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            stack.append (__field____main____Vector__int____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____j)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__elevations)
-            # RHS
-            stack.append (__field____main____Vector__Vector____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____i)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            stack.append (__field____main____Vector__int____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____j)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            __rhs = stack.pop()
-            __lhs = stack.pop()
-            __res = __lhs - __rhs
-            stack.append(__res)
-            # RHS
-            # Int Literal
-            stack.append(1)
-            __rhs = stack.pop ()
-            __lhs = stack.pop ()
-            __res = __lhs <= __rhs
-            stack.append (__res)
-            __if__106__cond = stack.pop ()
-            # get condition from stack
-            if (__if__106__cond):
-                # Body
-                # Statement
-                # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
-                # LHS
-                stack.append(__main__bfs__block__100__frontier)
-                # RHS
-                # Arguments
-                # Constructor Call - Vec::Vec(int, int, int) -> Vec
-                # Arguments
-                # Subtraction
-                # LHS
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____i)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # RHS
-                # Int Literal
-                stack.append(1)
-                __rhs = stack.pop()
-                __lhs = stack.pop()
-                __res = __lhs - __rhs
-                stack.append(__res)
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____j)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # Addition
-                # LHS
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____time)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # RHS
-                # Int Literal
-                stack.append(1)
-                __rhs = stack.pop()
-                __lhs = stack.pop()
-                __res = __lhs + __rhs
-                stack.append(__res)
-                __arg2 = stack.pop ()
-                __arg1 = stack.pop ()
-                __arg0 = stack.pop ()
-                __retval = __ctor____main____Vec____Vec__int__int__int (__arg0, __arg1, __arg2)
-                stack.append (__retval)
-                __arg0 = stack.pop ()
-                __obj = stack.pop ()
-                __retval = __method____main____LinkedList__Vec____pushBack__Vec (__obj, __arg0)
-                stack.append (__retval)
-                # Statement results can be ignored
-                stack.pop ()
-                # End Statement
-
-            # End of if
-            #-------------------------------------------------------------
-        # End of if
-        #-----------------------------------------------------------------
-        #-----------------------------------------------------------------
-        # If-Statement
-        # Precomputing all if/elif conditions and give unique names
-        # bc we can't have code between if and elif
-        # Condition
-        # Less Than
         # LHS
-        # Addition
-        # LHS
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
-        # RHS
-        stack.append (__field____main____Vec____j)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # RHS
-        # Int Literal
-        stack.append(1)
+        __main__for__104__block__105__for__106__block__107__for__108__i = 0
         __rhs = stack.pop()
-        __lhs = stack.pop()
-        __res = __lhs + __rhs
-        stack.append(__res)
-        # RHS
-        # Member Accessor
-        # LHS
-        # Subscript
-        # LHS
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__elevations)
-        # RHS
-        stack.append (__field____main____Vector__Vector____data)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # OFFSET
-        # Int Literal
-        stack.append(0)
-        __offset = stack.pop ()
-        __pointer = stack.pop ()
-        stack.append (__pointer[__offset])
-        # RHS
-        stack.append (__field____main____Vector__int____size)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        __rhs = stack.pop ()
-        __lhs = stack.pop ()
-        __res = __lhs < __rhs
-        stack.append (__res)
-        __if__107__cond = stack.pop ()
-        # get condition from stack
-        if (__if__107__cond):
-            # Body
-            #-------------------------------------------------------------
-            # If-Statement
-            # Precomputing all if/elif conditions and give unique names
-            # bc we can't have code between if and elif
+        __main__for__104__block__105__for__106__block__107__for__108__i = __rhs
+        stack.append (__main__for__104__block__105__for__106__block__107__for__108__i)
+        # Using an infinite loop so we can write a separate multi-line condition
+        while (1):
             # Condition
-            # Less Than or Equal to
+            # Less Than
             # LHS
-            # Subtraction
-            # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__elevations)
+            stack.append(__main__for__104__block__105__for__106__block__107__for__108__i)
             # RHS
-            stack.append (__field____main____Vector__Vector____data)
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__104__block__105__for__106__block__107__monkey_items)
+            # RHS
+            stack.append (__field____main____Vector__int____size)
             __child = stack.pop ()
             __parent = stack.pop ()
             stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____i)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            stack.append (__field____main____Vector__int____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Addition
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____j)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # RHS
-            # Int Literal
-            stack.append(1)
-            __rhs = stack.pop()
-            __lhs = stack.pop()
-            __res = __lhs + __rhs
-            stack.append(__res)
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__elevations)
-            # RHS
-            stack.append (__field____main____Vector__Vector____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____i)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            stack.append (__field____main____Vector__int____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____j)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            __rhs = stack.pop()
-            __lhs = stack.pop()
-            __res = __lhs - __rhs
-            stack.append(__res)
-            # RHS
-            # Int Literal
-            stack.append(1)
             __rhs = stack.pop ()
             __lhs = stack.pop ()
-            __res = __lhs <= __rhs
+            __res = __lhs < __rhs
             stack.append (__res)
-            __if__108__cond = stack.pop ()
-            # get condition from stack
-            if (__if__108__cond):
-                # Body
-                # Statement
-                # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
-                # LHS
-                stack.append(__main__bfs__block__100__frontier)
-                # RHS
-                # Arguments
-                # Constructor Call - Vec::Vec(int, int, int) -> Vec
-                # Arguments
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____i)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # Addition
-                # LHS
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____j)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # RHS
-                # Int Literal
-                stack.append(1)
-                __rhs = stack.pop()
-                __lhs = stack.pop()
-                __res = __lhs + __rhs
-                stack.append(__res)
-                # Addition
-                # LHS
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____time)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # RHS
-                # Int Literal
-                stack.append(1)
-                __rhs = stack.pop()
-                __lhs = stack.pop()
-                __res = __lhs + __rhs
-                stack.append(__res)
-                __arg2 = stack.pop ()
-                __arg1 = stack.pop ()
-                __arg0 = stack.pop ()
-                __retval = __ctor____main____Vec____Vec__int__int__int (__arg0, __arg1, __arg2)
-                stack.append (__retval)
-                __arg0 = stack.pop ()
-                __obj = stack.pop ()
-                __retval = __method____main____LinkedList__Vec____pushBack__Vec (__obj, __arg0)
-                stack.append (__retval)
-                # Statement results can be ignored
-                stack.pop ()
-                # End Statement
-
-            # End of if
-            #-------------------------------------------------------------
-        # End of if
-        #-----------------------------------------------------------------
-        #-----------------------------------------------------------------
-        # If-Statement
-        # Precomputing all if/elif conditions and give unique names
-        # bc we can't have code between if and elif
-        # Condition
-        # Less Than
-        # LHS
-        # Addition
-        # LHS
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
-        # RHS
-        stack.append (__field____main____Vec____i)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # RHS
-        # Int Literal
-        stack.append(1)
-        __rhs = stack.pop()
-        __lhs = stack.pop()
-        __res = __lhs + __rhs
-        stack.append(__res)
-        # RHS
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__elevations)
-        # RHS
-        stack.append (__field____main____Vector__Vector____size)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        __rhs = stack.pop ()
-        __lhs = stack.pop ()
-        __res = __lhs < __rhs
-        stack.append (__res)
-        __if__109__cond = stack.pop ()
-        # get condition from stack
-        if (__if__109__cond):
+            __cond = stack.pop ()
+            # break out of loop if condition is false
+            if (__cond == 0): break
             # Body
+            #-------------------------------------------------------------
+            # Code Block
+            # Statement
+            # Assignment - '='
+            # RHS
+            # Subscript
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__104__block__105__for__106__block__107__monkey_items)
+            # RHS
+            stack.append (__field____main____Vector__int____data)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # OFFSET
+            stack.append(__main__for__104__block__105__for__106__block__107__for__108__i)
+            __offset = stack.pop ()
+            __pointer = stack.pop ()
+            stack.append (__pointer[__offset])
+            # LHS
+            __main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level = 0
+            __rhs = stack.pop()
+            __main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level = __rhs
+            stack.append (__main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level)
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
             #-------------------------------------------------------------
             # If-Statement
             # Precomputing all if/elif conditions and give unique names
             # bc we can't have code between if and elif
             # Condition
-            # Less Than or Equal to
-            # LHS
-            # Subtraction
-            # LHS
-            # Subscript
+            # Equal
             # LHS
             # Member Accessor
             # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__elevations)
+            stack.append(__main__for__104__block__105__for__106__block__107__monkey)
             # RHS
-            stack.append (__field____main____Vector__Vector____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Addition
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____i)
+            stack.append (__field____main____Monkey____op)
             __child = stack.pop ()
             __parent = stack.pop ()
             stack.append (__parent[__child])
             # RHS
-            # Int Literal
-            stack.append(1)
-            __rhs = stack.pop()
-            __lhs = stack.pop()
-            __res = __lhs + __rhs
-            stack.append(__res)
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            stack.append (__field____main____Vector__int____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____j)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__elevations)
-            # RHS
-            stack.append (__field____main____Vector__Vector____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____i)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            stack.append (__field____main____Vector__int____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____j)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            __rhs = stack.pop()
-            __lhs = stack.pop()
-            __res = __lhs - __rhs
-            stack.append(__res)
-            # RHS
-            # Int Literal
-            stack.append(1)
+            stack.append(__main__OP_ADD)
             __rhs = stack.pop ()
             __lhs = stack.pop ()
-            __res = __lhs <= __rhs
+            __res = __lhs == __rhs
             stack.append (__res)
             __if__110__cond = stack.pop ()
+            # Condition for elif #0
+            # Equal
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__104__block__105__for__106__block__107__monkey)
+            # RHS
+            stack.append (__field____main____Monkey____op)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # RHS
+            stack.append(__main__OP_MUL)
+            __rhs = stack.pop ()
+            __lhs = stack.pop ()
+            __res = __lhs == __rhs
+            stack.append (__res)
+            __elif__110x0__cond = stack.pop ()
             # get condition from stack
             if (__if__110__cond):
                 # Body
                 # Statement
-                # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
-                # LHS
-                stack.append(__main__bfs__block__100__frontier)
+                # Assignment - '+='
                 # RHS
-                # Arguments
-                # Constructor Call - Vec::Vec(int, int, int) -> Vec
-                # Arguments
-                # Addition
-                # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__for__104__block__105__for__106__block__107__monkey)
                 # RHS
-                stack.append (__field____main____Vec____i)
+                stack.append (__field____main____Monkey____operand)
                 __child = stack.pop ()
                 __parent = stack.pop ()
                 stack.append (__parent[__child])
-                # RHS
-                # Int Literal
-                stack.append(1)
                 __rhs = stack.pop()
-                __lhs = stack.pop()
-                __res = __lhs + __rhs
-                stack.append(__res)
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____j)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # Addition
-                # LHS
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____time)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # RHS
-                # Int Literal
-                stack.append(1)
-                __rhs = stack.pop()
-                __lhs = stack.pop()
-                __res = __lhs + __rhs
-                stack.append(__res)
-                __arg2 = stack.pop ()
-                __arg1 = stack.pop ()
-                __arg0 = stack.pop ()
-                __retval = __ctor____main____Vec____Vec__int__int__int (__arg0, __arg1, __arg2)
-                stack.append (__retval)
-                __arg0 = stack.pop ()
-                __obj = stack.pop ()
-                __retval = __method____main____LinkedList__Vec____pushBack__Vec (__obj, __arg0)
-                stack.append (__retval)
+                __main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level = __main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level + __rhs
+                stack.append (__main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level)
                 # Statement results can be ignored
                 stack.pop ()
                 # End Statement
 
+            #-------------------------------------------------------------
+            # Elif-Statement
+            # Condition
+            elif (__elif__110x0__cond):
+                # Body
+                # Statement
+                # Assignment - '*='
+                # RHS
+                # Member Accessor
+                # LHS
+                stack.append(__main__for__104__block__105__for__106__block__107__monkey)
+                # RHS
+                stack.append (__field____main____Monkey____operand)
+                __child = stack.pop ()
+                __parent = stack.pop ()
+                stack.append (__parent[__child])
+                __rhs = stack.pop()
+                __main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level = __main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level * __rhs
+                stack.append (__main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level)
+                # Statement results can be ignored
+                stack.pop ()
+                # End Statement
+
+            #-------------------------------------------------------------
+            #-------------------------------------------------------------
+            # Else-Statement
+            else:
+                # Statement
+                # Assignment - '*='
+                # RHS
+                stack.append(__main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level)
+                __rhs = stack.pop()
+                __main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level = __main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level * __rhs
+                stack.append (__main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level)
+                # Statement results can be ignored
+                stack.pop ()
+                # End Statement
+
+            #-------------------------------------------------------------
             # End of if
             #-------------------------------------------------------------
-        # End of if
-        #-----------------------------------------------------------------
-        #-----------------------------------------------------------------
-        # If-Statement
-        # Precomputing all if/elif conditions and give unique names
-        # bc we can't have code between if and elif
-        # Condition
-        # Greater Than or Equal to
-        # LHS
-        # Subtraction
-        # LHS
-        # Member Accessor
-        # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
-        # RHS
-        stack.append (__field____main____Vec____j)
-        __child = stack.pop ()
-        __parent = stack.pop ()
-        stack.append (__parent[__child])
-        # RHS
-        # Int Literal
-        stack.append(1)
-        __rhs = stack.pop()
-        __lhs = stack.pop()
-        __res = __lhs - __rhs
-        stack.append(__res)
-        # RHS
-        # Int Literal
-        stack.append(0)
-        __rhs = stack.pop ()
-        __lhs = stack.pop ()
-        __res = __lhs >= __rhs
-        stack.append (__res)
-        __if__111__cond = stack.pop ()
-        # get condition from stack
-        if (__if__111__cond):
-            # Body
+            # Statement
+            # Assignment - '='
+            # RHS
+            # Modulus
+            # LHS
+            # Division
+            # LHS
+            stack.append(__main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level)
+            # RHS
+            # Int Literal
+            stack.append(1)
+            __rhs = stack.pop()
+            __lhs = stack.pop()
+            __res = __lhs // __rhs
+            stack.append(__res)
+            # RHS
+            stack.append(__main__common_div)
+            __rhs = stack.pop()
+            __lhs = stack.pop()
+            __res = __lhs % __rhs
+            stack.append(__res)
+            __rhs = stack.pop()
+            __main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level = __rhs
+            stack.append (__main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level)
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
             #-------------------------------------------------------------
             # If-Statement
             # Precomputing all if/elif conditions and give unique names
             # bc we can't have code between if and elif
             # Condition
-            # Less Than or Equal to
+            # Equal
             # LHS
-            # Subtraction
+            # Modulus
             # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__elevations)
+            stack.append(__main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level)
             # RHS
-            stack.append (__field____main____Vector__Vector____data)
+            # Member Accessor
+            # LHS
+            stack.append(__main__for__104__block__105__for__106__block__107__monkey)
+            # RHS
+            stack.append (__field____main____Monkey____divisible_by)
             __child = stack.pop ()
             __parent = stack.pop ()
             stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____i)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            stack.append (__field____main____Vector__int____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Subtraction
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____j)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # RHS
-            # Int Literal
-            stack.append(1)
             __rhs = stack.pop()
             __lhs = stack.pop()
-            __res = __lhs - __rhs
-            stack.append(__res)
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            # Subscript
-            # LHS
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__elevations)
-            # RHS
-            stack.append (__field____main____Vector__Vector____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____i)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            # RHS
-            stack.append (__field____main____Vector__int____data)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            # OFFSET
-            # Member Accessor
-            # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
-            # RHS
-            stack.append (__field____main____Vec____j)
-            __child = stack.pop ()
-            __parent = stack.pop ()
-            stack.append (__parent[__child])
-            __offset = stack.pop ()
-            __pointer = stack.pop ()
-            stack.append (__pointer[__offset])
-            __rhs = stack.pop()
-            __lhs = stack.pop()
-            __res = __lhs - __rhs
+            __res = __lhs % __rhs
             stack.append(__res)
             # RHS
             # Int Literal
-            stack.append(1)
+            stack.append(0)
             __rhs = stack.pop ()
             __lhs = stack.pop ()
-            __res = __lhs <= __rhs
+            __res = __lhs == __rhs
             stack.append (__res)
-            __if__112__cond = stack.pop ()
+            __if__111__cond = stack.pop ()
             # get condition from stack
-            if (__if__112__cond):
+            if (__if__111__cond):
                 # Body
                 # Statement
-                # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
+                # Method Call - Vector<:int:>::pushBack(int) -> void
                 # LHS
-                stack.append(__main__bfs__block__100__frontier)
+                # Member Accessor
+                # LHS
+                # Subscript
+                # LHS
+                # Member Accessor
+                # LHS
+                stack.append(__main__monkeys)
+                # RHS
+                stack.append (__field____main____Vector__Monkey____data)
+                __child = stack.pop ()
+                __parent = stack.pop ()
+                stack.append (__parent[__child])
+                # OFFSET
+                # Member Accessor
+                # LHS
+                stack.append(__main__for__104__block__105__for__106__block__107__monkey)
+                # RHS
+                stack.append (__field____main____Monkey____true_monkey_id)
+                __child = stack.pop ()
+                __parent = stack.pop ()
+                stack.append (__parent[__child])
+                __offset = stack.pop ()
+                __pointer = stack.pop ()
+                stack.append (__pointer[__offset])
+                # RHS
+                stack.append (__field____main____Monkey____items)
+                __child = stack.pop ()
+                __parent = stack.pop ()
+                stack.append (__parent[__child])
                 # RHS
                 # Arguments
-                # Constructor Call - Vec::Vec(int, int, int) -> Vec
-                # Arguments
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____i)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # Subtraction
-                # LHS
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____j)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # RHS
-                # Int Literal
-                stack.append(1)
-                __rhs = stack.pop()
-                __lhs = stack.pop()
-                __res = __lhs - __rhs
-                stack.append(__res)
-                # Addition
-                # LHS
-                # Member Accessor
-                # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
-                # RHS
-                stack.append (__field____main____Vec____time)
-                __child = stack.pop ()
-                __parent = stack.pop ()
-                stack.append (__parent[__child])
-                # RHS
-                # Int Literal
-                stack.append(1)
-                __rhs = stack.pop()
-                __lhs = stack.pop()
-                __res = __lhs + __rhs
-                stack.append(__res)
-                __arg2 = stack.pop ()
-                __arg1 = stack.pop ()
-                __arg0 = stack.pop ()
-                __retval = __ctor____main____Vec____Vec__int__int__int (__arg0, __arg1, __arg2)
-                stack.append (__retval)
+                stack.append(__main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level)
                 __arg0 = stack.pop ()
                 __obj = stack.pop ()
-                __retval = __method____main____LinkedList__Vec____pushBack__Vec (__obj, __arg0)
+                __retval = __method____main____Vector__int____pushBack__int (__obj, __arg0)
                 stack.append (__retval)
                 # Statement results can be ignored
                 stack.pop ()
                 # End Statement
 
+            #-------------------------------------------------------------
+            # Else-Statement
+            else:
+                # Statement
+                # Method Call - Vector<:int:>::pushBack(int) -> void
+                # LHS
+                # Member Accessor
+                # LHS
+                # Subscript
+                # LHS
+                # Member Accessor
+                # LHS
+                stack.append(__main__monkeys)
+                # RHS
+                stack.append (__field____main____Vector__Monkey____data)
+                __child = stack.pop ()
+                __parent = stack.pop ()
+                stack.append (__parent[__child])
+                # OFFSET
+                # Member Accessor
+                # LHS
+                stack.append(__main__for__104__block__105__for__106__block__107__monkey)
+                # RHS
+                stack.append (__field____main____Monkey____false_monkey_id)
+                __child = stack.pop ()
+                __parent = stack.pop ()
+                stack.append (__parent[__child])
+                __offset = stack.pop ()
+                __pointer = stack.pop ()
+                stack.append (__pointer[__offset])
+                # RHS
+                stack.append (__field____main____Monkey____items)
+                __child = stack.pop ()
+                __parent = stack.pop ()
+                stack.append (__parent[__child])
+                # RHS
+                # Arguments
+                stack.append(__main__for__104__block__105__for__106__block__107__for__108__block__109__worry_level)
+                __arg0 = stack.pop ()
+                __obj = stack.pop ()
+                __retval = __method____main____Vector__int____pushBack__int (__obj, __arg0)
+                stack.append (__retval)
+                # Statement results can be ignored
+                stack.pop ()
+                # End Statement
+
+            #-------------------------------------------------------------
             # End of if
             #-------------------------------------------------------------
-        # End of if
+            # Statement
+            # Assignment - '+='
+            # RHS
+            # Int Literal
+            stack.append(1)
+            # LHS
+            # Member Accessor Assignment
+            # LHS
+            stack.append(__main__for__104__block__105__for__106__block__107__monkey)
+            # RHS
+            stack.append(__field____main____Monkey____inspected_items)
+            __child = stack.pop()
+            __parent = stack.pop()
+            __rhs = stack.pop()
+            __parent[__child] = __parent[__child] + __rhs
+            stack.append (__parent[__child])
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
+            #-------------------------------------------------------------
+            # Update
+            # Pre-Increment
+            # RHS
+            stack.append(__main__for__104__block__105__for__106__block__107__for__108__i)
+            __rhs = stack.pop ()
+            __main__for__104__block__105__for__106__block__107__for__108__i = __main__for__104__block__105__for__106__block__107__for__108__i + 1
+            __res = __main__for__104__block__105__for__106__block__107__for__108__i
+            stack.append (__res)
         #-----------------------------------------------------------------
         # Statement
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
-        __arr = stack.pop ()
-        __builtin__free (__arr)
-        stack.append (0)
+        # Method Call - Vector<:int:>::clear() -> void
+        # LHS
+        stack.append(__main__for__104__block__105__for__106__block__107__monkey_items)
+        # RHS
+        # Arguments
+        __obj = stack.pop ()
+        __retval = __method____main____Vector__int____clear (__obj)
+        stack.append (__retval)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
 
         #-----------------------------------------------------------------
-    # End of While
+        # Update
+        # Pre-Increment
+        # RHS
+        stack.append(__main__for__104__block__105__for__106__m)
+        __rhs = stack.pop ()
+        __main__for__104__block__105__for__106__m = __main__for__104__block__105__for__106__m + 1
+        __res = __main__for__104__block__105__for__106__m
+        stack.append (__res)
     #---------------------------------------------------------------------
-    # Return
-    # Subscript
-    # LHS
-    # Member Accessor
-    # LHS
-    # Subscript
-    # LHS
-    # Member Accessor
-    # LHS
-    stack.append(__main__bfs__board)
-    # RHS
-    stack.append (__field____main____Vector__Vector____data)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # OFFSET
-    # Member Accessor
-    # LHS
-    stack.append(__main__bfs__end_pos)
-    # RHS
-    stack.append (__field____main____Vec____i)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __offset = stack.pop ()
-    __pointer = stack.pop ()
-    stack.append (__pointer[__offset])
-    # RHS
-    stack.append (__field____main____Vector__int____data)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    # OFFSET
-    # Member Accessor
-    # LHS
-    stack.append(__main__bfs__end_pos)
-    # RHS
-    stack.append (__field____main____Vec____j)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __offset = stack.pop ()
-    __pointer = stack.pop ()
-    stack.append (__pointer[__offset])
-    __rVal = stack.pop ()
-    return __rVal
     #---------------------------------------------------------------------
-# End Function Declaration - __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec
-#=========================================================================
-
+    # Update
+    # Pre-Increment
+    # RHS
+    stack.append(__main__for__104__r)
+    __rhs = stack.pop ()
+    __main__for__104__r = __main__for__104__r + 1
+    __res = __main__for__104__r
+    stack.append (__res)
+#-------------------------------------------------------------------------
 # Statement
 # Assignment - '='
 # RHS
-# Function Call - bfs(Vector<:Vector<:int:>:>, Vector<:Vector<:int:>:>, Vec, Vec) -> int
-# Arguments
-stack.append(__main__elevations)
-stack.append(__main__was_visited)
-stack.append(__main__start_pos)
-stack.append(__main__end_pos)
-__arg3 = stack.pop ()
-__arg2 = stack.pop ()
-__arg1 = stack.pop ()
-__arg0 = stack.pop ()
-# *** bfs
-__res = __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (__arg0, __arg1, __arg2, __arg3)
-stack.append (__res) # function call result
+# Int Literal
+stack.append(0)
 # LHS
-__main__res = 0
+__main__firstmax = 0
 __rhs = stack.pop()
-__main__res = __rhs
-stack.append (__main__res)
+__main__firstmax = __rhs
+stack.append (__main__firstmax)
 # Statement results can be ignored
 stack.pop ()
 # End Statement
 
 # Statement
+# Assignment - '='
+# RHS
+# Int Literal
+stack.append(0)
+# LHS
+__main__secondmax = 0
+__rhs = stack.pop()
+__main__secondmax = __rhs
+stack.append (__main__secondmax)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
+#-------------------------------------------------------------------------
+# For-Loop
+# Init
+# Assignment - '='
+# RHS
+# Int Literal
+stack.append(0)
+# LHS
+__main__for__112__i = 0
+__rhs = stack.pop()
+__main__for__112__i = __rhs
+stack.append (__main__for__112__i)
+# Using an infinite loop so we can write a separate multi-line condition
+while (1):
+    # Condition
+    # Less Than
+    # LHS
+    stack.append(__main__for__112__i)
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__monkeys)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs < __rhs
+    stack.append (__res)
+    __cond = stack.pop ()
+    # break out of loop if condition is false
+    if (__cond == 0): break
+    # Body
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Function Call - max(int, int) -> int
+    # Arguments
+    # Member Accessor
+    # LHS
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__monkeys)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    stack.append(__main__for__112__i)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    # RHS
+    stack.append (__field____main____Monkey____inspected_items)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    stack.append(__main__firstmax)
+    __arg1 = stack.pop ()
+    __arg0 = stack.pop ()
+    # *** max
+    __res = __main____max__int__int (__arg0, __arg1)
+    stack.append (__res) # function call result
+    __rhs = stack.pop()
+    __main__firstmax = __rhs
+    stack.append (__main__firstmax)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Update
+    # Pre-Increment
+    # RHS
+    stack.append(__main__for__112__i)
+    __rhs = stack.pop ()
+    __main__for__112__i = __main__for__112__i + 1
+    __res = __main__for__112__i
+    stack.append (__res)
+#-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+# For-Loop
+# Init
+# Assignment - '='
+# RHS
+# Int Literal
+stack.append(0)
+# LHS
+__main__for__113__i = 0
+__rhs = stack.pop()
+__main__for__113__i = __rhs
+stack.append (__main__for__113__i)
+# Using an infinite loop so we can write a separate multi-line condition
+while (1):
+    # Condition
+    # Less Than
+    # LHS
+    stack.append(__main__for__113__i)
+    # RHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__monkeys)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____size)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs < __rhs
+    stack.append (__res)
+    __cond = stack.pop ()
+    # break out of loop if condition is false
+    if (__cond == 0): break
+    # Body
+    #---------------------------------------------------------------------
+    # If-Statement
+    # Precomputing all if/elif conditions and give unique names
+    # bc we can't have code between if and elif
+    # Condition
+    # Not Equal
+    # LHS
+    # Member Accessor
+    # LHS
+    # Subscript
+    # LHS
+    # Member Accessor
+    # LHS
+    stack.append(__main__monkeys)
+    # RHS
+    stack.append (__field____main____Vector__Monkey____data)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # OFFSET
+    stack.append(__main__for__113__i)
+    __offset = stack.pop ()
+    __pointer = stack.pop ()
+    stack.append (__pointer[__offset])
+    # RHS
+    stack.append (__field____main____Monkey____inspected_items)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # RHS
+    stack.append(__main__firstmax)
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs != __rhs
+    stack.append (__res)
+    __if__114__cond = stack.pop ()
+    # get condition from stack
+    if (__if__114__cond):
+        # Body
+        # Statement
+        # Assignment - '='
+        # RHS
+        # Function Call - max(int, int) -> int
+        # Arguments
+        # Member Accessor
+        # LHS
+        # Subscript
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__monkeys)
+        # RHS
+        stack.append (__field____main____Vector__Monkey____data)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # OFFSET
+        stack.append(__main__for__113__i)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # RHS
+        stack.append (__field____main____Monkey____inspected_items)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        stack.append(__main__secondmax)
+        __arg1 = stack.pop ()
+        __arg0 = stack.pop ()
+        # *** max
+        __res = __main____max__int__int (__arg0, __arg1)
+        stack.append (__res) # function call result
+        __rhs = stack.pop()
+        __main__secondmax = __rhs
+        stack.append (__main__secondmax)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+    # End of if
+    #---------------------------------------------------------------------
+    # Update
+    # Pre-Increment
+    # RHS
+    stack.append(__main__for__113__i)
+    __rhs = stack.pop ()
+    __main__for__113__i = __main__for__113__i + 1
+    __res = __main__for__113__i
+    stack.append (__res)
+#-------------------------------------------------------------------------
+# Statement
 # Function Call - println(int) -> void
 # Arguments
-stack.append(__main__res)
+# Multiplication
+# LHS
+stack.append(__main__firstmax)
+# RHS
+stack.append(__main__secondmax)
+__rhs = stack.pop()
+__lhs = stack.pop()
+__res = __lhs * __rhs
+stack.append(__res)
 __arg0 = stack.pop ()
 # *** println
 __res = __builtin__println__int (__arg0)

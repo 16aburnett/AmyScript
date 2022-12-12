@@ -50,6 +50,12 @@ class Vector
         return this.data[--this.size];
     }
 
+    public method void clear ()
+    {
+        while (this.size > 0)
+            this.popBack ();
+    }
+
     public method T get (int index)
     {
         return this.data[index];

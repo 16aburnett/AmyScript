@@ -1,0 +1,140 @@
+
+//========================================================================
+
+template <:data_type:>
+class Node
+{
+    public field data_type data;
+    public field Node<:data_type:> prev; 
+    public field Node<:data_type:> next; 
+
+    constructor (data_type data, Node<:data_type:> prev, Node<:data_type:> next)
+    {
+        this.data = data;
+        this.prev = prev; 
+        this.next = next; 
+    }
+}
+
+//========================================================================
+
+template <:data_type:>
+class LinkedList 
+{
+    public field Node<:data_type:> header;
+    public field int  size; 
+
+    constructor () 
+    {
+        this.header = new Node<:data_type:> (data_type(), null, null);
+        this.header.next = this.header;
+        this.header.prev = this.header; 
+        
+        this.size = 0;
+    }
+
+    public method void pushBack (data_type val)
+    {
+        Node<:data_type:> tail = this.header.prev;
+        Node<:data_type:> node = new Node<:data_type:> (val, tail, this.header);
+        tail.next = node; 
+        this.header.prev = node; 
+
+        ++this.size;
+    }
+
+    public method void pushFront (data_type val)
+    {
+        Node<:data_type:> head = this.header.next;
+        Node<:data_type:> node = new Node<:data_type:> (val, this.header, head);
+        head.prev = node; 
+        this.header.next = node; 
+
+        ++this.size;
+    }
+
+    public method data_type popBack ()
+    {
+        if (this.size <= 0)
+            return data_type();
+        
+        Node<:data_type:> tail = this.header.prev;
+        tail.prev.next = this.header;
+        this.header.prev = tail.prev; 
+
+        --this.size; 
+
+        return tail.data; 
+
+    }
+
+    public method data_type popFront ()
+    {
+        if (this.size <= 0)
+            return data_type();
+
+        Node<:data_type:> head = this.header.next;
+        head.next.prev = this.header;
+        this.header.next = head.next; 
+
+        --this.size; 
+
+        return head.data; 
+    }
+
+    public method Node<:data_type:> begin ()
+    {
+        return this.header.next;
+    }
+
+    public method Node<:data_type:> end ()
+    {
+        return this.header;
+    }
+
+    public method Node<:data_type:> rbegin ()
+    {
+        return this.header.prev;
+    }
+
+    public method Node<:data_type:> rend ()
+    {
+        return this.header;
+    }
+
+    public method int isEmpty ()
+    {
+        return this.size == 0;
+    }
+
+}
+
+//========================================================================
+
+template <:T:>
+function void printForwards (LinkedList<:T:> list)
+{
+    print ("   Forwards: ");
+    for (Node<:T:> iter = list.begin (); iter != list.end (); iter = iter.next)
+    {
+        print (iter.data);
+        print (" -> ");
+    }
+    println ("");
+}
+
+//========================================================================
+
+template <:T:>
+function void printBackwards (LinkedList<:T:> list)
+{
+    print ("   Backwards: ");
+    for (Node<:T:> iter = list.rbegin (); iter != list.rend (); iter = iter.prev)
+    {
+        print (iter.data);
+        print (" <- ");
+    }
+    println ("");
+}
+
+//========================================================================

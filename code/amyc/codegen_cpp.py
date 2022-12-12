@@ -1,12 +1,12 @@
 # Amy Script Compiler - Code Generation
 # By Amy Burnett
-# April 11 2021
+# December 2022
 # ========================================================================
 
 import os 
 from sys import exit
 
-if __name__ == "codegen_python":
+if __name__ == "codegen_cpp":
     from amyAST import *
     from visitor import ASTVisitor
     from symbolTable import SymbolTable
@@ -20,11 +20,11 @@ else:
 DIVIDER_LENGTH = 75 
 TAB_LENGTH = 4
 
-LIB_FILENAME = os.path.dirname(__file__) + "/AmyScriptBuiltinLib_python.py"
+LIB_FILENAME = os.path.dirname(__file__) + "/AmyScriptBuiltinLib_cpp.cpp"
 
 # ========================================================================
 
-class CodeGenVisitor_python (ASTVisitor):
+class CodeGenVisitor_cpp (ASTVisitor):
 
     def __init__(self, lines):
         self.parameters = []
@@ -61,7 +61,7 @@ class CodeGenVisitor_python (ASTVisitor):
             return 
             
         self.printSpaces (self.indentation)
-        self.code += ["# ", comment, "\n"]
+        self.code += ["// ", comment, "\n"]
 
     def printHeader (self, header):
         if not self.shouldComment:
@@ -69,7 +69,7 @@ class CodeGenVisitor_python (ASTVisitor):
             
         self.printSpaces (self.indentation)
         dividerLength = DIVIDER_LENGTH - (self.indentation * TAB_LENGTH) - len (header) - 8
-        divider = ["#### "]
+        divider = ["//### "]
         divider += [header, " "]
         for i in range(dividerLength):
             divider += ["#"]
@@ -82,7 +82,7 @@ class CodeGenVisitor_python (ASTVisitor):
             
         self.printSpaces (self.indentation)
         dividerLength = DIVIDER_LENGTH - (self.indentation * TAB_LENGTH) - 3
-        divider = ["#="]
+        divider = ["//="]
         for i in range(dividerLength):
             divider += ["="]
         self.code += ["".join(divider)]
@@ -94,7 +94,7 @@ class CodeGenVisitor_python (ASTVisitor):
             
         self.printSpaces (self.indentation)
         dividerLength = DIVIDER_LENGTH - (self.indentation * TAB_LENGTH) - 3
-        divider = ["#-"]
+        divider = ["//-"]
         for i in range(dividerLength):
             divider += ["-"]
         self.code += ["".join(divider)]
@@ -113,7 +113,7 @@ class CodeGenVisitor_python (ASTVisitor):
 
     def visitProgramNode (self, node):
 
-        self.printComment ("Python compiled from AmyScript")
+        self.printComment ("Generated C++ code compiled from AmyScript")
         self.printDivider ()
         self.printNewline ()
 
@@ -1455,7 +1455,7 @@ class CodeGenVisitor_python (ASTVisitor):
 
     def visitStringLiteralExpressionNode (self, node):
         self.printComment ("String Literal")
-        self.printCode (f"stack.append({node.value}+'\\0')")
+        self.printCode (f"stack.append({node.value})")
 
     def visitListConstructorExpressionNode (self, node):
         self.printComment ("Array Constructor")
@@ -1473,16 +1473,18 @@ class CodeGenVisitor_python (ASTVisitor):
             # save element 
             elemName = f"__elem{elemIndex}"
             elemIndex -= 1
-            self.printCode (f"{elemName} = stack.pop ()")
+            self.printCode (f"POP {elemName}")
 
-        self.printCode (f"__list = [0] * {len(node.elems)}")
+        self.printCode (f"MALLOC __list {len(node.elems)}")
 
         # add elements to list in correct order
         for i in range(len(node.elems)):
-            self.printCode (f"__list[{i}] = __elem{i}")
+            self.printCode (f"ASSIGN __list[{i}] __elem{i}")
 
         # push array onto stack
-        self.printCode ("stack.append (__list)")
+        self.printCode ("PUSH __list")
+
+        self.indentation -= 1
         
 
     def visitNullExpressionNode (self, node):

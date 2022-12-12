@@ -33,6 +33,17 @@ function int strcmp (char[] a, char[] b)
     return 1;
 }
 
+function char[] substr (char[] a, int start, int end)
+{
+    char[] res = new char[end-start+1];
+    for (int i = 0; i < end-start; ++i)
+    {
+        res[i] = a[i+start];
+    }
+    res[end-start] = '\0';
+    return res;
+}
+
 //========================================================================
 
 // returns the first index that matches the given char
@@ -99,6 +110,50 @@ function Vector<:char[]:> split (char[] str, char delim)
 
 //========================================================================
 
+function int max (int a, int b)
+{
+    if (a >= b)
+        return a;
+    return b;
+}
+function float max (float a, float b)
+{
+    if (a >= b)
+        return a;
+    return b;
+}
+
+//========================================================================
+
+function int min (int a, int b)
+{
+    if (a <= b)
+        return a;
+    return b;
+}
+function float min (float a, float b)
+{
+    if (a <= b)
+        return a;
+    return b;
+}
+
+//========================================================================
+
+function int abs (int v)
+{
+    if (v < 0)
+        return -v;
+    return v;
+}
+function float abs (float v)
+{
+    if (v < 0.0)
+        return -v;
+    return v;
+}
+
+//========================================================================
 
 
 #endif

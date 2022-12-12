@@ -556,6 +556,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
 
         endLabel = f".__end{node.scopeName}"
         methodLabel = "."+node.scopeName
+        node.label = f".{node.scopeName}"
 
         # add jump to skip over function 
         self.printCode (f"jmp {endLabel}")
@@ -648,6 +649,7 @@ class CodeGenVisitor_x86 (ASTVisitor):
 
         endLabel = f".__end{node.scopeName}"
         ctorLabel = f".{node.scopeName}"
+        node.label = f".{node.scopeName}"
 
         # AD HOC CENTRAL!!
         # fill in prereferences with scopename 

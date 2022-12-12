@@ -1,0 +1,190 @@
+
+#include "Vector.amy"
+#include "algorithms.amy"
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+int OP_MUL = 0;
+int OP_ADD  = 1;
+int OP_SQUARE = 2;
+
+class Monkey
+{
+    public field Vector<:int:> items;
+    public field int op;
+    public field int operand;
+    public field int divisible_by;
+    public field int true_monkey_id;
+    public field int false_monkey_id;
+    public field int inspected_items;
+    constructor ()
+    {
+        this.items = new Vector<:int:> ();
+        this.op = 0;
+        this.operand = 0;
+        this.divisible_by = 0;
+        this.true_monkey_id = 0;
+        this.false_monkey_id = 0;
+        this.inspected_items = 0;
+    }
+}
+
+Vector<:Monkey:> monkeys = new Vector<:Monkey:> ();
+
+for (int l = 0; l < lines.size; l+=7)
+{
+    Monkey monkey = new Monkey ();
+
+    // parse items
+    char[] items_str = substr (lines.data[l+1], 17, strlen (lines.data[l+1]));
+    Vector<:char[]:> tokens0 = split (items_str, ' ');
+    //println<:char[]:> (tokens0);
+    for (int i = 0; i < tokens0.size; ++i)
+    {
+        // ignore comma or newline
+        char[] item_str = substr (tokens0.data[i], 0, strlen (tokens0.data[i])-1);
+        int item = stringToInt (item_str);
+        monkey.items.pushBack (item);
+        //println (item);
+        free (item_str);
+    }
+    for (int i = 0; i < tokens0.size; ++i)
+        free (tokens0.data[i]);
+    free (tokens0);
+    free (items_str);
+
+    // parse operator
+    // mul
+    if (first_index_of (lines.data[l+2], '*') != -1)
+    {
+        Vector<:char[]:> tokens1 = split (lines.data[l+2], ' ');
+        // old * old
+        if (tokens1.data[tokens1.size-1][0] == 'o')
+        {
+            monkey.op = OP_SQUARE;
+        }
+        else
+        {
+            monkey.op = OP_MUL;
+            monkey.operand = stringToInt (tokens1.data[tokens1.size-1]);
+        }
+        for (int j = 0; j < tokens1.size; ++j)
+            free (tokens1.data[j]);
+        free (tokens1);
+    }
+    // add
+    else
+    {
+        Vector<:char[]:> tokens1 = split (lines.data[l+2], ' ');
+        // old + old
+        if (tokens1.data[tokens1.size-1][0] == 'o')
+        {
+            // this does not happen
+            monkey.op = OP_SQUARE;
+        }
+        else
+        {
+            monkey.op = OP_ADD;
+            monkey.operand = stringToInt (tokens1.data[tokens1.size-1]);
+        }
+        for (int j = 0; j < tokens1.size; ++j)
+            free (tokens1.data[j]);
+        free (tokens1);
+    }
+
+    // parse divisible by
+    Vector<:char[]:> tokens2 = split (lines.data[l+3], ' ');
+    monkey.divisible_by = stringToInt (tokens2.data[tokens2.size-1]);
+    for (int j = 0; j < tokens2.size; ++j)
+        free (tokens2.data[j]);
+    free (tokens2);
+
+    // parse true
+    Vector<:char[]:> tokens3 = split (lines.data[l+4], ' ');
+    monkey.true_monkey_id = stringToInt (tokens3.data[tokens3.size-1]);
+    for (int j = 0; j < tokens3.size; ++j)
+        free (tokens3.data[j]);
+    free (tokens3);
+
+    // parse false
+    Vector<:char[]:> tokens4 = split (lines.data[l+5], ' ');
+    monkey.false_monkey_id = stringToInt (tokens4.data[tokens4.size-1]);
+    for (int j = 0; j < tokens4.size; ++j)
+        free (tokens4.data[j]);
+    free (tokens4);
+
+    monkeys.pushBack (monkey);
+
+}
+
+function void println (Vector<:Monkey:> monkeys)
+{
+    for (int i = 0; i < monkeys.size; ++i)
+    {
+        print (i); print (':');
+        println<:int:> (monkeys.data[i].items);
+    }
+}
+//println (monkeys);
+
+
+for (int r = 0; r < 20; ++r)
+{
+    //println (r);
+    //println (monkeys);
+
+    for (int m = 0; m < monkeys.size; ++m)
+    {
+        Monkey monkey = monkeys.data[m];
+        Vector<:int:> monkey_items = monkey.items;
+        //println (m);
+        for (int i = 0; i < monkey_items.size; ++i)
+        {
+            int worry_level = monkey_items.data[i];
+            //print ('\t'); println (worry_level);
+            
+            // apply operator
+            if (monkey.op == OP_ADD)
+                worry_level += monkey.operand;
+            elif (monkey.op == OP_MUL)
+                worry_level *= monkey.operand;
+            else
+                worry_level *= worry_level;
+
+            // decrease worry by 3
+            worry_level = worry_level / 3;
+
+            // check if worry level is divisible by __
+            if (worry_level % monkey.divisible_by == 0)
+                monkeys.data[monkey.true_monkey_id].items.pushBack (worry_level);
+            else
+                monkeys.data[monkey.false_monkey_id].items.pushBack (worry_level);
+
+            monkey.inspected_items += 1;
+        }
+
+        // we are done with this monkey's items
+        monkey_items.clear ();
+    }
+
+}
+
+//println (monkeys);
+
+int firstmax = 0;
+int secondmax = 0;
+
+for (int i = 0; i < monkeys.size; ++i)
+    firstmax = max (monkeys.data[i].inspected_items, firstmax);
+    
+for (int i = 0; i < monkeys.size; ++i)
+    if (monkeys.data[i].inspected_items != firstmax)
+        secondmax = max (monkeys.data[i].inspected_items, secondmax);
+
+println (firstmax * secondmax);

@@ -11,27 +11,6 @@ while (line != null)
     line = input();
 }
 
-function int max (int a, int b)
-{
-    if (a >= b)
-        return a;
-    return b;
-}
-
-function int min (int a, int b)
-{
-    if (a <= b)
-        return a;
-    return b;
-}
-
-function int abs (int v)
-{
-    if (v < 0)
-        return -v;
-    return v;
-}
-
 function int manhattan (int ax, int ay, int bx, int by)
 {
     return abs (ax - bx) + abs (ay - by);
@@ -72,8 +51,8 @@ for (int i = 0; i < lines.size; ++i)
     Vector<:char[]:> tokens = split (line, ' ');
     int amt = stringToInt (tokens.data[1]);
 
-    print ('('); print (i); print ('/'); print (lines.size); print (')'); print (' ');
-    println (tokens.data[0]);
+    //print ('('); print (i); print ('/'); print (lines.size); print (')'); print (' ');
+    //println (tokens.data[0]);
 
     for (int j = 0; j < amt; ++j)
     {  
@@ -183,6 +162,8 @@ for (int i = 0; i < lines.size; ++i)
         }
 
         // save new tail position
+        // the tail moves a lot less
+        // so this is less of a performance hit
         if (tail_moved)
         {
             // ensure it does not already exist

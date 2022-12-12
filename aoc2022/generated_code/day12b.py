@@ -3686,6 +3686,188 @@ __dtable____main____Vec = []
 #=========================================================================
 
 #=========================================================================
+# Function Declaration - print(Vec) -> void
+def __main____print__Vec (__main__print__p):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Function Call - print(char) -> void
+    # Arguments
+    # Char Literal
+    stack.append('(')
+    __arg0 = stack.pop ()
+    # *** print
+    __res = __builtin__print__char (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Function Call - print(int) -> void
+    # Arguments
+    # Member Accessor
+    # LHS
+    stack.append(__main__print__p)
+    # RHS
+    stack.append (__field____main____Vec____i)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __arg0 = stack.pop ()
+    # *** print
+    __res = __builtin__print__int (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Function Call - print(char) -> void
+    # Arguments
+    # Char Literal
+    stack.append(',')
+    __arg0 = stack.pop ()
+    # *** print
+    __res = __builtin__print__char (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Function Call - print(char) -> void
+    # Arguments
+    # Char Literal
+    stack.append(' ')
+    __arg0 = stack.pop ()
+    # *** print
+    __res = __builtin__print__char (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Function Call - print(int) -> void
+    # Arguments
+    # Member Accessor
+    # LHS
+    stack.append(__main__print__p)
+    # RHS
+    stack.append (__field____main____Vec____j)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __arg0 = stack.pop ()
+    # *** print
+    __res = __builtin__print__int (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Function Call - print(char) -> void
+    # Arguments
+    # Char Literal
+    stack.append(')')
+    __arg0 = stack.pop ()
+    # *** print
+    __res = __builtin__print__char (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+# End Function Declaration - __main____print__Vec
+#=========================================================================
+
+#=========================================================================
+# Function Declaration - println(Vec) -> void
+def __main____println__Vec (__main__println__p):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Function Call - print(Vec) -> void
+    # Arguments
+    stack.append(__main__println__p)
+    __arg0 = stack.pop ()
+    # *** print
+    __res = __main____print__Vec (__arg0)
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    # Function Call - println() -> void
+    # Arguments
+    # *** println
+    __res = __builtin__println ()
+    stack.append (__res) # function call result
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+# End Function Declaration - __main____println__Vec
+#=========================================================================
+
+#=========================================================================
+# Function Declaration - manhattan(int, int, int, int) -> int
+def __main____manhattan__int__int__int__int (__main__manhattan__ax, __main__manhattan__ay, __main__manhattan__bx, __main__manhattan__by):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Return
+    # Addition
+    # LHS
+    # Function Call - abs(int) -> int
+    # Arguments
+    # Subtraction
+    # LHS
+    stack.append(__main__manhattan__ax)
+    # RHS
+    stack.append(__main__manhattan__bx)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs - __rhs
+    stack.append(__res)
+    __arg0 = stack.pop ()
+    # *** abs
+    __res = __main____abs__int (__arg0)
+    stack.append (__res) # function call result
+    # RHS
+    # Function Call - abs(int) -> int
+    # Arguments
+    # Subtraction
+    # LHS
+    stack.append(__main__manhattan__ay)
+    # RHS
+    stack.append(__main__manhattan__by)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs - __rhs
+    stack.append(__res)
+    __arg0 = stack.pop ()
+    # *** abs
+    __res = __main____abs__int (__arg0)
+    stack.append (__res) # function call result
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
+    __rVal = stack.pop ()
+    return __rVal
+    #---------------------------------------------------------------------
+# End Function Declaration - __main____manhattan__int__int__int__int
+#=========================================================================
+
+#=========================================================================
 # Class Template - 
 #=========================================================================
 # Class Declaration - __main____Node__Vec inherits __builtin____main__Object
@@ -3959,10 +4141,10 @@ def __method____main____LinkedList__Vec____pushBack__Vec (this, __main____Linked
     __parent = stack.pop ()
     stack.append (__parent[__child])
     # LHS
-    __main____LinkedList__Vec__pushBack__block__80__tail = 0
+    __main____LinkedList__Vec__pushBack__block__83__tail = 0
     __rhs = stack.pop()
-    __main____LinkedList__Vec__pushBack__block__80__tail = __rhs
-    stack.append (__main____LinkedList__Vec__pushBack__block__80__tail)
+    __main____LinkedList__Vec__pushBack__block__83__tail = __rhs
+    stack.append (__main____LinkedList__Vec__pushBack__block__83__tail)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -3973,7 +4155,7 @@ def __method____main____LinkedList__Vec____pushBack__Vec (this, __main____Linked
     # Constructor Call - Node<:Vec:>::Node(Vec, Node<:Vec:>, Node<:Vec:>) -> Node<:Vec:>
     # Arguments
     stack.append(__main____LinkedList__Vec__pushBack__val)
-    stack.append(__main____LinkedList__Vec__pushBack__block__80__tail)
+    stack.append(__main____LinkedList__Vec__pushBack__block__83__tail)
     # Member Accessor
     # LHS
     stack.append(this)
@@ -3988,10 +4170,10 @@ def __method____main____LinkedList__Vec____pushBack__Vec (this, __main____Linked
     __retval = __ctor____main____Node__Vec____Node__Vec__Node__Node (__arg0, __arg1, __arg2)
     stack.append (__retval)
     # LHS
-    __main____LinkedList__Vec__pushBack__block__80__node = 0
+    __main____LinkedList__Vec__pushBack__block__83__node = 0
     __rhs = stack.pop()
-    __main____LinkedList__Vec__pushBack__block__80__node = __rhs
-    stack.append (__main____LinkedList__Vec__pushBack__block__80__node)
+    __main____LinkedList__Vec__pushBack__block__83__node = __rhs
+    stack.append (__main____LinkedList__Vec__pushBack__block__83__node)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -3999,11 +4181,11 @@ def __method____main____LinkedList__Vec____pushBack__Vec (this, __main____Linked
     # Statement
     # Assignment - '='
     # RHS
-    stack.append(__main____LinkedList__Vec__pushBack__block__80__node)
+    stack.append(__main____LinkedList__Vec__pushBack__block__83__node)
     # LHS
     # Member Accessor Assignment
     # LHS
-    stack.append(__main____LinkedList__Vec__pushBack__block__80__tail)
+    stack.append(__main____LinkedList__Vec__pushBack__block__83__tail)
     # RHS
     stack.append(__field____main____Node__Vec____next)
     __child = stack.pop()
@@ -4018,7 +4200,7 @@ def __method____main____LinkedList__Vec____pushBack__Vec (this, __main____Linked
     # Statement
     # Assignment - '='
     # RHS
-    stack.append(__main____LinkedList__Vec__pushBack__block__80__node)
+    stack.append(__main____LinkedList__Vec__pushBack__block__83__node)
     # LHS
     # Member Accessor Assignment
     # LHS
@@ -4098,10 +4280,10 @@ def __method____main____LinkedList__Vec____pushFront__Vec (this, __main____Linke
     __parent = stack.pop ()
     stack.append (__parent[__child])
     # LHS
-    __main____LinkedList__Vec__pushFront__block__81__head = 0
+    __main____LinkedList__Vec__pushFront__block__84__head = 0
     __rhs = stack.pop()
-    __main____LinkedList__Vec__pushFront__block__81__head = __rhs
-    stack.append (__main____LinkedList__Vec__pushFront__block__81__head)
+    __main____LinkedList__Vec__pushFront__block__84__head = __rhs
+    stack.append (__main____LinkedList__Vec__pushFront__block__84__head)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -4120,17 +4302,17 @@ def __method____main____LinkedList__Vec____pushFront__Vec (this, __main____Linke
     __child = stack.pop ()
     __parent = stack.pop ()
     stack.append (__parent[__child])
-    stack.append(__main____LinkedList__Vec__pushFront__block__81__head)
+    stack.append(__main____LinkedList__Vec__pushFront__block__84__head)
     __arg2 = stack.pop ()
     __arg1 = stack.pop ()
     __arg0 = stack.pop ()
     __retval = __ctor____main____Node__Vec____Node__Vec__Node__Node (__arg0, __arg1, __arg2)
     stack.append (__retval)
     # LHS
-    __main____LinkedList__Vec__pushFront__block__81__node = 0
+    __main____LinkedList__Vec__pushFront__block__84__node = 0
     __rhs = stack.pop()
-    __main____LinkedList__Vec__pushFront__block__81__node = __rhs
-    stack.append (__main____LinkedList__Vec__pushFront__block__81__node)
+    __main____LinkedList__Vec__pushFront__block__84__node = __rhs
+    stack.append (__main____LinkedList__Vec__pushFront__block__84__node)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -4138,11 +4320,11 @@ def __method____main____LinkedList__Vec____pushFront__Vec (this, __main____Linke
     # Statement
     # Assignment - '='
     # RHS
-    stack.append(__main____LinkedList__Vec__pushFront__block__81__node)
+    stack.append(__main____LinkedList__Vec__pushFront__block__84__node)
     # LHS
     # Member Accessor Assignment
     # LHS
-    stack.append(__main____LinkedList__Vec__pushFront__block__81__head)
+    stack.append(__main____LinkedList__Vec__pushFront__block__84__head)
     # RHS
     stack.append(__field____main____Node__Vec____prev)
     __child = stack.pop()
@@ -4157,7 +4339,7 @@ def __method____main____LinkedList__Vec____pushFront__Vec (this, __main____Linke
     # Statement
     # Assignment - '='
     # RHS
-    stack.append(__main____LinkedList__Vec__pushFront__block__81__node)
+    stack.append(__main____LinkedList__Vec__pushFront__block__84__node)
     # LHS
     # Member Accessor Assignment
     # LHS
@@ -4240,9 +4422,9 @@ def __method____main____LinkedList__Vec____popBack (this):
     __lhs = stack.pop ()
     __res = __lhs <= __rhs
     stack.append (__res)
-    __if__83__cond = stack.pop ()
+    __if__86__cond = stack.pop ()
     # get condition from stack
-    if (__if__83__cond):
+    if (__if__86__cond):
         # Body
         # Return
         # Function Call - Vec::Vec() -> Vec
@@ -4273,10 +4455,10 @@ def __method____main____LinkedList__Vec____popBack (this):
     __parent = stack.pop ()
     stack.append (__parent[__child])
     # LHS
-    __main____LinkedList__Vec__popBack__block__82__tail = 0
+    __main____LinkedList__Vec__popBack__block__85__tail = 0
     __rhs = stack.pop()
-    __main____LinkedList__Vec__popBack__block__82__tail = __rhs
-    stack.append (__main____LinkedList__Vec__popBack__block__82__tail)
+    __main____LinkedList__Vec__popBack__block__85__tail = __rhs
+    stack.append (__main____LinkedList__Vec__popBack__block__85__tail)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -4297,7 +4479,7 @@ def __method____main____LinkedList__Vec____popBack (this):
     # LHS
     # Member Accessor
     # LHS
-    stack.append(__main____LinkedList__Vec__popBack__block__82__tail)
+    stack.append(__main____LinkedList__Vec__popBack__block__85__tail)
     # RHS
     stack.append (__field____main____Node__Vec____prev)
     __child = stack.pop ()
@@ -4319,7 +4501,7 @@ def __method____main____LinkedList__Vec____popBack (this):
     # RHS
     # Member Accessor
     # LHS
-    stack.append(__main____LinkedList__Vec__popBack__block__82__tail)
+    stack.append(__main____LinkedList__Vec__popBack__block__85__tail)
     # RHS
     stack.append (__field____main____Node__Vec____prev)
     __child = stack.pop ()
@@ -4377,7 +4559,7 @@ def __method____main____LinkedList__Vec____popBack (this):
     # Return
     # Member Accessor
     # LHS
-    stack.append(__main____LinkedList__Vec__popBack__block__82__tail)
+    stack.append(__main____LinkedList__Vec__popBack__block__85__tail)
     # RHS
     stack.append (__field____main____Node__Vec____data)
     __child = stack.pop ()
@@ -4418,9 +4600,9 @@ def __method____main____LinkedList__Vec____popFront (this):
     __lhs = stack.pop ()
     __res = __lhs <= __rhs
     stack.append (__res)
-    __if__85__cond = stack.pop ()
+    __if__88__cond = stack.pop ()
     # get condition from stack
-    if (__if__85__cond):
+    if (__if__88__cond):
         # Body
         # Return
         # Function Call - Vec::Vec() -> Vec
@@ -4451,10 +4633,10 @@ def __method____main____LinkedList__Vec____popFront (this):
     __parent = stack.pop ()
     stack.append (__parent[__child])
     # LHS
-    __main____LinkedList__Vec__popFront__block__84__head = 0
+    __main____LinkedList__Vec__popFront__block__87__head = 0
     __rhs = stack.pop()
-    __main____LinkedList__Vec__popFront__block__84__head = __rhs
-    stack.append (__main____LinkedList__Vec__popFront__block__84__head)
+    __main____LinkedList__Vec__popFront__block__87__head = __rhs
+    stack.append (__main____LinkedList__Vec__popFront__block__87__head)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -4475,7 +4657,7 @@ def __method____main____LinkedList__Vec____popFront (this):
     # LHS
     # Member Accessor
     # LHS
-    stack.append(__main____LinkedList__Vec__popFront__block__84__head)
+    stack.append(__main____LinkedList__Vec__popFront__block__87__head)
     # RHS
     stack.append (__field____main____Node__Vec____next)
     __child = stack.pop ()
@@ -4497,7 +4679,7 @@ def __method____main____LinkedList__Vec____popFront (this):
     # RHS
     # Member Accessor
     # LHS
-    stack.append(__main____LinkedList__Vec__popFront__block__84__head)
+    stack.append(__main____LinkedList__Vec__popFront__block__87__head)
     # RHS
     stack.append (__field____main____Node__Vec____next)
     __child = stack.pop ()
@@ -4555,7 +4737,7 @@ def __method____main____LinkedList__Vec____popFront (this):
     # Return
     # Member Accessor
     # LHS
-    stack.append(__main____LinkedList__Vec__popFront__block__84__head)
+    stack.append(__main____LinkedList__Vec__popFront__block__87__head)
     # RHS
     stack.append (__field____main____Node__Vec____data)
     __child = stack.pop ()
@@ -4719,138 +4901,6 @@ __dtable____main____LinkedList__Vec = [__method____main____LinkedList__Vec____pu
 # End Function Template - 
 #=========================================================================
 
-#=========================================================================
-# Function Declaration - print(Vec) -> void
-def __main____print__Vec (__main__print__p):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Function Call - print(char) -> void
-    # Arguments
-    # Char Literal
-    stack.append('(')
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__char (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - print(int) -> void
-    # Arguments
-    # Member Accessor
-    # LHS
-    stack.append(__main__print__p)
-    # RHS
-    stack.append (__field____main____Vec____i)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__int (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - print(char) -> void
-    # Arguments
-    # Char Literal
-    stack.append(',')
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__char (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - print(char) -> void
-    # Arguments
-    # Char Literal
-    stack.append(' ')
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__char (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - print(int) -> void
-    # Arguments
-    # Member Accessor
-    # LHS
-    stack.append(__main__print__p)
-    # RHS
-    stack.append (__field____main____Vec____j)
-    __child = stack.pop ()
-    __parent = stack.pop ()
-    stack.append (__parent[__child])
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__int (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - print(char) -> void
-    # Arguments
-    # Char Literal
-    stack.append(')')
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __builtin__print__char (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-# End Function Declaration - __main____print__Vec
-#=========================================================================
-
-#=========================================================================
-# Function Declaration - println(Vec) -> void
-def __main____println__Vec (__main__println__p):
-    # Body
-    #---------------------------------------------------------------------
-    # Code Block
-    # Statement
-    # Function Call - print(Vec) -> void
-    # Arguments
-    stack.append(__main__println__p)
-    __arg0 = stack.pop ()
-    # *** print
-    __res = __main____print__Vec (__arg0)
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    # Statement
-    # Function Call - println() -> void
-    # Arguments
-    # *** println
-    __res = __builtin__println ()
-    stack.append (__res) # function call result
-    # Statement results can be ignored
-    stack.pop ()
-    # End Statement
-
-    #---------------------------------------------------------------------
-# End Function Declaration - __main____println__Vec
-#=========================================================================
-
 # Statement
 # Assignment - '='
 # RHS
@@ -4941,6 +4991,22 @@ stack.append (__main__end_pos)
 stack.pop ()
 # End Statement
 
+# Statement
+# Assignment - '='
+# RHS
+# Constructor Call - LinkedList<:Vec:>::LinkedList() -> LinkedList<:Vec:>
+# Arguments
+__retval = __ctor____main____LinkedList__Vec____LinkedList ()
+stack.append (__retval)
+# LHS
+__main__starting_positions = 0
+__rhs = stack.pop()
+__main__starting_positions = __rhs
+stack.append (__main__starting_positions)
+# Statement results can be ignored
+stack.pop ()
+# End Statement
+
 #-------------------------------------------------------------------------
 # For-Loop
 # Init
@@ -4949,16 +5015,16 @@ stack.pop ()
 # Int Literal
 stack.append(0)
 # LHS
-__main__for__93__l = 0
+__main__for__94__l = 0
 __rhs = stack.pop()
-__main__for__93__l = __rhs
-stack.append (__main__for__93__l)
+__main__for__94__l = __rhs
+stack.append (__main__for__94__l)
 # Using an infinite loop so we can write a separate multi-line condition
 while (1):
     # Condition
     # Less Than
     # LHS
-    stack.append(__main__for__93__l)
+    stack.append(__main__for__94__l)
     # RHS
     # Member Accessor
     # LHS
@@ -5032,7 +5098,7 @@ while (1):
     __parent = stack.pop ()
     stack.append (__parent[__child])
     # OFFSET
-    stack.append(__main__for__93__l)
+    stack.append(__main__for__94__l)
     __offset = stack.pop ()
     __pointer = stack.pop ()
     stack.append (__pointer[__offset])
@@ -5048,10 +5114,10 @@ while (1):
     __res = __lhs - __rhs
     stack.append(__res)
     # LHS
-    __main__for__93__block__94__size = 0
+    __main__for__94__block__95__size = 0
     __rhs = stack.pop()
-    __main__for__93__block__94__size = __rhs
-    stack.append (__main__for__93__block__94__size)
+    __main__for__94__block__95__size = __rhs
+    stack.append (__main__for__94__block__95__size)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -5064,18 +5130,18 @@ while (1):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__for__93__block__94__for__95__c = 0
+    __main__for__94__block__95__for__96__c = 0
     __rhs = stack.pop()
-    __main__for__93__block__94__for__95__c = __rhs
-    stack.append (__main__for__93__block__94__for__95__c)
+    __main__for__94__block__95__for__96__c = __rhs
+    stack.append (__main__for__94__block__95__for__96__c)
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__for__93__block__94__for__95__c)
+        stack.append(__main__for__94__block__95__for__96__c)
         # RHS
-        stack.append(__main__for__93__block__94__size)
+        stack.append(__main__for__94__block__95__size)
         __rhs = stack.pop ()
         __lhs = stack.pop ()
         __res = __lhs < __rhs
@@ -5105,12 +5171,12 @@ while (1):
         __parent = stack.pop ()
         stack.append (__parent[__child])
         # OFFSET
-        stack.append(__main__for__93__l)
+        stack.append(__main__for__94__l)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
         # OFFSET
-        stack.append(__main__for__93__block__94__for__95__c)
+        stack.append(__main__for__94__block__95__for__96__c)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -5120,10 +5186,10 @@ while (1):
         __res = __main____first_index_of__char__1__char (__arg0, __arg1)
         stack.append (__res) # function call result
         # LHS
-        __main__for__93__block__94__for__95__block__96__val = 0
+        __main__for__94__block__95__for__96__block__97__val = 0
         __rhs = stack.pop()
-        __main__for__93__block__94__for__95__block__96__val = __rhs
-        stack.append (__main__for__93__block__94__for__95__block__96__val)
+        __main__for__94__block__95__for__96__block__97__val = __rhs
+        stack.append (__main__for__94__block__95__for__96__block__97__val)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
@@ -5135,7 +5201,7 @@ while (1):
         # Condition
         # Equal
         # LHS
-        stack.append(__main__for__93__block__94__for__95__block__96__val)
+        stack.append(__main__for__94__block__95__for__96__block__97__val)
         # RHS
         # Int Literal
         stack.append(26)
@@ -5143,11 +5209,11 @@ while (1):
         __lhs = stack.pop ()
         __res = __lhs == __rhs
         stack.append (__res)
-        __if__97__cond = stack.pop ()
+        __if__98__cond = stack.pop ()
         # Condition for elif #0
         # Equal
         # LHS
-        stack.append(__main__for__93__block__94__for__95__block__96__val)
+        stack.append(__main__for__94__block__95__for__96__block__97__val)
         # RHS
         # Int Literal
         stack.append(27)
@@ -5155,9 +5221,9 @@ while (1):
         __lhs = stack.pop ()
         __res = __lhs == __rhs
         stack.append (__res)
-        __elif__97x0__cond = stack.pop ()
+        __elif__98x0__cond = stack.pop ()
         # get condition from stack
-        if (__if__97__cond):
+        if (__if__98__cond):
             # Body
             #-------------------------------------------------------------
             # Code Block
@@ -5167,8 +5233,8 @@ while (1):
             # Int Literal
             stack.append(0)
             __rhs = stack.pop()
-            __main__for__93__block__94__for__95__block__96__val = __rhs
-            stack.append (__main__for__93__block__94__for__95__block__96__val)
+            __main__for__94__block__95__for__96__block__97__val = __rhs
+            stack.append (__main__for__94__block__95__for__96__block__97__val)
             # Statement results can be ignored
             stack.pop ()
             # End Statement
@@ -5176,7 +5242,7 @@ while (1):
             # Statement
             # Assignment - '='
             # RHS
-            stack.append(__main__for__93__l)
+            stack.append(__main__for__94__l)
             # LHS
             # Member Accessor Assignment
             # LHS
@@ -5195,7 +5261,7 @@ while (1):
             # Statement
             # Assignment - '='
             # RHS
-            stack.append(__main__for__93__block__94__for__95__c)
+            stack.append(__main__for__94__block__95__for__96__c)
             # LHS
             # Member Accessor Assignment
             # LHS
@@ -5215,7 +5281,7 @@ while (1):
         #-----------------------------------------------------------------
         # Elif-Statement
         # Condition
-        elif (__elif__97x0__cond):
+        elif (__elif__98x0__cond):
             # Body
             #-------------------------------------------------------------
             # Code Block
@@ -5225,8 +5291,8 @@ while (1):
             # Int Literal
             stack.append(25)
             __rhs = stack.pop()
-            __main__for__93__block__94__for__95__block__96__val = __rhs
-            stack.append (__main__for__93__block__94__for__95__block__96__val)
+            __main__for__94__block__95__for__96__block__97__val = __rhs
+            stack.append (__main__for__94__block__95__for__96__block__97__val)
             # Statement results can be ignored
             stack.pop ()
             # End Statement
@@ -5234,7 +5300,7 @@ while (1):
             # Statement
             # Assignment - '='
             # RHS
-            stack.append(__main__for__93__l)
+            stack.append(__main__for__94__l)
             # LHS
             # Member Accessor Assignment
             # LHS
@@ -5253,7 +5319,7 @@ while (1):
             # Statement
             # Assignment - '='
             # RHS
-            stack.append(__main__for__93__block__94__for__95__c)
+            stack.append(__main__for__94__block__95__for__96__c)
             # LHS
             # Member Accessor Assignment
             # LHS
@@ -5273,6 +5339,52 @@ while (1):
         #-----------------------------------------------------------------
         # End of if
         #-----------------------------------------------------------------
+        #-----------------------------------------------------------------
+        # If-Statement
+        # Precomputing all if/elif conditions and give unique names
+        # bc we can't have code between if and elif
+        # Condition
+        # Equal
+        # LHS
+        stack.append(__main__for__94__block__95__for__96__block__97__val)
+        # RHS
+        # Int Literal
+        stack.append(0)
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs == __rhs
+        stack.append (__res)
+        __if__101__cond = stack.pop ()
+        # get condition from stack
+        if (__if__101__cond):
+            # Body
+            #-------------------------------------------------------------
+            # Code Block
+            # Statement
+            # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
+            # LHS
+            stack.append(__main__starting_positions)
+            # RHS
+            # Arguments
+            # Constructor Call - Vec::Vec(int, int) -> Vec
+            # Arguments
+            stack.append(__main__for__94__l)
+            stack.append(__main__for__94__block__95__for__96__c)
+            __arg1 = stack.pop ()
+            __arg0 = stack.pop ()
+            __retval = __ctor____main____Vec____Vec__int__int (__arg0, __arg1)
+            stack.append (__retval)
+            __arg0 = stack.pop ()
+            __obj = stack.pop ()
+            __retval = __method____main____LinkedList__Vec____pushBack__Vec (__obj, __arg0)
+            stack.append (__retval)
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
+            #-------------------------------------------------------------
+        # End of if
+        #-----------------------------------------------------------------
         # Statement
         # Method Call - Vector<:int:>::pushBack(int) -> void
         # LHS
@@ -5287,13 +5399,13 @@ while (1):
         __parent = stack.pop ()
         stack.append (__parent[__child])
         # OFFSET
-        stack.append(__main__for__93__l)
+        stack.append(__main__for__94__l)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
         # RHS
         # Arguments
-        stack.append(__main__for__93__block__94__for__95__block__96__val)
+        stack.append(__main__for__94__block__95__for__96__block__97__val)
         __arg0 = stack.pop ()
         __obj = stack.pop ()
         __retval = __method____main____Vector__int____pushBack__int (__obj, __arg0)
@@ -5316,7 +5428,7 @@ while (1):
         __parent = stack.pop ()
         stack.append (__parent[__child])
         # OFFSET
-        stack.append(__main__for__93__l)
+        stack.append(__main__for__94__l)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -5341,10 +5453,10 @@ while (1):
         # Update
         # Pre-Increment
         # RHS
-        stack.append(__main__for__93__block__94__for__95__c)
+        stack.append(__main__for__94__block__95__for__96__c)
         __rhs = stack.pop ()
-        __main__for__93__block__94__for__95__c = __main__for__93__block__94__for__95__c + 1
-        __res = __main__for__93__block__94__for__95__c
+        __main__for__94__block__95__for__96__c = __main__for__94__block__95__for__96__c + 1
+        __res = __main__for__94__block__95__for__96__c
         stack.append (__res)
     #---------------------------------------------------------------------
     #---------------------------------------------------------------------
@@ -5354,8 +5466,8 @@ while (1):
     # Int Literal
     stack.append(1)
     __rhs = stack.pop()
-    __main__for__93__l = __main__for__93__l + __rhs
-    stack.append (__main__for__93__l)
+    __main__for__94__l = __main__for__94__l + __rhs
+    stack.append (__main__for__94__l)
 #-------------------------------------------------------------------------
 #=========================================================================
 # Function Declaration - bfs(Vector<:Vector<:int:>:>, Vector<:Vector<:int:>:>, Vec, Vec) -> int
@@ -5371,10 +5483,10 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
     __retval = __ctor____main____LinkedList__Vec____LinkedList ()
     stack.append (__retval)
     # LHS
-    __main__bfs__block__100__frontier = 0
+    __main__bfs__block__103__frontier = 0
     __rhs = stack.pop()
-    __main__bfs__block__100__frontier = __rhs
-    stack.append (__main__bfs__block__100__frontier)
+    __main__bfs__block__103__frontier = __rhs
+    stack.append (__main__bfs__block__103__frontier)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -5382,7 +5494,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
     # Statement
     # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
     # LHS
-    stack.append(__main__bfs__block__100__frontier)
+    stack.append(__main__bfs__block__103__frontier)
     # RHS
     # Arguments
     # Constructor Call - Vec::Vec(int, int, int) -> Vec
@@ -5427,7 +5539,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # RHS
         # Method Call - LinkedList<:Vec:>::isEmpty() -> int
         # LHS
-        stack.append(__main__bfs__block__100__frontier)
+        stack.append(__main__bfs__block__103__frontier)
         # RHS
         # Arguments
         __obj = stack.pop ()
@@ -5447,17 +5559,17 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # RHS
         # Method Call - LinkedList<:Vec:>::popFront() -> Vec
         # LHS
-        stack.append(__main__bfs__block__100__frontier)
+        stack.append(__main__bfs__block__103__frontier)
         # RHS
         # Arguments
         __obj = stack.pop ()
         __retval = __method____main____LinkedList__Vec____popFront (__obj)
         stack.append (__retval)
         # LHS
-        __main__bfs__block__100__while__101__block__102__pos = 0
+        __main__bfs__block__103__while__104__block__105__pos = 0
         __rhs = stack.pop()
-        __main__bfs__block__100__while__101__block__102__pos = __rhs
-        stack.append (__main__bfs__block__100__while__101__block__102__pos)
+        __main__bfs__block__103__while__104__block__105__pos = __rhs
+        stack.append (__main__bfs__block__103__while__104__block__105__pos)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
@@ -5486,7 +5598,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # OFFSET
         # Member Accessor
         # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__bfs__block__103__while__104__block__105__pos)
         # RHS
         stack.append (__field____main____Vec____i)
         __child = stack.pop ()
@@ -5503,7 +5615,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # OFFSET
         # Member Accessor
         # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__bfs__block__103__while__104__block__105__pos)
         # RHS
         stack.append (__field____main____Vec____j)
         __child = stack.pop ()
@@ -5524,13 +5636,13 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         __lhs = stack.pop ()
         __res = __lhs != __rhs
         stack.append (__res)
-        __if__103__cond = stack.pop ()
+        __if__106__cond = stack.pop ()
         # get condition from stack
-        if (__if__103__cond):
+        if (__if__106__cond):
             # Body
             #-------------------------------------------------------------
             # Code Block
-            # Continue in __while__101
+            # Continue in __while__104
             continue
             #-------------------------------------------------------------
         # End of if
@@ -5540,7 +5652,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # RHS
         # Member Accessor
         # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__bfs__block__103__while__104__block__105__pos)
         # RHS
         stack.append (__field____main____Vec____time)
         __child = stack.pop ()
@@ -5564,7 +5676,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # OFFSET
         # Member Accessor
         # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__bfs__block__103__while__104__block__105__pos)
         # RHS
         stack.append (__field____main____Vec____i)
         __child = stack.pop ()
@@ -5581,7 +5693,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # OFFSET
         # Member Accessor
         # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__bfs__block__103__while__104__block__105__pos)
         # RHS
         stack.append (__field____main____Vec____j)
         __child = stack.pop ()
@@ -5607,7 +5719,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # LHS
         # Member Accessor
         # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__bfs__block__103__while__104__block__105__pos)
         # RHS
         stack.append (__field____main____Vec____i)
         __child = stack.pop ()
@@ -5627,9 +5739,9 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         __lhs = stack.pop ()
         __res = __lhs >= __rhs
         stack.append (__res)
-        __if__105__cond = stack.pop ()
+        __if__108__cond = stack.pop ()
         # get condition from stack
-        if (__if__105__cond):
+        if (__if__108__cond):
             # Body
             #-------------------------------------------------------------
             # If-Statement
@@ -5659,7 +5771,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # LHS
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____i)
             __child = stack.pop ()
@@ -5683,7 +5795,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____j)
             __child = stack.pop ()
@@ -5710,7 +5822,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____i)
             __child = stack.pop ()
@@ -5727,7 +5839,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____j)
             __child = stack.pop ()
@@ -5747,14 +5859,14 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             __lhs = stack.pop ()
             __res = __lhs <= __rhs
             stack.append (__res)
-            __if__106__cond = stack.pop ()
+            __if__109__cond = stack.pop ()
             # get condition from stack
-            if (__if__106__cond):
+            if (__if__109__cond):
                 # Body
                 # Statement
                 # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
                 # LHS
-                stack.append(__main__bfs__block__100__frontier)
+                stack.append(__main__bfs__block__103__frontier)
                 # RHS
                 # Arguments
                 # Constructor Call - Vec::Vec(int, int, int) -> Vec
@@ -5763,7 +5875,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
                 # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____i)
                 __child = stack.pop ()
@@ -5778,7 +5890,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
                 stack.append(__res)
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____j)
                 __child = stack.pop ()
@@ -5788,7 +5900,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
                 # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____time)
                 __child = stack.pop ()
@@ -5829,7 +5941,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # LHS
         # Member Accessor
         # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__bfs__block__103__while__104__block__105__pos)
         # RHS
         stack.append (__field____main____Vec____j)
         __child = stack.pop ()
@@ -5870,9 +5982,9 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         __lhs = stack.pop ()
         __res = __lhs < __rhs
         stack.append (__res)
-        __if__107__cond = stack.pop ()
+        __if__110__cond = stack.pop ()
         # get condition from stack
-        if (__if__107__cond):
+        if (__if__110__cond):
             # Body
             #-------------------------------------------------------------
             # If-Statement
@@ -5900,7 +6012,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____i)
             __child = stack.pop ()
@@ -5919,7 +6031,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # LHS
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____j)
             __child = stack.pop ()
@@ -5953,7 +6065,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____i)
             __child = stack.pop ()
@@ -5970,7 +6082,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____j)
             __child = stack.pop ()
@@ -5990,21 +6102,21 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             __lhs = stack.pop ()
             __res = __lhs <= __rhs
             stack.append (__res)
-            __if__108__cond = stack.pop ()
+            __if__111__cond = stack.pop ()
             # get condition from stack
-            if (__if__108__cond):
+            if (__if__111__cond):
                 # Body
                 # Statement
                 # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
                 # LHS
-                stack.append(__main__bfs__block__100__frontier)
+                stack.append(__main__bfs__block__103__frontier)
                 # RHS
                 # Arguments
                 # Constructor Call - Vec::Vec(int, int, int) -> Vec
                 # Arguments
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____i)
                 __child = stack.pop ()
@@ -6014,7 +6126,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
                 # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____j)
                 __child = stack.pop ()
@@ -6031,7 +6143,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
                 # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____time)
                 __child = stack.pop ()
@@ -6072,7 +6184,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # LHS
         # Member Accessor
         # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__bfs__block__103__while__104__block__105__pos)
         # RHS
         stack.append (__field____main____Vec____i)
         __child = stack.pop ()
@@ -6098,9 +6210,9 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         __lhs = stack.pop ()
         __res = __lhs < __rhs
         stack.append (__res)
-        __if__109__cond = stack.pop ()
+        __if__112__cond = stack.pop ()
         # get condition from stack
-        if (__if__109__cond):
+        if (__if__112__cond):
             # Body
             #-------------------------------------------------------------
             # If-Statement
@@ -6130,7 +6242,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # LHS
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____i)
             __child = stack.pop ()
@@ -6154,7 +6266,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____j)
             __child = stack.pop ()
@@ -6181,7 +6293,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____i)
             __child = stack.pop ()
@@ -6198,7 +6310,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____j)
             __child = stack.pop ()
@@ -6218,14 +6330,14 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             __lhs = stack.pop ()
             __res = __lhs <= __rhs
             stack.append (__res)
-            __if__110__cond = stack.pop ()
+            __if__113__cond = stack.pop ()
             # get condition from stack
-            if (__if__110__cond):
+            if (__if__113__cond):
                 # Body
                 # Statement
                 # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
                 # LHS
-                stack.append(__main__bfs__block__100__frontier)
+                stack.append(__main__bfs__block__103__frontier)
                 # RHS
                 # Arguments
                 # Constructor Call - Vec::Vec(int, int, int) -> Vec
@@ -6234,7 +6346,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
                 # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____i)
                 __child = stack.pop ()
@@ -6249,7 +6361,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
                 stack.append(__res)
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____j)
                 __child = stack.pop ()
@@ -6259,7 +6371,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
                 # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____time)
                 __child = stack.pop ()
@@ -6300,7 +6412,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # LHS
         # Member Accessor
         # LHS
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__bfs__block__103__while__104__block__105__pos)
         # RHS
         stack.append (__field____main____Vec____j)
         __child = stack.pop ()
@@ -6320,9 +6432,9 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         __lhs = stack.pop ()
         __res = __lhs >= __rhs
         stack.append (__res)
-        __if__111__cond = stack.pop ()
+        __if__114__cond = stack.pop ()
         # get condition from stack
-        if (__if__111__cond):
+        if (__if__114__cond):
             # Body
             #-------------------------------------------------------------
             # If-Statement
@@ -6350,7 +6462,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____i)
             __child = stack.pop ()
@@ -6369,7 +6481,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # LHS
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____j)
             __child = stack.pop ()
@@ -6403,7 +6515,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____i)
             __child = stack.pop ()
@@ -6420,7 +6532,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             # OFFSET
             # Member Accessor
             # LHS
-            stack.append(__main__bfs__block__100__while__101__block__102__pos)
+            stack.append(__main__bfs__block__103__while__104__block__105__pos)
             # RHS
             stack.append (__field____main____Vec____j)
             __child = stack.pop ()
@@ -6440,21 +6552,21 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
             __lhs = stack.pop ()
             __res = __lhs <= __rhs
             stack.append (__res)
-            __if__112__cond = stack.pop ()
+            __if__115__cond = stack.pop ()
             # get condition from stack
-            if (__if__112__cond):
+            if (__if__115__cond):
                 # Body
                 # Statement
                 # Method Call - LinkedList<:Vec:>::pushBack(Vec) -> void
                 # LHS
-                stack.append(__main__bfs__block__100__frontier)
+                stack.append(__main__bfs__block__103__frontier)
                 # RHS
                 # Arguments
                 # Constructor Call - Vec::Vec(int, int, int) -> Vec
                 # Arguments
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____i)
                 __child = stack.pop ()
@@ -6464,7 +6576,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
                 # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____j)
                 __child = stack.pop ()
@@ -6481,7 +6593,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
                 # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__bfs__block__100__while__101__block__102__pos)
+                stack.append(__main__bfs__block__103__while__104__block__105__pos)
                 # RHS
                 stack.append (__field____main____Vec____time)
                 __child = stack.pop ()
@@ -6512,7 +6624,7 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
         # End of if
         #-----------------------------------------------------------------
         # Statement
-        stack.append(__main__bfs__block__100__while__101__block__102__pos)
+        stack.append(__main__bfs__block__103__while__104__block__105__pos)
         __arr = stack.pop ()
         __builtin__free (__arr)
         stack.append (0)
@@ -6576,32 +6688,425 @@ def __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (_
 # Statement
 # Assignment - '='
 # RHS
-# Function Call - bfs(Vector<:Vector<:int:>:>, Vector<:Vector<:int:>:>, Vec, Vec) -> int
-# Arguments
-stack.append(__main__elevations)
-stack.append(__main__was_visited)
-stack.append(__main__start_pos)
-stack.append(__main__end_pos)
-__arg3 = stack.pop ()
-__arg2 = stack.pop ()
-__arg1 = stack.pop ()
-__arg0 = stack.pop ()
-# *** bfs
-__res = __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (__arg0, __arg1, __arg2, __arg3)
-stack.append (__res) # function call result
+# Multiplication
 # LHS
-__main__res = 0
+# Member Accessor
+# LHS
+stack.append(__main__elevations)
+# RHS
+stack.append (__field____main____Vector__Vector____size)
+__child = stack.pop ()
+__parent = stack.pop ()
+stack.append (__parent[__child])
+# RHS
+# Member Accessor
+# LHS
+# Subscript
+# LHS
+# Member Accessor
+# LHS
+stack.append(__main__elevations)
+# RHS
+stack.append (__field____main____Vector__Vector____data)
+__child = stack.pop ()
+__parent = stack.pop ()
+stack.append (__parent[__child])
+# OFFSET
+# Int Literal
+stack.append(0)
+__offset = stack.pop ()
+__pointer = stack.pop ()
+stack.append (__pointer[__offset])
+# RHS
+stack.append (__field____main____Vector__int____size)
+__child = stack.pop ()
+__parent = stack.pop ()
+stack.append (__parent[__child])
 __rhs = stack.pop()
-__main__res = __rhs
-stack.append (__main__res)
+__lhs = stack.pop()
+__res = __lhs * __rhs
+stack.append(__res)
+# LHS
+__main__min_moves = 0
+__rhs = stack.pop()
+__main__min_moves = __rhs
+stack.append (__main__min_moves)
 # Statement results can be ignored
 stack.pop ()
 # End Statement
 
+#-------------------------------------------------------------------------
+# While-Loop
+# Using an infinite loop so we can write a separate multi-line condition
+while (1):
+    # Condition
+    # Negate
+    # RHS
+    # Method Call - LinkedList<:Vec:>::isEmpty() -> int
+    # LHS
+    stack.append(__main__starting_positions)
+    # RHS
+    # Arguments
+    __obj = stack.pop ()
+    __retval = __method____main____LinkedList__Vec____isEmpty (__obj)
+    stack.append (__retval)
+    __rhs = stack.pop ()
+    __res = not __rhs
+    stack.append (__res)
+    __cond = stack.pop ()
+    # break out of loop if condition is false
+    if (__cond == 0): break
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Method Call - LinkedList<:Vec:>::popFront() -> Vec
+    # LHS
+    stack.append(__main__starting_positions)
+    # RHS
+    # Arguments
+    __obj = stack.pop ()
+    __retval = __method____main____LinkedList__Vec____popFront (__obj)
+    stack.append (__retval)
+    # LHS
+    __main__while__116__block__117__starting_pos = 0
+    __rhs = stack.pop()
+    __main__while__116__block__117__starting_pos = __rhs
+    stack.append (__main__while__116__block__117__starting_pos)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # If-Statement
+    # Precomputing all if/elif conditions and give unique names
+    # bc we can't have code between if and elif
+    # Condition
+    # Greater Than or Equal to
+    # LHS
+    # Function Call - manhattan(int, int, int, int) -> int
+    # Arguments
+    # Member Accessor
+    # LHS
+    stack.append(__main__while__116__block__117__starting_pos)
+    # RHS
+    stack.append (__field____main____Vec____i)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # Member Accessor
+    # LHS
+    stack.append(__main__while__116__block__117__starting_pos)
+    # RHS
+    stack.append (__field____main____Vec____j)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # Member Accessor
+    # LHS
+    stack.append(__main__end_pos)
+    # RHS
+    stack.append (__field____main____Vec____i)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    # Member Accessor
+    # LHS
+    stack.append(__main__end_pos)
+    # RHS
+    stack.append (__field____main____Vec____j)
+    __child = stack.pop ()
+    __parent = stack.pop ()
+    stack.append (__parent[__child])
+    __arg3 = stack.pop ()
+    __arg2 = stack.pop ()
+    __arg1 = stack.pop ()
+    __arg0 = stack.pop ()
+    # *** manhattan
+    __res = __main____manhattan__int__int__int__int (__arg0, __arg1, __arg2, __arg3)
+    stack.append (__res) # function call result
+    # RHS
+    stack.append(__main__min_moves)
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs >= __rhs
+    stack.append (__res)
+    __if__118__cond = stack.pop ()
+    # get condition from stack
+    if (__if__118__cond):
+        # Body
+        #-----------------------------------------------------------------
+        # Code Block
+        # Statement
+        stack.append(__main__while__116__block__117__starting_pos)
+        __arr = stack.pop ()
+        __builtin__free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Continue in __while__116
+        continue
+        #-----------------------------------------------------------------
+    # End of if
+    #---------------------------------------------------------------------
+    #---------------------------------------------------------------------
+    # For-Loop
+    # Init
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__while__116__block__117__for__120__i = 0
+    __rhs = stack.pop()
+    __main__while__116__block__117__for__120__i = __rhs
+    stack.append (__main__while__116__block__117__for__120__i)
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Less Than
+        # LHS
+        stack.append(__main__while__116__block__117__for__120__i)
+        # RHS
+        # Member Accessor
+        # LHS
+        stack.append(__main__was_visited)
+        # RHS
+        stack.append (__field____main____Vector__Vector____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs < __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        #-----------------------------------------------------------------
+        # Code Block
+        #-----------------------------------------------------------------
+        # For-Loop
+        # Init
+        # Assignment - '='
+        # RHS
+        # Int Literal
+        stack.append(0)
+        # LHS
+        __main__while__116__block__117__for__120__block__121__for__122__j = 0
+        __rhs = stack.pop()
+        __main__while__116__block__117__for__120__block__121__for__122__j = __rhs
+        stack.append (__main__while__116__block__117__for__120__block__121__for__122__j)
+        # Using an infinite loop so we can write a separate multi-line condition
+        while (1):
+            # Condition
+            # Less Than
+            # LHS
+            stack.append(__main__while__116__block__117__for__120__block__121__for__122__j)
+            # RHS
+            # Member Accessor
+            # LHS
+            # Subscript
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__was_visited)
+            # RHS
+            stack.append (__field____main____Vector__Vector____data)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # OFFSET
+            stack.append(__main__while__116__block__117__for__120__i)
+            __offset = stack.pop ()
+            __pointer = stack.pop ()
+            stack.append (__pointer[__offset])
+            # RHS
+            stack.append (__field____main____Vector__int____size)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            __rhs = stack.pop ()
+            __lhs = stack.pop ()
+            __res = __lhs < __rhs
+            stack.append (__res)
+            __cond = stack.pop ()
+            # break out of loop if condition is false
+            if (__cond == 0): break
+            # Body
+            #-------------------------------------------------------------
+            # Code Block
+            # Statement
+            # Assignment - '='
+            # RHS
+            # Negative
+            # RHS
+            # Int Literal
+            stack.append(1)
+            __rhs = stack.pop ()
+            __res = -__rhs
+            stack.append (__res)
+            # LHS
+            # Subscript assignment
+            # LHS
+            # Member Accessor
+            # LHS
+            # Subscript
+            # LHS
+            # Member Accessor
+            # LHS
+            stack.append(__main__was_visited)
+            # RHS
+            stack.append (__field____main____Vector__Vector____data)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # OFFSET
+            stack.append(__main__while__116__block__117__for__120__i)
+            __offset = stack.pop ()
+            __pointer = stack.pop ()
+            stack.append (__pointer[__offset])
+            # RHS
+            stack.append (__field____main____Vector__int____data)
+            __child = stack.pop ()
+            __parent = stack.pop ()
+            stack.append (__parent[__child])
+            # OFFSET
+            stack.append(__main__while__116__block__117__for__120__block__121__for__122__j)
+            __offset = stack.pop()
+            __pointer = stack.pop()
+            __rhs = stack.pop()
+            __pointer[__offset] = __rhs
+            stack.append (__pointer[__offset])
+            # Statement results can be ignored
+            stack.pop ()
+            # End Statement
+
+            #-------------------------------------------------------------
+            # Update
+            # Pre-Increment
+            # RHS
+            stack.append(__main__while__116__block__117__for__120__block__121__for__122__j)
+            __rhs = stack.pop ()
+            __main__while__116__block__117__for__120__block__121__for__122__j = __main__while__116__block__117__for__120__block__121__for__122__j + 1
+            __res = __main__while__116__block__117__for__120__block__121__for__122__j
+            stack.append (__res)
+        #-----------------------------------------------------------------
+        #-----------------------------------------------------------------
+        # Update
+        # Pre-Increment
+        # RHS
+        stack.append(__main__while__116__block__117__for__120__i)
+        __rhs = stack.pop ()
+        __main__while__116__block__117__for__120__i = __main__while__116__block__117__for__120__i + 1
+        __res = __main__while__116__block__117__for__120__i
+        stack.append (__res)
+    #---------------------------------------------------------------------
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Function Call - bfs(Vector<:Vector<:int:>:>, Vector<:Vector<:int:>:>, Vec, Vec) -> int
+    # Arguments
+    stack.append(__main__elevations)
+    stack.append(__main__was_visited)
+    stack.append(__main__while__116__block__117__starting_pos)
+    stack.append(__main__end_pos)
+    __arg3 = stack.pop ()
+    __arg2 = stack.pop ()
+    __arg1 = stack.pop ()
+    __arg0 = stack.pop ()
+    # *** bfs
+    __res = __main____bfs__Vector__tparam0__Vector__Vector__tparam0__Vector__Vec__Vec (__arg0, __arg1, __arg2, __arg3)
+    stack.append (__res) # function call result
+    # LHS
+    __main__while__116__block__117__res = 0
+    __rhs = stack.pop()
+    __main__while__116__block__117__res = __rhs
+    stack.append (__main__while__116__block__117__res)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # If-Statement
+    # Precomputing all if/elif conditions and give unique names
+    # bc we can't have code between if and elif
+    # Condition
+    # Equal
+    # LHS
+    stack.append(__main__while__116__block__117__res)
+    # RHS
+    # Negative
+    # RHS
+    # Int Literal
+    stack.append(1)
+    __rhs = stack.pop ()
+    __res = -__rhs
+    stack.append (__res)
+    __rhs = stack.pop ()
+    __lhs = stack.pop ()
+    __res = __lhs == __rhs
+    stack.append (__res)
+    __if__124__cond = stack.pop ()
+    # get condition from stack
+    if (__if__124__cond):
+        # Body
+        #-----------------------------------------------------------------
+        # Code Block
+        # Statement
+        stack.append(__main__while__116__block__117__starting_pos)
+        __arr = stack.pop ()
+        __builtin__free (__arr)
+        stack.append (0)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        # Continue in __while__116
+        continue
+        #-----------------------------------------------------------------
+    # End of if
+    #---------------------------------------------------------------------
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Function Call - min(int, int) -> int
+    # Arguments
+    stack.append(__main__while__116__block__117__res)
+    stack.append(__main__min_moves)
+    __arg1 = stack.pop ()
+    __arg0 = stack.pop ()
+    # *** min
+    __res = __main____min__int__int (__arg0, __arg1)
+    stack.append (__res) # function call result
+    __rhs = stack.pop()
+    __main__min_moves = __rhs
+    stack.append (__main__min_moves)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Statement
+    stack.append(__main__while__116__block__117__starting_pos)
+    __arr = stack.pop ()
+    __builtin__free (__arr)
+    stack.append (0)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+# End of While
+#-------------------------------------------------------------------------
 # Statement
 # Function Call - println(int) -> void
 # Arguments
-stack.append(__main__res)
+stack.append(__main__min_moves)
 __arg0 = stack.pop ()
 # *** println
 __res = __builtin__println__int (__arg0)

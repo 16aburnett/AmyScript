@@ -18,6 +18,7 @@ if __name__ == "__main__":
     from codeGen import CodeGenVisitor
     from codegen_x86 import CodeGenVisitor_x86
     from codegen_python import CodeGenVisitor_python
+    from codegen_cpp import CodeGenVisitor_cpp
 else:
     from .tokenizer import tokenize
     from .amyAST import *
@@ -27,6 +28,7 @@ else:
     from .codeGen import CodeGenVisitor
     from .codegen_x86 import CodeGenVisitor_x86
     from .codegen_python import CodeGenVisitor_python
+    from .codegen_cpp import CodeGenVisitor_cpp
 
 
 # ========================================================================
@@ -34,6 +36,7 @@ else:
 TARGET_AMYASM = "amyasm"
 TARGET_X86    = "x86"
 TARGET_PYTHON = "python"
+TARGET_CPP    = "cpp"
 
 BUILTIN_PREFIX = "__builtin__"
 
@@ -540,6 +543,8 @@ class AmyScriptCompiler:
             codeGenVisitor = CodeGenVisitor_x86 (lines)
         elif target == TARGET_PYTHON:
             codeGenVisitor = CodeGenVisitor_python (lines)
+        elif target == TARGET_CPP:
+            codeGenVisitor = CodeGenVisitor_cpp (lines)
 
         # generate code
         ast.accept (codeGenVisitor)
@@ -569,7 +574,7 @@ if __name__ == "__main__":
     argparser.add_argument("--emitPreprocessed", dest="emitPreprocessed", action="store_true", help="output the preprocessed code")
     argparser.add_argument("--emitAST", dest="emitAST", action="store_true", help="output the ast")
     argparser.add_argument("--preprocess", dest="preprocess", action="store_true", help="only run preprocessor")
-    argparser.add_argument("--target", nargs=1, dest="target", help="specifies the target language to compile to [default amyasm] (amyasm | x86 | python)")
+    argparser.add_argument("--target", nargs=1, dest="target", help="specifies the target language to compile to [default amyasm] (amyasm | x86 | python | cpp)")
 
     args = argparser.parse_args()
 
@@ -586,6 +591,8 @@ if __name__ == "__main__":
         target=TARGET_X86
     elif args.target[0] == "python": # transpile to python
         target=TARGET_PYTHON
+    elif args.target[0] == "cpp": # transpile to python
+        target=TARGET_CPP
     else: # Invalid/unknown target
         print (f"Unknown target {args.target}")
         exit (1)

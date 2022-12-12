@@ -27,9 +27,9 @@ SAMPLE = 0
 INPUT = 1
 RUN_INPUT_MODE = SAMPLE
 
-RUN_TIMEOUT = 60
+RUN_TIMEOUT = 300
 
-libraries = ["Vector.amy", "algorithms.amy"]
+libraries = ["Vector.amy", "algorithms.amy", "LinkedList.amy"]
 
 class Run:
     def __init__ (self, day, part, target):
@@ -135,7 +135,7 @@ def run (days, parts, targets, inputset, hide_answers):
         except subprocess.TimeoutExpired:
                 # catch timeout errors
                 print (f"Error: timeout of {RUN_TIMEOUT} seconds exceeded")
-                print (f"   Maybe there is a hang or the timeout needs to be increased or the process is waiting on input")
+                print (f"   Maybe there is a hang or the timeout needs to be increased or the process is waiting on input or your implementation is too slow")
                 continue
 
         # Ensure code ran successfully
@@ -160,10 +160,10 @@ def run (days, parts, targets, inputset, hide_answers):
     # elif inputset == "sample":
     #     print ("results are from 'sample' datasets")
 
-    print     (f"+-{  '---':>3}-+-{  '----':>4}-+-{  '------':>6}-+-{               '-'*9}-+-{                   '-'*10}-+-{                    '-'*8}-+-{        '-'*10}-+-{              '-'*8}-+-{               '-'*7}-+")
-    print     (f"| {  'day':^3} | {  'part':^4} | {  'target':^6} | {             'is':^9} | {            'compile':^10} | {                'exit':^8} | {  'result':^10} | {            'is':^8} | {        'runtime':^7} |")
-    print     (f"| {     '':^3} | {      '':^4} | {    'lang':^6} | {      'compiled?':^9} | {         'time (sec)':^10} | {            'success?':^8} | {        '':^10} | {      'correct?':^8} | {          '(sec)':^7} |")
-    print     (f"+-{  '---':>3}-+-{  '----':>4}-+-{  '------':>6}-+-{               '-'*9}-+-{                   '-'*10}-+-{                    '-'*8}-+-{        '-'*10}-+-{              '-'*8}-+-{               '-'*7}-+")
+    print     (f"+-{  '---':>3}-+-{  '----':>4}-+-{  '------':>6}-+-{               '-'*9}-+-{                   '-'*10}-+-{                    '-'*8}-+-{        '-'*12}-+-{              '-'*8}-+-{               '-'*8}-+")
+    print     (f"| {  'day':^3} | {  'part':^4} | {  'target':^6} | {             'is':^9} | {            'compile':^10} | {                'exit':^8} | {  'result':^12} | {            'is':^8} | {        'runtime':^8} |")
+    print     (f"| {     '':^3} | {      '':^4} | {    'lang':^6} | {      'compiled?':^9} | {         'time (sec)':^10} | {            'success?':^8} | {        '':^12} | {      'correct?':^8} | {          '(sec)':^8} |")
+    print     (f"+-{  '---':>3}-+-{  '----':>4}-+-{  '------':>6}-+-{               '-'*9}-+-{                   '-'*10}-+-{                    '-'*8}-+-{        '-'*12}-+-{              '-'*8}-+-{               '-'*8}-+")
     total_compile_time = 0
     total_run_time = 0
     for run in runs:
@@ -177,13 +177,13 @@ def run (days, parts, targets, inputset, hide_answers):
             result = f"{'-'*10}"
         else:
             result = run.result
-        print (f"| {run.day:>3} | {run.part:>4} | {run.target:>6} | {run.is_compiled!s:>9} | {  run.compile_time:>10.4f} | {run.ran_successfully!s:>8} | {    result:>10} | {run.is_correct!s:>8} | {   run.runtime:>7.4f} |")
+        print (f"| {run.day:>3} | {run.part:>4} | {run.target:>6} | {run.is_compiled!s:>9} | {  run.compile_time:>10.4f} | {run.ran_successfully!s:>8} | {    result:>12} | {run.is_correct!s:>8} | {   run.runtime:>8.4f} |")
         print(style.RESET, end="")
         total_compile_time += run.compile_time
         total_run_time += run.runtime
-    print     (f"+-{  '---':>3}-+-{  '----':>4}-+-{  '------':>6}-+-{               '-'*9}-+-{                   '-'*10}-+-{                    '-'*8}-+-{        '-'*10}-+-{              '-'*8}-+-{               '-'*7}-+")
-    print     (f"| {               'total':^10} | {  '      ':>6} | {               ' '*9} | {total_compile_time:>10.4f} | {                    ' '*8} | {        ' '*10} | {              ' '*8} | {total_run_time:>7.4f} |")
-    print     (f"+-{  '---':>3}-+-{  '----':>4}-+-{  '------':>6}-+-{               '-'*9}-+-{                   '-'*10}-+-{                    '-'*8}-+-{        '-'*10}-+-{              '-'*8}-+-{               '-'*7}-+")
+    print     (f"+-{  '---':>3}-+-{  '----':>4}-+-{  '------':>6}-+-{               '-'*9}-+-{                   '-'*10}-+-{                    '-'*8}-+-{        '-'*12}-+-{              '-'*8}-+-{               '-'*8}-+")
+    print     (f"| {               'total':^10} | {  '      ':>6} | {               ' '*9} | {total_compile_time:>10.4f} | {                    ' '*8} | {        ' '*12} | {              ' '*8} | {total_run_time:>8.4f} |")
+    print     (f"+-{  '---':>3}-+-{  '----':>4}-+-{  '------':>6}-+-{               '-'*9}-+-{                   '-'*10}-+-{                    '-'*8}-+-{        '-'*12}-+-{              '-'*8}-+-{               '-'*8}-+")
 
     print ()
 
@@ -201,7 +201,7 @@ if __name__ == "__main__":
 
     # print (args)
 
-    valid_days = [str(i) for i in range(1, 9)]
+    valid_days = [str(i) for i in range(1, 13)]
     days = args.days
     if "all" in args.days:
         days = valid_days
