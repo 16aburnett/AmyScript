@@ -9,6 +9,9 @@
 // # # Author: Amy Burnett
 // # # ========================================================================
 
+#include <vector>
+#include <iostream>
+
 // # # ========================================================================
 
 // # # Exits the program with the given exit code 
@@ -75,8 +78,9 @@
 // # # Utilizes printf "%d"
 // # # void println (int valueToPrint)#
 // # # valueToPrint : [rbp + 16]
-// def __builtin__println__int (v):
-//     print (v)
+void __builtin__println__int (long v) {
+    printf ("%ld\n", v);
+}
 
 // # # ========================================================================
 // # # // Prints a float to the screen with a newline
@@ -202,40 +206,59 @@
 
 // # # //========================================================================
 //=========================================================================
-//### SETUP EXPRESSION RESULT STACK ######################################
+//### All code must be in main ###########################################
 //=========================================================================
 
-// This stack is used to store results of expressions
-stack = []
+int main () {
+    //=====================================================================
+    //### SETUP EXPRESSION RESULT STACK ##################################
+    //=====================================================================
 
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+
+    // Declare general purpose variables
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    //=====================================================================
+    //### COMPILED CODE ##################################################
+    //=====================================================================
+
+    // Statement
+    // Function Call - println(int) -> void
+    // Arguments
+    // Addition
+    // LHS
+    // Int Literal
+    stack.push_back (1);
+    // RHS
+    // Int Literal
+    stack.push_back (2);
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __lhs = stack.back ();
+    stack.pop_back ();
+    __res = __lhs + __rhs;
+    stack.push_back (__res);
+    {
+        long* __arg0 = &stack.back ();
+        stack.pop_back ();
+        // println
+        __builtin__println__int (*((long*)__arg0));
+        stack.push_back (__res);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+
+    //=====================================================================
+    //### END OF CODE ####################################################
+    //=====================================================================
+
+}
 //=========================================================================
-//### COMPILED CODE ######################################################
-//=========================================================================
-
-// Statement
-// Function Call - println(int) -> void
-// Arguments
-// Addition
-// LHS
-// Int Literal
-stack.append(1)
-// RHS
-// Int Literal
-stack.append(2)
-__rhs = stack.pop()
-__lhs = stack.pop()
-__res = __lhs + __rhs
-stack.append(__res)
-__arg0 = stack.pop ()
-// *** println
-__res = __builtin__println__int (__arg0)
-stack.append (__res) # function call result
-// Statement results can be ignored
-stack.pop ()
-// End Statement
-
-
-//=========================================================================
-//### END OF CODE ########################################################
+//### END OF MAIN ########################################################
 //=========================================================================
 

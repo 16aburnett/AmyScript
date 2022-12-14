@@ -536,10 +536,17 @@ __builtin__stringToInt__char__1:
 ; //========================================================================
 ; // parses an int from a given char
 ; // int charToInt (char);
-; __builtin__charToInt__char:
-;     stackget val 0
-;     ctoi res val
-;     return res
+__builtin__charToInt__char:
+        ; function setup
+        push    rbp
+        mov     rbp, rsp
+
+        mov     rax, qword [rbp+16]
+        mov     rdx, '0'
+        sub     rax, rdx
+
+        pop rbp
+        ret
 
 ; //========================================================================
 ; // converts int to string
@@ -602,8 +609,9 @@ main:
                      ; Dispatch Table Entries
                      dq .__method____main____Vector__int____pushBack__int ; 0
                      dq .__method____main____Vector__int____popBack ; 1
-                     dq .__method____main____Vector__int____get__int ; 2
-                     dq .__method____main____Vector__int____set__int__int ; 3
+                     dq .__method____main____Vector__int____clear ; 2
+                     dq .__method____main____Vector__int____get__int ; 3
+                     dq .__method____main____Vector__int____set__int__int ; 4
                   section .text
          ;---------------------------------------------------------------
                   ; Field - int[] Vector<:int:>::data
@@ -1241,6 +1249,82 @@ jmp .__for__5
    ;---------------------------------------------------------------------
 
    ;---------------------------------------------------------------------
+            ; Method Declaration - Vector<:int:>::clear() -> void
+            jmp .__end__method____main____Vector__int____clear
+            .__method____main____Vector__int____clear:
+               ; Function Header:
+               ; Setup stack frame
+                  push rbp
+                  mov rbp, rsp
+                  ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+                     sub rsp, 16 ; space for local variables (16-byte aligned)
+                     ; [rbp - 8] - this - Reference to 'this' object instance
+                     mov rdx, qword [rbp + 16] ; param passed 'this'
+                     mov qword [rbp - 8], rdx ; save this to a local
+               ; Parameters
+               ; Body
+         ;---------------------------------------------------------------
+                  ; Code Block
+            ;------------------------------------------------------------
+                     ; While-Loop
+.__while__9:
+                        ; Condition
+                           ; Greater Than
+                              ; LHS
+                                 ; Member Accessor
+                                    ; LHS
+                                       ; This keyword
+                                          push qword [rbp - 8] ; __this
+                                    ; RHS
+                                       push qword [.__field____main____Vector__int____size] ; stored index associated with field that is being accessed
+                                    pop rdx ; rhs
+                                    pop rax ; lhs
+                                    push qword [rax + 8*rdx] ; lhs.rhs
+                              ; RHS
+                                 ; Int Literal
+                                    mov rax, 0
+                                    push rax
+                              pop rdx ; rhs
+                              pop rax ; lhs
+                              cmp rax, rdx
+                              setg al
+                              movzx eax, al
+                              push rax
+                           pop rax ; __cond
+                           cmp rax, 0 ; __cond
+                           je .__endwhile__9
+                        ; Body
+                           ; Method Call - Vector<:int:>::popBack() -> int
+                              ; Make space for 0 arg(s) and object parameter
+                              sub rsp, 8
+                              ; LHS
+                                 ; This keyword
+                                    push qword [rbp - 8] ; __this
+                                 pop rax ; object parameter
+                                 mov qword [rsp + 0], rax ; place as first parameter
+                              ; RHS
+                              ; Arguments
+                              call .__method____main____Vector__int____popBack
+                              ; Remove args
+                              add rsp, 8
+                              ; Push return value
+                              push rax
+                           ; Statement results can be ignored
+                           pop rdx
+                        jmp .__while__9
+                        ; End of While
+.__endwhile__9:
+            ;------------------------------------------------------------
+         ;---------------------------------------------------------------
+               ; Function Epilogue
+               mov rsp, rbp ; remove local vars + unpopped pushes
+               pop rbp
+               ret
+            .__end__method____main____Vector__int____clear:
+            ; End Method Declaration - .__method____main____Vector__int____clear
+   ;---------------------------------------------------------------------
+
+   ;---------------------------------------------------------------------
             ; Method Declaration - Vector<:int:>::get(int) -> int
             jmp .__end__method____main____Vector__int____get__int
             .__method____main____Vector__int____get__int:
@@ -1405,7 +1489,7 @@ jmp .__for__5
          pop rdx
 ;------------------------------------------------------------------------------
          ; While-Loop
-.__while__10:
+.__while__12:
          ; Condition
          ; Not Equal
             ; LHS
@@ -1433,7 +1517,7 @@ jmp .__for__5
             push rax
          pop rax ; __cond
          cmp rax, 0 ; __cond
-         je .__endwhile__10
+         je .__endwhile__12
          ; Body
 ;------------------------------------------------------------------------
          ; Code Block
@@ -1444,7 +1528,7 @@ jmp .__for__5
                      push rax
                ; LHS
                   ; Variable Declaration - calorieTotal
-                     mov rax, qword [rbp - 24]  ; __main__while__10__block__11__calorieTotal
+                     mov rax, qword [rbp - 24]  ; __main__while__12__block__13__calorieTotal
                pop rdx ; rhs value
                mov qword [rbp - 24], rdx
                push rdx
@@ -1452,7 +1536,7 @@ jmp .__for__5
             pop rdx
    ;---------------------------------------------------------------------
             ; While-Loop
-.__while__12:
+.__while__14:
                ; Condition
                   ; AND
                      ; Eval LHS
@@ -1483,7 +1567,7 @@ jmp .__for__5
                      ; Check if we need to short-circuit
                         pop rax ; __lhs
                         test rax, rax
-                        je .AND_SHORT_CIRCUIT13
+                        je .AND_SHORT_CIRCUIT15
                      ; Eval RHS
                         ; Not Equal
                            ; LHS
@@ -1512,18 +1596,18 @@ jmp .__for__5
                      ; Check RHS
                         pop rax ; __rhs
                         test rax, rax
-                        je .AND_SHORT_CIRCUIT13
+                        je .AND_SHORT_CIRCUIT15
                      ; Success state
                      mov rax, 1 ; result = True
-                     jmp .AND_END13
-.AND_SHORT_CIRCUIT13:
+                     jmp .AND_END15
+.AND_SHORT_CIRCUIT15:
                      mov rax, 0 ; result = False
-.AND_END13:
+.AND_END15:
                      movzx eax, al
                      push rax ; result
                   pop rax ; __cond
                   cmp rax, 0 ; __cond
-                  je .__endwhile__12
+                  je .__endwhile__14
                ; Body
          ;---------------------------------------------------------------
                   ; Code Block
@@ -1580,9 +1664,9 @@ jmp .__for__5
                      ; Statement results can be ignored
                      pop rdx
          ;---------------------------------------------------------------
-               jmp .__while__12
+               jmp .__while__14
                ; End of While
-.__endwhile__12:
+.__endwhile__14:
    ;---------------------------------------------------------------------
             ; Method Call - Vector<:int:>::pushBack(int) -> void
                ; Make space for 1 arg(s) and object parameter
@@ -1636,13 +1720,13 @@ jmp .__for__5
                      push rax
                   pop rdx ; __cond
                   cmp rdx, 0 ; ensure condition is true
-                  je .__endif__15 ; jump to end
+                  je .__endif__17 ; jump to end
                ; Body
-                  ; Break out of __while__10
-                  jmp .__endwhile__10
-               jmp .__endif__15 ; jump to end of condition chain
+                  ; Break out of __while__12
+                  jmp .__endwhile__12
+               jmp .__endif__17 ; jump to end of condition chain
                ; End of if
-.__endif__15:
+.__endif__17:
    ;---------------------------------------------------------------------
             ; Free Operator
                ; RHS
@@ -1672,9 +1756,9 @@ jmp .__for__5
             ; Statement results can be ignored
             pop rdx
 ;------------------------------------------------------------------------
-         jmp .__while__10
+         jmp .__while__12
          ; End of While
-.__endwhile__10:
+.__endwhile__12:
 ;------------------------------------------------------------------------------
          ; Assignment - '='
          ; RHS
@@ -1699,14 +1783,14 @@ jmp .__for__5
                push rax
          ; LHS
             ; Variable Declaration - i
-               mov rax, qword [rbp - 40]  ; __main__for__16__i
+               mov rax, qword [rbp - 40]  ; __main__for__18__i
          pop rdx ; rhs value
          mov qword [rbp - 40], rdx
          push rdx
          ; Loop init result can be discarded
          pop rax
-         jmp .__forcond__16
-.__for__16:
+         jmp .__forcond__18
+.__for__18:
          ; Update
          ; Pre-Increment - int
             ; RHS
@@ -1718,7 +1802,7 @@ jmp .__for__5
             push rax ; push result
          ; Loop update result can be discarded
          pop rax
-.__forcond__16:
+.__forcond__18:
          ; Condition
          ; Less Than
             ; LHS
@@ -1742,7 +1826,7 @@ jmp .__for__5
             push rax
          pop rax ; __cond
          cmp rax, 0 ; __cond
-         je .__endfor__16
+         je .__endfor__18
          ; Body
 ;------------------------------------------------------------------------
          ; If-Statement
@@ -1781,7 +1865,7 @@ jmp .__for__5
                   push rax
                pop rdx ; __cond
                cmp rdx, 0 ; ensure condition is true
-               je .__endif__17 ; jump to end
+               je .__endif__19 ; jump to end
             ; Body
                ; Assignment - '='
                   ; RHS
@@ -1811,14 +1895,14 @@ jmp .__for__5
                   push rdx
                ; Statement results can be ignored
                pop rdx
-            jmp .__endif__17 ; jump to end of condition chain
+            jmp .__endif__19 ; jump to end of condition chain
             ; End of if
-.__endif__17:
+.__endif__19:
 ;------------------------------------------------------------------------
          ; Repeat
-jmp .__for__16
+jmp .__for__18
          ; End of For
-.__endfor__16:
+.__endfor__18:
 ;------------------------------------------------------------------------------
          ; Function Call - println(int) -> void
          ; Make space for 1 arg(s)

@@ -163,9 +163,13 @@ def __builtin__stringToInt__char__1 (s):
     #     res = 0
     # return res
     # -1 to ignore the null terminator
+    # count till null terminator
+    i = 0
+    while s[i] != '\0':
+        i += 1
     if s[-1] == '\0':
         return int(''.join(s[:-1]))
-    return int(''.join(s))
+    return int(''.join(s[:i]))
 
 
 # # //========================================================================

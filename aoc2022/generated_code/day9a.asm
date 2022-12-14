@@ -615,6 +615,7 @@ main:
          ; [rbp - 184] - int isright (<unset-scope-name>)
          ; [rbp - 192] - int exists (<unset-scope-name>)
          ; [rbp - 200] - int k (<unset-scope-name>)
+         ; [rbp - 208] - Point tail_pos (<unset-scope-name>)
 
          ; Body
 ; ========================================================================
@@ -629,8 +630,9 @@ main:
                      ; Dispatch Table Entries
                      dq .__method____main____Vector__char__1____pushBack__char__1 ; 0
                      dq .__method____main____Vector__char__1____popBack ; 1
-                     dq .__method____main____Vector__char__1____get__int ; 2
-                     dq .__method____main____Vector__char__1____set__int__char__1 ; 3
+                     dq .__method____main____Vector__char__1____clear ; 2
+                     dq .__method____main____Vector__char__1____get__int ; 3
+                     dq .__method____main____Vector__char__1____set__int__char__1 ; 4
                   section .text
          ;---------------------------------------------------------------
                   ; Field - char[][] Vector<:char[]:>::data
@@ -1268,6 +1270,82 @@ jmp .__for__5
    ;---------------------------------------------------------------------
 
    ;---------------------------------------------------------------------
+            ; Method Declaration - Vector<:char[]:>::clear() -> void
+            jmp .__end__method____main____Vector__char__1____clear
+            .__method____main____Vector__char__1____clear:
+               ; Function Header:
+               ; Setup stack frame
+                  push rbp
+                  mov rbp, rsp
+                  ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+                     sub rsp, 16 ; space for local variables (16-byte aligned)
+                     ; [rbp - 8] - this - Reference to 'this' object instance
+                     mov rdx, qword [rbp + 16] ; param passed 'this'
+                     mov qword [rbp - 8], rdx ; save this to a local
+               ; Parameters
+               ; Body
+         ;---------------------------------------------------------------
+                  ; Code Block
+            ;------------------------------------------------------------
+                     ; While-Loop
+.__while__9:
+                        ; Condition
+                           ; Greater Than
+                              ; LHS
+                                 ; Member Accessor
+                                    ; LHS
+                                       ; This keyword
+                                          push qword [rbp - 8] ; __this
+                                    ; RHS
+                                       push qword [.__field____main____Vector__char__1____size] ; stored index associated with field that is being accessed
+                                    pop rdx ; rhs
+                                    pop rax ; lhs
+                                    push qword [rax + 8*rdx] ; lhs.rhs
+                              ; RHS
+                                 ; Int Literal
+                                    mov rax, 0
+                                    push rax
+                              pop rdx ; rhs
+                              pop rax ; lhs
+                              cmp rax, rdx
+                              setg al
+                              movzx eax, al
+                              push rax
+                           pop rax ; __cond
+                           cmp rax, 0 ; __cond
+                           je .__endwhile__9
+                        ; Body
+                           ; Method Call - Vector<:char[]:>::popBack() -> char[]
+                              ; Make space for 0 arg(s) and object parameter
+                              sub rsp, 8
+                              ; LHS
+                                 ; This keyword
+                                    push qword [rbp - 8] ; __this
+                                 pop rax ; object parameter
+                                 mov qword [rsp + 0], rax ; place as first parameter
+                              ; RHS
+                              ; Arguments
+                              call .__method____main____Vector__char__1____popBack
+                              ; Remove args
+                              add rsp, 8
+                              ; Push return value
+                              push rax
+                           ; Statement results can be ignored
+                           pop rdx
+                        jmp .__while__9
+                        ; End of While
+.__endwhile__9:
+            ;------------------------------------------------------------
+         ;---------------------------------------------------------------
+               ; Function Epilogue
+               mov rsp, rbp ; remove local vars + unpopped pushes
+               pop rbp
+               ret
+            .__end__method____main____Vector__char__1____clear:
+            ; End Method Declaration - .__method____main____Vector__char__1____clear
+   ;---------------------------------------------------------------------
+
+   ;---------------------------------------------------------------------
             ; Method Declaration - Vector<:char[]:>::get(int) -> char[]
             jmp .__end__method____main____Vector__char__1____get__int
             .__method____main____Vector__char__1____get__int:
@@ -1384,8 +1462,9 @@ jmp .__for__5
                ; Dispatch Table Entries
                dq .__method____main____Vector__Point____pushBack__Point ; 0
                dq .__method____main____Vector__Point____popBack ; 1
-               dq .__method____main____Vector__Point____get__int ; 2
-               dq .__method____main____Vector__Point____set__int__Point ; 3
+               dq .__method____main____Vector__Point____clear ; 2
+               dq .__method____main____Vector__Point____get__int ; 3
+               dq .__method____main____Vector__Point____set__int__Point ; 4
             section .text
    ;---------------------------------------------------------------------
             ; Field - Point[] Vector<:Point:>::data
@@ -1680,7 +1759,7 @@ jmp .__for__5
                         push rax
                      pop rdx ; __cond
                      cmp rdx, 0 ; ensure condition is true
-                     je .__endif__13 ; jump to end
+                     je .__endif__15 ; jump to end
                   ; Body
             ;------------------------------------------------------------
                      ; Code Block
@@ -1738,7 +1817,7 @@ jmp .__for__5
                                  push rax ; __ptr
                            ; LHS
                               ; Variable Declaration - nData
-                                 mov rax, qword [rbp - 16]  ; __main____Vector__Point__pushBack__block__12__if__13__block__14__nData
+                                 mov rax, qword [rbp - 16]  ; __main____Vector__Point__pushBack__block__14__if__15__block__16__nData
                            pop rdx ; rhs value
                            mov qword [rbp - 16], rdx
                            push rdx
@@ -1754,14 +1833,14 @@ jmp .__for__5
                                     push rax
                               ; LHS
                                  ; Variable Declaration - i
-                                    mov rax, qword [rbp - 24]  ; __main____Vector__Point__pushBack__block__12__if__13__block__14__for__15__i
+                                    mov rax, qword [rbp - 24]  ; __main____Vector__Point__pushBack__block__14__if__15__block__16__for__17__i
                               pop rdx ; rhs value
                               mov qword [rbp - 24], rdx
                               push rdx
                            ; Loop init result can be discarded
                            pop rax
-                        jmp .__forcond__15
-.__for__15:
+                        jmp .__forcond__17
+.__for__17:
                            ; Update
                               ; Pre-Increment - int
                                  ; RHS
@@ -1773,7 +1852,7 @@ jmp .__for__5
                                  push rax ; push result
                               ; Loop update result can be discarded
                               pop rax
-.__forcond__15:
+.__forcond__17:
                            ; Condition
                               ; Less Than
                                  ; LHS
@@ -1797,7 +1876,7 @@ jmp .__for__5
                                  push rax
                               pop rax ; __cond
                               cmp rax, 0 ; __cond
-                              je .__endfor__15
+                              je .__endfor__17
                            ; Body
                      ;---------------------------------------------------
                               ; Code Block
@@ -1837,9 +1916,9 @@ jmp .__for__5
                                  pop rdx
                      ;---------------------------------------------------
                            ; Repeat
-jmp .__for__15
+jmp .__for__17
                            ; End of For
-.__endfor__15:
+.__endfor__17:
                ;---------------------------------------------------------
                         ; Free Operator
                            ; RHS
@@ -1877,9 +1956,9 @@ jmp .__for__15
                         ; Statement results can be ignored
                         pop rdx
             ;------------------------------------------------------------
-                  jmp .__endif__13 ; jump to end of condition chain
+                  jmp .__endif__15 ; jump to end of condition chain
                   ; End of if
-.__endif__13:
+.__endif__15:
       ;------------------------------------------------------------------
                ; Assignment - '='
                   ; RHS
@@ -2020,6 +2099,82 @@ jmp .__for__15
          ret
          .__end__method____main____Vector__Point____popBack:
          ; End Method Declaration - .__method____main____Vector__Point____popBack
+;---------------------------------------------------------------------------
+
+;---------------------------------------------------------------------------
+         ; Method Declaration - Vector<:Point:>::clear() -> void
+         jmp .__end__method____main____Vector__Point____clear
+         .__method____main____Vector__Point____clear:
+         ; Function Header:
+         ; Setup stack frame
+            push rbp
+            mov rbp, rsp
+            ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+               sub rsp, 16 ; space for local variables (16-byte aligned)
+               ; [rbp - 8] - this - Reference to 'this' object instance
+               mov rdx, qword [rbp + 16] ; param passed 'this'
+               mov qword [rbp - 8], rdx ; save this to a local
+         ; Parameters
+         ; Body
+   ;---------------------------------------------------------------------
+            ; Code Block
+      ;------------------------------------------------------------------
+               ; While-Loop
+.__while__21:
+                  ; Condition
+                     ; Greater Than
+                        ; LHS
+                           ; Member Accessor
+                              ; LHS
+                                 ; This keyword
+                                    push qword [rbp - 8] ; __this
+                              ; RHS
+                                 push qword [.__field____main____Vector__Point____size] ; stored index associated with field that is being accessed
+                              pop rdx ; rhs
+                              pop rax ; lhs
+                              push qword [rax + 8*rdx] ; lhs.rhs
+                        ; RHS
+                           ; Int Literal
+                              mov rax, 0
+                              push rax
+                        pop rdx ; rhs
+                        pop rax ; lhs
+                        cmp rax, rdx
+                        setg al
+                        movzx eax, al
+                        push rax
+                     pop rax ; __cond
+                     cmp rax, 0 ; __cond
+                     je .__endwhile__21
+                  ; Body
+                     ; Method Call - Vector<:Point:>::popBack() -> Point
+                        ; Make space for 0 arg(s) and object parameter
+                        sub rsp, 8
+                        ; LHS
+                           ; This keyword
+                              push qword [rbp - 8] ; __this
+                           pop rax ; object parameter
+                           mov qword [rsp + 0], rax ; place as first parameter
+                        ; RHS
+                        ; Arguments
+                        call .__method____main____Vector__Point____popBack
+                        ; Remove args
+                        add rsp, 8
+                        ; Push return value
+                        push rax
+                     ; Statement results can be ignored
+                     pop rdx
+                  jmp .__while__21
+                  ; End of While
+.__endwhile__21:
+      ;------------------------------------------------------------------
+   ;---------------------------------------------------------------------
+         ; Function Epilogue
+         mov rsp, rbp ; remove local vars + unpopped pushes
+         pop rbp
+         ret
+         .__end__method____main____Vector__Point____clear:
+         ; End Method Declaration - .__method____main____Vector__Point____clear
 ;---------------------------------------------------------------------------
 
 ;---------------------------------------------------------------------------
@@ -2181,7 +2336,7 @@ jmp .__for__15
                push rax
             pop rdx ; __cond
             cmp rdx, 0 ; ensure condition is true
-            je .__endif__21 ; jump to end
+            je .__endif__25 ; jump to end
          ; Body
             ; Return
                ; Negative - int
@@ -2199,9 +2354,9 @@ jmp .__for__15
                mov rsp, rbp ; remove local vars + unpopped pushes
                pop rbp
                ret
-         jmp .__endif__21 ; jump to end of condition chain
+         jmp .__endif__25 ; jump to end of condition chain
          ; End of if
-.__endif__21:
+.__endif__25:
 ;---------------------------------------------------------------------------
          ; Assignment - '='
          ; RHS
@@ -2210,7 +2365,7 @@ jmp .__for__15
                push rax
          ; LHS
             ; Variable Declaration - size
-               mov rax, qword [rbp - 8]  ; __main__strlen__block__20__size
+               mov rax, qword [rbp - 8]  ; __main__strlen__block__24__size
          pop rdx ; rhs value
          mov qword [rbp - 8], rdx
          push rdx
@@ -2218,7 +2373,7 @@ jmp .__for__15
          pop rdx
 ;---------------------------------------------------------------------------
          ; While-Loop
-.__while__22:
+.__while__26:
          ; Condition
             ; Not Equal
                ; LHS
@@ -2247,11 +2402,11 @@ jmp .__for__15
                push rax
             pop rax ; __cond
             cmp rax, 0 ; __cond
-            je .__endwhile__22
+            je .__endwhile__26
          ; Body
-         jmp .__while__22
+         jmp .__while__26
          ; End of While
-.__endwhile__22:
+.__endwhile__26:
 ;---------------------------------------------------------------------------
          ; Return
          ; Subtraction - int, int
@@ -2321,7 +2476,7 @@ jmp .__for__15
                push rax
          ; LHS
             ; Variable Declaration - asize
-               mov rax, qword [rbp - 8]  ; __main__strcmp__block__23__asize
+               mov rax, qword [rbp - 8]  ; __main__strcmp__block__27__asize
          pop rdx ; rhs value
          mov qword [rbp - 8], rdx
          push rdx
@@ -2347,7 +2502,7 @@ jmp .__for__15
                push rax
          ; LHS
             ; Variable Declaration - bsize
-               mov rax, qword [rbp - 16]  ; __main__strcmp__block__23__bsize
+               mov rax, qword [rbp - 16]  ; __main__strcmp__block__27__bsize
          pop rdx ; rhs value
          mov qword [rbp - 16], rdx
          push rdx
@@ -2371,7 +2526,7 @@ jmp .__for__15
                push rax
             pop rdx ; __cond
             cmp rdx, 0 ; ensure condition is true
-            je .__endif__24 ; jump to end
+            je .__endif__28 ; jump to end
          ; Body
             ; Return
                ; Int Literal
@@ -2382,9 +2537,9 @@ jmp .__for__15
                mov rsp, rbp ; remove local vars + unpopped pushes
                pop rbp
                ret
-         jmp .__endif__24 ; jump to end of condition chain
+         jmp .__endif__28 ; jump to end of condition chain
          ; End of if
-.__endif__24:
+.__endif__28:
 ;---------------------------------------------------------------------------
 ;---------------------------------------------------------------------------
          ; For-Loop
@@ -2396,14 +2551,14 @@ jmp .__for__15
                   push rax
             ; LHS
                ; Variable Declaration - i
-                  mov rax, qword [rbp - 24]  ; __main__strcmp__block__23__for__25__i
+                  mov rax, qword [rbp - 24]  ; __main__strcmp__block__27__for__29__i
             pop rdx ; rhs value
             mov qword [rbp - 24], rdx
             push rdx
          ; Loop init result can be discarded
          pop rax
-         jmp .__forcond__25
-.__for__25:
+         jmp .__forcond__29
+.__for__29:
          ; Update
             ; Pre-Increment - int
                ; RHS
@@ -2415,7 +2570,7 @@ jmp .__for__15
                push rax ; push result
             ; Loop update result can be discarded
             pop rax
-.__forcond__25:
+.__forcond__29:
          ; Condition
             ; Less Than
                ; LHS
@@ -2432,7 +2587,7 @@ jmp .__for__15
                push rax
             pop rax ; __cond
             cmp rax, 0 ; __cond
-            je .__endfor__25
+            je .__endfor__29
          ; Body
    ;---------------------------------------------------------------------
             ; Code Block
@@ -2474,7 +2629,7 @@ jmp .__for__15
                         push rax
                      pop rdx ; __cond
                      cmp rdx, 0 ; ensure condition is true
-                     je .__endif__27 ; jump to end
+                     je .__endif__31 ; jump to end
                   ; Body
             ;------------------------------------------------------------
                      ; Code Block
@@ -2488,15 +2643,15 @@ jmp .__for__15
                            pop rbp
                            ret
             ;------------------------------------------------------------
-                  jmp .__endif__27 ; jump to end of condition chain
+                  jmp .__endif__31 ; jump to end of condition chain
                   ; End of if
-.__endif__27:
+.__endif__31:
       ;------------------------------------------------------------------
    ;---------------------------------------------------------------------
          ; Repeat
-jmp .__for__25
+jmp .__for__29
          ; End of For
-.__endfor__25:
+.__endfor__29:
 ;---------------------------------------------------------------------------
          ; Return
          ; Int Literal
@@ -2514,6 +2669,211 @@ jmp .__for__25
          ret
 .__end____main____strcmp__char__1__char__1:
          ; End Function Declaration - strcmp(char[], char[]) -> int
+; ====================================================================================
+
+; ====================================================================================
+         ; Function Declaration - substr(char[], int, int) -> char[]
+         ; Skip over function declaration
+         jmp .__end____main____substr__char__1__int__int
+.__main____substr__char__1__int__int:
+         ; Function Header:
+         ; Setup stack frame
+         push rbp
+         mov rbp, rsp
+         sub rsp, 16
+         ; Parameters
+         ; Param: a [rbp + 16]
+         ; Param: start [rbp + 24]
+         ; Param: end [rbp + 32]
+         ; Local Variables - Each variable is currently 64-bit (sorry not sorry)
+         ; [rbp - 8] - char[] res (<unset-scope-name>)
+         ; [rbp - 16] - int i (<unset-scope-name>)
+
+         ; Body
+;------------------------------------------------------------------------------
+         ; Code Block
+         ; Assignment - '='
+         ; RHS
+            ; Array Allocator
+               ; Addition - int, int
+                  ; LHS
+                     ; Subtraction - int, int
+                        ; LHS
+                           ; Identifier - int end
+                              push qword [rbp - -32]
+                        ; RHS
+                           ; Identifier - int start
+                              push qword [rbp - -24]
+                        pop rdx ; rhs
+                        pop rax ; lhs
+                        sub rax, rdx
+                        push rax
+                  ; RHS
+                     ; Int Literal
+                        mov rax, 1
+                        push rax
+                  pop rdx ; rhs
+                  pop rax ; lhs
+                  add rax, rdx
+                  push rax
+               pop rdx ; num elements for dimension[0]
+               mov rdi, rdx ; num bytes to allocate (1 byte per element)
+               call malloc ; allocates edi bytes on heap and stores pointer in rax
+               push rax ; __ptr
+         ; LHS
+            ; Variable Declaration - res
+               mov rax, qword [rbp - 8]  ; __main__substr__block__33__res
+         pop rdx ; rhs value
+         mov qword [rbp - 8], rdx
+         push rdx
+         ; Statement results can be ignored
+         pop rdx
+;---------------------------------------------------------------------------
+         ; For-Loop
+         ; Init
+         ; Assignment - '='
+            ; RHS
+               ; Int Literal
+                  mov rax, 0
+                  push rax
+            ; LHS
+               ; Variable Declaration - i
+                  mov rax, qword [rbp - 16]  ; __main__substr__block__33__for__34__i
+            pop rdx ; rhs value
+            mov qword [rbp - 16], rdx
+            push rdx
+         ; Loop init result can be discarded
+         pop rax
+         jmp .__forcond__34
+.__for__34:
+         ; Update
+            ; Pre-Increment - int
+               ; RHS
+                  ; Identifier - int i
+                     push qword [rbp - 16]
+               pop rdx
+               add qword [rbp - 16], 1
+               mov rax, qword [rbp - 16]
+               push rax ; push result
+            ; Loop update result can be discarded
+            pop rax
+.__forcond__34:
+         ; Condition
+            ; Less Than
+               ; LHS
+                  ; Identifier - int i
+                     push qword [rbp - 16]
+               ; RHS
+                  ; Subtraction - int, int
+                     ; LHS
+                        ; Identifier - int end
+                           push qword [rbp - -32]
+                     ; RHS
+                        ; Identifier - int start
+                           push qword [rbp - -24]
+                     pop rdx ; rhs
+                     pop rax ; lhs
+                     sub rax, rdx
+                     push rax
+               pop rdx ; rhs
+               pop rax ; lhs
+               cmp rax, rdx
+               setl al
+               movzx eax, al
+               push rax
+            pop rax ; __cond
+            cmp rax, 0 ; __cond
+            je .__endfor__34
+         ; Body
+   ;---------------------------------------------------------------------
+            ; Code Block
+               ; Assignment - '='
+                  ; RHS
+                     ; Subscript
+                        ; LHS
+                           ; Identifier - char[] a
+                              push qword [rbp - -16]
+                        ; OFFSET
+                           ; Addition - int, int
+                              ; LHS
+                                 ; Identifier - int i
+                                    push qword [rbp - 16]
+                              ; RHS
+                                 ; Identifier - int start
+                                    push qword [rbp - -24]
+                              pop rdx ; rhs
+                              pop rax ; lhs
+                              add rax, rdx
+                              push rax
+                        pop rdx ; __offset
+                        pop rax ; __pointer
+                        mov al, byte [rax + rdx] ; pointer + sizeof(data_t) * offset
+                        movzx rax, al ; zero extend because we need to push 64bit to stack
+                        push rax ; push char onto stack
+                  ; LHS
+                     ; Subscript assignment
+                        ; LHS
+                           ; Identifier - char[] res
+                              push qword [rbp - 8]
+                        ; OFFSET
+                           ; Identifier - int i
+                              push qword [rbp - 16]
+                        pop rdi ; __offset
+                        pop rbx ; __pointer
+                  pop rdx ; rhs value
+                  mov byte [rbx + rdi], dl
+                  push rdx
+               ; Statement results can be ignored
+               pop rdx
+   ;---------------------------------------------------------------------
+         ; Repeat
+jmp .__for__34
+         ; End of For
+.__endfor__34:
+;---------------------------------------------------------------------------
+         ; Assignment - '='
+         ; RHS
+            ; Char Literal
+               push 0 ; \0
+         ; LHS
+            ; Subscript assignment
+               ; LHS
+                  ; Identifier - char[] res
+                     push qword [rbp - 8]
+               ; OFFSET
+                  ; Subtraction - int, int
+                     ; LHS
+                        ; Identifier - int end
+                           push qword [rbp - -32]
+                     ; RHS
+                        ; Identifier - int start
+                           push qword [rbp - -24]
+                     pop rdx ; rhs
+                     pop rax ; lhs
+                     sub rax, rdx
+                     push rax
+               pop rdi ; __offset
+               pop rbx ; __pointer
+         pop rdx ; rhs value
+         mov byte [rbx + rdi], dl
+         push rdx
+         ; Statement results can be ignored
+         pop rdx
+         ; Return
+         ; Identifier - char[] res
+            push qword [rbp - 8]
+         pop rax ; return value (char[])
+         ; Clean up stack and return
+         mov rsp, rbp ; remove local vars + unpopped pushes
+         pop rbp
+         ret
+;------------------------------------------------------------------------------
+         ; Function Epilogue
+         mov rsp, rbp ; remove local vars + unpopped pushes
+         pop rbp
+         ret
+.__end____main____substr__char__1__int__int:
+         ; End Function Declaration - substr(char[], int, int) -> char[]
 ; ====================================================================================
 
 ; ====================================================================================
@@ -2556,7 +2916,7 @@ jmp .__for__25
                push rax
          ; LHS
             ; Variable Declaration - size
-               mov rax, qword [rbp - 8]  ; __main__first_index_of__block__29__size
+               mov rax, qword [rbp - 8]  ; __main__first_index_of__block__36__size
          pop rdx ; rhs value
          mov qword [rbp - 8], rdx
          push rdx
@@ -2572,14 +2932,14 @@ jmp .__for__25
                   push rax
             ; LHS
                ; Variable Declaration - i
-                  mov rax, qword [rbp - 16]  ; __main__first_index_of__block__29__for__30__i
+                  mov rax, qword [rbp - 16]  ; __main__first_index_of__block__36__for__37__i
             pop rdx ; rhs value
             mov qword [rbp - 16], rdx
             push rdx
          ; Loop init result can be discarded
          pop rax
-         jmp .__forcond__30
-.__for__30:
+         jmp .__forcond__37
+.__for__37:
          ; Update
             ; Pre-Increment - int
                ; RHS
@@ -2591,7 +2951,7 @@ jmp .__for__25
                push rax ; push result
             ; Loop update result can be discarded
             pop rax
-.__forcond__30:
+.__forcond__37:
          ; Condition
             ; Less Than
                ; LHS
@@ -2608,7 +2968,7 @@ jmp .__for__25
                push rax
             pop rax ; __cond
             cmp rax, 0 ; __cond
-            je .__endfor__30
+            je .__endfor__37
          ; Body
    ;---------------------------------------------------------------------
             ; Code Block
@@ -2642,7 +3002,7 @@ jmp .__for__25
                         push rax
                      pop rdx ; __cond
                      cmp rdx, 0 ; ensure condition is true
-                     je .__endif__32 ; jump to end
+                     je .__endif__39 ; jump to end
                   ; Body
                      ; Return
                         ; Identifier - int i
@@ -2652,15 +3012,15 @@ jmp .__for__25
                         mov rsp, rbp ; remove local vars + unpopped pushes
                         pop rbp
                         ret
-                  jmp .__endif__32 ; jump to end of condition chain
+                  jmp .__endif__39 ; jump to end of condition chain
                   ; End of if
-.__endif__32:
+.__endif__39:
       ;------------------------------------------------------------------
    ;---------------------------------------------------------------------
          ; Repeat
-jmp .__for__30
+jmp .__for__37
          ; End of For
-.__endfor__30:
+.__endfor__37:
 ;---------------------------------------------------------------------------
          ; Return
          ; Negative - int
@@ -2726,7 +3086,7 @@ jmp .__for__30
                push rax
          ; LHS
             ; Variable Declaration - tokens
-               mov rax, qword [rbp - 8]  ; __main__split__block__33__tokens
+               mov rax, qword [rbp - 8]  ; __main__split__block__40__tokens
          pop rdx ; rhs value
          mov qword [rbp - 8], rdx
          push rdx
@@ -2752,7 +3112,7 @@ jmp .__for__30
                push rax
          ; LHS
             ; Variable Declaration - size
-               mov rax, qword [rbp - 16]  ; __main__split__block__33__size
+               mov rax, qword [rbp - 16]  ; __main__split__block__40__size
          pop rdx ; rhs value
          mov qword [rbp - 16], rdx
          push rdx
@@ -2765,7 +3125,7 @@ jmp .__for__30
                push rax
          ; LHS
             ; Variable Declaration - i
-               mov rax, qword [rbp - 24]  ; __main__split__block__33__i
+               mov rax, qword [rbp - 24]  ; __main__split__block__40__i
          pop rdx ; rhs value
          mov qword [rbp - 24], rdx
          push rdx
@@ -2778,7 +3138,7 @@ jmp .__for__30
                push rax
          ; LHS
             ; Variable Declaration - j
-               mov rax, qword [rbp - 32]  ; __main__split__block__33__j
+               mov rax, qword [rbp - 32]  ; __main__split__block__40__j
          pop rdx ; rhs value
          mov qword [rbp - 32], rdx
          push rdx
@@ -2786,7 +3146,7 @@ jmp .__for__30
          pop rdx
 ;---------------------------------------------------------------------------
          ; While-Loop
-.__while__34:
+.__while__41:
          ; Condition
             ; Less Than
                ; LHS
@@ -2803,7 +3163,7 @@ jmp .__for__30
                push rax
             pop rax ; __cond
             cmp rax, 0 ; __cond
-            je .__endwhile__34
+            je .__endwhile__41
          ; Body
    ;---------------------------------------------------------------------
             ; Code Block
@@ -2837,7 +3197,7 @@ jmp .__for__30
                         push rax
                      pop rdx ; __cond
                      cmp rdx, 0 ; ensure condition is true
-                     je .__endif__36 ; jump to end
+                     je .__endif__43 ; jump to end
                   ; Body
             ;------------------------------------------------------------
                      ; Code Block
@@ -2848,7 +3208,7 @@ jmp .__for__30
                                  push rax
                            ; LHS
                               ; Variable Declaration - count
-                                 mov rax, qword [rbp - 40]  ; __main__split__block__33__while__34__block__35__if__36__block__37__count
+                                 mov rax, qword [rbp - 40]  ; __main__split__block__40__while__41__block__42__if__43__block__44__count
                            pop rdx ; rhs value
                            mov qword [rbp - 40], rdx
                            push rdx
@@ -2860,7 +3220,7 @@ jmp .__for__30
                                  push qword [rbp - 24]
                            ; LHS
                               ; Variable Declaration - k
-                                 mov rax, qword [rbp - 48]  ; __main__split__block__33__while__34__block__35__if__36__block__37__k
+                                 mov rax, qword [rbp - 48]  ; __main__split__block__40__while__41__block__42__if__43__block__44__k
                            pop rdx ; rhs value
                            mov qword [rbp - 48], rdx
                            push rdx
@@ -2868,7 +3228,7 @@ jmp .__for__30
                         pop rdx
                ;---------------------------------------------------------
                         ; While-Loop
-.__while__38:
+.__while__45:
                            ; Condition
                               ; Less Than
                                  ; LHS
@@ -2885,7 +3245,7 @@ jmp .__for__30
                                  push rax
                               pop rax ; __cond
                               cmp rax, 0 ; __cond
-                              je .__endwhile__38
+                              je .__endwhile__45
                            ; Body
                      ;---------------------------------------------------
                               ; If-Statement
@@ -2919,7 +3279,7 @@ jmp .__for__30
                                        push rax
                                     pop rdx ; __cond
                                     cmp rdx, 0 ; ensure condition is true
-                                    je .__else__39 ; jump to else
+                                    je .__else__46 ; jump to else
                                  ; Body
                                     ; Pre-Increment - int
                                        ; RHS
@@ -2931,19 +3291,19 @@ jmp .__for__30
                                        push rax ; push result
                                     ; Statement results can be ignored
                                     pop rdx
-                                 jmp .__endif__39 ; jump to end of condition chain
+                                 jmp .__endif__46 ; jump to end of condition chain
                         ;------------------------------------------------
                                  ; Else-Statement
-.__else__39:
-                                 ; Break out of __while__38
-                                 jmp .__endwhile__38
+.__else__46:
+                                 ; Break out of __while__45
+                                 jmp .__endwhile__45
                         ;------------------------------------------------
                                  ; End of if
-.__endif__39:
+.__endif__46:
                      ;---------------------------------------------------
-                           jmp .__while__38
+                           jmp .__while__45
                            ; End of While
-.__endwhile__38:
+.__endwhile__45:
                ;---------------------------------------------------------
                         ; Method Call - Vector<:char[]:>::pushBack(char[]) -> void
                            ; Make space for 1 arg(s) and object parameter
@@ -2993,14 +3353,14 @@ jmp .__for__30
                                     push rax
                               ; LHS
                                  ; Variable Declaration - k
-                                    mov rax, qword [rbp - 56]  ; __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k
+                                    mov rax, qword [rbp - 56]  ; __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k
                               pop rdx ; rhs value
                               mov qword [rbp - 56], rdx
                               push rdx
                            ; Loop init result can be discarded
                            pop rax
-                        jmp .__forcond__40
-.__for__40:
+                        jmp .__forcond__47
+.__for__47:
                            ; Update
                               ; Pre-Increment - int
                                  ; RHS
@@ -3012,7 +3372,7 @@ jmp .__for__30
                                  push rax ; push result
                               ; Loop update result can be discarded
                               pop rax
-.__forcond__40:
+.__forcond__47:
                            ; Condition
                               ; Less Than
                                  ; LHS
@@ -3029,7 +3389,7 @@ jmp .__for__30
                                  push rax
                               pop rax ; __cond
                               cmp rax, 0 ; __cond
-                              je .__endfor__40
+                              je .__endfor__47
                            ; Body
                      ;---------------------------------------------------
                               ; Code Block
@@ -3081,9 +3441,9 @@ jmp .__for__30
                                  pop rdx
                      ;---------------------------------------------------
                            ; Repeat
-jmp .__for__40
+jmp .__for__47
                            ; End of For
-.__endfor__40:
+.__endfor__47:
                ;---------------------------------------------------------
                         ; Assignment - '='
                            ; RHS
@@ -3130,9 +3490,9 @@ jmp .__for__40
                         ; Statement results can be ignored
                         pop rdx
             ;------------------------------------------------------------
-                  jmp .__endif__36 ; jump to end of condition chain
+                  jmp .__endif__43 ; jump to end of condition chain
                   ; End of if
-.__endif__36:
+.__endif__43:
       ;------------------------------------------------------------------
                ; Pre-Increment - int
                   ; RHS
@@ -3145,9 +3505,9 @@ jmp .__for__40
                ; Statement results can be ignored
                pop rdx
    ;---------------------------------------------------------------------
-         jmp .__while__34
+         jmp .__while__41
          ; End of While
-.__endwhile__34:
+.__endwhile__41:
 ;---------------------------------------------------------------------------
          ; Return
          ; Identifier - Vector<:char[]:> tokens
@@ -3202,7 +3562,7 @@ jmp .__for__40
                push rax
             pop rdx ; __cond
             cmp rdx, 0 ; ensure condition is true
-            je .__endif__43 ; jump to end
+            je .__endif__50 ; jump to end
          ; Body
             ; Return
                ; Identifier - int a
@@ -3212,9 +3572,9 @@ jmp .__for__40
                mov rsp, rbp ; remove local vars + unpopped pushes
                pop rbp
                ret
-         jmp .__endif__43 ; jump to end of condition chain
+         jmp .__endif__50 ; jump to end of condition chain
          ; End of if
-.__endif__43:
+.__endif__50:
 ;---------------------------------------------------------------------------
          ; Return
          ; Identifier - int b
@@ -3269,7 +3629,7 @@ jmp .__for__40
                push rax
             pop rdx ; __cond
             cmp rdx, 0 ; ensure condition is true
-            je .__endif__45 ; jump to end
+            je .__endif__52 ; jump to end
          ; Body
             ; Return
                ; Identifier - float a
@@ -3280,9 +3640,9 @@ jmp .__for__40
                mov rsp, rbp ; remove local vars + unpopped pushes
                pop rbp
                ret
-         jmp .__endif__45 ; jump to end of condition chain
+         jmp .__endif__52 ; jump to end of condition chain
          ; End of if
-.__endif__45:
+.__endif__52:
 ;---------------------------------------------------------------------------
          ; Return
          ; Identifier - float b
@@ -3338,7 +3698,7 @@ jmp .__for__40
                push rax
             pop rdx ; __cond
             cmp rdx, 0 ; ensure condition is true
-            je .__endif__47 ; jump to end
+            je .__endif__54 ; jump to end
          ; Body
             ; Return
                ; Identifier - int a
@@ -3348,9 +3708,9 @@ jmp .__for__40
                mov rsp, rbp ; remove local vars + unpopped pushes
                pop rbp
                ret
-         jmp .__endif__47 ; jump to end of condition chain
+         jmp .__endif__54 ; jump to end of condition chain
          ; End of if
-.__endif__47:
+.__endif__54:
 ;---------------------------------------------------------------------------
          ; Return
          ; Identifier - int b
@@ -3405,7 +3765,7 @@ jmp .__for__40
                push rax
             pop rdx ; __cond
             cmp rdx, 0 ; ensure condition is true
-            je .__endif__49 ; jump to end
+            je .__endif__56 ; jump to end
          ; Body
             ; Return
                ; Identifier - float a
@@ -3416,9 +3776,9 @@ jmp .__for__40
                mov rsp, rbp ; remove local vars + unpopped pushes
                pop rbp
                ret
-         jmp .__endif__49 ; jump to end of condition chain
+         jmp .__endif__56 ; jump to end of condition chain
          ; End of if
-.__endif__49:
+.__endif__56:
 ;---------------------------------------------------------------------------
          ; Return
          ; Identifier - float b
@@ -3474,7 +3834,7 @@ jmp .__for__40
                push rax
             pop rdx ; __cond
             cmp rdx, 0 ; ensure condition is true
-            je .__endif__51 ; jump to end
+            je .__endif__58 ; jump to end
          ; Body
             ; Return
                ; Negative - int
@@ -3491,9 +3851,9 @@ jmp .__for__40
                mov rsp, rbp ; remove local vars + unpopped pushes
                pop rbp
                ret
-         jmp .__endif__51 ; jump to end of condition chain
+         jmp .__endif__58 ; jump to end of condition chain
          ; End of if
-.__endif__51:
+.__endif__58:
 ;---------------------------------------------------------------------------
          ; Return
          ; Identifier - int v
@@ -3548,7 +3908,7 @@ jmp .__for__40
                push rax
             pop rdx ; __cond
             cmp rdx, 0 ; ensure condition is true
-            je .__endif__53 ; jump to end
+            je .__endif__60 ; jump to end
          ; Body
             ; Return
                ; Negative - float
@@ -3568,9 +3928,9 @@ jmp .__for__40
                mov rsp, rbp ; remove local vars + unpopped pushes
                pop rbp
                ret
-         jmp .__endif__53 ; jump to end of condition chain
+         jmp .__endif__60 ; jump to end of condition chain
          ; End of if
-.__endif__53:
+.__endif__60:
 ;---------------------------------------------------------------------------
          ; Return
          ; Identifier - float v
@@ -3632,7 +3992,7 @@ jmp .__for__40
          pop rdx
 ;------------------------------------------------------------------------------------
          ; While-Loop
-.__while__54:
+.__while__61:
          ; Condition
          ; Not Equal
          ; LHS
@@ -3649,7 +4009,7 @@ jmp .__for__40
          push rax
          pop rax ; __cond
          cmp rax, 0 ; __cond
-         je .__endwhile__54
+         je .__endwhile__61
          ; Body
 ;------------------------------------------------------------------------------
          ; Code Block
@@ -3694,9 +4054,9 @@ jmp .__for__40
          ; Statement results can be ignored
          pop rdx
 ;------------------------------------------------------------------------------
-         jmp .__while__54
+         jmp .__while__61
          ; End of While
-.__endwhile__54:
+.__endwhile__61:
 ;------------------------------------------------------------------------------------
 ; ====================================================================================
          ; Function Declaration - manhattan(int, int, int, int) -> int
@@ -4213,14 +4573,14 @@ jmp .__for__40
          push rax
          ; LHS
          ; Variable Declaration - i
-         mov rax, qword [rbp - 96]  ; __main__for__59__i
+         mov rax, qword [rbp - 96]  ; __main__for__66__i
          pop rdx ; rhs value
          mov qword [rbp - 96], rdx
          push rdx
          ; Loop init result can be discarded
          pop rax
-         jmp .__forcond__59
-.__for__59:
+         jmp .__forcond__66
+.__for__66:
          ; Update
          ; Pre-Increment - int
          ; RHS
@@ -4232,7 +4592,7 @@ jmp .__for__40
          push rax ; push result
          ; Loop update result can be discarded
          pop rax
-.__forcond__59:
+.__forcond__66:
          ; Condition
          ; Less Than
          ; LHS
@@ -4256,7 +4616,7 @@ jmp .__for__40
          push rax
          pop rax ; __cond
          cmp rax, 0 ; __cond
-         je .__endfor__59
+         je .__endfor__66
          ; Body
 ;---------------------------------------------------------------------------------
          ; Code Block
@@ -4281,7 +4641,7 @@ jmp .__for__40
             push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
          ; LHS
          ; Variable Declaration - line
-            mov rax, qword [rbp - 104]  ; __main__for__59__block__60__line
+            mov rax, qword [rbp - 104]  ; __main__for__66__block__67__line
          pop rdx ; rhs value
          mov qword [rbp - 104], rdx
          push rdx
@@ -4313,7 +4673,7 @@ jmp .__for__40
             push rax
          ; LHS
          ; Variable Declaration - tokens
-            mov rax, qword [rbp - 112]  ; __main__for__59__block__60__tokens
+            mov rax, qword [rbp - 112]  ; __main__for__66__block__67__tokens
          pop rdx ; rhs value
          mov qword [rbp - 112], rdx
          push rdx
@@ -4355,7 +4715,7 @@ jmp .__for__40
             push rax
          ; LHS
          ; Variable Declaration - amt
-            mov rax, qword [rbp - 120]  ; __main__for__59__block__60__amt
+            mov rax, qword [rbp - 120]  ; __main__for__66__block__67__amt
          pop rdx ; rhs value
          mov qword [rbp - 120], rdx
          push rdx
@@ -4371,14 +4731,14 @@ jmp .__for__40
                push rax
          ; LHS
             ; Variable Declaration - j
-               mov rax, qword [rbp - 128]  ; __main__for__59__block__60__for__61__j
+               mov rax, qword [rbp - 128]  ; __main__for__66__block__67__for__68__j
          pop rdx ; rhs value
          mov qword [rbp - 128], rdx
          push rdx
          ; Loop init result can be discarded
          pop rax
-         jmp .__forcond__61
-.__for__61:
+         jmp .__forcond__68
+.__for__68:
          ; Update
          ; Pre-Increment - int
             ; RHS
@@ -4390,7 +4750,7 @@ jmp .__for__40
             push rax ; push result
          ; Loop update result can be discarded
          pop rax
-.__forcond__61:
+.__forcond__68:
          ; Condition
          ; Less Than
             ; LHS
@@ -4407,7 +4767,7 @@ jmp .__for__40
             push rax
          pop rax ; __cond
          cmp rax, 0 ; __cond
-         je .__endfor__61
+         je .__endfor__68
          ; Body
 ;------------------------------------------------------------------------
          ; Code Block
@@ -4456,7 +4816,7 @@ jmp .__for__40
                      push rax
                   pop rdx ; __cond
                   cmp rdx, 0 ; ensure condition is true
-                  je .__elif__63x0 ; jump to first elif
+                  je .__elif__70x0 ; jump to first elif
                ; Body
          ;---------------------------------------------------------------
                   ; Code Block
@@ -4471,10 +4831,10 @@ jmp .__for__40
                      ; Statement results can be ignored
                      pop rdx
          ;---------------------------------------------------------------
-               jmp .__endif__63 ; jump to end of condition chain
+               jmp .__endif__70 ; jump to end of condition chain
       ;------------------------------------------------------------------
                ; Elif-Statement
-.__elif__63x0:
+.__elif__70x0:
                   ; Condition
                   ; Equal
                      ; LHS
@@ -4518,7 +4878,7 @@ jmp .__for__40
                      push rax
                   pop rdx ; __cond
                   cmp rdx, 0 ; ensure condition is true
-                  je .__elif__63x1
+                  je .__elif__70x1
                   ; Body
          ;---------------------------------------------------------------
                   ; Code Block
@@ -4533,11 +4893,11 @@ jmp .__for__40
                      ; Statement results can be ignored
                      pop rdx
          ;---------------------------------------------------------------
-                  jmp .__endif__63
+                  jmp .__endif__70
       ;------------------------------------------------------------------
       ;------------------------------------------------------------------
                ; Elif-Statement
-.__elif__63x1:
+.__elif__70x1:
                   ; Condition
                   ; Equal
                      ; LHS
@@ -4581,7 +4941,7 @@ jmp .__for__40
                      push rax
                   pop rdx ; __cond
                   cmp rdx, 0 ; ensure condition is true
-                  je .__elif__63x2
+                  je .__elif__70x2
                   ; Body
          ;---------------------------------------------------------------
                   ; Code Block
@@ -4596,11 +4956,11 @@ jmp .__for__40
                      ; Statement results can be ignored
                      pop rdx
          ;---------------------------------------------------------------
-                  jmp .__endif__63
+                  jmp .__endif__70
       ;------------------------------------------------------------------
       ;------------------------------------------------------------------
                ; Elif-Statement
-.__elif__63x2:
+.__elif__70x2:
                   ; Condition
                   ; Equal
                      ; LHS
@@ -4644,7 +5004,7 @@ jmp .__for__40
                      push rax
                   pop rdx ; __cond
                   cmp rdx, 0 ; ensure condition is true
-                  je .__endif__63
+                  je .__endif__70
                   ; Body
          ;---------------------------------------------------------------
                   ; Code Block
@@ -4659,10 +5019,10 @@ jmp .__for__40
                      ; Statement results can be ignored
                      pop rdx
          ;---------------------------------------------------------------
-                  jmp .__endif__63
+                  jmp .__endif__70
       ;------------------------------------------------------------------
                ; End of if
-.__endif__63:
+.__endif__70:
    ;---------------------------------------------------------------------
             ; Assignment - '='
                ; RHS
@@ -4671,7 +5031,7 @@ jmp .__for__40
                      push rax
                ; LHS
                   ; Variable Declaration - tail_moved
-                     mov rax, qword [rbp - 136]  ; __main__for__59__block__60__for__61__block__62__tail_moved
+                     mov rax, qword [rbp - 136]  ; __main__for__66__block__67__for__68__block__69__tail_moved
                pop rdx ; rhs value
                mov qword [rbp - 136], rdx
                push rdx
@@ -4706,7 +5066,7 @@ jmp .__for__40
                      push rax
                ; LHS
                   ; Variable Declaration - deltax
-                     mov rax, qword [rbp - 144]  ; __main__for__59__block__60__for__61__block__62__deltax
+                     mov rax, qword [rbp - 144]  ; __main__for__66__block__67__for__68__block__69__deltax
                pop rdx ; rhs value
                mov qword [rbp - 144], rdx
                push rdx
@@ -4741,7 +5101,7 @@ jmp .__for__40
                      push rax
                ; LHS
                   ; Variable Declaration - deltay
-                     mov rax, qword [rbp - 152]  ; __main__for__59__block__60__for__61__block__62__deltay
+                     mov rax, qword [rbp - 152]  ; __main__for__66__block__67__for__68__block__69__deltay
                pop rdx ; rhs value
                mov qword [rbp - 152], rdx
                push rdx
@@ -4768,7 +5128,7 @@ jmp .__for__40
                      ; Check if we need to short-circuit
                         pop rax ; __lhs
                         test rax, rax
-                        je .AND_SHORT_CIRCUIT69
+                        je .AND_SHORT_CIRCUIT76
                      ; Eval RHS
                         ; Greater Than or Equal to
                            ; LHS
@@ -4787,18 +5147,18 @@ jmp .__for__40
                      ; Check RHS
                         pop rax ; __rhs
                         test rax, rax
-                        je .AND_SHORT_CIRCUIT69
+                        je .AND_SHORT_CIRCUIT76
                      ; Success state
                      mov rax, 1 ; result = True
-                     jmp .AND_END69
-.AND_SHORT_CIRCUIT69:
+                     jmp .AND_END76
+.AND_SHORT_CIRCUIT76:
                      mov rax, 0 ; result = False
-.AND_END69:
+.AND_END76:
                      movzx eax, al
                      push rax ; result
                   pop rdx ; __cond
                   cmp rdx, 0 ; ensure condition is true
-                  je .__elif__68x0 ; jump to first elif
+                  je .__elif__75x0 ; jump to first elif
                ; Body
          ;---------------------------------------------------------------
                   ; Code Block
@@ -4819,7 +5179,7 @@ jmp .__for__40
                               push rax
                         ; LHS
                            ; Variable Declaration - isup
-                              mov rax, qword [rbp - 160]  ; __main__for__59__block__60__for__61__block__62__if__68__block__70__isup
+                              mov rax, qword [rbp - 160]  ; __main__for__66__block__67__for__68__block__69__if__75__block__77__isup
                         pop rdx ; rhs value
                         mov qword [rbp - 160], rdx
                         push rdx
@@ -4832,7 +5192,7 @@ jmp .__for__40
                               push qword [rbp - 160]
                            pop rdx ; __cond
                            cmp rdx, 0 ; ensure condition is true
-                           je .__else__71 ; jump to else
+                           je .__else__78 ; jump to else
                         ; Body
                   ;------------------------------------------------------
                            ; Code Block
@@ -4849,10 +5209,10 @@ jmp .__for__40
                               ; Statement results can be ignored
                               pop rdx
                   ;------------------------------------------------------
-                        jmp .__endif__71 ; jump to end of condition chain
+                        jmp .__endif__78 ; jump to end of condition chain
                ;---------------------------------------------------------
                         ; Else-Statement
-.__else__71:
+.__else__78:
                ;---------------------------------------------------------
                         ; Code Block
                            ; Assignment - '-='
@@ -4870,7 +5230,7 @@ jmp .__for__40
                ;---------------------------------------------------------
                ;---------------------------------------------------------
                         ; End of if
-.__endif__71:
+.__endif__78:
             ;------------------------------------------------------------
                      ; Assignment - '='
                         ; RHS
@@ -4883,10 +5243,10 @@ jmp .__for__40
                      ; Statement results can be ignored
                      pop rdx
          ;---------------------------------------------------------------
-               jmp .__endif__68 ; jump to end of condition chain
+               jmp .__endif__75 ; jump to end of condition chain
       ;------------------------------------------------------------------
                ; Elif-Statement
-.__elif__68x0:
+.__elif__75x0:
                   ; Condition
                   ; AND
                      ; Eval LHS
@@ -4906,7 +5266,7 @@ jmp .__for__40
                      ; Check if we need to short-circuit
                         pop rax ; __lhs
                         test rax, rax
-                        je .AND_SHORT_CIRCUIT74
+                        je .AND_SHORT_CIRCUIT81
                      ; Eval RHS
                         ; Greater Than or Equal to
                            ; LHS
@@ -4925,18 +5285,18 @@ jmp .__for__40
                      ; Check RHS
                         pop rax ; __rhs
                         test rax, rax
-                        je .AND_SHORT_CIRCUIT74
+                        je .AND_SHORT_CIRCUIT81
                      ; Success state
                      mov rax, 1 ; result = True
-                     jmp .AND_END74
-.AND_SHORT_CIRCUIT74:
+                     jmp .AND_END81
+.AND_SHORT_CIRCUIT81:
                      mov rax, 0 ; result = False
-.AND_END74:
+.AND_END81:
                      movzx eax, al
                      push rax ; result
                   pop rdx ; __cond
                   cmp rdx, 0 ; ensure condition is true
-                  je .__elif__68x1
+                  je .__elif__75x1
                   ; Body
          ;---------------------------------------------------------------
                   ; Code Block
@@ -4957,7 +5317,7 @@ jmp .__for__40
                               push rax
                         ; LHS
                            ; Variable Declaration - isright
-                              mov rax, qword [rbp - 168]  ; __main__for__59__block__60__for__61__block__62__elif__68x1__block__75__isright
+                              mov rax, qword [rbp - 168]  ; __main__for__66__block__67__for__68__block__69__elif__75x1__block__82__isright
                         pop rdx ; rhs value
                         mov qword [rbp - 168], rdx
                         push rdx
@@ -4970,7 +5330,7 @@ jmp .__for__40
                               push qword [rbp - 168]
                            pop rdx ; __cond
                            cmp rdx, 0 ; ensure condition is true
-                           je .__else__76 ; jump to else
+                           je .__else__83 ; jump to else
                         ; Body
                   ;------------------------------------------------------
                            ; Code Block
@@ -4987,10 +5347,10 @@ jmp .__for__40
                               ; Statement results can be ignored
                               pop rdx
                   ;------------------------------------------------------
-                        jmp .__endif__76 ; jump to end of condition chain
+                        jmp .__endif__83 ; jump to end of condition chain
                ;---------------------------------------------------------
                         ; Else-Statement
-.__else__76:
+.__else__83:
                ;---------------------------------------------------------
                         ; Code Block
                            ; Assignment - '-='
@@ -5008,7 +5368,7 @@ jmp .__for__40
                ;---------------------------------------------------------
                ;---------------------------------------------------------
                         ; End of if
-.__endif__76:
+.__endif__83:
             ;------------------------------------------------------------
                      ; Assignment - '='
                         ; RHS
@@ -5021,11 +5381,11 @@ jmp .__for__40
                      ; Statement results can be ignored
                      pop rdx
          ;---------------------------------------------------------------
-                  jmp .__endif__68
+                  jmp .__endif__75
       ;------------------------------------------------------------------
       ;------------------------------------------------------------------
                ; Elif-Statement
-.__elif__68x1:
+.__elif__75x1:
                   ; Condition
                   ; AND
                      ; Eval LHS
@@ -5047,7 +5407,7 @@ jmp .__for__40
                            ; Check if we need to short-circuit
                               pop rax ; __lhs
                               test rax, rax
-                              je .AND_SHORT_CIRCUIT79
+                              je .AND_SHORT_CIRCUIT86
                            ; Eval RHS
                               ; Not Equal
                                  ; LHS
@@ -5065,19 +5425,19 @@ jmp .__for__40
                            ; Check RHS
                               pop rax ; __rhs
                               test rax, rax
-                              je .AND_SHORT_CIRCUIT79
+                              je .AND_SHORT_CIRCUIT86
                            ; Success state
                            mov rax, 1 ; result = True
-                           jmp .AND_END79
-.AND_SHORT_CIRCUIT79:
+                           jmp .AND_END86
+.AND_SHORT_CIRCUIT86:
                            mov rax, 0 ; result = False
-.AND_END79:
+.AND_END86:
                            movzx eax, al
                            push rax ; result
                      ; Check if we need to short-circuit
                         pop rax ; __lhs
                         test rax, rax
-                        je .AND_SHORT_CIRCUIT80
+                        je .AND_SHORT_CIRCUIT87
                      ; Eval RHS
                         ; Greater Than
                            ; LHS
@@ -5128,18 +5488,18 @@ jmp .__for__40
                      ; Check RHS
                         pop rax ; __rhs
                         test rax, rax
-                        je .AND_SHORT_CIRCUIT80
+                        je .AND_SHORT_CIRCUIT87
                      ; Success state
                      mov rax, 1 ; result = True
-                     jmp .AND_END80
-.AND_SHORT_CIRCUIT80:
+                     jmp .AND_END87
+.AND_SHORT_CIRCUIT87:
                      mov rax, 0 ; result = False
-.AND_END80:
+.AND_END87:
                      movzx eax, al
                      push rax ; result
                   pop rdx ; __cond
                   cmp rdx, 0 ; ensure condition is true
-                  je .__endif__68
+                  je .__endif__75
                   ; Body
          ;---------------------------------------------------------------
                   ; Code Block
@@ -5160,7 +5520,7 @@ jmp .__for__40
                               push rax
                         ; LHS
                            ; Variable Declaration - isup
-                              mov rax, qword [rbp - 176]  ; __main__for__59__block__60__for__61__block__62__elif__68x2__block__81__isup
+                              mov rax, qword [rbp - 176]  ; __main__for__66__block__67__for__68__block__69__elif__75x2__block__88__isup
                         pop rdx ; rhs value
                         mov qword [rbp - 176], rdx
                         push rdx
@@ -5183,7 +5543,7 @@ jmp .__for__40
                               push rax
                         ; LHS
                            ; Variable Declaration - isright
-                              mov rax, qword [rbp - 184]  ; __main__for__59__block__60__for__61__block__62__elif__68x2__block__81__isright
+                              mov rax, qword [rbp - 184]  ; __main__for__66__block__67__for__68__block__69__elif__75x2__block__88__isright
                         pop rdx ; rhs value
                         mov qword [rbp - 184], rdx
                         push rdx
@@ -5199,25 +5559,25 @@ jmp .__for__40
                               ; Check if we need to short-circuit
                                  pop rax ; __lhs
                                  test rax, rax
-                                 je .AND_SHORT_CIRCUIT83
+                                 je .AND_SHORT_CIRCUIT90
                               ; Eval RHS
                                  ; Identifier - int isright
                                     push qword [rbp - 184]
                               ; Check RHS
                                  pop rax ; __rhs
                                  test rax, rax
-                                 je .AND_SHORT_CIRCUIT83
+                                 je .AND_SHORT_CIRCUIT90
                               ; Success state
                               mov rax, 1 ; result = True
-                              jmp .AND_END83
-.AND_SHORT_CIRCUIT83:
+                              jmp .AND_END90
+.AND_SHORT_CIRCUIT90:
                               mov rax, 0 ; result = False
-.AND_END83:
+.AND_END90:
                               movzx eax, al
                               push rax ; result
                            pop rdx ; __cond
                            cmp rdx, 0 ; ensure condition is true
-                           je .__elif__82x0 ; jump to first elif
+                           je .__elif__89x0 ; jump to first elif
                         ; Body
                   ;------------------------------------------------------
                            ; Code Block
@@ -5242,10 +5602,10 @@ jmp .__for__40
                               ; Statement results can be ignored
                               pop rdx
                   ;------------------------------------------------------
-                        jmp .__endif__82 ; jump to end of condition chain
+                        jmp .__endif__89 ; jump to end of condition chain
                ;---------------------------------------------------------
                         ; Elif-Statement
-.__elif__82x0:
+.__elif__89x0:
                            ; Condition
                            ; AND
                               ; Eval LHS
@@ -5261,25 +5621,25 @@ jmp .__for__40
                               ; Check if we need to short-circuit
                                  pop rax ; __lhs
                                  test rax, rax
-                                 je .AND_SHORT_CIRCUIT85
+                                 je .AND_SHORT_CIRCUIT92
                               ; Eval RHS
                                  ; Identifier - int isright
                                     push qword [rbp - 184]
                               ; Check RHS
                                  pop rax ; __rhs
                                  test rax, rax
-                                 je .AND_SHORT_CIRCUIT85
+                                 je .AND_SHORT_CIRCUIT92
                               ; Success state
                               mov rax, 1 ; result = True
-                              jmp .AND_END85
-.AND_SHORT_CIRCUIT85:
+                              jmp .AND_END92
+.AND_SHORT_CIRCUIT92:
                               mov rax, 0 ; result = False
-.AND_END85:
+.AND_END92:
                               movzx eax, al
                               push rax ; result
                            pop rdx ; __cond
                            cmp rdx, 0 ; ensure condition is true
-                           je .__elif__82x1
+                           je .__elif__89x1
                            ; Body
                   ;------------------------------------------------------
                            ; Code Block
@@ -5304,11 +5664,11 @@ jmp .__for__40
                               ; Statement results can be ignored
                               pop rdx
                   ;------------------------------------------------------
-                           jmp .__endif__82
+                           jmp .__endif__89
                ;---------------------------------------------------------
                ;---------------------------------------------------------
                         ; Elif-Statement
-.__elif__82x1:
+.__elif__89x1:
                            ; Condition
                            ; AND
                               ; Eval LHS
@@ -5324,7 +5684,7 @@ jmp .__for__40
                               ; Check if we need to short-circuit
                                  pop rax ; __lhs
                                  test rax, rax
-                                 je .AND_SHORT_CIRCUIT87
+                                 je .AND_SHORT_CIRCUIT94
                               ; Eval RHS
                                  ; Negate - int
                                     ; RHS
@@ -5338,18 +5698,18 @@ jmp .__for__40
                               ; Check RHS
                                  pop rax ; __rhs
                                  test rax, rax
-                                 je .AND_SHORT_CIRCUIT87
+                                 je .AND_SHORT_CIRCUIT94
                               ; Success state
                               mov rax, 1 ; result = True
-                              jmp .AND_END87
-.AND_SHORT_CIRCUIT87:
+                              jmp .AND_END94
+.AND_SHORT_CIRCUIT94:
                               mov rax, 0 ; result = False
-.AND_END87:
+.AND_END94:
                               movzx eax, al
                               push rax ; result
                            pop rdx ; __cond
                            cmp rdx, 0 ; ensure condition is true
-                           je .__elif__82x2
+                           je .__elif__89x2
                            ; Body
                   ;------------------------------------------------------
                            ; Code Block
@@ -5374,11 +5734,11 @@ jmp .__for__40
                               ; Statement results can be ignored
                               pop rdx
                   ;------------------------------------------------------
-                           jmp .__endif__82
+                           jmp .__endif__89
                ;---------------------------------------------------------
                ;---------------------------------------------------------
                         ; Elif-Statement
-.__elif__82x2:
+.__elif__89x2:
                            ; Condition
                            ; AND
                               ; Eval LHS
@@ -5387,7 +5747,7 @@ jmp .__for__40
                               ; Check if we need to short-circuit
                                  pop rax ; __lhs
                                  test rax, rax
-                                 je .AND_SHORT_CIRCUIT89
+                                 je .AND_SHORT_CIRCUIT96
                               ; Eval RHS
                                  ; Negate - int
                                     ; RHS
@@ -5401,18 +5761,18 @@ jmp .__for__40
                               ; Check RHS
                                  pop rax ; __rhs
                                  test rax, rax
-                                 je .AND_SHORT_CIRCUIT89
+                                 je .AND_SHORT_CIRCUIT96
                               ; Success state
                               mov rax, 1 ; result = True
-                              jmp .AND_END89
-.AND_SHORT_CIRCUIT89:
+                              jmp .AND_END96
+.AND_SHORT_CIRCUIT96:
                               mov rax, 0 ; result = False
-.AND_END89:
+.AND_END96:
                               movzx eax, al
                               push rax ; result
                            pop rdx ; __cond
                            cmp rdx, 0 ; ensure condition is true
-                           je .__endif__82
+                           je .__endif__89
                            ; Body
                   ;------------------------------------------------------
                            ; Code Block
@@ -5437,10 +5797,10 @@ jmp .__for__40
                               ; Statement results can be ignored
                               pop rdx
                   ;------------------------------------------------------
-                           jmp .__endif__82
+                           jmp .__endif__89
                ;---------------------------------------------------------
                         ; End of if
-.__endif__82:
+.__endif__89:
             ;------------------------------------------------------------
                      ; Assignment - '='
                         ; RHS
@@ -5453,10 +5813,10 @@ jmp .__for__40
                      ; Statement results can be ignored
                      pop rdx
          ;---------------------------------------------------------------
-                  jmp .__endif__68
+                  jmp .__endif__75
       ;------------------------------------------------------------------
                ; End of if
-.__endif__68:
+.__endif__75:
    ;---------------------------------------------------------------------
    ;---------------------------------------------------------------------
             ; If-Statement
@@ -5465,7 +5825,7 @@ jmp .__for__40
                      push qword [rbp - 136]
                   pop rdx ; __cond
                   cmp rdx, 0 ; ensure condition is true
-                  je .__endif__91 ; jump to end
+                  je .__endif__98 ; jump to end
                ; Body
          ;---------------------------------------------------------------
                   ; Code Block
@@ -5476,7 +5836,7 @@ jmp .__for__40
                               push rax
                         ; LHS
                            ; Variable Declaration - exists
-                              mov rax, qword [rbp - 192]  ; __main__for__59__block__60__for__61__block__62__if__91__block__92__exists
+                              mov rax, qword [rbp - 192]  ; __main__for__66__block__67__for__68__block__69__if__98__block__99__exists
                         pop rdx ; rhs value
                         mov qword [rbp - 192], rdx
                         push rdx
@@ -5492,14 +5852,14 @@ jmp .__for__40
                                  push rax
                            ; LHS
                               ; Variable Declaration - k
-                                 mov rax, qword [rbp - 200]  ; __main__for__59__block__60__for__61__block__62__if__91__block__92__for__93__k
+                                 mov rax, qword [rbp - 200]  ; __main__for__66__block__67__for__68__block__69__if__98__block__99__for__100__k
                            pop rdx ; rhs value
                            mov qword [rbp - 200], rdx
                            push rdx
                         ; Loop init result can be discarded
                         pop rax
-                     jmp .__forcond__93
-.__for__93:
+                     jmp .__forcond__100
+.__for__100:
                         ; Update
                            ; Pre-Increment - int
                               ; RHS
@@ -5511,7 +5871,7 @@ jmp .__for__40
                               push rax ; push result
                            ; Loop update result can be discarded
                            pop rax
-.__forcond__93:
+.__forcond__100:
                         ; Condition
                            ; Less Than
                               ; LHS
@@ -5535,10 +5895,37 @@ jmp .__for__40
                               push rax
                            pop rax ; __cond
                            cmp rax, 0 ; __cond
-                           je .__endfor__93
+                           je .__endfor__100
                         ; Body
                   ;------------------------------------------------------
                            ; Code Block
+                              ; Assignment - '='
+                                 ; RHS
+                                    ; Subscript
+                                       ; LHS
+                                          ; Member Accessor
+                                             ; LHS
+                                                ; Identifier - Vector<:Point:> tail_positions
+                                                   push qword [rbp - 24]
+                                             ; RHS
+                                                push qword [.__field____main____Vector__Point____data] ; stored index associated with field that is being accessed
+                                             pop rdx ; rhs
+                                             pop rax ; lhs
+                                             push qword [rax + 8*rdx] ; lhs.rhs
+                                       ; OFFSET
+                                          ; Identifier - int k
+                                             push qword [rbp - 200]
+                                       pop rdx ; __offset
+                                       pop rax ; __pointer
+                                       push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
+                                 ; LHS
+                                    ; Variable Declaration - tail_pos
+                                       mov rax, qword [rbp - 208]  ; __main__for__66__block__67__for__68__block__69__if__98__block__99__for__100__block__101__tail_pos
+                                 pop rdx ; rhs value
+                                 mov qword [rbp - 208], rdx
+                                 push rdx
+                              ; Statement results can be ignored
+                              pop rdx
                      ;---------------------------------------------------
                               ; If-Statement
                                  ; Condition
@@ -5548,23 +5935,8 @@ jmp .__for__40
                                              ; LHS
                                                 ; Member Accessor
                                                    ; LHS
-                                                      ; Subscript
-                                                         ; LHS
-                                                            ; Member Accessor
-                                                               ; LHS
-                                                                  ; Identifier - Vector<:Point:> tail_positions
-                                                                     push qword [rbp - 24]
-                                                               ; RHS
-                                                                  push qword [.__field____main____Vector__Point____data] ; stored index associated with field that is being accessed
-                                                               pop rdx ; rhs
-                                                               pop rax ; lhs
-                                                               push qword [rax + 8*rdx] ; lhs.rhs
-                                                         ; OFFSET
-                                                            ; Identifier - int k
-                                                               push qword [rbp - 200]
-                                                         pop rdx ; __offset
-                                                         pop rax ; __pointer
-                                                         push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
+                                                      ; Identifier - Point tail_pos
+                                                         push qword [rbp - 208]
                                                    ; RHS
                                                       push qword [.__field____main____Point____x] ; stored index associated with field that is being accessed
                                                    pop rdx ; rhs
@@ -5582,29 +5954,14 @@ jmp .__for__40
                                        ; Check if we need to short-circuit
                                           pop rax ; __lhs
                                           test rax, rax
-                                          je .AND_SHORT_CIRCUIT96
+                                          je .AND_SHORT_CIRCUIT103
                                        ; Eval RHS
                                           ; Equal
                                              ; LHS
                                                 ; Member Accessor
                                                    ; LHS
-                                                      ; Subscript
-                                                         ; LHS
-                                                            ; Member Accessor
-                                                               ; LHS
-                                                                  ; Identifier - Vector<:Point:> tail_positions
-                                                                     push qword [rbp - 24]
-                                                               ; RHS
-                                                                  push qword [.__field____main____Vector__Point____data] ; stored index associated with field that is being accessed
-                                                               pop rdx ; rhs
-                                                               pop rax ; lhs
-                                                               push qword [rax + 8*rdx] ; lhs.rhs
-                                                         ; OFFSET
-                                                            ; Identifier - int k
-                                                               push qword [rbp - 200]
-                                                         pop rdx ; __offset
-                                                         pop rax ; __pointer
-                                                         push qword [rax + 8*rdx] ; pointer + sizeof(data_t) * offset
+                                                      ; Identifier - Point tail_pos
+                                                         push qword [rbp - 208]
                                                    ; RHS
                                                       push qword [.__field____main____Point____y] ; stored index associated with field that is being accessed
                                                    pop rdx ; rhs
@@ -5622,18 +5979,18 @@ jmp .__for__40
                                        ; Check RHS
                                           pop rax ; __rhs
                                           test rax, rax
-                                          je .AND_SHORT_CIRCUIT96
+                                          je .AND_SHORT_CIRCUIT103
                                        ; Success state
                                        mov rax, 1 ; result = True
-                                       jmp .AND_END96
-.AND_SHORT_CIRCUIT96:
+                                       jmp .AND_END103
+.AND_SHORT_CIRCUIT103:
                                        mov rax, 0 ; result = False
-.AND_END96:
+.AND_END103:
                                        movzx eax, al
                                        push rax ; result
                                     pop rdx ; __cond
                                     cmp rdx, 0 ; ensure condition is true
-                                    je .__endif__95 ; jump to end
+                                    je .__endif__102 ; jump to end
                                  ; Body
                            ;---------------------------------------------
                                     ; Code Block
@@ -5647,18 +6004,18 @@ jmp .__for__40
                                           push rdx
                                        ; Statement results can be ignored
                                        pop rdx
-                                       ; Break out of __for__93
-                                       jmp .__endfor__93
+                                       ; Break out of __for__100
+                                       jmp .__endfor__100
                            ;---------------------------------------------
-                                 jmp .__endif__95 ; jump to end of condition chain
+                                 jmp .__endif__102 ; jump to end of condition chain
                                  ; End of if
-.__endif__95:
+.__endif__102:
                      ;---------------------------------------------------
                   ;------------------------------------------------------
                         ; Repeat
-jmp .__for__93
+jmp .__for__100
                         ; End of For
-.__endfor__93:
+.__endfor__100:
             ;------------------------------------------------------------
             ;------------------------------------------------------------
                      ; If-Statement
@@ -5674,7 +6031,7 @@ jmp .__for__93
                               push rax ; push result
                            pop rdx ; __cond
                            cmp rdx, 0 ; ensure condition is true
-                           je .__endif__98 ; jump to end
+                           je .__endif__105 ; jump to end
                         ; Body
                            ; Method Call - Vector<:Point:>::pushBack(Point) -> void
                               ; Make space for 1 arg(s) and object parameter
@@ -5719,14 +6076,14 @@ jmp .__for__93
                               push rax
                            ; Statement results can be ignored
                            pop rdx
-                        jmp .__endif__98 ; jump to end of condition chain
+                        jmp .__endif__105 ; jump to end of condition chain
                         ; End of if
-.__endif__98:
+.__endif__105:
             ;------------------------------------------------------------
          ;---------------------------------------------------------------
-               jmp .__endif__91 ; jump to end of condition chain
+               jmp .__endif__98 ; jump to end of condition chain
                ; End of if
-.__endif__91:
+.__endif__98:
    ;---------------------------------------------------------------------
             ; Assignment - '='
                ; RHS
@@ -5846,15 +6203,15 @@ jmp .__for__93
             pop rdx
 ;------------------------------------------------------------------------
          ; Repeat
-jmp .__for__61
+jmp .__for__68
          ; End of For
-.__endfor__61:
+.__endfor__68:
 ;------------------------------------------------------------------------------
 ;---------------------------------------------------------------------------------
          ; Repeat
-jmp .__for__59
+jmp .__for__66
          ; End of For
-.__endfor__59:
+.__endfor__66:
 ;---------------------------------------------------------------------------------------
          ; Function Call - println(int) -> void
          ; Make space for 1 arg(s)

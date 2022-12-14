@@ -1,0 +1,204 @@
+
+#include "Vector.amy"
+#include "algorithms.amy"
+#include "LinkedList.amy"
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+class Element
+{
+    public field int is_list;
+    public field int value;
+    public field Vector<:Element:> list;
+    constructor (int value)
+    {
+        this.is_list = 0;
+        this.value = value;
+        this.list = null;
+    }
+    constructor (Vector<:Element:> list)
+    {
+        this.is_list = 1;
+        this.value = 0;
+        this.list = list;
+    }
+    public method void switch_to_list (Vector<:Element:> list)
+    {
+        this.is_list = 1;
+        this.value = 0;
+        this.list = list;
+    }
+}
+
+function void print (Element e)
+{
+    if (e.is_list)
+    {
+        print ('[');
+        if (e.list.size > 0)
+            print (e.list.data[0]);
+        for (int i = 1; i < e.list.size; ++i)
+        {
+            print (','); print (e.list.data[i]);
+        }
+        print (']');
+        return;
+    }
+    print (e.value);
+}
+
+template <:type0, type1:>
+class Pair
+{
+    public field type0 a;
+    public field type1 b;
+    constructor (type0 a, type1 b)
+    {
+        this.a = a;
+        this.b = b;
+    }
+}
+
+// returns built element and the updated i value
+function Pair<:Element, int:> build_element (char[] line, int i, int line_size)
+{
+    //println (i);
+    //println (line[i]);
+    // end of the line
+    // this should not happen
+    if (i >= line_size)
+        return null;
+    // match list
+    if (line[i] == '[')
+    {
+        //println ("list");
+        ++i;
+        // match comma separated values
+        Vector<:Element:> sub_elements = new Vector<:Element:> ();
+        while (line[i] != ']')
+        {
+            Pair<:Element, int:> p = build_element (line, i, line_size);
+            sub_elements.pushBack (p.a);
+            i = p.b;
+            if (line[i] == ',')
+                ++i;
+            free (p);
+        }
+        ++i;
+        Element e = new Element (sub_elements);
+        return new Pair<:Element, int:> (e, i);
+    }
+    //println ("num");
+    // match number
+    Vector<:char:> str = new Vector<:char:> ();
+    while (!(line[i] == ',' || line[i] == ']'))
+    {
+        str.pushBack (line[i]);
+        ++i;
+    }
+    // i is now at , or ]
+    str.pushBack ('\0');
+    //println (str.data);
+    int value = stringToInt (str.data);
+    return new Pair<:Element, int:> (new Element (value), i);
+}
+
+int RIGHT_ORDER = 1;
+int CONTINUE = -1;
+int WRONG_ORDER = 0;
+
+function int is_correct_order (Element a, Element b)
+{
+    // functions cannot access outter scopes -__-
+    int RIGHT_ORDER = 1;
+    int CONTINUE = -1;
+    int WRONG_ORDER = 0;
+    
+    // both values are integers
+    if (!a.is_list && !b.is_list)
+    {
+        //println ("nums");
+        //print (a.value); print (' '); println (b.value);
+        //println (a.value < b.value);
+        //println (CONTINUE);
+        // lower should be first
+        if (a.value < b.value)
+            return RIGHT_ORDER;
+        elif (a.value > b.value)
+            return WRONG_ORDER;
+        return CONTINUE;
+    }
+
+    // both values are lists
+    if (a.is_list && b.is_list)
+    {
+        //println ("lists");
+        for (int i = 0; i < a.list.size && i < b.list.size; ++i)
+        {
+            // check sub elements 
+            int res = is_correct_order (a.list.data[i], b.list.data[i]);
+            if (res == RIGHT_ORDER)
+                return RIGHT_ORDER;
+            if (res == WRONG_ORDER)
+                return WRONG_ORDER;
+            // else CONTINUE
+        }
+        // reaches here if numbers match
+        // if left list is smaller -> right order
+        if (a.list.size < b.list.size)
+            return RIGHT_ORDER;
+        // if left list is bigger -> wrong order
+        if (a.list.size > b.list.size)
+            return WRONG_ORDER;
+        // if same length -> continue
+        return CONTINUE;
+
+    }
+
+    // miss matching - turn num into list
+    //println ("miss match");
+    if (!a.is_list)
+    {
+        Element newnum = new Element (a.value);
+        a.switch_to_list (new Vector<:Element:> ());
+        a.list.pushBack (newnum);
+    }
+    if (!b.is_list)
+    {
+        Element newnum = new Element (b.value);
+        b.switch_to_list (new Vector<:Element:> ());
+        b.list.pushBack (newnum);
+    }
+    // recheck
+    return is_correct_order (a, b);
+}
+
+int pair_index = 1;
+int pair_sum = 0;
+for (int l = 0; l < lines.size; l+=3)
+{
+    //print ("pair:"); println (pair_index);
+    Pair<:Element, int:> p0 = build_element (lines.data[l+0], 0, strlen (lines.data[l+0])-1);
+    //print (p0.a); println ();
+    Pair<:Element, int:> p1 = build_element (lines.data[l+1], 0, strlen (lines.data[l+1])-1);
+    //print (p1.a); println ();
+
+    // check if pairs of packets are in the right order
+    int res = is_correct_order (p0.a, p1.a);
+    //println (res);
+
+    if (res == RIGHT_ORDER)
+        pair_sum += pair_index;
+
+    pair_index++;
+
+}
+
+println (pair_sum);
+

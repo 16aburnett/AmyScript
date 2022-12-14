@@ -1104,8 +1104,15 @@ class AmyAssemblyInterpreter:
                     s = []
                     size = heap.sizeof (src)
                     # protection for chars (since python chars a strings)
-                    if size == 1: size += 1
+                    if size == 1: 
+                        size += 1
                     # -1 to ignore null char for strings
+                    else:
+                        # strlen 
+                        j = 0
+                        while j < size and heap.memory[src+j] != '\0':
+                            j += 1
+                        size = j+1
                     for i in range(size-1):
                         s += [heap.memory[src+i]]
                     s = "".join(s)
@@ -1125,11 +1132,20 @@ class AmyAssemblyInterpreter:
                     s = []
                     size = heap.sizeof (src)
                     # protection for chars (since python chars a strings)
-                    if size == 1: size += 1
+                    if size == 1: 
+                        size += 1
                     # -1 to ignore null char for strings
+                    else:
+                        # strlen 
+                        j = 0
+                        while j < size and heap.memory[src+j] != '\0':
+                            j += 1
+                        size = j+1
                     for i in range(size-1):
                         s += [heap.memory[src+i]]
                     s = "".join(s)
+                    # print ("'"+s+"'", size)
+                    # print (heap.memory[src-10:src+10])
                     heap.memory[address] = int (s)
                 # Case 3: Invalid param type
                 else:

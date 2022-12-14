@@ -2,6 +2,9 @@
 // # # Author: Amy Burnett
 // # # ========================================================================
 
+#include <vector>
+#include <iostream>
+
 // # # ========================================================================
 
 // # # Exits the program with the given exit code 
@@ -68,8 +71,9 @@
 // # # Utilizes printf "%d"
 // # # void println (int valueToPrint)#
 // # # valueToPrint : [rbp + 16]
-// def __builtin__println__int (v):
-//     print (v)
+void __builtin__println__int (long v) {
+    printf ("%ld\n", v);
+}
 
 // # # ========================================================================
 // # # // Prints a float to the screen with a newline

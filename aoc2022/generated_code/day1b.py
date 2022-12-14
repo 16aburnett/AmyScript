@@ -33,7 +33,8 @@ def __builtin__free (ptr):
 # # void print (char[] stringToPrint)#
 # # stringToPrint : [rbp + 16]
 def __builtin__print__char__1 (s):
-    print (s, end="")
+    # collapse char[] to python string
+    print (''.join(s), end="")
 
 # # ========================================================================
 
@@ -65,7 +66,8 @@ def __builtin__print__float (v):
 # # // void println (char[] stringToPrint)#
 # # stringToPrint : [rbp + 16]
 def __builtin__println__char__1 (v):
-    print (v)
+    # collapse char[] to python string
+    print (''.join(v))
 
 # # ========================================================================
 
@@ -168,9 +170,13 @@ def __builtin__stringToInt__char__1 (s):
     #     res = 0
     # return res
     # -1 to ignore the null terminator
+    # count till null terminator
+    i = 0
+    while s[i] != '\0':
+        i += 1
     if s[-1] == '\0':
         return int(''.join(s[:-1]))
-    return int(''.join(s))
+    return int(''.join(s[:i]))
 
 
 # # //========================================================================
@@ -746,6 +752,58 @@ def __method____main____Vector__int____popBack (this):
 #-------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------
+# Method Declaration - Vector<:int:>::clear() -> void
+def __method____main____Vector__int____clear (this):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    #---------------------------------------------------------------------
+    # While-Loop
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Greater Than
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append (__field____main____Vector__int____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # RHS
+        # Int Literal
+        stack.append(0)
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs > __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        # Statement
+        # Method Call - Vector<:int:>::popBack() -> int
+        # LHS
+        stack.append(this)
+        # RHS
+        # Arguments
+        __obj = stack.pop ()
+        __retval = __method____main____Vector__int____popBack (__obj)
+        stack.append (__retval)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+    # End of While
+    #---------------------------------------------------------------------
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__int____clear
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
 # Method Declaration - Vector<:int:>::get(int) -> int
 def __method____main____Vector__int____get__int (this, __main____Vector__int__get__index):
     # Body
@@ -812,7 +870,7 @@ def __method____main____Vector__int____set__int__int (this, __main____Vector__in
 #-------------------------------------------------------------------------
 
 # Populate Dispatch Table
-__dtable____main____Vector__int = [__method____main____Vector__int____pushBack__int, __method____main____Vector__int____popBack, __method____main____Vector__int____get__int, __method____main____Vector__int____set__int__int]
+__dtable____main____Vector__int = [__method____main____Vector__int____pushBack__int, __method____main____Vector__int____popBack, __method____main____Vector__int____clear, __method____main____Vector__int____get__int, __method____main____Vector__int____set__int__int]
 # End Class Declaration - __main____Vector__int
 #=========================================================================
 
@@ -897,10 +955,10 @@ while (1):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__while__10__block__11__calorieTotal = 0
+    __main__while__12__block__13__calorieTotal = 0
     __rhs = stack.pop()
-    __main__while__10__block__11__calorieTotal = __rhs
-    stack.append (__main__while__10__block__11__calorieTotal)
+    __main__while__12__block__13__calorieTotal = __rhs
+    stack.append (__main__while__12__block__13__calorieTotal)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -970,8 +1028,8 @@ while (1):
         __res = __builtin__stringToInt__char__1 (__arg0)
         stack.append (__res) # function call result
         __rhs = stack.pop()
-        __main__while__10__block__11__calorieTotal = __main__while__10__block__11__calorieTotal + __rhs
-        stack.append (__main__while__10__block__11__calorieTotal)
+        __main__while__12__block__13__calorieTotal = __main__while__12__block__13__calorieTotal + __rhs
+        stack.append (__main__while__12__block__13__calorieTotal)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
@@ -1009,7 +1067,7 @@ while (1):
     stack.append(__main__elfCalories)
     # RHS
     # Arguments
-    stack.append(__main__while__10__block__11__calorieTotal)
+    stack.append(__main__while__12__block__13__calorieTotal)
     __arg0 = stack.pop ()
     __obj = stack.pop ()
     __retval = __method____main____Vector__int____pushBack__int (__obj, __arg0)
@@ -1041,11 +1099,11 @@ while (1):
     __lhs = stack.pop ()
     __res = __lhs == __rhs
     stack.append (__res)
-    __if__14__cond = stack.pop ()
+    __if__16__cond = stack.pop ()
     # get condition from stack
-    if (__if__14__cond):
+    if (__if__16__cond):
         # Body
-        # Break out of __while__10
+        # Break out of __while__12
         break
     # End of if
     #---------------------------------------------------------------------
@@ -1090,10 +1148,10 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
     # Int Literal
     stack.append(1)
     # LHS
-    __main__bubbleSort__block__15__hasSwapped = 0
+    __main__bubbleSort__block__17__hasSwapped = 0
     __rhs = stack.pop()
-    __main__bubbleSort__block__15__hasSwapped = __rhs
-    stack.append (__main__bubbleSort__block__15__hasSwapped)
+    __main__bubbleSort__block__17__hasSwapped = __rhs
+    stack.append (__main__bubbleSort__block__17__hasSwapped)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -1103,7 +1161,7 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
-        stack.append(__main__bubbleSort__block__15__hasSwapped)
+        stack.append(__main__bubbleSort__block__17__hasSwapped)
         __cond = stack.pop ()
         # break out of loop if condition is false
         if (__cond == 0): break
@@ -1116,8 +1174,8 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
         # Int Literal
         stack.append(0)
         __rhs = stack.pop()
-        __main__bubbleSort__block__15__hasSwapped = __rhs
-        stack.append (__main__bubbleSort__block__15__hasSwapped)
+        __main__bubbleSort__block__17__hasSwapped = __rhs
+        stack.append (__main__bubbleSort__block__17__hasSwapped)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
@@ -1130,16 +1188,16 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
         # Int Literal
         stack.append(1)
         # LHS
-        __main__bubbleSort__block__15__while__16__block__17__for__18__i = 0
+        __main__bubbleSort__block__17__while__18__block__19__for__20__i = 0
         __rhs = stack.pop()
-        __main__bubbleSort__block__15__while__16__block__17__for__18__i = __rhs
-        stack.append (__main__bubbleSort__block__15__while__16__block__17__for__18__i)
+        __main__bubbleSort__block__17__while__18__block__19__for__20__i = __rhs
+        stack.append (__main__bubbleSort__block__17__while__18__block__19__for__20__i)
         # Using an infinite loop so we can write a separate multi-line condition
         while (1):
             # Condition
             # Less Than
             # LHS
-            stack.append(__main__bubbleSort__block__15__while__16__block__17__for__18__i)
+            stack.append(__main__bubbleSort__block__17__while__18__block__19__for__20__i)
             # RHS
             # Member Accessor
             # LHS
@@ -1173,7 +1231,7 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
             # Arguments
             # Subtraction
             # LHS
-            stack.append(__main__bubbleSort__block__15__while__16__block__17__for__18__i)
+            stack.append(__main__bubbleSort__block__17__while__18__block__19__for__20__i)
             # RHS
             # Int Literal
             stack.append(1)
@@ -1191,7 +1249,7 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
             stack.append(__main__bubbleSort__arr)
             # RHS
             # Arguments
-            stack.append(__main__bubbleSort__block__15__while__16__block__17__for__18__i)
+            stack.append(__main__bubbleSort__block__17__while__18__block__19__for__20__i)
             __arg0 = stack.pop ()
             __obj = stack.pop ()
             __retval = __method____main____Vector__int____get__int (__obj, __arg0)
@@ -1200,9 +1258,9 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
             __lhs = stack.pop ()
             __res = __lhs < __rhs
             stack.append (__res)
-            __if__20__cond = stack.pop ()
+            __if__22__cond = stack.pop ()
             # get condition from stack
-            if (__if__20__cond):
+            if (__if__22__cond):
                 # Body
                 #---------------------------------------------------------
                 # Code Block
@@ -1216,7 +1274,7 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
                 # Arguments
                 # Subtraction
                 # LHS
-                stack.append(__main__bubbleSort__block__15__while__16__block__17__for__18__i)
+                stack.append(__main__bubbleSort__block__17__while__18__block__19__for__20__i)
                 # RHS
                 # Int Literal
                 stack.append(1)
@@ -1229,10 +1287,10 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
                 __retval = __method____main____Vector__int____get__int (__obj, __arg0)
                 stack.append (__retval)
                 # LHS
-                __main__bubbleSort__block__15__while__16__block__17__for__18__block__19__if__20__block__21__temp = 0
+                __main__bubbleSort__block__17__while__18__block__19__for__20__block__21__if__22__block__23__temp = 0
                 __rhs = stack.pop()
-                __main__bubbleSort__block__15__while__16__block__17__for__18__block__19__if__20__block__21__temp = __rhs
-                stack.append (__main__bubbleSort__block__15__while__16__block__17__for__18__block__19__if__20__block__21__temp)
+                __main__bubbleSort__block__17__while__18__block__19__for__20__block__21__if__22__block__23__temp = __rhs
+                stack.append (__main__bubbleSort__block__17__while__18__block__19__for__20__block__21__if__22__block__23__temp)
                 # Statement results can be ignored
                 stack.pop ()
                 # End Statement
@@ -1245,7 +1303,7 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
                 # Arguments
                 # Subtraction
                 # LHS
-                stack.append(__main__bubbleSort__block__15__while__16__block__17__for__18__i)
+                stack.append(__main__bubbleSort__block__17__while__18__block__19__for__20__i)
                 # RHS
                 # Int Literal
                 stack.append(1)
@@ -1258,7 +1316,7 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
                 stack.append(__main__bubbleSort__arr)
                 # RHS
                 # Arguments
-                stack.append(__main__bubbleSort__block__15__while__16__block__17__for__18__i)
+                stack.append(__main__bubbleSort__block__17__while__18__block__19__for__20__i)
                 __arg0 = stack.pop ()
                 __obj = stack.pop ()
                 __retval = __method____main____Vector__int____get__int (__obj, __arg0)
@@ -1278,8 +1336,8 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
                 stack.append(__main__bubbleSort__arr)
                 # RHS
                 # Arguments
-                stack.append(__main__bubbleSort__block__15__while__16__block__17__for__18__i)
-                stack.append(__main__bubbleSort__block__15__while__16__block__17__for__18__block__19__if__20__block__21__temp)
+                stack.append(__main__bubbleSort__block__17__while__18__block__19__for__20__i)
+                stack.append(__main__bubbleSort__block__17__while__18__block__19__for__20__block__21__if__22__block__23__temp)
                 __arg1 = stack.pop ()
                 __arg0 = stack.pop ()
                 __obj = stack.pop ()
@@ -1295,8 +1353,8 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
                 # Int Literal
                 stack.append(1)
                 __rhs = stack.pop()
-                __main__bubbleSort__block__15__hasSwapped = __rhs
-                stack.append (__main__bubbleSort__block__15__hasSwapped)
+                __main__bubbleSort__block__17__hasSwapped = __rhs
+                stack.append (__main__bubbleSort__block__17__hasSwapped)
                 # Statement results can be ignored
                 stack.pop ()
                 # End Statement
@@ -1308,10 +1366,10 @@ def __main____bubbleSort__int____Vector__tparam0__int (__main__bubbleSort__arr):
             # Update
             # Pre-Increment
             # RHS
-            stack.append(__main__bubbleSort__block__15__while__16__block__17__for__18__i)
+            stack.append(__main__bubbleSort__block__17__while__18__block__19__for__20__i)
             __rhs = stack.pop ()
-            __main__bubbleSort__block__15__while__16__block__17__for__18__i = __main__bubbleSort__block__15__while__16__block__17__for__18__i + 1
-            __res = __main__bubbleSort__block__15__while__16__block__17__for__18__i
+            __main__bubbleSort__block__17__while__18__block__19__for__20__i = __main__bubbleSort__block__17__while__18__block__19__for__20__i + 1
+            __res = __main__bubbleSort__block__17__while__18__block__19__for__20__i
             stack.append (__res)
         #-----------------------------------------------------------------
         #-----------------------------------------------------------------

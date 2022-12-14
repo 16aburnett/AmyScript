@@ -128,14 +128,27 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.code += [line]
 
         self.printDivider ()
+        self.printHeader ("All code must be in main")
+        self.printDivider ()
+        self.printNewline ()
+
+        self.printCode ("int main () {")
+        self.indentation += 1
+
+        self.printDivider ()
         self.printHeader ("SETUP EXPRESSION RESULT STACK")
         self.printDivider ()
         self.printNewline ()
         
         # expression result stack stores values from expressions 
         self.printComment ("This stack is used to store results of expressions")
-        self.printCode ("stack = []")
+        self.printCode ("std::vector<long> stack;")
         self.printNewline ()
+
+        self.printComment ("Declare general purpose variables")
+        self.printCode ("long __lhs = 0;")
+        self.printCode ("long __rhs = 0;")
+        self.printCode ("long __res = 0;")
 
         self.printDivider ()
         self.printHeader ("COMPILED CODE")
@@ -149,6 +162,14 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printNewline ()
         self.printDivider ()
         self.printHeader ("END OF CODE")
+        self.printDivider ()
+        self.printNewline ()
+
+        self.indentation -= 1
+        self.printCode ("}")
+
+        self.printDivider ()
+        self.printHeader ("END OF MAIN")
         self.printDivider ()
         self.printNewline ()
 
@@ -734,7 +755,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             # don't need stack value from statement
             # in some cases, this extra value on the stack can break things
             self.printComment ("Statement results can be ignored")
-            self.printCode ("stack.pop ()")
+            self.printCode ("stack.pop_back ();")
             self.printComment ("End Statement")
             self.printNewline ()
 
@@ -838,7 +859,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 self.printComment ("RHS")
                 # # construct field index var 
                 # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-                self.printCode (f"stack.append({node.lhs.decl.scopeName})")
+                self.printCode (f"stack.push_back({node.lhs.decl.scopeName})")
 
                 self.printCode (f"__child = stack.pop()")
                 self.printCode (f"__parent = stack.pop()")
@@ -866,7 +887,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             elif node.op.type == "ASSIGN_MOD":
                 self.printCode (f"{lhsStr} = {lhsStr} % __rhs")
 
-            self.printCode (f"stack.append ({lhsStr})")
+            self.printCode (f"stack.push_back ({lhsStr})")
         
 
     def visitLogicalOrExpressionNode (self, node):
@@ -880,7 +901,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("__lhs = stack.pop ()")
         self.printCode ("__res = __lhs or __rhs")
         # push result to the stack
-        self.printCode ("stack.append (__res)")
+        self.printCode ("stack.push_back (__res)")
 
     def visitLogicalAndExpressionNode (self, node):
         self.printComment ("AND")
@@ -893,7 +914,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("__lhs = stack.pop ()")
         self.printCode ("__res = __lhs and __rhs")
         # push result to the stack
-        self.printCode ("stack.append (__res)")
+        self.printCode ("stack.push_back (__res)")
 
     def visitEqualityExpressionNode (self, node):
         if node.op.lexeme == "==":
@@ -918,7 +939,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printCode ("__res = __lhs != __rhs")
 
         # push result to the stack
-        self.printCode ("stack.append (__res)")
+        self.printCode ("stack.push_back (__res)")
 
     def visitInequalityExpressionNode (self, node):
         if node.op.lexeme == "<":
@@ -951,7 +972,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printCode ("__res = __lhs >= __rhs")
 
         # push result to the stack
-        self.printCode ("stack.append (__res)")
+        self.printCode ("stack.push_back (__res)")
 
     def visitAdditiveExpressionNode (self, node):
         # addition 
@@ -969,25 +990,27 @@ class CodeGenVisitor_cpp (ASTVisitor):
         node.rhs.accept (self)
 
         # get rhs and lhs off the stack 
-        self.printCode ("__rhs = stack.pop()")
-        self.printCode ("__lhs = stack.pop()")
+        self.printCode ("__rhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        self.printCode ("__lhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
         
         # simple additive 
         if node.overloadedFunctionCall == None:
             # addition
             if node.op.lexeme == "+":
-                self.printCode ("__res = __lhs + __rhs")
+                self.printCode ("__res = __lhs + __rhs;")
             # subtraction 
             elif node.op.lexeme == "-":
-                self.printCode ("__res = __lhs - __rhs")
+                self.printCode ("__res = __lhs - __rhs;")
         # overloaded function call 
         else:
             self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
             # push args in reverse order
-            self.printCode (f"__res = {node.overloadedFunctionCall.decl.scopeName} (__lhs, __rhs)")
+            self.printCode (f"__res = {node.overloadedFunctionCall.decl.scopeName} (__lhs, __rhs);")
 
         # push result to the stack
-        self.printCode ("stack.append(__res)")
+        self.printCode ("stack.push_back (__res);")
 
     def visitMultiplicativeExpressionNode (self, node):
         if node.op.lexeme == "*":
@@ -1030,7 +1053,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printCode (f"__res = {node.overloadedFunctionCall.decl.scopeName} (__lhs, __rhs)")
 
         # push result to the stack
-        self.printCode ("stack.append(__res)")
+        self.printCode ("stack.push_back(__res)")
             
     #  ++ | -- | + | - | ! | ~
     def visitUnaryLeftExpressionNode (self, node):
@@ -1083,7 +1106,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 self.printComment ("RHS")
                 # construct field index var 
                 # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
-                self.printCode (f"stack.append ({node.rhs.decl.scopeName})")
+                self.printCode (f"stack.push_back ({node.rhs.decl.scopeName})")
 
                 self.printCode ("__child = stack.pop ()")
                 self.printCode ("__parent = stack.pop ()")
@@ -1122,7 +1145,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 self.printComment ("RHS")
                 # construct field index var 
                 # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
-                self.printCode (f"stack.append ({node.rhs.decl.scopeName})")
+                self.printCode (f"stack.push_back ({node.rhs.decl.scopeName})")
 
                 self.printCode ("__child = stack.pop ()")
                 self.printCode ("__parent = stack.pop ()")
@@ -1142,7 +1165,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printCode ("__res = ~__rhs")
 
         # push result to the stack
-        self.printCode ("stack.append (__res)")
+        self.printCode ("stack.push_back (__res)")
 
     def visitPostIncrementExpressionNode(self, node):
         self.printComment ("Post-Increment")
@@ -1175,7 +1198,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printComment ("RHS")
             # construct field index var 
             # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"stack.append ({node.lhs.decl.scopeName})")
+            self.printCode (f"stack.push_back ({node.lhs.decl.scopeName})")
 
             self.printCode ("__child = stack.pop ()")
             self.printCode ("__parent = stack.pop ()")
@@ -1187,7 +1210,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             exit (1)
 
         # push result to the stack
-        self.printCode ("stack.append (__res)")
+        self.printCode ("stack.push_back (__res)")
 
     def visitPostDecrementExpressionNode (self, node):
         self.printComment ("Post-Decrement")
@@ -1220,7 +1243,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printComment ("RHS")
             # construct field index var 
             # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"stack.append ({node.lhs.decl.scopeName})")
+            self.printCode (f"stack.push_back ({node.lhs.decl.scopeName})")
 
             self.printCode ("__child = stack.pop ()")
             self.printCode ("__parent = stack.pop ()")
@@ -1232,7 +1255,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             exit (1)
 
         # push result to the stack
-        self.printCode ("stack.append (__res)")
+        self.printCode ("stack.push_back (__res)")
 
     def visitSubscriptExpressionNode (self, node):
         self.printComment ("Subscript")
@@ -1247,13 +1270,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         # simple subscript  
         if node.overloadedFunctionCall == None:
-            self.printCode ("stack.append (__pointer[__offset])")
+            self.printCode ("stack.push_back (__pointer[__offset])")
         # overloaded function call 
         else:
             self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
             # push args in reverse order
             self.printCode (f"__res = {node.overloadedFunctionCall.decl.scopeName} (__pointer, __offset)")
-            self.printCode (f"stack.append (__res)")
+            self.printCode (f"stack.push_back (__res)")
 
     def visitFunctionCallExpressionNode (self, node):
         self.printComment (f"Function Call - {node.decl.signature} -> {node.decl.type}")
@@ -1266,17 +1289,23 @@ class CodeGenVisitor_cpp (ASTVisitor):
         for arg in node.args:
             arg.accept (self)
 
+        # add scope so we can declare arg variables
+        self.printCode ("{")
+        self.indentation += 1
+
         argIndex = len(node.args)-1
         args = []
         for arg in node.args:
             # save argument 
             argName = f"__arg{argIndex}"
             argIndex -= 1
-            self.printCode (f"{argName} = stack.pop ()")
+            
+            self.printCode (f"{argName} = stack.back ();")
+            self.printCode (f"stack.pop_back ();")
             args.insert (0, argName)
 
         # call function
-        self.printComment (f"*** {node.function.id}")
+        self.printComment (f"{node.function.id}")
         funcname = ""
         if node.decl.scopeName == "":
             # x = sum([1 if '\n' in s else 0 for s in self.code])
@@ -1289,10 +1318,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
         else:
             funcname = node.decl.scopeName
 
-        self.printCode (f"__res = {funcname} ({', '.join(args)})")
+        self.printCode (f"__res = {funcname} ({', '.join(args)});")
         
         # put function's return val on the stack
-        self.printCode ("stack.append (__res) # function call result")
+        self.printCode ("stack.push_back (__res);")
+
+        self.indentation -= 1
+        self.printCode ("}")
 
     def visitMemberAccessorExpressionNode (self, node):
 
@@ -1318,11 +1350,11 @@ class CodeGenVisitor_cpp (ASTVisitor):
             print (f"   this could have happened due to a cyclic reference/composition with template classes")
             print (f"   cyclic references are not yet supported")
             exit (1)
-        self.printCode (f"stack.append ({node.decl.scopeName})")
+        self.printCode (f"stack.push_back ({node.decl.scopeName})")
 
         self.printCode ("__child = stack.pop ()")
         self.printCode ("__parent = stack.pop ()")
-        self.printCode ("stack.append (__parent[__child])")
+        self.printCode ("stack.push_back (__parent[__child])")
 
     def visitFieldAccessorExpressionNode (self, node):
         pass
@@ -1385,20 +1417,20 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printCode (f"__retval = {node.decl.scopeName} (__obj{', '.join(args)})")
                 
         # put function's return val on the stack
-        self.printCode ("stack.append (__retval)")
+        self.printCode ("stack.push_back (__retval)")
 
     def visitThisExpressionNode (self, node):
-        self.printCode (f"stack.append(this)")
+        self.printCode (f"stack.push_back(this)")
 
     def visitIdentifierExpressionNode (self, node):
-        self.printCode (f"stack.append({node.decl.scopeName})")
+        self.printCode (f"stack.push_back({node.decl.scopeName})")
 
     def visitArrayAllocatorExpressionNode (self, node):
         node.dimensions[0].accept (self)
         self.printCode (f"__dim = stack.pop ()")
         # this is probably not ideal and will likely cause problems
         self.printCode (f"__res = [None] * __dim")
-        self.printCode ("stack.append (__res)")
+        self.printCode ("stack.push_back (__res)")
 
     def visitConstructorCallExpressionNode (self, node):
         self.printComment (f"Constructor Call - {node.decl.signature} -> {node.decl.parentClass.type}")
@@ -1425,13 +1457,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode (f"__retval = {node.decl.scopeName} ({', '.join(args)})")
         
         # put function's return val on the stack
-        self.printCode ("stack.append (__retval)")
+        self.printCode ("stack.push_back (__retval)")
     
     def visitSizeofExpressionNode(self, node):
         node.rhs.accept (self)
         self.printCode ("__arr = stack.pop ()")
         self.printCode ("__res = len (__arr)")
-        self.printCode ("stack.append (__res)")
+        self.printCode ("stack.push_back (__res)")
     
     def visitFreeExpressionNode (self, node):
         # nothing to do, python has its own garbage collector ;)
@@ -1439,23 +1471,23 @@ class CodeGenVisitor_cpp (ASTVisitor):
         node.rhs.accept (self)
         self.printCode ("__arr = stack.pop ()")
         self.printCode ("__builtin__free (__arr)")
-        self.printCode ("stack.append (0)")
+        self.printCode ("stack.push_back (0)")
 
     def visitIntLiteralExpressionNode (self, node):
         self.printComment ("Int Literal")
-        self.printCode (f"stack.append({node.value})")
+        self.printCode (f"stack.push_back ({node.value});")
 
     def visitFloatLiteralExpressionNode (self, node):
         self.printComment ("Float Literal")
-        self.printCode (f"stack.append({node.value})")
+        self.printCode (f"stack.push_back ({node.value});")
 
     def visitCharLiteralExpressionNode (self, node):
         self.printComment ("Char Literal")
-        self.printCode (f"stack.append('{node.value}')")
+        self.printCode (f"stack.push_back ('{node.value}');")
 
     def visitStringLiteralExpressionNode (self, node):
         self.printComment ("String Literal")
-        self.printCode (f"stack.append({node.value})")
+        self.printCode (f"stack.push_back ({node.value});")
 
     def visitListConstructorExpressionNode (self, node):
         self.printComment ("Array Constructor")
@@ -1490,7 +1522,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
     def visitNullExpressionNode (self, node):
             
         self.printComment ("Null Literal")
-        self.printCode ("stack.append (None)")
+        self.printCode ("stack.push_back (None)")
 
 
 # ========================================================================

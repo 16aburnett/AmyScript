@@ -536,10 +536,17 @@ __builtin__stringToInt__char__1:
 ; //========================================================================
 ; // parses an int from a given char
 ; // int charToInt (char);
-; __builtin__charToInt__char:
-;     stackget val 0
-;     ctoi res val
-;     return res
+__builtin__charToInt__char:
+        ; function setup
+        push    rbp
+        mov     rbp, rsp
+
+        mov     rax, qword [rbp+16]
+        mov     rdx, '0'
+        sub     rax, rdx
+
+        pop rbp
+        ret
 
 ; //========================================================================
 ; // converts int to string

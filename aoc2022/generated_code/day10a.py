@@ -170,9 +170,13 @@ def __builtin__stringToInt__char__1 (s):
     #     res = 0
     # return res
     # -1 to ignore the null terminator
+    # count till null terminator
+    i = 0
+    while s[i] != '\0':
+        i += 1
     if s[-1] == '\0':
         return int(''.join(s[:-1]))
-    return int(''.join(s))
+    return int(''.join(s[:i]))
 
 
 # # //========================================================================
@@ -748,6 +752,58 @@ def __method____main____Vector__char__1____popBack (this):
 #-------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------
+# Method Declaration - Vector<:char[]:>::clear() -> void
+def __method____main____Vector__char__1____clear (this):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    #---------------------------------------------------------------------
+    # While-Loop
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Greater Than
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append (__field____main____Vector__char__1____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # RHS
+        # Int Literal
+        stack.append(0)
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs > __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        # Statement
+        # Method Call - Vector<:char[]:>::popBack() -> char[]
+        # LHS
+        stack.append(this)
+        # RHS
+        # Arguments
+        __obj = stack.pop ()
+        __retval = __method____main____Vector__char__1____popBack (__obj)
+        stack.append (__retval)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+    # End of While
+    #---------------------------------------------------------------------
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__char__1____clear
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
 # Method Declaration - Vector<:char[]:>::get(int) -> char[]
 def __method____main____Vector__char__1____get__int (this, __main____Vector__char__1__get__index):
     # Body
@@ -814,7 +870,7 @@ def __method____main____Vector__char__1____set__int__char__1 (this, __main____Ve
 #-------------------------------------------------------------------------
 
 # Populate Dispatch Table
-__dtable____main____Vector__char__1 = [__method____main____Vector__char__1____pushBack__char__1, __method____main____Vector__char__1____popBack, __method____main____Vector__char__1____get__int, __method____main____Vector__char__1____set__int__char__1]
+__dtable____main____Vector__char__1 = [__method____main____Vector__char__1____pushBack__char__1, __method____main____Vector__char__1____popBack, __method____main____Vector__char__1____clear, __method____main____Vector__char__1____get__int, __method____main____Vector__char__1____set__int__char__1]
 # End Class Declaration - __main____Vector__char__1
 #=========================================================================
 
@@ -1054,9 +1110,9 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
     __lhs = stack.pop ()
     __res = __lhs >= __rhs
     stack.append (__res)
-    __if__13__cond = stack.pop ()
+    __if__15__cond = stack.pop ()
     # get condition from stack
-    if (__if__13__cond):
+    if (__if__15__cond):
         # Body
         #-----------------------------------------------------------------
         # Code Block
@@ -1110,10 +1166,10 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
         __res = [None] * __dim
         stack.append (__res)
         # LHS
-        __main____Vector__int__pushBack__block__12__if__13__block__14__nData = 0
+        __main____Vector__int__pushBack__block__14__if__15__block__16__nData = 0
         __rhs = stack.pop()
-        __main____Vector__int__pushBack__block__12__if__13__block__14__nData = __rhs
-        stack.append (__main____Vector__int__pushBack__block__12__if__13__block__14__nData)
+        __main____Vector__int__pushBack__block__14__if__15__block__16__nData = __rhs
+        stack.append (__main____Vector__int__pushBack__block__14__if__15__block__16__nData)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
@@ -1126,16 +1182,16 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
         # Int Literal
         stack.append(0)
         # LHS
-        __main____Vector__int__pushBack__block__12__if__13__block__14__for__15__i = 0
+        __main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i = 0
         __rhs = stack.pop()
-        __main____Vector__int__pushBack__block__12__if__13__block__14__for__15__i = __rhs
-        stack.append (__main____Vector__int__pushBack__block__12__if__13__block__14__for__15__i)
+        __main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i = __rhs
+        stack.append (__main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i)
         # Using an infinite loop so we can write a separate multi-line condition
         while (1):
             # Condition
             # Less Than
             # LHS
-            stack.append(__main____Vector__int__pushBack__block__12__if__13__block__14__for__15__i)
+            stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i)
             # RHS
             # Member Accessor
             # LHS
@@ -1169,16 +1225,16 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
             __parent = stack.pop ()
             stack.append (__parent[__child])
             # OFFSET
-            stack.append(__main____Vector__int__pushBack__block__12__if__13__block__14__for__15__i)
+            stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i)
             __offset = stack.pop ()
             __pointer = stack.pop ()
             stack.append (__pointer[__offset])
             # LHS
             # Subscript assignment
             # LHS
-            stack.append(__main____Vector__int__pushBack__block__12__if__13__block__14__nData)
+            stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__nData)
             # OFFSET
-            stack.append(__main____Vector__int__pushBack__block__12__if__13__block__14__for__15__i)
+            stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i)
             __offset = stack.pop()
             __pointer = stack.pop()
             __rhs = stack.pop()
@@ -1192,10 +1248,10 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
             # Update
             # Pre-Increment
             # RHS
-            stack.append(__main____Vector__int__pushBack__block__12__if__13__block__14__for__15__i)
+            stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i)
             __rhs = stack.pop ()
-            __main____Vector__int__pushBack__block__12__if__13__block__14__for__15__i = __main____Vector__int__pushBack__block__12__if__13__block__14__for__15__i + 1
-            __res = __main____Vector__int__pushBack__block__12__if__13__block__14__for__15__i
+            __main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i = __main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i + 1
+            __res = __main____Vector__int__pushBack__block__14__if__15__block__16__for__17__i
             stack.append (__res)
         #-----------------------------------------------------------------
         # Statement
@@ -1217,7 +1273,7 @@ def __method____main____Vector__int____pushBack__int (this, __main____Vector__in
         # Statement
         # Assignment - '='
         # RHS
-        stack.append(__main____Vector__int__pushBack__block__12__if__13__block__14__nData)
+        stack.append(__main____Vector__int__pushBack__block__14__if__15__block__16__nData)
         # LHS
         # Member Accessor Assignment
         # LHS
@@ -1352,6 +1408,58 @@ def __method____main____Vector__int____popBack (this):
 #-------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------
+# Method Declaration - Vector<:int:>::clear() -> void
+def __method____main____Vector__int____clear (this):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    #---------------------------------------------------------------------
+    # While-Loop
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Greater Than
+        # LHS
+        # Member Accessor
+        # LHS
+        stack.append(this)
+        # RHS
+        stack.append (__field____main____Vector__int____size)
+        __child = stack.pop ()
+        __parent = stack.pop ()
+        stack.append (__parent[__child])
+        # RHS
+        # Int Literal
+        stack.append(0)
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs > __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        # Statement
+        # Method Call - Vector<:int:>::popBack() -> int
+        # LHS
+        stack.append(this)
+        # RHS
+        # Arguments
+        __obj = stack.pop ()
+        __retval = __method____main____Vector__int____popBack (__obj)
+        stack.append (__retval)
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+    # End of While
+    #---------------------------------------------------------------------
+    #---------------------------------------------------------------------
+    return 0
+# End Method Declaration - __method____main____Vector__int____clear
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
 # Method Declaration - Vector<:int:>::get(int) -> int
 def __method____main____Vector__int____get__int (this, __main____Vector__int__get__index):
     # Body
@@ -1418,7 +1526,7 @@ def __method____main____Vector__int____set__int__int (this, __main____Vector__in
 #-------------------------------------------------------------------------
 
 # Populate Dispatch Table
-__dtable____main____Vector__int = [__method____main____Vector__int____pushBack__int, __method____main____Vector__int____popBack, __method____main____Vector__int____get__int, __method____main____Vector__int____set__int__int]
+__dtable____main____Vector__int = [__method____main____Vector__int____pushBack__int, __method____main____Vector__int____popBack, __method____main____Vector__int____clear, __method____main____Vector__int____get__int, __method____main____Vector__int____set__int__int]
 # End Class Declaration - __main____Vector__int
 #=========================================================================
 
@@ -1456,9 +1564,9 @@ def __main____strlen__char__1 (__main__strlen__str):
     __lhs = stack.pop ()
     __res = __lhs == __rhs
     stack.append (__res)
-    __if__21__cond = stack.pop ()
+    __if__25__cond = stack.pop ()
     # get condition from stack
-    if (__if__21__cond):
+    if (__if__25__cond):
         # Body
         # Return
         # Negative
@@ -1478,10 +1586,10 @@ def __main____strlen__char__1 (__main__strlen__str):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__strlen__block__20__size = 0
+    __main__strlen__block__24__size = 0
     __rhs = stack.pop()
-    __main__strlen__block__20__size = __rhs
-    stack.append (__main__strlen__block__20__size)
+    __main__strlen__block__24__size = __rhs
+    stack.append (__main__strlen__block__24__size)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -1498,8 +1606,8 @@ def __main____strlen__char__1 (__main__strlen__str):
         stack.append(__main__strlen__str)
         # OFFSET
         # Post-Increment
-        __res = __main__strlen__block__20__size
-        __main__strlen__block__20__size = __main__strlen__block__20__size + 1
+        __res = __main__strlen__block__24__size
+        __main__strlen__block__24__size = __main__strlen__block__24__size + 1
         stack.append (__res)
         __offset = stack.pop ()
         __pointer = stack.pop ()
@@ -1520,7 +1628,7 @@ def __main____strlen__char__1 (__main__strlen__str):
     # Return
     # Subtraction
     # LHS
-    stack.append(__main__strlen__block__20__size)
+    stack.append(__main__strlen__block__24__size)
     # RHS
     # Int Literal
     stack.append(1)
@@ -1551,10 +1659,10 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
     __res = __main____strlen__char__1 (__arg0)
     stack.append (__res) # function call result
     # LHS
-    __main__strcmp__block__23__asize = 0
+    __main__strcmp__block__27__asize = 0
     __rhs = stack.pop()
-    __main__strcmp__block__23__asize = __rhs
-    stack.append (__main__strcmp__block__23__asize)
+    __main__strcmp__block__27__asize = __rhs
+    stack.append (__main__strcmp__block__27__asize)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -1570,10 +1678,10 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
     __res = __main____strlen__char__1 (__arg0)
     stack.append (__res) # function call result
     # LHS
-    __main__strcmp__block__23__bsize = 0
+    __main__strcmp__block__27__bsize = 0
     __rhs = stack.pop()
-    __main__strcmp__block__23__bsize = __rhs
-    stack.append (__main__strcmp__block__23__bsize)
+    __main__strcmp__block__27__bsize = __rhs
+    stack.append (__main__strcmp__block__27__bsize)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -1585,16 +1693,16 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
     # Condition
     # Not Equal
     # LHS
-    stack.append(__main__strcmp__block__23__asize)
+    stack.append(__main__strcmp__block__27__asize)
     # RHS
-    stack.append(__main__strcmp__block__23__bsize)
+    stack.append(__main__strcmp__block__27__bsize)
     __rhs = stack.pop ()
     __lhs = stack.pop ()
     __res = __lhs != __rhs
     stack.append (__res)
-    __if__24__cond = stack.pop ()
+    __if__28__cond = stack.pop ()
     # get condition from stack
-    if (__if__24__cond):
+    if (__if__28__cond):
         # Body
         # Return
         # Int Literal
@@ -1611,18 +1719,18 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__strcmp__block__23__for__25__i = 0
+    __main__strcmp__block__27__for__29__i = 0
     __rhs = stack.pop()
-    __main__strcmp__block__23__for__25__i = __rhs
-    stack.append (__main__strcmp__block__23__for__25__i)
+    __main__strcmp__block__27__for__29__i = __rhs
+    stack.append (__main__strcmp__block__27__for__29__i)
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__strcmp__block__23__for__25__i)
+        stack.append(__main__strcmp__block__27__for__29__i)
         # RHS
-        stack.append(__main__strcmp__block__23__asize)
+        stack.append(__main__strcmp__block__27__asize)
         __rhs = stack.pop ()
         __lhs = stack.pop ()
         __res = __lhs < __rhs
@@ -1644,7 +1752,7 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
         # LHS
         stack.append(__main__strcmp__a)
         # OFFSET
-        stack.append(__main__strcmp__block__23__for__25__i)
+        stack.append(__main__strcmp__block__27__for__29__i)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -1653,7 +1761,7 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
         # LHS
         stack.append(__main__strcmp__b)
         # OFFSET
-        stack.append(__main__strcmp__block__23__for__25__i)
+        stack.append(__main__strcmp__block__27__for__29__i)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -1661,9 +1769,9 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
         __lhs = stack.pop ()
         __res = __lhs != __rhs
         stack.append (__res)
-        __if__27__cond = stack.pop ()
+        __if__31__cond = stack.pop ()
         # get condition from stack
-        if (__if__27__cond):
+        if (__if__31__cond):
             # Body
             #-------------------------------------------------------------
             # Code Block
@@ -1679,10 +1787,10 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
         # Update
         # Pre-Increment
         # RHS
-        stack.append(__main__strcmp__block__23__for__25__i)
+        stack.append(__main__strcmp__block__27__for__29__i)
         __rhs = stack.pop ()
-        __main__strcmp__block__23__for__25__i = __main__strcmp__block__23__for__25__i + 1
-        __res = __main__strcmp__block__23__for__25__i
+        __main__strcmp__block__27__for__29__i = __main__strcmp__block__27__for__29__i + 1
+        __res = __main__strcmp__block__27__for__29__i
         stack.append (__res)
     #---------------------------------------------------------------------
     # Return
@@ -1692,6 +1800,163 @@ def __main____strcmp__char__1__char__1 (__main__strcmp__a, __main__strcmp__b):
     return __rVal
     #---------------------------------------------------------------------
 # End Function Declaration - __main____strcmp__char__1__char__1
+#=========================================================================
+
+#=========================================================================
+# Function Declaration - substr(char[], int, int) -> char[]
+def __main____substr__char__1__int__int (__main__substr__a, __main__substr__start, __main__substr__end):
+    # Body
+    #---------------------------------------------------------------------
+    # Code Block
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Addition
+    # LHS
+    # Subtraction
+    # LHS
+    stack.append(__main__substr__end)
+    # RHS
+    stack.append(__main__substr__start)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs - __rhs
+    stack.append(__res)
+    # RHS
+    # Int Literal
+    stack.append(1)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs + __rhs
+    stack.append(__res)
+    __dim = stack.pop ()
+    __res = [None] * __dim
+    stack.append (__res)
+    # LHS
+    __main__substr__block__33__res = 0
+    __rhs = stack.pop()
+    __main__substr__block__33__res = __rhs
+    stack.append (__main__substr__block__33__res)
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    #---------------------------------------------------------------------
+    # For-Loop
+    # Init
+    # Assignment - '='
+    # RHS
+    # Int Literal
+    stack.append(0)
+    # LHS
+    __main__substr__block__33__for__34__i = 0
+    __rhs = stack.pop()
+    __main__substr__block__33__for__34__i = __rhs
+    stack.append (__main__substr__block__33__for__34__i)
+    # Using an infinite loop so we can write a separate multi-line condition
+    while (1):
+        # Condition
+        # Less Than
+        # LHS
+        stack.append(__main__substr__block__33__for__34__i)
+        # RHS
+        # Subtraction
+        # LHS
+        stack.append(__main__substr__end)
+        # RHS
+        stack.append(__main__substr__start)
+        __rhs = stack.pop()
+        __lhs = stack.pop()
+        __res = __lhs - __rhs
+        stack.append(__res)
+        __rhs = stack.pop ()
+        __lhs = stack.pop ()
+        __res = __lhs < __rhs
+        stack.append (__res)
+        __cond = stack.pop ()
+        # break out of loop if condition is false
+        if (__cond == 0): break
+        # Body
+        #-----------------------------------------------------------------
+        # Code Block
+        # Statement
+        # Assignment - '='
+        # RHS
+        # Subscript
+        # LHS
+        stack.append(__main__substr__a)
+        # OFFSET
+        # Addition
+        # LHS
+        stack.append(__main__substr__block__33__for__34__i)
+        # RHS
+        stack.append(__main__substr__start)
+        __rhs = stack.pop()
+        __lhs = stack.pop()
+        __res = __lhs + __rhs
+        stack.append(__res)
+        __offset = stack.pop ()
+        __pointer = stack.pop ()
+        stack.append (__pointer[__offset])
+        # LHS
+        # Subscript assignment
+        # LHS
+        stack.append(__main__substr__block__33__res)
+        # OFFSET
+        stack.append(__main__substr__block__33__for__34__i)
+        __offset = stack.pop()
+        __pointer = stack.pop()
+        __rhs = stack.pop()
+        __pointer[__offset] = __rhs
+        stack.append (__pointer[__offset])
+        # Statement results can be ignored
+        stack.pop ()
+        # End Statement
+
+        #-----------------------------------------------------------------
+        # Update
+        # Pre-Increment
+        # RHS
+        stack.append(__main__substr__block__33__for__34__i)
+        __rhs = stack.pop ()
+        __main__substr__block__33__for__34__i = __main__substr__block__33__for__34__i + 1
+        __res = __main__substr__block__33__for__34__i
+        stack.append (__res)
+    #---------------------------------------------------------------------
+    # Statement
+    # Assignment - '='
+    # RHS
+    # Char Literal
+    stack.append('\0')
+    # LHS
+    # Subscript assignment
+    # LHS
+    stack.append(__main__substr__block__33__res)
+    # OFFSET
+    # Subtraction
+    # LHS
+    stack.append(__main__substr__end)
+    # RHS
+    stack.append(__main__substr__start)
+    __rhs = stack.pop()
+    __lhs = stack.pop()
+    __res = __lhs - __rhs
+    stack.append(__res)
+    __offset = stack.pop()
+    __pointer = stack.pop()
+    __rhs = stack.pop()
+    __pointer[__offset] = __rhs
+    stack.append (__pointer[__offset])
+    # Statement results can be ignored
+    stack.pop ()
+    # End Statement
+
+    # Return
+    stack.append(__main__substr__block__33__res)
+    __rVal = stack.pop ()
+    return __rVal
+    #---------------------------------------------------------------------
+# End Function Declaration - __main____substr__char__1__int__int
 #=========================================================================
 
 #=========================================================================
@@ -1711,10 +1976,10 @@ def __main____first_index_of__char__1__char (__main__first_index_of__arr, __main
     __res = __main____strlen__char__1 (__arg0)
     stack.append (__res) # function call result
     # LHS
-    __main__first_index_of__block__29__size = 0
+    __main__first_index_of__block__36__size = 0
     __rhs = stack.pop()
-    __main__first_index_of__block__29__size = __rhs
-    stack.append (__main__first_index_of__block__29__size)
+    __main__first_index_of__block__36__size = __rhs
+    stack.append (__main__first_index_of__block__36__size)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -1727,18 +1992,18 @@ def __main____first_index_of__char__1__char (__main__first_index_of__arr, __main
     # Int Literal
     stack.append(0)
     # LHS
-    __main__first_index_of__block__29__for__30__i = 0
+    __main__first_index_of__block__36__for__37__i = 0
     __rhs = stack.pop()
-    __main__first_index_of__block__29__for__30__i = __rhs
-    stack.append (__main__first_index_of__block__29__for__30__i)
+    __main__first_index_of__block__36__for__37__i = __rhs
+    stack.append (__main__first_index_of__block__36__for__37__i)
     # Using an infinite loop so we can write a separate multi-line condition
     while (1):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__first_index_of__block__29__for__30__i)
+        stack.append(__main__first_index_of__block__36__for__37__i)
         # RHS
-        stack.append(__main__first_index_of__block__29__size)
+        stack.append(__main__first_index_of__block__36__size)
         __rhs = stack.pop ()
         __lhs = stack.pop ()
         __res = __lhs < __rhs
@@ -1760,7 +2025,7 @@ def __main____first_index_of__char__1__char (__main__first_index_of__arr, __main
         # LHS
         stack.append(__main__first_index_of__arr)
         # OFFSET
-        stack.append(__main__first_index_of__block__29__for__30__i)
+        stack.append(__main__first_index_of__block__36__for__37__i)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -1770,12 +2035,12 @@ def __main____first_index_of__char__1__char (__main__first_index_of__arr, __main
         __lhs = stack.pop ()
         __res = __lhs == __rhs
         stack.append (__res)
-        __if__32__cond = stack.pop ()
+        __if__39__cond = stack.pop ()
         # get condition from stack
-        if (__if__32__cond):
+        if (__if__39__cond):
             # Body
             # Return
-            stack.append(__main__first_index_of__block__29__for__30__i)
+            stack.append(__main__first_index_of__block__36__for__37__i)
             __rVal = stack.pop ()
             return __rVal
         # End of if
@@ -1784,10 +2049,10 @@ def __main____first_index_of__char__1__char (__main__first_index_of__arr, __main
         # Update
         # Pre-Increment
         # RHS
-        stack.append(__main__first_index_of__block__29__for__30__i)
+        stack.append(__main__first_index_of__block__36__for__37__i)
         __rhs = stack.pop ()
-        __main__first_index_of__block__29__for__30__i = __main__first_index_of__block__29__for__30__i + 1
-        __res = __main__first_index_of__block__29__for__30__i
+        __main__first_index_of__block__36__for__37__i = __main__first_index_of__block__36__for__37__i + 1
+        __res = __main__first_index_of__block__36__for__37__i
         stack.append (__res)
     #---------------------------------------------------------------------
     # Return
@@ -1818,10 +2083,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
     __retval = __ctor____main____Vector__char__1____Vector ()
     stack.append (__retval)
     # LHS
-    __main__split__block__33__tokens = 0
+    __main__split__block__40__tokens = 0
     __rhs = stack.pop()
-    __main__split__block__33__tokens = __rhs
-    stack.append (__main__split__block__33__tokens)
+    __main__split__block__40__tokens = __rhs
+    stack.append (__main__split__block__40__tokens)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -1837,10 +2102,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
     __res = __main____strlen__char__1 (__arg0)
     stack.append (__res) # function call result
     # LHS
-    __main__split__block__33__size = 0
+    __main__split__block__40__size = 0
     __rhs = stack.pop()
-    __main__split__block__33__size = __rhs
-    stack.append (__main__split__block__33__size)
+    __main__split__block__40__size = __rhs
+    stack.append (__main__split__block__40__size)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -1851,10 +2116,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__split__block__33__i = 0
+    __main__split__block__40__i = 0
     __rhs = stack.pop()
-    __main__split__block__33__i = __rhs
-    stack.append (__main__split__block__33__i)
+    __main__split__block__40__i = __rhs
+    stack.append (__main__split__block__40__i)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -1865,10 +2130,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
     # Int Literal
     stack.append(0)
     # LHS
-    __main__split__block__33__j = 0
+    __main__split__block__40__j = 0
     __rhs = stack.pop()
-    __main__split__block__33__j = __rhs
-    stack.append (__main__split__block__33__j)
+    __main__split__block__40__j = __rhs
+    stack.append (__main__split__block__40__j)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -1880,9 +2145,9 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
         # Condition
         # Less Than
         # LHS
-        stack.append(__main__split__block__33__i)
+        stack.append(__main__split__block__40__i)
         # RHS
-        stack.append(__main__split__block__33__size)
+        stack.append(__main__split__block__40__size)
         __rhs = stack.pop ()
         __lhs = stack.pop ()
         __res = __lhs < __rhs
@@ -1904,7 +2169,7 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
         # LHS
         stack.append(__main__split__str)
         # OFFSET
-        stack.append(__main__split__block__33__i)
+        stack.append(__main__split__block__40__i)
         __offset = stack.pop ()
         __pointer = stack.pop ()
         stack.append (__pointer[__offset])
@@ -1914,9 +2179,9 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
         __lhs = stack.pop ()
         __res = __lhs != __rhs
         stack.append (__res)
-        __if__36__cond = stack.pop ()
+        __if__43__cond = stack.pop ()
         # get condition from stack
-        if (__if__36__cond):
+        if (__if__43__cond):
             # Body
             #-------------------------------------------------------------
             # Code Block
@@ -1926,10 +2191,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # Int Literal
             stack.append(0)
             # LHS
-            __main__split__block__33__while__34__block__35__if__36__block__37__count = 0
+            __main__split__block__40__while__41__block__42__if__43__block__44__count = 0
             __rhs = stack.pop()
-            __main__split__block__33__while__34__block__35__if__36__block__37__count = __rhs
-            stack.append (__main__split__block__33__while__34__block__35__if__36__block__37__count)
+            __main__split__block__40__while__41__block__42__if__43__block__44__count = __rhs
+            stack.append (__main__split__block__40__while__41__block__42__if__43__block__44__count)
             # Statement results can be ignored
             stack.pop ()
             # End Statement
@@ -1937,12 +2202,12 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # Statement
             # Assignment - '='
             # RHS
-            stack.append(__main__split__block__33__i)
+            stack.append(__main__split__block__40__i)
             # LHS
-            __main__split__block__33__while__34__block__35__if__36__block__37__k = 0
+            __main__split__block__40__while__41__block__42__if__43__block__44__k = 0
             __rhs = stack.pop()
-            __main__split__block__33__while__34__block__35__if__36__block__37__k = __rhs
-            stack.append (__main__split__block__33__while__34__block__35__if__36__block__37__k)
+            __main__split__block__40__while__41__block__42__if__43__block__44__k = __rhs
+            stack.append (__main__split__block__40__while__41__block__42__if__43__block__44__k)
             # Statement results can be ignored
             stack.pop ()
             # End Statement
@@ -1954,9 +2219,9 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 # Condition
                 # Less Than
                 # LHS
-                stack.append(__main__split__block__33__while__34__block__35__if__36__block__37__k)
+                stack.append(__main__split__block__40__while__41__block__42__if__43__block__44__k)
                 # RHS
-                stack.append(__main__split__block__33__size)
+                stack.append(__main__split__block__40__size)
                 __rhs = stack.pop ()
                 __lhs = stack.pop ()
                 __res = __lhs < __rhs
@@ -1977,8 +2242,8 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 stack.append(__main__split__str)
                 # OFFSET
                 # Post-Increment
-                __res = __main__split__block__33__while__34__block__35__if__36__block__37__k
-                __main__split__block__33__while__34__block__35__if__36__block__37__k = __main__split__block__33__while__34__block__35__if__36__block__37__k + 1
+                __res = __main__split__block__40__while__41__block__42__if__43__block__44__k
+                __main__split__block__40__while__41__block__42__if__43__block__44__k = __main__split__block__40__while__41__block__42__if__43__block__44__k + 1
                 stack.append (__res)
                 __offset = stack.pop ()
                 __pointer = stack.pop ()
@@ -1989,17 +2254,17 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 __lhs = stack.pop ()
                 __res = __lhs != __rhs
                 stack.append (__res)
-                __if__39__cond = stack.pop ()
+                __if__46__cond = stack.pop ()
                 # get condition from stack
-                if (__if__39__cond):
+                if (__if__46__cond):
                     # Body
                     # Statement
                     # Pre-Increment
                     # RHS
-                    stack.append(__main__split__block__33__while__34__block__35__if__36__block__37__count)
+                    stack.append(__main__split__block__40__while__41__block__42__if__43__block__44__count)
                     __rhs = stack.pop ()
-                    __main__split__block__33__while__34__block__35__if__36__block__37__count = __main__split__block__33__while__34__block__35__if__36__block__37__count + 1
-                    __res = __main__split__block__33__while__34__block__35__if__36__block__37__count
+                    __main__split__block__40__while__41__block__42__if__43__block__44__count = __main__split__block__40__while__41__block__42__if__43__block__44__count + 1
+                    __res = __main__split__block__40__while__41__block__42__if__43__block__44__count
                     stack.append (__res)
                     # Statement results can be ignored
                     stack.pop ()
@@ -2008,7 +2273,7 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 #---------------------------------------------------------
                 # Else-Statement
                 else:
-                    # Break out of __while__38
+                    # Break out of __while__45
                     break
                 #---------------------------------------------------------
                 # End of if
@@ -2018,12 +2283,12 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # Statement
             # Method Call - Vector<:char[]:>::pushBack(char[]) -> void
             # LHS
-            stack.append(__main__split__block__33__tokens)
+            stack.append(__main__split__block__40__tokens)
             # RHS
             # Arguments
             # Addition
             # LHS
-            stack.append(__main__split__block__33__while__34__block__35__if__36__block__37__count)
+            stack.append(__main__split__block__40__while__41__block__42__if__43__block__44__count)
             # RHS
             # Int Literal
             stack.append(1)
@@ -2050,18 +2315,18 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # Int Literal
             stack.append(0)
             # LHS
-            __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k = 0
+            __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k = 0
             __rhs = stack.pop()
-            __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k = __rhs
-            stack.append (__main__split__block__33__while__34__block__35__if__36__block__37__for__40__k)
+            __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k = __rhs
+            stack.append (__main__split__block__40__while__41__block__42__if__43__block__44__for__47__k)
             # Using an infinite loop so we can write a separate multi-line condition
             while (1):
                 # Condition
                 # Less Than
                 # LHS
-                stack.append(__main__split__block__33__while__34__block__35__if__36__block__37__for__40__k)
+                stack.append(__main__split__block__40__while__41__block__42__if__43__block__44__for__47__k)
                 # RHS
-                stack.append(__main__split__block__33__while__34__block__35__if__36__block__37__count)
+                stack.append(__main__split__block__40__while__41__block__42__if__43__block__44__count)
                 __rhs = stack.pop ()
                 __lhs = stack.pop ()
                 __res = __lhs < __rhs
@@ -2080,8 +2345,8 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 stack.append(__main__split__str)
                 # OFFSET
                 # Post-Increment
-                __res = __main__split__block__33__i
-                __main__split__block__33__i = __main__split__block__33__i + 1
+                __res = __main__split__block__40__i
+                __main__split__block__40__i = __main__split__block__40__i + 1
                 stack.append (__res)
                 __offset = stack.pop ()
                 __pointer = stack.pop ()
@@ -2093,19 +2358,19 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 # LHS
                 # Member Accessor
                 # LHS
-                stack.append(__main__split__block__33__tokens)
+                stack.append(__main__split__block__40__tokens)
                 # RHS
                 stack.append (__field____main____Vector__char__1____data)
                 __child = stack.pop ()
                 __parent = stack.pop ()
                 stack.append (__parent[__child])
                 # OFFSET
-                stack.append(__main__split__block__33__j)
+                stack.append(__main__split__block__40__j)
                 __offset = stack.pop ()
                 __pointer = stack.pop ()
                 stack.append (__pointer[__offset])
                 # OFFSET
-                stack.append(__main__split__block__33__while__34__block__35__if__36__block__37__for__40__k)
+                stack.append(__main__split__block__40__while__41__block__42__if__43__block__44__for__47__k)
                 __offset = stack.pop()
                 __pointer = stack.pop()
                 __rhs = stack.pop()
@@ -2119,10 +2384,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
                 # Update
                 # Pre-Increment
                 # RHS
-                stack.append(__main__split__block__33__while__34__block__35__if__36__block__37__for__40__k)
+                stack.append(__main__split__block__40__while__41__block__42__if__43__block__44__for__47__k)
                 __rhs = stack.pop ()
-                __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k = __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k + 1
-                __res = __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k
+                __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k = __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k + 1
+                __res = __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k
                 stack.append (__res)
             #-------------------------------------------------------------
             # Statement
@@ -2137,19 +2402,19 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # LHS
             # Member Accessor
             # LHS
-            stack.append(__main__split__block__33__tokens)
+            stack.append(__main__split__block__40__tokens)
             # RHS
             stack.append (__field____main____Vector__char__1____data)
             __child = stack.pop ()
             __parent = stack.pop ()
             stack.append (__parent[__child])
             # OFFSET
-            stack.append(__main__split__block__33__j)
+            stack.append(__main__split__block__40__j)
             __offset = stack.pop ()
             __pointer = stack.pop ()
             stack.append (__pointer[__offset])
             # OFFSET
-            stack.append(__main__split__block__33__while__34__block__35__if__36__block__37__count)
+            stack.append(__main__split__block__40__while__41__block__42__if__43__block__44__count)
             __offset = stack.pop()
             __pointer = stack.pop()
             __rhs = stack.pop()
@@ -2162,10 +2427,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
             # Statement
             # Pre-Increment
             # RHS
-            stack.append(__main__split__block__33__j)
+            stack.append(__main__split__block__40__j)
             __rhs = stack.pop ()
-            __main__split__block__33__j = __main__split__block__33__j + 1
-            __res = __main__split__block__33__j
+            __main__split__block__40__j = __main__split__block__40__j + 1
+            __res = __main__split__block__40__j
             stack.append (__res)
             # Statement results can be ignored
             stack.pop ()
@@ -2177,10 +2442,10 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
         # Statement
         # Pre-Increment
         # RHS
-        stack.append(__main__split__block__33__i)
+        stack.append(__main__split__block__40__i)
         __rhs = stack.pop ()
-        __main__split__block__33__i = __main__split__block__33__i + 1
-        __res = __main__split__block__33__i
+        __main__split__block__40__i = __main__split__block__40__i + 1
+        __res = __main__split__block__40__i
         stack.append (__res)
         # Statement results can be ignored
         stack.pop ()
@@ -2190,7 +2455,7 @@ def __main____split__char__1__char (__main__split__str, __main__split__delim):
     # End of While
     #---------------------------------------------------------------------
     # Return
-    stack.append(__main__split__block__33__tokens)
+    stack.append(__main__split__block__40__tokens)
     __rVal = stack.pop ()
     return __rVal
     #---------------------------------------------------------------------
@@ -2217,9 +2482,9 @@ def __main____max__int__int (__main__max__a, __main__max__b):
     __lhs = stack.pop ()
     __res = __lhs >= __rhs
     stack.append (__res)
-    __if__43__cond = stack.pop ()
+    __if__50__cond = stack.pop ()
     # get condition from stack
-    if (__if__43__cond):
+    if (__if__50__cond):
         # Body
         # Return
         stack.append(__main__max__a)
@@ -2255,9 +2520,9 @@ def __main____max__float__float (__main__max__a, __main__max__b):
     __lhs = stack.pop ()
     __res = __lhs >= __rhs
     stack.append (__res)
-    __if__45__cond = stack.pop ()
+    __if__52__cond = stack.pop ()
     # get condition from stack
-    if (__if__45__cond):
+    if (__if__52__cond):
         # Body
         # Return
         stack.append(__main__max__a)
@@ -2293,9 +2558,9 @@ def __main____min__int__int (__main__min__a, __main__min__b):
     __lhs = stack.pop ()
     __res = __lhs <= __rhs
     stack.append (__res)
-    __if__47__cond = stack.pop ()
+    __if__54__cond = stack.pop ()
     # get condition from stack
-    if (__if__47__cond):
+    if (__if__54__cond):
         # Body
         # Return
         stack.append(__main__min__a)
@@ -2331,9 +2596,9 @@ def __main____min__float__float (__main__min__a, __main__min__b):
     __lhs = stack.pop ()
     __res = __lhs <= __rhs
     stack.append (__res)
-    __if__49__cond = stack.pop ()
+    __if__56__cond = stack.pop ()
     # get condition from stack
-    if (__if__49__cond):
+    if (__if__56__cond):
         # Body
         # Return
         stack.append(__main__min__a)
@@ -2370,9 +2635,9 @@ def __main____abs__int (__main__abs__v):
     __lhs = stack.pop ()
     __res = __lhs < __rhs
     stack.append (__res)
-    __if__51__cond = stack.pop ()
+    __if__58__cond = stack.pop ()
     # get condition from stack
-    if (__if__51__cond):
+    if (__if__58__cond):
         # Body
         # Return
         # Negative
@@ -2414,9 +2679,9 @@ def __main____abs__float (__main__abs__v):
     __lhs = stack.pop ()
     __res = __lhs < __rhs
     stack.append (__res)
-    __if__53__cond = stack.pop ()
+    __if__60__cond = stack.pop ()
     # get condition from stack
-    if (__if__53__cond):
+    if (__if__60__cond):
         # Body
         # Return
         # Negative
@@ -2591,16 +2856,16 @@ stack.pop ()
 # Int Literal
 stack.append(0)
 # LHS
-__main__for__56__l = 0
+__main__for__63__l = 0
 __rhs = stack.pop()
-__main__for__56__l = __rhs
-stack.append (__main__for__56__l)
+__main__for__63__l = __rhs
+stack.append (__main__for__63__l)
 # Using an infinite loop so we can write a separate multi-line condition
 while (1):
     # Condition
     # Less Than
     # LHS
-    stack.append(__main__for__56__l)
+    stack.append(__main__for__63__l)
     # RHS
     # Member Accessor
     # LHS
@@ -2636,7 +2901,7 @@ while (1):
     __parent = stack.pop ()
     stack.append (__parent[__child])
     # OFFSET
-    stack.append(__main__for__56__l)
+    stack.append(__main__for__63__l)
     __offset = stack.pop ()
     __pointer = stack.pop ()
     stack.append (__pointer[__offset])
@@ -2648,10 +2913,10 @@ while (1):
     __res = __main____split__char__1__char (__arg0, __arg1)
     stack.append (__res) # function call result
     # LHS
-    __main__for__56__block__57__tokens = 0
+    __main__for__63__block__64__tokens = 0
     __rhs = stack.pop()
-    __main__for__56__block__57__tokens = __rhs
-    stack.append (__main__for__56__block__57__tokens)
+    __main__for__63__block__64__tokens = __rhs
+    stack.append (__main__for__63__block__64__tokens)
     # Statement results can be ignored
     stack.pop ()
     # End Statement
@@ -2669,7 +2934,7 @@ while (1):
     # LHS
     # Member Accessor
     # LHS
-    stack.append(__main__for__56__block__57__tokens)
+    stack.append(__main__for__63__block__64__tokens)
     # RHS
     stack.append (__field____main____Vector__char__1____data)
     __child = stack.pop ()
@@ -2694,7 +2959,7 @@ while (1):
     __lhs = stack.pop ()
     __res = __lhs == __rhs
     stack.append (__res)
-    __if__58__cond = stack.pop ()
+    __if__65__cond = stack.pop ()
     # Condition for elif #0
     # Equal
     # LHS
@@ -2704,7 +2969,7 @@ while (1):
     # LHS
     # Member Accessor
     # LHS
-    stack.append(__main__for__56__block__57__tokens)
+    stack.append(__main__for__63__block__64__tokens)
     # RHS
     stack.append (__field____main____Vector__char__1____data)
     __child = stack.pop ()
@@ -2729,9 +2994,9 @@ while (1):
     __lhs = stack.pop ()
     __res = __lhs == __rhs
     stack.append (__res)
-    __elif__58x0__cond = stack.pop ()
+    __elif__65x0__cond = stack.pop ()
     # get condition from stack
-    if (__if__58__cond):
+    if (__if__65__cond):
         # Body
         #-----------------------------------------------------------------
         # Code Block
@@ -2766,7 +3031,7 @@ while (1):
     #---------------------------------------------------------------------
     # Elif-Statement
     # Condition
-    elif (__elif__58x0__cond):
+    elif (__elif__65x0__cond):
         # Body
         #-----------------------------------------------------------------
         # Code Block
@@ -2779,7 +3044,7 @@ while (1):
         # LHS
         # Member Accessor
         # LHS
-        stack.append(__main__for__56__block__57__tokens)
+        stack.append(__main__for__63__block__64__tokens)
         # RHS
         stack.append (__field____main____Vector__char__1____data)
         __child = stack.pop ()
@@ -2796,10 +3061,10 @@ while (1):
         __res = __builtin__stringToInt__char__1 (__arg0)
         stack.append (__res) # function call result
         # LHS
-        __main__for__56__block__57__elif__58x0__block__60__value = 0
+        __main__for__63__block__64__elif__65x0__block__67__value = 0
         __rhs = stack.pop()
-        __main__for__56__block__57__elif__58x0__block__60__value = __rhs
-        stack.append (__main__for__56__block__57__elif__58x0__block__60__value)
+        __main__for__63__block__64__elif__65x0__block__67__value = __rhs
+        stack.append (__main__for__63__block__64__elif__65x0__block__67__value)
         # Statement results can be ignored
         stack.pop ()
         # End Statement
@@ -2861,7 +3126,7 @@ while (1):
         # Statement
         # Assignment - '+='
         # RHS
-        stack.append(__main__for__56__block__57__elif__58x0__block__60__value)
+        stack.append(__main__for__63__block__64__elif__65x0__block__67__value)
         __rhs = stack.pop()
         __main__registerx = __main__registerx + __rhs
         stack.append (__main__registerx)
@@ -2897,10 +3162,10 @@ while (1):
     # Update
     # Pre-Increment
     # RHS
-    stack.append(__main__for__56__l)
+    stack.append(__main__for__63__l)
     __rhs = stack.pop ()
-    __main__for__56__l = __main__for__56__l + 1
-    __res = __main__for__56__l
+    __main__for__63__l = __main__for__63__l + 1
+    __res = __main__for__63__l
     stack.append (__res)
 #-------------------------------------------------------------------------
 # Statement

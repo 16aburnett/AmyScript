@@ -259,12 +259,13 @@ __endOfLibrary:
       //==================================================================
       // Class Declaration - __main____Vector__int inherits __builtin____main__Object
          // Creating Dispatch Table
-            MALLOC __dtable____main____Vector__int 4
+            MALLOC __dtable____main____Vector__int 5
             // Populate Dispatch Table
             ASSIGN __dtable____main____Vector__int[0] __method____main____Vector__int____pushBack__int
             ASSIGN __dtable____main____Vector__int[1] __method____main____Vector__int____popBack
-            ASSIGN __dtable____main____Vector__int[2] __method____main____Vector__int____get__int
-            ASSIGN __dtable____main____Vector__int[3] __method____main____Vector__int____set__int__int
+            ASSIGN __dtable____main____Vector__int[2] __method____main____Vector__int____clear
+            ASSIGN __dtable____main____Vector__int[3] __method____main____Vector__int____get__int
+            ASSIGN __dtable____main____Vector__int[4] __method____main____Vector__int____set__int__int
          //---------------------------------------------------------------
          // Field - int[] Vector<:int:>::data
          ASSIGN __field____main____Vector__int____data 1
@@ -822,6 +823,68 @@ __endOfLibrary:
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
+         // Method Declaration - Vector<:int:>::clear() -> void
+         JUMP __end__method____main____Vector__int____clear
+         __method____main____Vector__int____clear:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // While-Loop
+                  __while__9:
+                     // Condition
+                        // Greater Than
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____Vector__int____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // RHS
+                              // Int Literal
+                                 PUSH 0
+                           POP __rhs
+                           POP __lhs
+                           GT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endwhile__9
+                     // Body
+                        // Method Call - Vector<:int:>::popBack() -> int
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                           // Arguments
+                           POP __obj
+                           // Pushing args in reverse order
+                           PUSH __obj
+                           CALL __method____main____Vector__int____popBack
+                           POP __void
+                           // Remove args
+                           RESPONSE __retval
+                           PUSH __retval
+                        // Statement results can be ignored
+                        POP __void
+                     JUMP __while__9
+                     // End of While
+                     __endwhile__9:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____Vector__int____clear:
+         // End Method Declaration - __method____main____Vector__int____clear
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
          // Method Declaration - Vector<:int:>::get(int) -> int
          JUMP __end__method____main____Vector__int____get__int
          __method____main____Vector__int____get__int:
@@ -961,7 +1024,7 @@ POP __void
 POP __void
 //------------------------------------------------------------------------
 // While-Loop
-__while__10:
+__while__12:
    // Condition
       // Not Equal
          // LHS
@@ -984,7 +1047,7 @@ __while__10:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endwhile__10
+      JEQ __endwhile__12
    // Body
       //------------------------------------------------------------------
       // Code Block
@@ -994,15 +1057,15 @@ __while__10:
                   PUSH 0
             // LHS
                // Variable Declaration
-                  ASSIGN __main__while__10__block__11__calorieTotal 0
+                  ASSIGN __main__while__12__block__13__calorieTotal 0
             POP __rhs
-            ASSIGN __main__while__10__block__11__calorieTotal __rhs
+            ASSIGN __main__while__12__block__13__calorieTotal __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
          //---------------------------------------------------------------
          // While-Loop
-         __while__12:
+         __while__14:
             // Condition
                // AND
                   // LHS
@@ -1051,7 +1114,7 @@ __while__10:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endwhile__12
+               JEQ __endwhile__14
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -1071,8 +1134,8 @@ __while__10:
                            RESPONSE __retval
                            PUSH __retval
                      POP __rhs
-                     ADD __main__while__10__block__11__calorieTotal __main__while__10__block__11__calorieTotal __rhs
-                     PUSH __main__while__10__block__11__calorieTotal
+                     ADD __main__while__12__block__13__calorieTotal __main__while__12__block__13__calorieTotal __rhs
+                     PUSH __main__while__12__block__13__calorieTotal
                   // Statement results can be ignored
                   POP __void
                   // Free Operator
@@ -1101,9 +1164,9 @@ __while__10:
                   // Statement results can be ignored
                   POP __void
                //---------------------------------------------------------
-            JUMP __while__12
+            JUMP __while__14
             // End of While
-            __endwhile__12:
+            __endwhile__14:
          //---------------------------------------------------------------
          // Method Call - Vector<:int:>::pushBack(int) -> void
             // LHS
@@ -1112,7 +1175,7 @@ __while__10:
             // RHS
             // Arguments
                // Identifier - calorieTotal
-                  PUSH __main__while__10__block__11__calorieTotal
+                  PUSH __main__while__12__block__13__calorieTotal
                POP __arg0
             POP __obj
             // Pushing args in reverse order
@@ -1150,13 +1213,13 @@ __while__10:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif__14
+               JEQ __endif__16
             // Body
-               // Break out of __while__10
-               JUMP __endwhile__10
-            JUMP __endif__14
+               // Break out of __while__12
+               JUMP __endwhile__12
+            JUMP __endif__16
             // End of if
-            __endif__14:
+            __endif__16:
          //---------------------------------------------------------------
          // Free Operator
             // RHS
@@ -1184,9 +1247,9 @@ __while__10:
          // Statement results can be ignored
          POP __void
       //------------------------------------------------------------------
-   JUMP __while__10
+   JUMP __while__12
    // End of While
-   __endwhile__10:
+   __endwhile__12:
 //------------------------------------------------------------------------
 // Assignment - '='
    // RHS
@@ -1209,27 +1272,27 @@ POP __void
             PUSH 0
       // LHS
          // Variable Declaration
-            ASSIGN __main__for__15__i 0
+            ASSIGN __main__for__17__i 0
       POP __rhs
-      ASSIGN __main__for__15__i __rhs
+      ASSIGN __main__for__17__i __rhs
       PUSH __rhs
-JUMP __forcond__15
-__for__15:
+JUMP __forcond__17
+__for__17:
    // Update
       // Pre-Increment
          // RHS
             // Identifier - i
-               PUSH __main__for__15__i
+               PUSH __main__for__17__i
          POP __rhs
-         ADD __main__for__15__i __main__for__15__i 1
-         ASSIGN __res __main__for__15__i
+         ADD __main__for__17__i __main__for__17__i 1
+         ASSIGN __res __main__for__17__i
          PUSH __res
-   __forcond__15:
+   __forcond__17:
    // Condition
       // Less Than
          // LHS
             // Identifier - i
-               PUSH __main__for__15__i
+               PUSH __main__for__17__i
          // RHS
             // Member Accessor
                // LHS
@@ -1246,7 +1309,7 @@ __for__15:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endfor__15
+      JEQ __endfor__17
    // Body
       //------------------------------------------------------------------
       // If-Statement
@@ -1260,7 +1323,7 @@ __for__15:
                      // RHS
                      // Arguments
                         // Identifier - i
-                           PUSH __main__for__15__i
+                           PUSH __main__for__17__i
                         POP __arg0
                      POP __obj
                      // Pushing args in reverse order
@@ -1281,7 +1344,7 @@ __for__15:
                PUSH __res
             POP __cond
             CMP __cond 0
-            JEQ __endif__16
+            JEQ __endif__18
          // Body
             // Assignment - '='
                // RHS
@@ -1292,7 +1355,7 @@ __for__15:
                      // RHS
                      // Arguments
                         // Identifier - i
-                           PUSH __main__for__15__i
+                           PUSH __main__for__17__i
                         POP __arg0
                      POP __obj
                      // Pushing args in reverse order
@@ -1309,14 +1372,14 @@ __for__15:
                PUSH __rhs
             // Statement results can be ignored
             POP __void
-         JUMP __endif__16
+         JUMP __endif__18
          // End of if
-         __endif__16:
+         __endif__18:
       //------------------------------------------------------------------
    // Repeat
-   JUMP __for__15
+   JUMP __for__17
    // End of For
-   __endfor__15:
+   __endfor__17:
 //------------------------------------------------------------------------
 // Function Call - println(int) -> void
    // Arguments

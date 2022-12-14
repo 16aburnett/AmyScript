@@ -1,0 +1,276 @@
+
+#include "Vector.amy"
+#include "algorithms.amy"
+#include "LinkedList.amy"
+
+//========================================================================
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+//========================================================================
+
+class Point
+{
+    public field int x;
+    public field int y;
+    constructor (int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+function void print (Point p)
+{
+    print ('('); print (p.x); print (','); print (' '); print (p.y); print (')');
+}
+
+function void println (Point p)
+{
+    print (p);
+    println ();
+}
+
+//========================================================================
+
+class Path
+{
+    public field Vector<:Point:> points;
+    constructor ()
+    {
+        this.points = new Vector<:Point:> ();
+    }
+    constructor (Vector<:Point:> points)
+    {
+        this.points = points;
+    }
+}
+
+function void print (Path p)
+{
+    if (p.points.size > 0)
+        print (p.points.data[0]);
+    for (int i = 1; i < p.points.size; ++i)
+    {
+        print ('-'); print ('>');
+        print (p.points.data[i]);
+    }
+}
+
+function void println (Path p)
+{
+    print (p);
+    println ();
+}
+
+//========================================================================
+
+function Path build_path (char[] line)
+{
+    // create the path
+    Path p = new Path ();
+
+    Vector<:char[]:> tokens = split (line, '-');
+
+    // parse first point
+    // x,y
+    Vector<:char[]:> point0_str = split (tokens.data[0], ',');
+    int x = stringToInt (point0_str.data[0]);
+    int y = stringToInt (point0_str.data[1]);
+    Point p0 = new Point (x, y);
+
+    p.points.pushBack (p0);
+
+    // parse the rest of the points
+    // > x,y
+    for (int i = 1; i < tokens.size; ++i)
+    {
+        // ignore '>' and ' '
+        char[] point_str = substr (tokens.data[i], 2, strlen(tokens.data[i]));
+
+        Vector<:char[]:> point_tokens = split (point_str, ',');
+        int x = stringToInt (point_tokens.data[0]);
+        int y = stringToInt (point_tokens.data[1]);
+        Point point = new Point (x, y);
+
+        p.points.pushBack (point);
+    }
+
+    return p;
+}
+
+//========================================================================
+
+Vector<:Path:> paths = new Vector<:Path:> ();
+
+for (int l = 0; l < lines.size; l+=1)
+{
+    Path p = build_path (lines.data[l]);
+    //println (p);
+    paths.pushBack (p);
+}
+
+// find min and max for board
+int maxx = 0;
+int minx = 500; // using 500 bc sand starts at 500,0
+int maxy = 0;
+int miny = 0; // this is fine as zero bc sand starts at 500,0
+for (int i = 0; i < paths.size; ++i)
+{
+    Path path = paths.data[i];
+    for (int j = 0; j < path.points.size; ++j)
+    {
+        Point point = path.points.data[j];
+        maxx = max (point.x+2, maxx); // +1 so maxx is exclusive and +1 for padding
+        maxy = max (point.y+1, maxy); // +1 so maxy is exclusive
+        minx = min (point.x-1, minx); // -1 for padding
+        miny = min (point.y, miny);
+    }    
+}
+
+//========================================================================
+
+Vector<:Vector<:char:>:> board = new Vector<:Vector<:char:>:> ();
+
+for (int i = miny; i < maxy; ++i)
+{
+    board.pushBack (new Vector<:char:> ());
+    for (int j = minx; j < maxx; ++j)
+    {
+        board.data[i-miny].pushBack ('.');
+    }
+}
+
+//========================================================================
+
+function void printboard (Vector<:Vector<:char:>:> board)
+{
+    for (int i = 0; i < board.size; ++i)
+    {
+        for (int j = 0; j < board.data[i].size; ++j)
+        {
+            print (board.data[i].data[j]);
+        }
+        println ();
+    }
+}
+//printboard (board);
+
+//========================================================================
+
+// draw walls
+// for each path
+for (int i = 0; i < paths.size; ++i)
+{
+    Path path = paths.data[i];
+    // for each segment
+    for (int j = 0; j < path.points.size-1; ++j)
+    {
+        Point a = path.points.data[j  ];
+        Point b = path.points.data[j+1];
+        //print (a); println (b);
+        // draw from a to b
+        // North
+        if (a.y > b.y)
+        {
+            for (int k = a.y; k >= b.y; --k)
+            {
+                board.data[k].data[a.x-minx] = '#'; 
+            }
+        }
+        // East
+        if (a.x < b.x)
+        {
+            for (int k = a.x; k <= b.x; ++k)
+            {
+                board.data[a.y].data[k-minx] = '#'; 
+            }
+        }
+        // South
+        if (a.y < b.y)
+        {
+            for (int k = a.y; k <= b.y; ++k)
+            {
+                board.data[k].data[a.x-minx] = '#'; 
+            }
+        }
+        // West
+        if (a.x > b.x)
+        {
+            for (int k = a.x; k >= b.x; --k)
+            {
+                board.data[a.y].data[k-minx] = '#'; 
+            }
+        }
+    }
+}
+
+//========================================================================
+
+// drop sand
+Point drop_point = new Point (500, 0);
+Point sand_pos = new Point (drop_point.x, drop_point.y);
+int num_sand_at_rest = 0;
+// timesteps
+while (1)
+{
+    // drop sand all the way
+    int has_reached_abyss = 0;
+    sand_pos.x = drop_point.x;
+    sand_pos.y = drop_point.y;
+    while (1)
+    {
+        // check if we reached the abyss
+        if (sand_pos.y+1 >= maxy)
+        {
+            has_reached_abyss = 1;
+            break;
+        }
+
+        // move down, if possible
+        if (board.data[sand_pos.y+1].data[sand_pos.x-minx] == '.')
+        {
+            sand_pos.y += 1;
+            continue;
+        }
+
+        // move diag down left, if possible
+        if (board.data[sand_pos.y+1].data[sand_pos.x-1-minx] == '.')
+        {
+            sand_pos.y += 1;
+            sand_pos.x -= 1;
+            continue;
+        }
+
+        // move diag down right, if possible
+        if (board.data[sand_pos.y+1].data[sand_pos.x+1-minx] == '.')
+        {
+            sand_pos.y += 1;
+            sand_pos.x += 1;
+            continue;
+        }
+
+        // otherwise, this unit of sand is at rest
+        board.data[sand_pos.y].data[sand_pos.x-minx] = 'o';
+        //printboard (board);
+        // move to next unit of sand
+        break;
+
+    }
+
+    // check if this sand reached the abyss
+    if (has_reached_abyss)
+        // reached abyss so stop dropping sand
+        break;
+
+    // sand is at rest
+    ++num_sand_at_rest;
+}
+
+println (num_sand_at_rest);

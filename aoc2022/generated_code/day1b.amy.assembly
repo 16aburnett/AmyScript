@@ -259,12 +259,13 @@ __endOfLibrary:
       //==================================================================
       // Class Declaration - __main____Vector__int inherits __builtin____main__Object
          // Creating Dispatch Table
-            MALLOC __dtable____main____Vector__int 4
+            MALLOC __dtable____main____Vector__int 5
             // Populate Dispatch Table
             ASSIGN __dtable____main____Vector__int[0] __method____main____Vector__int____pushBack__int
             ASSIGN __dtable____main____Vector__int[1] __method____main____Vector__int____popBack
-            ASSIGN __dtable____main____Vector__int[2] __method____main____Vector__int____get__int
-            ASSIGN __dtable____main____Vector__int[3] __method____main____Vector__int____set__int__int
+            ASSIGN __dtable____main____Vector__int[2] __method____main____Vector__int____clear
+            ASSIGN __dtable____main____Vector__int[3] __method____main____Vector__int____get__int
+            ASSIGN __dtable____main____Vector__int[4] __method____main____Vector__int____set__int__int
          //---------------------------------------------------------------
          // Field - int[] Vector<:int:>::data
          ASSIGN __field____main____Vector__int____data 1
@@ -822,6 +823,68 @@ __endOfLibrary:
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
+         // Method Declaration - Vector<:int:>::clear() -> void
+         JUMP __end__method____main____Vector__int____clear
+         __method____main____Vector__int____clear:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // While-Loop
+                  __while__9:
+                     // Condition
+                        // Greater Than
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____Vector__int____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // RHS
+                              // Int Literal
+                                 PUSH 0
+                           POP __rhs
+                           POP __lhs
+                           GT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endwhile__9
+                     // Body
+                        // Method Call - Vector<:int:>::popBack() -> int
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                           // Arguments
+                           POP __obj
+                           // Pushing args in reverse order
+                           PUSH __obj
+                           CALL __method____main____Vector__int____popBack
+                           POP __void
+                           // Remove args
+                           RESPONSE __retval
+                           PUSH __retval
+                        // Statement results can be ignored
+                        POP __void
+                     JUMP __while__9
+                     // End of While
+                     __endwhile__9:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____Vector__int____clear:
+         // End Method Declaration - __method____main____Vector__int____clear
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
          // Method Declaration - Vector<:int:>::get(int) -> int
          JUMP __end__method____main____Vector__int____get__int
          __method____main____Vector__int____get__int:
@@ -961,7 +1024,7 @@ POP __void
 POP __void
 //------------------------------------------------------------------------
 // While-Loop
-__while__10:
+__while__12:
    // Condition
       // Not Equal
          // LHS
@@ -984,7 +1047,7 @@ __while__10:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endwhile__10
+      JEQ __endwhile__12
    // Body
       //------------------------------------------------------------------
       // Code Block
@@ -994,15 +1057,15 @@ __while__10:
                   PUSH 0
             // LHS
                // Variable Declaration
-                  ASSIGN __main__while__10__block__11__calorieTotal 0
+                  ASSIGN __main__while__12__block__13__calorieTotal 0
             POP __rhs
-            ASSIGN __main__while__10__block__11__calorieTotal __rhs
+            ASSIGN __main__while__12__block__13__calorieTotal __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
          //---------------------------------------------------------------
          // While-Loop
-         __while__12:
+         __while__14:
             // Condition
                // AND
                   // LHS
@@ -1051,7 +1114,7 @@ __while__10:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endwhile__12
+               JEQ __endwhile__14
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -1071,8 +1134,8 @@ __while__10:
                            RESPONSE __retval
                            PUSH __retval
                      POP __rhs
-                     ADD __main__while__10__block__11__calorieTotal __main__while__10__block__11__calorieTotal __rhs
-                     PUSH __main__while__10__block__11__calorieTotal
+                     ADD __main__while__12__block__13__calorieTotal __main__while__12__block__13__calorieTotal __rhs
+                     PUSH __main__while__12__block__13__calorieTotal
                   // Statement results can be ignored
                   POP __void
                   // Free Operator
@@ -1101,9 +1164,9 @@ __while__10:
                   // Statement results can be ignored
                   POP __void
                //---------------------------------------------------------
-            JUMP __while__12
+            JUMP __while__14
             // End of While
-            __endwhile__12:
+            __endwhile__14:
          //---------------------------------------------------------------
          // Method Call - Vector<:int:>::pushBack(int) -> void
             // LHS
@@ -1112,7 +1175,7 @@ __while__10:
             // RHS
             // Arguments
                // Identifier - calorieTotal
-                  PUSH __main__while__10__block__11__calorieTotal
+                  PUSH __main__while__12__block__13__calorieTotal
                POP __arg0
             POP __obj
             // Pushing args in reverse order
@@ -1150,13 +1213,13 @@ __while__10:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif__14
+               JEQ __endif__16
             // Body
-               // Break out of __while__10
-               JUMP __endwhile__10
-            JUMP __endif__14
+               // Break out of __while__12
+               JUMP __endwhile__12
+            JUMP __endif__16
             // End of if
-            __endif__14:
+            __endif__16:
          //---------------------------------------------------------------
          // Free Operator
             // RHS
@@ -1184,9 +1247,9 @@ __while__10:
          // Statement results can be ignored
          POP __void
       //------------------------------------------------------------------
-   JUMP __while__10
+   JUMP __while__12
    // End of While
-   __endwhile__10:
+   __endwhile__12:
 //------------------------------------------------------------------------
 //========================================================================
 // Function Template - 
@@ -1207,21 +1270,21 @@ __while__10:
                         PUSH 1
                   // LHS
                      // Variable Declaration
-                        ASSIGN __main__bubbleSort__block__15__hasSwapped 0
+                        ASSIGN __main__bubbleSort__block__17__hasSwapped 0
                   POP __rhs
-                  ASSIGN __main__bubbleSort__block__15__hasSwapped __rhs
+                  ASSIGN __main__bubbleSort__block__17__hasSwapped __rhs
                   PUSH __rhs
                // Statement results can be ignored
                POP __void
                //---------------------------------------------------------
                // While-Loop
-               __while__16:
+               __while__18:
                   // Condition
                      // Identifier - hasSwapped
-                        PUSH __main__bubbleSort__block__15__hasSwapped
+                        PUSH __main__bubbleSort__block__17__hasSwapped
                      POP __cond
                      CMP __cond 0
-                     JEQ __endwhile__16
+                     JEQ __endwhile__18
                   // Body
                      //---------------------------------------------------
                      // Code Block
@@ -1230,7 +1293,7 @@ __while__10:
                               // Int Literal
                                  PUSH 0
                            POP __rhs
-                           ASSIGN __main__bubbleSort__block__15__hasSwapped __rhs
+                           ASSIGN __main__bubbleSort__block__17__hasSwapped __rhs
                            PUSH __rhs
                         // Statement results can be ignored
                         POP __void
@@ -1243,27 +1306,27 @@ __while__10:
                                     PUSH 1
                               // LHS
                                  // Variable Declaration
-                                    ASSIGN __main__bubbleSort__block__15__while__16__block__17__for__18__i 0
+                                    ASSIGN __main__bubbleSort__block__17__while__18__block__19__for__20__i 0
                               POP __rhs
-                              ASSIGN __main__bubbleSort__block__15__while__16__block__17__for__18__i __rhs
+                              ASSIGN __main__bubbleSort__block__17__while__18__block__19__for__20__i __rhs
                               PUSH __rhs
-                        JUMP __forcond__18
-                        __for__18:
+                        JUMP __forcond__20
+                        __for__20:
                            // Update
                               // Pre-Increment
                                  // RHS
                                     // Identifier - i
-                                       PUSH __main__bubbleSort__block__15__while__16__block__17__for__18__i
+                                       PUSH __main__bubbleSort__block__17__while__18__block__19__for__20__i
                                  POP __rhs
-                                 ADD __main__bubbleSort__block__15__while__16__block__17__for__18__i __main__bubbleSort__block__15__while__16__block__17__for__18__i 1
-                                 ASSIGN __res __main__bubbleSort__block__15__while__16__block__17__for__18__i
+                                 ADD __main__bubbleSort__block__17__while__18__block__19__for__20__i __main__bubbleSort__block__17__while__18__block__19__for__20__i 1
+                                 ASSIGN __res __main__bubbleSort__block__17__while__18__block__19__for__20__i
                                  PUSH __res
-                           __forcond__18:
+                           __forcond__20:
                            // Condition
                               // Less Than
                                  // LHS
                                     // Identifier - i
-                                       PUSH __main__bubbleSort__block__15__while__16__block__17__for__18__i
+                                       PUSH __main__bubbleSort__block__17__while__18__block__19__for__20__i
                                  // RHS
                                     // Member Accessor
                                        // LHS
@@ -1280,7 +1343,7 @@ __while__10:
                                  PUSH __res
                               POP __cond
                               CMP __cond 0
-                              JEQ __endfor__18
+                              JEQ __endfor__20
                            // Body
                               //------------------------------------------
                               // Code Block
@@ -1298,7 +1361,7 @@ __while__10:
                                                    // Subtraction
                                                       // LHS
                                                          // Identifier - i
-                                                            PUSH __main__bubbleSort__block__15__while__16__block__17__for__18__i
+                                                            PUSH __main__bubbleSort__block__17__while__18__block__19__for__20__i
                                                       // RHS
                                                          // Int Literal
                                                             PUSH 1
@@ -1325,7 +1388,7 @@ __while__10:
                                                 // RHS
                                                 // Arguments
                                                    // Identifier - i
-                                                      PUSH __main__bubbleSort__block__15__while__16__block__17__for__18__i
+                                                      PUSH __main__bubbleSort__block__17__while__18__block__19__for__20__i
                                                    POP __arg0
                                                 POP __obj
                                                 // Pushing args in reverse order
@@ -1343,7 +1406,7 @@ __while__10:
                                           PUSH __res
                                        POP __cond
                                        CMP __cond 0
-                                       JEQ __endif__20
+                                       JEQ __endif__22
                                     // Body
                                        //---------------------------------
                                        // Code Block
@@ -1358,7 +1421,7 @@ __while__10:
                                                       // Subtraction
                                                          // LHS
                                                             // Identifier - i
-                                                               PUSH __main__bubbleSort__block__15__while__16__block__17__for__18__i
+                                                               PUSH __main__bubbleSort__block__17__while__18__block__19__for__20__i
                                                          // RHS
                                                             // Int Literal
                                                                PUSH 1
@@ -1379,9 +1442,9 @@ __while__10:
                                                    PUSH __retval
                                              // LHS
                                                 // Variable Declaration
-                                                   ASSIGN __main__bubbleSort__block__15__while__16__block__17__for__18__block__19__if__20__block__21__temp 0
+                                                   ASSIGN __main__bubbleSort__block__17__while__18__block__19__for__20__block__21__if__22__block__23__temp 0
                                              POP __rhs
-                                             ASSIGN __main__bubbleSort__block__15__while__16__block__17__for__18__block__19__if__20__block__21__temp __rhs
+                                             ASSIGN __main__bubbleSort__block__17__while__18__block__19__for__20__block__21__if__22__block__23__temp __rhs
                                              PUSH __rhs
                                           // Statement results can be ignored
                                           POP __void
@@ -1394,7 +1457,7 @@ __while__10:
                                                 // Subtraction
                                                    // LHS
                                                       // Identifier - i
-                                                         PUSH __main__bubbleSort__block__15__while__16__block__17__for__18__i
+                                                         PUSH __main__bubbleSort__block__17__while__18__block__19__for__20__i
                                                    // RHS
                                                       // Int Literal
                                                          PUSH 1
@@ -1409,7 +1472,7 @@ __while__10:
                                                    // RHS
                                                    // Arguments
                                                       // Identifier - i
-                                                         PUSH __main__bubbleSort__block__15__while__16__block__17__for__18__i
+                                                         PUSH __main__bubbleSort__block__17__while__18__block__19__for__20__i
                                                       POP __arg0
                                                    POP __obj
                                                    // Pushing args in reverse order
@@ -1444,9 +1507,9 @@ __while__10:
                                              // RHS
                                              // Arguments
                                                 // Identifier - i
-                                                   PUSH __main__bubbleSort__block__15__while__16__block__17__for__18__i
+                                                   PUSH __main__bubbleSort__block__17__while__18__block__19__for__20__i
                                                 // Identifier - temp
-                                                   PUSH __main__bubbleSort__block__15__while__16__block__17__for__18__block__19__if__20__block__21__temp
+                                                   PUSH __main__bubbleSort__block__17__while__18__block__19__for__20__block__21__if__22__block__23__temp
                                                 POP __arg1
                                                 POP __arg0
                                              POP __obj
@@ -1468,25 +1531,25 @@ __while__10:
                                                 // Int Literal
                                                    PUSH 1
                                              POP __rhs
-                                             ASSIGN __main__bubbleSort__block__15__hasSwapped __rhs
+                                             ASSIGN __main__bubbleSort__block__17__hasSwapped __rhs
                                              PUSH __rhs
                                           // Statement results can be ignored
                                           POP __void
                                        //---------------------------------
-                                    JUMP __endif__20
+                                    JUMP __endif__22
                                     // End of if
-                                    __endif__20:
+                                    __endif__22:
                                  //---------------------------------------
                               //------------------------------------------
                            // Repeat
-                           JUMP __for__18
+                           JUMP __for__20
                            // End of For
-                           __endfor__18:
+                           __endfor__20:
                         //------------------------------------------------
                      //---------------------------------------------------
-                  JUMP __while__16
+                  JUMP __while__18
                   // End of While
-                  __endwhile__16:
+                  __endwhile__18:
                //---------------------------------------------------------
             //------------------------------------------------------------
          RETURN 0
