@@ -1,0 +1,175 @@
+
+println ("Not implemented");
+exit (1);
+
+#include "Vector.amy"
+#include "algorithms.amy"
+#include "LinkedList.amy"
+#include "MinHeap.amy"
+
+//========================================================================
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+//========================================================================
+
+class Valve
+{
+    public field char[] name;
+    public field int flow_rate;
+    public field Vector<:Valve:> tunnels;
+    public field int is_open;
+    constructor (char[] name, int flow_rate)
+    {
+        this.name = name;
+        this.flow_rate = flow_rate;
+        this.tunnels = new Vector<:Valve:> ();
+        this.is_open = 0;
+    }
+}
+
+function void print (Valve v)
+{
+    print ('('); print (v.name);
+    print (','); print (' '); print (v.flow_rate); 
+    print (','); print (' ');
+    for (int i = 0; i < v.tunnels.size; ++i)
+    {
+        print (v.tunnels.data[i].name);
+        print (' ');
+    }
+    print (')');
+}
+
+function void println (Valve v)
+{
+    print (v);
+    println ();
+}
+
+Vector<:Valve:> valves = new Vector<:Valve:> ();
+Valve start_valve = null;
+
+for (int l = 0; l < lines.size; l+=1)
+{
+    // Example Line:
+    // Valve AA has flow rate=0; tunnels lead to valves DD, II, BB
+    Vector<:char[]:> tokens = split (lines.data[l], ' ');
+    char[] name = tokens.data[1];
+    // rate=X;
+    // rate=XX;
+    char[] flow_str = tokens.data[4];
+    char[] flow_str1 = substr (flow_str, 5, strlen(flow_str)-1);
+    int flow_rate = stringToInt (flow_str1);
+    
+    Valve valve = new Valve (name, flow_rate);
+    valves.pushBack (valve);
+
+    if (name[0] == 'A' && name[1] == 'A')
+        start_valve = valve;
+}
+
+// link valves
+for (int l = 0; l < lines.size; l+=1)
+{
+    // Example Line:
+    // Valve AA has flow rate=0; tunnels lead to valves DD, II, BB
+    char[] tunnel_part = substr (lines.data[l], 45, strlen (lines.data[l]));
+    Vector<:char[]:> tokens = split (tunnel_part, ' ');
+    // find other valves
+    // ignore first token because it is the "valves" word
+    for (int i = 1; i < tokens.size; ++i)
+    {
+        // discard newline or comma
+        char[] tunnel = substr (tokens.data[i], 0, strlen (tokens.data[i])-1);
+
+        // search for valve with matching name
+        Valve matching_valve = valves.data[0];
+        for (int v = 0; v < valves.size; ++v)
+        {
+            // check if the names match
+            if (tunnel[0] == valves.data[v].name[0] && tunnel[1] == valves.data[v].name[1])
+            {
+                matching_valve = valves.data[v];
+                break;
+            }
+        }
+
+        // add valve reference to this valve
+        valves.data[l].tunnels.pushBack (matching_valve);
+    }
+}
+
+
+for (int i = 0; i < valves.size; ++i)
+{
+    println (valves.data[i]);
+}
+
+
+// breadth first search to find min steps to reach end
+//function int bfs (Valve start_pos)
+//{
+//    MinHeap<:Valve:> frontier = new MinHeap<:Valve:> ();
+//    frontier.push (start_pos);
+//    while (!frontier.isEmpty ())
+//    {
+//        Vec pos = frontier.pop ();
+//        // ensure position wasnt visited already
+//        if (board.data[pos.i].data[pos.j] != -1)
+//        {
+//            continue;
+//        }
+//        // check if we reached the finish
+//        // this is not necessary but is a shortcut
+//
+//        // visited position so mark it with the time
+//        board.data[pos.i].data[pos.j] = pos.time;
+//
+//        // North
+//        // ensure it is a valid position
+//        if (pos.i-1 >= 0)
+//            // ensure next elevation is at most one larger
+//            if ( (elevations.data[pos.i-1].data[pos.j] - elevations.data[pos.i].data[pos.j]) <= 1)
+//                frontier.pushBack (new Vec (pos.i-1, pos.j, pos.time+1));
+//        // East
+//        // ensure it is a valid position
+//        if (pos.j+1 < elevations.data[0].size)
+//            // ensure next elevation is at most one larger
+//            if ( (elevations.data[pos.i].data[pos.j+1] - elevations.data[pos.i].data[pos.j]) <= 1)
+//                frontier.pushBack (new Vec (pos.i, pos.j+1, pos.time+1));
+//        // South
+//        // ensure it is a valid position
+//        if (pos.i+1 < elevations.size)
+//            // ensure next elevation is at most one larger
+//            if ( (elevations.data[pos.i+1].data[pos.j] - elevations.data[pos.i].data[pos.j]) <= 1)
+//                frontier.pushBack (new Vec (pos.i+1, pos.j, pos.time+1));
+//        // West
+//        // ensure it is a valid position
+//        if (pos.j-1 >= 0)
+//            // ensure next elevation is at most one larger
+//            if ( (elevations.data[pos.i].data[pos.j-1] - elevations.data[pos.i].data[pos.j]) <= 1)
+//                frontier.pushBack (new Vec (pos.i, pos.j-1, pos.time+1));
+//        free (pos);
+//    }
+//
+//    return board.data[end_pos.i].data[end_pos.j];
+//
+//}
+
+Valve current_valve = start_valve;
+int total_pressure = 0;
+
+for (int i = 0; i < 30; ++i)
+{
+    print ("minute "); println (i+1);
+    print ("at valve, "); println (current_valve);
+
+    // 
+}

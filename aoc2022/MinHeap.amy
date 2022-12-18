@@ -1,0 +1,113 @@
+
+
+#ifndef MINHEAP_H
+#define MINHEAP_H
+
+#include "Vector.amy"
+
+template <:T:>
+class MinHeap
+{
+    public field Vector<:T:> elements;
+    constructor ()
+    {
+        this.elements = new Vector<:T:> ();
+    }
+    public method void push (T v)
+    {
+        int insert_index = this.elements.size;
+        // dummy push just to increase size and ensure capacity
+        this.elements.pushBack (v);
+
+        // shift larger parents down to find insertion point
+        while (insert_index != 0 && this.isParentGreater (insert_index, v))
+        {
+            // half swap parent down to child
+            this.elements.data[insert_index] = this.elements.data[this.parentIndex (insert_index)];
+            insert_index = this.parentIndex (insert_index);
+        }
+
+        // found insertion point
+        // add element to the heap
+        this.elements.data[insert_index] = v;
+    }
+    public method T pop ()
+    {
+        T min_value = this.elements.data[0];
+        // remove the last element
+        T last_element = this.elements.popBack ();
+
+        // shift down heap
+        int insert_index = 0;
+        while (this.isGreaterThanChildren (insert_index, last_element))
+        {
+            // move up smallest child
+            this.moveSmallestChildUp (insert_index);
+            insert_index = this.smallerChildIndex (insert_index);
+        }
+        this.elements.data[insert_index] = last_element;
+        return min_value;
+    }
+    public method T front ()
+    {
+        return this.elements.data[0];
+    }
+    public method int isParentGreater (int index, T element)
+    {
+        return this.elements.data[this.parentIndex(index)] > element;
+    }
+    public method int isGreaterThanChildren (int index, T element)
+    {
+        return this.exists (this.leftIndex (index)) && element > this.left (index)
+            || this.exists (this.rightIndex (index)) && element > this.right (index);
+    }
+    public method void moveSmallestChildUp (int index)
+    {
+        this.elements.data[index] = this.elements.data[this.smallerChildIndex (index)];
+    }
+    public method int smallerChildIndex (int index)
+    {
+        // if there is no right, then we know to swap left
+        // no need to check if left exists
+        if (!this.exists (this.rightIndex (index)))
+            return this.leftIndex (index);
+        
+        if (this.left (index) < this.right (index))
+            return this.leftIndex (index);
+        return this.rightIndex (index);
+    }
+    public method int parentIndex (int index)
+    {
+        return (index - 1) / 2;
+    }
+    public method int leftIndex (int index)
+    {
+        return 2 * index + 1;
+    }
+    public method T left (int index)
+    {
+        int i = this.leftIndex (index);
+        if (i > this.elements.size) return T();
+        return this.elements.data[i];
+    }
+    public method int rightIndex (int index)
+    {
+        return 2 * index + 2;
+    }
+    public method T right (int index)
+    {
+        int i = this.rightIndex (index);
+        if (i > this.elements.size) return T();
+        return this.elements.data[i];
+    }
+    public method int exists (int index)
+    {
+        return index < this.elements.size;
+    }
+    public method int isEmpty ()
+    {
+        return this.elements.size == 0;
+    }
+}
+
+#endif

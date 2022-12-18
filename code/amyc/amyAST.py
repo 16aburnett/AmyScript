@@ -797,7 +797,7 @@ class LogicalOrExpressionNode (ExpressionNode):
         visitor.visitLogicalOrExpressionNode (self)
 
     def copy (self):
-        return LogicalOrExpressionNode(self.lhs.copy(), self.rhs, self.lineNumber, self.columnNumber)
+        return LogicalOrExpressionNode(self.lhs.copy(), self.op, self.rhs, self.lineNumber, self.columnNumber)
 
 # ========================================================================
 # lhs - ExpressionNode

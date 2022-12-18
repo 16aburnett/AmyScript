@@ -1,3 +1,195 @@
 
+int x = 42;
+float y = 3.14;
+char c = 'X';
 
-println (1 + 2);
+println (x);
+println (y);
+println (c);
+
+{
+    int a = 21;
+    int b = 39;
+    int c = a + b;
+
+    println (c);
+}
+{
+    float a = 0.25;
+    float b = 3.53;
+    float c = a + b;
+
+    println (c);
+}
+{
+    float a = 0.25;
+    float b = 100.0;
+    float c = a * b;
+
+    println (c);
+    println (a / b);
+    println (21 % 2);
+    println (34 % 7);
+}
+
+{
+    int x = 0;
+    println (++x);
+    println (x);
+    println (++x);
+    println (--x);
+    println (x);
+    println (-x);
+    println (!x);
+    println (~x);
+    int y = 0;
+    println (y = ++x);
+    println (y);
+}
+
+{
+    int x = 7;
+    println (x++);
+    println (x);
+    println (x--);
+    println (x);
+}
+
+{
+    function int sum (int a, int b)
+    {
+        return a + b;
+    }
+    println (sum (7, 4));
+    function float sum (float a, float b)
+    {
+        return a + b;
+    }
+    println (sum (0.25, 0.05));
+
+}
+{
+    char[] str = "Hello, world!";
+    println (str);
+    free (str);
+    println (str); // prints garbage
+}
+{
+    print ("Enter name => ");
+    char[] name = input ();
+    print ("Hello, "); println (name);
+}
+{
+    println ("=== If statements");
+    float x = 3.14;
+    if (x == 0.0)
+    {
+        println ("x == 0.0");
+    }
+    elif (x > 0.0)
+    {
+        println ("x > 0.0");
+    }
+    else
+    {
+        println ("x < 0.0");
+    }
+    function int max (int a, int b)
+    {
+        if (a >= b)
+            return a;
+        return b;
+    }
+    println (max (7, 4));
+    println (max (4, 7));
+    println (max (-4, -7));
+    println (max (4, 4));
+}
+{
+    println ("=== for loop");
+    for (int i = 0; i < 10; ++i)
+    {
+        print (' ');
+        print (i);
+    }
+    println ();
+}
+{
+    println ("=== while loop");
+    int i = 0;
+    while (i < 21)
+    {
+        print (' '); print (i);
+        ++i;
+    }
+    print ('\n');
+}
+{
+    println ("=== arrays");
+    int size = 10;
+    int[] arr = new int[size];
+    for (int i = 0; i < size; ++i)
+    {
+        arr[i] = i * i;
+    }
+    for (int i = 0; i < size; ++i)
+    {
+        print (' '); print (arr[i]);
+    }
+    println ();
+}
+{
+    float[] arr = [3.14, 0.25, 0.0004, 10000.25];
+    for (int i = 0; i < 4; ++i)
+    {
+        print (' '); print (arr[i]);
+    }
+    println ();
+}
+{
+    char[] line = "AAA";
+    println (line);
+    line[1] = 'm';
+    println (line);
+    line[2] = 'y';
+    println (line);
+}
+{
+    println ("=== 2D array");
+    int rows = 5;
+    int cols = 5;
+    char[][] board = new char[rows][];
+    for (int i = 0; i < rows; ++i)
+    {
+        board[i] = new char[cols];
+        for (int j = 0; j < cols; ++j)
+        {
+            board[i][j] = '.';
+        }
+    }
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            print (board[i][j]);
+        }
+        println ();
+    }
+    println ();
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            if ((i+j) % 2 == 0)
+                board[i][j] = 'x';
+        }
+    }
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            print (board[i][j]);
+        }
+        println ();
+    }
+}

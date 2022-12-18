@@ -886,12 +886,21 @@ class CodeGenVisitor_python (ASTVisitor):
         self.printComment ("AND")
         self.printComment ("LHS")
         node.lhs.accept (self)
+        self.printComment ("Only check rhs if lhs was true")
+        self.printCode ("__lhs = stack[-1]")
+        self.printCode ("if (__lhs):")
+        self.indentation += 1
         self.printComment ("RHS")
         node.rhs.accept (self)
         # get rhs and lhs off the stack 
         self.printCode ("__rhs = stack.pop ()")
         self.printCode ("__lhs = stack.pop ()")
         self.printCode ("__res = __lhs and __rhs")
+        self.indentation -= 1
+        self.printCode ("else:")
+        self.indentation += 1
+        self.printCode ("__res = stack.pop ()")
+        self.indentation -= 1
         # push result to the stack
         self.printCode ("stack.append (__res)")
 
@@ -1455,7 +1464,7 @@ class CodeGenVisitor_python (ASTVisitor):
 
     def visitStringLiteralExpressionNode (self, node):
         self.printComment ("String Literal")
-        self.printCode (f"stack.append({node.value}+'\\0')")
+        self.printCode (f"stack.append([*({node.value}+'\\0')])")
 
     def visitListConstructorExpressionNode (self, node):
         self.printComment ("Array Constructor")

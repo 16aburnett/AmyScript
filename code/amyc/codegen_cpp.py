@@ -109,6 +109,99 @@ class CodeGenVisitor_cpp (ASTVisitor):
     def exitScope (self):
         self.scopeNames.pop ()
 
+    def printFunctionHeader (self):
+        self.printComment ("Function Header")
+        # expression result stack stores values from expressions 
+        self.printComment ("This stack is used to store results of expressions")
+        self.printCode ("std::vector<long> stack;")
+
+        self.printComment ("Declare general purpose variables")
+        self.printComment ("These are longs and can store anything up to 8 bytes via casting")
+        self.printCode ("long __lhs = 0;")
+        self.printCode ("long __rhs = 0;")
+        self.printCode ("long __res = 0;")
+        self.printCode ("long __stackval = 0;")
+        self.printCode ("long __pointer = 0;")
+        self.printCode ("long __offset = 0;")
+        self.printCode ("long __parent = 0;")
+        self.printCode ("long __child = 0;")
+
+    # returns the equivalent cpp type for the AmyScript type
+    def amyTypeToCPPType (self, type:TypeSpecifierNode):
+        type_str = "long"
+        # INT -> long
+        if type.type == Type.INT:
+            type_str = "long"
+        # FLOAT -> double
+        elif type.type == Type.FLOAT:
+            type_str = "double"
+        # CHAR -> char
+        elif type.type == Type.CHAR:
+            type_str = "char"
+        # objects - > <user-type-name>*
+        #   ex: Point* p;
+        elif type.type == Type.USERTYPE:
+            type_str = type.decl.scopeName
+        else:
+            type_str = "<unknown-type>*"
+        
+        # handle arrays/pointers
+        for _ in range(type.arrayDimensions):
+            type_str += '*'
+        return type_str
+
+    # converts long to the given type using a given variable
+    def stackToVar (self, type:TypeSpecifierNode, varname):
+        type_str = "long"
+        array_suffix = ""
+        # handle arrays/pointers
+        for _ in range(type.arrayDimensions):
+            array_suffix += '*'
+        # INT -> long
+        if type.type == Type.INT:
+            type_str = f"*reinterpret_cast<long*{array_suffix}>(&{varname})"
+        # FLOAT -> double
+        elif type.type == Type.FLOAT:
+            type_str = f"*reinterpret_cast<double*{array_suffix}>(&{varname})"
+        # CHAR -> char
+        elif type.type == Type.CHAR:
+            # non array
+            if array_suffix == "":
+                type_str = f"static_cast<char>(static_cast<unsigned char>({varname}))"
+            # array
+            else:
+                type_str = f"*reinterpret_cast<char*{array_suffix}>(&{varname})"
+        # objects - > <user-type-name>*
+        #   ex: Point* p;
+        elif type.type == Type.USERTYPE:
+            type_str = f"reinterpret_cast<{type.decl.scopeName}*{array_suffix}>({varname})"
+        else:
+            type_str = f"<unknown-conversion>*{array_suffix}"
+        
+        return type_str
+    
+    # converts given varname to a long so that it can be stored on the stack
+    def varToStack (self, type:TypeSpecifierNode, varname):
+        type_str = "long"
+        # arrays | objects
+        if type.type == Type.USERTYPE or type.arrayDimensions > 0:
+            # we can simply convert pointers to long
+            # objects and arrays are both pointers
+            type_str = f"reinterpret_cast<long>({varname})"
+        # INT -> long
+        elif type.type == Type.INT:
+            type_str = f"*reinterpret_cast<long*>(&{varname})"
+        # FLOAT -> double
+        elif type.type == Type.FLOAT:
+            type_str = f"*reinterpret_cast<long*>(&{varname})"
+        # CHAR -> char
+        elif type.type == Type.CHAR:
+            type_str = f"static_cast<long>(static_cast<unsigned char>({varname}))"
+        else:
+            type_str = f"<unknown-conversion>*"
+        
+        return type_str
+
     # === VISITOR FUNCTIONS ==============================================
 
     def visitProgramNode (self, node):
@@ -140,15 +233,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printDivider ()
         self.printNewline ()
         
-        # expression result stack stores values from expressions 
-        self.printComment ("This stack is used to store results of expressions")
-        self.printCode ("std::vector<long> stack;")
-        self.printNewline ()
-
-        self.printComment ("Declare general purpose variables")
-        self.printCode ("long __lhs = 0;")
-        self.printCode ("long __rhs = 0;")
-        self.printCode ("long __res = 0;")
+        self.printFunctionHeader ()
 
         self.printDivider ()
         self.printHeader ("COMPILED CODE")
@@ -184,13 +269,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
         pass
 
     def visitVariableDeclarationNode (self, node):
+        self.printComment ("Variable declaration")
         node.type.accept (self)
 
         # variable names are modified by its scope 
         scopeName = "".join (self.scopeNames) + "__" + node.id
 
-        # declare the variable with default value 
-        self.printCode (f"{scopeName} = 0")
+        self.printCode (f"{self.amyTypeToCPPType(node.type)} {scopeName};")
         self.lhs = node.id
         node.scopeName = scopeName
 
@@ -250,13 +335,35 @@ class CodeGenVisitor_cpp (ASTVisitor):
         params = []
         for i in range(len(node.params)):
             node.params[i].accept (self)
-            params.append (node.params[i].scopeName)
-        self.printCode (f"def {node.scopeName} ({', '.join(params)}):")
 
+            # get param typename
+            type_str = "long"
+            # INT
+            if node.type.type == Type.INT and node.type.arrayDimensions == 0:
+                type_str = "long"
+            # FLOAT
+            elif node.type.type == Type.FLOAT and node.type.arrayDimensions == 0:
+                type_str = "double"
+            # CHAR
+            elif node.type.type == Type.CHAR and node.type.arrayDimensions == 0:
+                type_str = "char"
+            # array or object
+            else:
+                type_str = "void*"
+            
+            params.append (f"{type_str} {node.params[i].scopeName}")
+        self.printCode (f"auto {node.scopeName} = [&stack] ({', '.join(params)})")
+
+        self.printCode ("{")
         self.indentation += 1
+
+        self.printFunctionHeader ()
+
         self.printComment ("Body")
         node.body.accept (self)
+
         self.indentation -= 1
+        self.printCode ("};")
 
         self.printComment (f"End Function Declaration - {node.scopeName}")
         self.printDivider ()
@@ -546,22 +653,26 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # that gets evaluated and the result 
         # should be stored on the stack 
         node.cond.accept (self)
-        self.printCode (f"__if__{ifIndex}__cond = stack.pop ()")
+        self.printCode (f"long __if__{ifIndex}__cond = stack.back ();")
+        self.printCode ("stack.pop_back ();")
         for i in range(len(node.elifs)):
             self.printComment (f"Condition for elif #{i}")
             node.elifs[i].cond.accept (self)
-            self.printCode (f"__elif__{ifIndex}x{elifIndex}__cond = stack.pop ()")
+            self.printCode (f"long __elif__{ifIndex}x{elifIndex}__cond = stack.back ();")
+            self.printCode ("stack.pop_back ();")
             elifIndex += 1
         elifIndex = 0
 
         self.printComment ("get condition from stack")
-        self.printCode (f"if (__if__{ifIndex}__cond):")
+        self.printCode (f"if (__if__{ifIndex}__cond)")
 
         # print the body of if 
+        self.printCode ("{")
         self.indentation += 1
         self.printComment ("Body")
         node.body.accept (self)
         self.indentation -= 1
+        self.printCode ("}")
 
         # exit if scope
         self.scopeNames.pop ()
@@ -584,16 +695,19 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
             # get condition result from stack
             # ***this wont work bc it would separate if and elif
-            # self.printCode ("__cond = stack.pop ()")
+            # self.printCode ("__cond = stack.back ();")
+            # self.printCode ("stack.pop_back ();")
 
-            self.printCode (f"elif (__elif__{ifIndex}x{elifIndex}__cond):")
+            self.printCode (f"else if (__elif__{ifIndex}x{elifIndex}__cond)")
             elifIndex += 1
 
             # Body
+            self.printCode ("{")
             self.indentation += 1
             self.printComment ("Body")
             elifNode.body.accept (self)
             self.indentation -= 1
+            self.printCode ("}")
 
             self.printSubDivider ()
 
@@ -608,11 +722,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
             # create new scope level 
             self.scopeNames += [elseLabel]
 
-            self.printCode ("else:")
+            self.printCode ("else")
 
+            self.printCode ("{")
             self.indentation += 1
             node.elseStmt.body.accept (self)
             self.indentation -= 1
+            self.printCode ("}")
 
             self.printSubDivider ()
 
@@ -663,28 +779,30 @@ class CodeGenVisitor_cpp (ASTVisitor):
         node.init.accept (self)
 
         self.printComment ("Using an infinite loop so we can write a separate multi-line condition")
-        self.printCode ("while (1):")
+        self.printCode ("while (1)")
 
+        self.printCode ("{")
         self.indentation += 1
 
         self.printComment ("Condition")
         node.cond.accept (self)
         # get condition result from stack
-        self.printCode ("__cond = stack.pop ()")
+        self.printCode ("long __cond = stack.back ();")
+        self.printCode ("stack.pop_back ();")
         # jump if false - negation of original condition
         self.printComment ("break out of loop if condition is false")
-        self.printCode ("if (__cond == 0): break")
+        self.printCode ("if (__cond == 0) break;")
 
         # print the body 
         self.printComment ("Body")
         node.body.accept (self)
-
 
         # perform update
         self.printComment ("Update")
         node.update.accept (self)
 
         self.indentation -= 1
+        self.printCode ("}")
 
         # end of loop context 
         # remove from current loop context
@@ -716,23 +834,26 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.parentLoops += [node]
 
         self.printComment ("Using an infinite loop so we can write a separate multi-line condition")
-        self.printCode ("while (1):")
+        self.printCode ("while (1)")
 
+        self.printCode ("{")
         self.indentation += 1
 
         self.printComment ("Condition")
         node.cond.accept (self)
         # get condition result from stack
-        self.printCode ("__cond = stack.pop ()")
+        self.printCode ("long __cond = stack.back ();")
+        self.printCode ("stack.pop_back ();")
         # jump if false - negation of original condition
         self.printComment ("break out of loop if condition is false")
-        self.printCode ("if (__cond == 0): break")
+        self.printCode ("if (__cond == 0) break;")
 
         # print the body 
         self.printComment ("Body")
         node.body.accept (self)
 
         self.indentation -= 1
+        self.printCode ("}")
 
         # end of while 
         self.printComment ("End of While")
@@ -765,8 +886,24 @@ class CodeGenVisitor_cpp (ASTVisitor):
         if node.expr != None:
             node.expr.accept (self)
             # get return value 
-            self.printCode ("__rVal = stack.pop ()")
-            self.printCode (f"return __rVal")
+            self.printCode ("__res = stack.back ();")
+            self.printCode ("stack.pop_back ();")
+
+            # cast res
+            # INT
+            if node.expr.type.type == Type.INT and node.expr.type.arrayDimensions == 0:
+                res_str = f"*reinterpret_cast<long*>(&__res)"
+            # FLOAT
+            elif node.expr.type.type == Type.FLOAT and node.expr.type.arrayDimensions == 0:
+                res_str = f"*reinterpret_cast<double*>(&__res)"
+            # CHAR
+            elif node.expr.type.type == Type.CHAR and node.expr.type.arrayDimensions == 0:
+                res_str = f"static_cast<char>(static_cast<unsigned char>(__res))"
+            # ARRAY or OBJECT
+            else:
+                res_str = f"reinterpret_cast<void*>(__res)"
+                
+            self.printCode (f"return {res_str};")
         # no value provided 
         else:
             self.printCode ("return")
@@ -774,15 +911,16 @@ class CodeGenVisitor_cpp (ASTVisitor):
     def visitContinueStatementNode (self, node):
         self.printComment (f"Continue in {self.parentLoops[-1].startLabel}")
         # for loops need to inject the update
+        # bc they were converted to while loops
         if isinstance (self.parentLoops[-1], ForStatementNode):
             self.parentLoops[-1].update.accept (self)
         # goes to the start of the loop (aka the condition)
-        self.printCode (f"continue")
+        self.printCode (f"continue;")
 
     def visitBreakStatementNode (self, node):
         self.printComment (f"Break out of {self.parentLoops[-1].startLabel}")
         # goes to the end of the loop
-        self.printCode (f"break")
+        self.printCode (f"break;")
 
     def visitCodeBlockNode (self, node):
         self.printSubDivider ()
@@ -826,11 +964,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
             if isinstance(node.lhs, VariableDeclarationNode):
                 self.printComment ("LHS")
                 node.lhs.accept (self)
-                self.printCode (f"__rhs = stack.pop()")
+                self.printCode (f"__rhs = stack.back ();")
+                self.printCode (f"stack.pop_back ();")
                 lhsStr = f"{node.lhs.scopeName}"
 
             elif isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-                self.printCode (f"__rhs = stack.pop()")
+                self.printCode (f"__rhs = stack.back ();")
+                self.printCode (f"stack.pop_back ();")
                 lhsStr = f"{node.lhs.decl.scopeName}"
 
             elif isinstance(node.lhs, SubscriptExpressionNode):
@@ -843,11 +983,14 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 self.printComment ("OFFSET")
                 node.lhs.offset.accept (self)
 
-                self.printCode (f"__offset = stack.pop()")
-                self.printCode (f"__pointer = stack.pop()")
+                self.printCode (f"__offset = stack.back ();")
+                self.printCode ("stack.pop_back ();")
+                self.printCode (f"__pointer = stack.back ();")
+                self.printCode ("stack.pop_back ();")
 
-                self.printCode (f"__rhs = stack.pop()")
-                lhsStr = f"__pointer[__offset]"
+                self.printCode (f"__rhs = stack.back ();")
+                self.printCode (f"stack.pop_back ();")
+                lhsStr = f"({self.stackToVar(node.lhs.lhs.type,'__pointer')})[__offset]"
 
             elif isinstance (node.lhs, MemberAccessorExpressionNode):
                 self.printComment ("LHS")
@@ -861,33 +1004,37 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
                 self.printCode (f"stack.push_back({node.lhs.decl.scopeName})")
 
-                self.printCode (f"__child = stack.pop()")
-                self.printCode (f"__parent = stack.pop()")
+                self.printCode (f"__child = stack.back ();")
+                self.printCode ("stack.pop_back ();")
+                self.printCode (f"__parent = stack.back ();")
+                self.printCode ("stack.pop_back ();")
 
-                self.printCode (f"__rhs = stack.pop()")
+                self.printCode (f"__rhs = stack.back ();")
+                self.printCode (f"stack.pop_back ();")
                 
                 lhsStr = f"__parent[__child]"
                 
             # =
             if node.op.type == "ASSIGN":
-                self.printCode (f"{lhsStr} = __rhs")
+                self.printCode (f"{lhsStr} = {self.stackToVar(node.type,'__rhs')};")
             # +=
             elif node.op.type == "ASSIGN_ADD":
-                self.printCode (f"{lhsStr} = {lhsStr} + __rhs")
+                self.printCode (f"{lhsStr} = {lhsStr} + {self.stackToVar(node.type,'__rhs')};")
             # -=
             elif node.op.type == "ASSIGN_SUB":
-                self.printCode (f"{lhsStr} = {lhsStr} - __rhs")
+                self.printCode (f"{lhsStr} = {lhsStr} - {self.stackToVar(node.type,'__rhs')};")
             # *=
             elif node.op.type == "ASSIGN_MUL":
-                self.printCode (f"{lhsStr} = {lhsStr} * __rhs")
+                self.printCode (f"{lhsStr} = {lhsStr} * {self.stackToVar(node.type,'__rhs')};")
             # /=
             elif node.op.type == "ASSIGN_DIV":
-                self.printCode (f"{lhsStr} = {lhsStr} / __rhs")
+                self.printCode (f"{lhsStr} = {lhsStr} / {self.stackToVar(node.type,'__rhs')};")
             # %=
             elif node.op.type == "ASSIGN_MOD":
-                self.printCode (f"{lhsStr} = {lhsStr} % __rhs")
+                self.printCode (f"{lhsStr} = {lhsStr} % {self.stackToVar(node.type,'__rhs')};")
 
-            self.printCode (f"stack.push_back ({lhsStr})")
+            self.printComment ("Result of assignment")
+            self.printCode (f"stack.push_back ({self.varToStack(node.type, lhsStr)});")
         
 
     def visitLogicalOrExpressionNode (self, node):
@@ -897,8 +1044,10 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printComment ("RHS")
         node.rhs.accept (self)
         # get rhs and lhs off the stack 
-        self.printCode ("__rhs = stack.pop ()")
-        self.printCode ("__lhs = stack.pop ()")
+        self.printCode ("__rhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        self.printCode ("__lhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
         self.printCode ("__res = __lhs or __rhs")
         # push result to the stack
         self.printCode ("stack.push_back (__res)")
@@ -910,8 +1059,10 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printComment ("RHS")
         node.rhs.accept (self)
         # get rhs and lhs off the stack 
-        self.printCode ("__rhs = stack.pop ()")
-        self.printCode ("__lhs = stack.pop ()")
+        self.printCode ("__rhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        self.printCode ("__lhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
         self.printCode ("__res = __lhs and __rhs")
         # push result to the stack
         self.printCode ("stack.push_back (__res)")
@@ -922,65 +1073,8 @@ class CodeGenVisitor_cpp (ASTVisitor):
         elif node.op.lexeme == "!=":
             self.printComment ("Not Equal")
 
-        # calc lhs 
-        self.printComment ("LHS")
-        node.lhs.accept (self)
-        # calc rhs 
-        self.printComment ("RHS")
-        node.rhs.accept (self)
-
-        # get rhs and lhs off the stack 
-        self.printCode ("__rhs = stack.pop ()")
-        self.printCode ("__lhs = stack.pop ()")
-
-        if node.op.lexeme == "==":
-            self.printCode ("__res = __lhs == __rhs")
-        elif node.op.lexeme == "!=":
-            self.printCode ("__res = __lhs != __rhs")
-
-        # push result to the stack
-        self.printCode ("stack.push_back (__res)")
-
-    def visitInequalityExpressionNode (self, node):
-        if node.op.lexeme == "<":
-            self.printComment ("Less Than")
-        elif node.op.lexeme == "<=":
-            self.printComment ("Less Than or Equal to")
-        elif node.op.lexeme == ">":
-            self.printComment ("Greater Than")
-        elif node.op.lexeme == ">=":
-            self.printComment ("Greater Than or Equal to")
-
-        # calc lhs 
-        self.printComment ("LHS")
-        node.lhs.accept (self)
-        # calc rhs 
-        self.printComment ("RHS")
-        node.rhs.accept (self)
-
-        # get rhs and lhs off the stack 
-        self.printCode ("__rhs = stack.pop ()")
-        self.printCode ("__lhs = stack.pop ()")
-
-        if node.op.lexeme == "<":
-            self.printCode ("__res = __lhs < __rhs")
-        elif node.op.lexeme == "<=":
-            self.printCode ("__res = __lhs <= __rhs")
-        elif node.op.lexeme == ">":
-            self.printCode ("__res = __lhs > __rhs")
-        elif node.op.lexeme == ">=":
-            self.printCode ("__res = __lhs >= __rhs")
-
-        # push result to the stack
-        self.printCode ("stack.push_back (__res)")
-
-    def visitAdditiveExpressionNode (self, node):
-        # addition 
-        if node.op.lexeme == "+":
-            self.printComment ("Addition")
-        # subtraction 
-        elif node.op.lexeme == "-":
-            self.printComment ("Subtraction")
+        self.printCode ("{")
+        self.indentation += 1
 
         # calc lhs 
         self.printComment ("LHS")
@@ -995,30 +1089,29 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("__lhs = stack.back ();")
         self.printCode ("stack.pop_back ();")
         
-        # simple additive 
-        if node.overloadedFunctionCall == None:
-            # addition
-            if node.op.lexeme == "+":
-                self.printCode ("__res = __lhs + __rhs;")
-            # subtraction 
-            elif node.op.lexeme == "-":
-                self.printCode ("__res = __lhs - __rhs;")
-        # overloaded function call 
-        else:
-            self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
-            # push args in reverse order
-            self.printCode (f"__res = {node.overloadedFunctionCall.decl.scopeName} (__lhs, __rhs);")
+        if node.op.lexeme == "==":
+            self.printCode (f"{self.amyTypeToCPPType (node.type)} __res = {self.stackToVar(node.lhs.type,'__lhs')} == {self.stackToVar(node.rhs.type,'__rhs')};")
+        elif node.op.lexeme == "!=":
+            self.printCode (f"{self.amyTypeToCPPType (node.type)} __res = {self.stackToVar(node.lhs.type,'__lhs')} != {self.stackToVar(node.rhs.type,'__rhs')};")
 
         # push result to the stack
-        self.printCode ("stack.push_back (__res);")
+        self.printCode (f"stack.push_back ({self.varToStack (node.type, '__res')});")
 
-    def visitMultiplicativeExpressionNode (self, node):
-        if node.op.lexeme == "*":
-            self.printComment ("Multiplication")
-        elif node.op.lexeme == "/":
-            self.printComment ("Division")
-        elif node.op.lexeme == "%":
-            self.printComment ("Modulus")
+        self.indentation -= 1
+        self.printCode ("}")
+
+    def visitInequalityExpressionNode (self, node):
+        if node.op.lexeme == "<":
+            self.printComment ("Less Than")
+        elif node.op.lexeme == "<=":
+            self.printComment ("Less Than or Equal to")
+        elif node.op.lexeme == ">":
+            self.printComment ("Greater Than")
+        elif node.op.lexeme == ">=":
+            self.printComment ("Greater Than or Equal to")
+
+        self.printCode ("{")
+        self.indentation += 1
 
         # calc lhs 
         self.printComment ("LHS")
@@ -1028,32 +1121,211 @@ class CodeGenVisitor_cpp (ASTVisitor):
         node.rhs.accept (self)
 
         # get rhs and lhs off the stack 
-        self.printCode ("__rhs = stack.pop()")
-        self.printCode ("__lhs = stack.pop()")
+        self.printCode ("__rhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        self.printCode ("__lhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+
+        if node.op.lexeme == "<":
+            self.printCode (f"{self.amyTypeToCPPType (node.type)} __res = {self.stackToVar(node.lhs.type,'__lhs')} < {self.stackToVar(node.rhs.type,'__rhs')};")
+        elif node.op.lexeme == "<=":
+            self.printCode (f"{self.amyTypeToCPPType (node.type)} __res = {self.stackToVar(node.lhs.type,'__lhs')} <= {self.stackToVar(node.rhs.type,'__rhs')};")
+        elif node.op.lexeme == ">":
+            self.printCode (f"{self.amyTypeToCPPType (node.type)} __res = {self.stackToVar(node.lhs.type,'__lhs')} > {self.stackToVar(node.rhs.type,'__rhs')};")
+        elif node.op.lexeme == ">=":
+            self.printCode (f"{self.amyTypeToCPPType (node.type)} __res = {self.stackToVar(node.lhs.type,'__lhs')} >= {self.stackToVar(node.rhs.type,'__rhs')};")
+
+        # push result to the stack
+        self.printCode (f"stack.push_back ({self.varToStack (node.type, '__res')});")
+
+        self.indentation -= 1
+        self.printCode ("}")
+
+    def visitAdditiveExpressionNode (self, node):
+        # addition 
+        if node.op.lexeme == "+":
+            self.printComment ("Addition")
+        # subtraction 
+        elif node.op.lexeme == "-":
+            self.printComment ("Subtraction")
+
+        self.printCode ("{")
+        self.indentation += 1
+
+        # calc lhs 
+        self.printComment ("LHS")
+        node.lhs.accept (self)
+        # calc rhs 
+        self.printComment ("RHS")
+        node.rhs.accept (self)
+
+        # get rhs and lhs off the stack 
+        self.printCode ("__rhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        self.printCode ("__lhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+
+        # cast lhs
+        # INT
+        if node.lhs.type.type == Type.INT and node.lhs.type.arrayDimensions == 0:
+            lhs_str = f"*reinterpret_cast<long*>(&__lhs)"
+        # FLOAT
+        elif node.lhs.type.type == Type.FLOAT and node.lhs.type.arrayDimensions == 0:
+            lhs_str = f"*reinterpret_cast<double*>(&__lhs)"
+        # CHAR
+        elif node.lhs.type.type == Type.CHAR and node.lhs.type.arrayDimensions == 0:
+            lhs_str = f"static_cast<char>(static_cast<unsigned char>(__lhs))"
+        # ARRAY
+        # OBJECT
+        else:
+            lhs_str = f"reinterpret_cast<void*>(__lhs)"
+
+        # cast rhs
+        # INT
+        if node.rhs.type.type == Type.INT and node.rhs.type.arrayDimensions == 0:
+            rhs_str = f"*reinterpret_cast<long*>(&__rhs)"
+        # FLOAT
+        elif node.rhs.type.type == Type.FLOAT and node.rhs.type.arrayDimensions == 0:
+            rhs_str = f"*reinterpret_cast<double*>(&__rhs)"
+        # CHAR
+        elif node.rhs.type.type == Type.CHAR and node.rhs.type.arrayDimensions == 0:
+            rhs_str = f"static_cast<char>(static_cast<unsigned char>(__rhs))"
+        # ARRAY
+        # OBJECT
+        else:
+            rhs_str = f"reinterpret_cast<void*>(__rhs)"
         
-        # simple 
+        # cast res
+        # INT
+        if node.type.type == Type.INT and node.type.arrayDimensions == 0:
+            res_type_str = f"long"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+        # FLOAT
+        elif node.type.type == Type.FLOAT and node.type.arrayDimensions == 0:
+            res_type_str = f"double"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+        # CHAR
+        elif node.type.type == Type.CHAR and node.type.arrayDimensions == 0:
+            res_type_str = f"char"
+            res_str = f"static_cast<long>(static_cast<unsigned char>(__res))"
+        # ARRAY
+        # OBJECT
+        else:
+            res_type_str = f"void*"
+            res_str = f"reinterpret_cast<long>(__res)"
+
+        # simple additive 
         if node.overloadedFunctionCall == None:
-            # mul
-            if node.op.lexeme == "*":
-                self.printCode ("__res = __lhs * __rhs")
-            # div 
-            elif node.op.lexeme == "/":
-                # integer division
-                if node.lhs.type.type == Type.INT:
-                    self.printCode (f"__res = __lhs // __rhs")
-                else:
-                    self.printCode (f"__res = __lhs / __rhs")
-            # mod
-            elif node.op.lexeme == "%":
-                self.printCode ("__res = __lhs % __rhs")
+            # addition
+            if node.op.lexeme == "+":
+                self.printCode (f"{res_type_str} __res = {lhs_str} + {rhs_str};")
+            # subtraction 
+            elif node.op.lexeme == "-":
+                self.printCode (f"{res_type_str} __res = {lhs_str} - {rhs_str};")
         # overloaded function call 
         else:
             self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
-            # push args in reverse order
-            self.printCode (f"__res = {node.overloadedFunctionCall.decl.scopeName} (__lhs, __rhs)")
+            self.printCode (f"{res_type_str} __res = {node.overloadedFunctionCall.decl.scopeName} ({lhs_str}, {rhs_str});")
 
         # push result to the stack
-        self.printCode ("stack.push_back(__res)")
+        self.printCode (f"stack.push_back ({res_str});")
+
+        self.indentation -= 1
+        self.printCode ("}")
+
+    def visitMultiplicativeExpressionNode (self, node):
+        if node.op.lexeme == "*":
+            self.printComment ("Multiplication")
+        elif node.op.lexeme == "/":
+            self.printComment ("Division")
+        elif node.op.lexeme == "%":
+            self.printComment ("Modulus")
+
+        self.printCode ("{")
+        self.indentation += 1
+
+        # calc lhs 
+        self.printComment ("LHS")
+        node.lhs.accept (self)
+        # calc rhs 
+        self.printComment ("RHS")
+        node.rhs.accept (self)
+
+        # get rhs and lhs off the stack 
+        self.printCode ("__rhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        self.printCode ("__lhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+
+        # cast lhs
+        # INT
+        if node.lhs.type.type == Type.INT and node.lhs.type.arrayDimensions == 0:
+            lhs_str = f"*reinterpret_cast<long*>(&__lhs)"
+        # FLOAT
+        elif node.lhs.type.type == Type.FLOAT and node.lhs.type.arrayDimensions == 0:
+            lhs_str = f"*reinterpret_cast<double*>(&__lhs)"
+        # CHAR
+        elif node.lhs.type.type == Type.CHAR and node.lhs.type.arrayDimensions == 0:
+            lhs_str = f"static_cast<char>(static_cast<unsigned char>(__lhs))"
+        # ARRAY
+        # OBJECT
+        else:
+            lhs_str = f"reinterpret_cast<void*>(__lhs)"
+
+        # cast rhs
+        # INT
+        if node.rhs.type.type == Type.INT and node.rhs.type.arrayDimensions == 0:
+            rhs_str = f"*reinterpret_cast<long*>(&__rhs)"
+        # FLOAT
+        elif node.rhs.type.type == Type.FLOAT and node.rhs.type.arrayDimensions == 0:
+            rhs_str = f"*reinterpret_cast<double*>(&__rhs)"
+        # CHAR
+        elif node.rhs.type.type == Type.CHAR and node.rhs.type.arrayDimensions == 0:
+            rhs_str = f"static_cast<char>(static_cast<unsigned char>(__rhs))"
+        # ARRAY
+        # OBJECT
+        else:
+            rhs_str = f"reinterpret_cast<void*>(__rhs)"
+        
+        # cast res
+        # INT
+        if node.type.type == Type.INT and node.type.arrayDimensions == 0:
+            res_type_str = f"long"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+            is_int = True
+        # FLOAT
+        elif node.type.type == Type.FLOAT and node.type.arrayDimensions == 0:
+            res_type_str = f"double"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+        # CHAR
+        elif node.type.type == Type.CHAR and node.type.arrayDimensions == 0:
+            res_type_str = f"char"
+            res_str = f"static_cast<long>(static_cast<unsigned char>(__res))"
+        # ARRAY
+        # OBJECT
+        else:
+            res_type_str = f"void*"
+            res_str = f"reinterpret_cast<long>(__res)"
+
+        # simple additive 
+        if node.overloadedFunctionCall == None:
+            if node.op.lexeme == "*":
+                self.printCode (f"{res_type_str} __res = {lhs_str} * {rhs_str};")
+            elif node.op.lexeme == "/":
+                # cpp already handles integer division
+                self.printCode (f"{res_type_str} __res = {lhs_str} / {rhs_str};")
+            elif node.op.lexeme == "%":
+                self.printCode (f"{res_type_str} __res = {lhs_str} % {rhs_str};")
+        # overloaded function call 
+        else:
+            self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
+            self.printCode (f"{res_type_str} __res = {node.overloadedFunctionCall.decl.scopeName} ({lhs_str}, {rhs_str});")
+
+        # push result to the stack
+        self.printCode (f"stack.push_back ({res_str});")
+
+        self.indentation -= 1
+        self.printCode ("}")
             
     #  ++ | -- | + | - | ! | ~
     def visitUnaryLeftExpressionNode (self, node):
@@ -1070,17 +1342,54 @@ class CodeGenVisitor_cpp (ASTVisitor):
         elif node.op.lexeme == "~":
             self.printComment ("Bitwise Negation")
 
+        self.printCode ("{")
+        self.indentation += 1
+
         # calc rhs 
         self.printComment ("RHS")
         node.rhs.accept (self)
         # get rhs off the stack 
-        self.printCode ("__rhs = stack.pop ()")
+        self.printCode ("__rhs = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        # cast rhs
+        # INT
+        if node.rhs.type.type == Type.INT and node.rhs.type.arrayDimensions == 0:
+            rhs_str = f"*reinterpret_cast<long*>(&__rhs)"
+        # FLOAT
+        elif node.rhs.type.type == Type.FLOAT and node.rhs.type.arrayDimensions == 0:
+            rhs_str = f"*reinterpret_cast<double*>(&__rhs)"
+        # CHAR
+        elif node.rhs.type.type == Type.CHAR and node.rhs.type.arrayDimensions == 0:
+            rhs_str = f"static_cast<char>(static_cast<unsigned char>(__rhs))"
+        # ARRAY or OBJECT
+        else:
+            rhs_str = f"reinterpret_cast<void*>(__rhs)"
         # ** i think this could be a potential bug because we pop rhs before visiting lhs and offset
-    
+
+        # cast res
+        # INT
+        if node.type.type == Type.INT and node.type.arrayDimensions == 0:
+            res_type_str = f"long"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+            is_int = True
+        # FLOAT
+        elif node.type.type == Type.FLOAT and node.type.arrayDimensions == 0:
+            res_type_str = f"double"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+        # CHAR
+        elif node.type.type == Type.CHAR and node.type.arrayDimensions == 0:
+            res_type_str = f"char"
+            res_str = f"static_cast<long>(static_cast<unsigned char>(__res))"
+        # ARRAY or OBJECT
+        else:
+            res_type_str = f"void*"
+            res_str = f"reinterpret_cast<long>(__res)"
+
         if node.op.lexeme == "++":
             if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
-                self.printCode (f"{node.rhs.decl.scopeName} = {node.rhs.decl.scopeName} + 1")
-                self.printCode (f"__res = {node.rhs.decl.scopeName}")
+                # we should not be visiting rhs
+                self.printCode (f"{node.rhs.decl.scopeName} = {node.rhs.decl.scopeName} + 1;")
+                self.printCode (f"__res = {node.rhs.decl.scopeName};")
             elif isinstance(node.rhs, SubscriptExpressionNode):
                 self.printComment ("RHS")
                 self.printComment ("Subscript assignment")
@@ -1091,11 +1400,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 self.printComment ("OFFSET")
                 node.rhs.offset.accept (self)
 
-                self.printCode ("__offset = stack.pop ()")
-                self.printCode ("__pointer = stack.pop ()")
+                self.printCode ("__offset = stack.back ();")
+                self.printCode ("stack.pop_back ();")
+                self.printCode ("__pointer = stack.back ();")
+                self.printCode ("stack.pop_back ();")
 
-                self.printCode (f"__pointer[__offset] = __pointer[__offset] + 1")
-                self.printCode (f"__res = __pointer[__offset]")
+                self.printCode (f"__pointer[__offset] = __pointer[__offset] + 1;")
+                self.printCode (f"__res = __pointer[__offset];")
             elif isinstance (node.rhs, MemberAccessorExpressionNode):
                 self.printComment ("LHS")
                 self.printComment ("Member Accessor Assignment")
@@ -1106,20 +1417,22 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 self.printComment ("RHS")
                 # construct field index var 
                 # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
-                self.printCode (f"stack.push_back ({node.rhs.decl.scopeName})")
+                self.printCode (f"stack.push_back ({node.rhs.decl.scopeName});")
 
-                self.printCode ("__child = stack.pop ()")
-                self.printCode ("__parent = stack.pop ()")
+                self.printCode ("__child = stack.back ();")
+                self.printCode ("stack.pop_back ();")
+                self.printCode ("__parent = stack.back ();")
+                self.printCode ("stack.pop_back ();")
 
-                self.printCode (f"__parent[__child] = __parent[__child] + 1")
-                self.printCode (f"__res = __parent[__child]")
+                self.printCode (f"__parent[__child] = __parent[__child] + 1;")
+                self.printCode (f"__res = __parent[__child];")
             else:
                 print ("yikes!")
                 exit (1)
         elif node.op.lexeme == "--":
             if isinstance(node.rhs, VariableDeclarationNode) or isinstance(node.rhs, IdentifierExpressionNode) or isinstance(node.rhs, ThisExpressionNode):
-                self.printCode (f"{node.rhs.decl.scopeName} = {node.rhs.decl.scopeName} - 1")
-                self.printCode (f"__res = {node.rhs.decl.scopeName}")
+                self.printCode (f"{node.rhs.decl.scopeName} = {node.rhs.decl.scopeName} - 1;")
+                self.printCode (f"__res = {node.rhs.decl.scopeName};")
             elif isinstance(node.rhs, SubscriptExpressionNode):
                 self.printComment ("RHS")
                 self.printComment ("Subscript assignment")
@@ -1130,11 +1443,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 self.printComment ("OFFSET")
                 node.rhs.offset.accept (self)
 
-                self.printCode ("__offset = stack.pop ()")
-                self.printCode ("__pointer = stack.pop ()")
+                self.printCode ("__offset = stack.back ();")
+                self.printCode ("stack.pop_back ();")
+                self.printCode ("__pointer = stack.back ();")
+                self.printCode ("stack.pop_back ();")
 
-                self.printCode (f"__pointer[__offset] = __pointer[__offset] - 1")
-                self.printCode (f"__res = __pointer[__offset]")
+                self.printCode (f"__pointer[__offset] = __pointer[__offset] - 1;")
+                self.printCode (f"__res = __pointer[__offset];")
             elif isinstance (node.rhs, MemberAccessorExpressionNode):
                 self.printComment ("LHS")
                 self.printComment ("Member Accessor Assignment")
@@ -1145,34 +1460,62 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 self.printComment ("RHS")
                 # construct field index var 
                 # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
-                self.printCode (f"stack.push_back ({node.rhs.decl.scopeName})")
+                self.printCode (f"stack.push_back ({node.rhs.decl.scopeName});")
 
-                self.printCode ("__child = stack.pop ()")
-                self.printCode ("__parent = stack.pop ()")
+                self.printCode ("__child = stack.back ();")
+                self.printCode ("stack.pop_back ();")
+                self.printCode ("__parent = stack.back ();")
+                self.printCode ("stack.pop_back ();")
 
-                self.printCode (f"__parent[__child] = __parent[__child] - 1")
-                self.printCode (f"__res = __parent[__child]")
+                self.printCode (f"__parent[__child] = __parent[__child] - 1;")
+                self.printCode (f"__res = __parent[__child];")
             else:
                 print ("yikes!")
                 exit (1)
         elif node.op.lexeme == "+":
-            self.printCode ("__res = __rhs")
+            self.printCode (f"{res_type_str} __res = {rhs_str};")
         elif node.op.lexeme == "-":
-            self.printCode ("__res = -__rhs")
+            self.printCode (f"{res_type_str} __res = -{rhs_str};")
         elif node.op.lexeme == "!":
-            self.printCode ("__res = not __rhs")
+            self.printCode (f"{res_type_str} __res = !{rhs_str};")
         elif node.op.lexeme == "~":
-            self.printCode ("__res = ~__rhs")
+            self.printCode (f"{res_type_str} __res = ~{rhs_str};")
 
         # push result to the stack
-        self.printCode ("stack.push_back (__res)")
+        self.printCode (f"stack.push_back ({res_str});")
+
+        self.indentation -= 1
+        self.printCode ("}")
 
     def visitPostIncrementExpressionNode(self, node):
         self.printComment ("Post-Increment")
 
+        self.printCode ("{")
+        self.indentation += 1
+
+        # cast res
+        # INT
+        if node.type.type == Type.INT and node.type.arrayDimensions == 0:
+            res_type_str = f"long"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+            is_int = True
+        # FLOAT
+        elif node.type.type == Type.FLOAT and node.type.arrayDimensions == 0:
+            res_type_str = f"double"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+        # CHAR
+        elif node.type.type == Type.CHAR and node.type.arrayDimensions == 0:
+            res_type_str = f"char"
+            res_str = f"static_cast<long>(static_cast<unsigned char>(__res))"
+        # ARRAY
+        # OBJECT
+        else:
+            res_type_str = f"void*"
+            res_str = f"reinterpret_cast<long>(__res)"
+
         if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-            self.printCode (f"__res = {node.lhs.decl.scopeName}")
-            self.printCode (f"{node.lhs.decl.scopeName} = {node.lhs.decl.scopeName} + 1")
+            self.printCode (f"{res_type_str} __res = {node.lhs.decl.scopeName};")
+            self.printCode (f"{node.lhs.decl.scopeName} = {node.lhs.decl.scopeName} + 1;")
         elif isinstance(node.lhs, SubscriptExpressionNode):
             self.printComment ("RHS")
             self.printComment ("Subscript assignment")
@@ -1183,11 +1526,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printComment ("OFFSET")
             node.lhs.offset.accept (self)
 
-            self.printCode ("__offset = stack.pop ()")
-            self.printCode ("__pointer = stack.pop ()")
+            self.printCode ("__offset = stack.back ();")
+            self.printCode ("stack.pop_back ();")
+            self.printCode ("__pointer = stack.back ();")
+            self.printCode ("stack.pop_back ();")
 
-            self.printCode (f"__res = __pointer[__offset]")
-            self.printCode (f"__pointer[__offset] = __pointer[__offset] + 1")
+            self.printCode (f"{res_type_str} __res = __pointer[__offset];")
+            self.printCode (f"__pointer[__offset] = __pointer[__offset] + 1;")
         elif isinstance (node.lhs, MemberAccessorExpressionNode):
             self.printComment ("LHS")
             self.printComment ("Member Accessor Assignment")
@@ -1198,26 +1543,54 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printComment ("RHS")
             # construct field index var 
             # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"stack.push_back ({node.lhs.decl.scopeName})")
+            self.printCode (f"stack.push_back ({node.lhs.decl.scopeName});")
 
-            self.printCode ("__child = stack.pop ()")
-            self.printCode ("__parent = stack.pop ()")
+            self.printCode ("__child = stack.back ();")
+            self.printCode ("stack.pop_back ();")
+            self.printCode ("__parent = stack.back ();")
+            self.printCode ("stack.pop_back ();")
 
-            self.printCode (f"__res = __parent[__child]")
-            self.printCode (f"__parent[__child] = __parent[__child] + 1")
+            self.printCode (f"{res_type_str} __res = __parent[__child];")
+            self.printCode (f"__parent[__child] = __parent[__child] + 1;")
         else:
             print ("yikes!")
             exit (1)
 
         # push result to the stack
-        self.printCode ("stack.push_back (__res)")
+        self.printCode (f"stack.push_back ({res_str});")
+
+        self.indentation -= 1
+        self.printCode ("}")
 
     def visitPostDecrementExpressionNode (self, node):
         self.printComment ("Post-Decrement")
 
+        self.printCode ("{")
+        self.indentation += 1
+
+        # cast res
+        # INT
+        if node.type.type == Type.INT and node.type.arrayDimensions == 0:
+            res_type_str = f"long"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+            is_int = True
+        # FLOAT
+        elif node.type.type == Type.FLOAT and node.type.arrayDimensions == 0:
+            res_type_str = f"double"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+        # CHAR
+        elif node.type.type == Type.CHAR and node.type.arrayDimensions == 0:
+            res_type_str = f"char"
+            res_str = f"static_cast<long>(static_cast<unsigned char>(__res))"
+        # ARRAY
+        # OBJECT
+        else:
+            res_type_str = f"void*"
+            res_str = f"reinterpret_cast<long>(__res)"
+
         if isinstance(node.lhs, VariableDeclarationNode) or isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-            self.printCode (f"__res = {node.lhs.decl.scopeName}")
-            self.printCode (f"{node.lhs.decl.scopeName} = {node.lhs.decl.scopeName} - 1")
+            self.printCode (f"{res_type_str} __res = {node.lhs.decl.scopeName};")
+            self.printCode (f"{node.lhs.decl.scopeName} = {node.lhs.decl.scopeName} - 1;")
         elif isinstance(node.lhs, SubscriptExpressionNode):
             self.printComment ("RHS")
             self.printComment ("Subscript assignment")
@@ -1228,11 +1601,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printComment ("OFFSET")
             node.lhs.offset.accept (self)
 
-            self.printCode ("__offset = stack.pop ()")
-            self.printCode ("__pointer = stack.pop ()")
+            self.printCode ("__offset = stack.back ();")
+            self.printCode ("stack.pop_back ();")
+            self.printCode ("__pointer = stack.back ();")
+            self.printCode ("stack.pop_back ();")
 
-            self.printCode (f"__res = __pointer[__offset]")
-            self.printCode (f"__pointer[__offset] = __pointer[__offset] - 1")
+            self.printCode (f"{res_type_str} __res = __pointer[__offset];")
+            self.printCode (f"__pointer[__offset] = __pointer[__offset] - 1;")
         elif isinstance (node.lhs, MemberAccessorExpressionNode):
             self.printComment ("LHS")
             self.printComment ("Member Accessor Assignment")
@@ -1243,43 +1618,64 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printComment ("RHS")
             # construct field index var 
             # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"stack.push_back ({node.lhs.decl.scopeName})")
+            self.printCode (f"stack.push_back ({node.lhs.decl.scopeName});")
 
-            self.printCode ("__child = stack.pop ()")
-            self.printCode ("__parent = stack.pop ()")
+            self.printCode ("__child = stack.back ();")
+            self.printCode ("stack.pop_back ();")
+            self.printCode ("__parent = stack.back ();")
+            self.printCode ("stack.pop_back ();")
 
-            self.printCode (f"__res = __parent[__child]")
-            self.printCode (f"__parent[__child] = __parent[__child] - 1")
+            self.printCode (f"{res_type_str} __res = __parent[__child];")
+            self.printCode (f"__parent[__child] = __parent[__child] - 1;")
         else:
             print ("yikes!")
             exit (1)
 
         # push result to the stack
-        self.printCode ("stack.push_back (__res)")
+        self.printCode (f"stack.push_back ({res_str});")
+
+        self.indentation -= 1
+        self.printCode ("}")
 
     def visitSubscriptExpressionNode (self, node):
         self.printComment ("Subscript")
+
+        self.printCode ("{")
+        self.indentation += 1
 
         self.printComment ("LHS")
         node.lhs.accept (self)
         self.printComment ("OFFSET")
         node.offset.accept (self)
 
-        self.printCode ("__offset = stack.pop ()")
-        self.printCode ("__pointer = stack.pop ()")
+        self.printCode ("__offset = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        self.printCode ("__pointer = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+
+        converted_pointer = self.stackToVar(node.lhs.type,'__pointer')
+        converted_offset  = self.stackToVar(node.offset.type, "__offset")
 
         # simple subscript  
         if node.overloadedFunctionCall == None:
-            self.printCode ("stack.push_back (__pointer[__offset])")
+            result = f"({converted_pointer})[{converted_offset}]"
+            self.printCode (f"stack.push_back ({self.varToStack(node.type,result)});")
         # overloaded function call 
         else:
             self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
             # push args in reverse order
-            self.printCode (f"__res = {node.overloadedFunctionCall.decl.scopeName} (__pointer, __offset)")
-            self.printCode (f"stack.push_back (__res)")
+            self.printCode (f"{self.amyTypeToCPPType(node.type)} __res = {node.overloadedFunctionCall.decl.scopeName} ({converted_pointer}, {converted_offset});")
+            self.printCode (f"stack.push_back ({self.varToStack(node.type,'__res')});")
+
+        self.indentation -= 1
+        self.printCode ("}")
 
     def visitFunctionCallExpressionNode (self, node):
         self.printComment (f"Function Call - {node.decl.signature} -> {node.decl.type}")
+
+        # add scope so we can declare arg variables
+        self.printCode ("{")
+        self.indentation += 1
 
         self.printComment ("Arguments")
         # calc arguments first
@@ -1289,19 +1685,18 @@ class CodeGenVisitor_cpp (ASTVisitor):
         for arg in node.args:
             arg.accept (self)
 
-        # add scope so we can declare arg variables
-        self.printCode ("{")
-        self.indentation += 1
-
         argIndex = len(node.args)-1
         args = []
         for arg in node.args:
             # save argument 
             argName = f"__arg{argIndex}"
             argIndex -= 1
-            
-            self.printCode (f"{argName} = stack.back ();")
+
+            self.printCode (f"")
+            self.printCode (f"__stackval = stack.back ();")
             self.printCode (f"stack.pop_back ();")
+            self.printComment ("Reinterpret from general register")
+            self.printCode (f"{self.amyTypeToCPPType (arg.type)} {argName} = {self.stackToVar (arg.type, '__stackval')};")
             args.insert (0, argName)
 
         # call function
@@ -1318,10 +1713,37 @@ class CodeGenVisitor_cpp (ASTVisitor):
         else:
             funcname = node.decl.scopeName
 
-        self.printCode (f"__res = {funcname} ({', '.join(args)});")
+        # cast res
+        # INT
+        if node.type.type == Type.INT and node.type.arrayDimensions == 0:
+            res_type_str = f"long"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+            is_int = True
+        # FLOAT
+        elif node.type.type == Type.FLOAT and node.type.arrayDimensions == 0:
+            res_type_str = f"double"
+            res_str = f"*reinterpret_cast<long*>(&__res)"
+        # CHAR
+        elif node.type.type == Type.CHAR and node.type.arrayDimensions == 0:
+            res_type_str = f"char"
+            res_str = f"static_cast<long>(static_cast<unsigned char>(__res))"
+        # ARRAY
+        # OBJECT
+        else:
+            res_type_str = f"void*"
+            res_str = f"reinterpret_cast<long>(__res)"
+
+        res_type_str = self.amyTypeToCPPType (node.type)
+
+        # function returns void
+        if node.decl.type.type == Type.VOID and node.decl.type.arrayDimensions == 0:
+            self.printCode (f"{funcname} ({', '.join(args)});")
+        # function returns a value
+        else:
+            self.printCode (f"{res_type_str} __res = {funcname} ({', '.join(args)});")
         
         # put function's return val on the stack
-        self.printCode ("stack.push_back (__res);")
+        self.printCode (f"stack.push_back ({res_str});")
 
         self.indentation -= 1
         self.printCode ("}")
@@ -1352,8 +1774,10 @@ class CodeGenVisitor_cpp (ASTVisitor):
             exit (1)
         self.printCode (f"stack.push_back ({node.decl.scopeName})")
 
-        self.printCode ("__child = stack.pop ()")
-        self.printCode ("__parent = stack.pop ()")
+        self.printCode ("__child = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        self.printCode ("__parent = stack.back ();")
+        self.printCode ("stack.pop_back ();")
         self.printCode ("stack.push_back (__parent[__child])")
 
     def visitFieldAccessorExpressionNode (self, node):
@@ -1386,13 +1810,15 @@ class CodeGenVisitor_cpp (ASTVisitor):
             # save argument 
             argName = f"__arg{argIndex}"
             argIndex -= 1
-            self.printCode (f"{argName} = stack.pop ()")
+            self.printCode (f"{argName} = stack.back ();")
+            self.printCode ("stack.pop_back ();")
             args.insert (1, argName)
         
         # parent object should be on the stack
         # *happens after args incase args uses __obj
         # in another method call
-        self.printCode ("__obj = stack.pop ()")
+        self.printCode ("__obj = stack.back ();")
+        self.printCode ("stack.pop_back ();")
 
         # if virtual function
         if node.decl.isVirtual:
@@ -1414,23 +1840,42 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         # otherwise, call function normally
         else:
-            self.printCode (f"__retval = {node.decl.scopeName} (__obj{', '.join(args)})")
+            self.printCode (f"__retval = {node.decl.scopeName} (__obj{', '.join(args)});")
                 
         # put function's return val on the stack
-        self.printCode ("stack.push_back (__retval)")
+        self.printCode ("stack.push_back (__retval);")
 
     def visitThisExpressionNode (self, node):
-        self.printCode (f"stack.push_back(this)")
+        self.printCode (f"stack.push_back (this);")
 
     def visitIdentifierExpressionNode (self, node):
-        self.printCode (f"stack.push_back({node.decl.scopeName})")
+        # INT
+        if node.type.type == Type.INT and node.type.arrayDimensions == 0:
+            self.printCode (f"stack.push_back (*reinterpret_cast<long*>(&{node.decl.scopeName}));")
+        # FLOAT
+        elif node.type.type == Type.FLOAT and node.type.arrayDimensions == 0:
+            self.printCode (f"stack.push_back (*reinterpret_cast<long*>(&{node.decl.scopeName}));")
+        # CHAR
+        elif node.type.type == Type.CHAR and node.type.arrayDimensions == 0:
+            self.printCode (f"stack.push_back (static_cast<long>(static_cast<unsigned char>({node.decl.scopeName})));")
+        # ARRAY or OBJECT
+        else:
+            self.printCode (f"stack.push_back (reinterpret_cast<long>({node.decl.scopeName}));")
 
     def visitArrayAllocatorExpressionNode (self, node):
+        self.printComment ("Array Allocator")
+        self.printCode ("{")
+        self.indentation += 1
+
         node.dimensions[0].accept (self)
-        self.printCode (f"__dim = stack.pop ()")
-        # this is probably not ideal and will likely cause problems
-        self.printCode (f"__res = [None] * __dim")
-        self.printCode ("stack.push_back (__res)")
+        self.printCode (f"__stackval = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        # the -1 removes one pointer level and substitutes it for [__stackval] for the allocation
+        self.printCode (f"{self.amyTypeToCPPType(node.type)} __res = new {self.amyTypeToCPPType(node.type)[:-1]}[__stackval];")
+        self.printCode (f"stack.push_back ({self.varToStack(node.type, '__res')});")
+
+        self.indentation -= 1
+        self.printCode ("}")
 
     def visitConstructorCallExpressionNode (self, node):
         self.printComment (f"Constructor Call - {node.decl.signature} -> {node.decl.parentClass.type}")
@@ -1450,7 +1895,8 @@ class CodeGenVisitor_cpp (ASTVisitor):
             # save argument 
             argName = f"__arg{argIndex}"
             argIndex -= 1
-            self.printCode (f"{argName} = stack.pop ()")
+            self.printCode (f"{argName} = stack.back ();")
+            self.printCode ("stack.pop_back ();")
             args.insert (0, argName)
 
         # call function
@@ -1461,17 +1907,17 @@ class CodeGenVisitor_cpp (ASTVisitor):
     
     def visitSizeofExpressionNode(self, node):
         node.rhs.accept (self)
-        self.printCode ("__arr = stack.pop ()")
-        self.printCode ("__res = len (__arr)")
-        self.printCode ("stack.push_back (__res)")
+        self.printCode ("__arr = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        self.printCode ("__res = len (__arr);")
+        self.printCode ("stack.push_back (__res);")
     
     def visitFreeExpressionNode (self, node):
-        # nothing to do, python has its own garbage collector ;)
-        # for now, i am just calling the builtin free function which will do nothing
         node.rhs.accept (self)
-        self.printCode ("__arr = stack.pop ()")
-        self.printCode ("__builtin__free (__arr)")
-        self.printCode ("stack.push_back (0)")
+        self.printCode ("__stackval = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        self.printCode (f"delete {self.stackToVar (node.rhs.type, '__stackval')};")
+        self.printCode ("stack.push_back (0);")
 
     def visitIntLiteralExpressionNode (self, node):
         self.printComment ("Int Literal")
@@ -1479,18 +1925,41 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
     def visitFloatLiteralExpressionNode (self, node):
         self.printComment ("Float Literal")
-        self.printCode (f"stack.push_back ({node.value});")
+        self.printCode (f"{{")
+        self.indentation += 1
+        self.printCode (f"double float_literal = {node.value};")
+        self.printCode (f"stack.push_back (*reinterpret_cast<long*>(&float_literal));")
+        self.indentation -= 1
+        self.printCode (f"}}")
 
     def visitCharLiteralExpressionNode (self, node):
         self.printComment ("Char Literal")
-        self.printCode (f"stack.push_back ('{node.value}');")
+        self.printCode (f"stack.push_back (static_cast<long>(static_cast<unsigned char>('{node.value}')));")
 
     def visitStringLiteralExpressionNode (self, node):
         self.printComment ("String Literal")
-        self.printCode (f"stack.push_back ({node.value});")
+        self.printCode ("{")
+        self.indentation += 1
+
+        self.printCode (f"char str_literal[] = {node.value};")
+        self.printComment ("convert to a heap string")
+        # -2 for double quotes
+        # +1 for null terminator
+        str_len = len(node.value)-2+1
+        self.printCode (f"char* str = new char[{str_len}];")
+        self.printComment ("copy string to heap allocation")
+        self.printCode (f"std::memcpy (str, &str_literal, {str_len});")        
+
+        self.printCode (f"stack.push_back (reinterpret_cast<long> (str));")
+
+        self.indentation -= 1
+        self.printCode ("}")
 
     def visitListConstructorExpressionNode (self, node):
         self.printComment ("Array Constructor")
+
+        self.printCode ("{")
+        self.indentation += 1
 
         # evaluate each element
         # elements could be list constructors 
@@ -1505,18 +1974,20 @@ class CodeGenVisitor_cpp (ASTVisitor):
             # save element 
             elemName = f"__elem{elemIndex}"
             elemIndex -= 1
-            self.printCode (f"POP {elemName}")
+            self.printCode (f"long {elemName} = stack.back ();")
+            self.printCode ("stack.pop_back ();")
 
-        self.printCode (f"MALLOC __list {len(node.elems)}")
+        self.printCode (f"{self.amyTypeToCPPType(node.type)} __list = new {self.amyTypeToCPPType(node.type)[:-1]}[{len(node.elems)}];")
 
         # add elements to list in correct order
         for i in range(len(node.elems)):
-            self.printCode (f"ASSIGN __list[{i}] __elem{i}")
+            self.printCode (f"__list[{i}] = {self.stackToVar(node.elems[i].type, f'__elem{i}')};")
 
         # push array onto stack
-        self.printCode ("PUSH __list")
+        self.printCode (f"stack.push_back ({self.varToStack(node.type,'__list')});")
 
         self.indentation -= 1
+        self.printCode ("}")
         
 
     def visitNullExpressionNode (self, node):

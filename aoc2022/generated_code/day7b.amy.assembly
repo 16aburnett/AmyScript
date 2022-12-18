@@ -259,12 +259,13 @@ __endOfLibrary:
       //==================================================================
       // Class Declaration - __main____Vector__char__1 inherits __builtin____main__Object
          // Creating Dispatch Table
-            MALLOC __dtable____main____Vector__char__1 4
+            MALLOC __dtable____main____Vector__char__1 5
             // Populate Dispatch Table
             ASSIGN __dtable____main____Vector__char__1[0] __method____main____Vector__char__1____pushBack__char__1
             ASSIGN __dtable____main____Vector__char__1[1] __method____main____Vector__char__1____popBack
-            ASSIGN __dtable____main____Vector__char__1[2] __method____main____Vector__char__1____get__int
-            ASSIGN __dtable____main____Vector__char__1[3] __method____main____Vector__char__1____set__int__char__1
+            ASSIGN __dtable____main____Vector__char__1[2] __method____main____Vector__char__1____clear
+            ASSIGN __dtable____main____Vector__char__1[3] __method____main____Vector__char__1____get__int
+            ASSIGN __dtable____main____Vector__char__1[4] __method____main____Vector__char__1____set__int__char__1
          //---------------------------------------------------------------
          // Field - char[][] Vector<:char[]:>::data
          ASSIGN __field____main____Vector__char__1____data 1
@@ -822,6 +823,68 @@ __endOfLibrary:
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
+         // Method Declaration - Vector<:char[]:>::clear() -> void
+         JUMP __end__method____main____Vector__char__1____clear
+         __method____main____Vector__char__1____clear:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // While-Loop
+                  __while__9:
+                     // Condition
+                        // Greater Than
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____Vector__char__1____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // RHS
+                              // Int Literal
+                                 PUSH 0
+                           POP __rhs
+                           POP __lhs
+                           GT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endwhile__9
+                     // Body
+                        // Method Call - Vector<:char[]:>::popBack() -> char[]
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                           // Arguments
+                           POP __obj
+                           // Pushing args in reverse order
+                           PUSH __obj
+                           CALL __method____main____Vector__char__1____popBack
+                           POP __void
+                           // Remove args
+                           RESPONSE __retval
+                           PUSH __retval
+                        // Statement results can be ignored
+                        POP __void
+                     JUMP __while__9
+                     // End of While
+                     __endwhile__9:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____Vector__char__1____clear:
+         // End Method Declaration - __method____main____Vector__char__1____clear
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
          // Method Declaration - Vector<:char[]:>::get(int) -> char[]
          JUMP __end__method____main____Vector__char__1____get__int
          __method____main____Vector__char__1____get__int:
@@ -912,12 +975,13 @@ __endOfLibrary:
       //==================================================================
       // Class Declaration - __main____Vector__File inherits __builtin____main__Object
          // Creating Dispatch Table
-            MALLOC __dtable____main____Vector__File 4
+            MALLOC __dtable____main____Vector__File 5
             // Populate Dispatch Table
             ASSIGN __dtable____main____Vector__File[0] __method____main____Vector__File____pushBack__File
             ASSIGN __dtable____main____Vector__File[1] __method____main____Vector__File____popBack
-            ASSIGN __dtable____main____Vector__File[2] __method____main____Vector__File____get__int
-            ASSIGN __dtable____main____Vector__File[3] __method____main____Vector__File____set__int__File
+            ASSIGN __dtable____main____Vector__File[2] __method____main____Vector__File____clear
+            ASSIGN __dtable____main____Vector__File[3] __method____main____Vector__File____get__int
+            ASSIGN __dtable____main____Vector__File[4] __method____main____Vector__File____set__int__File
          //---------------------------------------------------------------
          // Field - File[] Vector<:File:>::data
          ASSIGN __field____main____Vector__File____data 1
@@ -1160,7 +1224,7 @@ __endOfLibrary:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif__13
+                        JEQ __endif__15
                      // Body
                         //------------------------------------------------
                         // Code Block
@@ -1215,9 +1279,9 @@ __endOfLibrary:
                                     PUSH __ptr
                               // LHS
                                  // Variable Declaration
-                                    ASSIGN __main____Vector__File__pushBack__block__12__if__13__block__14__nData 0
+                                    ASSIGN __main____Vector__File__pushBack__block__14__if__15__block__16__nData 0
                               POP __rhs
-                              ASSIGN __main____Vector__File__pushBack__block__12__if__13__block__14__nData __rhs
+                              ASSIGN __main____Vector__File__pushBack__block__14__if__15__block__16__nData __rhs
                               PUSH __rhs
                            // Statement results can be ignored
                            POP __void
@@ -1230,27 +1294,27 @@ __endOfLibrary:
                                        PUSH 0
                                  // LHS
                                     // Variable Declaration
-                                       ASSIGN __main____Vector__File__pushBack__block__12__if__13__block__14__for__15__i 0
+                                       ASSIGN __main____Vector__File__pushBack__block__14__if__15__block__16__for__17__i 0
                                  POP __rhs
-                                 ASSIGN __main____Vector__File__pushBack__block__12__if__13__block__14__for__15__i __rhs
+                                 ASSIGN __main____Vector__File__pushBack__block__14__if__15__block__16__for__17__i __rhs
                                  PUSH __rhs
-                           JUMP __forcond__15
-                           __for__15:
+                           JUMP __forcond__17
+                           __for__17:
                               // Update
                                  // Pre-Increment
                                     // RHS
                                        // Identifier - i
-                                          PUSH __main____Vector__File__pushBack__block__12__if__13__block__14__for__15__i
+                                          PUSH __main____Vector__File__pushBack__block__14__if__15__block__16__for__17__i
                                     POP __rhs
-                                    ADD __main____Vector__File__pushBack__block__12__if__13__block__14__for__15__i __main____Vector__File__pushBack__block__12__if__13__block__14__for__15__i 1
-                                    ASSIGN __res __main____Vector__File__pushBack__block__12__if__13__block__14__for__15__i
+                                    ADD __main____Vector__File__pushBack__block__14__if__15__block__16__for__17__i __main____Vector__File__pushBack__block__14__if__15__block__16__for__17__i 1
+                                    ASSIGN __res __main____Vector__File__pushBack__block__14__if__15__block__16__for__17__i
                                     PUSH __res
-                              __forcond__15:
+                              __forcond__17:
                               // Condition
                                  // Less Than
                                     // LHS
                                        // Identifier - i
-                                          PUSH __main____Vector__File__pushBack__block__12__if__13__block__14__for__15__i
+                                          PUSH __main____Vector__File__pushBack__block__14__if__15__block__16__for__17__i
                                     // RHS
                                        // Member Accessor
                                           // LHS
@@ -1267,7 +1331,7 @@ __endOfLibrary:
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __endfor__15
+                                 JEQ __endfor__17
                               // Body
                                  //---------------------------------------
                                  // Code Block
@@ -1286,7 +1350,7 @@ __endOfLibrary:
                                                    PUSH __parent[__child]
                                              // OFFSET
                                                 // Identifier - i
-                                                   PUSH __main____Vector__File__pushBack__block__12__if__13__block__14__for__15__i
+                                                   PUSH __main____Vector__File__pushBack__block__14__if__15__block__16__for__17__i
                                              POP __offset
                                              POP __pointer
                                              PUSH __pointer[__offset]
@@ -1294,10 +1358,10 @@ __endOfLibrary:
                                           // Subscript assignment
                                              // LHS
                                                 // Identifier - nData
-                                                   PUSH __main____Vector__File__pushBack__block__12__if__13__block__14__nData
+                                                   PUSH __main____Vector__File__pushBack__block__14__if__15__block__16__nData
                                              // OFFSET
                                                 // Identifier - i
-                                                   PUSH __main____Vector__File__pushBack__block__12__if__13__block__14__for__15__i
+                                                   PUSH __main____Vector__File__pushBack__block__14__if__15__block__16__for__17__i
                                              POP __offset
                                              POP __pointer
                                        POP __rhs
@@ -1307,9 +1371,9 @@ __endOfLibrary:
                                     POP __void
                                  //---------------------------------------
                               // Repeat
-                              JUMP __for__15
+                              JUMP __for__17
                               // End of For
-                              __endfor__15:
+                              __endfor__17:
                            //---------------------------------------------
                            // Free Operator
                               // RHS
@@ -1331,7 +1395,7 @@ __endOfLibrary:
                            // Assignment - '='
                               // RHS
                                  // Identifier - nData
-                                    PUSH __main____Vector__File__pushBack__block__12__if__13__block__14__nData
+                                    PUSH __main____Vector__File__pushBack__block__14__if__15__block__16__nData
                               // LHS
                                  // Member Accessor Assignment
                                     // LHS
@@ -1347,9 +1411,9 @@ __endOfLibrary:
                            // Statement results can be ignored
                            POP __void
                         //------------------------------------------------
-                     JUMP __endif__13
+                     JUMP __endif__15
                      // End of if
-                     __endif__13:
+                     __endif__15:
                   //------------------------------------------------------
                   // Assignment - '='
                      // RHS
@@ -1472,6 +1536,68 @@ __endOfLibrary:
             RETURN 0
          __end__method____main____Vector__File____popBack:
          // End Method Declaration - __method____main____Vector__File____popBack
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Method Declaration - Vector<:File:>::clear() -> void
+         JUMP __end__method____main____Vector__File____clear
+         __method____main____Vector__File____clear:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // While-Loop
+                  __while__21:
+                     // Condition
+                        // Greater Than
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____Vector__File____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // RHS
+                              // Int Literal
+                                 PUSH 0
+                           POP __rhs
+                           POP __lhs
+                           GT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endwhile__21
+                     // Body
+                        // Method Call - Vector<:File:>::popBack() -> File
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                           // Arguments
+                           POP __obj
+                           // Pushing args in reverse order
+                           PUSH __obj
+                           CALL __method____main____Vector__File____popBack
+                           POP __void
+                           // Remove args
+                           RESPONSE __retval
+                           PUSH __retval
+                        // Statement results can be ignored
+                        POP __void
+                     JUMP __while__21
+                     // End of While
+                     __endwhile__21:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____Vector__File____clear:
+         // End Method Declaration - __method____main____Vector__File____clear
          //---------------------------------------------------------------
 
          //---------------------------------------------------------------
@@ -1604,7 +1730,7 @@ __main____strlen__char__1:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif__21
+               JEQ __endif__25
             // Body
                // Return
                   // Negative
@@ -1616,9 +1742,9 @@ __main____strlen__char__1:
                      PUSH __res
                   POP __rVal
                   RETURN __rVal
-            JUMP __endif__21
+            JUMP __endif__25
             // End of if
-            __endif__21:
+            __endif__25:
          //---------------------------------------------------------------
          // Assignment - '='
             // RHS
@@ -1626,15 +1752,15 @@ __main____strlen__char__1:
                   PUSH 0
             // LHS
                // Variable Declaration
-                  ASSIGN __main__strlen__block__20__size 0
+                  ASSIGN __main__strlen__block__24__size 0
             POP __rhs
-            ASSIGN __main__strlen__block__20__size __rhs
+            ASSIGN __main__strlen__block__24__size __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
          //---------------------------------------------------------------
          // While-Loop
-         __while__22:
+         __while__26:
             // Condition
                // Not Equal
                   // LHS
@@ -1644,8 +1770,8 @@ __main____strlen__char__1:
                               PUSH __main__strlen__str
                         // OFFSET
                            // Post-Increment
-                              ASSIGN __res __main__strlen__block__20__size
-                              ADD __main__strlen__block__20__size __main__strlen__block__20__size 1
+                              ASSIGN __res __main__strlen__block__24__size
+                              ADD __main__strlen__block__24__size __main__strlen__block__24__size 1
                               PUSH __res
                         POP __offset
                         POP __pointer
@@ -1659,17 +1785,17 @@ __main____strlen__char__1:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endwhile__22
+               JEQ __endwhile__26
             // Body
-            JUMP __while__22
+            JUMP __while__26
             // End of While
-            __endwhile__22:
+            __endwhile__26:
          //---------------------------------------------------------------
          // Return
             // Subtraction
                // LHS
                   // Identifier - size
-                     PUSH __main__strlen__block__20__size
+                     PUSH __main__strlen__block__24__size
                // RHS
                   // Int Literal
                      PUSH 1
@@ -1714,9 +1840,9 @@ __main____strcmp__char__1__char__1:
                   PUSH __retval
             // LHS
                // Variable Declaration
-                  ASSIGN __main__strcmp__block__23__asize 0
+                  ASSIGN __main__strcmp__block__27__asize 0
             POP __rhs
-            ASSIGN __main__strcmp__block__23__asize __rhs
+            ASSIGN __main__strcmp__block__27__asize __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
@@ -1737,9 +1863,9 @@ __main____strcmp__char__1__char__1:
                   PUSH __retval
             // LHS
                // Variable Declaration
-                  ASSIGN __main__strcmp__block__23__bsize 0
+                  ASSIGN __main__strcmp__block__27__bsize 0
             POP __rhs
-            ASSIGN __main__strcmp__block__23__bsize __rhs
+            ASSIGN __main__strcmp__block__27__bsize __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
@@ -1749,26 +1875,26 @@ __main____strcmp__char__1__char__1:
                // Not Equal
                   // LHS
                      // Identifier - asize
-                        PUSH __main__strcmp__block__23__asize
+                        PUSH __main__strcmp__block__27__asize
                   // RHS
                      // Identifier - bsize
-                        PUSH __main__strcmp__block__23__bsize
+                        PUSH __main__strcmp__block__27__bsize
                   POP __rhs
                   POP __lhs
                   NEQUAL __res __lhs __rhs
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif__24
+               JEQ __endif__28
             // Body
                // Return
                   // Int Literal
                      PUSH 0
                   POP __rVal
                   RETURN __rVal
-            JUMP __endif__24
+            JUMP __endif__28
             // End of if
-            __endif__24:
+            __endif__28:
          //---------------------------------------------------------------
          //---------------------------------------------------------------
          // For-Loop
@@ -1779,37 +1905,37 @@ __main____strcmp__char__1__char__1:
                      PUSH 0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__strcmp__block__23__for__25__i 0
+                     ASSIGN __main__strcmp__block__27__for__29__i 0
                POP __rhs
-               ASSIGN __main__strcmp__block__23__for__25__i __rhs
+               ASSIGN __main__strcmp__block__27__for__29__i __rhs
                PUSH __rhs
-         JUMP __forcond__25
-         __for__25:
+         JUMP __forcond__29
+         __for__29:
             // Update
                // Pre-Increment
                   // RHS
                      // Identifier - i
-                        PUSH __main__strcmp__block__23__for__25__i
+                        PUSH __main__strcmp__block__27__for__29__i
                   POP __rhs
-                  ADD __main__strcmp__block__23__for__25__i __main__strcmp__block__23__for__25__i 1
-                  ASSIGN __res __main__strcmp__block__23__for__25__i
+                  ADD __main__strcmp__block__27__for__29__i __main__strcmp__block__27__for__29__i 1
+                  ASSIGN __res __main__strcmp__block__27__for__29__i
                   PUSH __res
-            __forcond__25:
+            __forcond__29:
             // Condition
                // Less Than
                   // LHS
                      // Identifier - i
-                        PUSH __main__strcmp__block__23__for__25__i
+                        PUSH __main__strcmp__block__27__for__29__i
                   // RHS
                      // Identifier - asize
-                        PUSH __main__strcmp__block__23__asize
+                        PUSH __main__strcmp__block__27__asize
                   POP __rhs
                   POP __lhs
                   LT __res __lhs __rhs
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor__25
+               JEQ __endfor__29
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -1824,7 +1950,7 @@ __main____strcmp__char__1__char__1:
                                        PUSH __main__strcmp__a
                                  // OFFSET
                                     // Identifier - i
-                                       PUSH __main__strcmp__block__23__for__25__i
+                                       PUSH __main__strcmp__block__27__for__29__i
                                  POP __offset
                                  POP __pointer
                                  PUSH __pointer[__offset]
@@ -1835,7 +1961,7 @@ __main____strcmp__char__1__char__1:
                                        PUSH __main__strcmp__b
                                  // OFFSET
                                     // Identifier - i
-                                       PUSH __main__strcmp__block__23__for__25__i
+                                       PUSH __main__strcmp__block__27__for__29__i
                                  POP __offset
                                  POP __pointer
                                  PUSH __pointer[__offset]
@@ -1845,7 +1971,7 @@ __main____strcmp__char__1__char__1:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif__27
+                        JEQ __endif__31
                      // Body
                         //------------------------------------------------
                         // Code Block
@@ -1855,15 +1981,15 @@ __main____strcmp__char__1__char__1:
                               POP __rVal
                               RETURN __rVal
                         //------------------------------------------------
-                     JUMP __endif__27
+                     JUMP __endif__31
                      // End of if
-                     __endif__27:
+                     __endif__31:
                   //------------------------------------------------------
                //---------------------------------------------------------
             // Repeat
-            JUMP __for__25
+            JUMP __for__29
             // End of For
-            __endfor__25:
+            __endfor__29:
          //---------------------------------------------------------------
          // Return
             // Int Literal
@@ -1874,6 +2000,187 @@ __main____strcmp__char__1__char__1:
    RETURN 0
 __end____main____strcmp__char__1__char__1:
 // End Function Declaration - __main____strcmp__char__1__char__1
+//========================================================================
+
+//========================================================================
+// Function Declaration - substr(char[], int, int) -> char[]
+JUMP __end____main____substr__char__1__int__int
+__main____substr__char__1__int__int:
+   // Parameters
+      // Param: a
+      STACKGET __main__substr__a 0
+      // Param: start
+      STACKGET __main__substr__start 1
+      // Param: end
+      STACKGET __main__substr__end 2
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Assignment - '='
+            // RHS
+               // Array Allocator
+                  // Addition
+                     // LHS
+                        // Subtraction
+                           // LHS
+                              // Identifier - end
+                                 PUSH __main__substr__end
+                           // RHS
+                              // Identifier - start
+                                 PUSH __main__substr__start
+                           POP __rhs
+                           POP __lhs
+                           SUBTRACT __res __lhs __rhs
+                           PUSH __res
+                     // RHS
+                        // Int Literal
+                           PUSH 1
+                     POP __rhs
+                     POP __lhs
+                     ADD __res __lhs __rhs
+                     PUSH __res
+                  POP __size
+                  MALLOC __ptr __size
+                  PUSH __ptr
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__substr__block__33__res 0
+            POP __rhs
+            ASSIGN __main__substr__block__33__res __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment - '='
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__substr__block__33__for__34__i 0
+               POP __rhs
+               ASSIGN __main__substr__block__33__for__34__i __rhs
+               PUSH __rhs
+         JUMP __forcond__34
+         __for__34:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - i
+                        PUSH __main__substr__block__33__for__34__i
+                  POP __rhs
+                  ADD __main__substr__block__33__for__34__i __main__substr__block__33__for__34__i 1
+                  ASSIGN __res __main__substr__block__33__for__34__i
+                  PUSH __res
+            __forcond__34:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - i
+                        PUSH __main__substr__block__33__for__34__i
+                  // RHS
+                     // Subtraction
+                        // LHS
+                           // Identifier - end
+                              PUSH __main__substr__end
+                        // RHS
+                           // Identifier - start
+                              PUSH __main__substr__start
+                        POP __rhs
+                        POP __lhs
+                        SUBTRACT __res __lhs __rhs
+                        PUSH __res
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__34
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment - '='
+                     // RHS
+                        // Subscript
+                           // LHS
+                              // Identifier - a
+                                 PUSH __main__substr__a
+                           // OFFSET
+                              // Addition
+                                 // LHS
+                                    // Identifier - i
+                                       PUSH __main__substr__block__33__for__34__i
+                                 // RHS
+                                    // Identifier - start
+                                       PUSH __main__substr__start
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                           POP __offset
+                           POP __pointer
+                           PUSH __pointer[__offset]
+                     // LHS
+                        // Subscript assignment
+                           // LHS
+                              // Identifier - res
+                                 PUSH __main__substr__block__33__res
+                           // OFFSET
+                              // Identifier - i
+                                 PUSH __main__substr__block__33__for__34__i
+                           POP __offset
+                           POP __pointer
+                     POP __rhs
+                     ASSIGN __pointer[__offset] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+               //---------------------------------------------------------
+            // Repeat
+            JUMP __for__34
+            // End of For
+            __endfor__34:
+         //---------------------------------------------------------------
+         // Assignment - '='
+            // RHS
+               // Char Literal
+                  PUSH '\0'
+            // LHS
+               // Subscript assignment
+                  // LHS
+                     // Identifier - res
+                        PUSH __main__substr__block__33__res
+                  // OFFSET
+                     // Subtraction
+                        // LHS
+                           // Identifier - end
+                              PUSH __main__substr__end
+                        // RHS
+                           // Identifier - start
+                              PUSH __main__substr__start
+                        POP __rhs
+                        POP __lhs
+                        SUBTRACT __res __lhs __rhs
+                        PUSH __res
+                  POP __offset
+                  POP __pointer
+            POP __rhs
+            ASSIGN __pointer[__offset] __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         // Return
+            // Identifier - res
+               PUSH __main__substr__block__33__res
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____substr__char__1__int__int:
+// End Function Declaration - __main____substr__char__1__int__int
 //========================================================================
 
 //========================================================================
@@ -1905,9 +2212,9 @@ __main____first_index_of__char__1__char:
                   PUSH __retval
             // LHS
                // Variable Declaration
-                  ASSIGN __main__first_index_of__block__29__size 0
+                  ASSIGN __main__first_index_of__block__36__size 0
             POP __rhs
-            ASSIGN __main__first_index_of__block__29__size __rhs
+            ASSIGN __main__first_index_of__block__36__size __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
@@ -1920,37 +2227,37 @@ __main____first_index_of__char__1__char:
                      PUSH 0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__first_index_of__block__29__for__30__i 0
+                     ASSIGN __main__first_index_of__block__36__for__37__i 0
                POP __rhs
-               ASSIGN __main__first_index_of__block__29__for__30__i __rhs
+               ASSIGN __main__first_index_of__block__36__for__37__i __rhs
                PUSH __rhs
-         JUMP __forcond__30
-         __for__30:
+         JUMP __forcond__37
+         __for__37:
             // Update
                // Pre-Increment
                   // RHS
                      // Identifier - i
-                        PUSH __main__first_index_of__block__29__for__30__i
+                        PUSH __main__first_index_of__block__36__for__37__i
                   POP __rhs
-                  ADD __main__first_index_of__block__29__for__30__i __main__first_index_of__block__29__for__30__i 1
-                  ASSIGN __res __main__first_index_of__block__29__for__30__i
+                  ADD __main__first_index_of__block__36__for__37__i __main__first_index_of__block__36__for__37__i 1
+                  ASSIGN __res __main__first_index_of__block__36__for__37__i
                   PUSH __res
-            __forcond__30:
+            __forcond__37:
             // Condition
                // Less Than
                   // LHS
                      // Identifier - i
-                        PUSH __main__first_index_of__block__29__for__30__i
+                        PUSH __main__first_index_of__block__36__for__37__i
                   // RHS
                      // Identifier - size
-                        PUSH __main__first_index_of__block__29__size
+                        PUSH __main__first_index_of__block__36__size
                   POP __rhs
                   POP __lhs
                   LT __res __lhs __rhs
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor__30
+               JEQ __endfor__37
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -1965,7 +2272,7 @@ __main____first_index_of__char__1__char:
                                        PUSH __main__first_index_of__arr
                                  // OFFSET
                                     // Identifier - i
-                                       PUSH __main__first_index_of__block__29__for__30__i
+                                       PUSH __main__first_index_of__block__36__for__37__i
                                  POP __offset
                                  POP __pointer
                                  PUSH __pointer[__offset]
@@ -1978,22 +2285,22 @@ __main____first_index_of__char__1__char:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif__32
+                        JEQ __endif__39
                      // Body
                         // Return
                            // Identifier - i
-                              PUSH __main__first_index_of__block__29__for__30__i
+                              PUSH __main__first_index_of__block__36__for__37__i
                            POP __rVal
                            RETURN __rVal
-                     JUMP __endif__32
+                     JUMP __endif__39
                      // End of if
-                     __endif__32:
+                     __endif__39:
                   //------------------------------------------------------
                //---------------------------------------------------------
             // Repeat
-            JUMP __for__30
+            JUMP __for__37
             // End of For
-            __endfor__30:
+            __endfor__37:
          //---------------------------------------------------------------
          // Return
             // Negative
@@ -2034,9 +2341,9 @@ __main____split__char__1__char:
                   PUSH __retval
             // LHS
                // Variable Declaration
-                  ASSIGN __main__split__block__33__tokens 0
+                  ASSIGN __main__split__block__40__tokens 0
             POP __rhs
-            ASSIGN __main__split__block__33__tokens __rhs
+            ASSIGN __main__split__block__40__tokens __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
@@ -2057,9 +2364,9 @@ __main____split__char__1__char:
                   PUSH __retval
             // LHS
                // Variable Declaration
-                  ASSIGN __main__split__block__33__size 0
+                  ASSIGN __main__split__block__40__size 0
             POP __rhs
-            ASSIGN __main__split__block__33__size __rhs
+            ASSIGN __main__split__block__40__size __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
@@ -2069,9 +2376,9 @@ __main____split__char__1__char:
                   PUSH 0
             // LHS
                // Variable Declaration
-                  ASSIGN __main__split__block__33__i 0
+                  ASSIGN __main__split__block__40__i 0
             POP __rhs
-            ASSIGN __main__split__block__33__i __rhs
+            ASSIGN __main__split__block__40__i __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
@@ -2081,30 +2388,30 @@ __main____split__char__1__char:
                   PUSH 0
             // LHS
                // Variable Declaration
-                  ASSIGN __main__split__block__33__j 0
+                  ASSIGN __main__split__block__40__j 0
             POP __rhs
-            ASSIGN __main__split__block__33__j __rhs
+            ASSIGN __main__split__block__40__j __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
          //---------------------------------------------------------------
          // While-Loop
-         __while__34:
+         __while__41:
             // Condition
                // Less Than
                   // LHS
                      // Identifier - i
-                        PUSH __main__split__block__33__i
+                        PUSH __main__split__block__40__i
                   // RHS
                      // Identifier - size
-                        PUSH __main__split__block__33__size
+                        PUSH __main__split__block__40__size
                   POP __rhs
                   POP __lhs
                   LT __res __lhs __rhs
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endwhile__34
+               JEQ __endwhile__41
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -2119,7 +2426,7 @@ __main____split__char__1__char:
                                        PUSH __main__split__str
                                  // OFFSET
                                     // Identifier - i
-                                       PUSH __main__split__block__33__i
+                                       PUSH __main__split__block__40__i
                                  POP __offset
                                  POP __pointer
                                  PUSH __pointer[__offset]
@@ -2132,7 +2439,7 @@ __main____split__char__1__char:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif__36
+                        JEQ __endif__43
                      // Body
                         //------------------------------------------------
                         // Code Block
@@ -2142,42 +2449,42 @@ __main____split__char__1__char:
                                     PUSH 0
                               // LHS
                                  // Variable Declaration
-                                    ASSIGN __main__split__block__33__while__34__block__35__if__36__block__37__count 0
+                                    ASSIGN __main__split__block__40__while__41__block__42__if__43__block__44__count 0
                               POP __rhs
-                              ASSIGN __main__split__block__33__while__34__block__35__if__36__block__37__count __rhs
+                              ASSIGN __main__split__block__40__while__41__block__42__if__43__block__44__count __rhs
                               PUSH __rhs
                            // Statement results can be ignored
                            POP __void
                            // Assignment - '='
                               // RHS
                                  // Identifier - i
-                                    PUSH __main__split__block__33__i
+                                    PUSH __main__split__block__40__i
                               // LHS
                                  // Variable Declaration
-                                    ASSIGN __main__split__block__33__while__34__block__35__if__36__block__37__k 0
+                                    ASSIGN __main__split__block__40__while__41__block__42__if__43__block__44__k 0
                               POP __rhs
-                              ASSIGN __main__split__block__33__while__34__block__35__if__36__block__37__k __rhs
+                              ASSIGN __main__split__block__40__while__41__block__42__if__43__block__44__k __rhs
                               PUSH __rhs
                            // Statement results can be ignored
                            POP __void
                            //---------------------------------------------
                            // While-Loop
-                           __while__38:
+                           __while__45:
                               // Condition
                                  // Less Than
                                     // LHS
                                        // Identifier - k
-                                          PUSH __main__split__block__33__while__34__block__35__if__36__block__37__k
+                                          PUSH __main__split__block__40__while__41__block__42__if__43__block__44__k
                                     // RHS
                                        // Identifier - size
-                                          PUSH __main__split__block__33__size
+                                          PUSH __main__split__block__40__size
                                     POP __rhs
                                     POP __lhs
                                     LT __res __lhs __rhs
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __endwhile__38
+                                 JEQ __endwhile__45
                               // Body
                                  //---------------------------------------
                                  // If-Statement
@@ -2190,8 +2497,8 @@ __main____split__char__1__char:
                                                       PUSH __main__split__str
                                                 // OFFSET
                                                    // Post-Increment
-                                                      ASSIGN __res __main__split__block__33__while__34__block__35__if__36__block__37__k
-                                                      ADD __main__split__block__33__while__34__block__35__if__36__block__37__k __main__split__block__33__while__34__block__35__if__36__block__37__k 1
+                                                      ASSIGN __res __main__split__block__40__while__41__block__42__if__43__block__44__k
+                                                      ADD __main__split__block__40__while__41__block__42__if__43__block__44__k __main__split__block__40__while__41__block__42__if__43__block__44__k 1
                                                       PUSH __res
                                                 POP __offset
                                                 POP __pointer
@@ -2205,43 +2512,43 @@ __main____split__char__1__char:
                                           PUSH __res
                                        POP __cond
                                        CMP __cond 0
-                                       JEQ __else__39
+                                       JEQ __else__46
                                     // Body
                                        // Pre-Increment
                                           // RHS
                                              // Identifier - count
-                                                PUSH __main__split__block__33__while__34__block__35__if__36__block__37__count
+                                                PUSH __main__split__block__40__while__41__block__42__if__43__block__44__count
                                           POP __rhs
-                                          ADD __main__split__block__33__while__34__block__35__if__36__block__37__count __main__split__block__33__while__34__block__35__if__36__block__37__count 1
-                                          ASSIGN __res __main__split__block__33__while__34__block__35__if__36__block__37__count
+                                          ADD __main__split__block__40__while__41__block__42__if__43__block__44__count __main__split__block__40__while__41__block__42__if__43__block__44__count 1
+                                          ASSIGN __res __main__split__block__40__while__41__block__42__if__43__block__44__count
                                           PUSH __res
                                        // Statement results can be ignored
                                        POP __void
-                                    JUMP __endif__39
+                                    JUMP __endif__46
                                     //------------------------------------
                                     // Else-Statement
-                                    __else__39:
-                                    // Break out of __while__38
-                                    JUMP __endwhile__38
+                                    __else__46:
+                                    // Break out of __while__45
+                                    JUMP __endwhile__45
                                     //------------------------------------
                                     // End of if
-                                    __endif__39:
+                                    __endif__46:
                                  //---------------------------------------
-                              JUMP __while__38
+                              JUMP __while__45
                               // End of While
-                              __endwhile__38:
+                              __endwhile__45:
                            //---------------------------------------------
                            // Method Call - Vector<:char[]:>::pushBack(char[]) -> void
                               // LHS
                                  // Identifier - tokens
-                                    PUSH __main__split__block__33__tokens
+                                    PUSH __main__split__block__40__tokens
                               // RHS
                               // Arguments
                                  // Array Allocator
                                     // Addition
                                        // LHS
                                           // Identifier - count
-                                             PUSH __main__split__block__33__while__34__block__35__if__36__block__37__count
+                                             PUSH __main__split__block__40__while__41__block__42__if__43__block__44__count
                                        // RHS
                                           // Int Literal
                                              PUSH 1
@@ -2274,37 +2581,37 @@ __main____split__char__1__char:
                                        PUSH 0
                                  // LHS
                                     // Variable Declaration
-                                       ASSIGN __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k 0
+                                       ASSIGN __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k 0
                                  POP __rhs
-                                 ASSIGN __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k __rhs
+                                 ASSIGN __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k __rhs
                                  PUSH __rhs
-                           JUMP __forcond__40
-                           __for__40:
+                           JUMP __forcond__47
+                           __for__47:
                               // Update
                                  // Pre-Increment
                                     // RHS
                                        // Identifier - k
-                                          PUSH __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k
+                                          PUSH __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k
                                     POP __rhs
-                                    ADD __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k 1
-                                    ASSIGN __res __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k
+                                    ADD __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k 1
+                                    ASSIGN __res __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k
                                     PUSH __res
-                              __forcond__40:
+                              __forcond__47:
                               // Condition
                                  // Less Than
                                     // LHS
                                        // Identifier - k
-                                          PUSH __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k
+                                          PUSH __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k
                                     // RHS
                                        // Identifier - count
-                                          PUSH __main__split__block__33__while__34__block__35__if__36__block__37__count
+                                          PUSH __main__split__block__40__while__41__block__42__if__43__block__44__count
                                     POP __rhs
                                     POP __lhs
                                     LT __res __lhs __rhs
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __endfor__40
+                                 JEQ __endfor__47
                               // Body
                                  //---------------------------------------
                                  // Code Block
@@ -2316,8 +2623,8 @@ __main____split__char__1__char:
                                                    PUSH __main__split__str
                                              // OFFSET
                                                 // Post-Increment
-                                                   ASSIGN __res __main__split__block__33__i
-                                                   ADD __main__split__block__33__i __main__split__block__33__i 1
+                                                   ASSIGN __res __main__split__block__40__i
+                                                   ADD __main__split__block__40__i __main__split__block__40__i 1
                                                    PUSH __res
                                              POP __offset
                                              POP __pointer
@@ -2330,7 +2637,7 @@ __main____split__char__1__char:
                                                       // Member Accessor
                                                          // LHS
                                                             // Identifier - tokens
-                                                               PUSH __main__split__block__33__tokens
+                                                               PUSH __main__split__block__40__tokens
                                                          // RHS
                                                             PUSH __field____main____Vector__char__1____data
                                                          POP __child
@@ -2338,13 +2645,13 @@ __main____split__char__1__char:
                                                          PUSH __parent[__child]
                                                    // OFFSET
                                                       // Identifier - j
-                                                         PUSH __main__split__block__33__j
+                                                         PUSH __main__split__block__40__j
                                                    POP __offset
                                                    POP __pointer
                                                    PUSH __pointer[__offset]
                                              // OFFSET
                                                 // Identifier - k
-                                                   PUSH __main__split__block__33__while__34__block__35__if__36__block__37__for__40__k
+                                                   PUSH __main__split__block__40__while__41__block__42__if__43__block__44__for__47__k
                                              POP __offset
                                              POP __pointer
                                        POP __rhs
@@ -2354,9 +2661,9 @@ __main____split__char__1__char:
                                     POP __void
                                  //---------------------------------------
                               // Repeat
-                              JUMP __for__40
+                              JUMP __for__47
                               // End of For
-                              __endfor__40:
+                              __endfor__47:
                            //---------------------------------------------
                            // Assignment - '='
                               // RHS
@@ -2370,7 +2677,7 @@ __main____split__char__1__char:
                                              // Member Accessor
                                                 // LHS
                                                    // Identifier - tokens
-                                                      PUSH __main__split__block__33__tokens
+                                                      PUSH __main__split__block__40__tokens
                                                 // RHS
                                                    PUSH __field____main____Vector__char__1____data
                                                 POP __child
@@ -2378,13 +2685,13 @@ __main____split__char__1__char:
                                                 PUSH __parent[__child]
                                           // OFFSET
                                              // Identifier - j
-                                                PUSH __main__split__block__33__j
+                                                PUSH __main__split__block__40__j
                                           POP __offset
                                           POP __pointer
                                           PUSH __pointer[__offset]
                                     // OFFSET
                                        // Identifier - count
-                                          PUSH __main__split__block__33__while__34__block__35__if__36__block__37__count
+                                          PUSH __main__split__block__40__while__41__block__42__if__43__block__44__count
                                     POP __offset
                                     POP __pointer
                               POP __rhs
@@ -2395,42 +2702,348 @@ __main____split__char__1__char:
                            // Pre-Increment
                               // RHS
                                  // Identifier - j
-                                    PUSH __main__split__block__33__j
+                                    PUSH __main__split__block__40__j
                               POP __rhs
-                              ADD __main__split__block__33__j __main__split__block__33__j 1
-                              ASSIGN __res __main__split__block__33__j
+                              ADD __main__split__block__40__j __main__split__block__40__j 1
+                              ASSIGN __res __main__split__block__40__j
                               PUSH __res
                            // Statement results can be ignored
                            POP __void
                         //------------------------------------------------
-                     JUMP __endif__36
+                     JUMP __endif__43
                      // End of if
-                     __endif__36:
+                     __endif__43:
                   //------------------------------------------------------
                   // Pre-Increment
                      // RHS
                         // Identifier - i
-                           PUSH __main__split__block__33__i
+                           PUSH __main__split__block__40__i
                      POP __rhs
-                     ADD __main__split__block__33__i __main__split__block__33__i 1
-                     ASSIGN __res __main__split__block__33__i
+                     ADD __main__split__block__40__i __main__split__block__40__i 1
+                     ASSIGN __res __main__split__block__40__i
                      PUSH __res
                   // Statement results can be ignored
                   POP __void
                //---------------------------------------------------------
-            JUMP __while__34
+            JUMP __while__41
             // End of While
-            __endwhile__34:
+            __endwhile__41:
          //---------------------------------------------------------------
          // Return
             // Identifier - tokens
-               PUSH __main__split__block__33__tokens
+               PUSH __main__split__block__40__tokens
             POP __rVal
             RETURN __rVal
       //------------------------------------------------------------------
    RETURN 0
 __end____main____split__char__1__char:
 // End Function Declaration - __main____split__char__1__char
+//========================================================================
+
+//========================================================================
+// Function Declaration - max(int, int) -> int
+JUMP __end____main____max__int__int
+__main____max__int__int:
+   // Parameters
+      // Param: a
+      STACKGET __main__max__a 0
+      // Param: b
+      STACKGET __main__max__b 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Greater Than or Equal to
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__max__a
+                  // RHS
+                     // Identifier - b
+                        PUSH __main__max__b
+                  POP __rhs
+                  POP __lhs
+                  GE __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__50
+            // Body
+               // Return
+                  // Identifier - a
+                     PUSH __main__max__a
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif__50
+            // End of if
+            __endif__50:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - b
+               PUSH __main__max__b
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____max__int__int:
+// End Function Declaration - __main____max__int__int
+//========================================================================
+
+//========================================================================
+// Function Declaration - max(float, float) -> float
+JUMP __end____main____max__float__float
+__main____max__float__float:
+   // Parameters
+      // Param: a
+      STACKGET __main__max__a 0
+      // Param: b
+      STACKGET __main__max__b 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Greater Than or Equal to
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__max__a
+                  // RHS
+                     // Identifier - b
+                        PUSH __main__max__b
+                  POP __rhs
+                  POP __lhs
+                  GE __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__52
+            // Body
+               // Return
+                  // Identifier - a
+                     PUSH __main__max__a
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif__52
+            // End of if
+            __endif__52:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - b
+               PUSH __main__max__b
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____max__float__float:
+// End Function Declaration - __main____max__float__float
+//========================================================================
+
+//========================================================================
+// Function Declaration - min(int, int) -> int
+JUMP __end____main____min__int__int
+__main____min__int__int:
+   // Parameters
+      // Param: a
+      STACKGET __main__min__a 0
+      // Param: b
+      STACKGET __main__min__b 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Less Than or Equal to
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__min__a
+                  // RHS
+                     // Identifier - b
+                        PUSH __main__min__b
+                  POP __rhs
+                  POP __lhs
+                  LE __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__54
+            // Body
+               // Return
+                  // Identifier - a
+                     PUSH __main__min__a
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif__54
+            // End of if
+            __endif__54:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - b
+               PUSH __main__min__b
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____min__int__int:
+// End Function Declaration - __main____min__int__int
+//========================================================================
+
+//========================================================================
+// Function Declaration - min(float, float) -> float
+JUMP __end____main____min__float__float
+__main____min__float__float:
+   // Parameters
+      // Param: a
+      STACKGET __main__min__a 0
+      // Param: b
+      STACKGET __main__min__b 1
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Less Than or Equal to
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__min__a
+                  // RHS
+                     // Identifier - b
+                        PUSH __main__min__b
+                  POP __rhs
+                  POP __lhs
+                  LE __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__56
+            // Body
+               // Return
+                  // Identifier - a
+                     PUSH __main__min__a
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif__56
+            // End of if
+            __endif__56:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - b
+               PUSH __main__min__b
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____min__float__float:
+// End Function Declaration - __main____min__float__float
+//========================================================================
+
+//========================================================================
+// Function Declaration - abs(int) -> int
+JUMP __end____main____abs__int
+__main____abs__int:
+   // Parameters
+      // Param: v
+      STACKGET __main__abs__v 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - v
+                        PUSH __main__abs__v
+                  // RHS
+                     // Int Literal
+                        PUSH 0
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__58
+            // Body
+               // Return
+                  // Negative
+                     // RHS
+                        // Identifier - v
+                           PUSH __main__abs__v
+                     POP __rhs
+                     SUBTRACT __res 0 __rhs
+                     PUSH __res
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif__58
+            // End of if
+            __endif__58:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - v
+               PUSH __main__abs__v
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____abs__int:
+// End Function Declaration - __main____abs__int
+//========================================================================
+
+//========================================================================
+// Function Declaration - abs(float) -> float
+JUMP __end____main____abs__float
+__main____abs__float:
+   // Parameters
+      // Param: v
+      STACKGET __main__abs__v 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         //---------------------------------------------------------------
+         // If-Statement
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - v
+                        PUSH __main__abs__v
+                  // RHS
+                     // Float Literal
+                        PUSH 0.0
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endif__60
+            // Body
+               // Return
+                  // Negative
+                     // RHS
+                        // Identifier - v
+                           PUSH __main__abs__v
+                     POP __rhs
+                     SUBTRACT __res 0 __rhs
+                     PUSH __res
+                  POP __rVal
+                  RETURN __rVal
+            JUMP __endif__60
+            // End of if
+            __endif__60:
+         //---------------------------------------------------------------
+         // Return
+            // Identifier - v
+               PUSH __main__abs__v
+            POP __rVal
+            RETURN __rVal
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____abs__float:
+// End Function Declaration - __main____abs__float
 //========================================================================
 
 // Assignment - '='
@@ -2470,7 +3083,7 @@ POP __void
 POP __void
 //------------------------------------------------------------------------
 // While-Loop
-__while__42:
+__while__61:
    // Condition
       // Not Equal
          // LHS
@@ -2486,7 +3099,7 @@ __while__42:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endwhile__42
+      JEQ __endwhile__61
    // Body
       //------------------------------------------------------------------
       // Code Block
@@ -2527,9 +3140,9 @@ __while__42:
          // Statement results can be ignored
          POP __void
       //------------------------------------------------------------------
-   JUMP __while__42
+   JUMP __while__61
    // End of While
-   __endwhile__42:
+   __endwhile__61:
 //------------------------------------------------------------------------
 //========================================================================
 // Class Declaration - __main____File inherits __builtin____main__Object
@@ -2781,27 +3394,27 @@ POP __void
             PUSH 0
       // LHS
          // Variable Declaration
-            ASSIGN __main__for__45__i 0
+            ASSIGN __main__for__64__i 0
       POP __rhs
-      ASSIGN __main__for__45__i __rhs
+      ASSIGN __main__for__64__i __rhs
       PUSH __rhs
-JUMP __forcond__45
-__for__45:
+JUMP __forcond__64
+__for__64:
    // Update
       // Pre-Increment
          // RHS
             // Identifier - i
-               PUSH __main__for__45__i
+               PUSH __main__for__64__i
          POP __rhs
-         ADD __main__for__45__i __main__for__45__i 1
-         ASSIGN __res __main__for__45__i
+         ADD __main__for__64__i __main__for__64__i 1
+         ASSIGN __res __main__for__64__i
          PUSH __res
-   __forcond__45:
+   __forcond__64:
    // Condition
       // Less Than
          // LHS
             // Identifier - i
-               PUSH __main__for__45__i
+               PUSH __main__for__64__i
          // RHS
             // Member Accessor
                // LHS
@@ -2818,7 +3431,7 @@ __for__45:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endfor__45
+      JEQ __endfor__64
    // Body
       //------------------------------------------------------------------
       // Code Block
@@ -2839,7 +3452,7 @@ __for__45:
                               PUSH __parent[__child]
                         // OFFSET
                            // Identifier - i
-                              PUSH __main__for__45__i
+                              PUSH __main__for__64__i
                         POP __offset
                         POP __pointer
                         PUSH __pointer[__offset]
@@ -2859,9 +3472,9 @@ __for__45:
                   PUSH __retval
             // LHS
                // Variable Declaration
-                  ASSIGN __main__for__45__block__46__tokens 0
+                  ASSIGN __main__for__64__block__65__tokens 0
             POP __rhs
-            ASSIGN __main__for__45__block__46__tokens __rhs
+            ASSIGN __main__for__64__block__65__tokens __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
@@ -2885,7 +3498,7 @@ __for__45:
                                     PUSH __parent[__child]
                               // OFFSET
                                  // Identifier - i
-                                    PUSH __main__for__45__i
+                                    PUSH __main__for__64__i
                               POP __offset
                               POP __pointer
                               PUSH __pointer[__offset]
@@ -2904,7 +3517,7 @@ __for__45:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif__47
+               JEQ __endif__66
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -2920,7 +3533,7 @@ __for__45:
                                           // Member Accessor
                                              // LHS
                                                 // Identifier - tokens
-                                                   PUSH __main__for__45__block__46__tokens
+                                                   PUSH __main__for__64__block__65__tokens
                                              // RHS
                                                 PUSH __field____main____Vector__char__1____data
                                              POP __child
@@ -2947,7 +3560,7 @@ __for__45:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __elif__49x0
+                        JEQ __elif__68x0
                      // Body
                         //------------------------------------------------
                         // Code Block
@@ -2963,7 +3576,7 @@ __for__45:
                                                    // Member Accessor
                                                       // LHS
                                                          // Identifier - tokens
-                                                            PUSH __main__for__45__block__46__tokens
+                                                            PUSH __main__for__64__block__65__tokens
                                                       // RHS
                                                          PUSH __field____main____Vector__char__1____data
                                                       POP __child
@@ -2990,7 +3603,7 @@ __for__45:
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __elif__51x0
+                                 JEQ __elif__70x0
                               // Body
                                  //---------------------------------------
                                  // Code Block
@@ -3004,10 +3617,10 @@ __for__45:
                                     // Statement results can be ignored
                                     POP __void
                                  //---------------------------------------
-                              JUMP __endif__51
+                              JUMP __endif__70
                               //------------------------------------------
                               // Elif-Statement
-                              __elif__51x0:
+                              __elif__70x0:
                                  // Condition
                                  // Equal
                                     // LHS
@@ -3018,7 +3631,7 @@ __for__45:
                                                    // Member Accessor
                                                       // LHS
                                                          // Identifier - tokens
-                                                            PUSH __main__for__45__block__46__tokens
+                                                            PUSH __main__for__64__block__65__tokens
                                                       // RHS
                                                          PUSH __field____main____Vector__char__1____data
                                                       POP __child
@@ -3045,7 +3658,7 @@ __for__45:
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __else__51
+                                 JEQ __else__70
                                  // Body
                                  //---------------------------------------
                                  // Code Block
@@ -3066,11 +3679,11 @@ __for__45:
                                     // Statement results can be ignored
                                     POP __void
                                  //---------------------------------------
-                                 JUMP __endif__51
+                                 JUMP __endif__70
                               //------------------------------------------
                               //------------------------------------------
                               // Else-Statement
-                              __else__51:
+                              __else__70:
                               //------------------------------------------
                               // Code Block
                                  //---------------------------------------
@@ -3082,27 +3695,27 @@ __for__45:
                                              PUSH 0
                                        // LHS
                                           // Variable Declaration
-                                             ASSIGN __main__for__45__block__46__if__47__block__48__if__49__block__50__else__51__block__54__for__55__j 0
+                                             ASSIGN __main__for__64__block__65__if__66__block__67__if__68__block__69__else__70__block__73__for__74__j 0
                                        POP __rhs
-                                       ASSIGN __main__for__45__block__46__if__47__block__48__if__49__block__50__else__51__block__54__for__55__j __rhs
+                                       ASSIGN __main__for__64__block__65__if__66__block__67__if__68__block__69__else__70__block__73__for__74__j __rhs
                                        PUSH __rhs
-                                 JUMP __forcond__55
-                                 __for__55:
+                                 JUMP __forcond__74
+                                 __for__74:
                                     // Update
                                        // Pre-Increment
                                           // RHS
                                              // Identifier - j
-                                                PUSH __main__for__45__block__46__if__47__block__48__if__49__block__50__else__51__block__54__for__55__j
+                                                PUSH __main__for__64__block__65__if__66__block__67__if__68__block__69__else__70__block__73__for__74__j
                                           POP __rhs
-                                          ADD __main__for__45__block__46__if__47__block__48__if__49__block__50__else__51__block__54__for__55__j __main__for__45__block__46__if__47__block__48__if__49__block__50__else__51__block__54__for__55__j 1
-                                          ASSIGN __res __main__for__45__block__46__if__47__block__48__if__49__block__50__else__51__block__54__for__55__j
+                                          ADD __main__for__64__block__65__if__66__block__67__if__68__block__69__else__70__block__73__for__74__j __main__for__64__block__65__if__66__block__67__if__68__block__69__else__70__block__73__for__74__j 1
+                                          ASSIGN __res __main__for__64__block__65__if__66__block__67__if__68__block__69__else__70__block__73__for__74__j
                                           PUSH __res
-                                    __forcond__55:
+                                    __forcond__74:
                                     // Condition
                                        // Less Than
                                           // LHS
                                              // Identifier - j
-                                                PUSH __main__for__45__block__46__if__47__block__48__if__49__block__50__else__51__block__54__for__55__j
+                                                PUSH __main__for__64__block__65__if__66__block__67__if__68__block__69__else__70__block__73__for__74__j
                                           // RHS
                                              // Member Accessor
                                                 // LHS
@@ -3126,7 +3739,7 @@ __for__45:
                                           PUSH __res
                                        POP __cond
                                        CMP __cond 0
-                                       JEQ __endfor__55
+                                       JEQ __endfor__74
                                     // Body
                                        //---------------------------------
                                        // Code Block
@@ -3140,7 +3753,7 @@ __for__45:
                                                             // Member Accessor
                                                                // LHS
                                                                   // Identifier - tokens
-                                                                     PUSH __main__for__45__block__46__tokens
+                                                                     PUSH __main__for__64__block__65__tokens
                                                                // RHS
                                                                   PUSH __field____main____Vector__char__1____data
                                                                POP __child
@@ -3174,7 +3787,7 @@ __for__45:
                                                                      PUSH __parent[__child]
                                                                // OFFSET
                                                                   // Identifier - j
-                                                                     PUSH __main__for__45__block__46__if__47__block__48__if__49__block__50__else__51__block__54__for__55__j
+                                                                     PUSH __main__for__64__block__65__if__66__block__67__if__68__block__69__else__70__block__73__for__74__j
                                                                POP __offset
                                                                POP __pointer
                                                                PUSH __pointer[__offset]
@@ -3197,7 +3810,7 @@ __for__45:
                                                    PUSH __retval
                                                 POP __cond
                                                 CMP __cond 0
-                                                JEQ __endif__57
+                                                JEQ __endif__76
                                              // Body
                                                 //------------------------
                                                 // Code Block
@@ -3223,7 +3836,7 @@ __for__45:
                                                                   PUSH __parent[__child]
                                                             // OFFSET
                                                                // Identifier - j
-                                                                  PUSH __main__for__45__block__46__if__47__block__48__if__49__block__50__else__51__block__54__for__55__j
+                                                                  PUSH __main__for__64__block__65__if__66__block__67__if__68__block__69__else__70__block__73__for__74__j
                                                             POP __offset
                                                             POP __pointer
                                                             PUSH __pointer[__offset]
@@ -3232,29 +3845,29 @@ __for__45:
                                                       PUSH __rhs
                                                    // Statement results can be ignored
                                                    POP __void
-                                                   // Break out of __for__55
-                                                   JUMP __endfor__55
+                                                   // Break out of __for__74
+                                                   JUMP __endfor__74
                                                 //------------------------
-                                             JUMP __endif__57
+                                             JUMP __endif__76
                                              // End of if
-                                             __endif__57:
+                                             __endif__76:
                                           //------------------------------
                                        //---------------------------------
                                     // Repeat
-                                    JUMP __for__55
+                                    JUMP __for__74
                                     // End of For
-                                    __endfor__55:
+                                    __endfor__74:
                                  //---------------------------------------
                               //------------------------------------------
                               //------------------------------------------
                               // End of if
-                              __endif__51:
+                              __endif__70:
                            //---------------------------------------------
                         //------------------------------------------------
-                     JUMP __endif__49
+                     JUMP __endif__68
                      //---------------------------------------------------
                      // Elif-Statement
-                     __elif__49x0:
+                     __elif__68x0:
                         // Condition
                         // Equal
                            // LHS
@@ -3265,7 +3878,7 @@ __for__45:
                                           // Member Accessor
                                              // LHS
                                                 // Identifier - tokens
-                                                   PUSH __main__for__45__block__46__tokens
+                                                   PUSH __main__for__64__block__65__tokens
                                              // RHS
                                                 PUSH __field____main____Vector__char__1____data
                                              POP __child
@@ -3292,28 +3905,28 @@ __for__45:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif__49
+                        JEQ __endif__68
                         // Body
                         //------------------------------------------------
                         // Code Block
                            // Pre-Increment
                               // RHS
                                  // Identifier - i
-                                    PUSH __main__for__45__i
+                                    PUSH __main__for__64__i
                               POP __rhs
-                              ADD __main__for__45__i __main__for__45__i 1
-                              ASSIGN __res __main__for__45__i
+                              ADD __main__for__64__i __main__for__64__i 1
+                              ASSIGN __res __main__for__64__i
                               PUSH __res
                            // Statement results can be ignored
                            POP __void
                            //---------------------------------------------
                            // While-Loop
-                           __while__60:
+                           __while__79:
                               // Condition
                                  // Less Than
                                     // LHS
                                        // Identifier - i
-                                          PUSH __main__for__45__i
+                                          PUSH __main__for__64__i
                                     // RHS
                                        // Member Accessor
                                           // LHS
@@ -3330,7 +3943,7 @@ __for__45:
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __endwhile__60
+                                 JEQ __endwhile__79
                               // Body
                                  //---------------------------------------
                                  // Code Block
@@ -3354,7 +3967,7 @@ __for__45:
                                                                PUSH __parent[__child]
                                                          // OFFSET
                                                             // Identifier - i
-                                                               PUSH __main__for__45__i
+                                                               PUSH __main__for__64__i
                                                          POP __offset
                                                          POP __pointer
                                                          PUSH __pointer[__offset]
@@ -3373,13 +3986,13 @@ __for__45:
                                              PUSH __res
                                           POP __cond
                                           CMP __cond 0
-                                          JEQ __endif__62
+                                          JEQ __endif__81
                                        // Body
-                                          // Break out of __while__60
-                                          JUMP __endwhile__60
-                                       JUMP __endif__62
+                                          // Break out of __while__79
+                                          JUMP __endwhile__79
+                                       JUMP __endif__81
                                        // End of if
-                                       __endif__62:
+                                       __endif__81:
                                     //------------------------------------
                                     // Assignment - '='
                                        // RHS
@@ -3398,7 +4011,7 @@ __for__45:
                                                          PUSH __parent[__child]
                                                    // OFFSET
                                                       // Identifier - i
-                                                         PUSH __main__for__45__i
+                                                         PUSH __main__for__64__i
                                                    POP __offset
                                                    POP __pointer
                                                    PUSH __pointer[__offset]
@@ -3418,9 +4031,9 @@ __for__45:
                                              PUSH __retval
                                        // LHS
                                           // Variable Declaration
-                                             ASSIGN __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__tokens 0
+                                             ASSIGN __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__tokens 0
                                        POP __rhs
-                                       ASSIGN __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__tokens __rhs
+                                       ASSIGN __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__tokens __rhs
                                        PUSH __rhs
                                     // Statement results can be ignored
                                     POP __void
@@ -3436,7 +4049,7 @@ __for__45:
                                                             // Member Accessor
                                                                // LHS
                                                                   // Identifier - tokens
-                                                                     PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__tokens
+                                                                     PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__tokens
                                                                // RHS
                                                                   PUSH __field____main____Vector__char__1____data
                                                                POP __child
@@ -3463,7 +4076,7 @@ __for__45:
                                              PUSH __res
                                           POP __cond
                                           CMP __cond 0
-                                          JEQ __else__63
+                                          JEQ __else__82
                                        // Body
                                           //------------------------------
                                           // Code Block
@@ -3476,7 +4089,7 @@ __for__45:
                                                                // Member Accessor
                                                                   // LHS
                                                                      // Identifier - tokens
-                                                                        PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__tokens
+                                                                        PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__tokens
                                                                   // RHS
                                                                      PUSH __field____main____Vector__char__1____data
                                                                   POP __child
@@ -3498,9 +4111,9 @@ __for__45:
                                                       PUSH __retval
                                                 // LHS
                                                    // Variable Declaration
-                                                      ASSIGN __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__if__63__block__64__dir 0
+                                                      ASSIGN __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__if__82__block__83__dir 0
                                                 POP __rhs
-                                                ASSIGN __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__if__63__block__64__dir __rhs
+                                                ASSIGN __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__if__82__block__83__dir __rhs
                                                 PUSH __rhs
                                              // Statement results can be ignored
                                              POP __void
@@ -3512,7 +4125,7 @@ __for__45:
                                                    // Member Accessor Assignment
                                                       // LHS
                                                          // Identifier - dir
-                                                            PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__if__63__block__64__dir
+                                                            PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__if__82__block__83__dir
                                                       // RHS
                                                          PUSH __field____main____File____parent
                                                       POP __child
@@ -3530,7 +4143,7 @@ __for__45:
                                                    // Member Accessor Assignment
                                                       // LHS
                                                          // Identifier - dir
-                                                            PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__if__63__block__64__dir
+                                                            PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__if__82__block__83__dir
                                                       // RHS
                                                          PUSH __field____main____File____is_dir
                                                       POP __child
@@ -3554,7 +4167,7 @@ __for__45:
                                                 // RHS
                                                 // Arguments
                                                    // Identifier - dir
-                                                      PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__if__63__block__64__dir
+                                                      PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__if__82__block__83__dir
                                                    POP __arg0
                                                 POP __obj
                                                 // Pushing args in reverse order
@@ -3575,7 +4188,7 @@ __for__45:
                                                 // RHS
                                                 // Arguments
                                                    // Identifier - dir
-                                                      PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__if__63__block__64__dir
+                                                      PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__if__82__block__83__dir
                                                    POP __arg0
                                                 POP __obj
                                                 // Pushing args in reverse order
@@ -3590,10 +4203,10 @@ __for__45:
                                              // Statement results can be ignored
                                              POP __void
                                           //------------------------------
-                                       JUMP __endif__63
+                                       JUMP __endif__82
                                        //---------------------------------
                                        // Else-Statement
-                                       __else__63:
+                                       __else__82:
                                        //---------------------------------
                                        // Code Block
                                           // Assignment - '='
@@ -3605,7 +4218,7 @@ __for__45:
                                                             // Member Accessor
                                                                // LHS
                                                                   // Identifier - tokens
-                                                                     PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__tokens
+                                                                     PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__tokens
                                                                // RHS
                                                                   PUSH __field____main____Vector__char__1____data
                                                                POP __child
@@ -3628,9 +4241,9 @@ __for__45:
                                                    PUSH __retval
                                              // LHS
                                                 // Variable Declaration
-                                                   ASSIGN __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__else__63__block__65__size 0
+                                                   ASSIGN __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__else__82__block__84__size 0
                                              POP __rhs
-                                             ASSIGN __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__else__63__block__65__size __rhs
+                                             ASSIGN __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__else__82__block__84__size __rhs
                                              PUSH __rhs
                                           // Statement results can be ignored
                                           POP __void
@@ -3643,7 +4256,7 @@ __for__45:
                                                             // Member Accessor
                                                                // LHS
                                                                   // Identifier - tokens
-                                                                     PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__tokens
+                                                                     PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__tokens
                                                                // RHS
                                                                   PUSH __field____main____Vector__char__1____data
                                                                POP __child
@@ -3665,21 +4278,21 @@ __for__45:
                                                    PUSH __retval
                                              // LHS
                                                 // Variable Declaration
-                                                   ASSIGN __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__else__63__block__65__f 0
+                                                   ASSIGN __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__else__82__block__84__f 0
                                              POP __rhs
-                                             ASSIGN __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__else__63__block__65__f __rhs
+                                             ASSIGN __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__else__82__block__84__f __rhs
                                              PUSH __rhs
                                           // Statement results can be ignored
                                           POP __void
                                           // Assignment - '='
                                              // RHS
                                                 // Identifier - size
-                                                   PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__else__63__block__65__size
+                                                   PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__else__82__block__84__size
                                              // LHS
                                                 // Member Accessor Assignment
                                                    // LHS
                                                       // Identifier - f
-                                                         PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__else__63__block__65__f
+                                                         PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__else__82__block__84__f
                                                    // RHS
                                                       PUSH __field____main____File____size
                                                    POP __child
@@ -3697,7 +4310,7 @@ __for__45:
                                                 // Member Accessor Assignment
                                                    // LHS
                                                       // Identifier - f
-                                                         PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__else__63__block__65__f
+                                                         PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__else__82__block__84__f
                                                    // RHS
                                                       PUSH __field____main____File____parent
                                                    POP __child
@@ -3715,7 +4328,7 @@ __for__45:
                                                 // Member Accessor Assignment
                                                    // LHS
                                                       // Identifier - f
-                                                         PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__else__63__block__65__f
+                                                         PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__else__82__block__84__f
                                                    // RHS
                                                       PUSH __field____main____File____is_dir
                                                    POP __child
@@ -3739,7 +4352,7 @@ __for__45:
                                              // RHS
                                              // Arguments
                                                 // Identifier - f
-                                                   PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__else__63__block__65__f
+                                                   PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__else__82__block__84__f
                                                 POP __arg0
                                              POP __obj
                                              // Pushing args in reverse order
@@ -3760,7 +4373,7 @@ __for__45:
                                              // RHS
                                              // Arguments
                                                 // Identifier - f
-                                                   PUSH __main__for__45__block__46__if__47__block__48__elif__49x1__block__59__while__60__block__61__else__63__block__65__f
+                                                   PUSH __main__for__64__block__65__if__66__block__67__elif__68x1__block__78__while__79__block__80__else__82__block__84__f
                                                 POP __arg0
                                              POP __obj
                                              // Pushing args in reverse order
@@ -3777,49 +4390,49 @@ __for__45:
                                        //---------------------------------
                                        //---------------------------------
                                        // End of if
-                                       __endif__63:
+                                       __endif__82:
                                     //------------------------------------
                                     // Pre-Increment
                                        // RHS
                                           // Identifier - i
-                                             PUSH __main__for__45__i
+                                             PUSH __main__for__64__i
                                        POP __rhs
-                                       ADD __main__for__45__i __main__for__45__i 1
-                                       ASSIGN __res __main__for__45__i
+                                       ADD __main__for__64__i __main__for__64__i 1
+                                       ASSIGN __res __main__for__64__i
                                        PUSH __res
                                     // Statement results can be ignored
                                     POP __void
                                  //---------------------------------------
-                              JUMP __while__60
+                              JUMP __while__79
                               // End of While
-                              __endwhile__60:
+                              __endwhile__79:
                            //---------------------------------------------
                            // Pre-Decrement
                               // RHS
                                  // Identifier - i
-                                    PUSH __main__for__45__i
+                                    PUSH __main__for__64__i
                               POP __rhs
-                              SUBTRACT __main__for__45__i __main__for__45__i 1
-                              ASSIGN __res __main__for__45__i
+                              SUBTRACT __main__for__64__i __main__for__64__i 1
+                              ASSIGN __res __main__for__64__i
                               PUSH __res
                            // Statement results can be ignored
                            POP __void
                         //------------------------------------------------
-                        JUMP __endif__49
+                        JUMP __endif__68
                      //---------------------------------------------------
                      // End of if
-                     __endif__49:
+                     __endif__68:
                   //------------------------------------------------------
                //---------------------------------------------------------
-            JUMP __endif__47
+            JUMP __endif__66
             // End of if
-            __endif__47:
+            __endif__66:
          //---------------------------------------------------------------
       //------------------------------------------------------------------
    // Repeat
-   JUMP __for__45
+   JUMP __for__64
    // End of For
-   __endfor__45:
+   __endfor__64:
 //------------------------------------------------------------------------
 //========================================================================
 // Function Declaration - printfs(File, int) -> void
@@ -3850,13 +4463,13 @@ __main____printfs__File__int:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif__67
+               JEQ __endif__86
             // Body
                // Return
                   RETURN 0
-            JUMP __endif__67
+            JUMP __endif__86
             // End of if
-            __endif__67:
+            __endif__86:
          //---------------------------------------------------------------
          //---------------------------------------------------------------
          // For-Loop
@@ -3867,27 +4480,27 @@ __main____printfs__File__int:
                      PUSH 0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__printfs__block__66__for__68__i 0
+                     ASSIGN __main__printfs__block__85__for__87__i 0
                POP __rhs
-               ASSIGN __main__printfs__block__66__for__68__i __rhs
+               ASSIGN __main__printfs__block__85__for__87__i __rhs
                PUSH __rhs
-         JUMP __forcond__68
-         __for__68:
+         JUMP __forcond__87
+         __for__87:
             // Update
                // Pre-Increment
                   // RHS
                      // Identifier - i
-                        PUSH __main__printfs__block__66__for__68__i
+                        PUSH __main__printfs__block__85__for__87__i
                   POP __rhs
-                  ADD __main__printfs__block__66__for__68__i __main__printfs__block__66__for__68__i 1
-                  ASSIGN __res __main__printfs__block__66__for__68__i
+                  ADD __main__printfs__block__85__for__87__i __main__printfs__block__85__for__87__i 1
+                  ASSIGN __res __main__printfs__block__85__for__87__i
                   PUSH __res
-            __forcond__68:
+            __forcond__87:
             // Condition
                // Less Than
                   // LHS
                      // Identifier - i
-                        PUSH __main__printfs__block__66__for__68__i
+                        PUSH __main__printfs__block__85__for__87__i
                   // RHS
                      // Identifier - indent
                         PUSH __main__printfs__indent
@@ -3897,7 +4510,7 @@ __main____printfs__File__int:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor__68
+               JEQ __endfor__87
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -3933,9 +4546,9 @@ __main____printfs__File__int:
                   POP __void
                //---------------------------------------------------------
             // Repeat
-            JUMP __for__68
+            JUMP __for__87
             // End of For
-            __endfor__68:
+            __endfor__87:
          //---------------------------------------------------------------
          // Function Call - print(char[]) -> void
             // Arguments
@@ -4057,27 +4670,27 @@ __main____printfs__File__int:
                      PUSH 0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__printfs__block__66__for__70__i 0
+                     ASSIGN __main__printfs__block__85__for__89__i 0
                POP __rhs
-               ASSIGN __main__printfs__block__66__for__70__i __rhs
+               ASSIGN __main__printfs__block__85__for__89__i __rhs
                PUSH __rhs
-         JUMP __forcond__70
-         __for__70:
+         JUMP __forcond__89
+         __for__89:
             // Update
                // Pre-Increment
                   // RHS
                      // Identifier - i
-                        PUSH __main__printfs__block__66__for__70__i
+                        PUSH __main__printfs__block__85__for__89__i
                   POP __rhs
-                  ADD __main__printfs__block__66__for__70__i __main__printfs__block__66__for__70__i 1
-                  ASSIGN __res __main__printfs__block__66__for__70__i
+                  ADD __main__printfs__block__85__for__89__i __main__printfs__block__85__for__89__i 1
+                  ASSIGN __res __main__printfs__block__85__for__89__i
                   PUSH __res
-            __forcond__70:
+            __forcond__89:
             // Condition
                // Less Than
                   // LHS
                      // Identifier - i
-                        PUSH __main__printfs__block__66__for__70__i
+                        PUSH __main__printfs__block__85__for__89__i
                   // RHS
                      // Member Accessor
                         // LHS
@@ -4101,7 +4714,7 @@ __main____printfs__File__int:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor__70
+               JEQ __endfor__89
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -4127,7 +4740,7 @@ __main____printfs__File__int:
                                  PUSH __parent[__child]
                            // OFFSET
                               // Identifier - i
-                                 PUSH __main__printfs__block__66__for__70__i
+                                 PUSH __main__printfs__block__85__for__89__i
                            POP __offset
                            POP __pointer
                            PUSH __pointer[__offset]
@@ -4158,9 +4771,9 @@ __main____printfs__File__int:
                   POP __void
                //---------------------------------------------------------
             // Repeat
-            JUMP __for__70
+            JUMP __for__89
             // End of For
-            __endfor__70:
+            __endfor__89:
          //---------------------------------------------------------------
       //------------------------------------------------------------------
    RETURN 0
@@ -4195,13 +4808,13 @@ __main____sum_sizes__File:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif__73
+               JEQ __endif__92
             // Body
                // Return
                   RETURN 0
-            JUMP __endif__73
+            JUMP __endif__92
             // End of if
-            __endif__73:
+            __endif__92:
          //---------------------------------------------------------------
          //---------------------------------------------------------------
          // For-Loop
@@ -4212,27 +4825,27 @@ __main____sum_sizes__File:
                      PUSH 0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__sum_sizes__block__72__for__74__i 0
+                     ASSIGN __main__sum_sizes__block__91__for__93__i 0
                POP __rhs
-               ASSIGN __main__sum_sizes__block__72__for__74__i __rhs
+               ASSIGN __main__sum_sizes__block__91__for__93__i __rhs
                PUSH __rhs
-         JUMP __forcond__74
-         __for__74:
+         JUMP __forcond__93
+         __for__93:
             // Update
                // Pre-Increment
                   // RHS
                      // Identifier - i
-                        PUSH __main__sum_sizes__block__72__for__74__i
+                        PUSH __main__sum_sizes__block__91__for__93__i
                   POP __rhs
-                  ADD __main__sum_sizes__block__72__for__74__i __main__sum_sizes__block__72__for__74__i 1
-                  ASSIGN __res __main__sum_sizes__block__72__for__74__i
+                  ADD __main__sum_sizes__block__91__for__93__i __main__sum_sizes__block__91__for__93__i 1
+                  ASSIGN __res __main__sum_sizes__block__91__for__93__i
                   PUSH __res
-            __forcond__74:
+            __forcond__93:
             // Condition
                // Less Than
                   // LHS
                      // Identifier - i
-                        PUSH __main__sum_sizes__block__72__for__74__i
+                        PUSH __main__sum_sizes__block__91__for__93__i
                   // RHS
                      // Member Accessor
                         // LHS
@@ -4256,7 +4869,7 @@ __main____sum_sizes__File:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor__74
+               JEQ __endfor__93
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -4282,7 +4895,7 @@ __main____sum_sizes__File:
                                  PUSH __parent[__child]
                            // OFFSET
                               // Identifier - i
-                                 PUSH __main__sum_sizes__block__72__for__74__i
+                                 PUSH __main__sum_sizes__block__91__for__93__i
                            POP __offset
                            POP __pointer
                            PUSH __pointer[__offset]
@@ -4321,7 +4934,7 @@ __main____sum_sizes__File:
                                        PUSH __parent[__child]
                                  // OFFSET
                                     // Identifier - i
-                                       PUSH __main__sum_sizes__block__72__for__74__i
+                                       PUSH __main__sum_sizes__block__91__for__93__i
                                  POP __offset
                                  POP __pointer
                                  PUSH __pointer[__offset]
@@ -4346,9 +4959,9 @@ __main____sum_sizes__File:
                   POP __void
                //---------------------------------------------------------
             // Repeat
-            JUMP __for__74
+            JUMP __for__93
             // End of For
-            __endfor__74:
+            __endfor__93:
          //---------------------------------------------------------------
       //------------------------------------------------------------------
    RETURN 0
@@ -4398,16 +5011,16 @@ __main____sum_small_dirs__File:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif__77
+               JEQ __endif__96
             // Body
                // Return
                   // Int Literal
                      PUSH 0
                   POP __rVal
                   RETURN __rVal
-            JUMP __endif__77
+            JUMP __endif__96
             // End of if
-            __endif__77:
+            __endif__96:
          //---------------------------------------------------------------
          //---------------------------------------------------------------
          // If-Statement
@@ -4428,16 +5041,16 @@ __main____sum_small_dirs__File:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif__78
+               JEQ __endif__97
             // Body
                // Return
                   // Int Literal
                      PUSH 0
                   POP __rVal
                   RETURN __rVal
-            JUMP __endif__78
+            JUMP __endif__97
             // End of if
-            __endif__78:
+            __endif__97:
          //---------------------------------------------------------------
          // Assignment - '='
             // RHS
@@ -4445,9 +5058,9 @@ __main____sum_small_dirs__File:
                   PUSH 0
             // LHS
                // Variable Declaration
-                  ASSIGN __main__sum_small_dirs__block__76__sum 0
+                  ASSIGN __main__sum_small_dirs__block__95__sum 0
             POP __rhs
-            ASSIGN __main__sum_small_dirs__block__76__sum __rhs
+            ASSIGN __main__sum_small_dirs__block__95__sum __rhs
             PUSH __rhs
          // Statement results can be ignored
          POP __void
@@ -4474,7 +5087,7 @@ __main____sum_small_dirs__File:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endif__79
+               JEQ __endif__98
             // Body
                // Assignment - '+='
                   // RHS
@@ -4488,13 +5101,13 @@ __main____sum_small_dirs__File:
                         POP __parent
                         PUSH __parent[__child]
                   POP __rhs
-                  ADD __main__sum_small_dirs__block__76__sum __main__sum_small_dirs__block__76__sum __rhs
-                  PUSH __main__sum_small_dirs__block__76__sum
+                  ADD __main__sum_small_dirs__block__95__sum __main__sum_small_dirs__block__95__sum __rhs
+                  PUSH __main__sum_small_dirs__block__95__sum
                // Statement results can be ignored
                POP __void
-            JUMP __endif__79
+            JUMP __endif__98
             // End of if
-            __endif__79:
+            __endif__98:
          //---------------------------------------------------------------
          //---------------------------------------------------------------
          // For-Loop
@@ -4505,27 +5118,27 @@ __main____sum_small_dirs__File:
                      PUSH 0
                // LHS
                   // Variable Declaration
-                     ASSIGN __main__sum_small_dirs__block__76__for__80__i 0
+                     ASSIGN __main__sum_small_dirs__block__95__for__99__i 0
                POP __rhs
-               ASSIGN __main__sum_small_dirs__block__76__for__80__i __rhs
+               ASSIGN __main__sum_small_dirs__block__95__for__99__i __rhs
                PUSH __rhs
-         JUMP __forcond__80
-         __for__80:
+         JUMP __forcond__99
+         __for__99:
             // Update
                // Pre-Increment
                   // RHS
                      // Identifier - i
-                        PUSH __main__sum_small_dirs__block__76__for__80__i
+                        PUSH __main__sum_small_dirs__block__95__for__99__i
                   POP __rhs
-                  ADD __main__sum_small_dirs__block__76__for__80__i __main__sum_small_dirs__block__76__for__80__i 1
-                  ASSIGN __res __main__sum_small_dirs__block__76__for__80__i
+                  ADD __main__sum_small_dirs__block__95__for__99__i __main__sum_small_dirs__block__95__for__99__i 1
+                  ASSIGN __res __main__sum_small_dirs__block__95__for__99__i
                   PUSH __res
-            __forcond__80:
+            __forcond__99:
             // Condition
                // Less Than
                   // LHS
                      // Identifier - i
-                        PUSH __main__sum_small_dirs__block__76__for__80__i
+                        PUSH __main__sum_small_dirs__block__95__for__99__i
                   // RHS
                      // Member Accessor
                         // LHS
@@ -4549,7 +5162,7 @@ __main____sum_small_dirs__File:
                   PUSH __res
                POP __cond
                CMP __cond 0
-               JEQ __endfor__80
+               JEQ __endfor__99
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -4577,7 +5190,7 @@ __main____sum_small_dirs__File:
                                        PUSH __parent[__child]
                                  // OFFSET
                                     // Identifier - i
-                                       PUSH __main__sum_small_dirs__block__76__for__80__i
+                                       PUSH __main__sum_small_dirs__block__95__for__99__i
                                  POP __offset
                                  POP __pointer
                                  PUSH __pointer[__offset]
@@ -4591,19 +5204,19 @@ __main____sum_small_dirs__File:
                            RESPONSE __retval
                            PUSH __retval
                      POP __rhs
-                     ADD __main__sum_small_dirs__block__76__sum __main__sum_small_dirs__block__76__sum __rhs
-                     PUSH __main__sum_small_dirs__block__76__sum
+                     ADD __main__sum_small_dirs__block__95__sum __main__sum_small_dirs__block__95__sum __rhs
+                     PUSH __main__sum_small_dirs__block__95__sum
                   // Statement results can be ignored
                   POP __void
                //---------------------------------------------------------
             // Repeat
-            JUMP __for__80
+            JUMP __for__99
             // End of For
-            __endfor__80:
+            __endfor__99:
          //---------------------------------------------------------------
          // Return
             // Identifier - sum
-               PUSH __main__sum_small_dirs__block__76__sum
+               PUSH __main__sum_small_dirs__block__95__sum
             POP __rVal
             RETURN __rVal
       //------------------------------------------------------------------
@@ -4706,27 +5319,27 @@ POP __void
             PUSH 0
       // LHS
          // Variable Declaration
-            ASSIGN __main__for__82__i 0
+            ASSIGN __main__for__101__i 0
       POP __rhs
-      ASSIGN __main__for__82__i __rhs
+      ASSIGN __main__for__101__i __rhs
       PUSH __rhs
-JUMP __forcond__82
-__for__82:
+JUMP __forcond__101
+__for__101:
    // Update
       // Pre-Increment
          // RHS
             // Identifier - i
-               PUSH __main__for__82__i
+               PUSH __main__for__101__i
          POP __rhs
-         ADD __main__for__82__i __main__for__82__i 1
-         ASSIGN __res __main__for__82__i
+         ADD __main__for__101__i __main__for__101__i 1
+         ASSIGN __res __main__for__101__i
          PUSH __res
-   __forcond__82:
+   __forcond__101:
    // Condition
       // Less Than
          // LHS
             // Identifier - i
-               PUSH __main__for__82__i
+               PUSH __main__for__101__i
          // RHS
             // Member Accessor
                // LHS
@@ -4743,7 +5356,7 @@ __for__82:
          PUSH __res
       POP __cond
       CMP __cond 0
-      JEQ __endfor__82
+      JEQ __endfor__101
    // Body
       //------------------------------------------------------------------
       // Code Block
@@ -4765,7 +5378,7 @@ __for__82:
                               PUSH __parent[__child]
                         // OFFSET
                            // Identifier - i
-                              PUSH __main__for__82__i
+                              PUSH __main__for__101__i
                         POP __offset
                         POP __pointer
                         PUSH __pointer[__offset]
@@ -4776,7 +5389,7 @@ __for__82:
                   PUSH __parent[__child]
                POP __cond
                CMP __cond 0
-               JEQ __endif__84
+               JEQ __endif__103
             // Body
                //---------------------------------------------------------
                // Code Block
@@ -4800,7 +5413,7 @@ __for__82:
                                              PUSH __parent[__child]
                                        // OFFSET
                                           // Identifier - i
-                                             PUSH __main__for__82__i
+                                             PUSH __main__for__101__i
                                        POP __offset
                                        POP __pointer
                                        PUSH __pointer[__offset]
@@ -4818,7 +5431,7 @@ __for__82:
                            PUSH __res
                         POP __cond
                         CMP __cond 0
-                        JEQ __endif__86
+                        JEQ __endif__105
                      // Body
                         //------------------------------------------------
                         // Code Block
@@ -4842,7 +5455,7 @@ __for__82:
                                                       PUSH __parent[__child]
                                                 // OFFSET
                                                    // Identifier - i
-                                                      PUSH __main__for__82__i
+                                                      PUSH __main__for__101__i
                                                 POP __offset
                                                 POP __pointer
                                                 PUSH __pointer[__offset]
@@ -4860,7 +5473,7 @@ __for__82:
                                     PUSH __res
                                  POP __cond
                                  CMP __cond 0
-                                 JEQ __endif__88
+                                 JEQ __endif__107
                               // Body
                                  //---------------------------------------
                                  // Code Block
@@ -4881,7 +5494,7 @@ __for__82:
                                                          PUSH __parent[__child]
                                                    // OFFSET
                                                       // Identifier - i
-                                                         PUSH __main__for__82__i
+                                                         PUSH __main__for__101__i
                                                    POP __offset
                                                    POP __pointer
                                                    PUSH __pointer[__offset]
@@ -4896,25 +5509,25 @@ __for__82:
                                     // Statement results can be ignored
                                     POP __void
                                  //---------------------------------------
-                              JUMP __endif__88
+                              JUMP __endif__107
                               // End of if
-                              __endif__88:
+                              __endif__107:
                            //---------------------------------------------
                         //------------------------------------------------
-                     JUMP __endif__86
+                     JUMP __endif__105
                      // End of if
-                     __endif__86:
+                     __endif__105:
                   //------------------------------------------------------
                //---------------------------------------------------------
-            JUMP __endif__84
+            JUMP __endif__103
             // End of if
-            __endif__84:
+            __endif__103:
          //---------------------------------------------------------------
       //------------------------------------------------------------------
    // Repeat
-   JUMP __for__82
+   JUMP __for__101
    // End of For
-   __endfor__82:
+   __endfor__101:
 //------------------------------------------------------------------------
 // Function Call - println(int) -> void
    // Arguments
