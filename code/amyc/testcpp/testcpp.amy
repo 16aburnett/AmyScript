@@ -7,55 +7,56 @@ println (x);
 println (y);
 println (c);
 
+//{
+//    int a = 21;
+//    int b = 39;
+//    int c = a + b;
+//
+//    println (c);
+//}
+//{
+//    float a = 0.25;
+//    float b = 3.53;
+//    float c = a + b;
+//
+//    println (c);
+//}
+//{
+//    float a = 0.25;
+//    float b = 100.0;
+//    float c = a * b;
+//
+//    println (c);
+//    println (a / b);
+//    println (21 % 2);
+//    println (34 % 7);
+//}
+//
+//{
+//    int x = 0;
+//    println (++x);
+//    println (x);
+//    println (++x);
+//    println (--x);
+//    println (x);
+//    println (-x);
+//    println (!x);
+//    println (~x);
+//    int y = 0;
+//    println (y = ++x);
+//    println (y);
+//}
+//
+//{
+//    int x = 7;
+//    println (x++);
+//    println (x);
+//    println (x--);
+//    println (x);
+//}
+//
 {
-    int a = 21;
-    int b = 39;
-    int c = a + b;
-
-    println (c);
-}
-{
-    float a = 0.25;
-    float b = 3.53;
-    float c = a + b;
-
-    println (c);
-}
-{
-    float a = 0.25;
-    float b = 100.0;
-    float c = a * b;
-
-    println (c);
-    println (a / b);
-    println (21 % 2);
-    println (34 % 7);
-}
-
-{
-    int x = 0;
-    println (++x);
-    println (x);
-    println (++x);
-    println (--x);
-    println (x);
-    println (-x);
-    println (!x);
-    println (~x);
-    int y = 0;
-    println (y = ++x);
-    println (y);
-}
-
-{
-    int x = 7;
-    println (x++);
-    println (x);
-    println (x--);
-    println (x);
-}
-
-{
+    println ("=== function");
     function int sum (int a, int b)
     {
         return a + b;
@@ -67,6 +68,23 @@ println (c);
     }
     println (sum (0.25, 0.05));
 
+    function int sum (int a, int b, int c)
+    {
+        function int sum (int a, int b)
+        {
+            return a + b;
+        }
+        return sum(sum(a,b),c);
+    }
+    println (sum(34,26,40));
+
+    function void print (int x, char c, float f)
+    {
+        println (x);
+        println (c);
+        println (f);
+    }
+    print (24, 'A', 0.25);
 }
 {
     char[] str = "Hello, world!";
@@ -192,4 +210,100 @@ println (c);
         }
         println ();
     }
+}
+{
+    println ("=== function template");
+    template <:T:>
+    function T add (T a, T b)
+    {
+        return a + b;
+    }
+    println (add<:int:> (6, 3));
+    println (add<:float:> (0.12, 12.22));
+    template <:type:>
+    function type default_value ()
+    {
+        return type();
+    }
+    println (default_value<:int:>() == 0);
+    println (default_value<:float:>() == 0.0);
+    println (default_value<:char:>() == '\0');
+}
+{
+    println ("=== classes");
+    class A
+    {
+        public field int x;
+        constructor ()
+        {
+            this.x = 10;
+        }
+        public virtual void print ()
+        {
+            print ("   is A with values "); println (this.x);
+        }
+        public virtual int add (int v)
+        {
+            this.x += v;
+            return this.x;
+        }
+    }
+    class B inherits A
+    {
+        public field int y;
+        constructor ()
+        {
+            this.x = 42;
+            this.y = 14;
+        }
+        public virtual void print ()
+        {
+            print ("   is B with values "); print (this.x); print (','); print (' '); println (this.y);
+        }
+    }
+    class C inherits A
+    {
+        public field float z;
+        constructor ()
+        {
+            this.x = 24;
+            this.z = 3.14;
+        }
+    }
+    function void print (A a)
+    {
+        print ("is a A with value "); println (a.x);
+        a.print ();
+    }
+
+    A a = new A ();
+    B b = new B ();
+    C c = new C ();
+
+    print (a);
+    print (b);
+    print (c);
+
+    println (a.add (5));
+    println (b.add (5));
+    println (c.add (5));
+
+    print (a);
+    print (b);
+    print (c);
+    
+}
+{
+    println ("=== conversions");
+    int x = 10;
+    println (x);
+    float y = intToFloat (x) + 0.25;
+    println (y);
+    println (floatToInt (y));
+    char[] str = "3.1415e2";
+    println (stringToFloat (str) * 2.0);
+    char[] str2 = "12";
+    println (stringToInt (str2) * 2);
+    char c = '7';
+    println (charToInt (c));
 }

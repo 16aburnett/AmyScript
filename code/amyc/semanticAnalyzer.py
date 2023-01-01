@@ -219,6 +219,7 @@ class SymbolTableVisitor (ASTVisitor):
             for field in pDecl.fields: 
                 fields += [FieldDeclarationNode (field.security, field.type, field.id, field.token)]
                 fields[-1].isInherited = True
+                fields[-1].originalInheritedField = field
             # add current fields
             for field in node.fields:
                 fields += [field]

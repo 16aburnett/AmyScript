@@ -318,7 +318,8 @@ class FieldDeclarationNode (DeclarationNode):
         self.signature = ""
         self.signatureNoScope = ""
 
-        self.isInherited = False 
+        self.isInherited = False
+        self.originalInheritedField = None
 
         # x86 fields
         self.stackOffset = 0

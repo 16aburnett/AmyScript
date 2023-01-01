@@ -15,6 +15,7 @@ make && echo "Assembling..." && nasm -f elf64 helloworld.asm && echo "Linking...
 
 python3 ../amyScriptCompiler.py helloworld.amy -o helloworld.amy.assembly && python3 ../../amyasmi/amyAssemblyInterpreter.py helloworld.amy.assembly
 
+python3 ../amyScriptCompiler.py testcpp.amy --target cpp -o testcpp.cpp && g++ testcpp.cpp -o testcpp && ./testcpp
 
 
 

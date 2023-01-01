@@ -30,7 +30,20 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.parameters = []
         self.lines = lines 
         self.indentation = 0
-        self.code = []
+        self.indentation_stack = []
+        # we have multiple code stacks so that we can build
+        # function definitions and later push
+        # them to the global stack for cpp
+        # AmyScript allows functions within functions
+        # but CPP does not so this allows us to
+        # place function definitions in the correct order
+        # i.e. nested functions need to be defined before parent functions
+        self.global_code_stack = []
+        # by default we add the global code stack
+        # so that we can push to the global stack before main function
+        self.code_stacks = [self.global_code_stack]
+        # for compatability code references our global code
+        self.code = self.global_code_stack
         self.lhs = "null"
         self.jumpIndex = 0
         self.shouldComment = True
@@ -43,25 +56,37 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
     # === HELPER FUNCTIONS ===============================================
 
+    def createCodeStack (self):
+        self.code_stacks.append ([])
+        # new code stacks have their own indentation
+        # this is so separate functions arent weirdly indented
+        self.indentation_stack.append (self.indentation)
+        self.indentation = 0
+    
+    def popAndAddCodeStack (self):
+        self.global_code_stack += self.code_stacks.pop ()
+        # restore indentation
+        self.indentation = self.indentation_stack.pop ()
+
     def printIndent (self):
         self.printSpaces (self.indentation)
 
     def printSpaces (self, level):
         while level > 0:
             for i in range(TAB_LENGTH):
-                self.code += [" "]
+                self.code_stacks[-1] += [" "]
             level -= 1
 
-    def printCode (self, line):
-        self.printSpaces (self.indentation)
-        self.code += [f"{line}\n"]
+    def printCode (self, line, end="\n", shouldIndent=True):
+        if shouldIndent: self.printSpaces (self.indentation)
+        self.code_stacks[-1] += [f"{line}{end}"]
 
     def printComment (self, comment):
         if not self.shouldComment:
             return 
             
         self.printSpaces (self.indentation)
-        self.code += ["// ", comment, "\n"]
+        self.code_stacks[-1] += ["// ", comment, "\n"]
 
     def printHeader (self, header):
         if not self.shouldComment:
@@ -73,7 +98,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
         divider += [header, " "]
         for i in range(dividerLength):
             divider += ["#"]
-        self.code += ["".join(divider)]
+        self.code_stacks[-1] += ["".join(divider)]
         self.printNewline ()
 
     def printDivider (self):
@@ -85,7 +110,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
         divider = ["//="]
         for i in range(dividerLength):
             divider += ["="]
-        self.code += ["".join(divider)]
+        self.code_stacks[-1] += ["".join(divider)]
         self.printNewline ()
 
     def printSubDivider (self):
@@ -97,11 +122,11 @@ class CodeGenVisitor_cpp (ASTVisitor):
         divider = ["//-"]
         for i in range(dividerLength):
             divider += ["-"]
-        self.code += ["".join(divider)]
+        self.code_stacks[-1] += ["".join(divider)]
         self.printNewline ()
 
     def printNewline (self):
-        self.code += ["\n"]
+        self.code_stacks[-1] += ["\n"]
 
     def enterScope (self, name):
         self.scopeNames += [f"__{name}"]
@@ -117,14 +142,15 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         self.printComment ("Declare general purpose variables")
         self.printComment ("These are longs and can store anything up to 8 bytes via casting")
-        self.printCode ("long __lhs = 0;")
-        self.printCode ("long __rhs = 0;")
-        self.printCode ("long __res = 0;")
         self.printCode ("long __stackval = 0;")
         self.printCode ("long __pointer = 0;")
         self.printCode ("long __offset = 0;")
         self.printCode ("long __parent = 0;")
         self.printCode ("long __child = 0;")
+        self.printCode ("long __obj = 0;")
+        self.printCode ("long __lhs = 0;")
+        self.printCode ("long __rhs = 0;")
+        self.printCode ("long __res = 0;")
 
     # returns the equivalent cpp type for the AmyScript type
     def amyTypeToCPPType (self, type:TypeSpecifierNode):
@@ -141,7 +167,10 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # objects - > <user-type-name>*
         #   ex: Point* p;
         elif type.type == Type.USERTYPE:
-            type_str = type.decl.scopeName
+            type_str = f"{type.decl.scopeName}*"
+        # void
+        elif type.type == Type.VOID:
+            type_str = f"void"
         else:
             type_str = "<unknown-type>*"
         
@@ -218,10 +247,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # add library code
         file = open (LIB_FILENAME, "r")
         for line in file.readlines ():
-            self.code += [line]
+            self.code_stacks[-1] += [line]
+
+        # Build main code stack
+        self.createCodeStack ()
 
         self.printDivider ()
-        self.printHeader ("All code must be in main")
+        self.printHeader ("Main function")
         self.printDivider ()
         self.printNewline ()
 
@@ -257,6 +289,9 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printHeader ("END OF MAIN")
         self.printDivider ()
         self.printNewline ()
+
+        # push main function to the global stack
+        self.popAndAddCodeStack ()
 
     def visitTypeSpecifierNode (self, node):
         pass
@@ -321,12 +356,20 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         # AD HOC CENTRAL!!
         # fill in prereferences with scopename 
-        for i in range(len(self.code)):
-            if f"${node.signature}" in self.code[i]:
-                self.code[i] = self.code[i].replace(f"${node.signature}", node.scopeName)
+        for i in range(len(self.code_stacks[-1])):
+            if f"${node.signature}" in self.code_stacks[-1][i]:
+                self.code_stacks[-1][i] = self.code_stacks[-1][i].replace(f"${node.signature}", node.scopeName)
 
         # create new scope level 
         self.scopeNames += [f"__{node.id}"]
+
+        self.printComment (f"Function Declaration - {node.signature} -> {node.type}")
+        self.printComment ("*see this func def before this parent function")
+        self.printNewline ()
+
+        # create a new code stack to build this function's definition
+        # we will add this before the main function
+        self.createCodeStack ()
 
         self.printDivider ()
         self.printComment (f"Function Declaration - {node.signature} -> {node.type}")
@@ -335,24 +378,8 @@ class CodeGenVisitor_cpp (ASTVisitor):
         params = []
         for i in range(len(node.params)):
             node.params[i].accept (self)
-
-            # get param typename
-            type_str = "long"
-            # INT
-            if node.type.type == Type.INT and node.type.arrayDimensions == 0:
-                type_str = "long"
-            # FLOAT
-            elif node.type.type == Type.FLOAT and node.type.arrayDimensions == 0:
-                type_str = "double"
-            # CHAR
-            elif node.type.type == Type.CHAR and node.type.arrayDimensions == 0:
-                type_str = "char"
-            # array or object
-            else:
-                type_str = "void*"
-            
-            params.append (f"{type_str} {node.params[i].scopeName}")
-        self.printCode (f"auto {node.scopeName} = [&stack] ({', '.join(params)})")
+            params.append (f"{self.amyTypeToCPPType(node.params[i].type)} {node.params[i].scopeName}")
+        self.printCode (f"{self.amyTypeToCPPType(node.type)} {node.scopeName} ({', '.join(params)})")
 
         self.printCode ("{")
         self.indentation += 1
@@ -371,6 +398,8 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         # remove scope level 
         self.scopeNames.pop ()
+
+        self.popAndAddCodeStack ()
 
     def visitClassDeclarationNode(self, node):
 
@@ -394,6 +423,23 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.scopeNames += [f"__{node.scopeName}"]
 
         node.scopeName = "".join(self.scopeNames)
+
+        if node.pDecl != None:
+            self.printComment (f"Class Declaration - {node.scopeName} inherits {node.pDecl.scopeName}")
+        else: 
+            self.printComment (f"Class Declaration - {node.scopeName}")
+        self.printComment ("*see this class def before this parent function")
+        self.printNewline ()
+
+        # first add a forward decl for any insider functions
+        self.createCodeStack ()
+        self.printComment ("Add forward decl for any inner functions and methods")
+        self.printCode (f"class {node.scopeName};")
+        self.popAndAddCodeStack ()
+
+        # create a new code stack to build this class's definition
+        # we will add this before the main function
+        self.createCodeStack ()
 
         self.printDivider ()
         if node.pDecl != None:
@@ -437,13 +483,24 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # create dispatch table 
         self.printComment ("Creating Dispatch Table (will be populated later)")
         node.dtableScopeName = "__dtable__" + "".join (self.scopeNames)
-        self.printCode (f"{node.dtableScopeName} = []")
+        self.printCode (f"void* {node.dtableScopeName}[{len(node.functionPointerList)}];")
+
+        # class header
+        self.printCode (f"class {node.scopeName} : public {node.pDecl.scopeName}")
+        self.printCode ("{")
+        self.indentation += 1
+        self.printCode ("public:")
 
         # create scope names for fields 
         for field in node.fields:
             # variable names are modified by its scope 
             fieldScopeName = "__field__" + "".join (self.scopeNames) + "____" + field.id
             field.scopeName = fieldScopeName
+            # if this field was inherited by a parent class
+            # then we need to use the original scopeName
+            # *this may fail if the original scope name wasn't made yet
+            if field.isInherited:
+                field.scopeName = field.originalInheritedField.scopeName
 
         # dispatch table pointer is at i = 0 
         i = 1
@@ -457,16 +514,22 @@ class CodeGenVisitor_cpp (ASTVisitor):
             ctor.parentClass = node
             ctor.accept (self)
 
+        self.indentation -= 1
+        self.printCode ("};")
+        self.popAndAddCodeStack ()
+
+        # we need to add the methods outside of the class
         for method in node.methods:
             method.parentClass = node
             method.accept (self)
-        
+
+        # this is printed in where the class was originally defined (probably main)
         self.printComment ("Populate Dispatch Table")
         # populate dispatch table
-        funcpointers = []
         for i in range(len(node.functionPointerList)):
-            funcpointers.append (node.functionPointerList[i].scopeName)
-        self.printCode (f"{node.dtableScopeName} = [{', '.join(funcpointers)}]")
+            self.printCode (f"{node.dtableScopeName}[{i}] = (void*){node.functionPointerList[i].scopeName};")
+
+        self.createCodeStack ()
 
         self.printComment (f"End Class Declaration - {node.scopeName}")
         self.printDivider ()
@@ -475,18 +538,23 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # remove scope level 
         self.scopeNames.pop ()
 
+        self.popAndAddCodeStack ()
+
     def visitFieldDeclarationNode (self, node):
         self.printSubDivider ()
         self.printComment (f"Field - {node.type} {node.signature}")
         if node.isInherited:
             self.printComment (f"Inherited from {node.parentClass.pDecl.id}")
-
-        # fieldIndexVarname = f"__field__{node.id}__{field.id}"
-        self.printCode (f"{node.scopeName} = {node.index}")
+            self.printComment (f"{node.originalInheritedField.scopeName}")
+        else:
+            # fieldIndexVarname = f"__field__{node.id}__{field.id}"
+            self.printComment (f"{node.scopeName} = {node.index}")
+            self.printCode (f"{self.amyTypeToCPPType(node.type)} {node.scopeName};")
 
         self.printSubDivider ()
 
     def visitMethodDeclarationNode (self, node):
+        self.createCodeStack ()
 
         # create new scope level 
         self.scopeNames += [f"__{node.id}"]
@@ -501,34 +569,44 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         # ensure we start with the object instance param
         # parameters
+        params_with_types = ['']
         params = ['']
         for i in range(len(node.params)):
             node.params[i].accept (self)
             params.append (node.params[i].scopeName)
-        self.printCode (f"def {methodLabel} (this{', '.join(params)}):")
-
+            params_with_types.append (f"{self.amyTypeToCPPType(node.params[i].type)} {node.params[i].scopeName}")
+        self.printCode (f"{self.amyTypeToCPPType(node.type)} {methodLabel} ({self.amyTypeToCPPType(node.parentClass.type)} __this{', '.join(params_with_types)})")
+        self.printCode ("{")
         self.indentation += 1
+        self.printFunctionHeader ()
 
         # inherited methods
         if node.isInherited:
             self.printComment (f"Jump to {node.inheritedMethod.parentClass.id}'s version")
-            self.printCode (f"__retval = {node.inheritedMethod.scopeName} (this{', '.join(params)})")
-            self.printCode (f"return __retval")
+            # function returns void
+            if node.type.type == Type.VOID and node.type.arrayDimensions == 0:
+                self.printCode (f"{node.inheritedMethod.scopeName} (__this{', '.join(params)});")
+            # function returns a value
+            else:
+                self.printCode (f"{self.amyTypeToCPPType(node.type)} __inheritedres = {node.inheritedMethod.scopeName} (__this{', '.join(params)});")
+                self.printCode (f"return __inheritedres;")
         else:
             self.printComment ("Body")
             node.body.accept (self)
 
             # extra return statement for if return is not provided 
-            self.printCode ("return 0")
+            # self.printCode ("return 0")
 
         self.indentation -= 1
-
+        self.printCode ("}")
         self.printComment (f"End Method Declaration - {methodLabel}")
         self.printSubDivider ()
         self.printNewline ()
 
         # remove scope level 
         self.scopeNames.pop ()
+
+        self.popAndAddCodeStack ()
 
     def visitConstructorDeclarationNode (self, node):
 
@@ -543,27 +621,26 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         # AD HOC CENTRAL!!
         # fill in prereferences with scopename 
-        for i in range(len(self.code)):
-            if f"${node.signature}" in self.code[i]:
-                self.code[i] = self.code[i].replace(f"${node.signature}", node.scopeName)
+        for i in range(len(self.code_stacks[-1])):
+            if f"${node.signature}" in self.code_stacks[-1][i]:
+                self.code_stacks[-1][i] = self.code_stacks[-1][i].replace(f"${node.signature}", node.scopeName)
 
         # parameters
         params = []
         for i in range(len(node.params)):
             node.params[i].accept (self)
-            params.append (node.params[i].scopeName)
-        self.printCode (f"def {ctorLabel} ({', '.join(params)}):")
+            params.append (f"{self.amyTypeToCPPType(node.params[i].type)} {node.params[i].scopeName}")
 
+        # ctor header
+        self.printCode (f"{node.parentClass.scopeName} ({', '.join(params)})")
+        self.printCode ("{")
         self.indentation += 1
+        self.printFunctionHeader ()
 
         # create class instance 
-        self.printComment ("Creating Class Instance")
-        # +1 because all classes start with a dispatch table 
-        self.printCode (f"this = [0] * {len(node.parentClass.fields)+1}")
-
-        # add dispatch table to instance
-        self.printComment ("Add Dispatch Table")
-        self.printCode (f"this[0] = {node.parentClass.dtableScopeName}")
+        self.printComment ("Add dispatch table to instance")
+        self.printCode (f"dtable = {node.parentClass.dtableScopeName};")
+        self.printCode (f"{node.parentClass.scopeName}* __this = this;")
 
         # ** maybe initialize entries? or that might be inefficient
         
@@ -572,11 +649,11 @@ class CodeGenVisitor_cpp (ASTVisitor):
         node.body.accept (self)
 
         # return constructed class instance
-        self.printComment ("Return the constructed instance")
-        self.printCode ("return this")
+        # self.printComment ("Return the constructed instance")
+        # self.printCode ("return this")
 
         self.indentation -= 1
-
+        self.printCode ("}")
         self.printComment (f"End Constructor Declaration - {node.scopeName}")
         self.printSubDivider ()
         self.printNewline ()
@@ -1002,17 +1079,17 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 self.printComment ("RHS")
                 # # construct field index var 
                 # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-                self.printCode (f"stack.push_back({node.lhs.decl.scopeName})")
+                # self.printCode (f"stack.push_back({node.lhs.decl.scopeName})")
 
-                self.printCode (f"__child = stack.back ();")
-                self.printCode ("stack.pop_back ();")
+                # self.printCode (f"__child = stack.back ();")
+                # self.printCode ("stack.pop_back ();")
                 self.printCode (f"__parent = stack.back ();")
                 self.printCode ("stack.pop_back ();")
 
                 self.printCode (f"__rhs = stack.back ();")
                 self.printCode (f"stack.pop_back ();")
                 
-                lhsStr = f"__parent[__child]"
+                lhsStr = f"({self.stackToVar(node.lhs.lhs.type, '__parent')})->{node.lhs.decl.scopeName}"
                 
             # =
             if node.op.type == "ASSIGN":
@@ -1685,12 +1762,11 @@ class CodeGenVisitor_cpp (ASTVisitor):
         for arg in node.args:
             arg.accept (self)
 
-        argIndex = len(node.args)-1
         args = []
-        for arg in node.args:
+        for i in range (len(node.args)-1, -1, -1):
+            arg = node.args[i]
             # save argument 
-            argName = f"__arg{argIndex}"
-            argIndex -= 1
+            argName = f"__arg{i}"
 
             self.printCode (f"")
             self.printCode (f"__stackval = stack.back ();")
@@ -1760,25 +1836,26 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.indentation -= 1
             return 
 
-        self.printComment ("Member Accessor")
+        self.printComment (f"Member Accessor obj.{node.rhs.id}")
 
         self.printComment ("LHS")
         node.lhs.accept (self)
 
         self.printComment ("RHS")
         if node.decl.scopeName == "":
-            x = sum([1 if '\n' in s else 0 for s in self.code])
+            # x = sum([1 if '\n' in s else 0 for s in self.code])
             print (f"[code-gen] [member-accessor] Error: no scope name for '{node.decl.id}' on line {node.lineNumber}")
             print (f"   this could have happened due to a cyclic reference/composition with template classes")
             print (f"   cyclic references are not yet supported")
             exit (1)
-        self.printCode (f"stack.push_back ({node.decl.scopeName})")
+        # self.printCode (f"stack.push_back ({node.decl.scopeName})")
 
-        self.printCode ("__child = stack.back ();")
-        self.printCode ("stack.pop_back ();")
+        # self.printCode ("__child = stack.back ();")
+        # self.printCode ("stack.pop_back ();")
         self.printCode ("__parent = stack.back ();")
         self.printCode ("stack.pop_back ();")
-        self.printCode ("stack.push_back (__parent[__child])")
+        # lhsStr = f"({self.stackToVar(node.lhs.lhs.type, '__parent')})->{node.lhs.decl.scopeName}"
+        self.printCode (f"stack.push_back (({self.stackToVar(node.lhs.type, '__parent')})->{node.decl.scopeName});")
 
     def visitFieldAccessorExpressionNode (self, node):
         pass
@@ -1796,6 +1873,10 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # construct field index var 
         # methodName = f"__method__{node.lhs.type.id}__{node.rhs.id}"
 
+        # add scope so we can declare arg variables
+        self.printCode ("{")
+        self.indentation += 1
+
         self.printComment ("Arguments")
         # calc arguments first
         # an argument could be another function call
@@ -1804,22 +1885,27 @@ class CodeGenVisitor_cpp (ASTVisitor):
         for arg in node.args:
             arg.accept (self)
 
-        argIndex = len(node.args)-1
         args = ['']
-        for arg in node.args:
+        arg_types = ['']
+        for i in range (len(node.args)-1, -1, -1):
+            arg = node.args[i]
             # save argument 
-            argName = f"__arg{argIndex}"
-            argIndex -= 1
-            self.printCode (f"{argName} = stack.back ();")
+            argName = f"__arg{i}"
+
+            self.printCode (f"{self.amyTypeToCPPType(arg.type)} {argName} = stack.back ();")
             self.printCode ("stack.pop_back ();")
-            args.insert (1, argName)
+            args.append (argName)
+            arg_types.append (self.amyTypeToCPPType(arg.type))
         
         # parent object should be on the stack
         # *happens after args incase args uses __obj
         # in another method call
         self.printCode ("__obj = stack.back ();")
         self.printCode ("stack.pop_back ();")
+        obj = self.stackToVar(node.decl.parentClass.type, '__obj')
 
+        # determine function_name
+        function_name = ""
         # if virtual function
         if node.decl.isVirtual:
             # call the appropriate function 
@@ -1834,19 +1920,29 @@ class CodeGenVisitor_cpp (ASTVisitor):
                     break 
             else:
                 print (f"Error: Dispatch Function not found")
-            # call proper dispatch function 
-            self.printCode (f"__dtable = __obj[0]")
-            self.printCode (f"__retval = __dtable[{i}] (__obj{', '.join(args)})")
+            # get proper dispatch function 
+            # Ex: ((void(*)(A*))(a->dtable[0]))
+            func_type = f"{node.decl.type}(*)({self.amyTypeToCPPType(node.decl.parentClass.type)}{', '.join(arg_types)})"
+            function_name = f"(({func_type})({obj}->dtable[{i}]))"
 
-        # otherwise, call function normally
+        # otherwise, normal function call
         else:
-            self.printCode (f"__retval = {node.decl.scopeName} (__obj{', '.join(args)});")
-                
-        # put function's return val on the stack
-        self.printCode ("stack.push_back (__retval);")
+            function_name = node.decl.scopeName 
+
+        # call function
+        # function returns void
+        if node.decl.type.type == Type.VOID and node.decl.type.arrayDimensions == 0:
+            self.printCode (f"{function_name} ({obj}{', '.join(args)});")
+        # function returns a value
+        else:
+            self.printCode (f"{self.amyTypeToCPPType(node.type)} __res = {function_name} ({obj}{', '.join(args)});")
+            self.printCode (f"stack.push_back ({self.varToStack(node.type, '__res')});")
+
+        self.indentation -= 1
+        self.printCode ("}")
 
     def visitThisExpressionNode (self, node):
-        self.printCode (f"stack.push_back (this);")
+        self.printCode (f"stack.push_back ({self.varToStack(node.type, '__this')});")
 
     def visitIdentifierExpressionNode (self, node):
         # INT
@@ -1900,10 +1996,10 @@ class CodeGenVisitor_cpp (ASTVisitor):
             args.insert (0, argName)
 
         # call function
-        self.printCode (f"__retval = {node.decl.scopeName} ({', '.join(args)})")
+        ctor_expr = self.varToStack(node.type, f"new {node.decl.parentClass.scopeName} ({', '.join(args)})")
         
         # put function's return val on the stack
-        self.printCode ("stack.push_back (__retval)")
+        self.printCode (f"stack.push_back ({ctor_expr});")
     
     def visitSizeofExpressionNode(self, node):
         node.rhs.accept (self)
