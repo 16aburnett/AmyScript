@@ -14,7 +14,8 @@ class TestTarget (Enum):
     AMYASM = 0
     X86 = 1
     PYTHON = 2
-    ALL = 3 # tests all targets
+    CPP = 3
+    ALL = 4 # tests all targets
 
 # expectedOutputX86 - this is the expected output to match with the stdout 
 #   from running with target X86.
@@ -39,6 +40,7 @@ class Test:
         expectedOutputAMYASM:str=None, 
         expectedOutputX86:str=None, 
         expectedOutputPython:str=None,
+        expectedOutputCPP:str=None,
         expectedCompilerOutput:str=None,
         shouldCompile:bool=True
     ):
@@ -46,8 +48,9 @@ class Test:
         self.code = code
         self.expectedOutput = expectedOutput
         self.expectedOutputAMYASM = expectedOutputAMYASM if expectedOutputAMYASM != None else expectedOutput
-        self.expectedOutputX86 = expectedOutputX86 if expectedOutputX86 != None else expectedOutput
+        self.expectedOutputX86    = expectedOutputX86    if expectedOutputX86    != None else expectedOutput
         self.expectedOutputPython = expectedOutputPython if expectedOutputPython != None else expectedOutput
+        self.expectedOutputCPP    = expectedOutputCPP    if expectedOutputCPP    != None else expectedOutput
         self.expectedCompilerOutput = expectedCompilerOutput
         self.shouldCompile = shouldCompile
 
@@ -59,10 +62,11 @@ class MultiFileTest (Test):
         expectedOutputAMYASM: str = None, 
         expectedOutputX86: str = None, 
         expectedOutputPython: str = None, 
+        expectedOutputCPP:str=None,
         expectedCompilerOutput: str = None, 
         shouldCompile: bool = True
     ):
-        super().__init__(name, code, expectedOutput, expectedOutputAMYASM, expectedOutputX86, expectedOutputPython, expectedCompilerOutput, shouldCompile)
+        super().__init__(name, code, expectedOutput, expectedOutputAMYASM, expectedOutputX86, expectedOutputPython, expectedOutputCPP, expectedCompilerOutput, shouldCompile)
 
 class TestGroup:
     def __init__(self, name:str, sharedCode:str="", tests:list=[]):
@@ -417,6 +421,120 @@ def runTest_helper (test, code:str, testTarget:TestTarget, level:int, groupChain
                     numSuccessfulTests += 1
             numTests += 1
 
+        if testTarget == TestTarget.CPP or testTarget == TestTarget.ALL:
+            # compile the code
+            os.system (f'cat > test_data/test.amy <<EOF \n{fullCode}\nEOF')
+            compilerOutput = subprocess.run ([f'python3', '../amyc/amyScriptCompiler.py', 'test_data/test.amy', '--target', 'cpp', '-o', 'test_data/test.cpp'], capture_output=True, text=True)
+
+            isCompiled = (compilerOutput.returncode == 0)
+
+            # 1. Failed to Compile when expecting fail
+            if not isCompiled and not test.shouldCompile:
+                # ensure expectedCompilerOutput exists
+                if test.expectedCompilerOutput not in compilerOutput.stdout:
+                    print (f"=== FAILED =====================")
+                    print (f"Test Group: {groupChain}")
+                    print (f"Test: {test.name}")
+                    print (f"Target: {TestTarget.CPP}")
+                    print ("Code:")
+                    print (fullCode)
+                    print (f"Compiled? {isCompiled}")
+                    print ("Expected Compiler Output:")
+                    print (test.expectedCompilerOutput)
+                    print ("Actual Compiler Output:")
+                    print (compilerOutput.stdout)
+                    print (compilerOutput.stderr)
+                    print (f"================================")
+                else:
+                    numSuccessfulTests += 1
+            
+            # 2. Failed to Compile when expecting success
+            elif not isCompiled and test.shouldCompile:
+                print (f"=== FAILED =====================")
+                print (f"Test Group: {groupChain}")
+                print (f"Test: {test.name}")
+                print (f"Target: {TestTarget.CPP}")
+                print ("Code:")
+                print (fullCode)
+                print (f"Compiled? {isCompiled}")
+                print ("Compiler Output:")
+                print (compilerOutput.stdout)
+                print (f"--- STDERR ---------------------")
+                print (compilerOutput.stderr)
+                print (f"--------------------------------")
+                print (f"================================")
+            
+            # 3. Compiles when expecting fail
+            elif isCompiled and not test.shouldCompile:
+                print (f"=== FAILED =====================")
+                print (f"Reason: Should have failed to compile")
+                print (f"Test Group: {groupChain}")
+                print (f"Test: {test.name}")
+                print (f"Target: {TestTarget.CPP}")
+                print ("Code:")
+                print (fullCode)
+                print (f"Compiled? {isCompiled}")
+                print ("Expected Compiler Output:")
+                print (test.expectedCompilerOutput)
+                print ("Compiler Output:")
+                print (compilerOutput.stdout)
+                print (f"================================")
+
+            # 4. Compiles when expecting success
+            else:
+                # build code with gcc
+                gcc_result = subprocess.run (['g++','test_data/test.cpp','-o', 'testcpp'], capture_output=True, text=True)
+                # ensure code builds with g++
+                if gcc_result.returncode != 0:
+                    print (f"=== FAILED =====================")
+                    print (f"Test Group: {groupChain}")
+                    print (f"Test: {test.name}")
+                    print (f"Target: {TestTarget.CPP}")
+                    print ("Code:")
+                    print (fullCode)
+                    print (f"Compiled? {isCompiled}")
+                    print ("Reason: g++ failed to compile code")
+                    print ("Returncode:", gcc_result.returncode)
+                    print (f"--- STDERR ---------------------")
+                    print (gcc_result.stderr)
+                    print (f"--------------------------------")
+                    print (f"================================")
+                    
+                # run the code
+                result = subprocess.run (["./testcpp"], capture_output=True, text=True)
+                # ensure it was successful
+                wasTestSuccessful = result.stdout == test.expectedOutputCPP
+                if not wasTestSuccessful:
+                    print (f"=== FAILED =====================")
+                    print (f"Test Group: {groupChain}")
+                    print (f"Test: {test.name}")
+                    print (f"Target: {TestTarget.CPP}")
+                    print ("Code:")
+                    print (fullCode)
+                    print (f"Compiled? {isCompiled}")
+                    print ("Expected Output:")
+                    print (test.expectedOutputCPP)
+                    print ("Actual Output:")
+                    print (result.stdout)
+                    print (f"================================")
+                elif result.returncode != 0:
+                    print (f"=== FAILED =====================")
+                    print (f"Test Group: {groupChain}")
+                    print (f"Test: {test.name}")
+                    print (f"Target: {TestTarget.CPP}")
+                    print ("Code:")
+                    print (fullCode)
+                    print (f"Compiled? {isCompiled}")
+                    print ("Failed due to non-zero return code")
+                    print ("Returncode:", result.returncode)
+                    print (f"--- STDERR ---------------------")
+                    print (result.stderr)
+                    print (f"--------------------------------")
+                    print (f"================================")
+                else:
+                    numSuccessfulTests += 1
+            numTests += 1
+
         for i in range(level):
             print ('| ', end='')
         print ('> ', end='')
@@ -661,6 +779,6 @@ function void println (Vector<:T:> v)
 
 
 
-runTest (allTests, TestTarget.ALL, shouldBreakOnFail=False)
+runTest (allTests, TestTarget.CPP, shouldBreakOnFail=True)
 
 # runTest (, TestTarget.ALL, shouldBreakOnFail=False)

@@ -983,7 +983,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             self.printCode (f"return {res_str};")
         # no value provided 
         else:
-            self.printCode ("return")
+            self.printCode ("return;")
 
     def visitContinueStatementNode (self, node):
         self.printComment (f"Continue in {self.parentLoops[-1].startLabel}")
@@ -1492,17 +1492,15 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 node.rhs.lhs.accept (self)
 
                 self.printComment ("RHS")
-                # construct field index var 
-                # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
-                self.printCode (f"stack.push_back ({node.rhs.decl.scopeName});")
 
-                self.printCode ("__child = stack.back ();")
-                self.printCode ("stack.pop_back ();")
                 self.printCode ("__parent = stack.back ();")
                 self.printCode ("stack.pop_back ();")
+                parent = f"({self.stackToVar(node.rhs.lhs.type, '__parent')})"
+                lhsStr = f"{parent}->{node.rhs.decl.scopeName}"
 
-                self.printCode (f"__parent[__child] = __parent[__child] + 1;")
-                self.printCode (f"__res = __parent[__child];")
+                self.printCode (f"{lhsStr} = {lhsStr} + 1;")
+                self.printCode (f"__res = {lhsStr};")
+
             else:
                 print ("yikes!")
                 exit (1)
@@ -1535,17 +1533,14 @@ class CodeGenVisitor_cpp (ASTVisitor):
                 node.rhs.lhs.accept (self)
 
                 self.printComment ("RHS")
-                # construct field index var 
-                # fieldIndex = f"__field__{node.rhs.lhs.type.id}__{node.rhs.rhs.id}"
-                self.printCode (f"stack.push_back ({node.rhs.decl.scopeName});")
 
-                self.printCode ("__child = stack.back ();")
-                self.printCode ("stack.pop_back ();")
                 self.printCode ("__parent = stack.back ();")
                 self.printCode ("stack.pop_back ();")
+                parent = f"({self.stackToVar(node.rhs.lhs.type, '__parent')})"
+                lhsStr = f"{parent}->{node.rhs.decl.scopeName}"
 
-                self.printCode (f"__parent[__child] = __parent[__child] - 1;")
-                self.printCode (f"__res = __parent[__child];")
+                self.printCode (f"{lhsStr} = {lhsStr} - 1;")
+                self.printCode (f"__res = {lhsStr};")
             else:
                 print ("yikes!")
                 exit (1)
@@ -1618,17 +1613,15 @@ class CodeGenVisitor_cpp (ASTVisitor):
             node.lhs.lhs.accept (self)
 
             self.printComment ("RHS")
-            # construct field index var 
-            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"stack.push_back ({node.lhs.decl.scopeName});")
 
-            self.printCode ("__child = stack.back ();")
-            self.printCode ("stack.pop_back ();")
             self.printCode ("__parent = stack.back ();")
             self.printCode ("stack.pop_back ();")
+            parent = f"({self.stackToVar(node.lhs.lhs.type, '__parent')})"
+            lhsStr = f"{parent}->{node.lhs.decl.scopeName}"
 
-            self.printCode (f"{res_type_str} __res = __parent[__child];")
-            self.printCode (f"__parent[__child] = __parent[__child] + 1;")
+            self.printCode (f"{res_type_str} __res = {lhsStr};")
+            self.printCode (f"{lhsStr} = {lhsStr} + 1;")
+
         else:
             print ("yikes!")
             exit (1)
@@ -1693,17 +1686,14 @@ class CodeGenVisitor_cpp (ASTVisitor):
             node.lhs.lhs.accept (self)
 
             self.printComment ("RHS")
-            # construct field index var 
-            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"stack.push_back ({node.lhs.decl.scopeName});")
 
-            self.printCode ("__child = stack.back ();")
-            self.printCode ("stack.pop_back ();")
             self.printCode ("__parent = stack.back ();")
             self.printCode ("stack.pop_back ();")
+            parent = f"({self.stackToVar(node.lhs.lhs.type, '__parent')})"
+            lhsStr = f"{parent}->{node.lhs.decl.scopeName}"
 
-            self.printCode (f"{res_type_str} __res = __parent[__child];")
-            self.printCode (f"__parent[__child] = __parent[__child] - 1;")
+            self.printCode (f"{res_type_str} __res = {lhsStr};")
+            self.printCode (f"{lhsStr} = {lhsStr} - 1;")
         else:
             print ("yikes!")
             exit (1)
@@ -1715,7 +1705,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("}")
 
     def visitSubscriptExpressionNode (self, node):
-        self.printComment ("Subscript")
+        self.printComment ("Subscript Expression")
 
         self.printCode ("{")
         self.indentation += 1
@@ -1736,7 +1726,8 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # simple subscript  
         if node.overloadedFunctionCall == None:
             result = f"({converted_pointer})[{converted_offset}]"
-            self.printCode (f"stack.push_back ({self.varToStack(node.type,result)});")
+            self.printCode (f"{self.amyTypeToCPPType(node.type)} __res = {result};")
+            self.printCode (f"stack.push_back ({self.varToStack(node.type, '__res')});")
         # overloaded function call 
         else:
             self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
@@ -1814,12 +1805,15 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # function returns void
         if node.decl.type.type == Type.VOID and node.decl.type.arrayDimensions == 0:
             self.printCode (f"{funcname} ({', '.join(args)});")
+            # no return
+            # but we'll still return something
+            self.printComment ("push dummy value - funcall returns void")
+            self.printCode (f"stack.push_back (0);")
         # function returns a value
         else:
-            self.printCode (f"{res_type_str} __res = {funcname} ({', '.join(args)});")
-        
-        # put function's return val on the stack
-        self.printCode (f"stack.push_back ({res_str});")
+            self.printCode (f"{self.amyTypeToCPPType(node.type)} __res = {funcname} ({', '.join(args)});")
+            # put function's return val on the stack
+            self.printCode (f"stack.push_back ({self.varToStack(node.type, '__res')});")
 
         self.indentation -= 1
         self.printCode ("}")
@@ -1838,6 +1832,9 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         self.printComment (f"Member Accessor obj.{node.rhs.id}")
 
+        self.printCode ("{")
+        self.indentation += 1
+
         self.printComment ("LHS")
         node.lhs.accept (self)
 
@@ -1855,7 +1852,11 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("__parent = stack.back ();")
         self.printCode ("stack.pop_back ();")
         # lhsStr = f"({self.stackToVar(node.lhs.lhs.type, '__parent')})->{node.lhs.decl.scopeName}"
-        self.printCode (f"stack.push_back (({self.stackToVar(node.lhs.type, '__parent')})->{node.decl.scopeName});")
+        self.printCode (f"{self.amyTypeToCPPType(node.type)} __res = ({self.stackToVar(node.lhs.type, '__parent')})->{node.decl.scopeName};")
+        self.printCode (f"stack.push_back ({self.varToStack(node.type, '__res')});")
+
+        self.indentation -= 1
+        self.printCode ("}")
 
     def visitFieldAccessorExpressionNode (self, node):
         pass
@@ -1892,8 +1893,11 @@ class CodeGenVisitor_cpp (ASTVisitor):
             # save argument 
             argName = f"__arg{i}"
 
-            self.printCode (f"{self.amyTypeToCPPType(arg.type)} {argName} = stack.back ();")
-            self.printCode ("stack.pop_back ();")
+            self.printCode (f"__stackval = stack.back ();")
+            self.printCode (f"stack.pop_back ();")
+            self.printComment ("Reinterpret from general register")
+
+            self.printCode (f"{self.amyTypeToCPPType (arg.type)} {argName} = {self.stackToVar (arg.type, '__stackval')};")
             args.append (argName)
             arg_types.append (self.amyTypeToCPPType(arg.type))
         
@@ -1933,6 +1937,8 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # function returns void
         if node.decl.type.type == Type.VOID and node.decl.type.arrayDimensions == 0:
             self.printCode (f"{function_name} ({obj}{', '.join(args)});")
+            self.printComment ("push dummy value - method rtype is void")
+            self.printCode ("stack.push_back (0);")
         # function returns a value
         else:
             self.printCode (f"{self.amyTypeToCPPType(node.type)} __res = {function_name} ({obj}{', '.join(args)});")

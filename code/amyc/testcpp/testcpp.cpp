@@ -464,7 +464,8 @@ void __main__block__0____print__int__char__float (long __main__block__0__print__
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -482,7 +483,8 @@ void __main__block__0____print__int__char__float (long __main__block__0__print__
         char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
         // println
         __builtin__println__char (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -500,7 +502,8 @@ void __main__block__0____print__int__char__float (long __main__block__0__print__
         double __arg0 = *reinterpret_cast<double*>(&__stackval);
         // println
         __builtin__println__float (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -877,7 +880,8 @@ void __method____main__block__54____A____print (__main__block__54____A* __this)
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // print
         __builtin__print__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -888,12 +892,15 @@ void __method____main__block__54____A____print (__main__block__54____A* __this)
     {
         // Arguments
         // Member Accessor obj.x
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        stack.push_back ((reinterpret_cast<__main__block__54____A*>(__parent))->__field____main__block__54____A____x);
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__this));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__54____A*>(__parent))->__field____main__block__54____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
         
         __stackval = stack.back ();
         stack.pop_back ();
@@ -901,7 +908,8 @@ void __method____main__block__54____A____print (__main__block__54____A* __this)
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -955,12 +963,15 @@ long __method____main__block__54____A____add__int (__main__block__54____A* __thi
 
     // Return
     // Member Accessor obj.x
-    // LHS
-    stack.push_back (reinterpret_cast<long>(__this));
-    // RHS
-    __parent = stack.back ();
-    stack.pop_back ();
-    stack.push_back ((reinterpret_cast<__main__block__54____A*>(__parent))->__field____main__block__54____A____x);
+    {
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__this));
+        // RHS
+        __parent = stack.back ();
+        stack.pop_back ();
+        long __res = (reinterpret_cast<__main__block__54____A*>(__parent))->__field____main__block__54____A____x;
+        stack.push_back (*reinterpret_cast<long*>(&__res));
+    }
     __res = stack.back ();
     stack.pop_back ();
     return *reinterpret_cast<long*>(&__res);
@@ -1130,7 +1141,8 @@ void __method____main__block__54____B____print (__main__block__54____B* __this)
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // print
         __builtin__print__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1141,12 +1153,15 @@ void __method____main__block__54____B____print (__main__block__54____B* __this)
     {
         // Arguments
         // Member Accessor obj.x
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        stack.push_back ((reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____A____x);
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__this));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
         
         __stackval = stack.back ();
         stack.pop_back ();
@@ -1154,7 +1169,8 @@ void __method____main__block__54____B____print (__main__block__54____B* __this)
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // print
         __builtin__print__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1173,7 +1189,8 @@ void __method____main__block__54____B____print (__main__block__54____B* __this)
         char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
         // print
         __builtin__print__char (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1192,7 +1209,8 @@ void __method____main__block__54____B____print (__main__block__54____B* __this)
         char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
         // print
         __builtin__print__char (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1203,12 +1221,15 @@ void __method____main__block__54____B____print (__main__block__54____B* __this)
     {
         // Arguments
         // Member Accessor obj.y
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        stack.push_back ((reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____B____y);
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__this));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____B____y;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
         
         __stackval = stack.back ();
         stack.pop_back ();
@@ -1216,7 +1237,8 @@ void __method____main__block__54____B____print (__main__block__54____B* __this)
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1419,7 +1441,8 @@ void __main__block__54____print__A (__main__block__54____A* __main__block__54__p
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // print
         __builtin__print__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1430,12 +1453,15 @@ void __main__block__54____print__A (__main__block__54____A* __main__block__54__p
     {
         // Arguments
         // Member Accessor obj.x
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__main__block__54__print__a));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        stack.push_back ((reinterpret_cast<__main__block__54____A*>(__parent))->__field____main__block__54____A____x);
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__54__print__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__54____A*>(__parent))->__field____main__block__54____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
         
         __stackval = stack.back ();
         stack.pop_back ();
@@ -1443,7 +1469,8 @@ void __main__block__54____print__A (__main__block__54____A* __main__block__54__p
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1460,6 +1487,8 @@ void __main__block__54____print__A (__main__block__54____A* __main__block__54__p
         stack.pop_back ();
         // Virtual Function Dispatch
         ((void(*)(__main__block__54____A*))(reinterpret_cast<__main__block__54____A*>(__obj)->dtable[0])) (reinterpret_cast<__main__block__54____A*>(__obj));
+        // push dummy value - method rtype is void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1468,6 +1497,103 @@ void __main__block__54____print__A (__main__block__54____A* __main__block__54__p
     //---------------------------------------------------------------------
 };
 // End Function Declaration - __main__block__54____print__A
+//=========================================================================
+
+// Add forward decl for any inner functions and methods
+class __main__block__63____A;
+//=========================================================================
+// Class Declaration - __main__block__63____A inherits __builtin____main__Object
+// Creating Dispatch Table (will be populated later)
+void* __dtable____main__block__63____A[0];
+class __main__block__63____A : public __builtin____main__Object
+{
+    public:
+    //---------------------------------------------------------------------
+    // Field - int A::x
+    // __field____main__block__63____A____x = 1
+    long __field____main__block__63____A____x;
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // Field - float A::y
+    // __field____main__block__63____A____y = 2
+    double __field____main__block__63____A____y;
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // Constructor Declaration - A::A() -> A
+    __main__block__63____A ()
+    {
+        // Function Header
+        // This stack is used to store results of expressions
+        std::vector<long> stack;
+        // Declare general purpose variables
+        // These are longs and can store anything up to 8 bytes via casting
+        long __stackval = 0;
+        long __pointer = 0;
+        long __offset = 0;
+        long __parent = 0;
+        long __child = 0;
+        long __obj = 0;
+        long __lhs = 0;
+        long __rhs = 0;
+        long __res = 0;
+        // Add dispatch table to instance
+        dtable = __dtable____main__block__63____A;
+        __main__block__63____A* __this = this;
+        // Body
+        //-----------------------------------------------------------------
+        // Code Block
+        // Statement
+        // Assignment - '='
+        // RHS
+        // Int Literal
+        stack.push_back (10);
+        // LHS
+        // Member Accessor Assignment
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__this));
+        // RHS
+        __parent = stack.back ();
+        stack.pop_back ();
+        __rhs = stack.back ();
+        stack.pop_back ();
+        (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = *reinterpret_cast<long*>(&__rhs);
+        // Result of assignment
+        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x));
+        // Statement results can be ignored
+        stack.pop_back ();
+        // End Statement
+
+        // Statement
+        // Assignment - '='
+        // RHS
+        // Float Literal
+        {
+            double float_literal = 3.14;
+            stack.push_back (*reinterpret_cast<long*>(&float_literal));
+        }
+        // LHS
+        // Member Accessor Assignment
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__this));
+        // RHS
+        __parent = stack.back ();
+        stack.pop_back ();
+        __rhs = stack.back ();
+        stack.pop_back ();
+        (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____y = *reinterpret_cast<double*>(&__rhs);
+        // Result of assignment
+        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____y));
+        // Statement results can be ignored
+        stack.pop_back ();
+        // End Statement
+
+        //-----------------------------------------------------------------
+    }
+    // End Constructor Declaration - __ctor____main__block__63____A____A
+    //---------------------------------------------------------------------
+
+};
+// End Class Declaration - __main__block__63____A
 //=========================================================================
 
 //=========================================================================
@@ -1563,7 +1689,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1581,7 +1708,8 @@ int main () {
         double __arg0 = *reinterpret_cast<double*>(&__stackval);
         // println
         __builtin__println__float (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1599,7 +1727,8 @@ int main () {
         char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
         // println
         __builtin__println__char (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1627,7 +1756,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1668,7 +1798,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1715,7 +1846,8 @@ int main () {
         double __arg0 = *reinterpret_cast<double*>(&__stackval);
         // println
         __builtin__println__float (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1763,7 +1895,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1802,7 +1935,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // print
         __main__block__0____print__int__char__float (__arg0, __arg1, __arg2);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1847,7 +1981,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1875,7 +2010,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1904,7 +2040,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // print
         __builtin__print__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1952,7 +2089,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // print
         __builtin__print__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1970,7 +2108,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -1999,7 +2138,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -2095,7 +2235,8 @@ int main () {
             char* __arg0 = *reinterpret_cast<char**>(&__stackval);
             // println
             __builtin__println__char__1 (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -2131,7 +2272,8 @@ int main () {
             char* __arg0 = *reinterpret_cast<char**>(&__stackval);
             // println
             __builtin__println__char__1 (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -2166,7 +2308,8 @@ int main () {
             char* __arg0 = *reinterpret_cast<char**>(&__stackval);
             // println
             __builtin__println__char__1 (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -2212,7 +2355,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -2250,7 +2394,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -2304,7 +2449,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -2342,7 +2488,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -2371,7 +2518,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -2430,7 +2578,8 @@ int main () {
             char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
             // print
             __builtin__print__char (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -2448,7 +2597,8 @@ int main () {
             long __arg0 = *reinterpret_cast<long*>(&__stackval);
             // print
             __builtin__print__int (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -2474,7 +2624,8 @@ int main () {
         // Arguments
         // println
         __builtin__println ();
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -2503,7 +2654,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -2566,7 +2718,8 @@ int main () {
             char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
             // print
             __builtin__print__char (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -2584,7 +2737,8 @@ int main () {
             long __arg0 = *reinterpret_cast<long*>(&__stackval);
             // print
             __builtin__print__int (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -2622,7 +2776,8 @@ int main () {
         char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
         // print
         __builtin__print__char (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -2651,7 +2806,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -2837,7 +2993,8 @@ int main () {
             char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
             // print
             __builtin__print__char (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -2847,7 +3004,7 @@ int main () {
         // Function Call - print(int) -> void
         {
             // Arguments
-            // Subscript
+            // Subscript Expression
             {
                 // LHS
                 stack.push_back (reinterpret_cast<long>(__main__block__21__arr));
@@ -2857,7 +3014,8 @@ int main () {
                 stack.pop_back ();
                 __pointer = stack.back ();
                 stack.pop_back ();
-                stack.push_back (*reinterpret_cast<long*>(&(*reinterpret_cast<long**>(&__pointer))[*reinterpret_cast<long*>(&__offset)]));
+                long __res = (*reinterpret_cast<long**>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                stack.push_back (*reinterpret_cast<long*>(&__res));
             }
             
             __stackval = stack.back ();
@@ -2866,7 +3024,8 @@ int main () {
             long __arg0 = *reinterpret_cast<long*>(&__stackval);
             // print
             __builtin__print__int (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -2892,7 +3051,8 @@ int main () {
         // Arguments
         // println
         __builtin__println ();
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -3007,7 +3167,8 @@ int main () {
             char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
             // print
             __builtin__print__char (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -3017,7 +3178,7 @@ int main () {
         // Function Call - print(float) -> void
         {
             // Arguments
-            // Subscript
+            // Subscript Expression
             {
                 // LHS
                 stack.push_back (reinterpret_cast<long>(__main__block__26__arr));
@@ -3027,7 +3188,8 @@ int main () {
                 stack.pop_back ();
                 __pointer = stack.back ();
                 stack.pop_back ();
-                stack.push_back (*reinterpret_cast<long*>(&(*reinterpret_cast<double**>(&__pointer))[*reinterpret_cast<long*>(&__offset)]));
+                double __res = (*reinterpret_cast<double**>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                stack.push_back (*reinterpret_cast<long*>(&__res));
             }
             
             __stackval = stack.back ();
@@ -3036,7 +3198,8 @@ int main () {
             double __arg0 = *reinterpret_cast<double*>(&__stackval);
             // print
             __builtin__print__float (__arg0);
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -3062,7 +3225,8 @@ int main () {
         // Arguments
         // println
         __builtin__println ();
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -3107,7 +3271,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -3150,7 +3315,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -3193,7 +3359,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -3222,7 +3389,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -3401,7 +3569,7 @@ int main () {
             // LHS
             // Subscript assignment
             // LHS
-            // Subscript
+            // Subscript Expression
             {
                 // LHS
                 stack.push_back (reinterpret_cast<long>(__main__block__30__board));
@@ -3411,7 +3579,8 @@ int main () {
                 stack.pop_back ();
                 __pointer = stack.back ();
                 stack.pop_back ();
-                stack.push_back (reinterpret_cast<long>((*reinterpret_cast<char***>(&__pointer))[*reinterpret_cast<long*>(&__offset)]));
+                char* __res = (*reinterpret_cast<char***>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                stack.push_back (reinterpret_cast<long>(__res));
             }
             // OFFSET
             stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__31__block__32__for__33__j));
@@ -3538,10 +3707,10 @@ int main () {
             // Function Call - print(char) -> void
             {
                 // Arguments
-                // Subscript
+                // Subscript Expression
                 {
                     // LHS
-                    // Subscript
+                    // Subscript Expression
                     {
                         // LHS
                         stack.push_back (reinterpret_cast<long>(__main__block__30__board));
@@ -3551,7 +3720,8 @@ int main () {
                         stack.pop_back ();
                         __pointer = stack.back ();
                         stack.pop_back ();
-                        stack.push_back (reinterpret_cast<long>((*reinterpret_cast<char***>(&__pointer))[*reinterpret_cast<long*>(&__offset)]));
+                        char* __res = (*reinterpret_cast<char***>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                        stack.push_back (reinterpret_cast<long>(__res));
                     }
                     // OFFSET
                     stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__35__block__36__for__37__j));
@@ -3559,7 +3729,8 @@ int main () {
                     stack.pop_back ();
                     __pointer = stack.back ();
                     stack.pop_back ();
-                    stack.push_back (static_cast<long>(static_cast<unsigned char>((*reinterpret_cast<char**>(&__pointer))[*reinterpret_cast<long*>(&__offset)])));
+                    char __res = (*reinterpret_cast<char**>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                    stack.push_back (static_cast<long>(static_cast<unsigned char>(__res)));
                 }
                 
                 __stackval = stack.back ();
@@ -3568,7 +3739,8 @@ int main () {
                 char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
                 // print
                 __builtin__print__char (__arg0);
-                stack.push_back (reinterpret_cast<long>(__res));
+                // push dummy value - funcall returns void
+                stack.push_back (0);
             }
             // Statement results can be ignored
             stack.pop_back ();
@@ -3594,7 +3766,8 @@ int main () {
             // Arguments
             // println
             __builtin__println ();
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -3620,7 +3793,8 @@ int main () {
         // Arguments
         // println
         __builtin__println ();
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -3762,7 +3936,7 @@ int main () {
                 // LHS
                 // Subscript assignment
                 // LHS
-                // Subscript
+                // Subscript Expression
                 {
                     // LHS
                     stack.push_back (reinterpret_cast<long>(__main__block__30__board));
@@ -3772,7 +3946,8 @@ int main () {
                     stack.pop_back ();
                     __pointer = stack.back ();
                     stack.pop_back ();
-                    stack.push_back (reinterpret_cast<long>((*reinterpret_cast<char***>(&__pointer))[*reinterpret_cast<long*>(&__offset)]));
+                    char* __res = (*reinterpret_cast<char***>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                    stack.push_back (reinterpret_cast<long>(__res));
                 }
                 // OFFSET
                 stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__39__block__40__for__41__j));
@@ -3902,10 +4077,10 @@ int main () {
             // Function Call - print(char) -> void
             {
                 // Arguments
-                // Subscript
+                // Subscript Expression
                 {
                     // LHS
-                    // Subscript
+                    // Subscript Expression
                     {
                         // LHS
                         stack.push_back (reinterpret_cast<long>(__main__block__30__board));
@@ -3915,7 +4090,8 @@ int main () {
                         stack.pop_back ();
                         __pointer = stack.back ();
                         stack.pop_back ();
-                        stack.push_back (reinterpret_cast<long>((*reinterpret_cast<char***>(&__pointer))[*reinterpret_cast<long*>(&__offset)]));
+                        char* __res = (*reinterpret_cast<char***>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                        stack.push_back (reinterpret_cast<long>(__res));
                     }
                     // OFFSET
                     stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__44__block__45__for__46__j));
@@ -3923,7 +4099,8 @@ int main () {
                     stack.pop_back ();
                     __pointer = stack.back ();
                     stack.pop_back ();
-                    stack.push_back (static_cast<long>(static_cast<unsigned char>((*reinterpret_cast<char**>(&__pointer))[*reinterpret_cast<long*>(&__offset)])));
+                    char __res = (*reinterpret_cast<char**>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                    stack.push_back (static_cast<long>(static_cast<unsigned char>(__res)));
                 }
                 
                 __stackval = stack.back ();
@@ -3932,7 +4109,8 @@ int main () {
                 char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
                 // print
                 __builtin__print__char (__arg0);
-                stack.push_back (reinterpret_cast<long>(__res));
+                // push dummy value - funcall returns void
+                stack.push_back (0);
             }
             // Statement results can be ignored
             stack.pop_back ();
@@ -3958,7 +4136,8 @@ int main () {
             // Arguments
             // println
             __builtin__println ();
-            stack.push_back (reinterpret_cast<long>(__res));
+            // push dummy value - funcall returns void
+            stack.push_back (0);
         }
         // Statement results can be ignored
         stack.pop_back ();
@@ -4001,7 +4180,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4050,7 +4230,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4094,7 +4275,8 @@ int main () {
         double __arg0 = *reinterpret_cast<double*>(&__stackval);
         // println
         __builtin__println__float (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4145,7 +4327,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4185,7 +4368,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4222,7 +4406,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4251,7 +4436,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4344,7 +4530,8 @@ int main () {
         __main__block__54____A* __arg0 = reinterpret_cast<__main__block__54____A*>(__stackval);
         // print
         __main__block__54____print__A (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4362,7 +4549,8 @@ int main () {
         __main__block__54____B* __arg0 = reinterpret_cast<__main__block__54____B*>(__stackval);
         // print
         __main__block__54____print__A (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4380,7 +4568,8 @@ int main () {
         __main__block__54____C* __arg0 = reinterpret_cast<__main__block__54____C*>(__stackval);
         // print
         __main__block__54____print__A (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4398,8 +4587,10 @@ int main () {
             // Arguments
             // Int Literal
             stack.push_back (5);
-            long __arg0 = stack.back ();
+            __stackval = stack.back ();
             stack.pop_back ();
+            // Reinterpret from general register
+            long __arg0 = *reinterpret_cast<long*>(&__stackval);
             __obj = stack.back ();
             stack.pop_back ();
             // Virtual Function Dispatch
@@ -4413,7 +4604,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4431,8 +4623,10 @@ int main () {
             // Arguments
             // Int Literal
             stack.push_back (5);
-            long __arg0 = stack.back ();
+            __stackval = stack.back ();
             stack.pop_back ();
+            // Reinterpret from general register
+            long __arg0 = *reinterpret_cast<long*>(&__stackval);
             __obj = stack.back ();
             stack.pop_back ();
             // Virtual Function Dispatch
@@ -4446,7 +4640,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4464,8 +4659,10 @@ int main () {
             // Arguments
             // Int Literal
             stack.push_back (5);
-            long __arg0 = stack.back ();
+            __stackval = stack.back ();
             stack.pop_back ();
+            // Reinterpret from general register
+            long __arg0 = *reinterpret_cast<long*>(&__stackval);
             __obj = stack.back ();
             stack.pop_back ();
             // Virtual Function Dispatch
@@ -4479,7 +4676,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4497,7 +4695,8 @@ int main () {
         __main__block__54____A* __arg0 = reinterpret_cast<__main__block__54____A*>(__stackval);
         // print
         __main__block__54____print__A (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4515,7 +4714,8 @@ int main () {
         __main__block__54____B* __arg0 = reinterpret_cast<__main__block__54____B*>(__stackval);
         // print
         __main__block__54____print__A (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4533,7 +4733,8 @@ int main () {
         __main__block__54____C* __arg0 = reinterpret_cast<__main__block__54____C*>(__stackval);
         // print
         __main__block__54____print__A (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4562,7 +4763,8 @@ int main () {
         char* __arg0 = *reinterpret_cast<char**>(&__stackval);
         // println
         __builtin__println__char__1 (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4597,7 +4799,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4659,7 +4862,8 @@ int main () {
         double __arg0 = *reinterpret_cast<double*>(&__stackval);
         // println
         __builtin__println__float (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4689,7 +4893,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4759,7 +4964,8 @@ int main () {
         double __arg0 = *reinterpret_cast<double*>(&__stackval);
         // println
         __builtin__println__float (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4826,7 +5032,8 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();
@@ -4873,7 +5080,683 @@ int main () {
         long __arg0 = *reinterpret_cast<long*>(&__stackval);
         // println
         __builtin__println__int (__arg0);
-        stack.push_back (reinterpret_cast<long>(__res));
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Function Call - println(char[]) -> void
+    {
+        // Arguments
+        // String Literal
+        {
+            char str_literal[] = "=== more class tests";
+            // convert to a heap string
+            char* str = new char[21];
+            // copy string to heap allocation
+            std::memcpy (str, &str_literal, 21);
+            stack.push_back (reinterpret_cast<long> (str));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        char* __arg0 = *reinterpret_cast<char**>(&__stackval);
+        // println
+        __builtin__println__char__1 (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Class Declaration - __main__block__63____A inherits __builtin____main__Object
+    // *see this class def before this parent function
+
+    // Populate Dispatch Table
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Constructor Call - A::A() -> A
+    // Arguments
+    stack.push_back (reinterpret_cast<long>(new __main__block__63____A ()));
+    // LHS
+    // Variable declaration
+    __main__block__63____A* __main__block__63__a;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__63__a = reinterpret_cast<__main__block__63____A*>(__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.x
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (42);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.x
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '+='
+    // RHS
+    // Int Literal
+    stack.push_back (20);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x + *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.x
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '-='
+    // RHS
+    // Int Literal
+    stack.push_back (13);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x - *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.x
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '*='
+    // RHS
+    // Int Literal
+    stack.push_back (2);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x * *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.x
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '/='
+    // RHS
+    // Int Literal
+    stack.push_back (3);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x / *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.x
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Pre-Increment
+        {
+            // RHS
+            // Member Accessor obj.x
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+                // RHS
+                __parent = stack.back ();
+                stack.pop_back ();
+                long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            __rhs = stack.back ();
+            stack.pop_back ();
+            // LHS
+            // Member Accessor Assignment
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x + 1;
+            __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Pre-Decrement
+        {
+            // RHS
+            // Member Accessor obj.x
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+                // RHS
+                __parent = stack.back ();
+                stack.pop_back ();
+                long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            __rhs = stack.back ();
+            stack.pop_back ();
+            // LHS
+            // Member Accessor Assignment
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x - 1;
+            __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Negative
+        {
+            // RHS
+            // Member Accessor obj.x
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+                // RHS
+                __parent = stack.back ();
+                stack.pop_back ();
+                long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            __rhs = stack.back ();
+            stack.pop_back ();
+            long __res = -*reinterpret_cast<long*>(&__rhs);
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Positive
+        {
+            // RHS
+            // Member Accessor obj.x
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+                // RHS
+                __parent = stack.back ();
+                stack.pop_back ();
+                long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            __rhs = stack.back ();
+            stack.pop_back ();
+            long __res = *reinterpret_cast<long*>(&__rhs);
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Negate
+        {
+            // RHS
+            // Member Accessor obj.x
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+                // RHS
+                __parent = stack.back ();
+                stack.pop_back ();
+                long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            __rhs = stack.back ();
+            stack.pop_back ();
+            long __res = !*reinterpret_cast<long*>(&__rhs);
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Bitwise Negation
+        {
+            // RHS
+            // Member Accessor obj.x
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+                // RHS
+                __parent = stack.back ();
+                stack.pop_back ();
+                long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            __rhs = stack.back ();
+            stack.pop_back ();
+            long __res = ~*reinterpret_cast<long*>(&__rhs);
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Post-Increment
+        {
+            // LHS
+            // Member Accessor Assignment
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x + 1;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.x
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Post-Decrement
+        {
+            // LHS
+            // Member Accessor Assignment
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x - 1;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.x
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__main__block__63__a));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
     }
     // Statement results can be ignored
     stack.pop_back ();

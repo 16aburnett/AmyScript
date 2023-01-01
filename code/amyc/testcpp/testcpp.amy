@@ -307,3 +307,38 @@ println (c);
     char c = '7';
     println (charToInt (c));
 }
+{
+    println ("=== more class tests");
+    class A
+    {
+        public field int x;
+        public field float y;
+        constructor ()
+        {
+            this.x = 10;
+            this.y = 3.14;
+        }
+    }
+    A a = new A ();
+    println (a.x);
+    a.x = 42;
+    println (a.x);
+    a.x += 20;
+    println (a.x);
+    a.x -= 13;
+    println (a.x);
+    a.x *= 2;
+    println (a.x);
+    a.x /= 3;
+    println (a.x);
+    println (++a.x);
+    println (--a.x);
+    println (-a.x);
+    println (+a.x);
+    println (!a.x);
+    println (~a.x);
+    println (a.x++);
+    println (a.x);
+    println (a.x--);
+    println (a.x);
+}
