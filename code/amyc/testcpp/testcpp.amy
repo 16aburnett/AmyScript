@@ -342,3 +342,116 @@ println (c);
     println (a.x--);
     println (a.x);
 }
+{
+    println ("=== test logical and");
+    int[][] a = new int[2][];
+    int x = 1;
+    int y = 0;
+    // if the read of a runs
+    // then we will get a segfault
+    // short circuit eval should prevent this
+    int r = x && y && a[512][0];
+    println (r);
+}
+{
+    println ("=== test logical or");
+    int[][] a = new int[2][];
+    int x = 0;
+    int y = 1;
+    // if the read of a runs
+    // then we will get a segfault
+    // short circuit eval should prevent this
+    int r = x || y || a[512][0];
+    println (r);
+}
+{
+    char[] arr = null;
+    if (arr == null)
+    {
+        println ("it null");
+    }
+}
+{
+    println ("=== test vector of vector");
+    template <:T:>
+    class Vec
+    {
+        public field T[] data;
+        public field int size;
+        constructor ()
+        {
+            this.data = new T[10];
+            this.size = 0;
+        }
+        public method void push_back (T v)
+        {
+            this.data[this.size++] = v;
+        }
+    }
+    // Vec<:char:> is not defined but it now works :)
+    //Vec<:char:> chars = new Vec<:char:> ();
+    Vec<:Vec<:char:>:> v = new Vec<:Vec<:char:>:>();
+    for (int i = 0; i < 5; ++i)
+    {
+        v.push_back (new Vec<:char:>());
+        for (int j = 0; j < 5; ++j)
+        {
+            if ((i+j) %2 == 0)
+                v.data[i].push_back('x');
+            else
+                v.data[i].push_back('.');
+        }
+    }
+    for (int i = 0; i < v.size; ++i)
+    {
+        for (int j = 0; j < v.data[i].size; ++j)
+        {
+            print (v.data[i].data[j]);
+        }
+        println ();
+    }
+    println ("=== test class decl after template decl");
+    class Point
+    {
+        public field int x;
+        public field int y;
+        constructor (int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+    Vec<:Point:> points = new Vec<:Point:>();
+    points.push_back (new Point (7, 6));
+    print (points.data[0].x); print (' '); println (points.data[0].y);
+}
+{
+    println ("=== test template defaults");
+    template <:T:>
+    class A
+    {
+        public field T x;
+        constructor ()
+        {
+            this.x = T();
+        }
+    }
+    class B
+    {
+        public field int w;
+        constructor ()
+        {
+            this.w = 23;
+        }
+    }
+    A<:B:> a = new A<:B:> ();
+    println (a.x.w);
+    function void print (B b)
+    {
+        if (b == null)
+            println ("null");
+        else
+            println (b.w);
+    }
+    print (null);
+}

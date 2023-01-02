@@ -52,6 +52,13 @@ class SymbolTableVisitor (ASTVisitor):
         # print (f"[typespec] {node}")
         # if type spec is not primitive
         if (node.type == Type.USERTYPE):
+            # first save any template parameters
+            # this is useful for the following case
+            # where Vector:<char:> needs to be known
+            # before the outer vector
+            # Ex: Vector<:Vector<:char:>:>
+            for tparam in node.templateParams:
+                tparam.accept (self)
             # make sure type exists 
             # and save with the type spec for later lookup 
             node.decl = self.table.lookup (node.id, Kind.TYPE, [], node.templateParams, self)
@@ -63,9 +70,6 @@ class SymbolTableVisitor (ASTVisitor):
                 print ()
                 self.wasSuccessful = False
                 node.type = Type.UNKNOWN
-            # check template parameter types 
-            # for tparam in node.templateParams:
-            #     tparam.accept (self)
 
     def visitParameterNode (self, node):
         node.type.accept (self)

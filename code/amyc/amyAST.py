@@ -1021,6 +1021,9 @@ class FunctionCallExpressionNode (ExpressionNode):
 
         self.decl = None
 
+        # this is ad hoc for default ctors
+        self.is_ctor = False
+
         self.lineNumber = line
         self.columnNumber = column
 

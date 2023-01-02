@@ -18,6 +18,7 @@ if __name__ == "__main__":
     from codeGen import CodeGenVisitor
     from codegen_x86 import CodeGenVisitor_x86
     from codegen_python import CodeGenVisitor_python
+    from precodegen_cpp import PreCodeGenVisitor_cpp
     from codegen_cpp import CodeGenVisitor_cpp
 else:
     from .tokenizer import tokenize
@@ -29,6 +30,7 @@ else:
     from .codegen_x86 import CodeGenVisitor_x86
     from .codegen_python import CodeGenVisitor_python
     from .codegen_cpp import CodeGenVisitor_cpp
+    from .precodegen_cpp import PreCodeGenVisitor_cpp
 
 
 # ========================================================================
@@ -544,6 +546,8 @@ class AmyScriptCompiler:
         elif target == TARGET_PYTHON:
             codeGenVisitor = CodeGenVisitor_python (lines)
         elif target == TARGET_CPP:
+            # precodegen stage to generate scopenames
+            ast.accept (PreCodeGenVisitor_cpp (lines))
             codeGenVisitor = CodeGenVisitor_cpp (lines)
 
         # generate code

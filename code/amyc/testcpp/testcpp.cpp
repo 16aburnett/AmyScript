@@ -233,6 +233,134 @@ class __builtin____main__Object
     void** dtable;
 };
 //=========================================================================
+//### Header section #####################################################
+//=========================================================================
+
+long __main__block__0____sum__int__int (long __main__block__0__sum__a, long __main__block__0__sum__b);
+double __main__block__0____sum__float__float (double __main__block__0__sum__a, double __main__block__0__sum__b);
+long __main__block__0____sum__int__int__int (long __main__block__0__sum__a, long __main__block__0__sum__b, long __main__block__0__sum__c);
+long __main__block__0__sum__block__3____sum__int__int (long __main__block__0__sum__block__3__sum__a, long __main__block__0__sum__block__3__sum__b);
+void __main__block__0____print__int__char__float (long __main__block__0__print__x, char __main__block__0__print__c, double __main__block__0__print__f);
+long __main__block__8____max__int__int (long __main__block__8__max__a, long __main__block__8__max__b);
+long __main__block__48____add__int____int__int (long __main__block__48__add__a, long __main__block__48__add__b);
+double __main__block__48____add__float____float__float (double __main__block__48__add__a, double __main__block__48__add__b);
+long __main__block__48____default_value__int__ ();
+double __main__block__48____default_value__float__ ();
+char __main__block__48____default_value__char__ ();
+// Class Declaration - __main__block__54____A inherits __builtin____main__Object
+void* __dtable____main__block__54____A[2];
+class __main__block__54____A : public __builtin____main__Object
+{
+    public:
+    // Field - int A::x
+    long __field____main__block__54____A____x;
+    __main__block__54____A ();
+};
+// Class Declaration - __main__block__54____B inherits __main__block__54____A
+void* __dtable____main__block__54____B[2];
+class __main__block__54____B : public __main__block__54____A
+{
+    public:
+    // Field - int B::x
+    // __field____main__block__54____A____x Inherited from A
+    // Field - int B::y
+    long __field____main__block__54____B____y;
+    __main__block__54____B ();
+};
+// Class Declaration - __main__block__54____C inherits __main__block__54____A
+void* __dtable____main__block__54____C[2];
+class __main__block__54____C : public __main__block__54____A
+{
+    public:
+    // Field - int C::x
+    // __field____main__block__54____A____x Inherited from A
+    // Field - float C::z
+    double __field____main__block__54____C____z;
+    __main__block__54____C ();
+};
+void __main__block__54____print__A (__main__block__54____A* __main__block__54__print__a);
+// Class Declaration - __main__block__63____A inherits __builtin____main__Object
+void* __dtable____main__block__63____A[0];
+class __main__block__63____A : public __builtin____main__Object
+{
+    public:
+    // Field - int A::x
+    long __field____main__block__63____A____x;
+    // Field - float A::y
+    double __field____main__block__63____A____y;
+    __main__block__63____A ();
+};
+// Class Declaration - __main__block__70____Vec__char inherits __builtin____main__Object
+void* __dtable____main__block__70____Vec__char[1];
+class __main__block__70____Vec__char : public __builtin____main__Object
+{
+    public:
+    // Field - char[] Vec<:char:>::data
+    char* __field____main__block__70____Vec__char____data;
+    // Field - int Vec<:char:>::size
+    long __field____main__block__70____Vec__char____size;
+    __main__block__70____Vec__char ();
+};
+class __main__block__70____Vec__char; // Vec<:char:>
+// Class Declaration - __main__block__70____Vec__Vec inherits __builtin____main__Object
+void* __dtable____main__block__70____Vec__Vec[1];
+class __main__block__70____Vec__Vec : public __builtin____main__Object
+{
+    public:
+    // Field - Vec<:char:>[] Vec<:Vec<:char:>:>::data
+    __main__block__70____Vec__char** __field____main__block__70____Vec__Vec____data;
+    // Field - int Vec<:Vec<:char:>:>::size
+    long __field____main__block__70____Vec__Vec____size;
+    __main__block__70____Vec__Vec ();
+};
+class __main__block__70____Point; // Point
+// Class Declaration - __main__block__70____Vec__Point inherits __builtin____main__Object
+void* __dtable____main__block__70____Vec__Point[1];
+class __main__block__70____Vec__Point : public __builtin____main__Object
+{
+    public:
+    // Field - Point[] Vec<:Point:>::data
+    __main__block__70____Point** __field____main__block__70____Vec__Point____data;
+    // Field - int Vec<:Point:>::size
+    long __field____main__block__70____Vec__Point____size;
+    __main__block__70____Vec__Point ();
+};
+// Class Declaration - __main__block__70____Point inherits __builtin____main__Object
+void* __dtable____main__block__70____Point[0];
+class __main__block__70____Point : public __builtin____main__Object
+{
+    public:
+    // Field - int Point::x
+    long __field____main__block__70____Point____x;
+    // Field - int Point::y
+    long __field____main__block__70____Point____y;
+    __main__block__70____Point (long __main__block__70____Point__x, long __main__block__70____Point__y);
+};
+class __main__block__87____B; // B
+// Class Declaration - __main__block__87____A__B inherits __builtin____main__Object
+void* __dtable____main__block__87____A__B[0];
+class __main__block__87____A__B : public __builtin____main__Object
+{
+    public:
+    // Field - B A<:B:>::x
+    __main__block__87____B* __field____main__block__87____A__B____x;
+    __main__block__87____A__B ();
+};
+// Class Declaration - __main__block__87____B inherits __builtin____main__Object
+void* __dtable____main__block__87____B[0];
+class __main__block__87____B : public __builtin____main__Object
+{
+    public:
+    // Field - int B::w
+    long __field____main__block__87____B____w;
+    __main__block__87____B ();
+};
+void __main__block__87____print__B (__main__block__87____B* __main__block__87__print__b);
+//=========================================================================
+//### Functions section ##################################################
+//=========================================================================
+
+//=========================================================================
 // Function Declaration - sum(int, int) -> int
 long __main__block__0____sum__int__int (long __main__block__0__sum__a, long __main__block__0__sum__b)
 {
@@ -774,71 +902,56 @@ char __main__block__48____default_value__char__ ()
 // End Function Declaration - __main__block__48____default_value__char__
 //=========================================================================
 
-// Add forward decl for any inner functions and methods
-class __main__block__54____A;
-//=========================================================================
-// Class Declaration - __main__block__54____A inherits __builtin____main__Object
-// Creating Dispatch Table (will be populated later)
-void* __dtable____main__block__54____A[2];
-class __main__block__54____A : public __builtin____main__Object
+//-------------------------------------------------------------------------
+// Constructor Declaration - A::A() -> A
+__main__block__54____A::__main__block__54____A ()
 {
-    public:
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Add dispatch table to instance
+    dtable = __dtable____main__block__54____A;
+    __main__block__54____A* __this = this;
+    // Body
     //---------------------------------------------------------------------
-    // Field - int A::x
-    // __field____main__block__54____A____x = 1
-    long __field____main__block__54____A____x;
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    // Constructor Declaration - A::A() -> A
-    __main__block__54____A ()
-    {
-        // Function Header
-        // This stack is used to store results of expressions
-        std::vector<long> stack;
-        // Declare general purpose variables
-        // These are longs and can store anything up to 8 bytes via casting
-        long __stackval = 0;
-        long __pointer = 0;
-        long __offset = 0;
-        long __parent = 0;
-        long __child = 0;
-        long __obj = 0;
-        long __lhs = 0;
-        long __rhs = 0;
-        long __res = 0;
-        // Add dispatch table to instance
-        dtable = __dtable____main__block__54____A;
-        __main__block__54____A* __this = this;
-        // Body
-        //-----------------------------------------------------------------
-        // Code Block
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Int Literal
-        stack.push_back (10);
-        // LHS
-        // Member Accessor Assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (reinterpret_cast<__main__block__54____A*>(__parent))->__field____main__block__54____A____x = *reinterpret_cast<long*>(&__rhs);
-        // Result of assignment
-        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__54____A*>(__parent))->__field____main__block__54____A____x));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (10);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__54____A*>(__parent))->__field____main__block__54____A____x = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__54____A*>(__parent))->__field____main__block__54____A____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
 
-        //-----------------------------------------------------------------
-    }
-    // End Constructor Declaration - __ctor____main__block__54____A____A
     //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main__block__54____A____A
+//-------------------------------------------------------------------------
 
-};
 //-------------------------------------------------------------------------
 // Method Declaration - A::print() -> void
 void __method____main__block__54____A____print (__main__block__54____A* __this)
@@ -980,100 +1093,77 @@ long __method____main__block__54____A____add__int (__main__block__54____A* __thi
 // End Method Declaration - __method____main__block__54____A____add__int
 //-------------------------------------------------------------------------
 
-// End Class Declaration - __main__block__54____A
-//=========================================================================
-
-// Add forward decl for any inner functions and methods
-class __main__block__54____B;
-//=========================================================================
-// Class Declaration - __main__block__54____B inherits __main__block__54____A
-// Creating Dispatch Table (will be populated later)
-void* __dtable____main__block__54____B[2];
-class __main__block__54____B : public __main__block__54____A
+//-------------------------------------------------------------------------
+// Constructor Declaration - B::B() -> B
+__main__block__54____B::__main__block__54____B ()
 {
-    public:
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Add dispatch table to instance
+    dtable = __dtable____main__block__54____B;
+    __main__block__54____B* __this = this;
+    // Body
     //---------------------------------------------------------------------
-    // Field - int B::x
-    // Inherited from A
-    // __field____main__block__54____A____x
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    // Field - int B::y
-    // __field____main__block__54____B____y = 2
-    long __field____main__block__54____B____y;
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    // Constructor Declaration - B::B() -> B
-    __main__block__54____B ()
-    {
-        // Function Header
-        // This stack is used to store results of expressions
-        std::vector<long> stack;
-        // Declare general purpose variables
-        // These are longs and can store anything up to 8 bytes via casting
-        long __stackval = 0;
-        long __pointer = 0;
-        long __offset = 0;
-        long __parent = 0;
-        long __child = 0;
-        long __obj = 0;
-        long __lhs = 0;
-        long __rhs = 0;
-        long __res = 0;
-        // Add dispatch table to instance
-        dtable = __dtable____main__block__54____B;
-        __main__block__54____B* __this = this;
-        // Body
-        //-----------------------------------------------------------------
-        // Code Block
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Int Literal
-        stack.push_back (42);
-        // LHS
-        // Member Accessor Assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____A____x = *reinterpret_cast<long*>(&__rhs);
-        // Result of assignment
-        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____A____x));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (42);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____A____x = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____A____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
 
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Int Literal
-        stack.push_back (14);
-        // LHS
-        // Member Accessor Assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____B____y = *reinterpret_cast<long*>(&__rhs);
-        // Result of assignment
-        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____B____y));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (14);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____B____y = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__54____B*>(__parent))->__field____main__block__54____B____y));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
 
-        //-----------------------------------------------------------------
-    }
-    // End Constructor Declaration - __ctor____main__block__54____B____B
     //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main__block__54____B____B
+//-------------------------------------------------------------------------
 
-};
 //-------------------------------------------------------------------------
 // Method Declaration - B::add(int) -> int
 // Inherited from A
@@ -1249,103 +1339,80 @@ void __method____main__block__54____B____print (__main__block__54____B* __this)
 // End Method Declaration - __method____main__block__54____B____print
 //-------------------------------------------------------------------------
 
-// End Class Declaration - __main__block__54____B
-//=========================================================================
-
-// Add forward decl for any inner functions and methods
-class __main__block__54____C;
-//=========================================================================
-// Class Declaration - __main__block__54____C inherits __main__block__54____A
-// Creating Dispatch Table (will be populated later)
-void* __dtable____main__block__54____C[2];
-class __main__block__54____C : public __main__block__54____A
+//-------------------------------------------------------------------------
+// Constructor Declaration - C::C() -> C
+__main__block__54____C::__main__block__54____C ()
 {
-    public:
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Add dispatch table to instance
+    dtable = __dtable____main__block__54____C;
+    __main__block__54____C* __this = this;
+    // Body
     //---------------------------------------------------------------------
-    // Field - int C::x
-    // Inherited from A
-    // __field____main__block__54____A____x
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    // Field - float C::z
-    // __field____main__block__54____C____z = 2
-    double __field____main__block__54____C____z;
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    // Constructor Declaration - C::C() -> C
-    __main__block__54____C ()
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (24);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__54____C*>(__parent))->__field____main__block__54____A____x = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__54____C*>(__parent))->__field____main__block__54____A____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Float Literal
     {
-        // Function Header
-        // This stack is used to store results of expressions
-        std::vector<long> stack;
-        // Declare general purpose variables
-        // These are longs and can store anything up to 8 bytes via casting
-        long __stackval = 0;
-        long __pointer = 0;
-        long __offset = 0;
-        long __parent = 0;
-        long __child = 0;
-        long __obj = 0;
-        long __lhs = 0;
-        long __rhs = 0;
-        long __res = 0;
-        // Add dispatch table to instance
-        dtable = __dtable____main__block__54____C;
-        __main__block__54____C* __this = this;
-        // Body
-        //-----------------------------------------------------------------
-        // Code Block
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Int Literal
-        stack.push_back (24);
-        // LHS
-        // Member Accessor Assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (reinterpret_cast<__main__block__54____C*>(__parent))->__field____main__block__54____A____x = *reinterpret_cast<long*>(&__rhs);
-        // Result of assignment
-        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__54____C*>(__parent))->__field____main__block__54____A____x));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
-
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Float Literal
-        {
-            double float_literal = 3.14;
-            stack.push_back (*reinterpret_cast<long*>(&float_literal));
-        }
-        // LHS
-        // Member Accessor Assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (reinterpret_cast<__main__block__54____C*>(__parent))->__field____main__block__54____C____z = *reinterpret_cast<double*>(&__rhs);
-        // Result of assignment
-        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__54____C*>(__parent))->__field____main__block__54____C____z));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
-
-        //-----------------------------------------------------------------
+        double float_literal = 3.14;
+        stack.push_back (*reinterpret_cast<long*>(&float_literal));
     }
-    // End Constructor Declaration - __ctor____main__block__54____C____C
-    //---------------------------------------------------------------------
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__54____C*>(__parent))->__field____main__block__54____C____z = *reinterpret_cast<double*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__54____C*>(__parent))->__field____main__block__54____C____z));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
 
-};
+    //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main__block__54____C____C
+//-------------------------------------------------------------------------
+
 //-------------------------------------------------------------------------
 // Method Declaration - C::print() -> void
 // Inherited from A
@@ -1396,9 +1463,6 @@ long __method____main__block__54____C____add__int (__main__block__54____C* __thi
 }
 // End Method Declaration - __method____main__block__54____C____add__int
 //-------------------------------------------------------------------------
-
-// End Class Declaration - __main__block__54____C
-//=========================================================================
 
 //=========================================================================
 // Function Declaration - print(A) -> void
@@ -1499,112 +1563,10 @@ void __main__block__54____print__A (__main__block__54____A* __main__block__54__p
 // End Function Declaration - __main__block__54____print__A
 //=========================================================================
 
-// Add forward decl for any inner functions and methods
-class __main__block__63____A;
-//=========================================================================
-// Class Declaration - __main__block__63____A inherits __builtin____main__Object
-// Creating Dispatch Table (will be populated later)
-void* __dtable____main__block__63____A[0];
-class __main__block__63____A : public __builtin____main__Object
+//-------------------------------------------------------------------------
+// Constructor Declaration - A::A() -> A
+__main__block__63____A::__main__block__63____A ()
 {
-    public:
-    //---------------------------------------------------------------------
-    // Field - int A::x
-    // __field____main__block__63____A____x = 1
-    long __field____main__block__63____A____x;
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    // Field - float A::y
-    // __field____main__block__63____A____y = 2
-    double __field____main__block__63____A____y;
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    // Constructor Declaration - A::A() -> A
-    __main__block__63____A ()
-    {
-        // Function Header
-        // This stack is used to store results of expressions
-        std::vector<long> stack;
-        // Declare general purpose variables
-        // These are longs and can store anything up to 8 bytes via casting
-        long __stackval = 0;
-        long __pointer = 0;
-        long __offset = 0;
-        long __parent = 0;
-        long __child = 0;
-        long __obj = 0;
-        long __lhs = 0;
-        long __rhs = 0;
-        long __res = 0;
-        // Add dispatch table to instance
-        dtable = __dtable____main__block__63____A;
-        __main__block__63____A* __this = this;
-        // Body
-        //-----------------------------------------------------------------
-        // Code Block
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Int Literal
-        stack.push_back (10);
-        // LHS
-        // Member Accessor Assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = *reinterpret_cast<long*>(&__rhs);
-        // Result of assignment
-        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
-
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Float Literal
-        {
-            double float_literal = 3.14;
-            stack.push_back (*reinterpret_cast<long*>(&float_literal));
-        }
-        // LHS
-        // Member Accessor Assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____y = *reinterpret_cast<double*>(&__rhs);
-        // Result of assignment
-        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____y));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
-
-        //-----------------------------------------------------------------
-    }
-    // End Constructor Declaration - __ctor____main__block__63____A____A
-    //---------------------------------------------------------------------
-
-};
-// End Class Declaration - __main__block__63____A
-//=========================================================================
-
-//=========================================================================
-//### Main function ######################################################
-//=========================================================================
-
-int main () {
-    //=====================================================================
-    //### SETUP EXPRESSION RESULT STACK ##################################
-    //=====================================================================
-
     // Function Header
     // This stack is used to store results of expressions
     std::vector<long> stack;
@@ -1619,10 +1581,817 @@ int main () {
     long __lhs = 0;
     long __rhs = 0;
     long __res = 0;
-    //=====================================================================
-    //### COMPILED CODE ##################################################
-    //=====================================================================
+    // Add dispatch table to instance
+    dtable = __dtable____main__block__63____A;
+    __main__block__63____A* __this = this;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (10);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
 
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Float Literal
+    {
+        double float_literal = 3.14;
+        stack.push_back (*reinterpret_cast<long*>(&float_literal));
+    }
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____y = *reinterpret_cast<double*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__63____A*>(__parent))->__field____main__block__63____A____y));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main__block__63____A____A
+//-------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+// Constructor Declaration - Vec<:char:>::Vec() -> Vec<:char:>
+__main__block__70____Vec__char::__main__block__70____Vec__char ()
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Add dispatch table to instance
+    dtable = __dtable____main__block__70____Vec__char;
+    __main__block__70____Vec__char* __this = this;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Array Allocator
+    {
+        // Int Literal
+        stack.push_back (10);
+        __stackval = stack.back ();
+        stack.pop_back ();
+        char* __res = new char[__stackval];
+        stack.push_back (reinterpret_cast<long>(__res));
+    }
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__70____Vec__char*>(__parent))->__field____main__block__70____Vec__char____data = *reinterpret_cast<char**>(&__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>((reinterpret_cast<__main__block__70____Vec__char*>(__parent))->__field____main__block__70____Vec__char____data));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (0);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__70____Vec__char*>(__parent))->__field____main__block__70____Vec__char____size = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__70____Vec__char*>(__parent))->__field____main__block__70____Vec__char____size));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main__block__70____Vec__char____Vec
+//-------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+// Method Declaration - Vec<:char:>::push_back(char) -> void
+void __method____main__block__70____Vec__char____push_back__char (__main__block__70____Vec__char* __this, char __main__block__70____Vec__char__push_back__v)
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    stack.push_back (static_cast<long>(static_cast<unsigned char>(__main__block__70____Vec__char__push_back__v)));
+    // LHS
+    // Subscript assignment
+    // LHS
+    // Member Accessor obj.data
+    {
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__this));
+        // RHS
+        __parent = stack.back ();
+        stack.pop_back ();
+        char* __res = (reinterpret_cast<__main__block__70____Vec__char*>(__parent))->__field____main__block__70____Vec__char____data;
+        stack.push_back (reinterpret_cast<long>(__res));
+    }
+    // OFFSET
+    // Post-Increment
+    {
+        // LHS
+        // Member Accessor Assignment
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__this));
+        // RHS
+        __parent = stack.back ();
+        stack.pop_back ();
+        long __res = (reinterpret_cast<__main__block__70____Vec__char*>(__parent))->__field____main__block__70____Vec__char____size;
+        (reinterpret_cast<__main__block__70____Vec__char*>(__parent))->__field____main__block__70____Vec__char____size = (reinterpret_cast<__main__block__70____Vec__char*>(__parent))->__field____main__block__70____Vec__char____size + 1;
+        stack.push_back (*reinterpret_cast<long*>(&__res));
+    }
+    __offset = stack.back ();
+    stack.pop_back ();
+    __pointer = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (*reinterpret_cast<char**>(&__pointer))[__offset] = static_cast<char>(static_cast<unsigned char>(__rhs));
+    // Result of assignment
+    stack.push_back (static_cast<long>(static_cast<unsigned char>((*reinterpret_cast<char**>(&__pointer))[__offset])));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Method Declaration - __method____main__block__70____Vec__char____push_back__char
+//-------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+// Constructor Declaration - Vec<:Vec<:char:>:>::Vec() -> Vec<:Vec<:char:>:>
+__main__block__70____Vec__Vec::__main__block__70____Vec__Vec ()
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Add dispatch table to instance
+    dtable = __dtable____main__block__70____Vec__Vec;
+    __main__block__70____Vec__Vec* __this = this;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Array Allocator
+    {
+        // Int Literal
+        stack.push_back (10);
+        __stackval = stack.back ();
+        stack.pop_back ();
+        __main__block__70____Vec__char** __res = new __main__block__70____Vec__char*[__stackval];
+        stack.push_back (reinterpret_cast<long>(__res));
+    }
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____data = reinterpret_cast<__main__block__70____Vec__char**>(__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>((reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____data));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (0);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____size = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____size));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main__block__70____Vec__Vec____Vec
+//-------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+// Method Declaration - Vec<:Vec<:char:>:>::push_back(Vec<:char:>) -> void
+void __method____main__block__70____Vec__Vec____push_back__Vec (__main__block__70____Vec__Vec* __this, __main__block__70____Vec__char* __main__block__70____Vec__Vec__push_back__v)
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    stack.push_back (reinterpret_cast<long>(__main__block__70____Vec__Vec__push_back__v));
+    // LHS
+    // Subscript assignment
+    // LHS
+    // Member Accessor obj.data
+    {
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__this));
+        // RHS
+        __parent = stack.back ();
+        stack.pop_back ();
+        __main__block__70____Vec__char** __res = (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____data;
+        stack.push_back (reinterpret_cast<long>(__res));
+    }
+    // OFFSET
+    // Post-Increment
+    {
+        // LHS
+        // Member Accessor Assignment
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__this));
+        // RHS
+        __parent = stack.back ();
+        stack.pop_back ();
+        long __res = (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____size;
+        (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____size = (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____size + 1;
+        stack.push_back (*reinterpret_cast<long*>(&__res));
+    }
+    __offset = stack.back ();
+    stack.pop_back ();
+    __pointer = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__70____Vec__char**>(__pointer))[__offset] = reinterpret_cast<__main__block__70____Vec__char*>(__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>((reinterpret_cast<__main__block__70____Vec__char**>(__pointer))[__offset]));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Method Declaration - __method____main__block__70____Vec__Vec____push_back__Vec
+//-------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+// Constructor Declaration - Vec<:Point:>::Vec() -> Vec<:Point:>
+__main__block__70____Vec__Point::__main__block__70____Vec__Point ()
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Add dispatch table to instance
+    dtable = __dtable____main__block__70____Vec__Point;
+    __main__block__70____Vec__Point* __this = this;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Array Allocator
+    {
+        // Int Literal
+        stack.push_back (10);
+        __stackval = stack.back ();
+        stack.pop_back ();
+        __main__block__70____Point** __res = new __main__block__70____Point*[__stackval];
+        stack.push_back (reinterpret_cast<long>(__res));
+    }
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__70____Vec__Point*>(__parent))->__field____main__block__70____Vec__Point____data = reinterpret_cast<__main__block__70____Point**>(__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>((reinterpret_cast<__main__block__70____Vec__Point*>(__parent))->__field____main__block__70____Vec__Point____data));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (0);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__70____Vec__Point*>(__parent))->__field____main__block__70____Vec__Point____size = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__70____Vec__Point*>(__parent))->__field____main__block__70____Vec__Point____size));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main__block__70____Vec__Point____Vec
+//-------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+// Method Declaration - Vec<:Point:>::push_back(Point) -> void
+void __method____main__block__70____Vec__Point____push_back__Point (__main__block__70____Vec__Point* __this, __main__block__70____Point* __main__block__70____Vec__Point__push_back__v)
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    stack.push_back (reinterpret_cast<long>(__main__block__70____Vec__Point__push_back__v));
+    // LHS
+    // Subscript assignment
+    // LHS
+    // Member Accessor obj.data
+    {
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__this));
+        // RHS
+        __parent = stack.back ();
+        stack.pop_back ();
+        __main__block__70____Point** __res = (reinterpret_cast<__main__block__70____Vec__Point*>(__parent))->__field____main__block__70____Vec__Point____data;
+        stack.push_back (reinterpret_cast<long>(__res));
+    }
+    // OFFSET
+    // Post-Increment
+    {
+        // LHS
+        // Member Accessor Assignment
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__this));
+        // RHS
+        __parent = stack.back ();
+        stack.pop_back ();
+        long __res = (reinterpret_cast<__main__block__70____Vec__Point*>(__parent))->__field____main__block__70____Vec__Point____size;
+        (reinterpret_cast<__main__block__70____Vec__Point*>(__parent))->__field____main__block__70____Vec__Point____size = (reinterpret_cast<__main__block__70____Vec__Point*>(__parent))->__field____main__block__70____Vec__Point____size + 1;
+        stack.push_back (*reinterpret_cast<long*>(&__res));
+    }
+    __offset = stack.back ();
+    stack.pop_back ();
+    __pointer = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__70____Point**>(__pointer))[__offset] = reinterpret_cast<__main__block__70____Point*>(__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>((reinterpret_cast<__main__block__70____Point**>(__pointer))[__offset]));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Method Declaration - __method____main__block__70____Vec__Point____push_back__Point
+//-------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+// Constructor Declaration - Point::Point(int, int) -> Point
+__main__block__70____Point::__main__block__70____Point (long __main__block__70____Point__Point__x, long __main__block__70____Point__Point__y)
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Add dispatch table to instance
+    dtable = __dtable____main__block__70____Point;
+    __main__block__70____Point* __this = this;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__70____Point__Point__x));
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__70____Point*>(__parent))->__field____main__block__70____Point____x = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__70____Point*>(__parent))->__field____main__block__70____Point____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__70____Point__Point__y));
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__70____Point*>(__parent))->__field____main__block__70____Point____y = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__70____Point*>(__parent))->__field____main__block__70____Point____y));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main__block__70____Point____Point__int__int
+//-------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+// Constructor Declaration - A<:B:>::A() -> A<:B:>
+__main__block__87____A__B::__main__block__87____A__B ()
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Add dispatch table to instance
+    dtable = __dtable____main__block__87____A__B;
+    __main__block__87____A__B* __this = this;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Function Call - B::B() -> B
+    {
+        // Arguments
+        // B::B
+        __main__block__87____B* __res = new __main__block__87____B ();
+        stack.push_back (reinterpret_cast<long>(__res));
+    }
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__87____A__B*>(__parent))->__field____main__block__87____A__B____x = reinterpret_cast<__main__block__87____B*>(__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>((reinterpret_cast<__main__block__87____A__B*>(__parent))->__field____main__block__87____A__B____x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main__block__87____A__B____A
+//-------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+// Constructor Declaration - B::B() -> B
+__main__block__87____B::__main__block__87____B ()
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Add dispatch table to instance
+    dtable = __dtable____main__block__87____B;
+    __main__block__87____B* __this = this;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (23);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main__block__87____B*>(__parent))->__field____main__block__87____B____w = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main__block__87____B*>(__parent))->__field____main__block__87____B____w));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main__block__87____B____B
+//-------------------------------------------------------------------------
+
+//=========================================================================
+// Function Declaration - print(B) -> void
+void __main__block__87____print__B (__main__block__87____B* __main__block__87__print__b)
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    //---------------------------------------------------------------------
+    // If-Statement
+    // Precomputing all if/elif conditions and give unique names
+    // bc we can't have code between if and elif
+    // Condition
+    // Equal
+    {
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__main__block__87__print__b));
+        // RHS
+        // Null Literal
+        stack.push_back ((long)nullptr);
+        __rhs = stack.back ();
+        stack.pop_back ();
+        __lhs = stack.back ();
+        stack.pop_back ();
+        long __res = reinterpret_cast<__main__block__87____B*>(__lhs) == nullptr;
+        stack.push_back (*reinterpret_cast<long*>(&__res));
+    }
+    long __if__91__cond = stack.back ();
+    stack.pop_back ();
+    // get condition from stack
+    if (__if__91__cond)
+    {
+        // Body
+        // Statement
+        // Function Call - println(char[]) -> void
+        {
+            // Arguments
+            // String Literal
+            {
+                char str_literal[] = "null";
+                // convert to a heap string
+                char* str = new char[5];
+                // copy string to heap allocation
+                std::memcpy (str, &str_literal, 5);
+                stack.push_back (reinterpret_cast<long> (str));
+            }
+            
+            __stackval = stack.back ();
+            stack.pop_back ();
+            // Reinterpret from general register
+            char* __arg0 = *reinterpret_cast<char**>(&__stackval);
+            // println
+            __builtin__println__char__1 (__arg0);
+            // push dummy value - funcall returns void
+            stack.push_back (0);
+        }
+        // Statement results can be ignored
+        stack.pop_back ();
+        // End Statement
+
+    }
+    //---------------------------------------------------------------------
+    // Else-Statement
+    else
+    {
+        // Statement
+        // Function Call - println(int) -> void
+        {
+            // Arguments
+            // Member Accessor obj.w
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__87__print__b));
+                // RHS
+                __parent = stack.back ();
+                stack.pop_back ();
+                long __res = (reinterpret_cast<__main__block__87____B*>(__parent))->__field____main__block__87____B____w;
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            
+            __stackval = stack.back ();
+            stack.pop_back ();
+            // Reinterpret from general register
+            long __arg0 = *reinterpret_cast<long*>(&__stackval);
+            // println
+            __builtin__println__int (__arg0);
+            // push dummy value - funcall returns void
+            stack.push_back (0);
+        }
+        // Statement results can be ignored
+        stack.pop_back ();
+        // End Statement
+
+    }
+    //---------------------------------------------------------------------
+    // End of if
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+};
+// End Function Declaration - __main__block__87____print__B
+//=========================================================================
+
+//=========================================================================
+//### Main function ######################################################
+//=========================================================================
+
+int main () {
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+
+    // Main body
+    //---------------------------------------------------------------------
     // Statement
     // Assignment - '='
     // RHS
@@ -2540,6 +3309,8 @@ int main () {
     __main__block__15__for__16__i = *reinterpret_cast<long*>(&__rhs);
     // Result of assignment
     stack.push_back (*reinterpret_cast<long*>(&__main__block__15__for__16__i));
+    // We can ignore the init result
+    stack.pop_back ();
     // Using an infinite loop so we can write a separate multi-line condition
     while (1)
     {
@@ -2616,6 +3387,8 @@ int main () {
             __res = __main__block__15__for__16__i;
             stack.push_back (*reinterpret_cast<long*>(&__res));
         }
+        // We can ignore the update result
+        stack.pop_back ();
     }
     //---------------------------------------------------------------------
     // Statement
@@ -2868,6 +3641,8 @@ int main () {
     __main__block__21__for__22__i = *reinterpret_cast<long*>(&__rhs);
     // Result of assignment
     stack.push_back (*reinterpret_cast<long*>(&__main__block__21__for__22__i));
+    // We can ignore the init result
+    stack.pop_back ();
     // Using an infinite loop so we can write a separate multi-line condition
     while (1)
     {
@@ -2939,6 +3714,8 @@ int main () {
             __res = __main__block__21__for__22__i;
             stack.push_back (*reinterpret_cast<long*>(&__res));
         }
+        // We can ignore the update result
+        stack.pop_back ();
     }
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
@@ -2956,6 +3733,8 @@ int main () {
     __main__block__21__for__24__i = *reinterpret_cast<long*>(&__rhs);
     // Result of assignment
     stack.push_back (*reinterpret_cast<long*>(&__main__block__21__for__24__i));
+    // We can ignore the init result
+    stack.pop_back ();
     // Using an infinite loop so we can write a separate multi-line condition
     while (1)
     {
@@ -3043,6 +3822,8 @@ int main () {
             __res = __main__block__21__for__24__i;
             stack.push_back (*reinterpret_cast<long*>(&__res));
         }
+        // We can ignore the update result
+        stack.pop_back ();
     }
     //---------------------------------------------------------------------
     // Statement
@@ -3129,6 +3910,8 @@ int main () {
     __main__block__26__for__27__i = *reinterpret_cast<long*>(&__rhs);
     // Result of assignment
     stack.push_back (*reinterpret_cast<long*>(&__main__block__26__for__27__i));
+    // We can ignore the init result
+    stack.pop_back ();
     // Using an infinite loop so we can write a separate multi-line condition
     while (1)
     {
@@ -3217,6 +4000,8 @@ int main () {
             __res = __main__block__26__for__27__i;
             stack.push_back (*reinterpret_cast<long*>(&__res));
         }
+        // We can ignore the update result
+        stack.pop_back ();
     }
     //---------------------------------------------------------------------
     // Statement
@@ -3468,6 +4253,8 @@ int main () {
     __main__block__30__for__31__i = *reinterpret_cast<long*>(&__rhs);
     // Result of assignment
     stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__31__i));
+    // We can ignore the init result
+    stack.pop_back ();
     // Using an infinite loop so we can write a separate multi-line condition
     while (1)
     {
@@ -3537,6 +4324,8 @@ int main () {
         __main__block__30__for__31__block__32__for__33__j = *reinterpret_cast<long*>(&__rhs);
         // Result of assignment
         stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__31__block__32__for__33__j));
+        // We can ignore the init result
+        stack.pop_back ();
         // Using an infinite loop so we can write a separate multi-line condition
         while (1)
         {
@@ -3609,6 +4398,8 @@ int main () {
                 __res = __main__block__30__for__31__block__32__for__33__j;
                 stack.push_back (*reinterpret_cast<long*>(&__res));
             }
+            // We can ignore the update result
+            stack.pop_back ();
         }
         //-----------------------------------------------------------------
         //-----------------------------------------------------------------
@@ -3623,6 +4414,8 @@ int main () {
             __res = __main__block__30__for__31__i;
             stack.push_back (*reinterpret_cast<long*>(&__res));
         }
+        // We can ignore the update result
+        stack.pop_back ();
     }
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
@@ -3640,6 +4433,8 @@ int main () {
     __main__block__30__for__35__i = *reinterpret_cast<long*>(&__rhs);
     // Result of assignment
     stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__35__i));
+    // We can ignore the init result
+    stack.pop_back ();
     // Using an infinite loop so we can write a separate multi-line condition
     while (1)
     {
@@ -3679,6 +4474,8 @@ int main () {
         __main__block__30__for__35__block__36__for__37__j = *reinterpret_cast<long*>(&__rhs);
         // Result of assignment
         stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__35__block__36__for__37__j));
+        // We can ignore the init result
+        stack.pop_back ();
         // Using an infinite loop so we can write a separate multi-line condition
         while (1)
         {
@@ -3758,6 +4555,8 @@ int main () {
                 __res = __main__block__30__for__35__block__36__for__37__j;
                 stack.push_back (*reinterpret_cast<long*>(&__res));
             }
+            // We can ignore the update result
+            stack.pop_back ();
         }
         //-----------------------------------------------------------------
         // Statement
@@ -3785,6 +4584,8 @@ int main () {
             __res = __main__block__30__for__35__i;
             stack.push_back (*reinterpret_cast<long*>(&__res));
         }
+        // We can ignore the update result
+        stack.pop_back ();
     }
     //---------------------------------------------------------------------
     // Statement
@@ -3815,6 +4616,8 @@ int main () {
     __main__block__30__for__39__i = *reinterpret_cast<long*>(&__rhs);
     // Result of assignment
     stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__39__i));
+    // We can ignore the init result
+    stack.pop_back ();
     // Using an infinite loop so we can write a separate multi-line condition
     while (1)
     {
@@ -3854,6 +4657,8 @@ int main () {
         __main__block__30__for__39__block__40__for__41__j = *reinterpret_cast<long*>(&__rhs);
         // Result of assignment
         stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__39__block__40__for__41__j));
+        // We can ignore the init result
+        stack.pop_back ();
         // Using an infinite loop so we can write a separate multi-line condition
         while (1)
         {
@@ -3979,6 +4784,8 @@ int main () {
                 __res = __main__block__30__for__39__block__40__for__41__j;
                 stack.push_back (*reinterpret_cast<long*>(&__res));
             }
+            // We can ignore the update result
+            stack.pop_back ();
         }
         //-----------------------------------------------------------------
         //-----------------------------------------------------------------
@@ -3993,6 +4800,8 @@ int main () {
             __res = __main__block__30__for__39__i;
             stack.push_back (*reinterpret_cast<long*>(&__res));
         }
+        // We can ignore the update result
+        stack.pop_back ();
     }
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
@@ -4010,6 +4819,8 @@ int main () {
     __main__block__30__for__44__i = *reinterpret_cast<long*>(&__rhs);
     // Result of assignment
     stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__44__i));
+    // We can ignore the init result
+    stack.pop_back ();
     // Using an infinite loop so we can write a separate multi-line condition
     while (1)
     {
@@ -4049,6 +4860,8 @@ int main () {
         __main__block__30__for__44__block__45__for__46__j = *reinterpret_cast<long*>(&__rhs);
         // Result of assignment
         stack.push_back (*reinterpret_cast<long*>(&__main__block__30__for__44__block__45__for__46__j));
+        // We can ignore the init result
+        stack.pop_back ();
         // Using an infinite loop so we can write a separate multi-line condition
         while (1)
         {
@@ -4128,6 +4941,8 @@ int main () {
                 __res = __main__block__30__for__44__block__45__for__46__j;
                 stack.push_back (*reinterpret_cast<long*>(&__res));
             }
+            // We can ignore the update result
+            stack.pop_back ();
         }
         //-----------------------------------------------------------------
         // Statement
@@ -4155,6 +4970,8 @@ int main () {
             __res = __main__block__30__for__44__i;
             stack.push_back (*reinterpret_cast<long*>(&__res));
         }
+        // We can ignore the update result
+        stack.pop_back ();
     }
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
@@ -4468,8 +5285,10 @@ int main () {
     // Assignment - '='
     // RHS
     // Constructor Call - A::A() -> A
-    // Arguments
-    stack.push_back (reinterpret_cast<long>(new __main__block__54____A ()));
+    {
+        // Arguments
+        stack.push_back (reinterpret_cast<long>(new __main__block__54____A ()));
+    }
     // LHS
     // Variable declaration
     __main__block__54____A* __main__block__54__a;
@@ -4486,8 +5305,10 @@ int main () {
     // Assignment - '='
     // RHS
     // Constructor Call - B::B() -> B
-    // Arguments
-    stack.push_back (reinterpret_cast<long>(new __main__block__54____B ()));
+    {
+        // Arguments
+        stack.push_back (reinterpret_cast<long>(new __main__block__54____B ()));
+    }
     // LHS
     // Variable declaration
     __main__block__54____B* __main__block__54__b;
@@ -4504,8 +5325,10 @@ int main () {
     // Assignment - '='
     // RHS
     // Constructor Call - C::C() -> C
-    // Arguments
-    stack.push_back (reinterpret_cast<long>(new __main__block__54____C ()));
+    {
+        // Arguments
+        stack.push_back (reinterpret_cast<long>(new __main__block__54____C ()));
+    }
     // LHS
     // Variable declaration
     __main__block__54____C* __main__block__54__c;
@@ -5125,8 +5948,10 @@ int main () {
     // Assignment - '='
     // RHS
     // Constructor Call - A::A() -> A
-    // Arguments
-    stack.push_back (reinterpret_cast<long>(new __main__block__63____A ()));
+    {
+        // Arguments
+        stack.push_back (reinterpret_cast<long>(new __main__block__63____A ()));
+    }
     // LHS
     // Variable declaration
     __main__block__63____A* __main__block__63__a;
@@ -5763,11 +6588,1360 @@ int main () {
     // End Statement
 
     //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Function Call - println(char[]) -> void
+    {
+        // Arguments
+        // String Literal
+        {
+            char str_literal[] = "=== test logical and";
+            // convert to a heap string
+            char* str = new char[21];
+            // copy string to heap allocation
+            std::memcpy (str, &str_literal, 21);
+            stack.push_back (reinterpret_cast<long> (str));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        char* __arg0 = *reinterpret_cast<char**>(&__stackval);
+        // println
+        __builtin__println__char__1 (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Array Allocator
+    {
+        // Int Literal
+        stack.push_back (2);
+        __stackval = stack.back ();
+        stack.pop_back ();
+        long** __res = new long*[__stackval];
+        stack.push_back (reinterpret_cast<long>(__res));
+    }
+    // LHS
+    // Variable declaration
+    long** __main__block__65__a;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__65__a = *reinterpret_cast<long***>(&__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>(__main__block__65__a));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (1);
+    // LHS
+    // Variable declaration
+    long __main__block__65__x;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__65__x = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__65__x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (0);
+    // LHS
+    // Variable declaration
+    long __main__block__65__y;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__65__y = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__65__y));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // AND
+    // LHS
+    // AND
+    // LHS
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__65__x));
+    __lhs = stack.back ();
+    // Short circuit eval - only check rhs if lhs was true
+    if (__lhs)
+    {
+        // RHS
+        stack.push_back (*reinterpret_cast<long*>(&__main__block__65__y));
+        __rhs = stack.back ();
+        stack.pop_back ();
+    }
+    __lhs = stack.back ();
+    stack.pop_back ();
+    __res = __lhs && __rhs;
+    stack.push_back (__res);
+    __lhs = stack.back ();
+    // Short circuit eval - only check rhs if lhs was true
+    if (__lhs)
+    {
+        // RHS
+        // Subscript Expression
+        {
+            // LHS
+            // Subscript Expression
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__65__a));
+                // OFFSET
+                // Int Literal
+                stack.push_back (512);
+                __offset = stack.back ();
+                stack.pop_back ();
+                __pointer = stack.back ();
+                stack.pop_back ();
+                long* __res = (*reinterpret_cast<long***>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                stack.push_back (reinterpret_cast<long>(__res));
+            }
+            // OFFSET
+            // Int Literal
+            stack.push_back (0);
+            __offset = stack.back ();
+            stack.pop_back ();
+            __pointer = stack.back ();
+            stack.pop_back ();
+            long __res = (*reinterpret_cast<long**>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        __rhs = stack.back ();
+        stack.pop_back ();
+    }
+    __lhs = stack.back ();
+    stack.pop_back ();
+    __res = __lhs && __rhs;
+    stack.push_back (__res);
+    // LHS
+    // Variable declaration
+    long __main__block__65__r;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__65__r = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__65__r));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        stack.push_back (*reinterpret_cast<long*>(&__main__block__65__r));
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Function Call - println(char[]) -> void
+    {
+        // Arguments
+        // String Literal
+        {
+            char str_literal[] = "=== test logical or";
+            // convert to a heap string
+            char* str = new char[20];
+            // copy string to heap allocation
+            std::memcpy (str, &str_literal, 20);
+            stack.push_back (reinterpret_cast<long> (str));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        char* __arg0 = *reinterpret_cast<char**>(&__stackval);
+        // println
+        __builtin__println__char__1 (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Array Allocator
+    {
+        // Int Literal
+        stack.push_back (2);
+        __stackval = stack.back ();
+        stack.pop_back ();
+        long** __res = new long*[__stackval];
+        stack.push_back (reinterpret_cast<long>(__res));
+    }
+    // LHS
+    // Variable declaration
+    long** __main__block__66__a;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__66__a = *reinterpret_cast<long***>(&__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>(__main__block__66__a));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (0);
+    // LHS
+    // Variable declaration
+    long __main__block__66__x;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__66__x = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__66__x));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (1);
+    // LHS
+    // Variable declaration
+    long __main__block__66__y;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__66__y = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__66__y));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // OR
+    // LHS
+    // OR
+    // LHS
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__66__x));
+    __lhs = stack.back ();
+    // Short circuit eval - only check rhs if lhs was false
+    if (!__lhs)
+    {
+        // RHS
+        stack.push_back (*reinterpret_cast<long*>(&__main__block__66__y));
+        __rhs = stack.back ();
+        stack.pop_back ();
+    }
+    __lhs = stack.back ();
+    stack.pop_back ();
+    __res = __lhs || __rhs;
+    stack.push_back (__res);
+    __lhs = stack.back ();
+    // Short circuit eval - only check rhs if lhs was false
+    if (!__lhs)
+    {
+        // RHS
+        // Subscript Expression
+        {
+            // LHS
+            // Subscript Expression
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__66__a));
+                // OFFSET
+                // Int Literal
+                stack.push_back (512);
+                __offset = stack.back ();
+                stack.pop_back ();
+                __pointer = stack.back ();
+                stack.pop_back ();
+                long* __res = (*reinterpret_cast<long***>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                stack.push_back (reinterpret_cast<long>(__res));
+            }
+            // OFFSET
+            // Int Literal
+            stack.push_back (0);
+            __offset = stack.back ();
+            stack.pop_back ();
+            __pointer = stack.back ();
+            stack.pop_back ();
+            long __res = (*reinterpret_cast<long**>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        __rhs = stack.back ();
+        stack.pop_back ();
+    }
+    __lhs = stack.back ();
+    stack.pop_back ();
+    __res = __lhs || __rhs;
+    stack.push_back (__res);
+    // LHS
+    // Variable declaration
+    long __main__block__66__r;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__66__r = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__66__r));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        stack.push_back (*reinterpret_cast<long*>(&__main__block__66__r));
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Null Literal
+    stack.push_back ((long)nullptr);
+    // LHS
+    // Variable declaration
+    char* __main__block__67__arr;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__67__arr = *reinterpret_cast<char**>(&__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>(__main__block__67__arr));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+    // If-Statement
+    // Precomputing all if/elif conditions and give unique names
+    // bc we can't have code between if and elif
+    // Condition
+    // Equal
+    {
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__main__block__67__arr));
+        // RHS
+        // Null Literal
+        stack.push_back ((long)nullptr);
+        __rhs = stack.back ();
+        stack.pop_back ();
+        __lhs = stack.back ();
+        stack.pop_back ();
+        long __res = *reinterpret_cast<char**>(&__lhs) == nullptr;
+        stack.push_back (*reinterpret_cast<long*>(&__res));
+    }
+    long __if__68__cond = stack.back ();
+    stack.pop_back ();
+    // get condition from stack
+    if (__if__68__cond)
+    {
+        // Body
+        //-----------------------------------------------------------------
+        // Code Block
+        // Statement
+        // Function Call - println(char[]) -> void
+        {
+            // Arguments
+            // String Literal
+            {
+                char str_literal[] = "it null";
+                // convert to a heap string
+                char* str = new char[8];
+                // copy string to heap allocation
+                std::memcpy (str, &str_literal, 8);
+                stack.push_back (reinterpret_cast<long> (str));
+            }
+            
+            __stackval = stack.back ();
+            stack.pop_back ();
+            // Reinterpret from general register
+            char* __arg0 = *reinterpret_cast<char**>(&__stackval);
+            // println
+            __builtin__println__char__1 (__arg0);
+            // push dummy value - funcall returns void
+            stack.push_back (0);
+        }
+        // Statement results can be ignored
+        stack.pop_back ();
+        // End Statement
+
+        //-----------------------------------------------------------------
+    }
+    // End of if
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Function Call - println(char[]) -> void
+    {
+        // Arguments
+        // String Literal
+        {
+            char str_literal[] = "=== test vector of vector";
+            // convert to a heap string
+            char* str = new char[26];
+            // copy string to heap allocation
+            std::memcpy (str, &str_literal, 26);
+            stack.push_back (reinterpret_cast<long> (str));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        char* __arg0 = *reinterpret_cast<char**>(&__stackval);
+        // println
+        __builtin__println__char__1 (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
 
     //=====================================================================
-    //### END OF CODE ####################################################
+    // Class Template - 
+    // Class Declaration - __main__block__70____Vec__char inherits __builtin____main__Object
+    // *see this class def before this parent function
+
+    // Populate Dispatch Table
+    __dtable____main__block__70____Vec__char[0] = (void*)__method____main__block__70____Vec__char____push_back__char;
+    // Class Declaration - __main__block__70____Vec__Vec inherits __builtin____main__Object
+    // *see this class def before this parent function
+
+    // Populate Dispatch Table
+    __dtable____main__block__70____Vec__Vec[0] = (void*)__method____main__block__70____Vec__Vec____push_back__Vec;
+    // Class Declaration - __main__block__70____Vec__Point inherits __builtin____main__Object
+    // *see this class def before this parent function
+
+    // Populate Dispatch Table
+    __dtable____main__block__70____Vec__Point[0] = (void*)__method____main__block__70____Vec__Point____push_back__Point;
+    // End Class Template - 
     //=====================================================================
 
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Constructor Call - Vec<:Vec<:char:>:>::Vec() -> Vec<:Vec<:char:>:>
+    {
+        // Arguments
+        stack.push_back (reinterpret_cast<long>(new __main__block__70____Vec__Vec ()));
+    }
+    // LHS
+    // Variable declaration
+    __main__block__70____Vec__Vec* __main__block__70__v;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__70__v = reinterpret_cast<__main__block__70____Vec__Vec*>(__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>(__main__block__70__v));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+    // For-Loop
+    // Init
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (0);
+    // LHS
+    // Variable declaration
+    long __main__block__70__for__77__i;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__70__for__77__i = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__77__i));
+    // We can ignore the init result
+    stack.pop_back ();
+    // Using an infinite loop so we can write a separate multi-line condition
+    while (1)
+    {
+        // Condition
+        // Less Than
+        {
+            // LHS
+            stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__77__i));
+            // RHS
+            // Int Literal
+            stack.push_back (5);
+            __rhs = stack.back ();
+            stack.pop_back ();
+            __lhs = stack.back ();
+            stack.pop_back ();
+            long __res = *reinterpret_cast<long*>(&__lhs) < *reinterpret_cast<long*>(&__rhs);
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        long __cond = stack.back ();
+        stack.pop_back ();
+        // break out of loop if condition is false
+        if (__cond == 0) break;
+        // Body
+        //-----------------------------------------------------------------
+        // Code Block
+        // Statement
+        // Method Call - Vec<:Vec<:char:>:>::push_back(Vec<:char:>) -> void
+        // LHS
+        stack.push_back (reinterpret_cast<long>(__main__block__70__v));
+        // RHS
+        {
+            // Arguments
+            // Constructor Call - Vec<:char:>::Vec() -> Vec<:char:>
+            {
+                // Arguments
+                stack.push_back (reinterpret_cast<long>(new __main__block__70____Vec__char ()));
+            }
+            __stackval = stack.back ();
+            stack.pop_back ();
+            // Reinterpret from general register
+            __main__block__70____Vec__char* __arg0 = reinterpret_cast<__main__block__70____Vec__char*>(__stackval);
+            __obj = stack.back ();
+            stack.pop_back ();
+            __method____main__block__70____Vec__Vec____push_back__Vec (reinterpret_cast<__main__block__70____Vec__Vec*>(__obj), __arg0);
+            // push dummy value - method rtype is void
+            stack.push_back (0);
+        }
+        // Statement results can be ignored
+        stack.pop_back ();
+        // End Statement
+
+        //-----------------------------------------------------------------
+        // For-Loop
+        // Init
+        // Assignment - '='
+        // RHS
+        // Int Literal
+        stack.push_back (0);
+        // LHS
+        // Variable declaration
+        long __main__block__70__for__77__block__78__for__79__j;
+        __rhs = stack.back ();
+        stack.pop_back ();
+        __main__block__70__for__77__block__78__for__79__j = *reinterpret_cast<long*>(&__rhs);
+        // Result of assignment
+        stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__77__block__78__for__79__j));
+        // We can ignore the init result
+        stack.pop_back ();
+        // Using an infinite loop so we can write a separate multi-line condition
+        while (1)
+        {
+            // Condition
+            // Less Than
+            {
+                // LHS
+                stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__77__block__78__for__79__j));
+                // RHS
+                // Int Literal
+                stack.push_back (5);
+                __rhs = stack.back ();
+                stack.pop_back ();
+                __lhs = stack.back ();
+                stack.pop_back ();
+                long __res = *reinterpret_cast<long*>(&__lhs) < *reinterpret_cast<long*>(&__rhs);
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            long __cond = stack.back ();
+            stack.pop_back ();
+            // break out of loop if condition is false
+            if (__cond == 0) break;
+            // Body
+            //-------------------------------------------------------------
+            // Code Block
+            //-------------------------------------------------------------
+            // If-Statement
+            // Precomputing all if/elif conditions and give unique names
+            // bc we can't have code between if and elif
+            // Condition
+            // Equal
+            {
+                // LHS
+                // Modulus
+                {
+                    // LHS
+                    // Addition
+                    {
+                        // LHS
+                        stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__77__i));
+                        // RHS
+                        stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__77__block__78__for__79__j));
+                        __rhs = stack.back ();
+                        stack.pop_back ();
+                        __lhs = stack.back ();
+                        stack.pop_back ();
+                        long __res = *reinterpret_cast<long*>(&__lhs) + *reinterpret_cast<long*>(&__rhs);
+                        stack.push_back (*reinterpret_cast<long*>(&__res));
+                    }
+                    // RHS
+                    // Int Literal
+                    stack.push_back (2);
+                    __rhs = stack.back ();
+                    stack.pop_back ();
+                    __lhs = stack.back ();
+                    stack.pop_back ();
+                    long __res = *reinterpret_cast<long*>(&__lhs) % *reinterpret_cast<long*>(&__rhs);
+                    stack.push_back (*reinterpret_cast<long*>(&__res));
+                }
+                // RHS
+                // Int Literal
+                stack.push_back (0);
+                __rhs = stack.back ();
+                stack.pop_back ();
+                __lhs = stack.back ();
+                stack.pop_back ();
+                long __res = *reinterpret_cast<long*>(&__lhs) == *reinterpret_cast<long*>(&__rhs);
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            long __if__81__cond = stack.back ();
+            stack.pop_back ();
+            // get condition from stack
+            if (__if__81__cond)
+            {
+                // Body
+                // Statement
+                // Method Call - Vec<:char:>::push_back(char) -> void
+                // LHS
+                // Subscript Expression
+                {
+                    // LHS
+                    // Member Accessor obj.data
+                    {
+                        // LHS
+                        stack.push_back (reinterpret_cast<long>(__main__block__70__v));
+                        // RHS
+                        __parent = stack.back ();
+                        stack.pop_back ();
+                        __main__block__70____Vec__char** __res = (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____data;
+                        stack.push_back (reinterpret_cast<long>(__res));
+                    }
+                    // OFFSET
+                    stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__77__i));
+                    __offset = stack.back ();
+                    stack.pop_back ();
+                    __pointer = stack.back ();
+                    stack.pop_back ();
+                    __main__block__70____Vec__char* __res = (reinterpret_cast<__main__block__70____Vec__char**>(__pointer))[*reinterpret_cast<long*>(&__offset)];
+                    stack.push_back (reinterpret_cast<long>(__res));
+                }
+                // RHS
+                {
+                    // Arguments
+                    // Char Literal
+                    stack.push_back (static_cast<long>(static_cast<unsigned char>('x')));
+                    __stackval = stack.back ();
+                    stack.pop_back ();
+                    // Reinterpret from general register
+                    char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
+                    __obj = stack.back ();
+                    stack.pop_back ();
+                    __method____main__block__70____Vec__char____push_back__char (reinterpret_cast<__main__block__70____Vec__char*>(__obj), __arg0);
+                    // push dummy value - method rtype is void
+                    stack.push_back (0);
+                }
+                // Statement results can be ignored
+                stack.pop_back ();
+                // End Statement
+
+            }
+            //-------------------------------------------------------------
+            // Else-Statement
+            else
+            {
+                // Statement
+                // Method Call - Vec<:char:>::push_back(char) -> void
+                // LHS
+                // Subscript Expression
+                {
+                    // LHS
+                    // Member Accessor obj.data
+                    {
+                        // LHS
+                        stack.push_back (reinterpret_cast<long>(__main__block__70__v));
+                        // RHS
+                        __parent = stack.back ();
+                        stack.pop_back ();
+                        __main__block__70____Vec__char** __res = (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____data;
+                        stack.push_back (reinterpret_cast<long>(__res));
+                    }
+                    // OFFSET
+                    stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__77__i));
+                    __offset = stack.back ();
+                    stack.pop_back ();
+                    __pointer = stack.back ();
+                    stack.pop_back ();
+                    __main__block__70____Vec__char* __res = (reinterpret_cast<__main__block__70____Vec__char**>(__pointer))[*reinterpret_cast<long*>(&__offset)];
+                    stack.push_back (reinterpret_cast<long>(__res));
+                }
+                // RHS
+                {
+                    // Arguments
+                    // Char Literal
+                    stack.push_back (static_cast<long>(static_cast<unsigned char>('.')));
+                    __stackval = stack.back ();
+                    stack.pop_back ();
+                    // Reinterpret from general register
+                    char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
+                    __obj = stack.back ();
+                    stack.pop_back ();
+                    __method____main__block__70____Vec__char____push_back__char (reinterpret_cast<__main__block__70____Vec__char*>(__obj), __arg0);
+                    // push dummy value - method rtype is void
+                    stack.push_back (0);
+                }
+                // Statement results can be ignored
+                stack.pop_back ();
+                // End Statement
+
+            }
+            //-------------------------------------------------------------
+            // End of if
+            //-------------------------------------------------------------
+            //-------------------------------------------------------------
+            // Update
+            // Pre-Increment
+            {
+                // RHS
+                stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__77__block__78__for__79__j));
+                __rhs = stack.back ();
+                stack.pop_back ();
+                __main__block__70__for__77__block__78__for__79__j = __main__block__70__for__77__block__78__for__79__j + 1;
+                __res = __main__block__70__for__77__block__78__for__79__j;
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            // We can ignore the update result
+            stack.pop_back ();
+        }
+        //-----------------------------------------------------------------
+        //-----------------------------------------------------------------
+        // Update
+        // Pre-Increment
+        {
+            // RHS
+            stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__77__i));
+            __rhs = stack.back ();
+            stack.pop_back ();
+            __main__block__70__for__77__i = __main__block__70__for__77__i + 1;
+            __res = __main__block__70__for__77__i;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        // We can ignore the update result
+        stack.pop_back ();
+    }
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // For-Loop
+    // Init
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (0);
+    // LHS
+    // Variable declaration
+    long __main__block__70__for__82__i;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__70__for__82__i = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__82__i));
+    // We can ignore the init result
+    stack.pop_back ();
+    // Using an infinite loop so we can write a separate multi-line condition
+    while (1)
+    {
+        // Condition
+        // Less Than
+        {
+            // LHS
+            stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__82__i));
+            // RHS
+            // Member Accessor obj.size
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__70__v));
+                // RHS
+                __parent = stack.back ();
+                stack.pop_back ();
+                long __res = (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____size;
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            __rhs = stack.back ();
+            stack.pop_back ();
+            __lhs = stack.back ();
+            stack.pop_back ();
+            long __res = *reinterpret_cast<long*>(&__lhs) < *reinterpret_cast<long*>(&__rhs);
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        long __cond = stack.back ();
+        stack.pop_back ();
+        // break out of loop if condition is false
+        if (__cond == 0) break;
+        // Body
+        //-----------------------------------------------------------------
+        // Code Block
+        //-----------------------------------------------------------------
+        // For-Loop
+        // Init
+        // Assignment - '='
+        // RHS
+        // Int Literal
+        stack.push_back (0);
+        // LHS
+        // Variable declaration
+        long __main__block__70__for__82__block__83__for__84__j;
+        __rhs = stack.back ();
+        stack.pop_back ();
+        __main__block__70__for__82__block__83__for__84__j = *reinterpret_cast<long*>(&__rhs);
+        // Result of assignment
+        stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__82__block__83__for__84__j));
+        // We can ignore the init result
+        stack.pop_back ();
+        // Using an infinite loop so we can write a separate multi-line condition
+        while (1)
+        {
+            // Condition
+            // Less Than
+            {
+                // LHS
+                stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__82__block__83__for__84__j));
+                // RHS
+                // Member Accessor obj.size
+                {
+                    // LHS
+                    // Subscript Expression
+                    {
+                        // LHS
+                        // Member Accessor obj.data
+                        {
+                            // LHS
+                            stack.push_back (reinterpret_cast<long>(__main__block__70__v));
+                            // RHS
+                            __parent = stack.back ();
+                            stack.pop_back ();
+                            __main__block__70____Vec__char** __res = (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____data;
+                            stack.push_back (reinterpret_cast<long>(__res));
+                        }
+                        // OFFSET
+                        stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__82__i));
+                        __offset = stack.back ();
+                        stack.pop_back ();
+                        __pointer = stack.back ();
+                        stack.pop_back ();
+                        __main__block__70____Vec__char* __res = (reinterpret_cast<__main__block__70____Vec__char**>(__pointer))[*reinterpret_cast<long*>(&__offset)];
+                        stack.push_back (reinterpret_cast<long>(__res));
+                    }
+                    // RHS
+                    __parent = stack.back ();
+                    stack.pop_back ();
+                    long __res = (reinterpret_cast<__main__block__70____Vec__char*>(__parent))->__field____main__block__70____Vec__char____size;
+                    stack.push_back (*reinterpret_cast<long*>(&__res));
+                }
+                __rhs = stack.back ();
+                stack.pop_back ();
+                __lhs = stack.back ();
+                stack.pop_back ();
+                long __res = *reinterpret_cast<long*>(&__lhs) < *reinterpret_cast<long*>(&__rhs);
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            long __cond = stack.back ();
+            stack.pop_back ();
+            // break out of loop if condition is false
+            if (__cond == 0) break;
+            // Body
+            //-------------------------------------------------------------
+            // Code Block
+            // Statement
+            // Function Call - print(char) -> void
+            {
+                // Arguments
+                // Subscript Expression
+                {
+                    // LHS
+                    // Member Accessor obj.data
+                    {
+                        // LHS
+                        // Subscript Expression
+                        {
+                            // LHS
+                            // Member Accessor obj.data
+                            {
+                                // LHS
+                                stack.push_back (reinterpret_cast<long>(__main__block__70__v));
+                                // RHS
+                                __parent = stack.back ();
+                                stack.pop_back ();
+                                __main__block__70____Vec__char** __res = (reinterpret_cast<__main__block__70____Vec__Vec*>(__parent))->__field____main__block__70____Vec__Vec____data;
+                                stack.push_back (reinterpret_cast<long>(__res));
+                            }
+                            // OFFSET
+                            stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__82__i));
+                            __offset = stack.back ();
+                            stack.pop_back ();
+                            __pointer = stack.back ();
+                            stack.pop_back ();
+                            __main__block__70____Vec__char* __res = (reinterpret_cast<__main__block__70____Vec__char**>(__pointer))[*reinterpret_cast<long*>(&__offset)];
+                            stack.push_back (reinterpret_cast<long>(__res));
+                        }
+                        // RHS
+                        __parent = stack.back ();
+                        stack.pop_back ();
+                        char* __res = (reinterpret_cast<__main__block__70____Vec__char*>(__parent))->__field____main__block__70____Vec__char____data;
+                        stack.push_back (reinterpret_cast<long>(__res));
+                    }
+                    // OFFSET
+                    stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__82__block__83__for__84__j));
+                    __offset = stack.back ();
+                    stack.pop_back ();
+                    __pointer = stack.back ();
+                    stack.pop_back ();
+                    char __res = (*reinterpret_cast<char**>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
+                    stack.push_back (static_cast<long>(static_cast<unsigned char>(__res)));
+                }
+                
+                __stackval = stack.back ();
+                stack.pop_back ();
+                // Reinterpret from general register
+                char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
+                // print
+                __builtin__print__char (__arg0);
+                // push dummy value - funcall returns void
+                stack.push_back (0);
+            }
+            // Statement results can be ignored
+            stack.pop_back ();
+            // End Statement
+
+            //-------------------------------------------------------------
+            // Update
+            // Pre-Increment
+            {
+                // RHS
+                stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__82__block__83__for__84__j));
+                __rhs = stack.back ();
+                stack.pop_back ();
+                __main__block__70__for__82__block__83__for__84__j = __main__block__70__for__82__block__83__for__84__j + 1;
+                __res = __main__block__70__for__82__block__83__for__84__j;
+                stack.push_back (*reinterpret_cast<long*>(&__res));
+            }
+            // We can ignore the update result
+            stack.pop_back ();
+        }
+        //-----------------------------------------------------------------
+        // Statement
+        // Function Call - println() -> void
+        {
+            // Arguments
+            // println
+            __builtin__println ();
+            // push dummy value - funcall returns void
+            stack.push_back (0);
+        }
+        // Statement results can be ignored
+        stack.pop_back ();
+        // End Statement
+
+        //-----------------------------------------------------------------
+        // Update
+        // Pre-Increment
+        {
+            // RHS
+            stack.push_back (*reinterpret_cast<long*>(&__main__block__70__for__82__i));
+            __rhs = stack.back ();
+            stack.pop_back ();
+            __main__block__70__for__82__i = __main__block__70__for__82__i + 1;
+            __res = __main__block__70__for__82__i;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        // We can ignore the update result
+        stack.pop_back ();
+    }
+    //---------------------------------------------------------------------
+    // Statement
+    // Function Call - println(char[]) -> void
+    {
+        // Arguments
+        // String Literal
+        {
+            char str_literal[] = "=== test class decl after template decl";
+            // convert to a heap string
+            char* str = new char[40];
+            // copy string to heap allocation
+            std::memcpy (str, &str_literal, 40);
+            stack.push_back (reinterpret_cast<long> (str));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        char* __arg0 = *reinterpret_cast<char**>(&__stackval);
+        // println
+        __builtin__println__char__1 (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Class Declaration - __main__block__70____Point inherits __builtin____main__Object
+    // *see this class def before this parent function
+
+    // Populate Dispatch Table
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Constructor Call - Vec<:Point:>::Vec() -> Vec<:Point:>
+    {
+        // Arguments
+        stack.push_back (reinterpret_cast<long>(new __main__block__70____Vec__Point ()));
+    }
+    // LHS
+    // Variable declaration
+    __main__block__70____Vec__Point* __main__block__70__points;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__70__points = reinterpret_cast<__main__block__70____Vec__Point*>(__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>(__main__block__70__points));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Method Call - Vec<:Point:>::push_back(Point) -> void
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__main__block__70__points));
+    // RHS
+    {
+        // Arguments
+        // Constructor Call - Point::Point(int, int) -> Point
+        {
+            // Arguments
+            // Int Literal
+            stack.push_back (7);
+            // Int Literal
+            stack.push_back (6);
+            __stackval = stack.back ();
+            stack.pop_back ();
+            // Reinterpret from general register
+            long __arg1 = *reinterpret_cast<long*>(&__stackval);
+            __stackval = stack.back ();
+            stack.pop_back ();
+            // Reinterpret from general register
+            long __arg0 = *reinterpret_cast<long*>(&__stackval);
+            stack.push_back (reinterpret_cast<long>(new __main__block__70____Point (__arg0, __arg1)));
+        }
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        __main__block__70____Point* __arg0 = reinterpret_cast<__main__block__70____Point*>(__stackval);
+        __obj = stack.back ();
+        stack.pop_back ();
+        __method____main__block__70____Vec__Point____push_back__Point (reinterpret_cast<__main__block__70____Vec__Point*>(__obj), __arg0);
+        // push dummy value - method rtype is void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - print(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.x
+        {
+            // LHS
+            // Subscript Expression
+            {
+                // LHS
+                // Member Accessor obj.data
+                {
+                    // LHS
+                    stack.push_back (reinterpret_cast<long>(__main__block__70__points));
+                    // RHS
+                    __parent = stack.back ();
+                    stack.pop_back ();
+                    __main__block__70____Point** __res = (reinterpret_cast<__main__block__70____Vec__Point*>(__parent))->__field____main__block__70____Vec__Point____data;
+                    stack.push_back (reinterpret_cast<long>(__res));
+                }
+                // OFFSET
+                // Int Literal
+                stack.push_back (0);
+                __offset = stack.back ();
+                stack.pop_back ();
+                __pointer = stack.back ();
+                stack.pop_back ();
+                __main__block__70____Point* __res = (reinterpret_cast<__main__block__70____Point**>(__pointer))[*reinterpret_cast<long*>(&__offset)];
+                stack.push_back (reinterpret_cast<long>(__res));
+            }
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__70____Point*>(__parent))->__field____main__block__70____Point____x;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // print
+        __builtin__print__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - print(char) -> void
+    {
+        // Arguments
+        // Char Literal
+        stack.push_back (static_cast<long>(static_cast<unsigned char>(' ')));
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        char __arg0 = static_cast<char>(static_cast<unsigned char>(__stackval));
+        // print
+        __builtin__print__char (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.y
+        {
+            // LHS
+            // Subscript Expression
+            {
+                // LHS
+                // Member Accessor obj.data
+                {
+                    // LHS
+                    stack.push_back (reinterpret_cast<long>(__main__block__70__points));
+                    // RHS
+                    __parent = stack.back ();
+                    stack.pop_back ();
+                    __main__block__70____Point** __res = (reinterpret_cast<__main__block__70____Vec__Point*>(__parent))->__field____main__block__70____Vec__Point____data;
+                    stack.push_back (reinterpret_cast<long>(__res));
+                }
+                // OFFSET
+                // Int Literal
+                stack.push_back (0);
+                __offset = stack.back ();
+                stack.pop_back ();
+                __pointer = stack.back ();
+                stack.pop_back ();
+                __main__block__70____Point* __res = (reinterpret_cast<__main__block__70____Point**>(__pointer))[*reinterpret_cast<long*>(&__offset)];
+                stack.push_back (reinterpret_cast<long>(__res));
+            }
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__70____Point*>(__parent))->__field____main__block__70____Point____y;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Function Call - println(char[]) -> void
+    {
+        // Arguments
+        // String Literal
+        {
+            char str_literal[] = "=== test template defaults";
+            // convert to a heap string
+            char* str = new char[27];
+            // copy string to heap allocation
+            std::memcpy (str, &str_literal, 27);
+            stack.push_back (reinterpret_cast<long> (str));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        char* __arg0 = *reinterpret_cast<char**>(&__stackval);
+        // println
+        __builtin__println__char__1 (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //=====================================================================
+    // Class Template - 
+    // Class Declaration - __main__block__87____A__B inherits __builtin____main__Object
+    // *see this class def before this parent function
+
+    // Populate Dispatch Table
+    // End Class Template - 
+    //=====================================================================
+
+    // Class Declaration - __main__block__87____B inherits __builtin____main__Object
+    // *see this class def before this parent function
+
+    // Populate Dispatch Table
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Constructor Call - A<:B:>::A() -> A<:B:>
+    {
+        // Arguments
+        stack.push_back (reinterpret_cast<long>(new __main__block__87____A__B ()));
+    }
+    // LHS
+    // Variable declaration
+    __main__block__87____A__B* __main__block__87__a;
+    __rhs = stack.back ();
+    stack.pop_back ();
+    __main__block__87__a = reinterpret_cast<__main__block__87____A__B*>(__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>(__main__block__87__a));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Function Call - println(int) -> void
+    {
+        // Arguments
+        // Member Accessor obj.w
+        {
+            // LHS
+            // Member Accessor obj.x
+            {
+                // LHS
+                stack.push_back (reinterpret_cast<long>(__main__block__87__a));
+                // RHS
+                __parent = stack.back ();
+                stack.pop_back ();
+                __main__block__87____B* __res = (reinterpret_cast<__main__block__87____A__B*>(__parent))->__field____main__block__87____A__B____x;
+                stack.push_back (reinterpret_cast<long>(__res));
+            }
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main__block__87____B*>(__parent))->__field____main__block__87____B____w;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        long __arg0 = *reinterpret_cast<long*>(&__stackval);
+        // println
+        __builtin__println__int (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Function Declaration - print(B) -> void
+    // *see this func def before this parent function
+
+    // Statement
+    // Function Call - print(B) -> void
+    {
+        // Arguments
+        // Null Literal
+        stack.push_back ((long)nullptr);
+        
+        __stackval = stack.back ();
+        stack.pop_back ();
+        // Reinterpret from general register
+        std::nullptr_t __arg0 = nullptr;
+        // print
+        __main__block__87____print__B (__arg0);
+        // push dummy value - funcall returns void
+        stack.push_back (0);
+    }
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
 }
 //=========================================================================
 //### END OF MAIN ########################################################

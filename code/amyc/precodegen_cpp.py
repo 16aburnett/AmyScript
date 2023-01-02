@@ -1,4 +1,4 @@
-# Amy Script Compiler - Code Generation
+# Amy Script Compiler - Pre Code Generation setup stage
 # By Amy Burnett
 # December 2022
 # ========================================================================
@@ -6,7 +6,7 @@
 import os 
 from sys import exit
 
-if __name__ == "codegen_cpp":
+if __name__ == "precodegen_cpp":
     from amyAST import *
     from visitor import ASTVisitor
     from symbolTable import SymbolTable
@@ -24,7 +24,7 @@ LIB_FILENAME = os.path.dirname(__file__) + "/AmyScriptBuiltinLib_cpp.cpp"
 
 # ========================================================================
 
-class CodeGenVisitor_cpp (ASTVisitor):
+class PreCodeGenVisitor_cpp (ASTVisitor):
 
     def __init__(self, lines):
         self.parameters = []
@@ -44,9 +44,6 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.code_stacks = [self.global_code_stack]
         # for compatability code references our global code
         self.code = self.global_code_stack
-        # header code stack is used for header definitions
-        # this is to get around template defaults
-        self.header_code = []
         self.lhs = "null"
         self.jumpIndex = 0
         self.shouldComment = True
@@ -67,16 +64,9 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.indentation = 0
     
     def popAndAddCodeStack (self):
-        self.global_code_stack += self.popCodeStack ()
-
-    def popAndAddCodeStackToHeader (self):
-        self.header_code += self.popCodeStack ()
-    
-    def popCodeStack (self):
-        codestack = self.code_stacks.pop ()
+        self.global_code_stack += self.code_stacks.pop ()
         # restore indentation
         self.indentation = self.indentation_stack.pop ()
-        return codestack
 
     def printIndent (self):
         self.printSpaces (self.indentation)
@@ -219,7 +209,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             type_str = f"reinterpret_cast<{type.decl.scopeName}*{array_suffix}>({varname})"
         # null
         elif type.type == Type.NULL:
-            type_str = f'nullptr'
+            type_str = f'reinterpret_cast<void*>({varname})'
         else:
             type_str = f"<unknown-conversion>*{array_suffix}"
         
@@ -254,9 +244,6 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
     def visitProgramNode (self, node):
 
-        # === library code
-        self.createCodeStack ()
-
         self.printComment ("Generated C++ code compiled from AmyScript")
         self.printDivider ()
         self.printNewline ()
@@ -271,29 +258,6 @@ class CodeGenVisitor_cpp (ASTVisitor):
         for line in file.readlines ():
             self.code_stacks[-1] += [line]
 
-        library_code_stack = self.popCodeStack ()
-
-        # === header code stack
-        self.createCodeStack ()
-        self.printDivider ()
-        self.printHeader ("Header section")
-        self.printDivider ()
-        self.printNewline ()
-        self.header_code += self.popCodeStack ()
-        # *populated from visiting code
-
-        # === functions code stack
-        self.createCodeStack ()
-        self.printDivider ()
-        self.printHeader ("Functions section")
-        self.printDivider ()
-        self.printNewline ()
-        self.global_code_stack += self.popCodeStack ()
-        # *populated from visiting code
-        # this is stored in global_code_stack
-
-        # === main code stack
-        # this is stored in global_code_stack
         # Build main code stack
         self.createCodeStack ()
 
@@ -304,15 +268,28 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         self.printCode ("int main () {")
         self.indentation += 1
+
+        self.printDivider ()
+        self.printHeader ("SETUP EXPRESSION RESULT STACK")
+        self.printDivider ()
+        self.printNewline ()
         
         self.printFunctionHeader ()
+
+        self.printDivider ()
+        self.printHeader ("COMPILED CODE")
+        self.printDivider ()
         self.printNewline ()
 
-        self.printComment ("Main body")
-        self.printSubDivider ()
         for codeunit in node.codeunits:
             if codeunit != None:
                 codeunit.accept (self)
+
+        self.printNewline ()
+        self.printDivider ()
+        self.printHeader ("END OF CODE")
+        self.printDivider ()
+        self.printNewline ()
 
         self.indentation -= 1
         self.printCode ("}")
@@ -324,8 +301,6 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         # push main function to the global stack
         self.popAndAddCodeStack ()
-
-        self.code = library_code_stack + self.header_code + self.global_code_stack
 
     def visitTypeSpecifierNode (self, node):
         pass
@@ -401,25 +376,20 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printComment ("*see this func def before this parent function")
         self.printNewline ()
 
+        # create a new code stack to build this function's definition
+        # we will add this before the main function
+        self.createCodeStack ()
+
+        self.printDivider ()
+        self.printComment (f"Function Declaration - {node.signature} -> {node.type}")
+
         # parameters
         params = []
         for i in range(len(node.params)):
             node.params[i].accept (self)
             params.append (f"{self.amyTypeToCPPType(node.params[i].type)} {node.params[i].scopeName}")
-
-        # add function signature to header section
-        self.createCodeStack ()
-        self.printCode (f"{self.amyTypeToCPPType(node.type)} {node.scopeName} ({', '.join(params)});")
-        self.popAndAddCodeStackToHeader ()
-
-        # create a new code stack to build this function's definition
-        # we will add this before the main function
-        self.createCodeStack ()
-        self.printDivider ()
-        self.printComment (f"Function Declaration - {node.signature} -> {node.type}")
-
-        # function signature
         self.printCode (f"{self.amyTypeToCPPType(node.type)} {node.scopeName} ({', '.join(params)})")
+
         self.printCode ("{")
         self.indentation += 1
 
@@ -463,29 +433,27 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         node.scopeName = "".join(self.scopeNames)
 
-        # === MAIN =======================================================
         if node.pDecl != None:
             self.printComment (f"Class Declaration - {node.scopeName} inherits {node.pDecl.scopeName}")
         else: 
             self.printComment (f"Class Declaration - {node.scopeName}")
         self.printComment ("*see this class def before this parent function")
         self.printNewline ()
-        # === END MAIN ===================================================
-
-        # === HEADER =====================================================
-        # create a new code stack to build this class's definition
-        # we will add this to the header section
-        self.createCodeStack ()
 
         # first add a forward decl for any insider functions
-        # self.printComment ("Add forward decl for any inner functions and methods")
-        # self.printCode (f"class {node.scopeName};")
+        self.createCodeStack ()
+        self.printComment ("Add forward decl for any inner functions and methods")
+        self.printCode (f"class {node.scopeName};")
         for templateParam in node.templateParams:
             if templateParam.type == Type.USERTYPE:
-                self.printCode (f"class {templateParam.decl.scopeName}; // {templateParam}")
-                # self.printCode (f"{templateParam.decl.scopeName}::{templateParam.decl.scopeName}(); // {templateParam}'s default ctor")
+                self.printComment (f"{templateParam} {templateParam.decl.scopeName}")
+        self.popAndAddCodeStack ()
 
-        # self.printDivider ()
+        # create a new code stack to build this class's definition
+        # we will add this before the main function
+        self.createCodeStack ()
+
+        self.printDivider ()
         if node.pDecl != None:
             self.printComment (f"Class Declaration - {node.scopeName} inherits {node.pDecl.scopeName}")
         else: 
@@ -525,7 +493,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             ctor.scopeName = "".join(scopeName)
 
         # create dispatch table 
-        # self.printComment ("Creating Dispatch Table (will be populated later)")
+        self.printComment ("Creating Dispatch Table (will be populated later)")
         node.dtableScopeName = "__dtable__" + "".join (self.scopeNames)
         self.printCode (f"void* {node.dtableScopeName}[{len(node.functionPointerList)}];")
 
@@ -554,54 +522,48 @@ class CodeGenVisitor_cpp (ASTVisitor):
             field.accept (self)
             i += 1
 
-        # print ctor signatures
-        for ctor in node.constructors:
-            ctor.parentClass = node
-            # parameters
-            params = []
-            for i in range(len(ctor.params)):
-                ctor.params[i].accept (self)
-                params.append (f"{self.amyTypeToCPPType(ctor.params[i].type)} {ctor.params[i].scopeName}")
-
-            # add function signature to header section
-            self.printCode (f"{node.scopeName} ({', '.join(params)});")
-
-        self.indentation -= 1
-        self.printCode ("};")
-        self.popAndAddCodeStackToHeader ()
-        # === END HEADER =================================================
-
-        # === IMPLEMENTATION =============================================
-        # print ctor implementations
         for ctor in node.constructors:
             ctor.parentClass = node
             ctor.accept (self)
+
+        self.indentation -= 1
+        self.printCode ("};")
+        self.popAndAddCodeStack ()
 
         # we need to add the methods outside of the class
         for method in node.methods:
             method.parentClass = node
             method.accept (self)
-        # === END IMPLEMENTATION =========================================
 
-        # === PRINT TO MAIN ==============================================
         # this is printed in where the class was originally defined (probably main)
         self.printComment ("Populate Dispatch Table")
         # populate dispatch table
         for i in range(len(node.functionPointerList)):
             self.printCode (f"{node.dtableScopeName}[{i}] = (void*){node.functionPointerList[i].scopeName};")
-        # === END PRINT TO MAIN ==========================================
+
+        self.createCodeStack ()
+
+        self.printComment (f"End Class Declaration - {node.scopeName}")
+        self.printDivider ()
+        self.printNewline ()
 
         # remove scope level 
         self.scopeNames.pop ()
 
+        self.popAndAddCodeStack ()
+
     def visitFieldDeclarationNode (self, node):
+        self.printSubDivider ()
         self.printComment (f"Field - {node.type} {node.signature}")
         if node.isInherited:
-            # dont print inherited fields
-            # as that would shadow the real inherited fields
-            self.printComment (f"{node.originalInheritedField.scopeName} Inherited from {node.parentClass.pDecl.id}")
+            self.printComment (f"Inherited from {node.parentClass.pDecl.id}")
+            self.printComment (f"{node.originalInheritedField.scopeName}")
         else:
+            # fieldIndexVarname = f"__field__{node.id}__{field.id}"
+            self.printComment (f"{node.scopeName} = {node.index}")
             self.printCode (f"{self.amyTypeToCPPType(node.type)} {node.scopeName};")
+
+        self.printSubDivider ()
 
     def visitMethodDeclarationNode (self, node):
         self.createCodeStack ()
@@ -659,7 +621,6 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.popAndAddCodeStack ()
 
     def visitConstructorDeclarationNode (self, node):
-        self.createCodeStack ()
 
         # create new scope level 
         self.scopeNames += [f"__{node.parentClass.id}"]
@@ -683,7 +644,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
             params.append (f"{self.amyTypeToCPPType(node.params[i].type)} {node.params[i].scopeName}")
 
         # ctor header
-        self.printCode (f"{node.parentClass.scopeName}::{node.parentClass.scopeName} ({', '.join(params)})")
+        self.printCode (f"{node.parentClass.scopeName} ({', '.join(params)})")
         self.printCode ("{")
         self.indentation += 1
         self.printFunctionHeader ()
@@ -711,8 +672,6 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         # remove scope level 
         self.scopeNames.pop ()
-        
-        self.popAndAddCodeStack ()
 
     def visitEnumDeclarationNode (self, node):
 
@@ -1177,8 +1136,6 @@ class CodeGenVisitor_cpp (ASTVisitor):
 
         self.indentation -= 1
         self.printCode ("}")
-
-        self.printCode ("__lhs = stack.back ();")
         self.printCode ("stack.pop_back ();")
 
         self.printCode ("__res = __lhs || __rhs;")
@@ -1206,7 +1163,6 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.indentation -= 1
         self.printCode ("}")
 
-        self.printCode ("__lhs = stack.back ();")
         self.printCode ("stack.pop_back ();")
         
         self.printCode ("__res = __lhs && __rhs;")
@@ -1846,8 +1802,6 @@ class CodeGenVisitor_cpp (ASTVisitor):
             # solution! extremely ad hoc 
             funcname = node.decl.signature
             # exit (1)
-        elif node.is_ctor:
-            funcname = f"new {node.type.decl.scopeName}"
         else:
             funcname = node.decl.scopeName
 
@@ -2053,9 +2007,6 @@ class CodeGenVisitor_cpp (ASTVisitor):
     def visitConstructorCallExpressionNode (self, node):
         self.printComment (f"Constructor Call - {node.decl.signature} -> {node.decl.parentClass.type}")
 
-        self.printCode ("{")
-        self.indentation += 1
-
         self.printComment ("Arguments")
         # calc arguments first
         # an argument could be another function call
@@ -2065,26 +2016,21 @@ class CodeGenVisitor_cpp (ASTVisitor):
             arg.accept (self)
 
         # retrieve values
-        # pop off the stack in reverse order
+        argIndex = len(node.args)-1
         args = []
-        for i in range(len(node.args)-1, -1, -1):
-            arg = node.args[i]
+        for arg in node.args:
             # save argument 
-            argName = f"__arg{i}"
-            self.printCode (f"__stackval = stack.back ();")
+            argName = f"__arg{argIndex}"
+            argIndex -= 1
+            self.printCode (f"{argName} = stack.back ();")
             self.printCode ("stack.pop_back ();")
             args.insert (0, argName)
-            self.printComment ("Reinterpret from general register")
-            self.printCode (f"{self.amyTypeToCPPType (arg.type)} {argName} = {self.stackToVar (arg.type, '__stackval')};")
 
         # call function
         ctor_expr = self.varToStack(node.type, f"new {node.decl.parentClass.scopeName} ({', '.join(args)})")
         
         # put function's return val on the stack
         self.printCode (f"stack.push_back ({ctor_expr});")
-
-        self.indentation -= 1
-        self.printCode ("}")
     
     def visitSizeofExpressionNode(self, node):
         node.rhs.accept (self)

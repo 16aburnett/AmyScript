@@ -297,8 +297,9 @@ class TemplateVisitor (ASTVisitor):
             # OBJECT TYPE -> ctor for object
             elif templateParam.type == Type.USERTYPE:
                 # print (f"object default constructor,    {templateParam}")
-                # node = ConstructorCallExpressionNode (templateParam, templateParam.id, node.args, node.templateParams, node.lineNumber, node.columnNumber)
+                # node = ConstructorCallExpressionNode (templateParam, templateParam.id, None, node.args, node.templateParams, node.lineNumber, node.columnNumber)
                 node.function.id = f"{templateParam}::{templateParam.id}"
+                node.is_ctor = True
 
             # PRIMITIVE TYPE
             else:
