@@ -1,0 +1,134 @@
+
+#ifndef STRING_H
+#define STRING_H
+
+class String
+{
+    public field int    size;
+    public field int    capacity;
+    public field int    increaseFactor;
+    public field char[] data;
+
+    constructor ()
+    {
+        this.size = 0;
+        this.capacity = 10;
+        this.increaseFactor = 10;
+        this.data = new char[this.capacity];
+    }
+
+    constructor (int size)
+    {
+        this.size = size;
+        this.capacity = size;
+        this.increaseFactor = 10;
+        this.data = new char[this.capacity];
+    }
+
+    constructor (char[] string)
+    {
+        this.size = sizeof (string);
+        this.data = new char[this.size];
+        for (int i = 0; i < this.size; ++i)
+        {
+            this.data[i] = string[i];
+        }
+        this.capacity = this.size;
+        this.increaseFactor = 10;
+    }
+
+    public method void pushBack (char c)
+    {
+        // ensure capacity
+        if (this.size + 1 >= this.capacity)
+        {
+            this.capacity += this.increaseFactor;
+            char[] newData = new char[this.capacity];
+            for (int i = 0; i < this.size; ++i)
+            {
+                newData[i] = this.data[i];
+            }
+            free (this.data);
+            this.data = newData;
+        }
+        this.data[this.size++] = c;
+    }
+
+    // undefined behavior if there is nothing to pop
+    public method char popBack ()
+    {
+        // ensure there is something to pop
+        if (this.size == 0) return '$';
+        return this.data[--this.size];
+    }
+
+}
+
+function String __add__ (String a, String b)
+{
+    String c = new String (a.size + b.size);
+    int j = 0;
+    for (int i = 0; i < a.size; ++i)
+    {
+        c.data[j++] = a.data[i];
+    }
+    for (int i = 0; i < b.size; ++i)
+    {
+        c.data[j++] = b.data[i];
+    }
+    return c;
+}
+
+function String __add__ (String a, char[] b)
+{
+    String b_ = new String (b);
+    String c = a + b_;
+    free (b_);
+    return c;
+}
+
+function String __add__ (char[] a, String b)
+{
+    String a_ = new String (a);
+    String c = a_ + b;
+    free (a_);
+    return c;
+}
+
+function String __add__ (char[] a, char[] b)
+{
+    String a_ = new String (a);
+    String b_ = new String (b);
+    String c = a_ + b_;
+    free (a_);
+    free (b_);
+    return c;
+}
+
+function void print (String str)
+{
+    print (str.data);
+}
+
+function void println (String str)
+{
+    println (str.data);
+}
+
+for (int i = 0; i < 100; ++i)
+{
+    String food = new String ("pizza");
+    char[] c0 = "I like";
+    char[] c1 = " ";
+    char[] c2 = "!!!";
+    String str = c0 + c1 + food + c2;
+
+    //println (str);
+
+    free (c0);
+    free (c1);
+    free (c2);
+    free (food);
+}
+
+#endif

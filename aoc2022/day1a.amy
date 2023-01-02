@@ -1,0 +1,34 @@
+
+
+#include "Vector.amy"
+
+Vector<:int:> elfCalories = new Vector<:int:>();
+
+char[] line = input();
+
+while (line[0] != '$')
+{
+    int calorieTotal = 0;
+
+    while (line[0] != '\n' && line[0] != '$')
+    {
+        calorieTotal += stringToInt (line);
+        free (line);
+        line = input();
+    }
+
+    elfCalories.pushBack (calorieTotal);
+
+    if (line[0] == '$') break;
+
+    free (line);
+    line = input();
+}
+
+int maxCalories = 0;
+
+for (int i = 0; i < elfCalories.size; ++i)
+    if (elfCalories.get(i) > maxCalories)
+        maxCalories = elfCalories.get(i);
+
+println (maxCalories);

@@ -1,0 +1,190 @@
+
+#include "Vector.amy"
+#include "algorithms.amy"
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+class Vec
+{
+    public field int i;
+    public field int j;
+    public field int time;
+    constructor ()
+    {
+        this.i = 0;
+        this.j = 0;
+        this.time = 0;
+    }
+    constructor (int i, int j)
+    {
+        this.i = i;
+        this.j = j;
+        this.time = 0;
+    }
+    constructor (int i, int j, int time)
+    {
+        this.i = i;
+        this.j = j;
+        this.time = time;
+    }
+}
+
+function void print (Vec p)
+{
+    print ('('); print (p.i); print (','); print (' '); print (p.j); print(')');
+}
+
+function void println (Vec p)
+{
+    print (p);
+    println ();
+}
+
+
+function int manhattan (int ax, int ay, int bx, int by)
+{
+    return abs (ax - bx) + abs (ay - by);
+}
+
+#include "LinkedList.amy"
+
+Vector<:Vector<:int:>:> elevations = new Vector<:Vector<:int:>:> ();
+Vector<:Vector<:int:>:> was_visited = new Vector<:Vector<:int:>:> ();
+
+char[] alphabet = "abcdefghijklmnopqrstuvwxyzSE";
+
+Vec start_pos = new Vec (0, 0);
+Vec end_pos   = new Vec (0, 0);
+
+LinkedList<:Vec:> starting_positions = new LinkedList <:Vec:> ();
+
+for (int l = 0; l < lines.size; l+=1)
+{
+    elevations.pushBack (new Vector<:int:> ());
+    was_visited.pushBack (new Vector<:int:> ());
+    int size = strlen (lines.data[l])-1;
+    for (int c = 0; c < size; ++c)
+    {
+        int val = first_index_of (alphabet, lines.data[l][c]);
+        //println (val);
+        if (val == 26)
+        {
+            val = 0; // set to lowest elevation, 'a'
+            start_pos.i = l;
+            start_pos.j = c;
+        }
+        elif (val == 27)
+        {
+            val = 25; // set to highest elevation, 'z'
+            end_pos.i = l;
+            end_pos.j = c;
+        }
+        // save potential starting position
+        if (val == 0)
+        {
+            starting_positions.pushBack (new Vec (l, c));
+        }
+        elevations.data[l].pushBack (val);
+        was_visited.data[l].pushBack (-1);
+    }
+
+}
+
+// breadth first search to find min steps to reach end
+function int bfs (Vector<:Vector<:int:>:> elevations, Vector<:Vector<:int:>:> board, Vec start_pos, Vec end_pos)
+{
+    LinkedList<:Vec:> frontier = new LinkedList<:Vec:> ();
+    frontier.pushBack (new Vec (start_pos.i, start_pos.j, 0));
+    while (!frontier.isEmpty ())
+    {
+        Vec pos = frontier.popFront ();
+        // ensure position wasnt visited already
+        if (board.data[pos.i].data[pos.j] != -1)
+        {
+            continue;
+        }
+        // check if we reached the finish
+        // this is not necessary but is a shortcut
+
+        // visited position so mark it with the time
+        board.data[pos.i].data[pos.j] = pos.time;
+
+        // North
+        // ensure it is a valid position
+        if (pos.i-1 >= 0)
+            // ensure next elevation is at most one larger
+            if ( (elevations.data[pos.i-1].data[pos.j] - elevations.data[pos.i].data[pos.j]) <= 1)
+                frontier.pushBack (new Vec (pos.i-1, pos.j, pos.time+1));
+        // East
+        // ensure it is a valid position
+        if (pos.j+1 < elevations.data[0].size)
+            // ensure next elevation is at most one larger
+            if ( (elevations.data[pos.i].data[pos.j+1] - elevations.data[pos.i].data[pos.j]) <= 1)
+                frontier.pushBack (new Vec (pos.i, pos.j+1, pos.time+1));
+        // South
+        // ensure it is a valid position
+        if (pos.i+1 < elevations.size)
+            // ensure next elevation is at most one larger
+            if ( (elevations.data[pos.i+1].data[pos.j] - elevations.data[pos.i].data[pos.j]) <= 1)
+                frontier.pushBack (new Vec (pos.i+1, pos.j, pos.time+1));
+        // West
+        // ensure it is a valid position
+        if (pos.j-1 >= 0)
+            // ensure next elevation is at most one larger
+            if ( (elevations.data[pos.i].data[pos.j-1] - elevations.data[pos.i].data[pos.j]) <= 1)
+                frontier.pushBack (new Vec (pos.i, pos.j-1, pos.time+1));
+        free (pos);
+    }
+
+    return board.data[end_pos.i].data[end_pos.j];
+
+}
+
+int min_moves = elevations.size * elevations.data[0].size;
+
+while (!starting_positions.isEmpty ())
+{
+    Vec starting_pos = starting_positions.popFront ();
+    //println (starting_pos);
+
+    // shortcut using manhattan distance
+    // this rarely happens
+    if (manhattan (starting_pos.i, starting_pos.j, end_pos.i, end_pos.j) >= min_moves)
+    {
+        //println ("Skipping");
+        free (starting_pos);
+        continue;
+    }
+
+    // reset time board
+    for (int i = 0; i < was_visited.size; ++i)
+    {
+        for (int j = 0; j < was_visited.data[i].size; ++j)
+        {
+            was_visited.data[i].data[j] = -1;
+        }
+    }
+
+    int res = bfs (elevations, was_visited, starting_pos, end_pos);
+
+    // ignore if no solution
+    if (res == -1)
+    {
+        //println ("no solution");
+        free (starting_pos);
+        continue;
+    }
+
+    min_moves = min (res, min_moves);
+
+    free (starting_pos);
+
+}
+
+println (min_moves);

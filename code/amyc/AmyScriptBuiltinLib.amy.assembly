@@ -13,17 +13,16 @@ jump __endOfLibrary
 //========================================================================
 // Prints a given string to the screen
 // void print (char[] stringToPrint);
-print__char__1:
+__builtin__print__char__1:
     // grab string
     stackget __str 0
-    sizeof __size __str
     // print each char
     // init
     assign __i 0
 __print__char__1__loop:
     // cond
-    cmp __i __size
-    jge __print__char__1__endloop
+    cmp __str[__i] 0
+    jeq __print__char__1__endloop
     // Body
     print __str[__i]
     // update
@@ -36,7 +35,7 @@ __print__char__1__endloop:
 //========================================================================
 // Prints an int to the screen
 // void print (int intToPrint);
-print__int:
+__builtin__print__int:
     stackget __str 0
     print __str
     return 0
@@ -44,7 +43,7 @@ print__int:
 //========================================================================
 // Prints a float to the screen
 // void print (float floatToPrint);
-print__float:
+__builtin__print__float:
     stackget __str 0
     print __str
     return 0
@@ -52,7 +51,7 @@ print__float:
 //========================================================================
 // Prints a char to the screen
 // void print (char charToPrint);
-print__char:
+__builtin__print__char:
     // grab string
     stackget __char 0
     print __char
@@ -61,7 +60,7 @@ print__char:
 //========================================================================
 // Prints an enum's integer value 
 // void print (Enum e);
-print__Enum:
+__builtin__print__Enum:
     stackget __e 0
     print __e
     return 0
@@ -69,17 +68,16 @@ print__Enum:
 //========================================================================
 // Prints a given string to the screen with a newline at the end
 // void println (char[] stringToPrint);
-println__char__1:
+__builtin__println__char__1:
     // grab string
     stackget __str 0
-    sizeof __size __str
     // print each char
     // init
     assign __i 0
 __println__char__1__loop:
     // cond
-    cmp __i __size
-    jge __println__char__1__endloop
+    cmp __str[__i] 0
+    jeq __println__char__1__endloop
     // Body
     print __str[__i]
     // update
@@ -93,7 +91,7 @@ __println__char__1__endloop:
 //========================================================================
 // Prints an int to the screen with a newline
 // void print (int intToPrint);
-println__int:
+__builtin__println__int:
     stackget __str 0
     println __str
     return 0
@@ -101,7 +99,7 @@ println__int:
 //========================================================================
 // Prints a float to the screen with a newline
 // void println (float floatToPrint);
-println__float:
+__builtin__println__float:
     stackget __str 0
     println __str
     return 0
@@ -109,7 +107,7 @@ println__float:
 //========================================================================
 // Prints a char to the screen with a newline
 // void println (char charToPrint);
-println__char:
+__builtin__println__char:
     // grab string
     stackget __char 0
     println __char
@@ -118,7 +116,7 @@ println__char:
 //========================================================================
 // Prints an enum's integer value with a newline
 // void println (Enum e);
-println__Enum:
+__builtin__println__Enum:
     stackget __e 0
     println __e
     return 0
@@ -126,32 +124,41 @@ println__Enum:
 //========================================================================
 // Prints a newline to the console
 // void println ();
-println:
+__builtin__println:
     println 
     return 0
 
 //========================================================================
 // grabs input from the console 
 // char[] input ();
-input:
+__builtin__input:
     input __line
     return __line
 
 //========================================================================
 // exits/stops the program 
-exit:
+__builtin__exit:
     halt
+
+//========================================================================
+
+// Exits the program with the given exit code 
+// void exit(int exit_code)
+// - exit_code : 
+__builtin__exit__int:
+    // ** not implemented for amyasm
+    halt 
 
 //========================================================================
 // returns default float value
 // float float ();
-float:
+__builtin__float:
     return 0.0
 
 //========================================================================
 // converts int to float
 // float intToFloat (int);
-intToFloat__int:
+__builtin__intToFloat__int:
     stackget val 0
     itof res val
     return res
@@ -159,7 +166,7 @@ intToFloat__int:
 //========================================================================
 // parses a float from a given char[]
 // float stringToFloat (char[]);
-stringToFloat__char__1:
+__builtin__stringToFloat__char__1:
     stackget val 0
     stof res val
     return res
@@ -167,19 +174,19 @@ stringToFloat__char__1:
 //========================================================================
 // returns default int value
 // int int ();
-int:
+__builtin__int:
     return 0
 
 //========================================================================
 // returns default char value
 // char char ();
-char:
+__builtin__char:
     return '0'
 
 //========================================================================
 // converts float to int
 // int floatToInt (float);
-floatToInt__float:
+__builtin__floatToInt__float:
     stackget val 0
     ftoi res val
     return res
@@ -187,7 +194,7 @@ floatToInt__float:
 //========================================================================
 // parses an int from a given char[]
 // int stringToInt (char[]);
-stringToInt__char__1:
+__builtin__stringToInt__char__1:
     stackget val 0
     stoi res val
     return res
@@ -195,7 +202,7 @@ stringToInt__char__1:
 //========================================================================
 // parses an int from a given char
 // int charToInt (char);
-charToInt__char:
+__builtin__charToInt__char:
     stackget val 0
     ctoi res val
     return res
@@ -203,7 +210,7 @@ charToInt__char:
 //========================================================================
 // converts int to string
 // char[] string (int);
-string__int:
+__builtin__string__int:
     stackget val 0
     string res val
     return res
@@ -211,7 +218,7 @@ string__int:
 //========================================================================
 // converts float to string
 // char[] string (float);
-string__float:
+__builtin__string__float:
     stackget val 0
     string res val
     return res
@@ -220,7 +227,7 @@ string__float:
 
 // returns default value for array and object (null)
 // null null ();
-null:
+__builtin__null:
     return __null
 
 //========================================================================

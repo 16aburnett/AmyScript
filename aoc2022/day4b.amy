@@ -1,0 +1,98 @@
+
+
+#include "Vector.amy"
+#include "algorithms.amy"
+
+char[] line = input();
+
+int total = 0;
+
+Vector<:char[]:> lines = new Vector<:char[]:>();
+
+while (line[0] != '$')
+{
+    lines.pushBack (line);
+
+    line = input();
+}
+
+for (int l = 0; l < lines.size; ++l)
+{
+
+    char[] line = lines.data[l];
+    int line_size = strlen (line);
+
+    int indexcomma = 0;
+    int indexdash0 = 0;
+    int indexdash1 = 0;
+    for (int i = 0; i < line_size; ++i)
+    {
+        if (line[i] == '-')
+        {
+            if (indexcomma == 0)
+                indexdash0 = i;
+            else
+                indexdash1 = i;
+        }
+        if (line[i] == ',')
+            indexcomma = i;
+    }
+
+    int begin = 0;
+    int end = indexdash0;
+    int iter = 0;
+    char[] a_ = new char[end-begin+1];
+    for (int i = begin; i < end; ++i)
+        a_[iter++] = line[i];
+    a_[end-begin] = '\0';
+
+    begin = indexdash0+1;
+    end = indexcomma;
+    iter = 0;
+    char[] b_ = new char[end-begin+1];
+    for (int i = begin; i < end; ++i)
+        b_[iter++] = line[i];
+    b_[end-begin] = '\0';
+
+    begin = indexcomma+1;
+    end = indexdash1;
+    iter = 0;
+    char[] c_ = new char[end-begin+1];
+    for (int i = begin; i < end; ++i)
+        c_[iter++] = line[i];
+    c_[end-begin] = '\0';
+
+    begin = indexdash1+1;
+    end = line_size-1; //-1 bc newline
+    iter = 0;
+    char[] d_ = new char[end-begin+1];
+    for (int i = begin; i < end; ++i)
+        d_[iter++] = line[i];
+    d_[end-begin] = '\0';
+
+    int begin0 = stringToInt (a_);
+    int end0 = stringToInt (b_);
+    int begin1 = stringToInt (c_);
+    int end1 = stringToInt (d_);
+
+    // check if overlapping
+    // check if each end point is in the other range
+    int overlaps = 0;
+    if (begin0 >= begin1 && begin0 <= end1)
+        overlaps = 1;
+    if (end0 >= begin1 && end0 <= end1)
+        overlaps = 1;
+    if (begin1 >= begin0 && begin1 <= end0)
+        overlaps = 1;
+    if (end1 >= begin0 && end1 <= end0)
+        overlaps = 1;
+    
+    
+    if (overlaps)
+    {
+        total++;
+    }
+
+}
+
+println (total);

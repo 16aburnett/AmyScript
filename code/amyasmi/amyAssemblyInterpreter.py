@@ -353,6 +353,7 @@ class AmyAssemblyInterpreter:
 
             # make sure offset isn't outside of address' block
             if (offset >= heap.sizeof (address)):
+                # print (heap.memory[address-15:address+15], heap.memory[address])
                 print (f"Error: Index out of bounds.")
                 exit (1)
             
@@ -378,6 +379,7 @@ class AmyAssemblyInterpreter:
 
                 # make sure offset isn't outside of address' block
                 if (offset >= heap.sizeof (address)):
+                    # print (heap.memory[address-15:address+15], "'"+heap.memory[address]+"'")
                     print (f"Error: Index out of bounds.")
                     exit (1)
 
@@ -404,6 +406,10 @@ class AmyAssemblyInterpreter:
             elif params[i] == MODE_IMMEDIATE and MODE_IMMEDIATE not in reject:
                 # convert special characters for output
                 if isinstance(params[i+1], str) and params[i+1][0] == '\\':
+                    # literal_eval will essentially output the string 
+                    # which will convert \ chars to actual newlines, tabs, etc
+                    import ast
+                    params[i+1] = ast.literal_eval ("'"+params[i+1]+"'")
                     return params[i+1].replace ("\\n", "\n").replace ("\\t", "\t").replace ("\\r", "\r").replace ("\\b", "\b"), i+2
                 return params[i+1], i+2
 
@@ -567,12 +573,19 @@ class AmyAssemblyInterpreter:
                 # INPUT dest 
 
                 # Read in line 
-                line = sys.stdin.readline()
+                try:
+                    line = input () + '\n' + '\0'
+                except EOFError:
+                    line = 0
 
                 # put in memory 
-                lineAddress = heap.malloc(len(line))
-                for i in range(len(line)):
-                    heap.memory[lineAddress+i] = line[i]
+                if line != 0:
+                    lineAddress = heap.malloc(len(line))
+                    for i in range(len(line)):
+                        heap.memory[lineAddress+i] = line[i]
+                else:
+                    # set to null
+                    lineAddress = 0
 
                 # Case 1: Memory
                 if params[0] == MODE_MEMORY:
@@ -692,6 +705,10 @@ class AmyAssemblyInterpreter:
                 src1, i = getNextValue(heap, stack, params, 0)
                 src2, i = getNextValue(heap, stack, params, i)
                 # set flags 
+                if isinstance (src1, str):
+                    src1 = ord(src1)
+                if isinstance (src2, str):
+                    src2 = ord(src2)
                 lessThanFlag = 1 if src1 < src2 else 0
                 equalFlag = 1 if src1 == src2 else 0
                 greaterThanFlag = 1 if src1 > src2 else 0
@@ -1011,7 +1028,7 @@ class AmyAssemblyInterpreter:
                 # Case1 : dest variable
                 if params[0] == MODE_STACK:
                     src, i = getNextValue(heap, stack, params, 2)
-                    s = str(src)
+                    s = str(src) + '\0'
                     # create string on heap
                     ptr = heap.malloc (len(s))
                     # add characters to heap block
@@ -1024,7 +1041,7 @@ class AmyAssemblyInterpreter:
                     pmode, pointer, omode, offset = params[1:5]
                     address = getMemAddress(stack, pmode, pointer, omode, offset)
                     src, i = getNextValue(heap, stack, params, 5)
-                    s = str(src)
+                    s = str(src) + '\0'
                     # create string on heap
                     ptr = heap.malloc (len(s))
                     # add characters to heap block
@@ -1048,7 +1065,8 @@ class AmyAssemblyInterpreter:
                     # accumulate characters 
                     s = []
                     size = heap.sizeof (src)
-                    for i in range(size):
+                    # -1 to ignore null char
+                    for i in range(size-1):
                         s += [heap.memory[src+i]]
                     s = "".join(s)
                     stack[base_pointer][params[1]] = float (s)
@@ -1064,7 +1082,8 @@ class AmyAssemblyInterpreter:
                     # accumulate characters 
                     s = []
                     size = heap.sizeof (src)
-                    for i in range(size):
+                    # -1 to ignore null char
+                    for i in range(size-1):
                         s += [heap.memory[src+i]]
                     s = "".join(s)
                     heap.memory[address] = float (s)
@@ -1084,9 +1103,21 @@ class AmyAssemblyInterpreter:
                     # accumulate characters 
                     s = []
                     size = heap.sizeof (src)
-                    for i in range(size):
+                    # protection for chars (since python chars a strings)
+                    if size == 1: 
+                        size += 1
+                    # -1 to ignore null char for strings
+                    else:
+                        # strlen 
+                        j = 0
+                        while j < size and heap.memory[src+j] != '\0':
+                            j += 1
+                        size = j+1
+                    for i in range(size-1):
                         s += [heap.memory[src+i]]
                     s = "".join(s)
+                    # print ("'"+s+"'", size)
+                    # print (heap.memory[src-10:src+10])
                     stack[base_pointer][params[1]] = int (s)
                 # Case2 : dest memory
                 elif params[0] == MODE_MEMORY:
@@ -1100,9 +1131,21 @@ class AmyAssemblyInterpreter:
                     # accumulate characters 
                     s = []
                     size = heap.sizeof (src)
-                    for i in range(size):
+                    # protection for chars (since python chars a strings)
+                    if size == 1: 
+                        size += 1
+                    # -1 to ignore null char for strings
+                    else:
+                        # strlen 
+                        j = 0
+                        while j < size and heap.memory[src+j] != '\0':
+                            j += 1
+                        size = j+1
+                    for i in range(size-1):
                         s += [heap.memory[src+i]]
                     s = "".join(s)
+                    # print ("'"+s+"'", size)
+                    # print (heap.memory[src-10:src+10])
                     heap.memory[address] = int (s)
                 # Case 3: Invalid param type
                 else:
@@ -1138,6 +1181,7 @@ class AmyAssemblyInterpreter:
 
         # print ("=======================================")
         # printheap(heap)
+        # print (heap.allocatedMemory)
 
         # print("*** End of program ***")
 

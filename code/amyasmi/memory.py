@@ -13,6 +13,10 @@ class BlockHeader:
         self.prevBlock = prevBlock
         self.payloadSize = payloadSize
         self.isAlloc = isAlloc
+    def __str__ (self):
+        return (f"[{self.payloadSize}, {self.isAlloc}]")
+    def __repr__ (self):
+        return self.__str__ ()
 
 class Heap:
     def __init__(self):
@@ -21,6 +25,7 @@ class Heap:
         # set up first free block
         # mem[0] is reserved for NULLPTR
         self.memory[1] = BlockHeader(None, initialSize-2, False)
+        self.allocatedMemory = 0
 
     def malloc(self, size:int) -> int:
         """allocates space for given size and returns the pointer to 
@@ -37,8 +42,9 @@ class Heap:
                 continue
             # if sufficient 
             if header.payloadSize == size:
-                # allocate 
+                # allocate this block
                 header.isAlloc = True
+                self.allocatedMemory += header.payloadSize
                 # return pointer to first payload pos
                 return i + 1
             # if sufficient
@@ -49,6 +55,7 @@ class Heap:
                 # modify this payload
                 header.payloadSize = size
                 header.isAlloc = True
+                self.allocatedMemory += header.payloadSize
                 # if second split has >0 payload
                 # *** removed if because caused error 
                 # if secondPayload > 0:
@@ -67,17 +74,21 @@ class Heap:
         # Lets add one
         self.memory += [BlockHeader(header, size, True)]
         self.memory += [0 for _ in range(size)]
+        self.allocatedMemory += size
         # return pointer to first payload pos
         return i + 1
 
     def free(self, address:int):
         """Frees the block containing the address"""
         self.memory[address-1].isAlloc = False
+        self.allocatedMemory -= self.memory[address-1].payloadSize
         self.coallese(address-1)
     
     def coallese(self, address:int):
-        """Merges the free block at given address with
-        adjacent free blocks"""
+        """
+        Merges the free block at given address with adjacent free blocks
+        - allocated blocks are left unchanged
+        """
         # combine with free block after
         nextBlockAddr = address+self.memory[address].payloadSize+1
         if nextBlockAddr < len(self.memory) and not self.memory[nextBlockAddr].isAlloc:

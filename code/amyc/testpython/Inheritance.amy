@@ -1,0 +1,58 @@
+
+#ifndef GENERICARRAY_H
+#define GENERICARRAY_H
+
+class A
+{
+    public field float x;
+    constructor (float x)
+    {
+        this.x = x;
+    }
+}
+
+class B inherits A
+{
+    public field float y;
+    public field float z;
+    constructor (float x, float y, float z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+}
+
+function void printA (A a)
+{
+    println (a.x);
+}
+
+A a = new A (3.14);
+
+println (a.x);
+
+B b = new B (0.1, 0.4, 34.23);
+
+println (b.x);
+
+printA (a);
+printA (b);
+
+// overload standard print
+
+function void print (A a)
+{
+    print (a.x);
+}
+
+function void println (A a)
+{
+    print (a);
+    println ();
+}
+
+println (a);
+println (b);
+
+#endif

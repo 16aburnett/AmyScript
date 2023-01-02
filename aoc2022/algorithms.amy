@@ -1,0 +1,159 @@
+
+#ifndef ALGORITHMS_H
+#define ALGORITHMS_H
+
+#include "Vector.amy"
+
+//========================================================================
+
+// returns the length of a given null terminated string
+// length does not include the null terminator
+// returns -1 if the given string is null
+function int strlen (char[] str)
+{
+    if (str == null) return -1;
+    int size = 0;
+    while (str[size++] != '\0');
+    return size-1;
+}
+
+function int strcmp (char[] a, char[] b)
+{
+    int asize = strlen (a);
+    int bsize = strlen (b);
+    if (asize != bsize)
+        return 0;
+    for (int i = 0; i < asize; ++i)
+    {
+        if (a[i] != b[i])
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+function char[] substr (char[] a, int start, int end)
+{
+    char[] res = new char[end-start+1];
+    for (int i = 0; i < end-start; ++i)
+    {
+        res[i] = a[i+start];
+    }
+    res[end-start] = '\0';
+    return res;
+}
+
+//========================================================================
+
+// returns the first index that matches the given char
+// -1 if the given char is not found in the given array
+function int first_index_of (char[] arr, char c)
+{
+    int size = strlen (arr);
+    for (int i = 0; i < size; ++i)
+    {
+        if (arr[i] == c)
+            return i;
+    }
+    // not found
+    return -1;
+}
+
+//========================================================================
+
+// returns a list of strings from the given string that are delimited by delim
+function Vector<:char[]:> split (char[] str, char delim)
+{   
+    // buffer initially set to sizeof str 
+    // extra space will be removed later 
+    // this prevents the need to reallocate more space 
+    Vector<:char[]:> tokens = new Vector<:char[]:> ();
+
+    int size = strlen (str);
+
+    int i = 0; 
+    int j = 0; 
+    while (i < size)
+    {
+        // at the start of a new split 
+        if (str[i] != delim)
+        {
+            // determine split size 
+            int count = 0;
+            int k = i;
+            while (k < size) 
+                if (str[k++] != delim)
+                    ++count; 
+                else 
+                    break;
+
+            // allocate space for the split
+            // +1 for \0
+            tokens.pushBack (new char[count+1]);
+
+            // add characters until delim is reached 
+            for (int k = 0; k < count; ++k)
+            {
+                tokens.data[j][k] = str[i++];
+            }
+            tokens.data[j][count] = '\0';
+            // move to next split token
+            ++j; 
+        }
+        // skip over delimiters
+        ++i; 
+    }
+
+    return tokens; 
+}
+
+//========================================================================
+
+function int max (int a, int b)
+{
+    if (a >= b)
+        return a;
+    return b;
+}
+function float max (float a, float b)
+{
+    if (a >= b)
+        return a;
+    return b;
+}
+
+//========================================================================
+
+function int min (int a, int b)
+{
+    if (a <= b)
+        return a;
+    return b;
+}
+function float min (float a, float b)
+{
+    if (a <= b)
+        return a;
+    return b;
+}
+
+//========================================================================
+
+function int abs (int v)
+{
+    if (v < 0)
+        return -v;
+    return v;
+}
+function float abs (float v)
+{
+    if (v < 0.0)
+        return -v;
+    return v;
+}
+
+//========================================================================
+
+
+#endif

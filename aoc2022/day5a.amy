@@ -1,0 +1,94 @@
+
+
+#include "Vector.amy"
+#include "algorithms.amy"
+
+char[] line = input();
+
+int total = 0;
+
+Vector<:char[]:> stacklines = new Vector<:char[]:>();
+Vector<:char[]:> instructionlines = new Vector<:char[]:>();
+
+int newline = 0;
+while (line[0] != '$')
+{
+    if (line[0] == '\n')
+    {
+        newline = 1;
+    }
+    elif (!newline)
+        stacklines.pushBack (line);
+    else
+        instructionlines.pushBack (line);
+
+    line = input();
+}
+
+//println<:char[]:> (stacklines);
+//println<:char[]:> (instructionlines);
+
+Vector<:char[]:> tokens = split (stacklines.data[stacklines.size-1], ' ');
+
+//for (int i = 0; i < tokens.size; ++i)
+//{
+//    println (tokens.data[i]);
+//}
+
+int size = stringToInt(tokens.data[tokens.size-2]);
+
+//println (size);
+
+Vector<:Vector<:char:>:> stacks = new Vector<:Vector<:char:>:>();
+
+for (int i = 0; i < size; ++i)
+{
+    stacks.pushBack (new Vector<:char:>());
+}
+
+for (int j = stacklines.size-2; j > -1; --j)
+{
+    //print (stacklines.data[j]);
+    for (int i = 0; i < size; ++i)
+    {
+        if (stacklines.data[j][i*4+1] != ' ')
+        {
+            //println (stacklines.data[j][i*4+1]);
+            stacks.data[i].pushBack (stacklines.data[j][i*4+1]);
+        }
+    }
+}
+
+//for (int i = 0; i < stacks.size; ++i)
+//{
+//    println<:char:> (stacks.data[i]);
+//}
+
+for (int i = 0; i < instructionlines.size; ++i)
+{
+    // "move x from y to z"
+    if (instructionlines.data[i][0] == '$') break;
+    Vector<:char[]:> tokens = split (instructionlines.data[i], ' ');
+    int num_boxes = stringToInt (tokens.data[1]);
+    int src = stringToInt (tokens.data[3])-1;
+    int dest = stringToInt (tokens.data[5])-1;
+    for (int j = 0; j < num_boxes; ++j)
+    {
+        char box = stacks.data[src].popBack ();
+        stacks.data[dest].pushBack (box);
+    }
+}
+
+//for (int i = 0; i < stacks.size; ++i)
+//{
+//    println<:char:> (stacks.data[i]);
+//}
+
+for (int i = 0; i < stacks.size; ++i)
+{
+    if (stacks.data[i].size != 0)
+        print (stacks.data[i].data[stacks.data[i].size-1]);
+}
+println ();
+
+

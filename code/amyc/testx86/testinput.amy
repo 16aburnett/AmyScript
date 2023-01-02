@@ -1,0 +1,14 @@
+
+
+char[] line = input();
+
+while (line[0] != '$')
+{
+    print (line);
+    
+    free (line);
+    line = input();
+}
+
+
+

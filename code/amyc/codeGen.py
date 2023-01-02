@@ -879,7 +879,9 @@ class CodeGenVisitor (ASTVisitor):
         self.scopeNames.pop ()
 
     def visitExpressionStatementNode (self, node):
-        if node.expr != None:
+        # ignore variable decl
+        # int x; should not translate to anything
+        if node.expr != None and not isinstance(node.expr, VariableDeclarationNode):
             node.expr.accept (self)
             # don't need stack value from statement
             # in some cases, this extra value on the stack can break things
@@ -955,97 +957,118 @@ class CodeGenVisitor (ASTVisitor):
         node.rhs.accept (self)
         self.indentation -= 1
 
-        if isinstance(node.lhs, VariableDeclarationNode):
-            self.printComment ("LHS")
-            self.indentation += 1
-            node.lhs.accept (self)
-            self.indentation -= 1
-            self.printCode (f"POP __rhs")
-            lhsStr = f"{node.lhs.scopeName}"
+        # simple assign 
+        if node.overloadedFunctionCall == None:
 
-        elif isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
-            self.printCode (f"POP __rhs")
-            lhsStr = f"{node.lhs.decl.scopeName}"
+            if isinstance(node.lhs, VariableDeclarationNode):
+                self.printComment ("LHS")
+                self.indentation += 1
+                node.lhs.accept (self)
+                self.indentation -= 1
+                self.printCode (f"POP __rhs")
+                lhsStr = f"{node.lhs.scopeName}"
 
-        elif isinstance(node.lhs, SubscriptExpressionNode):
-            self.printComment ("LHS")
-            self.indentation += 1
-            self.printComment ("Subscript assignment")
+            elif isinstance(node.lhs, IdentifierExpressionNode) or isinstance(node.lhs, ThisExpressionNode):
+                self.printCode (f"POP __rhs")
+                lhsStr = f"{node.lhs.decl.scopeName}"
 
-            self.indentation += 1
+            elif isinstance(node.lhs, SubscriptExpressionNode):
+                self.printComment ("LHS")
+                self.indentation += 1
+                self.printComment ("Subscript assignment")
 
-            self.printComment ("LHS")
-            self.indentation += 1
-            node.lhs.lhs.accept (self)
-            self.indentation -= 1
+                self.indentation += 1
 
-            self.printComment ("OFFSET")
-            self.indentation += 1
-            node.lhs.offset.accept (self)
-            self.indentation -= 1
+                self.printComment ("LHS")
+                self.indentation += 1
+                node.lhs.lhs.accept (self)
+                self.indentation -= 1
 
-            self.printCode ("POP __offset")
-            self.printCode ("POP __pointer")
+                self.printComment ("OFFSET")
+                self.indentation += 1
+                node.lhs.offset.accept (self)
+                self.indentation -= 1
 
-            self.indentation -= 1
-            self.indentation -= 1
+                self.printCode ("POP __offset")
+                self.printCode ("POP __pointer")
 
-            self.printCode (f"POP __rhs")
-            lhsStr = f"__pointer[__offset]"
+                self.indentation -= 1
+                self.indentation -= 1
 
-        elif isinstance (node.lhs, MemberAccessorExpressionNode):
-            self.printComment ("LHS")
-            self.indentation += 1
-            self.printComment ("Member Accessor Assignment")
+                self.printCode (f"POP __rhs")
+                lhsStr = f"__pointer[__offset]"
 
-            self.indentation += 1
+            elif isinstance (node.lhs, MemberAccessorExpressionNode):
+                self.printComment ("LHS")
+                self.indentation += 1
+                self.printComment ("Member Accessor Assignment")
 
-            self.printComment ("LHS")
-            self.indentation += 1
-            node.lhs.lhs.accept (self)
-            self.indentation -= 1
+                self.indentation += 1
 
-            self.printComment ("RHS")
-            self.indentation += 1
-            # # construct field index var 
-            # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
-            self.printCode (f"PUSH {node.lhs.decl.scopeName}")
-            self.indentation -= 1
+                self.printComment ("LHS")
+                self.indentation += 1
+                node.lhs.lhs.accept (self)
+                self.indentation -= 1
 
-            self.printCode ("POP __child")
-            self.printCode ("POP __parent")
+                self.printComment ("RHS")
+                self.indentation += 1
+                # # construct field index var 
+                # fieldIndex = f"__field__{node.lhs.lhs.type.id}__{node.lhs.rhs.id}"
+                self.printCode (f"PUSH {node.lhs.decl.scopeName}")
+                self.indentation -= 1
 
-            self.printCode (f"POP __rhs")
-            
-            lhsStr = f"__parent[__child]"
+                self.printCode ("POP __child")
+                self.printCode ("POP __parent")
 
-            self.indentation -= 1
-            self.indentation -= 1
+                self.printCode (f"POP __rhs")
+                
+                lhsStr = f"__parent[__child]"
 
-        # =
-        if node.op.type == "ASSIGN":
-            self.printCode (f"ASSIGN {lhsStr} __rhs")
-            self.printCode ("PUSH __rhs")
-        # +=
-        elif node.op.type == "ASSIGN_ADD":
-            self.printCode (f"ADD {lhsStr} {lhsStr} __rhs")
-            self.printCode (f"PUSH {lhsStr}")
-        # -=
-        elif node.op.type == "ASSIGN_SUB":
-            self.printCode (f"SUBTRACT {lhsStr} {lhsStr} __rhs")
-            self.printCode (f"PUSH {lhsStr}")
-        # *=
-        elif node.op.type == "ASSIGN_MUL":
-            self.printCode (f"MULTIPLY {lhsStr} {lhsStr} __rhs")
-            self.printCode (f"PUSH {lhsStr}")
-        # /=
-        elif node.op.type == "ASSIGN_DIV":
-            self.printCode (f"DIVIDE {lhsStr} {lhsStr} __rhs")
-            self.printCode (f"PUSH {lhsStr}")
-        # %=
-        elif node.op.type == "ASSIGN_MOD":
-            self.printCode (f"MOD {lhsStr} {lhsStr} __rhs")
-            self.printCode (f"PUSH {lhsStr}")
+                self.indentation -= 1
+                self.indentation -= 1
+                
+            # =
+            if node.op.type == "ASSIGN":
+                self.printCode (f"ASSIGN {lhsStr} __rhs")
+                self.printCode ("PUSH __rhs")
+            # +=
+            elif node.op.type == "ASSIGN_ADD":
+                self.printCode (f"ADD {lhsStr} {lhsStr} __rhs")
+                self.printCode (f"PUSH {lhsStr}")
+            # -=
+            elif node.op.type == "ASSIGN_SUB":
+                self.printCode (f"SUBTRACT {lhsStr} {lhsStr} __rhs")
+                self.printCode (f"PUSH {lhsStr}")
+            # *=
+            elif node.op.type == "ASSIGN_MUL":
+                self.printCode (f"MULTIPLY {lhsStr} {lhsStr} __rhs")
+                self.printCode (f"PUSH {lhsStr}")
+            # /=
+            elif node.op.type == "ASSIGN_DIV":
+                self.printCode (f"DIVIDE {lhsStr} {lhsStr} __rhs")
+                self.printCode (f"PUSH {lhsStr}")
+            # %=
+            elif node.op.type == "ASSIGN_MOD":
+                self.printCode (f"MOD {lhsStr} {lhsStr} __rhs")
+                self.printCode (f"PUSH {lhsStr}")
+
+        # *no assignment operator overloading yet
+        # overloaded function call 
+        # else:
+        #     self.printComment (f"Using Overloaded Version - {node.overloadedFunctionCall.function.id}")
+        #     # there is no lhs
+        #     if isinstance(node.lhs, VariableDeclarationNode):
+        #         # first call default constructor to get lhs instance
+        #         self.printComment ("Calling default constructor")
+        #         self.printCode (f"CALL {node.lhs.decl.scopeName}")
+        #         self.printCode (f"RESPONSE __lhs")
+        #     # then call overloaded assignment operator
+        #     # push args in reverse order
+        #     self.printCode (f"PUSH __rhs")
+        #     self.printCode (f"PUSH __lhs")
+        #     self.printCode (f"CALL {node.overloadedFunctionCall.decl.scopeName}")
+        #     self.printCode (f"RESPONSE __res")
+        #     self.printCode (f"PUSH __res")
         
         self.indentation -= 1
 
@@ -1931,6 +1954,8 @@ class CodeGenVisitor (ASTVisitor):
     def visitStringLiteralExpressionNode (self, node):
         self.printComment ("String Literal")
         self.indentation += 1
+        # this should be allocated statically
+        # I REALLY need to fix this stack/heap issue
         # create string on heap as char[]
         node.value = (node.value.replace(f'\n', f'\\n').replace ('\t', '\\t')).replace ("\r", "\\r").replace ("\b", "\\b")
         # node.value = node.value.replace ("\\n", "\n").replace ("\\t", "\t").replace ("\\r", "\r").replace ("\\b", "\b")
@@ -1938,14 +1963,17 @@ class CodeGenVisitor (ASTVisitor):
         for i in range(len(chars)-1):
             if i >= len(chars)-1:
                 break
-            if chars[i] == "\\" and \
-                (chars[i+1] == 'n'  \
-                or chars[i+1] == 't'\
-                or chars[i+1] == 'r'\
-                or chars[i+1] == 'b'):
+            if chars[i] == "\\": # and \
+                # (chars[i+1] == 'n'  \
+                # or chars[i+1] == 't'\
+                # or chars[i+1] == 'r'\
+                # or chars[i+1] == 'b'):
                 chars[i] = "\\" + chars[i+1]
                 del chars[i+1]
-        node.value = chars
+            # add backslash to apostrophe 
+            elif chars[i] == '\'':
+                chars[i] = '\\\''
+        node.value = chars + ['\\0']
         backSlashes = 0
         # for c in node.value:
         #     if c == '\\':

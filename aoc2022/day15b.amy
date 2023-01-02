@@ -1,0 +1,294 @@
+
+#include "Vector.amy"
+#include "algorithms.amy"
+#include "LinkedList.amy"
+
+//========================================================================
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+//========================================================================
+
+class Point
+{
+    public field int x;
+    public field int y;
+    constructor (int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+function void print (Point p)
+{
+    print ('('); print (p.x); print (','); print (' '); print (p.y); print (')');
+}
+
+function void println (Point p)
+{
+    print (p);
+    println ();
+}
+
+function int manhattan (Point a, Point b)
+{
+    return abs (a.x - b.x) + abs (a.y - b.y);
+}
+
+//========================================================================
+
+class Sensor
+{
+    public field Point position;
+    public field Point closest_beacon;
+    public field int radius;
+    constructor (Point pos, Point b)
+    {
+        this.position = pos;
+        this.closest_beacon = b;
+        this.radius = manhattan (this.position, this.closest_beacon);
+    }
+    public method int contains (Point p)
+    {
+        return manhattan (this.position, p) <= this.radius;
+    }
+}
+
+function void print (Sensor s)
+{
+    print (s.position);
+    print (' ');
+    print (s.closest_beacon);
+}
+
+function void println (Sensor s)
+{
+    print (s);
+    println ();
+}
+
+//========================================================================
+
+Vector<:Sensor:> sensors = new Vector<:Sensor:> ();
+
+for (int l = 0; l < lines.size; l+=1)
+{
+    // Example Line:
+    // Sensor at x=2, y=18: closest beacon is at x=-2, y=15
+    Vector<:char[]:> tokens = split (lines.data[l], ' ');
+    char[] x0_token = tokens.data[2];
+    char[] x0_str = substr (x0_token, 2, strlen(x0_token)-1);
+    int x0 = stringToInt (x0_str);
+    char[] y0_token = tokens.data[3];
+    char[] y0_str = substr (y0_token, 2, strlen(y0_token)-1);
+    int y0 = stringToInt (y0_str);
+    char[] x1_token = tokens.data[8];
+    char[] x1_str = substr (x1_token, 2, strlen(x1_token)-1);
+    int x1 = stringToInt (x1_str);
+    char[] y1_token = tokens.data[9];
+    char[] y1_str = substr (y1_token, 2, strlen(y1_token));
+    int y1 = stringToInt (y1_str);
+    sensors.pushBack (new Sensor (new Point (x0, y0), new Point (x1, y1)));
+}
+
+int minx = sensors.data[0].position.x;
+int maxx = 0;
+int miny = sensors.data[0].position.y;
+int maxy = 0;
+
+for (int i = 0; i < sensors.size; ++i)
+{
+    Sensor sensor = sensors.data[i];
+    println (sensor);
+    minx = min (sensor.position.x-sensor.radius-1, minx);
+    maxx = max (sensor.position.x+sensor.radius+1, maxx);
+    miny = min (sensor.position.y-sensor.radius-1, miny);
+    maxy = max (sensor.position.y+sensor.radius+1, maxy);
+}
+
+//========================================================================
+
+function void printboard (Vector<:Vector<:char:>:> board)
+{
+    for (int i = 0; i < board.size; ++i)
+    {
+        for (int j = 0; j < board.data[i].size; ++j)
+        {
+            print (board.data[i].data[j]);
+        }
+        println ();
+    }
+}
+
+// sample and main input files check different rows
+int important_row = 10;
+int upper_bound = 20;
+if (2000000 < maxx)
+{
+    important_row = 2000000;
+    upper_bound = 4000000;
+}
+
+Vector<:Vector<:char:>:> board = new Vector<:Vector<:char:>:> ();
+
+// initialize board to being empty
+//for (int i = 0; i < upper_bound; ++i)
+//{
+//    board.pushBack (new Vector<:char:> ());
+//    for (int j = 0; j < upper_bound; ++j)
+//    {
+//        board.data[i].pushBack ('.');
+//    }
+//}
+//printboard (board); println ();
+
+
+//for (int i = 0; i < sensors.size; ++i)
+//{
+//    Sensor sensor = sensors.data[i];
+//    // color range up
+//    for (int k = sensor.position.y; k >= sensor.position.y-sensor.radius; --k)
+//    {
+//        if (k == important_row)
+//        {
+//            for (int j = sensor.position.x-sensor.radius+(sensor.position.y-k); j <= sensor.position.x+sensor.radius-(sensor.position.y-k); ++j)
+//            {
+//                if (board.data[k-miny].data[j-minx] == '.')
+//                    board.data[k-miny].data[j-minx] = '#';
+//            }
+//        }
+//    }
+//    // color range down
+//    for (int k = sensor.position.y; k <= sensor.position.y+sensor.radius; ++k)
+//    {
+//        if (k == important_row)
+//        {
+//            for (int j = sensor.position.x-sensor.radius+(k-sensor.position.y); j <= sensor.position.x+sensor.radius-(k-sensor.position.y); ++j)
+//            {
+//                if (board.data[k-miny].data[j-minx] == '.')
+//                    board.data[k-miny].data[j-minx] = '#';
+//            }
+//        }
+//    }
+//    // place sensor
+//    board.data[sensor.position.y-miny].data[sensor.position.x-minx] = 'S';
+//    // place closest beacon
+//    board.data[sensor.closest_beacon.y-miny].data[sensor.closest_beacon.x-minx] = 'B';
+//
+//}
+
+// we know that the single empty space will be 
+// on the edge of a sensor's range 
+
+// so we can march through each row (O(N) where N == 4000000)
+// and build a list of adjacent points that are outside of each sensor's range
+// so essentially for a row, each sensor will have an adjacent point 
+// to the left and to the right of the sensor's range (2 points, 2*S, where S is #sensors)
+// and add those points to a list if they are in the desired range (0 -> 4,000,000) (<=2*S)
+// and if one of those points is outside of every sensor's range
+// then we found our position (this step may be S^2 but S is ~10)
+
+// board only stores the important row
+//board.pushBack (new Vector<:char:> ());
+//for (int j = minx; j < maxx; ++j)
+//{
+//    print (j); print ('/'); println (maxx);
+//    board.data[0].pushBack ('.');
+//}
+
+// for each row
+for (int i = 0; i < upper_bound; ++i)
+{
+    print (i); print ('/'); println (upper_bound);
+    Vector<:Point:> adjacent_points = new Vector<:Point:> ();
+    // for each sensor
+    for (int s = 0; s < sensors.size; ++s)
+    {
+        Sensor sensor = sensors.data[s];
+        // check if sensor range overlaps with this line
+        if (sensor.position.y-sensor.radius <= i && i <= sensor.position.y+sensor.radius)
+        {
+            // find adjacent points
+            Point lhs = new Point (sensor.position.x-sensor.radius+abs(sensor.position.y-i)-1, i);
+
+            // check if the point is outside each sensor's ranges
+            // ensure point is in x range
+            if ((0 <= lhs.x && lhs.x <= upper_bound))
+            {
+                // point is in the range
+                // determine if this point is outside each sensor
+                // first assume it is
+                int is_outside = 1;
+                // and try to disprove that assumption
+                for (int ss = 0; ss < sensors.size; ++ss)
+                {
+                    // check if this point is within this sensor
+                    if (sensors.data[ss].contains(lhs))
+                    {
+                        // assumption was wrong
+                        is_outside = 0;
+                        break;
+                    }
+                }
+                // check if point is outside each sensor 
+                if (is_outside)
+                {
+                    // we found a point that is outside
+                    println (lhs);
+                    println (lhs.x * 4000000 + lhs.y);
+                    // peace!
+                    exit(1);
+                }
+
+            }
+
+            free (lhs);
+
+            // check if point 
+
+            Point rhs = new Point (sensor.position.x+sensor.radius-abs(sensor.position.y-i)+1, i);
+
+            // check if the point is outside each sensor's ranges
+            // ensure point is in x range
+            if ((0 <= rhs.x && rhs.x <= upper_bound))
+            {
+                // point is in the range
+                // determine if this point is outside each sensor
+                // first assume it is
+                int is_outside = 1;
+                // and try to disprove that assumption
+                for (int ss = 0; ss < sensors.size; ++ss)
+                {
+                    // check if this point is within this sensor
+                    if (sensors.data[ss].contains(rhs))
+                    {
+                        // assumption was wrong
+                        is_outside = 0;
+                        break;
+                    }
+                }
+                // check if point is outside each sensor 
+                if (is_outside)
+                {
+                    // we found a point that is outside
+                    println (rhs);
+                    println (rhs.x * 4000000 + rhs.y);
+                    // peace!
+                    exit(1);
+                }
+
+            }
+
+            free (rhs);
+
+        }
+    }
+}
+

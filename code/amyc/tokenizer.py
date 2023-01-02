@@ -39,11 +39,13 @@ token_specification = [
 # Comments 
     ('COMMENT',  r'//.*\n?'),      # single line comment 
 # literals 
-    ('FLOAT',    r'\d*\.\d+'), 
-    ('INT',      r'\d+(\.\d*)?'), 
-    ('CHAR',     r'\'(\\n|\\t|\\r|\\b|\\f|.)\''),   
+    # ('FLOAT',    r'[-+]?[0-9]+[.][0-9]*([eE][-+]?[0-9]+)?'), 
+    # ('INT',      r'[-+]?[0-9]+'), 
+    ('FLOAT',    r'[0-9]+[.][0-9]*([eE][-+]?[0-9]+)?'), 
+    ('INT',      r'[0-9]+'), 
+    ('CHAR',     r'\'(\\[A-Za-z_0-9\'\"]*|.)\''),   # '0' '\n' '\101'
     # ('STRING',   r'"[^"\\]*(\\.[^"\\]*)*"'),   
-    ('STRING',   r'"([^"]|\\")*"'),   
+    ('STRING',   r'\"([^"\\]|\\.)*\"'),   
 # Keywords - handled after identifiers are matched
     # ('IF',       r'if'),  
     # ('ELIF',     r'elif'),  

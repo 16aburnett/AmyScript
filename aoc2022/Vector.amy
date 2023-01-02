@@ -1,0 +1,93 @@
+
+#ifndef VECTOR_H
+#define VECTOR_H
+
+template <:T:>
+class Vector
+{
+    public field T[]   data;
+    public field int   size;
+    public field int   capacity;
+
+    constructor ()
+    {
+        this.capacity = 10;
+        this.size = 0; 
+        this.data = new T[this.capacity];
+    }
+
+    // data is not initialized so it is likely garbage
+    constructor (int size)
+    {
+        this.capacity = size+10;
+        this.size = size; 
+        this.data = new T[this.capacity];
+    }
+
+    public method void pushBack (T val)
+    {
+        // ensure there is space 
+        if (this.size + 1 >= this.capacity)
+        {
+            this.capacity = this.capacity * 2; 
+            T[] nData = new T[this.capacity];
+            // move old data over
+            for (int i = 0; i < this.size; ++i)
+            {
+                nData[i] = this.data[i];
+            }
+            free (this.data);
+            this.data = nData; 
+        }
+
+        // add new num
+        this.data[this.size] = val; 
+        ++this.size; 
+    }
+
+    public method T popBack ()
+    {
+        return this.data[--this.size];
+    }
+
+    public method void clear ()
+    {
+        while (this.size > 0)
+            this.popBack ();
+    }
+
+    public method T get (int index)
+    {
+        return this.data[index];
+    }
+
+    public method void set (int index, T value)
+    {
+        this.data[index] = value;
+    }
+
+}
+
+template <:T:>
+function void print (Vector<:T:> v)
+{
+    print ('[');
+    if (v.size != 0)
+        print (v.data[0]);
+    for (int i = 1; i < v.size; ++i)
+    {
+        print (',');
+        print (' ');
+        print (v.data[i]);
+    }
+    print (']');
+}
+
+template <:T:>
+function void println (Vector<:T:> v)
+{
+    print<:T:> (v);
+    println ();
+}
+
+#endif

@@ -1,0 +1,691 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+// Global Builtin Variables
+
+    assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+print__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+println__char__1:
+    // grab string
+    stackget __str 0
+    sizeof __size __str
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __i __size
+    jge __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+println__Enum:
+    stackget __e 0
+    println __e
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+exit:
+    halt
+
+//========================================================================
+
+// Exits the program with the given exit code 
+// void exit(int exit_code)
+// - exit_code : 
+exit__int:
+    // ** not implemented for amyasm
+    halt 
+
+//========================================================================
+// returns default float value
+// float float ();
+float:
+    return 0.0
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// returns default int value
+// int int ();
+int:
+    return 0
+
+//========================================================================
+// returns default char value
+// char char ();
+char:
+    return '0'
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char
+// int charToInt (char);
+charToInt__char:
+    stackget val 0
+    ctoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+// returns default value for array and object (null)
+// null null ();
+null:
+    return __null
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main____A inherits __main__Object
+   // Creating Dispatch Table
+      MALLOC __dtable____main____A 0
+      // Populate Dispatch Table
+   //---------------------------------------------------------------------
+   // Field - float A::x
+   ASSIGN __field____main____A____x 1
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main____A
+   //---------------------------------------------------------------------
+   // Constructor Declaration - A::A(float) -> A
+   JUMP __end__ctor____main____A____A__float
+   __ctor____main____A____A__float:
+      // Creating Class Instance
+         MALLOC __this 2
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main____A
+      // Parameters
+         // Param: x
+         STACKGET __main____A__A__x 0
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment - '='
+               // RHS
+                  // Identifier - x
+                     PUSH __main____A__A__x
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main____A____x
+                     POP __child
+                     POP __parent
+                     POP __rhs
+               ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Statement results can be ignored
+            POP __void
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main____A____A__float:
+   // End Constructor Declaration - __ctor____main____A____A__float
+   //---------------------------------------------------------------------
+
+__endclass____main____A:
+// End Class Declaration - __main____A
+//========================================================================
+
+//========================================================================
+// Class Declaration - __main____B inherits __main____A
+   // Creating Dispatch Table
+      MALLOC __dtable____main____B 0
+      // Populate Dispatch Table
+   //---------------------------------------------------------------------
+   // Field - float B::x
+   // Inherited from A
+   ASSIGN __field____main____B____x 1
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - float B::y
+   ASSIGN __field____main____B____y 2
+   //---------------------------------------------------------------------
+   //---------------------------------------------------------------------
+   // Field - float B::z
+   ASSIGN __field____main____B____z 3
+   //---------------------------------------------------------------------
+// skip over class methods
+JUMP __endclass____main____B
+   //---------------------------------------------------------------------
+   // Constructor Declaration - B::B(float, float, float) -> B
+   JUMP __end__ctor____main____B____B__float__float__float
+   __ctor____main____B____B__float__float__float:
+      // Creating Class Instance
+         MALLOC __this 4
+         // Add Dispatch Table
+         ASSIGN __this[0] __dtable____main____B
+      // Parameters
+         // Param: x
+         STACKGET __main____B__B__x 0
+         // Param: y
+         STACKGET __main____B__B__y 1
+         // Param: z
+         STACKGET __main____B__B__z 2
+      // Body
+         //---------------------------------------------------------------
+         // Code Block
+            // Assignment - '='
+               // RHS
+                  // Identifier - x
+                     PUSH __main____B__B__x
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main____B____x
+                     POP __child
+                     POP __parent
+                     POP __rhs
+               ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Statement results can be ignored
+            POP __void
+            // Assignment - '='
+               // RHS
+                  // Identifier - y
+                     PUSH __main____B__B__y
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main____B____y
+                     POP __child
+                     POP __parent
+                     POP __rhs
+               ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Statement results can be ignored
+            POP __void
+            // Assignment - '='
+               // RHS
+                  // Identifier - z
+                     PUSH __main____B__B__z
+               // LHS
+                  // Member Accessor Assignment
+                     // LHS
+                        // This keyword
+                           PUSH __this
+                     // RHS
+                        PUSH __field____main____B____z
+                     POP __child
+                     POP __parent
+                     POP __rhs
+               ASSIGN __parent[__child] __rhs
+               PUSH __rhs
+            // Statement results can be ignored
+            POP __void
+         //---------------------------------------------------------------
+      RETURN __this
+   __end__ctor____main____B____B__float__float__float:
+   // End Constructor Declaration - __ctor____main____B____B__float__float__float
+   //---------------------------------------------------------------------
+
+__endclass____main____B:
+// End Class Declaration - __main____B
+//========================================================================
+
+//========================================================================
+// Function Declaration - printA(A) -> void
+JUMP __end____main____printA__A
+__main____printA__A:
+   // Parameters
+      // Param: a
+      STACKGET __main__printA__a 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - println(float) -> void
+            // Arguments
+               // Member Accessor
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__printA__a
+                  // RHS
+                     PUSH __field____main____A____x
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** println
+            CALL println__float
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____printA__A:
+// End Function Declaration - __main____printA__A
+//========================================================================
+
+// Assignment - '='
+   // RHS
+      // Constructor Call - A::A(float) -> A
+         // Arguments
+            // Float Literal
+               PUSH 3.14
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg0
+         CALL __ctor____main____A____A__float
+         // Remove args
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__a 0
+   POP __rhs
+   ASSIGN __main__a __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Function Call - println(float) -> void
+   // Arguments
+      // Member Accessor
+         // LHS
+            // Identifier - a
+               PUSH __main__a
+         // RHS
+            PUSH __field____main____A____x
+         POP __child
+         POP __parent
+         PUSH __parent[__child]
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__float
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+// Assignment - '='
+   // RHS
+      // Constructor Call - B::B(float, float, float) -> B
+         // Arguments
+            // Float Literal
+               PUSH 0.1
+            // Float Literal
+               PUSH 0.4
+            // Float Literal
+               PUSH 34.23
+            POP __arg2
+            POP __arg1
+            POP __arg0
+         // Pushing args in reverse order
+         PUSH __arg2
+         PUSH __arg1
+         PUSH __arg0
+         CALL __ctor____main____B____B__float__float__float
+         // Remove args
+         POP __void
+         POP __void
+         POP __void
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__b 0
+   POP __rhs
+   ASSIGN __main__b __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Function Call - println(float) -> void
+   // Arguments
+      // Member Accessor
+         // LHS
+            // Identifier - b
+               PUSH __main__b
+         // RHS
+            PUSH __field____main____B____x
+         POP __child
+         POP __parent
+         PUSH __parent[__child]
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL println__float
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+// Function Call - printA(A) -> void
+   // Arguments
+      // Identifier - a
+         PUSH __main__a
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** printA
+   CALL __main____printA__A
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+// Function Call - printA(A) -> void
+   // Arguments
+      // Identifier - b
+         PUSH __main__b
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** printA
+   CALL __main____printA__A
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+//========================================================================
+// Function Declaration - print(A) -> void
+JUMP __end____main____print__A
+__main____print__A:
+   // Parameters
+      // Param: a
+      STACKGET __main__print__a 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - print(float) -> void
+            // Arguments
+               // Member Accessor
+                  // LHS
+                     // Identifier - a
+                        PUSH __main__print__a
+                  // RHS
+                     PUSH __field____main____A____x
+                  POP __child
+                  POP __parent
+                  PUSH __parent[__child]
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL print__float
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____print__A:
+// End Function Declaration - __main____print__A
+//========================================================================
+
+//========================================================================
+// Function Declaration - println(A) -> void
+JUMP __end____main____println__A
+__main____println__A:
+   // Parameters
+      // Param: a
+      STACKGET __main__println__a 0
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Function Call - print(A) -> void
+            // Arguments
+               // Identifier - a
+                  PUSH __main__println__a
+               POP __arg0
+            // Pushing args in reverse order
+            PUSH __arg0
+            // *** print
+            CALL __main____print__A
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         // Function Call - println() -> void
+            // Arguments
+            // Pushing args in reverse order
+            // *** println
+            CALL println
+            // Remove args
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+      //------------------------------------------------------------------
+   RETURN 0
+__end____main____println__A:
+// End Function Declaration - __main____println__A
+//========================================================================
+
+// Function Call - println(A) -> void
+   // Arguments
+      // Identifier - a
+         PUSH __main__a
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL __main____println__A
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+// Function Call - println(A) -> void
+   // Arguments
+      // Identifier - b
+         PUSH __main__b
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL __main____println__A
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

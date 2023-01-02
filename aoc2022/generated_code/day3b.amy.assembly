@@ -1,0 +1,1944 @@
+// AmyAssembly compiled from AmyScript
+//========================================================================
+
+//========================================================================
+//### LIBRARY CODE #######################################################
+//========================================================================
+
+// AmyScript Built-in library
+// Author: Amy Burnett
+//========================================================================
+// Global Builtin Variables
+
+    assign __null 0
+
+//========================================================================
+// dont execute library functions 
+
+jump __endOfLibrary
+
+//========================================================================
+// Prints a given string to the screen
+// void print (char[] stringToPrint);
+__builtin__print__char__1:
+    // grab string
+    stackget __str 0
+    // print each char
+    // init
+    assign __i 0
+__print__char__1__loop:
+    // cond
+    cmp __str[__i] 0
+    jeq __print__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __print__char__1__loop
+__print__char__1__endloop:
+    return 0
+
+//========================================================================
+// Prints an int to the screen
+// void print (int intToPrint);
+__builtin__print__int:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen
+// void print (float floatToPrint);
+__builtin__print__float:
+    stackget __str 0
+    print __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen
+// void print (char charToPrint);
+__builtin__print__char:
+    // grab string
+    stackget __char 0
+    print __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value 
+// void print (Enum e);
+__builtin__print__Enum:
+    stackget __e 0
+    print __e
+    return 0
+
+//========================================================================
+// Prints a given string to the screen with a newline at the end
+// void println (char[] stringToPrint);
+__builtin__println__char__1:
+    // grab string
+    stackget __str 0
+    // print each char
+    // init
+    assign __i 0
+__println__char__1__loop:
+    // cond
+    cmp __str[__i] 0
+    jeq __println__char__1__endloop
+    // Body
+    print __str[__i]
+    // update
+    add __i __i 1
+    // repeat
+    jump __println__char__1__loop
+__println__char__1__endloop:
+    println
+    return 0
+
+//========================================================================
+// Prints an int to the screen with a newline
+// void print (int intToPrint);
+__builtin__println__int:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a float to the screen with a newline
+// void println (float floatToPrint);
+__builtin__println__float:
+    stackget __str 0
+    println __str
+    return 0
+
+//========================================================================
+// Prints a char to the screen with a newline
+// void println (char charToPrint);
+__builtin__println__char:
+    // grab string
+    stackget __char 0
+    println __char
+    return 0
+
+//========================================================================
+// Prints an enum's integer value with a newline
+// void println (Enum e);
+__builtin__println__Enum:
+    stackget __e 0
+    println __e
+    return 0
+
+//========================================================================
+// Prints a newline to the console
+// void println ();
+__builtin__println:
+    println 
+    return 0
+
+//========================================================================
+// grabs input from the console 
+// char[] input ();
+__builtin__input:
+    input __line
+    return __line
+
+//========================================================================
+// exits/stops the program 
+__builtin__exit:
+    halt
+
+//========================================================================
+
+// Exits the program with the given exit code 
+// void exit(int exit_code)
+// - exit_code : 
+__builtin__exit__int:
+    // ** not implemented for amyasm
+    halt 
+
+//========================================================================
+// returns default float value
+// float float ();
+__builtin__float:
+    return 0.0
+
+//========================================================================
+// converts int to float
+// float intToFloat (int);
+__builtin__intToFloat__int:
+    stackget val 0
+    itof res val
+    return res
+
+//========================================================================
+// parses a float from a given char[]
+// float stringToFloat (char[]);
+__builtin__stringToFloat__char__1:
+    stackget val 0
+    stof res val
+    return res
+
+//========================================================================
+// returns default int value
+// int int ();
+__builtin__int:
+    return 0
+
+//========================================================================
+// returns default char value
+// char char ();
+__builtin__char:
+    return '0'
+
+//========================================================================
+// converts float to int
+// int floatToInt (float);
+__builtin__floatToInt__float:
+    stackget val 0
+    ftoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char[]
+// int stringToInt (char[]);
+__builtin__stringToInt__char__1:
+    stackget val 0
+    stoi res val
+    return res
+
+//========================================================================
+// parses an int from a given char
+// int charToInt (char);
+__builtin__charToInt__char:
+    stackget val 0
+    ctoi res val
+    return res
+
+//========================================================================
+// converts int to string
+// char[] string (int);
+__builtin__string__int:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+// converts float to string
+// char[] string (float);
+__builtin__string__float:
+    stackget val 0
+    string res val
+    return res
+
+//========================================================================
+
+// returns default value for array and object (null)
+// null null ();
+__builtin__null:
+    return __null
+
+//========================================================================
+
+__endOfLibrary:
+    //push prompt
+    //call print
+
+    //call input
+    //response name
+
+    //push name
+    //call println
+
+//========================================================================
+//### COMPILED CODE ######################################################
+//========================================================================
+
+//========================================================================
+// Class Template - 
+   // Instances:
+      //==================================================================
+      // Class Declaration - __main____Vector__char__1 inherits __builtin____main__Object
+         // Creating Dispatch Table
+            MALLOC __dtable____main____Vector__char__1 5
+            // Populate Dispatch Table
+            ASSIGN __dtable____main____Vector__char__1[0] __method____main____Vector__char__1____pushBack__char__1
+            ASSIGN __dtable____main____Vector__char__1[1] __method____main____Vector__char__1____popBack
+            ASSIGN __dtable____main____Vector__char__1[2] __method____main____Vector__char__1____clear
+            ASSIGN __dtable____main____Vector__char__1[3] __method____main____Vector__char__1____get__int
+            ASSIGN __dtable____main____Vector__char__1[4] __method____main____Vector__char__1____set__int__char__1
+         //---------------------------------------------------------------
+         // Field - char[][] Vector<:char[]:>::data
+         ASSIGN __field____main____Vector__char__1____data 1
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // Field - int Vector<:char[]:>::size
+         ASSIGN __field____main____Vector__char__1____size 2
+         //---------------------------------------------------------------
+         //---------------------------------------------------------------
+         // Field - int Vector<:char[]:>::capacity
+         ASSIGN __field____main____Vector__char__1____capacity 3
+         //---------------------------------------------------------------
+      // skip over class methods
+      JUMP __endclass____main____Vector__char__1
+         //---------------------------------------------------------------
+         // Constructor Declaration - Vector<:char[]:>::Vector() -> Vector<:char[]:>
+         JUMP __end__ctor____main____Vector__char__1____Vector
+         __ctor____main____Vector__char__1____Vector:
+            // Creating Class Instance
+               MALLOC __this 4
+               // Add Dispatch Table
+               ASSIGN __this[0] __dtable____main____Vector__char__1
+            // Parameters
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment - '='
+                     // RHS
+                        // Int Literal
+                           PUSH 10
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____Vector__char__1____capacity
+                           POP __child
+                           POP __parent
+                           POP __rhs
+                     ASSIGN __parent[__child] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+                  // Assignment - '='
+                     // RHS
+                        // Int Literal
+                           PUSH 0
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____Vector__char__1____size
+                           POP __child
+                           POP __parent
+                           POP __rhs
+                     ASSIGN __parent[__child] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+                  // Assignment - '='
+                     // RHS
+                        // Array Allocator
+                           // Member Accessor
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main____Vector__char__1____capacity
+                              POP __child
+                              POP __parent
+                              PUSH __parent[__child]
+                           POP __size
+                           MALLOC __ptr __size
+                           PUSH __ptr
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____Vector__char__1____data
+                           POP __child
+                           POP __parent
+                           POP __rhs
+                     ASSIGN __parent[__child] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+               //---------------------------------------------------------
+            RETURN __this
+         __end__ctor____main____Vector__char__1____Vector:
+         // End Constructor Declaration - __ctor____main____Vector__char__1____Vector
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Constructor Declaration - Vector<:char[]:>::Vector(int) -> Vector<:char[]:>
+         JUMP __end__ctor____main____Vector__char__1____Vector__int
+         __ctor____main____Vector__char__1____Vector__int:
+            // Creating Class Instance
+               MALLOC __this 4
+               // Add Dispatch Table
+               ASSIGN __this[0] __dtable____main____Vector__char__1
+            // Parameters
+               // Param: size
+               STACKGET __main____Vector__char__1__Vector__size 0
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment - '='
+                     // RHS
+                        // Addition
+                           // LHS
+                              // Identifier - size
+                                 PUSH __main____Vector__char__1__Vector__size
+                           // RHS
+                              // Int Literal
+                                 PUSH 10
+                           POP __rhs
+                           POP __lhs
+                           ADD __res __lhs __rhs
+                           PUSH __res
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____Vector__char__1____capacity
+                           POP __child
+                           POP __parent
+                           POP __rhs
+                     ASSIGN __parent[__child] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+                  // Assignment - '='
+                     // RHS
+                        // Identifier - size
+                           PUSH __main____Vector__char__1__Vector__size
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____Vector__char__1____size
+                           POP __child
+                           POP __parent
+                           POP __rhs
+                     ASSIGN __parent[__child] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+                  // Assignment - '='
+                     // RHS
+                        // Array Allocator
+                           // Member Accessor
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main____Vector__char__1____capacity
+                              POP __child
+                              POP __parent
+                              PUSH __parent[__child]
+                           POP __size
+                           MALLOC __ptr __size
+                           PUSH __ptr
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____Vector__char__1____data
+                           POP __child
+                           POP __parent
+                           POP __rhs
+                     ASSIGN __parent[__child] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+               //---------------------------------------------------------
+            RETURN __this
+         __end__ctor____main____Vector__char__1____Vector__int:
+         // End Constructor Declaration - __ctor____main____Vector__char__1____Vector__int
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Method Declaration - Vector<:char[]:>::pushBack(char[]) -> void
+         JUMP __end__method____main____Vector__char__1____pushBack__char__1
+         __method____main____Vector__char__1____pushBack__char__1:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+               // Param: val
+               STACKGET __main____Vector__char__1__pushBack__val 1
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // If-Statement
+                     // Condition
+                        // Greater Than or Equal to
+                           // LHS
+                              // Addition
+                                 // LHS
+                                    // Member Accessor
+                                       // LHS
+                                          // This keyword
+                                             PUSH __this
+                                       // RHS
+                                          PUSH __field____main____Vector__char__1____size
+                                       POP __child
+                                       POP __parent
+                                       PUSH __parent[__child]
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 ADD __res __lhs __rhs
+                                 PUSH __res
+                           // RHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____Vector__char__1____capacity
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           POP __rhs
+                           POP __lhs
+                           GE __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endif__3
+                     // Body
+                        //------------------------------------------------
+                        // Code Block
+                           // Assignment - '='
+                              // RHS
+                                 // Multiplication
+                                    // LHS
+                                       // Member Accessor
+                                          // LHS
+                                             // This keyword
+                                                PUSH __this
+                                          // RHS
+                                             PUSH __field____main____Vector__char__1____capacity
+                                          POP __child
+                                          POP __parent
+                                          PUSH __parent[__child]
+                                    // RHS
+                                       // Int Literal
+                                          PUSH 2
+                                    POP __rhs
+                                    POP __lhs
+                                    MULTIPLY __res __lhs __rhs
+                                    PUSH __res
+                              // LHS
+                                 // Member Accessor Assignment
+                                    // LHS
+                                       // This keyword
+                                          PUSH __this
+                                    // RHS
+                                       PUSH __field____main____Vector__char__1____capacity
+                                    POP __child
+                                    POP __parent
+                                    POP __rhs
+                              ASSIGN __parent[__child] __rhs
+                              PUSH __rhs
+                           // Statement results can be ignored
+                           POP __void
+                           // Assignment - '='
+                              // RHS
+                                 // Array Allocator
+                                    // Member Accessor
+                                       // LHS
+                                          // This keyword
+                                             PUSH __this
+                                       // RHS
+                                          PUSH __field____main____Vector__char__1____capacity
+                                       POP __child
+                                       POP __parent
+                                       PUSH __parent[__child]
+                                    POP __size
+                                    MALLOC __ptr __size
+                                    PUSH __ptr
+                              // LHS
+                                 // Variable Declaration
+                                    ASSIGN __main____Vector__char__1__pushBack__block__2__if__3__block__4__nData 0
+                              POP __rhs
+                              ASSIGN __main____Vector__char__1__pushBack__block__2__if__3__block__4__nData __rhs
+                              PUSH __rhs
+                           // Statement results can be ignored
+                           POP __void
+                           //---------------------------------------------
+                           // For-Loop
+                           // Init
+                              // Assignment - '='
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 0
+                                 // LHS
+                                    // Variable Declaration
+                                       ASSIGN __main____Vector__char__1__pushBack__block__2__if__3__block__4__for__5__i 0
+                                 POP __rhs
+                                 ASSIGN __main____Vector__char__1__pushBack__block__2__if__3__block__4__for__5__i __rhs
+                                 PUSH __rhs
+                           JUMP __forcond__5
+                           __for__5:
+                              // Update
+                                 // Pre-Increment
+                                    // RHS
+                                       // Identifier - i
+                                          PUSH __main____Vector__char__1__pushBack__block__2__if__3__block__4__for__5__i
+                                    POP __rhs
+                                    ADD __main____Vector__char__1__pushBack__block__2__if__3__block__4__for__5__i __main____Vector__char__1__pushBack__block__2__if__3__block__4__for__5__i 1
+                                    ASSIGN __res __main____Vector__char__1__pushBack__block__2__if__3__block__4__for__5__i
+                                    PUSH __res
+                              __forcond__5:
+                              // Condition
+                                 // Less Than
+                                    // LHS
+                                       // Identifier - i
+                                          PUSH __main____Vector__char__1__pushBack__block__2__if__3__block__4__for__5__i
+                                    // RHS
+                                       // Member Accessor
+                                          // LHS
+                                             // This keyword
+                                                PUSH __this
+                                          // RHS
+                                             PUSH __field____main____Vector__char__1____size
+                                          POP __child
+                                          POP __parent
+                                          PUSH __parent[__child]
+                                    POP __rhs
+                                    POP __lhs
+                                    LT __res __lhs __rhs
+                                    PUSH __res
+                                 POP __cond
+                                 CMP __cond 0
+                                 JEQ __endfor__5
+                              // Body
+                                 //---------------------------------------
+                                 // Code Block
+                                    // Assignment - '='
+                                       // RHS
+                                          // Subscript
+                                             // LHS
+                                                // Member Accessor
+                                                   // LHS
+                                                      // This keyword
+                                                         PUSH __this
+                                                   // RHS
+                                                      PUSH __field____main____Vector__char__1____data
+                                                   POP __child
+                                                   POP __parent
+                                                   PUSH __parent[__child]
+                                             // OFFSET
+                                                // Identifier - i
+                                                   PUSH __main____Vector__char__1__pushBack__block__2__if__3__block__4__for__5__i
+                                             POP __offset
+                                             POP __pointer
+                                             PUSH __pointer[__offset]
+                                       // LHS
+                                          // Subscript assignment
+                                             // LHS
+                                                // Identifier - nData
+                                                   PUSH __main____Vector__char__1__pushBack__block__2__if__3__block__4__nData
+                                             // OFFSET
+                                                // Identifier - i
+                                                   PUSH __main____Vector__char__1__pushBack__block__2__if__3__block__4__for__5__i
+                                             POP __offset
+                                             POP __pointer
+                                       POP __rhs
+                                       ASSIGN __pointer[__offset] __rhs
+                                       PUSH __rhs
+                                    // Statement results can be ignored
+                                    POP __void
+                                 //---------------------------------------
+                              // Repeat
+                              JUMP __for__5
+                              // End of For
+                              __endfor__5:
+                           //---------------------------------------------
+                           // Free Operator
+                              // RHS
+                                 // Member Accessor
+                                    // LHS
+                                       // This keyword
+                                          PUSH __this
+                                    // RHS
+                                       PUSH __field____main____Vector__char__1____data
+                                    POP __child
+                                    POP __parent
+                                    PUSH __parent[__child]
+                              // Free array
+                              POP __array
+                              FREE __array
+                              PUSH __array
+                           // Statement results can be ignored
+                           POP __void
+                           // Assignment - '='
+                              // RHS
+                                 // Identifier - nData
+                                    PUSH __main____Vector__char__1__pushBack__block__2__if__3__block__4__nData
+                              // LHS
+                                 // Member Accessor Assignment
+                                    // LHS
+                                       // This keyword
+                                          PUSH __this
+                                    // RHS
+                                       PUSH __field____main____Vector__char__1____data
+                                    POP __child
+                                    POP __parent
+                                    POP __rhs
+                              ASSIGN __parent[__child] __rhs
+                              PUSH __rhs
+                           // Statement results can be ignored
+                           POP __void
+                        //------------------------------------------------
+                     JUMP __endif__3
+                     // End of if
+                     __endif__3:
+                  //------------------------------------------------------
+                  // Assignment - '='
+                     // RHS
+                        // Identifier - val
+                           PUSH __main____Vector__char__1__pushBack__val
+                     // LHS
+                        // Subscript assignment
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____Vector__char__1____data
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // OFFSET
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____Vector__char__1____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           POP __offset
+                           POP __pointer
+                     POP __rhs
+                     ASSIGN __pointer[__offset] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+                  // Pre-Increment
+                     // RHS
+                        // Member Accessor
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____Vector__char__1____size
+                           POP __child
+                           POP __parent
+                           PUSH __parent[__child]
+                     POP __rhs
+                     // LHS
+                        // Member Accessor Assignment
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                              PUSH __field____main____Vector__char__1____size
+                           POP __child
+                           POP __parent
+                           ADD __parent[__child] __parent[__child] 1
+                           ASSIGN __res __parent[__child]
+                     PUSH __res
+                  // Statement results can be ignored
+                  POP __void
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____Vector__char__1____pushBack__char__1:
+         // End Method Declaration - __method____main____Vector__char__1____pushBack__char__1
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Method Declaration - Vector<:char[]:>::popBack() -> char[]
+         JUMP __end__method____main____Vector__char__1____popBack
+         __method____main____Vector__char__1____popBack:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Return
+                     // Subscript
+                        // LHS
+                           // Member Accessor
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main____Vector__char__1____data
+                              POP __child
+                              POP __parent
+                              PUSH __parent[__child]
+                        // OFFSET
+                           // Pre-Decrement
+                              // RHS
+                                 // Member Accessor
+                                    // LHS
+                                       // This keyword
+                                          PUSH __this
+                                    // RHS
+                                       PUSH __field____main____Vector__char__1____size
+                                    POP __child
+                                    POP __parent
+                                    PUSH __parent[__child]
+                              POP __rhs
+                              // LHS
+                                 // Member Accessor Assignment
+                                    // LHS
+                                       // This keyword
+                                          PUSH __this
+                                    // RHS
+                                       PUSH __field____main____Vector__char__1____size
+                                    POP __child
+                                    POP __parent
+                                    SUBTRACT __parent[__child] __parent[__child] 1
+                                    ASSIGN __res __parent[__child]
+                              PUSH __res
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                     POP __rVal
+                     RETURN __rVal
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____Vector__char__1____popBack:
+         // End Method Declaration - __method____main____Vector__char__1____popBack
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Method Declaration - Vector<:char[]:>::clear() -> void
+         JUMP __end__method____main____Vector__char__1____clear
+         __method____main____Vector__char__1____clear:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // While-Loop
+                  __while__9:
+                     // Condition
+                        // Greater Than
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____Vector__char__1____size
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // RHS
+                              // Int Literal
+                                 PUSH 0
+                           POP __rhs
+                           POP __lhs
+                           GT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endwhile__9
+                     // Body
+                        // Method Call - Vector<:char[]:>::popBack() -> char[]
+                           // LHS
+                              // This keyword
+                                 PUSH __this
+                           // RHS
+                           // Arguments
+                           POP __obj
+                           // Pushing args in reverse order
+                           PUSH __obj
+                           CALL __method____main____Vector__char__1____popBack
+                           POP __void
+                           // Remove args
+                           RESPONSE __retval
+                           PUSH __retval
+                        // Statement results can be ignored
+                        POP __void
+                     JUMP __while__9
+                     // End of While
+                     __endwhile__9:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____Vector__char__1____clear:
+         // End Method Declaration - __method____main____Vector__char__1____clear
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Method Declaration - Vector<:char[]:>::get(int) -> char[]
+         JUMP __end__method____main____Vector__char__1____get__int
+         __method____main____Vector__char__1____get__int:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+               // Param: index
+               STACKGET __main____Vector__char__1__get__index 1
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Return
+                     // Subscript
+                        // LHS
+                           // Member Accessor
+                              // LHS
+                                 // This keyword
+                                    PUSH __this
+                              // RHS
+                                 PUSH __field____main____Vector__char__1____data
+                              POP __child
+                              POP __parent
+                              PUSH __parent[__child]
+                        // OFFSET
+                           // Identifier - index
+                              PUSH __main____Vector__char__1__get__index
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                     POP __rVal
+                     RETURN __rVal
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____Vector__char__1____get__int:
+         // End Method Declaration - __method____main____Vector__char__1____get__int
+         //---------------------------------------------------------------
+
+         //---------------------------------------------------------------
+         // Method Declaration - Vector<:char[]:>::set(int, char[]) -> void
+         JUMP __end__method____main____Vector__char__1____set__int__char__1
+         __method____main____Vector__char__1____set__int__char__1:
+            // Class Instance
+               STACKGET __this 0
+            // Parameters
+               // Param: index
+               STACKGET __main____Vector__char__1__set__index 1
+               // Param: value
+               STACKGET __main____Vector__char__1__set__value 2
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  // Assignment - '='
+                     // RHS
+                        // Identifier - value
+                           PUSH __main____Vector__char__1__set__value
+                     // LHS
+                        // Subscript assignment
+                           // LHS
+                              // Member Accessor
+                                 // LHS
+                                    // This keyword
+                                       PUSH __this
+                                 // RHS
+                                    PUSH __field____main____Vector__char__1____data
+                                 POP __child
+                                 POP __parent
+                                 PUSH __parent[__child]
+                           // OFFSET
+                              // Identifier - index
+                                 PUSH __main____Vector__char__1__set__index
+                           POP __offset
+                           POP __pointer
+                     POP __rhs
+                     ASSIGN __pointer[__offset] __rhs
+                     PUSH __rhs
+                  // Statement results can be ignored
+                  POP __void
+               //---------------------------------------------------------
+            RETURN 0
+         __end__method____main____Vector__char__1____set__int__char__1:
+         // End Method Declaration - __method____main____Vector__char__1____set__int__char__1
+         //---------------------------------------------------------------
+
+      __endclass____main____Vector__char__1:
+      // End Class Declaration - __main____Vector__char__1
+      //==================================================================
+
+// End Class Template - 
+//========================================================================
+
+//========================================================================
+// Function Template - 
+   // Instances:
+// End Function Template - 
+//========================================================================
+
+//========================================================================
+// Function Template - 
+   // Instances:
+// End Function Template - 
+//========================================================================
+
+// Assignment - '='
+   // RHS
+      // String Literal
+         MALLOC __str 54
+         ASSIGN __str[0] ' '
+         ASSIGN __str[1] 'a'
+         ASSIGN __str[2] 'b'
+         ASSIGN __str[3] 'c'
+         ASSIGN __str[4] 'd'
+         ASSIGN __str[5] 'e'
+         ASSIGN __str[6] 'f'
+         ASSIGN __str[7] 'g'
+         ASSIGN __str[8] 'h'
+         ASSIGN __str[9] 'i'
+         ASSIGN __str[10] 'j'
+         ASSIGN __str[11] 'k'
+         ASSIGN __str[12] 'l'
+         ASSIGN __str[13] 'm'
+         ASSIGN __str[14] 'n'
+         ASSIGN __str[15] 'o'
+         ASSIGN __str[16] 'p'
+         ASSIGN __str[17] 'q'
+         ASSIGN __str[18] 'r'
+         ASSIGN __str[19] 's'
+         ASSIGN __str[20] 't'
+         ASSIGN __str[21] 'u'
+         ASSIGN __str[22] 'v'
+         ASSIGN __str[23] 'w'
+         ASSIGN __str[24] 'x'
+         ASSIGN __str[25] 'y'
+         ASSIGN __str[26] 'z'
+         ASSIGN __str[27] 'A'
+         ASSIGN __str[28] 'B'
+         ASSIGN __str[29] 'C'
+         ASSIGN __str[30] 'D'
+         ASSIGN __str[31] 'E'
+         ASSIGN __str[32] 'F'
+         ASSIGN __str[33] 'G'
+         ASSIGN __str[34] 'H'
+         ASSIGN __str[35] 'I'
+         ASSIGN __str[36] 'J'
+         ASSIGN __str[37] 'K'
+         ASSIGN __str[38] 'L'
+         ASSIGN __str[39] 'M'
+         ASSIGN __str[40] 'N'
+         ASSIGN __str[41] 'O'
+         ASSIGN __str[42] 'P'
+         ASSIGN __str[43] 'Q'
+         ASSIGN __str[44] 'R'
+         ASSIGN __str[45] 'S'
+         ASSIGN __str[46] 'T'
+         ASSIGN __str[47] 'U'
+         ASSIGN __str[48] 'V'
+         ASSIGN __str[49] 'W'
+         ASSIGN __str[50] 'X'
+         ASSIGN __str[51] 'Y'
+         ASSIGN __str[52] 'Z'
+         ASSIGN __str[53] '\0'
+         PUSH __str
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__letters 0
+   POP __rhs
+   ASSIGN __main__letters __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Assignment - '='
+   // RHS
+      // Addition
+         // LHS
+            // Addition
+               // LHS
+                  // Int Literal
+                     PUSH 26
+               // RHS
+                  // Int Literal
+                     PUSH 26
+               POP __rhs
+               POP __lhs
+               ADD __res __lhs __rhs
+               PUSH __res
+         // RHS
+            // Int Literal
+               PUSH 1
+         POP __rhs
+         POP __lhs
+         ADD __res __lhs __rhs
+         PUSH __res
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__letters_size 0
+   POP __rhs
+   ASSIGN __main__letters_size __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Assignment - '='
+   // RHS
+      // Function Call - input() -> char[]
+         // Arguments
+         // Pushing args in reverse order
+         // *** input
+         CALL __builtin__input
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__line 0
+   POP __rhs
+   ASSIGN __main__line __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Assignment - '='
+   // RHS
+      // Int Literal
+         PUSH 0
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__total 0
+   POP __rhs
+   ASSIGN __main__total __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+// Assignment - '='
+   // RHS
+      // Constructor Call - Vector<:char[]:>::Vector() -> Vector<:char[]:>
+         // Arguments
+         // Pushing args in reverse order
+         CALL __ctor____main____Vector__char__1____Vector
+         // Remove args
+         RESPONSE __retval
+         PUSH __retval
+   // LHS
+      // Variable Declaration
+         ASSIGN __main__lines 0
+   POP __rhs
+   ASSIGN __main__lines __rhs
+   PUSH __rhs
+// Statement results can be ignored
+POP __void
+//------------------------------------------------------------------------
+// While-Loop
+__while__12:
+   // Condition
+      // Not Equal
+         // LHS
+            // Subscript
+               // LHS
+                  // Identifier - line
+                     PUSH __main__line
+               // OFFSET
+                  // Int Literal
+                     PUSH 0
+               POP __offset
+               POP __pointer
+               PUSH __pointer[__offset]
+         // RHS
+            // Char Literal
+               PUSH '$'
+         POP __rhs
+         POP __lhs
+         NEQUAL __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endwhile__12
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Method Call - Vector<:char[]:>::pushBack(char[]) -> void
+            // LHS
+               // Identifier - lines
+                  PUSH __main__lines
+            // RHS
+            // Arguments
+               // Identifier - line
+                  PUSH __main__line
+               POP __arg0
+            POP __obj
+            // Pushing args in reverse order
+            PUSH __arg0
+            PUSH __obj
+            CALL __method____main____Vector__char__1____pushBack__char__1
+            POP __void
+            // Remove args
+            POP __void
+            RESPONSE __retval
+            PUSH __retval
+         // Statement results can be ignored
+         POP __void
+         // Assignment - '='
+            // RHS
+               // Function Call - input() -> char[]
+                  // Arguments
+                  // Pushing args in reverse order
+                  // *** input
+                  CALL __builtin__input
+                  // Remove args
+                  RESPONSE __retval
+                  PUSH __retval
+            POP __rhs
+            ASSIGN __main__line __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+      //------------------------------------------------------------------
+   JUMP __while__12
+   // End of While
+   __endwhile__12:
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+// For-Loop
+// Init
+   // Assignment - '='
+      // RHS
+         // Int Literal
+            PUSH 0
+      // LHS
+         // Variable Declaration
+            ASSIGN __main__for__14__l 0
+      POP __rhs
+      ASSIGN __main__for__14__l __rhs
+      PUSH __rhs
+JUMP __forcond__14
+__for__14:
+   // Update
+      // Assignment - '+='
+         // RHS
+            // Int Literal
+               PUSH 3
+         POP __rhs
+         ADD __main__for__14__l __main__for__14__l __rhs
+         PUSH __main__for__14__l
+   __forcond__14:
+   // Condition
+      // Less Than
+         // LHS
+            // Identifier - l
+               PUSH __main__for__14__l
+         // RHS
+            // Member Accessor
+               // LHS
+                  // Identifier - lines
+                     PUSH __main__lines
+               // RHS
+                  PUSH __field____main____Vector__char__1____size
+               POP __child
+               POP __parent
+               PUSH __parent[__child]
+         POP __rhs
+         POP __lhs
+         LT __res __lhs __rhs
+         PUSH __res
+      POP __cond
+      CMP __cond 0
+      JEQ __endfor__14
+   // Body
+      //------------------------------------------------------------------
+      // Code Block
+         // Assignment - '='
+            // RHS
+               // Subscript
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // Identifier - lines
+                              PUSH __main__lines
+                        // RHS
+                           PUSH __field____main____Vector__char__1____data
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // OFFSET
+                     // Addition
+                        // LHS
+                           // Identifier - l
+                              PUSH __main__for__14__l
+                        // RHS
+                           // Int Literal
+                              PUSH 0
+                        POP __rhs
+                        POP __lhs
+                        ADD __res __lhs __rhs
+                        PUSH __res
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__14__block__15__line0 0
+            POP __rhs
+            ASSIGN __main__for__14__block__15__line0 __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         // Assignment - '='
+            // RHS
+               // Int Literal
+                  PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__14__block__15__line0_size 0
+            POP __rhs
+            ASSIGN __main__for__14__block__15__line0_size __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         //---------------------------------------------------------------
+         // While-Loop
+         __while__16:
+            // Condition
+               // Not Equal
+                  // LHS
+                     // Subscript
+                        // LHS
+                           // Identifier - line0
+                              PUSH __main__for__14__block__15__line0
+                        // OFFSET
+                           // Post-Increment
+                              ASSIGN __res __main__for__14__block__15__line0_size
+                              ADD __main__for__14__block__15__line0_size __main__for__14__block__15__line0_size 1
+                              PUSH __res
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // RHS
+                     // Char Literal
+                        PUSH '\0'
+                  POP __rhs
+                  POP __lhs
+                  NEQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endwhile__16
+            // Body
+            JUMP __while__16
+            // End of While
+            __endwhile__16:
+         //---------------------------------------------------------------
+         // Pre-Decrement
+            // RHS
+               // Identifier - line0_size
+                  PUSH __main__for__14__block__15__line0_size
+            POP __rhs
+            SUBTRACT __main__for__14__block__15__line0_size __main__for__14__block__15__line0_size 1
+            ASSIGN __res __main__for__14__block__15__line0_size
+            PUSH __res
+         // Statement results can be ignored
+         POP __void
+         // Assignment - '='
+            // RHS
+               // Subscript
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // Identifier - lines
+                              PUSH __main__lines
+                        // RHS
+                           PUSH __field____main____Vector__char__1____data
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // OFFSET
+                     // Addition
+                        // LHS
+                           // Identifier - l
+                              PUSH __main__for__14__l
+                        // RHS
+                           // Int Literal
+                              PUSH 1
+                        POP __rhs
+                        POP __lhs
+                        ADD __res __lhs __rhs
+                        PUSH __res
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__14__block__15__line1 0
+            POP __rhs
+            ASSIGN __main__for__14__block__15__line1 __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         // Assignment - '='
+            // RHS
+               // Int Literal
+                  PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__14__block__15__line1_size 0
+            POP __rhs
+            ASSIGN __main__for__14__block__15__line1_size __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         //---------------------------------------------------------------
+         // While-Loop
+         __while__17:
+            // Condition
+               // Not Equal
+                  // LHS
+                     // Subscript
+                        // LHS
+                           // Identifier - line1
+                              PUSH __main__for__14__block__15__line1
+                        // OFFSET
+                           // Post-Increment
+                              ASSIGN __res __main__for__14__block__15__line1_size
+                              ADD __main__for__14__block__15__line1_size __main__for__14__block__15__line1_size 1
+                              PUSH __res
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // RHS
+                     // Char Literal
+                        PUSH '\0'
+                  POP __rhs
+                  POP __lhs
+                  NEQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endwhile__17
+            // Body
+            JUMP __while__17
+            // End of While
+            __endwhile__17:
+         //---------------------------------------------------------------
+         // Pre-Decrement
+            // RHS
+               // Identifier - line1_size
+                  PUSH __main__for__14__block__15__line1_size
+            POP __rhs
+            SUBTRACT __main__for__14__block__15__line1_size __main__for__14__block__15__line1_size 1
+            ASSIGN __res __main__for__14__block__15__line1_size
+            PUSH __res
+         // Statement results can be ignored
+         POP __void
+         // Assignment - '='
+            // RHS
+               // Subscript
+                  // LHS
+                     // Member Accessor
+                        // LHS
+                           // Identifier - lines
+                              PUSH __main__lines
+                        // RHS
+                           PUSH __field____main____Vector__char__1____data
+                        POP __child
+                        POP __parent
+                        PUSH __parent[__child]
+                  // OFFSET
+                     // Addition
+                        // LHS
+                           // Identifier - l
+                              PUSH __main__for__14__l
+                        // RHS
+                           // Int Literal
+                              PUSH 2
+                        POP __rhs
+                        POP __lhs
+                        ADD __res __lhs __rhs
+                        PUSH __res
+                  POP __offset
+                  POP __pointer
+                  PUSH __pointer[__offset]
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__14__block__15__line2 0
+            POP __rhs
+            ASSIGN __main__for__14__block__15__line2 __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         // Assignment - '='
+            // RHS
+               // Int Literal
+                  PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__14__block__15__line2_size 0
+            POP __rhs
+            ASSIGN __main__for__14__block__15__line2_size __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         //---------------------------------------------------------------
+         // While-Loop
+         __while__18:
+            // Condition
+               // Not Equal
+                  // LHS
+                     // Subscript
+                        // LHS
+                           // Identifier - line2
+                              PUSH __main__for__14__block__15__line2
+                        // OFFSET
+                           // Post-Increment
+                              ASSIGN __res __main__for__14__block__15__line2_size
+                              ADD __main__for__14__block__15__line2_size __main__for__14__block__15__line2_size 1
+                              PUSH __res
+                        POP __offset
+                        POP __pointer
+                        PUSH __pointer[__offset]
+                  // RHS
+                     // Char Literal
+                        PUSH '\0'
+                  POP __rhs
+                  POP __lhs
+                  NEQUAL __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endwhile__18
+            // Body
+            JUMP __while__18
+            // End of While
+            __endwhile__18:
+         //---------------------------------------------------------------
+         // Pre-Decrement
+            // RHS
+               // Identifier - line2_size
+                  PUSH __main__for__14__block__15__line2_size
+            POP __rhs
+            SUBTRACT __main__for__14__block__15__line2_size __main__for__14__block__15__line2_size 1
+            ASSIGN __res __main__for__14__block__15__line2_size
+            PUSH __res
+         // Statement results can be ignored
+         POP __void
+         // Assignment - '='
+            // RHS
+               // Char Literal
+                  PUSH '0'
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__14__block__15__common 0
+            POP __rhs
+            ASSIGN __main__for__14__block__15__common __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment - '='
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__for__14__block__15__for__19__i 0
+               POP __rhs
+               ASSIGN __main__for__14__block__15__for__19__i __rhs
+               PUSH __rhs
+         JUMP __forcond__19
+         __for__19:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - i
+                        PUSH __main__for__14__block__15__for__19__i
+                  POP __rhs
+                  ADD __main__for__14__block__15__for__19__i __main__for__14__block__15__for__19__i 1
+                  ASSIGN __res __main__for__14__block__15__for__19__i
+                  PUSH __res
+            __forcond__19:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - i
+                        PUSH __main__for__14__block__15__for__19__i
+                  // RHS
+                     // Subtraction
+                        // LHS
+                           // Identifier - line0_size
+                              PUSH __main__for__14__block__15__line0_size
+                        // RHS
+                           // Int Literal
+                              PUSH 1
+                        POP __rhs
+                        POP __lhs
+                        SUBTRACT __res __lhs __rhs
+                        PUSH __res
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__19
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // For-Loop
+                  // Init
+                     // Assignment - '='
+                        // RHS
+                           // Int Literal
+                              PUSH 0
+                        // LHS
+                           // Variable Declaration
+                              ASSIGN __main__for__14__block__15__for__19__block__20__for__21__j 0
+                        POP __rhs
+                        ASSIGN __main__for__14__block__15__for__19__block__20__for__21__j __rhs
+                        PUSH __rhs
+                  JUMP __forcond__21
+                  __for__21:
+                     // Update
+                        // Pre-Increment
+                           // RHS
+                              // Identifier - j
+                                 PUSH __main__for__14__block__15__for__19__block__20__for__21__j
+                           POP __rhs
+                           ADD __main__for__14__block__15__for__19__block__20__for__21__j __main__for__14__block__15__for__19__block__20__for__21__j 1
+                           ASSIGN __res __main__for__14__block__15__for__19__block__20__for__21__j
+                           PUSH __res
+                     __forcond__21:
+                     // Condition
+                        // Less Than
+                           // LHS
+                              // Identifier - j
+                                 PUSH __main__for__14__block__15__for__19__block__20__for__21__j
+                           // RHS
+                              // Subtraction
+                                 // LHS
+                                    // Identifier - line1_size
+                                       PUSH __main__for__14__block__15__line1_size
+                                 // RHS
+                                    // Int Literal
+                                       PUSH 1
+                                 POP __rhs
+                                 POP __lhs
+                                 SUBTRACT __res __lhs __rhs
+                                 PUSH __res
+                           POP __rhs
+                           POP __lhs
+                           LT __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endfor__21
+                     // Body
+                        //------------------------------------------------
+                        // Code Block
+                           //---------------------------------------------
+                           // If-Statement
+                              // Condition
+                                 // Equal
+                                    // LHS
+                                       // Subscript
+                                          // LHS
+                                             // Identifier - line0
+                                                PUSH __main__for__14__block__15__line0
+                                          // OFFSET
+                                             // Identifier - i
+                                                PUSH __main__for__14__block__15__for__19__i
+                                          POP __offset
+                                          POP __pointer
+                                          PUSH __pointer[__offset]
+                                    // RHS
+                                       // Subscript
+                                          // LHS
+                                             // Identifier - line1
+                                                PUSH __main__for__14__block__15__line1
+                                          // OFFSET
+                                             // Identifier - j
+                                                PUSH __main__for__14__block__15__for__19__block__20__for__21__j
+                                          POP __offset
+                                          POP __pointer
+                                          PUSH __pointer[__offset]
+                                    POP __rhs
+                                    POP __lhs
+                                    EQUAL __res __lhs __rhs
+                                    PUSH __res
+                                 POP __cond
+                                 CMP __cond 0
+                                 JEQ __endif__23
+                              // Body
+                                 //---------------------------------------
+                                 // Code Block
+                                    //------------------------------------
+                                    // For-Loop
+                                    // Init
+                                       // Assignment - '='
+                                          // RHS
+                                             // Int Literal
+                                                PUSH 0
+                                          // LHS
+                                             // Variable Declaration
+                                                ASSIGN __main__for__14__block__15__for__19__block__20__for__21__block__22__if__23__block__24__for__25__k 0
+                                          POP __rhs
+                                          ASSIGN __main__for__14__block__15__for__19__block__20__for__21__block__22__if__23__block__24__for__25__k __rhs
+                                          PUSH __rhs
+                                    JUMP __forcond__25
+                                    __for__25:
+                                       // Update
+                                          // Pre-Increment
+                                             // RHS
+                                                // Identifier - k
+                                                   PUSH __main__for__14__block__15__for__19__block__20__for__21__block__22__if__23__block__24__for__25__k
+                                             POP __rhs
+                                             ADD __main__for__14__block__15__for__19__block__20__for__21__block__22__if__23__block__24__for__25__k __main__for__14__block__15__for__19__block__20__for__21__block__22__if__23__block__24__for__25__k 1
+                                             ASSIGN __res __main__for__14__block__15__for__19__block__20__for__21__block__22__if__23__block__24__for__25__k
+                                             PUSH __res
+                                       __forcond__25:
+                                       // Condition
+                                          // Less Than
+                                             // LHS
+                                                // Identifier - k
+                                                   PUSH __main__for__14__block__15__for__19__block__20__for__21__block__22__if__23__block__24__for__25__k
+                                             // RHS
+                                                // Subtraction
+                                                   // LHS
+                                                      // Identifier - line2_size
+                                                         PUSH __main__for__14__block__15__line2_size
+                                                   // RHS
+                                                      // Int Literal
+                                                         PUSH 1
+                                                   POP __rhs
+                                                   POP __lhs
+                                                   SUBTRACT __res __lhs __rhs
+                                                   PUSH __res
+                                             POP __rhs
+                                             POP __lhs
+                                             LT __res __lhs __rhs
+                                             PUSH __res
+                                          POP __cond
+                                          CMP __cond 0
+                                          JEQ __endfor__25
+                                       // Body
+                                          //------------------------------
+                                          // Code Block
+                                             //---------------------------
+                                             // If-Statement
+                                                // Condition
+                                                   // Equal
+                                                      // LHS
+                                                         // Subscript
+                                                            // LHS
+                                                               // Identifier - line0
+                                                                  PUSH __main__for__14__block__15__line0
+                                                            // OFFSET
+                                                               // Identifier - i
+                                                                  PUSH __main__for__14__block__15__for__19__i
+                                                            POP __offset
+                                                            POP __pointer
+                                                            PUSH __pointer[__offset]
+                                                      // RHS
+                                                         // Subscript
+                                                            // LHS
+                                                               // Identifier - line2
+                                                                  PUSH __main__for__14__block__15__line2
+                                                            // OFFSET
+                                                               // Identifier - k
+                                                                  PUSH __main__for__14__block__15__for__19__block__20__for__21__block__22__if__23__block__24__for__25__k
+                                                            POP __offset
+                                                            POP __pointer
+                                                            PUSH __pointer[__offset]
+                                                      POP __rhs
+                                                      POP __lhs
+                                                      EQUAL __res __lhs __rhs
+                                                      PUSH __res
+                                                   POP __cond
+                                                   CMP __cond 0
+                                                   JEQ __endif__27
+                                                // Body
+                                                   //---------------------
+                                                   // Code Block
+                                                      // Assignment - '='
+                                                         // RHS
+                                                            // Subscript
+                                                               // LHS
+                                                                  // Identifier - line0
+                                                                     PUSH __main__for__14__block__15__line0
+                                                               // OFFSET
+                                                                  // Identifier - i
+                                                                     PUSH __main__for__14__block__15__for__19__i
+                                                               POP __offset
+                                                               POP __pointer
+                                                               PUSH __pointer[__offset]
+                                                         POP __rhs
+                                                         ASSIGN __main__for__14__block__15__common __rhs
+                                                         PUSH __rhs
+                                                      // Statement results can be ignored
+                                                      POP __void
+                                                   //---------------------
+                                                JUMP __endif__27
+                                                // End of if
+                                                __endif__27:
+                                             //---------------------------
+                                          //------------------------------
+                                       // Repeat
+                                       JUMP __for__25
+                                       // End of For
+                                       __endfor__25:
+                                    //------------------------------------
+                                 //---------------------------------------
+                              JUMP __endif__23
+                              // End of if
+                              __endif__23:
+                           //---------------------------------------------
+                        //------------------------------------------------
+                     // Repeat
+                     JUMP __for__21
+                     // End of For
+                     __endfor__21:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            // Repeat
+            JUMP __for__19
+            // End of For
+            __endfor__19:
+         //---------------------------------------------------------------
+         // Assignment - '='
+            // RHS
+               // Int Literal
+                  PUSH 0
+            // LHS
+               // Variable Declaration
+                  ASSIGN __main__for__14__block__15__score 0
+            POP __rhs
+            ASSIGN __main__for__14__block__15__score __rhs
+            PUSH __rhs
+         // Statement results can be ignored
+         POP __void
+         //---------------------------------------------------------------
+         // For-Loop
+         // Init
+            // Assignment - '='
+               // RHS
+                  // Int Literal
+                     PUSH 0
+               // LHS
+                  // Variable Declaration
+                     ASSIGN __main__for__14__block__15__for__29__i 0
+               POP __rhs
+               ASSIGN __main__for__14__block__15__for__29__i __rhs
+               PUSH __rhs
+         JUMP __forcond__29
+         __for__29:
+            // Update
+               // Pre-Increment
+                  // RHS
+                     // Identifier - i
+                        PUSH __main__for__14__block__15__for__29__i
+                  POP __rhs
+                  ADD __main__for__14__block__15__for__29__i __main__for__14__block__15__for__29__i 1
+                  ASSIGN __res __main__for__14__block__15__for__29__i
+                  PUSH __res
+            __forcond__29:
+            // Condition
+               // Less Than
+                  // LHS
+                     // Identifier - i
+                        PUSH __main__for__14__block__15__for__29__i
+                  // RHS
+                     // Identifier - letters_size
+                        PUSH __main__letters_size
+                  POP __rhs
+                  POP __lhs
+                  LT __res __lhs __rhs
+                  PUSH __res
+               POP __cond
+               CMP __cond 0
+               JEQ __endfor__29
+            // Body
+               //---------------------------------------------------------
+               // Code Block
+                  //------------------------------------------------------
+                  // If-Statement
+                     // Condition
+                        // Equal
+                           // LHS
+                              // Subscript
+                                 // LHS
+                                    // Identifier - letters
+                                       PUSH __main__letters
+                                 // OFFSET
+                                    // Identifier - i
+                                       PUSH __main__for__14__block__15__for__29__i
+                                 POP __offset
+                                 POP __pointer
+                                 PUSH __pointer[__offset]
+                           // RHS
+                              // Identifier - common
+                                 PUSH __main__for__14__block__15__common
+                           POP __rhs
+                           POP __lhs
+                           EQUAL __res __lhs __rhs
+                           PUSH __res
+                        POP __cond
+                        CMP __cond 0
+                        JEQ __endif__31
+                     // Body
+                        // Assignment - '='
+                           // RHS
+                              // Identifier - i
+                                 PUSH __main__for__14__block__15__for__29__i
+                           POP __rhs
+                           ASSIGN __main__for__14__block__15__score __rhs
+                           PUSH __rhs
+                        // Statement results can be ignored
+                        POP __void
+                     JUMP __endif__31
+                     // End of if
+                     __endif__31:
+                  //------------------------------------------------------
+               //---------------------------------------------------------
+            // Repeat
+            JUMP __for__29
+            // End of For
+            __endfor__29:
+         //---------------------------------------------------------------
+         // Assignment - '+='
+            // RHS
+               // Identifier - score
+                  PUSH __main__for__14__block__15__score
+            POP __rhs
+            ADD __main__total __main__total __rhs
+            PUSH __main__total
+         // Statement results can be ignored
+         POP __void
+      //------------------------------------------------------------------
+   // Repeat
+   JUMP __for__14
+   // End of For
+   __endfor__14:
+//------------------------------------------------------------------------
+// Function Call - println(int) -> void
+   // Arguments
+      // Identifier - total
+         PUSH __main__total
+      POP __arg0
+   // Pushing args in reverse order
+   PUSH __arg0
+   // *** println
+   CALL __builtin__println__int
+   // Remove args
+   POP __void
+   RESPONSE __retval
+   PUSH __retval
+// Statement results can be ignored
+POP __void
+//========================================================================
+//### END OF CODE ########################################################
+//========================================================================
+

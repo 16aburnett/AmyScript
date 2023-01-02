@@ -1,0 +1,220 @@
+
+
+#include "Vector.amy"
+#include "algorithms.amy"
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+//println <:char[]:> (lines);
+
+// acts as both a file and directory
+class File
+{
+    public field char[] name;
+    public field File parent;
+    public field Vector<:File:> children;
+    public field int size;
+    public field int is_dir;
+    constructor (char[] name)
+    {
+        this.name = name;
+        this.parent = null;
+        this.children = new Vector<:File:> ();
+        this.size = 0;
+        this.is_dir = 0;
+    }
+}
+
+File root = new File ("/\n");
+root.is_dir = 1;
+
+File workingdir = root;
+
+Vector<:File:> all_files = new Vector<:File:> ();
+all_files.pushBack (root);
+
+for (int i = 0; i < lines.size; ++i)
+{
+    //print (lines.data[i]);
+    Vector<:char[]:> tokens = split (lines.data[i], ' ');
+    //println<:char[]:> (tokens);
+    if (lines.data[i][0] == '$')
+    {
+        // cd
+        if (tokens.data[1][0] == 'c')
+        {
+            //println ("cd");
+            // cd /
+            if (tokens.data[2][0] == '/')
+            {
+                //println ("changing to root");
+                workingdir = root;
+                //println (workingdir == null);
+            }
+
+            // cd ..
+            elif (tokens.data[2][0] == '.')
+            {
+                //println ("going back a dir");
+                workingdir = workingdir.parent;
+                //println (workingdir == null);
+            }
+
+            // cd x
+            else 
+            {
+                //println (tokens.data[2]);
+                //println (workingdir == null);
+                for (int j = 0; j < workingdir.children.size; ++j)
+                {
+                    //print (tokens.data[2]);
+                    //print (workingdir.children.data[j].name);
+                    if (strcmp (tokens.data[2], workingdir.children.data[j].name))
+                    {
+                        //println ("match!");
+                        workingdir = workingdir.children.data[j];
+                        break;
+                    }
+                }
+                //print ("changed to "); println (tokens.data[2]);
+            }
+        }
+        elif (tokens.data[1][0] == 'l')
+        {
+            //println ("ls");
+            // look ahead at listed files
+            ++i;
+            while (i < lines.size)
+            {
+                if (lines.data[i][0] == '$')
+                    break;
+                //print (lines.data[i]);
+                Vector<:char[]:> tokens = split (lines.data[i], ' ');
+                //println <:char[]:> (tokens);
+                // dir xyz
+                if (tokens.data[0][0] == 'd')
+                {
+                    //println ("dir");
+                    // make dir
+                    File dir = new File (tokens.data[1]);
+                    dir.parent = workingdir;
+                    dir.is_dir = 1;
+                    workingdir.children.pushBack (dir);
+                    all_files.pushBack (dir);
+                }
+                // 123 abc
+                else
+                {
+                    int size = stringToInt (tokens.data[0]);
+                    //println (size);
+                    File f = new File (tokens.data[1]);
+                    f.size = size;
+                    f.parent = workingdir;
+                    f.is_dir = 0;
+                    workingdir.children.pushBack (f);
+                    all_files.pushBack (f);
+                }
+
+                // nextline
+                ++i;
+            }
+            //for (int j = 0; j < workingdir.children.size; ++j)
+            //{
+            //    print (workingdir.children.data[j].name);
+            //}
+            --i;
+
+        }
+    }
+}
+
+//println ();
+//println ();
+
+// print filesystem
+function void printfs (File fs, int indent)
+{
+    if (fs == null)
+        return;
+    for (int i = 0; i < indent; ++i)
+    {
+        print (' '); print (' ');
+    }
+    print (fs.name); print ('('); print (fs.size); print (')');
+    print (' '); print (fs.is_dir);
+    for (int i = 0; i < fs.children.size; ++i)
+    {
+        printfs (fs.children.data[i], indent+1);
+    }
+}
+
+//printfs (root, 0);
+
+function void sum_sizes (File fs)
+{
+    if (fs == null)
+        return;
+    for (int i = 0; i < fs.children.size; ++i)
+    {
+        sum_sizes (fs.children.data[i]);
+        fs.size += fs.children.data[i].size;
+    }
+}
+
+sum_sizes (root);
+
+//println ();
+//println ();
+//printfs (root, 0);
+
+
+function int sum_small_dirs (File fs)
+{
+    if (fs == null)
+        return 0;
+    // ignore files
+    if (!fs.is_dir)
+        return 0;
+    int sum = 0;
+    if (fs.size < 100000)
+        sum += fs.size;
+    for (int i = 0; i < fs.children.size; ++i)
+    {
+        sum += sum_small_dirs (fs.children.data[i]);
+    }
+    return sum;
+}
+
+//println ();
+//println (sum_small_dirs (root));
+
+int total_space =         70000000;
+int unused_space_needed = 30000000;
+int effective_space = total_space - unused_space_needed;
+int min_space_to_remove = root.size - effective_space;
+
+// find smallest directory that is larger than the effective space
+int smallest = total_space;
+
+for (int i = 0; i < all_files.size; ++i)
+{
+    if (all_files.data[i].is_dir)
+    {
+        // ensure it is enough space
+        if (all_files.data[i].size >= min_space_to_remove)
+        {
+            if (all_files.data[i].size < smallest)
+            {
+                smallest = all_files.data[i].size;
+            }
+        }
+    }
+}
+
+println (smallest);

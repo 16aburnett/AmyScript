@@ -1,0 +1,760 @@
+
+#include "Vector.amy"
+#include "algorithms.amy"
+#include "LinkedList.amy"
+
+//========================================================================
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+//========================================================================
+
+int x = 0;
+int y = 0;
+
+Vector<:char[]:> board = new Vector<:char[]:> ();
+board.pushBack ("+-------+");
+board.pushBack ("|.......|");
+board.pushBack ("|.......|");
+board.pushBack ("|.......|");
+
+
+function void printboard (Vector<:char[]:> board)
+{
+    return;
+    for (int i = board.size-1; i >= 0; --i)
+    {
+        for (int j = 0; j < 9; ++j)
+        {
+            print (board.data[i][j]);
+        }
+        println ();
+    }
+    println ();
+}
+function void printboard2 (Vector<:char[]:> board)
+{
+    for (int i = board.size-1; i >= 0; --i)
+    {
+        for (int j = 0; j < 9; ++j)
+        {
+            print (board.data[i][j]);
+        }
+        println (i);
+    }
+    println ();
+}
+
+int shift_index = 0;
+int shift_max = strlen(lines.data[0])-1;
+
+int iter = 0;
+int num_rocks = 0;
+int max_rocks = 2022;
+int height = 0;
+while (1)
+{
+    // ..####.
+    // .......
+    // .......
+    // .......
+    {
+        // ensure space to drop rock
+        // new rock needs to be placed 3 above highest rock
+        // find highest rock height
+        int rock_height = 0;
+        for (int i = board.size-1; i >= 0; --i)
+        {
+            for (int j = 1; j < 8; ++j)
+            {
+                if (board.data[i][j] != '.')
+                {
+                    rock_height = i;
+                    break;
+                }
+            }
+            if (rock_height != 0)
+                break;
+        }
+        // add height if needed (including shape size)
+        int shape_height = 1;
+        char rock_char = '0';
+        int desired_height = rock_height + 3 + shape_height;
+        while (board.size-1 < desired_height)
+            board.pushBack ("|.......|");
+
+        printboard (board);
+
+        // place rock
+        // left edge must be 2 away from edge
+        int[] posx0 = [3,4,5,6];
+        int posy = rock_height + 3 + 1;
+        board.data[posy][posx0[0]] = rock_char;
+        board.data[posy][posx0[1]] = rock_char;
+        board.data[posy][posx0[2]] = rock_char;
+        board.data[posy][posx0[3]] = rock_char;
+        printboard (board);
+
+        // repeatedly move rock until it rests
+        while (1)
+        {
+            // shift rock
+            println (shift_index);
+            //  remove rock
+            board.data[posy][posx0[0]] = '.';
+            board.data[posy][posx0[1]] = '.';
+            board.data[posy][posx0[2]] = '.';
+            board.data[posy][posx0[3]] = '.';
+            //  move rock
+            if (lines.data[0][shift_index] == '<')
+            {
+                println ("shift left");
+                // ensure it can move left
+                // x####.
+                if (board.data[posy][posx0[0]-1] == '.')
+                {
+                    posx0[0] -= 1;
+                    posx0[1] -= 1;
+                    posx0[2] -= 1;
+                    posx0[3] -= 1;
+                }
+            }
+            else
+            {
+                println ("shift right");
+                // ensure it can move right
+                // .####x
+                if (board.data[posy][posx0[3]+1] == '.')
+                {
+                    posx0[0] += 1;
+                    posx0[1] += 1;
+                    posx0[2] += 1;
+                    posx0[3] += 1;
+                }
+            }
+            //  redraw rock
+            board.data[posy][posx0[0]] = rock_char;
+            board.data[posy][posx0[1]] = rock_char;
+            board.data[posy][posx0[2]] = rock_char;
+            board.data[posy][posx0[3]] = rock_char;
+            shift_index = (shift_index + 1) % shift_max;
+            printboard (board);
+
+            // ensure rock can drop 
+            if (board.data[posy-1][posx0[0]] != '.' || 
+                board.data[posy-1][posx0[1]] != '.' ||
+                board.data[posy-1][posx0[2]] != '.' ||
+                board.data[posy-1][posx0[3]] != '.' ||
+                posy-1 == 0)
+            {
+                // rest rock
+                println ("rock at rest");
+                break;
+            }
+
+            // drop rock
+            //  remove rock
+            board.data[posy][posx0[0]] = '.';
+            board.data[posy][posx0[1]] = '.';
+            board.data[posy][posx0[2]] = '.';
+            board.data[posy][posx0[3]] = '.';
+            //  move rock
+            posy -= 1;
+            //  redraw rock
+            board.data[posy][posx0[0]] = rock_char;
+            board.data[posy][posx0[1]] = rock_char;
+            board.data[posy][posx0[2]] = rock_char;
+            board.data[posy][posx0[3]] = rock_char;
+
+            printboard (board);
+
+        }
+        printboard (board);
+    }
+    num_rocks += 1;
+    if (num_rocks >= max_rocks)
+        break;
+
+    // ...#...
+    // ..###..
+    // ...#...
+    // .......
+    // .......
+    // .......
+    {
+        // ensure space to drop rock
+        // new rock needs to be placed 3 above highest rock
+        // find highest rock height
+        int rock_height = 0;
+        for (int i = board.size-1; i >= 0; --i)
+        {
+            for (int j = 1; j < 8; ++j)
+            {
+                if (board.data[i][j] != '.')
+                {
+                    rock_height = i;
+                    break;
+                }
+            }
+            if (rock_height != 0)
+                break;
+        }
+        // add height if needed (including shape size)
+        int shape_height = 3;
+        char rock_char = '1';
+        int desired_height = rock_height + 3 + shape_height;
+        while (board.size-1 < desired_height)
+            board.pushBack ("|.......|");
+
+        printboard (board);
+
+        // place rock
+        // left edge must be 2 away from edge
+        int[] posx0 = [4];
+        int[] posx1 = [3, 4, 5];
+        int[] posx2 = [4];
+        int posy = rock_height + 3 + 1;
+        // draw rock
+        board.data[posy  ][posx0[0]] = rock_char;
+        board.data[posy+1][posx1[0]] = rock_char;
+        board.data[posy+1][posx1[1]] = rock_char;
+        board.data[posy+1][posx1[2]] = rock_char;
+        board.data[posy+2][posx2[0]] = rock_char;
+        printboard (board);
+
+        // repeatedly move rock until it rests
+        while (1)
+        {
+            // shift rock
+            println (shift_index);
+            //  remove rock
+            board.data[posy  ][posx0[0]] = '.';
+            board.data[posy+1][posx1[0]] = '.';
+            board.data[posy+1][posx1[1]] = '.';
+            board.data[posy+1][posx1[2]] = '.';
+            board.data[posy+2][posx2[0]] = '.';
+            //  move rock
+            if (lines.data[0][shift_index] == '<')
+            {
+                println ("shift left");
+                // ensure it can move left
+                // .x#.
+                // x###
+                // .x#.
+                if (board.data[posy  ][posx0[0]-1] == '.' &&
+                    board.data[posy+1][posx1[0]-1] == '.' &&
+                    board.data[posy+2][posx2[0]-1] == '.')
+                {
+                    posx0[0] -= 1;
+                    posx1[0] -= 1;
+                    posx1[1] -= 1;
+                    posx1[2] -= 1;
+                    posx2[0] -= 1;
+                }
+            }
+            else
+            {
+                println ("shift right");
+                // ensure it can move right
+                // ..#x.
+                // .###x
+                // ..#x.
+                if (board.data[posy  ][posx0[0]+1] == '.' &&
+                    board.data[posy+1][posx1[2]+1] == '.' &&
+                    board.data[posy+2][posx2[0]+1] == '.')
+                {
+                    posx0[0] += 1;
+                    posx1[0] += 1;
+                    posx1[1] += 1;
+                    posx1[2] += 1;
+                    posx2[0] += 1;
+                }
+            }
+            //  redraw rock
+            board.data[posy  ][posx0[0]] = rock_char;
+            board.data[posy+1][posx1[0]] = rock_char;
+            board.data[posy+1][posx1[1]] = rock_char;
+            board.data[posy+1][posx1[2]] = rock_char;
+            board.data[posy+2][posx2[0]] = rock_char;
+            shift_index = (shift_index + 1) % shift_max;
+            printboard (board);
+
+            // ensure rock can drop 
+            // ###
+            // x#x
+            // .x.
+            if (board.data[posy  ][posx0[0]-1] != '.' ||
+                board.data[posy-1][posx0[0]  ] != '.' || 
+                board.data[posy  ][posx0[0]+1] != '.' ||
+                posy-1 == 0)
+            {
+                // rest rock
+                println ("rock at rest");
+                break;
+            }
+
+            // drop rock
+            //  remove rock
+            board.data[posy  ][posx0[0]] = '.';
+            board.data[posy+1][posx1[0]] = '.';
+            board.data[posy+1][posx1[1]] = '.';
+            board.data[posy+1][posx1[2]] = '.';
+            board.data[posy+2][posx2[0]] = '.';
+            //  move rock
+            posy -= 1;
+            //  redraw rock
+            board.data[posy  ][posx0[0]] = rock_char;
+            board.data[posy+1][posx1[0]] = rock_char;
+            board.data[posy+1][posx1[1]] = rock_char;
+            board.data[posy+1][posx1[2]] = rock_char;
+            board.data[posy+2][posx2[0]] = rock_char;
+            printboard (board);
+
+        }
+        printboard (board);
+    }
+    num_rocks += 1;
+    if (num_rocks >= max_rocks)
+        break;
+
+    // ....#..
+    // ....#..
+    // ..###..
+    // .......
+    // .......
+    // .......
+    {
+        // ensure space to drop rock
+        // new rock needs to be placed 3 above highest rock
+        // find highest rock height
+        int rock_height = 0;
+        for (int i = board.size-1; i >= 0; --i)
+        {
+            for (int j = 1; j < 8; ++j)
+            {
+                if (board.data[i][j] != '.')
+                {
+                    rock_height = i;
+                    break;
+                }
+            }
+            if (rock_height != 0)
+                break;
+        }
+        // add height if needed (including shape size)
+        int shape_height = 3;
+        char rock_char = '2';
+        int desired_height = rock_height + 3 + shape_height;
+        while (board.size-1 < desired_height)
+            board.pushBack ("|.......|");
+
+        printboard (board);
+
+        // place rock
+        // left edge must be 2 away from edge
+        int[] posx0 = [3,4,5];
+        int[] posx1 = [5];
+        int[] posx2 = [5];
+        int posy = rock_height + 3 + 1;
+        // draw rock
+        board.data[posy  ][posx0[0]] = rock_char;
+        board.data[posy  ][posx0[1]] = rock_char;
+        board.data[posy  ][posx0[2]] = rock_char;
+        board.data[posy+1][posx1[0]] = rock_char;
+        board.data[posy+2][posx2[0]] = rock_char;
+        printboard (board);
+
+        // repeatedly move rock until it rests
+        while (1)
+        {
+            // shift rock
+            println (shift_index);
+            //  remove rock
+            board.data[posy  ][posx0[0]] = '.';
+            board.data[posy  ][posx0[1]] = '.';
+            board.data[posy  ][posx0[2]] = '.';
+            board.data[posy+1][posx1[0]] = '.';
+            board.data[posy+2][posx2[0]] = '.';
+            //  move rock
+            if (lines.data[0][shift_index] == '<')
+            {
+                println ("shift left");
+                // ensure it can move left
+                // ..x#
+                // ..x#
+                // x###
+                if (board.data[posy  ][posx0[0]-1] == '.' &&
+                    board.data[posy+1][posx1[0]-1] == '.' &&
+                    board.data[posy+2][posx2[0]-1] == '.')
+                {
+                    posx0[0] -= 1;
+                    posx0[1] -= 1;
+                    posx0[2] -= 1;
+                    posx1[0] -= 1;
+                    posx2[0] -= 1;
+                }
+            }
+            else
+            {
+                println ("shift right");
+                // ensure it can move right
+                // ...#x
+                // ...#x
+                // .###x
+                if (board.data[posy  ][posx0[2]+1] == '.' &&
+                    board.data[posy+1][posx1[0]+1] == '.' &&
+                    board.data[posy+2][posx2[0]+1] == '.')
+                {
+                    posx0[0] += 1;
+                    posx0[1] += 1;
+                    posx0[2] += 1;
+                    posx1[0] += 1;
+                    posx2[0] += 1;
+                }
+            }
+            //  redraw rock
+            board.data[posy  ][posx0[0]] = rock_char;
+            board.data[posy  ][posx0[1]] = rock_char;
+            board.data[posy  ][posx0[2]] = rock_char;
+            board.data[posy+1][posx1[0]] = rock_char;
+            board.data[posy+2][posx2[0]] = rock_char;
+            shift_index = (shift_index + 1) % shift_max;
+            printboard (board);
+
+            // ensure rock can drop 
+            // ###
+            // xxx
+            if (board.data[posy-1][posx0[0]] != '.' || 
+                board.data[posy-1][posx0[1]] != '.' || 
+                board.data[posy-1][posx0[2]] != '.' || 
+                posy-1 == 0)
+            {
+                // rest rock
+                println ("rock at rest");
+                break;
+            }
+
+            // drop rock
+            //  remove rock
+            board.data[posy  ][posx0[0]] = '.';
+            board.data[posy  ][posx0[1]] = '.';
+            board.data[posy  ][posx0[2]] = '.';
+            board.data[posy+1][posx1[0]] = '.';
+            board.data[posy+2][posx2[0]] = '.';
+            //  move rock
+            posy -= 1;
+            //  redraw rock
+            board.data[posy  ][posx0[0]] = rock_char;
+            board.data[posy  ][posx0[1]] = rock_char;
+            board.data[posy  ][posx0[2]] = rock_char;
+            board.data[posy+1][posx1[0]] = rock_char;
+            board.data[posy+2][posx2[0]] = rock_char;
+
+            printboard (board);
+
+        }
+        printboard (board);
+    }
+    num_rocks += 1;
+    if (num_rocks >= max_rocks)
+        break;
+
+    // ..#....
+    // ..#....
+    // ..#....
+    // ..#....
+    // .......
+    // .......
+    // .......
+    {
+        // ensure space to drop rock
+        // new rock needs to be placed 3 above highest rock
+        // find highest rock height
+        int rock_height = 0;
+        for (int i = board.size-1; i >= 0; --i)
+        {
+            for (int j = 1; j < 8; ++j)
+            {
+                if (board.data[i][j] != '.')
+                {
+                    rock_height = i;
+                    break;
+                }
+            }
+            if (rock_height != 0)
+                break;
+        }
+        // add height if needed (including shape size)
+        int shape_height = 4;
+        char rock_char = '3';
+        int desired_height = rock_height + 3 + shape_height;
+        while (board.size-1 < desired_height)
+            board.pushBack ("|.......|");
+
+        printboard (board);
+
+        // place rock
+        // left edge must be 2 away from edge
+        int[] posx0 = [3];
+        int[] posx1 = [3];
+        int[] posx2 = [3];
+        int[] posx3 = [3];
+        int posy = rock_height + 3 + 1;
+        // draw rock
+        board.data[posy  ][posx0[0]] = rock_char;
+        board.data[posy+1][posx1[0]] = rock_char;
+        board.data[posy+2][posx2[0]] = rock_char;
+        board.data[posy+3][posx3[0]] = rock_char;
+        printboard (board);
+
+        // repeatedly move rock until it rests
+        while (1)
+        {
+            // shift rock
+            println (shift_index);
+            //  remove rock
+            board.data[posy  ][posx0[0]] = '.';
+            board.data[posy+1][posx1[0]] = '.';
+            board.data[posy+2][posx2[0]] = '.';
+            board.data[posy+3][posx3[0]] = '.';
+            //  move rock
+            if (lines.data[0][shift_index] == '<')
+            {
+                println ("shift left");
+                // ensure it can move left
+                // ..x#
+                // ..x#
+                // ..x#
+                // ..x#
+                if (board.data[posy  ][posx0[0]-1] == '.' &&
+                    board.data[posy+1][posx1[0]-1] == '.' &&
+                    board.data[posy+2][posx2[0]-1] == '.' &&
+                    board.data[posy+3][posx3[0]-1] == '.')
+                {
+                    posx0[0] -= 1;
+                    posx1[0] -= 1;
+                    posx2[0] -= 1;
+                    posx3[0] -= 1;
+                }
+            }
+            else
+            {
+                println ("shift right");
+                // ensure it can move right
+                // ..#x
+                // ..#x
+                // ..#x
+                // ..#x
+                if (board.data[posy  ][posx0[0]+1] == '.' &&
+                    board.data[posy+1][posx1[0]+1] == '.' &&
+                    board.data[posy+2][posx2[0]+1] == '.' &&
+                    board.data[posy+3][posx3[0]+1] == '.')
+                {
+                    posx0[0] += 1;
+                    posx1[0] += 1;
+                    posx2[0] += 1;
+                    posx3[0] += 1;
+                }
+            }
+            //  redraw rock
+            board.data[posy  ][posx0[0]] = rock_char;
+            board.data[posy+1][posx1[0]] = rock_char;
+            board.data[posy+2][posx2[0]] = rock_char;
+            board.data[posy+3][posx3[0]] = rock_char;
+            shift_index = (shift_index + 1) % shift_max;
+            printboard (board);
+
+            // ensure rock can drop 
+            // ..#.
+            // ..#.
+            // ..#.
+            // ..#.
+            // ..x.
+            if (board.data[posy-1][posx0[0]] != '.' ||
+                posy-1 == 0)
+            {
+                // rest rock
+                println ("rock at rest");
+                break;
+            }
+
+            // drop rock
+            //  remove rock
+            board.data[posy  ][posx0[0]] = '.';
+            board.data[posy+1][posx1[0]] = '.';
+            board.data[posy+2][posx2[0]] = '.';
+            board.data[posy+3][posx3[0]] = '.';
+            //  move rock
+            posy -= 1;
+            //  redraw rock
+            board.data[posy  ][posx0[0]] = rock_char;
+            board.data[posy+1][posx1[0]] = rock_char;
+            board.data[posy+2][posx2[0]] = rock_char;
+            board.data[posy+3][posx3[0]] = rock_char;
+
+            printboard (board);
+
+        }
+        printboard (board);
+    }
+    num_rocks += 1;
+    if (num_rocks >= max_rocks)
+        break;
+
+    // ..##...
+    // ..##...
+    // .......
+    // .......
+    // .......
+    {
+        // ensure space to drop rock
+        // new rock needs to be placed 3 above highest rock
+        // find highest rock height
+        int rock_height = 0;
+        for (int i = board.size-1; i >= 0; --i)
+        {
+            for (int j = 1; j < 8; ++j)
+            {
+                if (board.data[i][j] != '.')
+                {
+                    rock_height = i;
+                    break;
+                }
+            }
+            if (rock_height != 0)
+                break;
+        }
+        // add height if needed (including shape size)
+        int shape_height = 2;
+        char rock_char = '4';
+        int desired_height = rock_height + 3 + shape_height;
+        while (board.size-1 < desired_height)
+            board.pushBack ("|.......|");
+
+        printboard (board);
+
+        // place rock
+        // left edge must be 2 away from edge
+        int[] posx0 = [3, 4];
+        int[] posx1 = [3, 4];
+        int posy = rock_height + 3 + 1;
+        // draw rock
+        board.data[posy  ][posx0[0]] = rock_char;
+        board.data[posy  ][posx0[1]] = rock_char;
+        board.data[posy+1][posx1[0]] = rock_char;
+        board.data[posy+1][posx1[1]] = rock_char;
+        printboard (board);
+
+        // repeatedly move rock until it rests
+        while (1)
+        {
+            // shift rock
+            println (shift_index);
+            //  remove rock
+            board.data[posy  ][posx0[0]] = '.';
+            board.data[posy  ][posx0[1]] = '.';
+            board.data[posy+1][posx1[0]] = '.';
+            board.data[posy+1][posx1[1]] = '.';
+            //  move rock
+            if (lines.data[0][shift_index] == '<')
+            {
+                println ("shift left");
+                // ensure it can move left
+                // .x##
+                // .x##
+                if (board.data[posy  ][posx0[0]-1] == '.' &&
+                    board.data[posy+1][posx1[0]-1] == '.')
+                {
+                    posx0[0] -= 1;
+                    posx0[1] -= 1;
+                    posx1[0] -= 1;
+                    posx1[1] -= 1;
+                }
+            }
+            else
+            {
+                println ("shift right");
+                // ensure it can move right
+                // ..##x
+                // ..##x
+                if (board.data[posy  ][posx0[1]+1] == '.' &&
+                    board.data[posy+1][posx1[1]+1] == '.')
+                {
+                    posx0[0] += 1;
+                    posx0[1] += 1;
+                    posx1[0] += 1;
+                    posx1[1] += 1;
+                }
+            }
+            //  redraw rock
+            board.data[posy  ][posx0[0]] = rock_char;
+            board.data[posy  ][posx0[1]] = rock_char;
+            board.data[posy+1][posx1[0]] = rock_char;
+            board.data[posy+1][posx1[1]] = rock_char;
+            shift_index = (shift_index + 1) % shift_max;
+            printboard (board);
+
+            // ensure rock can drop 
+            // ..##
+            // ..##
+            // ..xx
+            if (board.data[posy-1][posx0[0]] != '.' ||
+                board.data[posy-1][posx0[1]] != '.' ||
+                posy-1 == 0)
+            {
+                // rest rock
+                println ("rock at rest");
+                break;
+            }
+
+            // drop rock
+            //  remove rock
+            board.data[posy  ][posx0[0]] = '.';
+            board.data[posy  ][posx0[1]] = '.';
+            board.data[posy+1][posx1[0]] = '.';
+            board.data[posy+1][posx1[1]] = '.';
+            //  move rock
+            posy -= 1;
+            //  redraw rock
+            board.data[posy  ][posx0[0]] = rock_char;
+            board.data[posy  ][posx0[1]] = rock_char;
+            board.data[posy+1][posx1[0]] = rock_char;
+            board.data[posy+1][posx1[1]] = rock_char;
+
+            printboard (board);
+
+        }
+        printboard (board);
+    }
+    num_rocks += 1;
+    if (num_rocks >= max_rocks)
+        break;
+
+
+}
+
+// find highest rock height
+int rock_height = 0;
+for (int i = board.size-1; i >= 0; --i)
+{
+    for (int j = 1; j < 8; ++j)
+    {
+        if (board.data[i][j] != '.')
+        {
+            rock_height = i;
+            break;
+        }
+    }
+    if (rock_height != 0)
+        break;
+}
+
+printboard2 (board);
+println (rock_height);
+

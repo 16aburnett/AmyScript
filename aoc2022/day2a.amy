@@ -1,0 +1,86 @@
+
+
+char[] line = input();
+
+char ROCK0     = 'A';
+char PAPER0    = 'B';
+char SCISSORS0 = 'C';
+char ROCK1     = 'X';
+char PAPER1    = 'Y';
+char SCISSORS1 = 'Z';
+
+int SCORE_ROCK     = 1;
+int SCORE_PAPER    = 2;
+int SCORE_SCISSORS = 3;
+
+int SCORE_LOSE = 0;
+int SCORE_DRAW = 3;
+int SCORE_WIN  = 6;
+
+int totalScore = 0;
+
+while (line[0] != '$')
+{
+    char lhs = line[0];
+    char rhs = line[2];
+
+    int localScore = 0;
+
+    // add score for shape played
+    if (rhs == ROCK1) localScore += SCORE_ROCK;
+    if (rhs == PAPER1) localScore += SCORE_PAPER;
+    if (rhs == SCISSORS1) localScore += SCORE_SCISSORS;
+
+    // add score for outcome of game
+    if (rhs == ROCK1)
+    {
+        // win 
+        if (lhs == SCISSORS0)
+        {
+            localScore += SCORE_WIN;
+        }
+        // draw
+        elif (lhs == ROCK0)
+        {
+            localScore += SCORE_DRAW;
+        }
+        // ignore loss bc 0 points
+    }
+    elif (rhs == PAPER1)
+    {
+        // win 
+        if (lhs == ROCK0)
+        {
+            localScore += SCORE_WIN;
+        }
+        // draw
+        elif (lhs == PAPER0)
+        {
+            localScore += SCORE_DRAW;
+        }
+        // ignore loss bc 0 points
+    }
+    if (rhs == SCISSORS1)
+    {
+        // win 
+        if (lhs == PAPER0)
+        {
+            localScore += SCORE_WIN;
+        }
+        // draw
+        elif (lhs == SCISSORS0)
+        {
+            localScore += SCORE_DRAW;
+        }
+        // ignore loss bc 0 points
+    }
+
+    totalScore += localScore;
+
+    //println (localScore);
+
+    free (line);
+    line = input();
+}
+
+println (totalScore);

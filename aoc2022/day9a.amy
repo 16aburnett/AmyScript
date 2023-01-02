@@ -1,0 +1,180 @@
+
+
+#include "Vector.amy"
+#include "algorithms.amy"
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+function int manhattan (int ax, int ay, int bx, int by)
+{
+    return abs (ax - bx) + abs (ay - by);
+}
+
+class Point
+{
+    public field int x;
+    public field int y;
+    constructor (int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+function void print (Point p)
+{
+    print ('('); print (p.x); print (','); print (' '); print (p.y); print(')');
+}
+
+Vector<:Point:> tail_positions = new Vector<:Point:> ();
+int hx = 0;
+int hy = 0;
+int tx = 0;
+int ty = 0;
+int xmin = 0;
+int xmax = 0;
+int ymin = 0;
+int ymax = 0;
+// save tail's starting position
+tail_positions.pushBack (new Point(0,0));
+for (int i = 0; i < lines.size; ++i)
+{
+    char[] line = lines.data[i];
+
+    Vector<:char[]:> tokens = split (line, ' ');
+    int amt = stringToInt (tokens.data[1]);
+
+    //print ('('); print (i); print ('/'); print (lines.size); print (')'); print (' ');
+    //println (tokens.data[0]);
+
+    for (int j = 0; j < amt; ++j)
+    {
+        //print ('\t'); print ('('); print (j); print ('/'); print (amt); println (')');
+        
+        if (tokens.data[0][0] == 'U')
+        {
+            ++hy;
+        }
+        elif (tokens.data[0][0] == 'R')
+        {
+            ++hx;
+        }
+        elif (tokens.data[0][0] == 'D')
+        {
+            --hy;
+        }
+        elif (tokens.data[0][0] == 'L')
+        {
+            --hx;
+        }
+        // fix tail position 
+        int tail_moved = 0;
+        int deltax = abs (hx - tx);
+        int deltay = abs (hy - ty);
+        // same row, but 2 apart
+        if (hx == tx && deltay >= 2)
+        {
+            // move tail 1 in direction of head
+            int isup = hy > ty;
+            if (isup)
+            {
+                ty += 1;
+            }
+            else
+            {
+                ty -= 1;
+            }
+            tail_moved = 1;
+        }
+        // same col
+        elif (hy == ty && deltax >= 2)
+        {
+            // move tail 1 in direction of head
+            int isright = hx > tx;
+            if (isright)
+            {
+                tx += 1;
+            }
+            else
+            {
+                tx -= 1;
+            }
+            tail_moved = 1;
+        }
+        // not same row or col
+        // and not touching
+        elif (hx != tx && hy != ty && manhattan (hx, hy, tx, ty) > 2)
+        {
+            // needs to move diagonally towards head
+            int isup = hy > ty;
+            int isright = hx > tx;
+            // NE 
+            if (isup && isright)
+            {
+                ++ty;
+                ++tx;
+            }
+            // SE 
+            elif (!isup && isright)
+            {
+                --ty;
+                ++tx;
+            }
+
+            // SW 
+            elif (!isup && !isright)
+            {
+                --ty;
+                --tx;
+            }
+
+            // NW
+            elif (isup && !isright)
+            {
+                ++ty;
+                --tx;
+            }
+            tail_moved = 1;
+        }
+        // same position
+        // or touching
+        // else
+        
+        // save new tail position
+        if (tail_moved)
+        {
+            // ensure it does not already exist
+            int exists = 0;
+            for (int k = 0; k < tail_positions.size; ++k)
+            {
+                //print ('\t'); print ('\t'); print ('('); print (k); print ('/'); print (tail_positions.size); println (')');
+
+                Point tail_pos = tail_positions.data[k];
+                if (tail_pos.x == tx && tail_pos.y == ty)
+                {
+                    // position exists so ignore this point
+                    exists = 1;
+                    break;
+                }
+            }
+            if (!exists)
+                tail_positions.pushBack (new Point (tx, ty));
+        }
+
+        // calc bounds for board
+        xmin = min (hx, xmin);
+        xmax = max (hx, xmax);
+        ymin = min (hy, ymin);
+        ymax = max (hy, ymax);
+
+    }
+
+}
+
+println (tail_positions.size);

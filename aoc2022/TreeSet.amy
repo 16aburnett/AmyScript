@@ -1,0 +1,22 @@
+
+#ifndef TREESET_H
+#define TREESET_H
+
+
+class Node 
+{
+    public field int data;
+    public field Node left;
+    public field Node right;
+    public field Node parent;
+    public field int height;
+
+    constructor (int data)
+    {
+        this.data = data;
+    }
+}
+
+
+
+# endif

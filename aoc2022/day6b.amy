@@ -1,0 +1,28 @@
+
+char[] line = input ();
+
+int size = 0;
+while (line[size++] != '\0');
+
+for (int i = 0; i < size-3; ++i)
+{
+    int is_unique = 1;
+    for (int j = i; j < i+14; ++j)
+    {
+        for (int k = j+1; k < i+14; ++k)
+        {
+            if (line[j] == line[k])
+            {
+                is_unique = 0;
+                break;
+            }
+        }
+        if (!is_unique)
+            break;
+    }
+    if (is_unique)
+    {
+        println (i+14);
+        break;
+    }
+}

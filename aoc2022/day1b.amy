@@ -1,0 +1,66 @@
+
+
+#include "Vector.amy"
+
+Vector<:int:> elfCalories = new Vector<:int:>();
+
+char[] line = input();
+
+while (line[0] != '$')
+{
+    int calorieTotal = 0;
+
+    while (line[0] != '\n' && line[0] != '$')
+    {
+        calorieTotal += stringToInt (line);
+        free (line);
+        line = input();
+    }
+
+    elfCalories.pushBack (calorieTotal);
+
+    if (line[0] == '$') break;
+
+    free (line);
+    line = input();
+}
+
+template <:T:>
+function void bubbleSort (Vector<:T:> arr)
+{
+    int hasSwapped = 1;
+    while (hasSwapped)
+    {
+        hasSwapped = 0;
+        for (int i = 1; i < arr.size; ++i)
+        {
+            if (arr.get(i-1) < arr.get(i))
+            {
+                int temp = arr.get(i-1);
+                arr.set(i-1, arr.get(i));
+                arr.set(i, temp);
+                hasSwapped = 1;
+            }
+        }
+    }
+}
+
+//for (int i = 0; i < elfCalories.size; ++i)
+//{
+//    print (elfCalories.get(i));
+//    print (' ');
+//}
+//println ();
+
+bubbleSort<:int:> (elfCalories);
+
+//for (int i = 0; i < elfCalories.size; ++i)
+//{
+//    print (elfCalories.get(i));
+//    print (' ');
+//}
+//println ();
+
+int sumTop3Elves = elfCalories.get(0) + elfCalories.get(1) + elfCalories.get(2);
+
+println (sumTop3Elves);

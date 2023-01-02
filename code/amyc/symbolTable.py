@@ -29,6 +29,9 @@ class Kind(Enum):
     VAR  = 1
     FUNC = 2
 
+class ScopeType (Enum):
+    FUNCTION = 0
+    OTHER    = 1
 
 # ========================================================================
 
@@ -38,14 +41,20 @@ class SymbolTable:
         self.nestLevel = 0
         # list of dictionaries
         self.table = [{}]
+        self.scopeTypes = [ScopeType.FUNCTION]
         self.lines = []
 
-    def enterScope (self):
+        # for x86
+        self.linksFollowed = 0
+
+    def enterScope (self, scopeType=ScopeType.OTHER):
         self.table.append ({})
+        self.scopeTypes.append(scopeType)
         self.nestLevel += 1
 
     def exitScope (self):
         self.table.pop ()
+        self.scopeTypes.pop ()
         self.nestLevel -= 1
 
     # table [
@@ -210,7 +219,7 @@ class SymbolTable:
 
     def lookup (self, name, kind, params=[], templateParams=[], visitor=None):
 
-        # print (f"[SymbolTable] [lookup] {name}",end="")
+        # print (f"[SymbolTable] [lookup] [debug] {name}",end="")
         # if len(templateParams) > 0:
         #     print (f"<:{templateParams[0]}",end="")
         #     for i in range(1, len(templateParams)):
@@ -218,13 +227,17 @@ class SymbolTable:
         #     print(":>",end="")
         # print ()
 
+        self.linksFollowed = 0
 
         # for each scope
         # march through the scopes 
         # use closes suitable match 
         for i in range(len(self.table)-1, -1, -1):
+
             # ensure var is in this scope 
             if (name not in self.table[i]):
+                if self.scopeTypes[i] == ScopeType.FUNCTION:
+                    self.linksFollowed += 1
                 continue
 
             # TYPES (CLASS, CLASSTEMP, ENUM)
@@ -233,6 +246,8 @@ class SymbolTable:
                 if len(templateParams) > 0:
                     # ensure template params match 
                     if len(templateParams) not in self.table[i][name].typeDec:
+                        if self.scopeTypes[i] == ScopeType.FUNCTION:
+                            self.linksFollowed += 1
                         continue 
 
                     # create template instance if DNE
@@ -269,6 +284,8 @@ class SymbolTable:
                 else:
                     # ensure symbol is a variable
                     if 0 not in self.table[i][name].typeDec:
+                        if self.scopeTypes[i] == ScopeType.FUNCTION:
+                            self.linksFollowed += 1
                         continue
                     return self.table[i][name].typeDec[0]
             
@@ -276,6 +293,8 @@ class SymbolTable:
             elif (kind == Kind.VAR):
                 # ensure symbol is a variable
                 if self.table[i][name].varDec == None:
+                    if self.scopeTypes[i] == ScopeType.FUNCTION:
+                        self.linksFollowed += 1
                     continue
                 return self.table[i][name].varDec
                 
@@ -286,6 +305,8 @@ class SymbolTable:
                 if len(templateParams) > 0 and isinstance (self.table[i][name].funDec, dict):
                     # ensure num template params match 
                     if len(templateParams) not in self.table[i][name].funDec:
+                        if self.scopeTypes[i] == ScopeType.FUNCTION:
+                            self.linksFollowed += 1
                         continue
                     # find matching instance
                     # ** currently, overloading template functions with normal parameters is not supported 
@@ -294,22 +315,26 @@ class SymbolTable:
                         tempSignature += [f", {templateParams[j].__str__()}"]
                     tempSignature += [f":>"]
                     tempSignature = "".join(tempSignature)
-                    # print (tempSignature)
+                    # print (f"[SymbolTable] [lookup] [debug] desired template signature: {tempSignature}")
                     # create template instance if it DNE
                     if tempSignature not in self.table[i][name].funDec[len(templateParams)].instantiations:
-                        # print ("creating function template instance...")
+                        # print (f"[SymbolTable] [lookup] [debug] creating new function template instance...")
                         # create instance
                         func = self.table[i][name].funDec[len(templateParams)].function.copy()
                         self.table[i][name].funDec[len(templateParams)].instantiations[tempSignature] = func
                         # overrite template aliases with their new types 
                         templateVisitor = TemplateVisitor (self.table[i][name].funDec[len(templateParams)].types, templateParams)
+                        # print (f"[SymbolTable] [lookup] [debug] template visitor start - ")
                         func.accept (templateVisitor)
+                        # print (f"[SymbolTable] [lookup] [debug] template visitor end - ")
                         # analyze new instance 
                         visitor.insertFunc = False
                         func.templateParams = templateParams
                         oldWasSuccessful = visitor.wasSuccessful
                         visitor.wasSuccessful = True
+                        # print (f"[SymbolTable] [lookup] [debug] visit new instance start - ")
                         func.accept (visitor)
+                        # print (f"[SymbolTable] [lookup] [debug] visit new instance end - ")
                         if not visitor.wasSuccessful:
                             print (f"^~~~From instantiation of function '{func.signature}'", end="\n\n")
                         # restore previous success
@@ -430,6 +455,8 @@ class SymbolTable:
                     if len(candidates) == 0:
                         # no viable overloads found at this scope
                         print (f"Semantic Error: no viable candidates found for \"{name}\"")
+                        if self.scopeTypes[i] == ScopeType.FUNCTION:
+                            self.linksFollowed += 1
                         # return None 
                         continue
                     # found viable overloads 
@@ -461,6 +488,8 @@ class SymbolTable:
                     # no ambiguity -> found viable candidate
                     return candidates[maxI[0]][0]
                     # reaches here if no overloads match 
+            if self.scopeTypes[i] == ScopeType.FUNCTION:
+                self.linksFollowed += 1
                 
         # reaches here if no matching declaration was found
         return None

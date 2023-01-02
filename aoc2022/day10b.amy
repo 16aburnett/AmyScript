@@ -1,0 +1,196 @@
+
+
+#include "Vector.amy"
+#include "algorithms.amy"
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+int cycle = 0;
+int column = 0;
+int registerx = 1;
+Vector<:int:> x_prev = new Vector<:int:> ();
+x_prev.pushBack (registerx);
+//print ('#');
+
+Vector<:Vector<:char:>:> output = new Vector<:Vector<:char:>:> ();
+
+for (int l = 0; l < lines.size; ++l)
+{
+    Vector<:char[]:> tokens = split (lines.data[l], ' ');
+
+    if (tokens.data[0][0] == 'n')
+    {
+        // do nothing and advance cycle
+
+        //if (column == 0) println ();
+        if (column == 0) output.pushBack (new Vector<:char:>());
+        // determine what pixel to print
+        if (registerx-1 <= column && column <= registerx+1)
+        {
+            // overlaps so draw light
+            //print ('#');
+            output.data[output.size-1].pushBack ('#');
+        }
+        else
+        {
+            // no overlap, draw dark
+            //print ('.');
+            output.data[output.size-1].pushBack ('.');
+        }
+        cycle += 1;
+        column = (column + 1) % 40;
+        x_prev.pushBack (registerx);
+    }
+    elif (tokens.data[0][0] == 'a')
+    {
+        // takes two clock cycles
+        int value = stringToInt (tokens.data[1]);
+
+        // first clock cycle
+        //if (column == 0) println ();
+        if (column == 0) output.pushBack (new Vector<:char:>());
+        // determine what pixel to print
+        if (registerx-1 <= column && column <= registerx+1)
+        {
+            // overlaps so draw light
+            //print ('#');
+            output.data[output.size-1].pushBack ('#');
+        }
+        else
+        {
+            // no overlap, draw dark
+            //print ('.');
+            output.data[output.size-1].pushBack ('.');
+        }
+        cycle += 1;
+        column = (column + 1) % 40;
+        x_prev.pushBack (registerx);
+
+        // second cycle
+        //if (column == 0) println ();
+        if (column == 0) output.pushBack (new Vector<:char:>());
+        // determine what pixel to print
+        if (registerx-1 <= column && column <= registerx+1)
+        {
+            // overlaps so draw light
+            //print ('#');
+            output.data[output.size-1].pushBack ('#');
+        }
+        else
+        {
+            // no overlap, draw dark
+            //print ('.');
+            output.data[output.size-1].pushBack ('.');
+        }
+        cycle += 1;
+        column = (column + 1) % 40;
+        x_prev.pushBack (registerx);
+
+        // now we can add the value to x
+        registerx += value;
+    }
+    else
+    {
+        println ("Unknown instruction");
+    }
+    
+}
+
+//for (int i = 0; i < output.size; ++i)
+//{
+//    for (int j = 0; j < output.data[i].size; ++j)
+//    {
+//        print (output.data[i].data[j]);
+//    }
+//    println ();
+//}
+
+// parse letters from CRT output
+char[][][] ascii_to_char_index = [
+    [ // R
+        "###.",
+        "#..#",
+        "#..#",
+        "###.",
+        "#.#.",
+        "#..#"
+    ],
+    [ // L
+        "#...",
+        "#...",
+        "#...",
+        "#...",
+        "#...",
+        "####"
+    ],
+    [ // E
+        "####",
+        "#...",
+        "###.",
+        "#...",
+        "#...",
+        "####"
+    ],
+    [ // Z
+        "####",
+        "...#",
+        "..#.",
+        ".#..",
+        "#...",
+        "####"
+    ],
+    [ // F
+        "####",
+        "#...",
+        "###.",
+        "#...",
+        "#...",
+        "#..."
+    ],
+    [ // G
+        ".##.",
+        "#..#",
+        "#...",
+        "#.##",
+        "#..#",
+        ".###"
+    ]
+];
+
+char[] char_index_to_char = "RLEZFG";
+
+int num_known_chars = strlen (char_index_to_char);
+int char_height = 6;
+int char_width = 4;
+
+for (int letter_base = 0; letter_base < output.data[0].size; letter_base+=char_width+1)
+{
+    // try to match position against chars
+    for (int c = 0; c < num_known_chars; ++c)
+    {
+        // assume these two match
+        int is_match = 1;
+        // then try to prove it wrong
+        for (int i = 0; i < char_height; ++i)
+        {
+            for (int j = 0; j < char_width; ++j)
+            {
+                if (output.data[i].data[j+letter_base] != ascii_to_char_index[c][i][j])
+                {
+                    is_match = 0;
+                    break;
+                }
+            }
+        }
+        if (is_match)
+            print(char_index_to_char[c]);
+    }
+}
+
+println ();

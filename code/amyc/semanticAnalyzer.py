@@ -23,6 +23,8 @@ class SymbolTableVisitor (ASTVisitor):
         self.table = SymbolTable ()
 
         self.parameters = []
+        self.isFunctionBody = False
+
         self.lines = lines 
         self.table.lines = self.lines
 
@@ -33,9 +35,15 @@ class SymbolTableVisitor (ASTVisitor):
         self.containingFunction = [] 
         self.containingLoop = []
 
+        # keeps track of the root 
+        self.programNode = None
+
         self.insertFunc = True 
 
     def visitProgramNode (self, node):
+        # keep track of the root node 
+        self.programNode = node
+
         for codeunit in node.codeunits:
             if codeunit != None:
                 codeunit.accept (self)
@@ -44,6 +52,13 @@ class SymbolTableVisitor (ASTVisitor):
         # print (f"[typespec] {node}")
         # if type spec is not primitive
         if (node.type == Type.USERTYPE):
+            # first save any template parameters
+            # this is useful for the following case
+            # where Vector:<char:> needs to be known
+            # before the outer vector
+            # Ex: Vector<:Vector<:char:>:>
+            for tparam in node.templateParams:
+                tparam.accept (self)
             # make sure type exists 
             # and save with the type spec for later lookup 
             node.decl = self.table.lookup (node.id, Kind.TYPE, [], node.templateParams, self)
@@ -55,9 +70,6 @@ class SymbolTableVisitor (ASTVisitor):
                 print ()
                 self.wasSuccessful = False
                 node.type = Type.UNKNOWN
-            # check template parameter types 
-            # for tparam in node.templateParams:
-            #     tparam.accept (self)
 
     def visitParameterNode (self, node):
         node.type.accept (self)
@@ -94,6 +106,14 @@ class SymbolTableVisitor (ASTVisitor):
             printToken (node.token, "      ")
             print ()
             self.wasSuccessful = False
+
+        # save a reference to this variable for the function header
+        if len(self.containingFunction) > 0:
+            self.containingFunction[-1].localVariables += [node]
+        # if global code, save to global localVariables 
+        else:
+            self.programNode.localVariables += [node]
+
 
     def visitFunctionNode (self, node):
         node.type.accept (self)
@@ -149,7 +169,9 @@ class SymbolTableVisitor (ASTVisitor):
         containingLoop = self.containingLoop
         self.containingLoop = []
 
+        self.isFunctionBody = True
         node.body.accept (self)
+        self.isFunctionBody = False
 
         self.containingFunction.pop ()
         # restore containing loop state
@@ -201,6 +223,7 @@ class SymbolTableVisitor (ASTVisitor):
             for field in pDecl.fields: 
                 fields += [FieldDeclarationNode (field.security, field.type, field.id, field.token)]
                 fields[-1].isInherited = True
+                fields[-1].originalInheritedField = field
             # add current fields
             for field in node.fields:
                 fields += [field]
@@ -334,6 +357,23 @@ class SymbolTableVisitor (ASTVisitor):
 
         # print ()
         # print ()
+
+        # save a reference to this classes dispatch table for the function header
+        # if len(self.containingFunction) > 0:
+        #     self.containingFunction[-1].localVariables += [node]
+        # # if global code, save to global localVariables 
+        # else:
+        #     self.programNode.localVariables += [node]
+        
+        # add fields to parent function
+        # for field in node.fields:
+        #     if len(self.containingFunction) > 0:
+        #         self.containingFunction[-1].localVariables += [field]
+        #     # if global code, save to global localVariables 
+        #     else:
+        #         self.programNode.localVariables += [field]
+
+        # ** adding these to a data section instead of malloc
 
 
         # remove current containing class (going out of scope)
@@ -646,7 +686,15 @@ class SymbolTableVisitor (ASTVisitor):
             return 
 
     def visitCodeBlockNode (self, node):
-        self.table.enterScope ()
+
+        # determine scope type
+        # this is used to determine number of dynamic links to follow
+        scopeType = ScopeType.OTHER
+        if self.isFunctionBody:
+            scopeType = ScopeType.FUNCTION
+            self.isFunctionBody = False
+
+        self.table.enterScope (scopeType)
 
         # if this is a function body
         # then add the parameters to this scope
@@ -673,6 +721,12 @@ class SymbolTableVisitor (ASTVisitor):
 
         node.type = node.lhs.type
 
+        # ensure types work for overloaded operators
+        if node.op.lexeme == '=':
+            overloadedFunctionName = "__assign__"
+        hasOverloadedMethod = node.lhs.type.type == Type.USERTYPE and node.lhs.type.arrayDimensions == 0 and self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs]) != None
+        # hasOverloadedFunction = self.table.lookup (overloadedFunctionName, Kind.FUNC, [node.lhs, node.rhs]) != None
+
         # ensure types work 
         isDiffType = node.lhs.type.__str__() != node.rhs.type.__str__()
         isDiffDimensions = node.lhs.type.arrayDimensions != node.rhs.type.arrayDimensions 
@@ -698,12 +752,30 @@ class SymbolTableVisitor (ASTVisitor):
                     break 
                 parent = parent.pDecl
             isDiffType = not isSubtype
-        if (not isArrayNullOp and not isObjectNullOp and (isDiffType or isDiffDimensions)):
+        if (not isArrayNullOp and not isObjectNullOp and (isDiffType or isDiffDimensions)) and not hasOverloadedMethod:
             print (f"Semantic Error: mismatching types in assign, \"{node.op.lexeme}\"")
             printToken (node.op)
             print (f"   {node.lhs.type} != {node.rhs.type}")
             print ()
             self.wasSuccessful = False
+                    
+        # ensure operands arent floats if operator is mod 
+        elif (node.op.lexeme == '%=' and (node.lhs.type.__str__() == 'float' or node.rhs.type.__str__() == 'float')) and not hasOverloadedMethod:
+            print (f"Semantic Error: float values cannot be used with the mod operator ({node.op.lexeme})")
+            printToken (node.op)
+            print (f"   LHS: {node.lhs.type}")
+            print (f"   RHS: {node.rhs.type}")
+            print ()
+            self.wasSuccessful = False
+
+        # method operator overload
+        if hasOverloadedMethod:
+            node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (f"{node.lhs.type}::{overloadedFunctionName}", node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
+            node.overloadedFunctionCall.decl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])
+
+        # mark variable as assigned to
+        if isinstance (node.lhs, (VariableDeclarationNode, IdentifierExpressionNode)):
+            node.lhs.wasAssigned = True
 
     def visitLogicalOrExpressionNode (self, node):
         node.lhs.accept (self)
@@ -820,12 +892,16 @@ class SymbolTableVisitor (ASTVisitor):
         elif hasOverloadedFunction and not hasOverloadedMethod:
             node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (overloadedFunctionName, node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
             node.overloadedFunctionCall.decl = self.table.lookup (overloadedFunctionName, Kind.FUNC, [node.lhs, node.rhs])
+            # this additive's type becomes the return type of the overloaded function call
+            node.type = node.overloadedFunctionCall.decl.type
         
         # method operator overload
         elif hasOverloadedMethod and not hasOverloadedFunction:
             node.overloadedFunctionCall = FunctionCallExpressionNode (IdentifierExpressionNode (f"{node.lhs.type}::{overloadedFunctionName}", node.op, 0, 0), [node.lhs, node.rhs], [], node.op, 0, 0)
             node.overloadedFunctionCall.decl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])
-        
+            # this additive's type becomes the return type of the overloaded function call
+            node.type = node.overloadedFunctionCall.decl.type
+
         # ambiguous 
         elif hasOverloadedFunction and hasOverloadedMethod:
             overloadedMethodDecl = self.table.lookup (f"{node.lhs.type}::{overloadedFunctionName}", Kind.FUNC, [node.rhs])
@@ -866,6 +942,15 @@ class SymbolTableVisitor (ASTVisitor):
             print (f"Semantic Error: invalid/mismatching types for \"{node.op.lexeme}\"")
             printToken (node.op)
             print (f"   {node.lhs.type} != {node.rhs.type}")
+            print ()
+            self.wasSuccessful = False
+        
+        # ensure operands arent floats if operator is mod 
+        elif node.op.lexeme == '%' and (node.lhs.type.__str__() == 'float' or node.rhs.type.__str__() == 'float'):
+            print (f"Semantic Error: float values cannot be used with the mod operator ({node.op.lexeme})")
+            printToken (node.op)
+            print (f"   LHS: {node.lhs.type}")
+            print (f"   RHS: {node.rhs.type}")
             print ()
             self.wasSuccessful = False
             
@@ -1301,6 +1386,19 @@ class SymbolTableVisitor (ASTVisitor):
                 node.type = decl.type
                 # save declaration 
                 node.decl = decl 
+                # print(f"==> {node.decl.id} : linksFollowed={self.table.linksFollowed}")
+            # wasassigned on identifier covers the case
+            # when the lhs of an assign is an identifier instead of a variable decl
+            # int x;
+            # x = 10;
+            if node.wasAssigned:
+                node.decl.wasAssigned = True
+            # ensure variable was assigned
+            if not node.wasAssigned and not node.decl.wasAssigned:
+                print (f"Semantic Error: variable '{node.id}' referenced before assignment")
+                printToken (node.token)
+                print ()
+                self.wasSuccessful = False
 
     def visitArrayAllocatorExpressionNode (self, node):
         node.type.accept (self)
@@ -1341,6 +1439,11 @@ class SymbolTableVisitor (ASTVisitor):
     
     def visitSizeofExpressionNode(self, node):
         node.rhs.accept (self)
+        print ("Semantic Error: sizeof keyword is deprecated")
+        printToken (node.op)
+        print ()
+        self.wasSuccessful = False
+        return
         # ensure RHS is an array
         if node.rhs.type.arrayDimensions == 0:
             print (f"Semantic Error: Sizeof requires an array")
@@ -1367,13 +1470,17 @@ class SymbolTableVisitor (ASTVisitor):
         pass
 
     def visitFloatLiteralExpressionNode (self, node):
-        pass
+        # FOR X86-64
+        # save with program node so these can be added to the data section
+        self.programNode.floatLiterals += [node]
 
     def visitCharLiteralExpressionNode (self, node):
         pass
 
     def visitStringLiteralExpressionNode (self, node):
-        pass
+        # FOR X86-64
+        # save with program node so these can be added to the data section
+        self.programNode.stringLiterals += [node]
 
     def visitListConstructorExpressionNode (self, node):
         for elem in node.elems:

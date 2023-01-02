@@ -1,0 +1,64 @@
+
+
+#include "Vector.amy"
+#include "algorithms.amy"
+
+char[] line = input();
+Vector<:char[]:> lines = new Vector<:char[]:> ();
+while (line != null)
+{
+    lines.pushBack (line);
+    line = input();
+}
+
+int cycle = 0;
+int registerx = 1;
+Vector<:int:> x_prev = new Vector<:int:> ();
+x_prev.pushBack (registerx);
+
+for (int l = 0; l < lines.size; ++l)
+{
+    Vector<:char[]:> tokens = split (lines.data[l], ' ');
+
+    if (tokens.data[0][0] == 'n')
+    {
+        // do nothing and advance cycle
+        cycle += 1;
+        x_prev.pushBack (registerx);
+    }
+    elif (tokens.data[0][0] == 'a')
+    {
+        // takes two clock cycles
+        int value = stringToInt (tokens.data[1]);
+        cycle += 1;
+        x_prev.pushBack (registerx);
+        cycle += 1;
+        x_prev.pushBack (registerx);
+        // now we can add the value to x
+        registerx += value;
+    }
+    else
+    {
+        println ("Unknown instruction");
+    }
+    
+}
+
+//println (registerx);
+
+int sum = 0;
+
+//println (x_prev.data[20]);
+sum += x_prev.data[20] * 20;
+//println (x_prev.data[60]);
+sum += x_prev.data[60] * 60;
+//println (x_prev.data[100]);
+sum += x_prev.data[100] * 100;
+//println (x_prev.data[140]);
+sum += x_prev.data[140] * 140;
+//println (x_prev.data[180]);
+sum += x_prev.data[180] * 180;
+//println (x_prev.data[220]);
+sum += x_prev.data[220] * 220;
+
+println (sum);

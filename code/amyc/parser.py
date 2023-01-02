@@ -1245,6 +1245,7 @@ class Parser:
             self.match ("factor", "LPAREN")
             if self.tokens[self.currentToken].type != "RPAREN":
                 lhs = self.expression ()
+                lhs.hasParentheses = True
             self.match ("factor", "RPAREN")
         # <factor> -> THIS
         elif self.tokens[self.currentToken].type == "THIS":

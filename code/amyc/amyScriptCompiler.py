@@ -16,6 +16,10 @@ if __name__ == "__main__":
     from visitor import *
     from semanticAnalyzer import *
     from codeGen import CodeGenVisitor
+    from codegen_x86 import CodeGenVisitor_x86
+    from codegen_python import CodeGenVisitor_python
+    from precodegen_cpp import PreCodeGenVisitor_cpp
+    from codegen_cpp import CodeGenVisitor_cpp
 else:
     from .tokenizer import tokenize
     from .amyAST import *
@@ -23,13 +27,24 @@ else:
     from .visitor import *
     from .semanticAnalyzer import *
     from .codeGen import CodeGenVisitor
+    from .codegen_x86 import CodeGenVisitor_x86
+    from .codegen_python import CodeGenVisitor_python
+    from .codegen_cpp import CodeGenVisitor_cpp
+    from .precodegen_cpp import PreCodeGenVisitor_cpp
 
 
 # ========================================================================
 
+TARGET_AMYASM = "amyasm"
+TARGET_X86    = "x86"
+TARGET_PYTHON = "python"
+TARGET_CPP    = "cpp"
+
+BUILTIN_PREFIX = "__builtin__"
+
 class AmyScriptCompiler:
 
-    def __init__(self, mainFilename, otherFilenames, destFilename="a.amy.assembly", debug=False, emitAST=False, emitPreprocessed=False, preprocess=False):
+    def __init__(self, mainFilename, otherFilenames, destFilename="a.amy.assembly", debug=False, emitAST=False, emitPreprocessed=False, preprocess=False, target=TARGET_AMYASM):
         self.mainFilename = mainFilename
         self.otherFilenames = otherFilenames
         self.destFilename = destFilename
@@ -43,6 +58,8 @@ class AmyScriptCompiler:
 
         self.astFilename = mainFilename + ".ast"
         self.debugLines = []
+
+        self.target = target
 
     #---------------------------------------------------------------------
 
@@ -83,9 +100,11 @@ class AmyScriptCompiler:
 
         # Add built-in functions/variables 
 
+
         #  char[] input ();
         inputFunc = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None), "input", None, [], None)
-        inputFunc.scopeName = "input"
+        inputFunc.scopeName = BUILTIN_PREFIX+"input"
+        inputFunc.label = inputFunc.scopeName
         inputFunc.type.arrayDimensions += 1
         # create signature for node
         signature = [f"{inputFunc.id}("]
@@ -102,7 +121,8 @@ class AmyScriptCompiler:
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
         param0.type.arrayDimensions += 1
         printFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "print", None, [param0], None)
-        printFunc.scopeName = "print__char__1"
+        printFunc.scopeName = BUILTIN_PREFIX+"print__char__1"
+        printFunc.label = printFunc.scopeName
         # create signature for node
         signature = [f"{printFunc.id}("]
         if len(printFunc.params) > 0:
@@ -117,7 +137,8 @@ class AmyScriptCompiler:
         #  void print (int intToPrint);
         param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "intToPrint", None)
         printIntFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "print", None, [param0], None)
-        printIntFunc.scopeName = "print__int"
+        printIntFunc.scopeName = BUILTIN_PREFIX+"print__int"
+        printIntFunc.label = printIntFunc.scopeName
         # create signature for node
         signature = [f"{printIntFunc.id}("]
         if len(printIntFunc.params) > 0:
@@ -132,7 +153,8 @@ class AmyScriptCompiler:
         #  void print (float floatToPrint);
         param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
         printFloatFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "print", None, [param0], None)
-        printFloatFunc.scopeName = "print__float"
+        printFloatFunc.scopeName = BUILTIN_PREFIX+"print__float"
+        printFloatFunc.label = printFloatFunc.scopeName
         # create signature for node
         signature = [f"{printFloatFunc.id}("]
         if len(printFloatFunc.params) > 0:
@@ -147,7 +169,8 @@ class AmyScriptCompiler:
         #  void print (char c);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
         printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "print", None, [param0], None)
-        printCharFunc.scopeName = "print__char"
+        printCharFunc.scopeName = BUILTIN_PREFIX+"print__char"
+        printCharFunc.label = printCharFunc.scopeName
         # create signature for node
         signature = [f"{printCharFunc.id}("]
         if len(printCharFunc.params) > 0:
@@ -162,7 +185,8 @@ class AmyScriptCompiler:
         #  void print (Enum e);
         param0 = ParameterNode(TypeSpecifierNode (Type.USERTYPE, "Enum", None), "e", None)
         printEnumFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "print", None, [param0], None)
-        printEnumFunc.scopeName = "print__Enum"
+        printEnumFunc.scopeName = BUILTIN_PREFIX+"print__Enum"
+        printEnumFunc.label = printEnumFunc.scopeName
         # create signature for node
         signature = [f"{printEnumFunc.id}("]
         if len(printEnumFunc.params) > 0:
@@ -178,7 +202,8 @@ class AmyScriptCompiler:
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "str", None)
         param0.type.arrayDimensions += 1
         printlnFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [param0], None)
-        printlnFunc.scopeName = "println__char__1"
+        printlnFunc.scopeName = BUILTIN_PREFIX+"println__char__1"
+        printlnFunc.label = printlnFunc.scopeName
         # create signature for node
         signature = [f"{printlnFunc.id}("]
         if len(printlnFunc.params) > 0:
@@ -193,7 +218,8 @@ class AmyScriptCompiler:
         #  void println (int intToPrint);
         param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "intToPrint", None)
         printIntFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [param0], None)
-        printIntFunc.scopeName = "println__int"
+        printIntFunc.scopeName = BUILTIN_PREFIX+"println__int"
+        printIntFunc.label = printIntFunc.scopeName
         # create signature for node
         signature = [f"{printIntFunc.id}("]
         if len(printIntFunc.params) > 0:
@@ -208,7 +234,8 @@ class AmyScriptCompiler:
         #  void println (float floatToPrint);
         param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
         printFloatFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [param0], None)
-        printFloatFunc.scopeName = "println__float"
+        printFloatFunc.scopeName = BUILTIN_PREFIX+"println__float"
+        printFloatFunc.label = printFloatFunc.scopeName
         # create signature for node
         signature = [f"{printFloatFunc.id}("]
         if len(printFloatFunc.params) > 0:
@@ -223,7 +250,8 @@ class AmyScriptCompiler:
         #  void println (char c);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
         printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [param0], None)
-        printCharFunc.scopeName = "println__char"
+        printCharFunc.scopeName = BUILTIN_PREFIX+"println__char"
+        printCharFunc.label = printCharFunc.scopeName
         # create signature for node
         signature = [f"{printCharFunc.id}("]
         if len(printCharFunc.params) > 0:
@@ -238,7 +266,8 @@ class AmyScriptCompiler:
         #  void println (Enum e);
         param0 = ParameterNode(TypeSpecifierNode (Type.USERTYPE, "Enum", None), "e", None)
         printEnumFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [param0], None)
-        printEnumFunc.scopeName = "println__Enum"
+        printEnumFunc.scopeName = BUILTIN_PREFIX+"println__Enum"
+        printEnumFunc.label = printEnumFunc.scopeName
         # create signature for node
         signature = [f"{printEnumFunc.id}("]
         if len(printEnumFunc.params) > 0:
@@ -252,7 +281,8 @@ class AmyScriptCompiler:
 
         #  void println ();
         printCharFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "println", None, [], None)
-        printCharFunc.scopeName = "println"
+        printCharFunc.scopeName = BUILTIN_PREFIX+"println"
+        printCharFunc.label = printCharFunc.scopeName
         # create signature for node
         signature = [f"{printCharFunc.id}("]
         if len(printCharFunc.params) > 0:
@@ -265,15 +295,28 @@ class AmyScriptCompiler:
         symbolTableVisitor.table.insert (printCharFunc, printCharFunc.id, Kind.FUNC)
 
         #  void exit ();
+        # for x86 this directly calls the system exit
         exitFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "exit", None, [], None)
-        exitFunc.scopeName = "exit"
+        exitFunc.scopeName = BUILTIN_PREFIX+"exit"
+        exitFunc.label = exitFunc.scopeName
         # create signature for node
         exitFunc.signature = "exit()"
         symbolTableVisitor.table.insert (exitFunc, exitFunc.id, Kind.FUNC)
 
+       #  void exit (int exit_status);
+        # for x86 this directly calls the system exit
+        param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "exit_status", None)
+        exitFunc = FunctionNode (TypeSpecifierNode (Type.VOID, "void", None), "exit", None, [param0], None)
+        exitFunc.scopeName = BUILTIN_PREFIX+"exit__int"
+        exitFunc.label = exitFunc.scopeName
+        # create signature for node
+        exitFunc.signature = "exit(int)"
+        symbolTableVisitor.table.insert (exitFunc, exitFunc.id, Kind.FUNC)
+
         #  float float ();
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.FLOAT, "float", None, []), "float", None, [], None)
-        builtinFunction.scopeName = "float"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"float"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -288,7 +331,8 @@ class AmyScriptCompiler:
         #  float intToFloat (int val);
         param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "val", None)
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.FLOAT, "float", None), "intToFloat", None, [param0], None)
-        builtinFunction.scopeName = "intToFloat__int"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"intToFloat__int"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -304,7 +348,8 @@ class AmyScriptCompiler:
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
         param0.type.arrayDimensions = 1
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.FLOAT, "float", None), "stringToFloat", None, [param0], None)
-        builtinFunction.scopeName = "stringToFloat__char__1"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"stringToFloat__char__1"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -318,7 +363,8 @@ class AmyScriptCompiler:
 
         #  int int ();
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.INT, "int", None, []), "int", None, [], None)
-        builtinFunction.scopeName = "int"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"int"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -332,7 +378,8 @@ class AmyScriptCompiler:
 
         #  char char ();
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None, []), "char", None, [], None)
-        builtinFunction.scopeName = "char"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"char"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -347,7 +394,8 @@ class AmyScriptCompiler:
         #  int floatToInt (float);
         param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.INT, "int", None), "floatToInt", None, [param0], None)
-        builtinFunction.scopeName = "floatToInt__float"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"floatToInt__float"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -363,7 +411,8 @@ class AmyScriptCompiler:
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
         param0.type.arrayDimensions = 1
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.INT, "int", None), "stringToInt", None, [param0], None)
-        builtinFunction.scopeName = "stringToInt__char__1"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"stringToInt__char__1"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -378,7 +427,8 @@ class AmyScriptCompiler:
         #  int charToInt (char);
         param0 = ParameterNode(TypeSpecifierNode (Type.CHAR, "char", None), "val", None)
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.INT, "int", None), "charToInt", None, [param0], None)
-        builtinFunction.scopeName = "charToInt__char"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"charToInt__char"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -394,7 +444,8 @@ class AmyScriptCompiler:
         param0 = ParameterNode(TypeSpecifierNode (Type.INT, "int", None), "val", None)
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None), "string", None, [param0], None)
         builtinFunction.type.arrayDimensions = 1
-        builtinFunction.scopeName = "string__int"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"string__int"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -410,7 +461,8 @@ class AmyScriptCompiler:
         param0 = ParameterNode(TypeSpecifierNode (Type.FLOAT, "float", None), "val", None)
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.CHAR, "char", None), "string", None, [param0], None)
         builtinFunction.type.arrayDimensions = 1
-        builtinFunction.scopeName = "string__float"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"string__float"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -424,7 +476,8 @@ class AmyScriptCompiler:
 
         #  null null ();
         builtinFunction = FunctionNode (TypeSpecifierNode (Type.NULL, "null", None, []), "null", None, [], None)
-        builtinFunction.scopeName = "null"
+        builtinFunction.scopeName = BUILTIN_PREFIX+"null"
+        builtinFunction.label = builtinFunction.scopeName
         # create signature for node
         signature = [f"{builtinFunction.id}("]
         if len(builtinFunction.params) > 0:
@@ -440,13 +493,20 @@ class AmyScriptCompiler:
         # LIBRARY OBJECTS
 
         # create default object type 
+        # class Object
+        # {
+        #   public virtual char[] toString ()
+        #   {
+        #       return "<Object>";
+        #   }
+        # }
         objClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Object", None), "Object", None, None, [], [], [], [], [])
-        objClass.scopeName = "__main__Object"
+        objClass.scopeName = BUILTIN_PREFIX+"__main__Object"
         symbolTableVisitor.table.insert (objClass, "Object", Kind.TYPE)
 
         # create default object type 
         enumClass = ClassDeclarationNode (TypeSpecifierNode (Type.USERTYPE, "Enum", None), "Enum", None, None, ["Object"], [], [], [], [])
-        enumClass.scopeName = "__main__Enum"
+        enumClass.scopeName = BUILTIN_PREFIX+"__main__Enum"
         symbolTableVisitor.table.insert (enumClass, "Enum", Kind.TYPE)
 
 
@@ -479,7 +539,17 @@ class AmyScriptCompiler:
 
         #=== CODE GENERATION =====================================================
 
-        codeGenVisitor = CodeGenVisitor (lines)
+        if target == TARGET_AMYASM:
+            codeGenVisitor = CodeGenVisitor (lines)
+        elif target == TARGET_X86:
+            codeGenVisitor = CodeGenVisitor_x86 (lines)
+        elif target == TARGET_PYTHON:
+            codeGenVisitor = CodeGenVisitor_python (lines)
+        elif target == TARGET_CPP:
+            # precodegen stage to generate scopenames
+            ast.accept (PreCodeGenVisitor_cpp (lines))
+            codeGenVisitor = CodeGenVisitor_cpp (lines)
+
         # generate code
         ast.accept (codeGenVisitor)
 
@@ -508,6 +578,7 @@ if __name__ == "__main__":
     argparser.add_argument("--emitPreprocessed", dest="emitPreprocessed", action="store_true", help="output the preprocessed code")
     argparser.add_argument("--emitAST", dest="emitAST", action="store_true", help="output the ast")
     argparser.add_argument("--preprocess", dest="preprocess", action="store_true", help="only run preprocessor")
+    argparser.add_argument("--target", nargs=1, dest="target", help="specifies the target language to compile to [default amyasm] (amyasm | x86 | python | cpp)")
 
     args = argparser.parse_args()
 
@@ -517,6 +588,23 @@ if __name__ == "__main__":
     if args.outputFilename:
         destFilename = args.outputFilename
 
+    # ensure valid target
+    if args.target == None or args.target[0] == "amyasm": # Default 
+        target=TARGET_AMYASM
+    elif args.target[0] == "x86":  # Intel x86
+        target=TARGET_X86
+    elif args.target[0] == "python": # transpile to python
+        target=TARGET_PYTHON
+    elif args.target[0] == "cpp": # transpile to python
+        target=TARGET_CPP
+    else: # Invalid/unknown target
+        print (f"Unknown target {args.target}")
+        exit (1)
+
+    # output compilation info 
+    print ("target      :", target)
+    print ("destFilename:", destFilename)
+
     # compile code 
     compiler = AmyScriptCompiler (
         mainFilename, 
@@ -524,7 +612,8 @@ if __name__ == "__main__":
         destFilename=destFilename,
         emitAST=args.emitAST, 
         emitPreprocessed=args.emitPreprocessed, 
-        preprocess=args.preprocess
+        preprocess=args.preprocess,
+        target=target
     )
     destCode = compiler.compile ()
 
