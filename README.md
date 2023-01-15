@@ -1,7 +1,7 @@
 AmyScript
 ===========
 
-AmyScript is a middle-to-high-level programming language which looks somewhat similar to C, C++, or Java. It is still currently in development and the compiler exists in `code/amyc`. This is just a fun personal project and is not a serious language. The compiler is currently built just to be functional and does not have any optimizations.=-
+AmyScript is a middle-to-high-level programming language which looks somewhat similar to C, C++, or Java. It is still currently in development and the compiler exists in `code/amyc`. This is just a fun personal project and is not a serious language. The compiler is currently built just to be functional and does not have any optimizations.
 
 Check out the documentation at https://16aburnett.github.io/AmyScript/website
 
