@@ -1,49 +1,63 @@
 AmyScript
 ===========
 
-AmyScript is a middle-to-high-level programming language. It is still currently in development and the compiler exists in `code/amyc`. The expectation is that AmyScript is compiled to AmyAssembly which will then be interpreted. 
+AmyScript is a middle-to-high-level programming language which looks somewhat similar to C, C++, or Java. It is still currently in development and the compiler exists in `code/amyc`. This is just a fun personal project and is not a serious language. The compiler is currently built just to be functional and does not have any optimizations.=-
 
 Check out the documentation at https://16aburnett.github.io/AmyScript/website
-
-AmyAssembly is a low-level command-based programming language. 
-The language is similar to assembly with some differences like variables instead of registers. 
-The interpreter exists in `code/amyasmi`
 
 Dependencies
 ============
 
-- Python3.8 - Both the interpreter and compiler are written in Python3.8.
+- Python3.8 - The compiler is written in Python3.8.
 - pyinstaller - used to build the compiler and interpreter 
 - Bash terminal - for running the bash build scripts 
 
-Building Tools
-==============
+Building
+========
 
 Requires pyinstaller. This is still a work in progress. 
 ```
-source install.sh
+cd code/amyc
+./build.sh
 ```
-this will build the compiler and interpreter and add them to the PATH. Note, when you quit out of the terminal, you will need to source the install again to add the compiler and interpreter to the PATH. 
+This will build the compiler and add a symlink to the executable in `$HOME/bin` so you should add `$HOME/bin` to your PATH if it isn't already. You can do that by adding the following to your `~/.bashrc`
+```bash
+export PATH="$HOME/bin:$PATH
+```
 
-Compiling AmyScript to AmyAssembly
-==================================
+Uninstalling
+============
+AmyScript does not install anything outside of the cloned repo other than the symlink in `$HOME/bin`. To uninstall, you can remove that symlink.
+```bash
+rm $HOME/bin/amyc
+```
+
+Compiling an AmyScript Program
+==============================
 
 Run the following command to compile a file 
 ```
-$ amyc yourFile.amy
+amyc yourFile.amy
 ```
-If your code successfully compiles, you will get a .assembly file including the compiled AmyAssembly. Check out the AmyAssembly if you want! It's pretty cool!
+By default, the compiler compiles to a custom language called [AmyAssembly](https://github.com/16aburnett/AmyAssembly). If your code successfully compiles, you will get a .amyasm file including the compiled AmyAssembly. Check out the generated AmyAssembly code if you want! It's pretty cool!
+
+Also, fun fact, this is a multi-target compiler meaning that you can compile the code to AmyAssembly, x86, python3, or C++.
+
+There are multiple flags and arguments that you can give to the compiler. You can see a list of them by using the `--help` argument:
+```bash
+amyc --help
+```
 
 AmyScript Example Program
 =========================
 
-AmyScript code:
-```
+AmyScript code, 'helloworld.amy':
+```cpp
 function void printSubstring (char[] str, int start, int end)
 {
     for (int i = start; i < end; ++i)
     {
-        printChar (str[i]);
+        print (str[i]);
     }
 }
 
@@ -54,75 +68,18 @@ printSubstring (msg, 5, 13);
 
 println ("");
 ```
+
+Compile with:
+```bash
+amyc helloworld.amy --target amyasm -o helloworld.amyasm
+```
+
+Since we compiled to AmyAssembly, we can run the program with the following (as long as AmyAssembly is installed):
+```bash
+amyasmi helloworld.amyasm
+```
+
 Output:
-```
-Hello, World!
-```
-
-
-Running An AmyAssembly Program
-==============================
-AmyAssembly can be executed using the AmyAssembly Interpreter (amyasmi).
-
-Documentation coming soon. 
-```
-$ amyasmi yourFile.amy.assembly
-```
-
-Sample AmyAssembly Program
-==========================
-Below is a sample hello world program 
-```
-// 'Simple' AmyAssembly hello world program 
-// By Amy Burnett
-//========================================================================
-
-// start at main
-    jump main
-
-//========================================================================
-// Returns a customary phrase stored on the heap
-getCustomaryPhraseFromHeap:
-    malloc phrase 13
-    assign phrase[0] 'H' 
-    assign phrase[1] 'e'
-    assign phrase[2] 'l'
-    assign phrase[3] 'l'
-    assign phrase[4] 'o'
-    assign phrase[5] ','
-    assign phrase[6] ' '
-    assign phrase[7] 'W'
-    assign phrase[8] 'o'
-    assign phrase[9] 'r'
-    assign phrase[10] 'l'
-    assign phrase[11] 'd'
-    assign phrase[12] '!'
-    return phrase
-
-//========================================================================
-
-main:
-    call getCustomaryPhraseFromHeap
-    // grab the return value of the previous call
-    response msg 
-    // loop through phrase and print out 
-    assign i 0
-while:
-    // condition
-    cmp i 13
-    jge endwhile
-    // body 
-    print msg[i]
-    // update
-    add i i 1
-    // repeat
-    jump while
-endwhile:
-    println 
-    free msg 
-    halt
-```
-Which outputs
 ```
 Hello, World!
 ```
