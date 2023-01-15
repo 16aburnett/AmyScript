@@ -1,3 +1,0 @@
-/home/amy/Desktop/AmyScript/code/amyAssemblyInterpreterCPP/build/CMakeFiles/rebuild_cache.dir
-/home/amy/Desktop/AmyScript/code/amyAssemblyInterpreterCPP/build/CMakeFiles/amyasm.dir
-/home/amy/Desktop/AmyScript/code/amyAssemblyInterpreterCPP/build/CMakeFiles/edit_cache.dir

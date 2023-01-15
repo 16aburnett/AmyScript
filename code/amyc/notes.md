@@ -38,6 +38,12 @@ Sun Jan 1 2023  - stayed up til 6:26am jan 1
     lot of stuff done today :)
     i need to sleep but dont want to :'(
 
+Mon Jan 2 2023 - mon morning - stayed up til 3:15am
+    fixed a bunch of cpp bugs 
+    added section for .h header stuff for classes and func
+    got most of aoc solutions working with cpp
+    cpp with -O3 go brr - almost as fast as x86 target
+
 - [ ] sizeof for x86
     - create a builtin array class 
     that stores pointer and array size?
@@ -50,9 +56,6 @@ Sun Jan 1 2023  - stayed up til 6:26am jan 1
 
 - [ ] separate amyasm to a separate repo
 - [ ] targets should have default output file names
-
-- [ ] backend to python
-- [ ] backend to c++
 
 - [ ] exponent operator **
 - [ ] pointer syntax - I really dislike using * for pointers
@@ -71,6 +74,14 @@ Sun Jan 1 2023  - stayed up til 6:26am jan 1
     - this is really rooted in amyasm garbage
 
 - [ ] operator overloading
+    - we need references or pointers
+    - vec[0] = 10 works by returning reference to vec[0]
+    - references are automatically dereferenced
+    - pass by reference passes a copy of the address rather than value
+
+
+
+
 
 - [ ] extra keywords
     - and, or, not

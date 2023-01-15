@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/amyasm.dir/amyAssemblyInterpreter.cpp.o CMakeFiles/amyasm.dir/lexer.cpp.o CMakeFiles/amyasm.dir/util.cpp.o CMakeFiles/amyasm.dir/memory.cpp.o  -o amyasm 

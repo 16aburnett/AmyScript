@@ -256,6 +256,8 @@ class __main__block__54____A : public __builtin____main__Object
     long __field____main__block__54____A____x;
     __main__block__54____A ();
 };
+void __method____main__block__54____A____print (__main__block__54____A* __this);
+long __method____main__block__54____A____add__int (__main__block__54____A* __this, long __main__block__54____A__add__v);
 // Class Declaration - __main__block__54____B inherits __main__block__54____A
 void* __dtable____main__block__54____B[2];
 class __main__block__54____B : public __main__block__54____A
@@ -267,6 +269,8 @@ class __main__block__54____B : public __main__block__54____A
     long __field____main__block__54____B____y;
     __main__block__54____B ();
 };
+long __method____main__block__54____B____add__int (__main__block__54____B* __this, long __main__block__54____B__add__v);
+void __method____main__block__54____B____print (__main__block__54____B* __this);
 // Class Declaration - __main__block__54____C inherits __main__block__54____A
 void* __dtable____main__block__54____C[2];
 class __main__block__54____C : public __main__block__54____A
@@ -278,6 +282,8 @@ class __main__block__54____C : public __main__block__54____A
     double __field____main__block__54____C____z;
     __main__block__54____C ();
 };
+void __method____main__block__54____C____print (__main__block__54____C* __this);
+long __method____main__block__54____C____add__int (__main__block__54____C* __this, long __main__block__54____C__add__v);
 void __main__block__54____print__A (__main__block__54____A* __main__block__54__print__a);
 // Class Declaration - __main__block__63____A inherits __builtin____main__Object
 void* __dtable____main__block__63____A[0];
@@ -301,6 +307,7 @@ class __main__block__70____Vec__char : public __builtin____main__Object
     long __field____main__block__70____Vec__char____size;
     __main__block__70____Vec__char ();
 };
+void __method____main__block__70____Vec__char____push_back__char (__main__block__70____Vec__char* __this, char __main__block__70____Vec__char__push_back__v);
 class __main__block__70____Vec__char; // Vec<:char:>
 // Class Declaration - __main__block__70____Vec__Vec inherits __builtin____main__Object
 void* __dtable____main__block__70____Vec__Vec[1];
@@ -313,6 +320,7 @@ class __main__block__70____Vec__Vec : public __builtin____main__Object
     long __field____main__block__70____Vec__Vec____size;
     __main__block__70____Vec__Vec ();
 };
+void __method____main__block__70____Vec__Vec____push_back__Vec (__main__block__70____Vec__Vec* __this, __main__block__70____Vec__char* __main__block__70____Vec__Vec__push_back__v);
 class __main__block__70____Point; // Point
 // Class Declaration - __main__block__70____Vec__Point inherits __builtin____main__Object
 void* __dtable____main__block__70____Vec__Point[1];
@@ -325,6 +333,7 @@ class __main__block__70____Vec__Point : public __builtin____main__Object
     long __field____main__block__70____Vec__Point____size;
     __main__block__70____Vec__Point ();
 };
+void __method____main__block__70____Vec__Point____push_back__Point (__main__block__70____Vec__Point* __this, __main__block__70____Point* __main__block__70____Vec__Point__push_back__v);
 // Class Declaration - __main__block__70____Point inherits __builtin____main__Object
 void* __dtable____main__block__70____Point[0];
 class __main__block__70____Point : public __builtin____main__Object
@@ -356,6 +365,7 @@ class __main__block__87____B : public __builtin____main__Object
     __main__block__87____B ();
 };
 void __main__block__87____print__B (__main__block__87____B* __main__block__87__print__b);
+
 //=========================================================================
 //### Functions section ##################################################
 //=========================================================================

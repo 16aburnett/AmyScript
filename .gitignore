@@ -4,5 +4,9 @@
 *.assemblyi
 # abstract syntax tree files
 *.ast
+*.preprocessed
 __pycache__/
 .vscode/
+build
+dist
+*.spec

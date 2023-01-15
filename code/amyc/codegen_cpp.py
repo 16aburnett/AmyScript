@@ -325,7 +325,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # push main function to the global stack
         self.popAndAddCodeStack ()
 
-        self.code = library_code_stack + self.header_code + self.global_code_stack
+        self.code = library_code_stack + self.header_code + ['\n'] + self.global_code_stack
 
     def visitTypeSpecifierNode (self, node):
         pass
@@ -625,6 +625,14 @@ class CodeGenVisitor_cpp (ASTVisitor):
             node.params[i].accept (self)
             params.append (node.params[i].scopeName)
             params_with_types.append (f"{self.amyTypeToCPPType(node.params[i].type)} {node.params[i].scopeName}")
+
+        # === HEADER CODE ================================================
+        # add function signature to header section
+        self.createCodeStack ()
+        self.printCode (f"{self.amyTypeToCPPType(node.type)} {methodLabel} ({self.amyTypeToCPPType(node.parentClass.type)} __this{', '.join(params_with_types)});")
+        self.popAndAddCodeStackToHeader ()
+        # === END HEADER CODE ============================================
+
         self.printCode (f"{self.amyTypeToCPPType(node.type)} {methodLabel} ({self.amyTypeToCPPType(node.parentClass.type)} __this{', '.join(params_with_types)})")
         self.printCode ("{")
         self.indentation += 1

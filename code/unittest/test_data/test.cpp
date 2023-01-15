@@ -232,138 +232,141 @@ class __builtin____main__Object
     // all objects will have a dispatch table
     void** dtable;
 };
-// Add forward decl for any inner functions and methods
-class __main____Vector__float;
 //=========================================================================
+//### Header section #####################################################
+//=========================================================================
+
 // Class Declaration - __main____Vector__float inherits __builtin____main__Object
-// Creating Dispatch Table (will be populated later)
 void* __dtable____main____Vector__float[4];
 class __main____Vector__float : public __builtin____main__Object
 {
     public:
-    //---------------------------------------------------------------------
     // Field - float[] Vector<:float:>::data
-    // __field____main____Vector__float____data = 1
     double* __field____main____Vector__float____data;
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
     // Field - int Vector<:float:>::size
-    // __field____main____Vector__float____size = 2
     long __field____main____Vector__float____size;
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
     // Field - int Vector<:float:>::capacity
-    // __field____main____Vector__float____capacity = 3
     long __field____main____Vector__float____capacity;
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    // Constructor Declaration - Vector<:float:>::Vector() -> Vector<:float:>
-    __main____Vector__float ()
-    {
-        // Function Header
-        // This stack is used to store results of expressions
-        std::vector<long> stack;
-        // Declare general purpose variables
-        // These are longs and can store anything up to 8 bytes via casting
-        long __stackval = 0;
-        long __pointer = 0;
-        long __offset = 0;
-        long __parent = 0;
-        long __child = 0;
-        long __obj = 0;
-        long __lhs = 0;
-        long __rhs = 0;
-        long __res = 0;
-        // Add dispatch table to instance
-        dtable = __dtable____main____Vector__float;
-        __main____Vector__float* __this = this;
-        // Body
-        //-----------------------------------------------------------------
-        // Code Block
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Int Literal
-        stack.push_back (10);
-        // LHS
-        // Member Accessor Assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____capacity = *reinterpret_cast<long*>(&__rhs);
-        // Result of assignment
-        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____capacity));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
-
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Int Literal
-        stack.push_back (0);
-        // LHS
-        // Member Accessor Assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____size = *reinterpret_cast<long*>(&__rhs);
-        // Result of assignment
-        stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____size));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
-
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Array Allocator
-        {
-            // Member Accessor obj.capacity
-            {
-                // LHS
-                stack.push_back (reinterpret_cast<long>(__this));
-                // RHS
-                __parent = stack.back ();
-                stack.pop_back ();
-                long __res = (reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____capacity;
-                stack.push_back (*reinterpret_cast<long*>(&__res));
-            }
-            __stackval = stack.back ();
-            stack.pop_back ();
-            double* __res = new double[__stackval];
-            stack.push_back (reinterpret_cast<long>(__res));
-        }
-        // LHS
-        // Member Accessor Assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__this));
-        // RHS
-        __parent = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____data = *reinterpret_cast<double**>(&__rhs);
-        // Result of assignment
-        stack.push_back (reinterpret_cast<long>((reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____data));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
-
-        //-----------------------------------------------------------------
-    }
-    // End Constructor Declaration - __ctor____main____Vector__float____Vector
-    //---------------------------------------------------------------------
-
+    __main____Vector__float ();
 };
+void __method____main____Vector__float____pushBack__float (__main____Vector__float* __this, double __main____Vector__float__pushBack__val);
+double __method____main____Vector__float____popBack (__main____Vector__float* __this);
+double __method____main____Vector__float____get__int (__main____Vector__float* __this, long __main____Vector__float__get__index);
+void __method____main____Vector__float____set__int__float (__main____Vector__float* __this, long __main____Vector__float__set__index, double __main____Vector__float__set__value);
+void __main____print__float____Vector__tparam0__float (__main____Vector__float* __main__print__v);
+void __main____println__float____Vector__tparam0__float (__main____Vector__float* __main__println__v);
+
+//=========================================================================
+//### Functions section ##################################################
+//=========================================================================
+
+//-------------------------------------------------------------------------
+// Constructor Declaration - Vector<:float:>::Vector() -> Vector<:float:>
+__main____Vector__float::__main____Vector__float ()
+{
+    // Function Header
+    // This stack is used to store results of expressions
+    std::vector<long> stack;
+    // Declare general purpose variables
+    // These are longs and can store anything up to 8 bytes via casting
+    long __stackval = 0;
+    long __pointer = 0;
+    long __offset = 0;
+    long __parent = 0;
+    long __child = 0;
+    long __obj = 0;
+    long __lhs = 0;
+    long __rhs = 0;
+    long __res = 0;
+    // Add dispatch table to instance
+    dtable = __dtable____main____Vector__float;
+    __main____Vector__float* __this = this;
+    // Body
+    //---------------------------------------------------------------------
+    // Code Block
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (10);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____capacity = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____capacity));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Int Literal
+    stack.push_back (0);
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____size = *reinterpret_cast<long*>(&__rhs);
+    // Result of assignment
+    stack.push_back (*reinterpret_cast<long*>(&(reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____size));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    // Statement
+    // Assignment - '='
+    // RHS
+    // Array Allocator
+    {
+        // Member Accessor obj.capacity
+        {
+            // LHS
+            stack.push_back (reinterpret_cast<long>(__this));
+            // RHS
+            __parent = stack.back ();
+            stack.pop_back ();
+            long __res = (reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____capacity;
+            stack.push_back (*reinterpret_cast<long*>(&__res));
+        }
+        __stackval = stack.back ();
+        stack.pop_back ();
+        double* __res = new double[__stackval];
+        stack.push_back (reinterpret_cast<long>(__res));
+    }
+    // LHS
+    // Member Accessor Assignment
+    // LHS
+    stack.push_back (reinterpret_cast<long>(__this));
+    // RHS
+    __parent = stack.back ();
+    stack.pop_back ();
+    __rhs = stack.back ();
+    stack.pop_back ();
+    (reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____data = *reinterpret_cast<double**>(&__rhs);
+    // Result of assignment
+    stack.push_back (reinterpret_cast<long>((reinterpret_cast<__main____Vector__float*>(__parent))->__field____main____Vector__float____data));
+    // Statement results can be ignored
+    stack.pop_back ();
+    // End Statement
+
+    //---------------------------------------------------------------------
+}
+// End Constructor Declaration - __ctor____main____Vector__float____Vector
+//-------------------------------------------------------------------------
+
 //-------------------------------------------------------------------------
 // Method Declaration - Vector<:float:>::pushBack(float) -> void
 void __method____main____Vector__float____pushBack__float (__main____Vector__float* __this, double __main____Vector__float__pushBack__val)
@@ -531,6 +534,8 @@ void __method____main____Vector__float____pushBack__float (__main____Vector__flo
         __main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i = *reinterpret_cast<long*>(&__rhs);
         // Result of assignment
         stack.push_back (*reinterpret_cast<long*>(&__main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i));
+        // We can ignore the init result
+        stack.pop_back ();
         // Using an infinite loop so we can write a separate multi-line condition
         while (1)
         {
@@ -620,6 +625,8 @@ void __method____main____Vector__float____pushBack__float (__main____Vector__flo
                 __res = __main____Vector__float__pushBack__block__1__if__2__block__3__for__4__i;
                 stack.push_back (*reinterpret_cast<long*>(&__res));
             }
+            // We can ignore the update result
+            stack.pop_back ();
         }
         //-----------------------------------------------------------------
         // Statement
@@ -934,9 +941,6 @@ void __method____main____Vector__float____set__int__float (__main____Vector__flo
 // End Method Declaration - __method____main____Vector__float____set__int__float
 //-------------------------------------------------------------------------
 
-// End Class Declaration - __main____Vector__float
-//=========================================================================
-
 //=========================================================================
 // Function Declaration - print<:float:>(Vector<:float:>) -> void
 void __main____print__float____Vector__tparam0__float (__main____Vector__float* __main__print__v)
@@ -1071,6 +1075,8 @@ void __main____print__float____Vector__tparam0__float (__main____Vector__float* 
     __main__print__block__9__for__11__i = *reinterpret_cast<long*>(&__rhs);
     // Result of assignment
     stack.push_back (*reinterpret_cast<long*>(&__main__print__block__9__for__11__i));
+    // We can ignore the init result
+    stack.pop_back ();
     // Using an infinite loop so we can write a separate multi-line condition
     while (1)
     {
@@ -1196,6 +1202,8 @@ void __main____print__float____Vector__tparam0__float (__main____Vector__float* 
             __res = __main__print__block__9__for__11__i;
             stack.push_back (*reinterpret_cast<long*>(&__res));
         }
+        // We can ignore the update result
+        stack.pop_back ();
     }
     //---------------------------------------------------------------------
     // Statement
@@ -1286,10 +1294,6 @@ void __main____println__float____Vector__tparam0__float (__main____Vector__float
 //=========================================================================
 
 int main () {
-    //=====================================================================
-    //### SETUP EXPRESSION RESULT STACK ##################################
-    //=====================================================================
-
     // Function Header
     // This stack is used to store results of expressions
     std::vector<long> stack;
@@ -1304,10 +1308,9 @@ int main () {
     long __lhs = 0;
     long __rhs = 0;
     long __res = 0;
-    //=====================================================================
-    //### COMPILED CODE ##################################################
-    //=====================================================================
 
+    // Main body
+    //---------------------------------------------------------------------
     //=====================================================================
     // Class Template - 
     // Class Declaration - __main____Vector__float inherits __builtin____main__Object
@@ -1341,8 +1344,10 @@ int main () {
     // Assignment - '='
     // RHS
     // Constructor Call - Vector<:float:>::Vector() -> Vector<:float:>
-    // Arguments
-    stack.push_back (reinterpret_cast<long>(new __main____Vector__float ()));
+    {
+        // Arguments
+        stack.push_back (reinterpret_cast<long>(new __main____Vector__float ()));
+    }
     // LHS
     // Variable declaration
     __main____Vector__float* __main__v;
@@ -1459,11 +1464,6 @@ int main () {
     // Statement results can be ignored
     stack.pop_back ();
     // End Statement
-
-
-    //=====================================================================
-    //### END OF CODE ####################################################
-    //=====================================================================
 
 }
 //=========================================================================
