@@ -145,11 +145,12 @@ class CodeGenVisitor_cpp (ASTVisitor):
     def exitScope (self):
         self.scopeNames.pop ()
 
-    def printFunctionHeader (self):
+    def printFunctionHeader (self, shouldIncludeStack=True):
         self.printComment ("Function Header")
         # expression result stack stores values from expressions 
-        self.printComment ("This stack is used to store results of expressions")
-        self.printCode ("std::vector<long> stack;")
+        if (shouldIncludeStack):
+            self.printComment ("This stack is used to store results of expressions")
+            self.printCode ("std::vector<long> stack;")
 
         self.printComment ("Declare general purpose variables")
         self.printComment ("These are longs and can store anything up to 8 bytes via casting")
@@ -1010,12 +1011,14 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.indentation += 1
 
         self.printComment ("Parallel Loop setup")
-        self.printFunctionHeader ()
+        self.printFunctionHeader (shouldIncludeStack=False)
         self.printSubDivider ()
 
         # print the body
         self.printComment ("Parallel Loop's Body")
+        self.shouldWriteInline = True
         node.body.accept (self)
+        self.shouldWriteInline = False
 
         self.indentation -= 1
         self.printCode ("}")
@@ -1084,6 +1087,16 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.scopeNames.pop ()
 
     def visitExpressionStatementNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            # Print indent
+            self.printCode ("", end="", shouldIndent=True)
+            # Print expression
+            node.expr.accept (self)
+            # End line with the semicolon
+            self.printCode (";", shouldIndent=False)
+            return
+
         # ignore variable decl
         # int x; should not translate to anything
         if node.expr != None and not isinstance(node.expr, VariableDeclarationNode):

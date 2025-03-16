@@ -739,8 +739,6 @@ int main () {
     {
         // Parallel Loop setup
         // Function Header
-        // This stack is used to store results of expressions
-        std::vector<long> stack;
         // Declare general purpose variables
         // These are longs and can store anything up to 8 bytes via casting
         long __stackval = 0;
@@ -756,41 +754,7 @@ int main () {
         // Parallel Loop's Body
         //-----------------------------------------------------------------
         // Code Block
-        // Statement
-        // Assignment - '='
-        // RHS
-        // Subscript Expression
-        {
-            // LHS
-            stack.push_back (reinterpret_cast<long>(__main__A));
-            // OFFSET
-            stack.push_back (*reinterpret_cast<long*>(&__main__parallel_for__4__i));
-            __offset = stack.back ();
-            stack.pop_back ();
-            __pointer = stack.back ();
-            stack.pop_back ();
-            long __res = (*reinterpret_cast<long**>(&__pointer))[*reinterpret_cast<long*>(&__offset)];
-            stack.push_back (*reinterpret_cast<long*>(&__res));
-        }
-        // LHS
-        // Subscript assignment
-        // LHS
-        stack.push_back (reinterpret_cast<long>(__main__B_parallel));
-        // OFFSET
-        stack.push_back (*reinterpret_cast<long*>(&__main__parallel_for__4__i));
-        __offset = stack.back ();
-        stack.pop_back ();
-        __pointer = stack.back ();
-        stack.pop_back ();
-        __rhs = stack.back ();
-        stack.pop_back ();
-        (*reinterpret_cast<long**>(&__pointer))[__offset] = *reinterpret_cast<long*>(&__rhs);
-        // Result of assignment
-        stack.push_back (*reinterpret_cast<long*>(&(*reinterpret_cast<long**>(&__pointer))[__offset]));
-        // Statement results can be ignored
-        stack.pop_back ();
-        // End Statement
-
+        __main__B_parallel[__main__parallel_for__4__i] = __main__A[__main__parallel_for__4__i];
         //-----------------------------------------------------------------
     }
     //---------------------------------------------------------------------
