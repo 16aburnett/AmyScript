@@ -160,6 +160,8 @@ def tokenize(code, mainFilename, debugLines=[]):
                 kind = "ELSE"
             elif (lexeme == "for"):
                 kind = "FOR"
+            elif (lexeme == "parallel_for"):
+                kind = "PARALLEL_FOR"
             elif (lexeme == "while"):
                 kind = "WHILE"
             elif (lexeme == "return"):

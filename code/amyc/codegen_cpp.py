@@ -56,6 +56,7 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.parentLoops = []
         self.pushParent = False
         self.scopeNames = ["__main"]
+        self.shouldWriteInline = False
 
     # === HELPER FUNCTIONS ===============================================
 
@@ -338,6 +339,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
         pass
 
     def visitVariableDeclarationNode (self, node):
+        if self.shouldWriteInline:
+            node.type.accept (self)
+            # variable names are modified by its scope 
+            scopeName = "".join (self.scopeNames) + "__" + node.id
+            self.printCode (f"{self.amyTypeToCPPType(node.type)} {scopeName}", end="", shouldIndent=False)
+            return
+
         self.printComment ("Variable declaration")
         node.type.accept (self)
 
@@ -955,6 +963,72 @@ class CodeGenVisitor_cpp (ASTVisitor):
         # exit scope
         self.scopeNames.pop ()
 
+    def visitParallelForStatementNode (self, node):
+        self.printSubDivider ()
+        self.printComment ("Parallel For-Loop")
+
+        # unique codes for jump labels 
+        forIndex = self.jumpIndex
+        self.jumpIndex += 1
+
+        forLabel = f"__parallel_for__{forIndex}"
+        condLabel = f"__forcond__{forIndex}"
+        elseLabel = f"__forelse__{forIndex}"
+        endLabel = f"__endfor__{forIndex}"
+
+        # create new scope level 
+        self.scopeNames += [forLabel]
+
+        # save loop info for break and continue statements
+        node.startLabel = forLabel
+        # break label should be end of loop
+        node.breakLabel = endLabel
+        # end label should be the location to go 
+        # when loop terminates normally
+        if (node.elseStmt != None):
+            node.endLabel = elseLabel
+        else:
+            node.endLabel = endLabel
+        self.parentLoops += [node]
+
+        # OpenMP parallelism
+        self.printCode ("#pragma omp parallel for")
+        self.printCode ("for (", end="")
+        self.shouldWriteInline = True
+        node.init.accept (self)
+        self.shouldWriteInline = False
+        self.printCode ("; ", end="", shouldIndent=False)
+        self.shouldWriteInline = True
+        node.cond.accept (self)
+        self.shouldWriteInline = False
+        self.printCode ("; ", end="", shouldIndent=False)
+        self.shouldWriteInline = True
+        node.update.accept (self)
+        self.shouldWriteInline = False
+        self.printCode (")", shouldIndent=False)
+        self.printCode ("{")
+        self.indentation += 1
+
+        self.printComment ("Parallel Loop setup")
+        self.printFunctionHeader ()
+        self.printSubDivider ()
+
+        # print the body
+        self.printComment ("Parallel Loop's Body")
+        node.body.accept (self)
+
+        self.indentation -= 1
+        self.printCode ("}")
+
+        # end of loop context 
+        # remove from current loop context
+        self.parentLoops.pop ()
+
+        self.printSubDivider ()
+
+        # exit scope
+        self.scopeNames.pop ()
+
     def visitWhileStatementNode (self, node):
         self.printSubDivider ()
         self.printComment ("While-Loop")
@@ -1081,6 +1155,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
         node.rhs.accept (self)
 
     def visitAssignExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            node.lhs.accept (self)
+            self.printCode (" = ", end="", shouldIndent=False)
+            node.rhs.accept (self)
+            return
+
         self.printComment (f"Assignment - '{node.op.lexeme}'")
 
         self.printComment ("RHS")
@@ -1166,6 +1247,12 @@ class CodeGenVisitor_cpp (ASTVisitor):
         
 
     def visitLogicalOrExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            node.lhs.accept (self)
+            self.printCode (" || ", end="", shouldIndent=False)
+            node.rhs.accept (self)
+            return
         self.printComment ("OR")
         self.printComment ("LHS")
         node.lhs.accept (self)
@@ -1194,6 +1281,12 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("stack.push_back (__res);")
 
     def visitLogicalAndExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            node.lhs.accept (self)
+            self.printCode (" && ", end="", shouldIndent=False)
+            node.rhs.accept (self)
+            return
         self.printComment ("AND")
         self.printComment ("LHS")
         node.lhs.accept (self)
@@ -1222,6 +1315,12 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("stack.push_back (__res);")
 
     def visitEqualityExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            node.lhs.accept (self)
+            self.printCode (f" {node.op.lexeme} ", end="", shouldIndent=False)
+            node.rhs.accept (self)
+            return
         if node.op.lexeme == "==":
             self.printComment ("Equal")
         elif node.op.lexeme == "!=":
@@ -1255,6 +1354,12 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("}")
 
     def visitInequalityExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            node.lhs.accept (self)
+            self.printCode (f" {node.op.lexeme} ", end="", shouldIndent=False)
+            node.rhs.accept (self)
+            return
         if node.op.lexeme == "<":
             self.printComment ("Less Than")
         elif node.op.lexeme == "<=":
@@ -1296,6 +1401,12 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("}")
 
     def visitAdditiveExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            node.lhs.accept (self)
+            self.printCode (f" {node.op.lexeme} ", end="", shouldIndent=False)
+            node.rhs.accept (self)
+            return
         # addition 
         if node.op.lexeme == "+":
             self.printComment ("Addition")
@@ -1388,6 +1499,12 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("}")
 
     def visitMultiplicativeExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            node.lhs.accept (self)
+            self.printCode (f" {node.op.lexeme} ", end="", shouldIndent=False)
+            node.rhs.accept (self)
+            return
         if node.op.lexeme == "*":
             self.printComment ("Multiplication")
         elif node.op.lexeme == "/":
@@ -1483,6 +1600,11 @@ class CodeGenVisitor_cpp (ASTVisitor):
             
     #  ++ | -- | + | - | ! | ~
     def visitUnaryLeftExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            self.printCode (f"{node.op.lexeme}", end="", shouldIndent=False)
+            node.rhs.accept (self)
+            return
         if node.op.lexeme == "++":
             self.printComment ("Pre-Increment")
         elif node.op.lexeme == "--":
@@ -1637,6 +1759,11 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("}")
 
     def visitPostIncrementExpressionNode(self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            node.lhs.accept (self)
+            self.printCode (f"{node.op.lexeme}", end="", shouldIndent=False)
+            return
         self.printComment ("Post-Increment")
 
         self.printCode ("{")
@@ -1710,6 +1837,11 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("}")
 
     def visitPostDecrementExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            node.lhs.accept (self)
+            self.printCode (f"{node.op.lexeme}", end="", shouldIndent=False)
+            return
         self.printComment ("Post-Decrement")
 
         self.printCode ("{")
@@ -1782,6 +1914,13 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("}")
 
     def visitSubscriptExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            node.lhs.accept (self)
+            self.printCode (f"[", end="", shouldIndent=False)
+            node.offset.accept (self)
+            self.printCode (f"]", end="", shouldIndent=False)
+            return
         self.printComment ("Subscript Expression")
 
         self.printCode ("{")
@@ -2030,6 +2169,10 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode (f"stack.push_back ({self.varToStack(node.type, '__this')});")
 
     def visitIdentifierExpressionNode (self, node):
+        # Handle inline
+        if self.shouldWriteInline:
+            self.printCode (f"{node.decl.scopeName}", end="", shouldIndent=False)
+            return
         # INT
         if node.type.type == Type.INT and node.type.arrayDimensions == 0:
             self.printCode (f"stack.push_back (*reinterpret_cast<long*>(&{node.decl.scopeName}));")
@@ -2109,10 +2252,16 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode ("stack.push_back (0);")
 
     def visitIntLiteralExpressionNode (self, node):
+        if self.shouldWriteInline:
+            self.printCode (f"{node.value}", end="", shouldIndent=False)
+            return
         self.printComment ("Int Literal")
         self.printCode (f"stack.push_back ({node.value});")
 
     def visitFloatLiteralExpressionNode (self, node):
+        if self.shouldWriteInline:
+            self.printCode (f"{node.value}", end="", shouldIndent=False)
+            return
         self.printComment ("Float Literal")
         self.printCode (f"{{")
         self.indentation += 1
@@ -2122,10 +2271,16 @@ class CodeGenVisitor_cpp (ASTVisitor):
         self.printCode (f"}}")
 
     def visitCharLiteralExpressionNode (self, node):
+        if self.shouldWriteInline:
+            self.printCode (f"'{node.value}'", end="", shouldIndent=False)
+            return
         self.printComment ("Char Literal")
         self.printCode (f"stack.push_back (static_cast<long>(static_cast<unsigned char>('{node.value}')));")
 
     def visitStringLiteralExpressionNode (self, node):
+        if self.shouldWriteInline:
+            self.printCode (f"\"{node.value}\"", end="", shouldIndent=False)
+            return
         self.printComment ("String Literal")
         self.printCode ("{")
         self.indentation += 1
@@ -2180,6 +2335,9 @@ class CodeGenVisitor_cpp (ASTVisitor):
         
 
     def visitNullExpressionNode (self, node):
+        if self.shouldWriteInline:
+            self.printCode (f"nullptr", end="", shouldIndent=False)
+            return
         self.printComment ("Null Literal")
         self.printCode ("stack.push_back ((long)nullptr);")
 

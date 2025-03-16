@@ -595,6 +595,25 @@ class SymbolTableVisitor (ASTVisitor):
 
         self.table.exitScope ()
 
+    def visitParallelForStatementNode (self, node):
+        # create scope to include variables in condition 
+        self.table.enterScope ()
+
+        node.init.accept (self)
+        node.cond.accept (self)
+        node.update.accept (self)
+
+        # containing loop keeps track of what loop we're currently in 
+        # this is helpful for ensuring CONTINUE and BREAK are in a loop
+        self.containingLoop += [node]
+        node.body.accept (self)
+        self.containingLoop.pop ()
+
+        if node.elseStmt:
+            node.elseStmt.accept (self)
+
+        self.table.exitScope ()
+
     def visitWhileStatementNode (self, node):
         # create scope to include variables in condition 
         self.table.enterScope ()

@@ -1,0 +1,55 @@
+// Testing AmyScript parallelism
+// Author: Amy Burnett
+
+print ("Input N => ");
+int N = stringToInt (input ());
+
+print ("Allocating arrays with "); print (N); println (" elements...");
+int[] A          = new int[N];
+int[] B_serial   = new int[N];
+int[] B_parallel = new int[N];
+
+// Give some values to A
+println ("Filling array, A...");
+for (int i = 0; i < N; ++i)
+{
+    A[i] = i * 2;
+}
+
+// Serial copy
+println ("Serial copy (B_serial = A)...");
+for (int i = 0; i < N; ++i)
+{
+    B_serial[i] = A[i];
+}
+
+// Parallel copy
+println ("Parallel copy (B_parallel = A)...");
+parallel_for (int i = 0; i < N; ++i)
+{
+    B_parallel[i] = A[i];
+}
+
+// Verification
+println ("Verifying result (B_serial == B_parallel)...");
+// intially assume that the arrays match
+int do_arrays_match = 1;
+// now check if that assumption is wrong
+for (int i = 0; i < N; ++i)
+{
+    if (B_parallel[i] != B_serial[i])
+    {
+        // Found elem that does not match
+        do_arrays_match = 0;
+        println ("Does not match");
+        print ("i:            "); println (i);
+        print ("B_parallel[i]:"); println (B_parallel[i]);
+        print ("B_serial[i]:  "); println (B_serial[i]);
+        print ("A[i]:         "); println (A[i]);
+        break;
+    }
+}
+if (do_arrays_match)
+    println ("Verification: PASS");
+else
+    println ("Verification: FAIL");

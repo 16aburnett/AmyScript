@@ -186,6 +186,15 @@ class TemplateVisitor (ASTVisitor):
         if node.elseStmt:
             node.elseStmt.accept (self)
 
+    def visitParallelForStatementNode (self, node):
+        node.init.accept (self)
+        node.cond.accept (self)
+        node.update.accept (self)
+        node.body.accept (self)
+
+        if node.elseStmt:
+            node.elseStmt.accept (self)
+
     def visitWhileStatementNode (self, node):
         node.cond.accept (self)
         node.body.accept (self)

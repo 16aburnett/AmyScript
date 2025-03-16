@@ -76,6 +76,10 @@ class ASTVisitor (ABC):
         pass
 
     @abstractmethod
+    def visitParallelForStatementNode (self, node):
+        pass
+
+    @abstractmethod
     def visitWhileStatementNode (self, node):
         pass
 
@@ -539,6 +543,42 @@ class PrintVisitor (ASTVisitor):
     def visitForStatementNode (self, node):
         self.printSpaces (self.level)
         self.outputstrings += [f"For:\n"]
+
+        self.level += 1
+
+        # print init 
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Init: {node.init.type.type}\n"]
+        self.level += 1
+        node.init.accept (self)
+        self.level -= 1
+
+        # print cond 
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Condition: {node.cond.type.type}\n"]
+        self.level += 1
+        node.cond.accept (self)
+        self.level -= 1
+
+        # print update 
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Update: {node.update.type.type}\n"]
+        self.level += 1
+        node.update.accept (self)
+        self.level -= 1
+
+        # print body 
+        self.printSpaces (self.level)
+        self.outputstrings += ["Body:\n"]
+        self.level += 1
+        node.body.accept (self)
+        self.level -= 1
+
+        self.level -= 1
+
+    def visitParallelForStatementNode (self, node):
+        self.printSpaces (self.level)
+        self.outputstrings += [f"Parallel For:\n"]
 
         self.level += 1
 

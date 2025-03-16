@@ -612,6 +612,34 @@ class ForStatementNode (StatementNode):
     def copy (self):
         return ForStatementNode (self.init.copy(), self.cond.copy(), self.update.copy(), self.body.copy(), self.elseStmt.copy() if self.elseStmt else None)
 
+
+# ========================================================================
+# init - ExpressionNode
+# cond - ExpressionNode
+# update - ExpressionNode
+# body - CodeUnitNode
+
+class ParallelForStatementNode (StatementNode):
+    
+    def __init__(self, init, cond, update, body, elseStmt):
+        self.init = init
+        self.cond = cond
+        self.update = update
+        self.body = body 
+        self.elseStmt = elseStmt
+        self.startLabel = ""
+        self.breakLabel = ""
+        self.endLabel = ""
+
+        self.lineNumber = 0
+        self.columnNumber = 0
+
+    def accept (self, visitor):
+        visitor.visitParallelForStatementNode (self)
+
+    def copy (self):
+        return ParallelForStatementNode (self.init.copy(), self.cond.copy(), self.update.copy(), self.body.copy(), self.elseStmt.copy() if self.elseStmt else None)
+
 # ========================================================================
 # cond - ExpressionNode
 # body - CodeUnitNode

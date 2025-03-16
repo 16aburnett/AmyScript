@@ -906,6 +906,77 @@ class PreCodeGenVisitor_cpp (ASTVisitor):
         # exit scope
         self.scopeNames.pop ()
 
+    def visitParallelForStatementNode (self, node):
+        self.printSubDivider ()
+        self.printComment ("Parallel For-Loop")
+
+        # unique codes for jump labels 
+        forIndex = self.jumpIndex
+        self.jumpIndex += 1
+
+        forLabel = f"__parallel_for__{forIndex}"
+        condLabel = f"__forcond__{forIndex}"
+        elseLabel = f"__forelse__{forIndex}"
+        endLabel = f"__endfor__{forIndex}"
+
+        # create new scope level 
+        self.scopeNames += [forLabel]
+
+        # save loop info for break and continue statements
+        node.startLabel = forLabel
+        # break label should be end of loop
+        node.breakLabel = endLabel
+        # end label should be the location to go 
+        # when loop terminates normally
+        if (node.elseStmt != None):
+            node.endLabel = elseLabel
+        else:
+            node.endLabel = endLabel
+        self.parentLoops += [node]
+
+        # init
+        self.printComment ("Init")
+        node.init.accept (self)
+        self.printComment ("We can ignore the init result")
+        self.printCode ("stack.pop_back ();")
+
+        self.printComment ("Using an infinite loop so we can write a separate multi-line condition")
+        self.printCode ("while (1)")
+
+        self.printCode ("{")
+        self.indentation += 1
+
+        self.printComment ("Condition")
+        node.cond.accept (self)
+        # get condition result from stack
+        self.printCode ("long __cond = stack.back ();")
+        self.printCode ("stack.pop_back ();")
+        # jump if false - negation of original condition
+        self.printComment ("break out of loop if condition is false")
+        self.printCode ("if (__cond == 0) break;")
+
+        # print the body 
+        self.printComment ("Body")
+        node.body.accept (self)
+
+        # perform update
+        self.printComment ("Update")
+        node.update.accept (self)
+        self.printComment ("We can ignore the update result")
+        self.printCode ("stack.pop_back ();")
+
+        self.indentation -= 1
+        self.printCode ("}")
+
+        # end of loop context 
+        # remove from current loop context
+        self.parentLoops.pop ()
+
+        self.printSubDivider ()
+
+        # exit scope
+        self.scopeNames.pop ()
+
     def visitWhileStatementNode (self, node):
         self.printSubDivider ()
         self.printComment ("While-Loop")

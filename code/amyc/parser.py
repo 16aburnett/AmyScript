@@ -565,6 +565,7 @@ class Parser:
     # statement 
     # <statement> -> <codeblock>
     #             -> <forloop>
+    #             -> <parallelforloop>
     #             -> <whileloop>
     #             -> <condition>
     #             -> <returnStatement>
@@ -583,6 +584,9 @@ class Parser:
         # <statement> -> <forloop>
         elif (self.tokens[self.currentToken].type == "FOR"):
             node = self.forloop ()
+        # <statement> -> <parallelforloop>
+        elif (self.tokens[self.currentToken].type == "PARALLEL_FOR"):
+            node = self.parallelforloop ()
         # <statement> -> <whileloop>
         elif (self.tokens[self.currentToken].type == "WHILE"):
             node = self.whileloop ()
@@ -651,6 +655,32 @@ class Parser:
         self.leave ("forloop")
 
         return ForStatementNode (init, cond, update, body, elseStmt)
+
+    # ====================================================================
+    # parallel_for loop 
+    # <parallelforloop> -> parallel_for ( <expr> ; <expr> ; <expr> ) <statement> [ <else> ]
+
+    def parallelforloop (self):
+        self.enter ("parallelforloop")
+
+        self.match ("parallelforloop", "PARALLEL_FOR")
+        self.match ("parallelforloop", "LPAREN")
+        init = self.expression ()
+        self.match ("parallelforloop", "SEMI")
+        cond = self.expression ()
+        self.match ("parallelforloop", "SEMI")
+        update = self.expression ()
+        self.match ("parallelforloop", "RPAREN")
+        body = self.statement ()
+
+        # match 0 or 1 else
+        elseStmt = None
+        if (self.tokens[self.currentToken].type == "ELSE"):
+            elseStmt = self.elseStatement ()
+
+        self.leave ("parallelforloop")
+
+        return ParallelForStatementNode (init, cond, update, body, elseStmt)
 
     # ====================================================================
     # while loop 
